@@ -10,6 +10,7 @@
 #include "FList.hpp"
 #include "FApp.hpp"
 #include "PlatformGraphicsInterface.hpp"
+#import "MetalViewController.h"
 
 #include <stdio.h>
 #include <math.h>
@@ -79,7 +80,7 @@ void os_message_box(const char *pTitle, const char *pBody) {
     [alert setInformativeText:tmpTitle];
     [alert setAlertStyle:NSAlertStyleWarning];
     
-    id window = ((id)CFBridgingRelease(gGraphicsInterface->GetMetalView()));
+    id window = gMetalView;//((id)CFBridgingRelease(gGraphicsInterface->GetMetalView()));
     [alert beginSheetModalForWindow:window completionHandler:^(NSModalResponse returnCode) {
         NSLog(@"Message Box Killed...");
     }];

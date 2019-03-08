@@ -34,8 +34,6 @@ public:
     
     virtual float GetScale() override;
     
-    virtual void *GetMetalView() const override { return mMetalView; }
-    
     // overrides
     virtual void Kill() override;
     virtual bool IsReady() override;
