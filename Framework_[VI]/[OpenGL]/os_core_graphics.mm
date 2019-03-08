@@ -525,6 +525,8 @@ void Graphics::DepthClear() {
 
 void Graphics::Clear(float pRed, float pGreen, float pBlue, float pAlpha) {
     // ... This is handled by Metal
+    glClearColor(pRed, pGreen, pBlue, pAlpha);
+    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void Graphics::Clear(float pRed, float pGreen, float pBlue) {
@@ -670,15 +672,20 @@ void Graphics::UniformBind(FUniforms *pUniforms) {
 }
 
 int Graphics::TextureGenerate(unsigned int *pData, int pWidth, int pHeight) {
-    int aBindIndex =- 1;
-    
-    
+    int aBindIndex = -1;
+    glGenTextures(1, (GLuint*)(&aBindIndex));
+    if (aBindIndex == -1) {
+        printf("Error Binding Texture [%d x %d]\n", pWidth, pHeight);
+    } else {
+        printf("Success Binding Texture [%d x %d]\n", pWidth, pHeight);
+        TextureSetData(aBindIndex, pData, pWidth, pHeight);
+    }
     return aBindIndex;
 }
 
 void Graphics::TextureDelete(int pIndex) {
     if (pIndex != -1) {
-        
+        glDeleteTextures(1, (GLuint*)(&(pIndex)));
     }
 }
 
@@ -693,11 +700,14 @@ bool Graphics::TextureValid(FTexture *pTexture) {
 }
 
 void Graphics::TextureSetData(int pIndex, unsigned int *pData, int pWidth, int pHeight) {
+    TextureBind(pIndex);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pWidth, pHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, pData);
     
 }
 
 void Graphics::TextureBind(int pIndex) {
-    
+    glBindTexture(GL_TEXTURE_2D, pIndex);
 }
 
 void Graphics::TextureBind(FTexture *pTexture) {
@@ -707,15 +717,28 @@ void Graphics::TextureBind(FTexture *pTexture) {
 }
 
 int Graphics::BufferGenerate(int pLength) {
-    int aBindIndex =- 1;
     
-    
+    unsigned int aBindIndex = 0;
+    glGenBuffers(pLength, &aBindIndex);
     return aBindIndex;
+    
+    
+    //glBindBuffer(GL_ARRAY_BUFFER, pBufferIndex);
+    //glBufferData(GL_ARRAY_BUFFER, pSize * 4, pData, GL_STATIC_DRAW);
+    
+    //GL_ELEMENT_ARRAY_BUFFER
+    
+    //glBufferSubData(<#GLenum target#>, <#GLintptr offset#>, <#GLsizeiptr size#>, <#const GLvoid *data#>)
+    
 }
 
 int Graphics::BufferGenerate(void *pData, int pLength) {
-    int aBindIndex =- 1;
-    
+    int aBindIndex = BufferGenerate(pLength);
+    if (aBindIndex != -1) {
+        BufferWrite(aBindIndex, pData, pLength);
+    } else {
+        printf("Failed To Make Buffer[%d]\n", pLength);
+    }
     return aBindIndex;
 }
 
@@ -888,7 +911,7 @@ void Graphics::ClipSetAppFrame(float pX, float pY, float pWidth, float pHeight) 
 }
 
 void Graphics::ViewportSet(float pX, float pY, float pWidth, float pHeight) {
-    
+    glViewport(pX, pY, pWidth, pHeight);
 }
 
 void Graphics::DrawModelEfficientSetup(float *pPositions, float *pTextureCoords, float *pNormals, FTexture *pTexture) {
@@ -1111,15 +1134,17 @@ FMatrix Graphics::MatrixModelViewGet() {
 }
 
 void Graphics::CullFacesSetFront() {
-    
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_FRONT);
 }
 
 void Graphics::CullFacesSetBack() {
-    
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
 }
 
 void Graphics::CullFacesSetDisabled() {
-    
+    glDisable(GL_CULL_FACE);
 }
 
 void Graphics::RenderQuad(float pX1, float pY1, float pX2, float pY2, float pX3, float pY3, float pX4, float pY4, FTexture *pTexture) {
@@ -1132,25 +1157,18 @@ static float cRenderQuadBufferUV[9];
 void Graphics::RenderQuad(float pX1, float pY1, float pX2, float pY2, float pX3, float pY3, float pX4, float pY4, float pU1, float pV1, float pU2, float pV2, float pU3, float pV3, float pU4, float pV4, FTexture *pTexture) {
     cRenderQuadBufferPositions[0] = pX1;
     cRenderQuadBufferPositions[1] = pY1;
-    
     cRenderQuadBufferPositions[2] = pX2;
     cRenderQuadBufferPositions[3] = pY2;
-    
     cRenderQuadBufferPositions[4] = pX3;
     cRenderQuadBufferPositions[5] = pY3;
-    
     cRenderQuadBufferPositions[6] = pX4;
     cRenderQuadBufferPositions[7] = pY4;
-
     cRenderQuadBufferUV[0] = pU1;
     cRenderQuadBufferUV[1] = pV1;
-    
     cRenderQuadBufferUV[2] = pU2;
     cRenderQuadBufferUV[3] = pV2;
-    
     cRenderQuadBufferUV[4] = pU3;
     cRenderQuadBufferUV[5] = pV3;
-    
     cRenderQuadBufferUV[6] = pU4;
     cRenderQuadBufferUV[7] = pV4;
     
@@ -1180,15 +1198,10 @@ void Graphics::RenderQuadScaled(float pX1, float pY1, float pX2, float pY2, floa
     pY1 = aCenterY - aRangeY;
     pY3 = aCenterY + aRangeY;
     
-    
     pX3 = pX1;
     pX4 = pX2;
     pY2 = pY1;
     pY4 = pY3;
-    
-    
-    //pX1 -= pPush;
-    //pX2 += pPush;
     
     cRenderQuadBufferPositions[0] = pX1;
     cRenderQuadBufferPositions[1] = pY1;
@@ -1431,6 +1444,7 @@ void Graphics::Ortho2D() {
 }
 
 
+
 void Graphics::PipelineStateSetShape2DNoBlending() {
     Graphics::BufferSetIndicesShape();
     //[gMetalPipeline pipelineStateSetShape2DNoBlending];
@@ -1466,6 +1480,42 @@ void Graphics::PipelineStateSetShape3DAlphaBlending() {
 void Graphics::PipelineStateSetShape3DAdditiveBlending() {
     Graphics::BufferSetIndicesShape();
     //[gMetalPipeline pipelineStateSetShape3DAdditiveBlending];
+    
+}
+
+void Graphics::PipelineStateSetSpriteNoBlending() {
+    Graphics::BufferSetIndicesSprite();
+    //[gMetalPipeline pipelineStateSetSpriteNoBlending];
+    
+    if (gOpenGLEngine) {
+        gOpenGLEngine->UseProgramSprite();
+    }
+    
+}
+
+void Graphics::PipelineStateSetSpriteAlphaBlending() {
+    Graphics::BufferSetIndicesSprite();
+    //[gMetalPipeline pipelineStateSetSpriteAlphaBlending];
+    
+}
+
+void Graphics::PipelineStateSetSpriteAdditiveBlending() {
+    Graphics::BufferSetIndicesSprite();
+    
+    //[gMetalPipeline pipelineStateSetSpriteAdditiveBlending];
+}
+
+void Graphics::PipelineStateSetSpritePremultipliedBlending() {
+    Graphics::BufferSetIndicesSprite();
+    
+    //[gMetalPipeline pipelineStateSetSpritePremultipliedBlending];
+    
+}
+
+void Graphics::PipelineStateSetSpriteWhiteBlending() {
+    Graphics::BufferSetIndicesSprite();
+    
+    //[gMetalPipeline pipelineStateSetSpriteWhiteBlending];
     
 }
 
@@ -1545,36 +1595,7 @@ void Graphics::PipelineStateSetSimpleModelAlphaBlending() {
     
 }
 
-void Graphics::PipelineStateSetSpriteNoBlending() {
-    Graphics::BufferSetIndicesSprite();
-    //[gMetalPipeline pipelineStateSetSpriteNoBlending];
-}
 
-void Graphics::PipelineStateSetSpriteAlphaBlending() {
-    Graphics::BufferSetIndicesSprite();
-    //[gMetalPipeline pipelineStateSetSpriteAlphaBlending];
-    
-}
-
-void Graphics::PipelineStateSetSpriteAdditiveBlending() {
-    Graphics::BufferSetIndicesSprite();
-    
-    //[gMetalPipeline pipelineStateSetSpriteAdditiveBlending];
-}
-
-void Graphics::PipelineStateSetSpritePremultipliedBlending() {
-    Graphics::BufferSetIndicesSprite();
-    
-    //[gMetalPipeline pipelineStateSetSpritePremultipliedBlending];
-    
-}
-
-void Graphics::PipelineStateSetSpriteWhiteBlending() {
-    Graphics::BufferSetIndicesSprite();
-    
-    //[gMetalPipeline pipelineStateSetSpriteWhiteBlending];
-    
-}
 
 
 

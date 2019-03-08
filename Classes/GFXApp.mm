@@ -91,22 +91,22 @@ void GFXApp::Load() {
     AppShellSetImageFileScale(1);
     mChaosEgg1X.Load("gi_chaos_egg_mockup_1");
     mRay[0].Load("effect_ray_wide_1_0");
-    printf("mRay[0] [%f x %f]\n", mRay[0].mWidth, mRay[0].mHeight);
+    
     
     AppShellSetImageFileScale(2);
     mChaosEgg2X.Load("gi_chaos_egg_mockup_2");
     mRay[1].Load("effect_ray_wide_2_0");
-    printf("mRay[0] [%f x %f]\n", mRay[1].mWidth, mRay[1].mHeight);
+    
     
     AppShellSetImageFileScale(3);
     mChaosEgg3X.Load("gi_chaos_egg_mockup_3");
     mRay[2].Load("effect_ray_wide_3_0");
-    printf("mRay[0] [%f x %f]\n", mRay[2].mWidth, mRay[2].mHeight);
+    
     
     AppShellSetImageFileScale(4);
     mChaosEgg4X.Load("gi_chaos_egg_mockup_4");
     mRay[3].Load("effect_ray_wide_4_0");
-    printf("mRay[0] [%f x %f]\n", mRay[3].mWidth, mRay[3].mHeight);
+    
     
 }
 
@@ -129,6 +129,7 @@ void GFXApp::LoadComplete() {
     //
     //
     
+    /*
     if (mGame == NULL) {
         mGame = new Game();
         mWindowMain.AddChild(mGame);
@@ -141,6 +142,7 @@ void GFXApp::LoadComplete() {
         mScreenTool->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
         mWindowTools.AddChild(mScreenTool);
     }
+    */
     
     //
     /*
@@ -200,6 +202,17 @@ void GFXApp::Draw() {
                                   false); //Clear Depth
         //Draw2D();
         
+        
+        Graphics::PipelineStateSetSpriteAlphaBlending();
+        Graphics::SetColor(1.0f, 1.0f, 1.0f, 1.0f);
+        
+        Graphics::MatrixProjectionResetOrtho();
+        Graphics::MatrixModelViewReset();
+        
+        mRay[0].Draw(10, 10);
+        mRay[1].Draw(50, 10);
+        mRay[2].Draw(100, 10);
+        mRay[3].Draw(150, 10);
         
     }
 }

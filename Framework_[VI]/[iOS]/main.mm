@@ -10,9 +10,6 @@
 #import "AppDelegate.h"
 #import "GFXApp.hpp"
 
-
-//gApp = new GLApp();
-
 int main(int argc, char * argv[]) {
     @autoreleasepool {
         gApp = new GFXApp();

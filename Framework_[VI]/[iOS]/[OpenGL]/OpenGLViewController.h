@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <Metal/Metal.h>
 #import "OpenGLView.h"
+#import "OpenGLEngine.hpp"
 
 #include <OpenGLES/ES2/gl.h>
 #include <OpenGLES/ES2/glext.h>
@@ -23,3 +24,4 @@
 
 extern CAEAGLLayer *gOpenGLLayer;
 extern OpenGLView *gOpenGLView;
+extern OpenGLEngine *gOpenGLEngine;

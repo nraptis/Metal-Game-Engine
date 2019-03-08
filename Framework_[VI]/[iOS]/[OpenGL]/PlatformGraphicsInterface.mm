@@ -29,12 +29,10 @@ float PlatformGraphicsInterface::GetScale() {
     return mScale;
 }
 
-
 bool PlatformGraphicsInterface::IsReady() {
-    
-    //if (gMetalEngine != nil) {
-    //    return gMetalEngine.ready;
-    //}
+    if (gOpenGLEngine != NULL) {
+        return gOpenGLEngine->IsReady();
+    }
     return false;
 }
 

@@ -23,8 +23,9 @@
 //TODO: You must CERTAINLY be able to use only one "sprite buffer" and
 //share it among all of the different sprites? Or... ?
 
-static unsigned int gGLBufferRender = 0;
-static unsigned int gGLBufferDepth = 0;
+//static unsigned int gGLBufferRender = 0;
+//static unsigned int gGLBufferDepth = 0;
+
 
 @interface OpenGLView() {
     
@@ -71,6 +72,7 @@ static unsigned int gGLBufferDepth = 0;
         exit(1);
     }
     
+    /*
     glGenRenderbuffers(1, &gGLBufferDepth);
     glBindRenderbuffer(GL_RENDERBUFFER, gGLBufferDepth);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, self.frame.size.width, self.frame.size.height);
@@ -78,12 +80,10 @@ static unsigned int gGLBufferDepth = 0;
     glGenRenderbuffers(1, &gGLBufferRender);
     glBindRenderbuffer(GL_RENDERBUFFER, gGLBufferRender);
     [_context renderbufferStorage:GL_RENDERBUFFER fromDrawable:_eaglLayer];
-    
+    */
     //
-    _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayCallback)];
-    [_displayLink setPreferredFramesPerSecond: 60];
-    [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode: NSDefaultRunLoopMode];
     //
+    //[self active];
     //
     //
 }
@@ -94,6 +94,25 @@ static unsigned int gGLBufferDepth = 0;
 
 - (void)displayCallback {
     
+}
+
+- (void)active {
+    if (_displayLink == NULL) {
+        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayCallback)];
+        [_displayLink setPreferredFramesPerSecond: 60];
+        [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode: NSDefaultRunLoopMode];
+    }
+}
+
+- (void)inactive {
+    if (_displayLink != NULL) {
+        [_displayLink invalidate];
+        _displayLink = nil;
+    }
+}
+
+- (void)commit {
+    [_context presentRenderbuffer:GL_RENDERBUFFER];
 }
 
 - (void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event {

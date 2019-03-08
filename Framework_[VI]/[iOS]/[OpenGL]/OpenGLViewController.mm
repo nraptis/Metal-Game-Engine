@@ -11,6 +11,7 @@
 
 CAEAGLLayer *gOpenGLLayer = NULL;
 OpenGLView *gOpenGLView = NULL;
+OpenGLEngine *gOpenGLEngine = NULL;
 
 @interface OpenGLViewController ()
 {
@@ -25,6 +26,12 @@ OpenGLView *gOpenGLView = NULL;
     [self loadViewIfNeeded];
     self.view.frame = CGRectMake(0.0f, 0.0f, kDeviceWidth, kDeviceHeight);
     [_openGLView setup];
+    
+    gOpenGLEngine = new OpenGLEngine();
+    gOpenGLEngine->SetUp();
+    
+    [_openGLView active];
+    
 }
 
 - (void)loadView {
