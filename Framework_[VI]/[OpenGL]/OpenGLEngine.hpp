@@ -13,6 +13,8 @@
 #import <OpenGLES/ES2/glext.h>
 
 #include "ShaderProgram.hpp"
+#include "ShaderProgramSprite.hpp"
+#include "ShaderProgramSpriteWhite.hpp"
 
 class OpenGLEngine {
 public:
@@ -20,26 +22,36 @@ public:
     OpenGLEngine();
     ~OpenGLEngine();
     
-    void                        SetUp();
+    void                            SetUp();
     
-    void                        BuildPrograms();
+    void                            BuildPrograms();
     
-    void                        Prerender();
-    void                        Postrender();
-    
-    
-    bool                        IsReady();
-    bool                        mIsReady;
-    
-    void                        UseProgram(ShaderProgram *pProgram);
-    void                        UseProgramSprite();
+    void                            Prerender();
+    void                            Postrender();
     
     
+    bool                            IsReady();
+    bool                            mIsReady;
     
-    ShaderProgram               *mShaderProgramShape;
-    ShaderProgram               *mShaderProgramSprite;
+    void                            UseProgram(ShaderProgram *pProgram);
+    
+    void                            UseProgramShape();
+    void                            UseProgramSprite();
+    void                            UseProgramSpriteWhite();
     
     
+    ShaderProgram                   *mShaderProgramShape;
+    ShaderProgramSprite             *mShaderProgramSprite;
+    ShaderProgramSpriteWhite        *mShaderProgramSpriteWhite;
+    
+    
+    GLint                           framebufferWidth;
+    GLint                           framebufferHeight;
+    
+    // The OpenGL ES names for the framebuffer and renderbuffer used to render to this view.
+    GLuint                          defaultFramebuffer;
+    GLuint                          colorRenderbuffer;
+    GLuint                          depthRenderbuffer;
     
     //int                         mSpriteProgram;
     

@@ -45,8 +45,12 @@ int os_create_thread_lock();
 bool os_thread_lock_exists(int pLockIndex);
 void os_delete_thread_lock(int pLockIndex);
 void os_delete_all_thread_locks();
+
 void os_lock_thread(int pLockIndex);
 void os_unlock_thread(int pLockIndex);
+
+void os_lock_graphics_thread(int pLockIndex);
+void os_unlock_graphics_thread(int pLockIndex);
 
 
 

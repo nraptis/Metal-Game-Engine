@@ -13,10 +13,8 @@
 #include "FModelData.h"
 #include "FModelDataPacked.hpp"
 #include "UIRoundedRect.hpp"
-
 #include "FloatingCamera.hpp"
 #include "FUniforms.hpp"
-
 
 class Util_ScreenFrame;
 class LightConfigurationScene;
@@ -104,6 +102,10 @@ public:
     LevelSelectorScreen                     *mLevelSelect;
     LightConfigurationScene                 *mLightScene;
     Util_ScreenFrame                        *mScreenTool;
+    
+    FTextureRect                            mTestTR;
+    int                                     mBufferPositions;
+    int                                     mBufferTextureCoords;
     
 };
 

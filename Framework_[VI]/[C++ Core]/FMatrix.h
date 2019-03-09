@@ -38,7 +38,7 @@ public:
     void                                Add(FMatrix &pMatrix);
     void                                Subtract(FMatrix &pMatrix);
     
-    void                                Rotate(float pDegrees){RotateZ(pDegrees);}
+    void                                Rotate(float pDegrees) { RotateZ(pDegrees); }
     void                                Rotate(float pDegrees, float pAxisX, float pAxisY, float pAxisZ);
     void                                RotateX(float pDegrees);
     void                                RotateY(float pDegrees);

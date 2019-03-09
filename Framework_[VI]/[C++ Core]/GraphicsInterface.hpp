@@ -35,7 +35,7 @@ public:
     virtual ~GraphicsInterface();
     
     virtual void Initialize() { }
-    
+
     virtual void Kill() { }
     
     virtual bool IsReady() { return false; }

@@ -16,12 +16,17 @@
 
 #include "os_core_outlets.h"
 #include "core_includes.h"
+#include "OSMusicPlayer.h"
+
+
+
 
 #include "openal/al.h"
 #include "OpenAL/alc.h"
 
 #include "FSound.h"
 
+OSMusicPlayer *gMusicPlayer = NULL;
 
 FSoundInstanceIOS::FSoundInstanceIOS()
 {
@@ -143,6 +148,8 @@ void core_sound_initialize()
     alListenerfv(AL_POSITION, ListenerPos);
     alListenerfv(AL_VELOCITY, ListenerVel);
     alListenerfv(AL_ORIENTATION, ListenerOri);
+    
+    gMusicPlayer = [[OSMusicPlayer alloc] init];
 }
 
 void *sound_load_ios(const char *theFilename, int *theDataSize, int *theDataFormat, int* theSampleRate) {
@@ -529,40 +536,35 @@ void core_sound_instance_destroy(FSoundInstance *pInstance) {
 }
 
 void core_sound_musicPlay(const char *pFilePath, bool pLoop) {
-    /*
-     FString aPath = gDirBundle + pFilePath;
-     [gRootBase musicPlay:[NSString stringWithUTF8String:aPath.c()] withLoop:pLoop];
-     */
+   FString aFilePath = gDirBundle + pFilePath;
+    
+    if (os_fileExists(aFilePath)) {
+        [gMusicPlayer musicPlay: [NSString stringWithUTF8String: aFilePath.c()] withLoop: pLoop];
+    }
+    
 }
 
 void core_sound_musicCrossFade(const char *pFilePath, int pDurationTicks, bool pLoop) {
-    
-    FString aPath = gDirBundle + pFilePath;
-    
-    /*
-     [gRootBase musicCrossFadeWithPath:[NSString stringWithUTF8String:aPath.c()] withDurationTicks:pDurationTicks withLoop:pLoop];
-     */
+    FString aFilePath = gDirBundle + pFilePath;
+    if (os_fileExists(aFilePath)) {
+        [gMusicPlayer musicCrossFadeWithPath:[NSString stringWithUTF8String: aFilePath.c()] withDurationTicks: pDurationTicks withLoop: pLoop];
+    }
 }
 
-void core_sound_musicFadeOut(int pDurationTicks)
-{
-    /*
-     [gRootBase musicFadeOutWithDurationTicks:pDurationTicks];
-     */
+void core_sound_musicFadeOut(int pDurationTicks) {
+    [gMusicPlayer musicFadeOutWithDurationTicks: pDurationTicks];
 }
 
 void core_sound_musicStop() {
-    /*
-     [gRootBase musicStop];
-     */
+    [gMusicPlayer musicStop];
 }
 
 bool core_sound_musicIsPlaying() {
-    bool aReturn = false;
-    /*
-     aReturn = [gRootBase musicIsPlaying];
-     */
-    return aReturn;
+    bool aResult = false;
+    
+    aResult = [gMusicPlayer musicIsPlaying];
+    
+    return aResult;
 }
 
 void core_sound_musicSetVolume(float pVolume) {
@@ -603,7 +605,7 @@ void core_sound_reloadEffects() {
 }
 
 void core_sound_update() {
-    
+    [gMusicPlayer updateFade];
 }
 
 void core_sound_active() {

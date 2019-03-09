@@ -155,7 +155,6 @@ void FApp::BaseUpdate() {
     
     core_sound_update();
     
-    
     if (mFPSDisplayTimer == 0) {
         
         mFPSDisplay = mFPS;
@@ -206,7 +205,6 @@ void FApp::BaseDraw() {
     Graphics::MatrixProjectionSet(aOrtho);
     Graphics::MatrixModelViewReset();
     DrawOver();
-    
     
     
     
@@ -724,7 +722,7 @@ void FApp::ThrottleUpdate() {
 void ThrottleDrawThread() {
     if (gGraphicsInterface) {
         
-        //Graphics::ThreadLock();
+        Graphics::ThreadLock();
         
         if (gGraphicsInterface) {
             gGraphicsInterface->SetContext();
@@ -745,7 +743,7 @@ void ThrottleDrawThread() {
         
         gGraphicsInterface->Commit();
         
-        //Graphics::ThreadUnlock();
+        Graphics::ThreadUnlock();
         
     }
 }
@@ -934,6 +932,13 @@ void FApp::FrameController() {
                         //if (mFPS > 57) {
                         //    mFPS = 60;
                         //}
+                        
+                        static int aFPSTimer = 0;
+                        aFPSTimer++;
+                        if (aFPSTimer >= 60) {
+                            aFPSTimer = 0;
+                            //printf("FPS: %d\n", mFPS);
+                        }
                     }
                     //TODO:
                     //

@@ -23,12 +23,15 @@
 //TODO: You must CERTAINLY be able to use only one "sprite buffer" and
 //share it among all of the different sprites? Or... ?
 
-//static unsigned int gGLBufferRender = 0;
-//static unsigned int gGLBufferDepth = 0;
-
-
 @interface OpenGLView() {
+    EAGLContext *context;
     
+    GLint framebufferWidth;
+    GLint framebufferHeight;
+    
+    // The OpenGL ES names for the framebuffer and renderbuffer used to render to this view.
+    GLuint defaultFramebuffer, colorRenderbuffer;
+    GLuint depthRenderbuffer;
 }
 
 @end
@@ -47,12 +50,9 @@
     _screenScale = (int)([UIScreen mainScreen].scale + 0.5f);
     printf("SCREEN SCALE: [[%d]]\n", _screenScale);
     //
-
-    
-    
-    
     
     self.multipleTouchEnabled = YES;
+    self.contentScaleFactor = _screenScale;
     
     _eaglLayer = (CAEAGLLayer*) self.layer;
     _eaglLayer.opaque = YES;
@@ -60,32 +60,20 @@
     
     EAGLRenderingAPI api = kEAGLRenderingAPIOpenGLES2;
     
-    _context = [[EAGLContext alloc] initWithAPI:api];
+    context = [[EAGLContext alloc] initWithAPI:api];
     
-    if (!_context) {
+    if (!context) {
         NSLog(@"Failed to initialize OpenGLES 2.0 context");
         exit(1);
     }
     
-    if (![EAGLContext setCurrentContext: _context]) {
+    if (![EAGLContext setCurrentContext: context]) {
         NSLog(@"Failed to set current OpenGL context");
         exit(1);
     }
     
-    /*
-    glGenRenderbuffers(1, &gGLBufferDepth);
-    glBindRenderbuffer(GL_RENDERBUFFER, gGLBufferDepth);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, self.frame.size.width, self.frame.size.height);
-    
-    glGenRenderbuffers(1, &gGLBufferRender);
-    glBindRenderbuffer(GL_RENDERBUFFER, gGLBufferRender);
-    [_context renderbufferStorage:GL_RENDERBUFFER fromDrawable:_eaglLayer];
-    */
-    //
-    //
-    //[self active];
-    //
-    //
+    [self createFramebuffer];
+    [self setFramebuffer];
 }
 
 + (id)layerClass {
@@ -111,14 +99,86 @@
     }
 }
 
-- (void)setContext {
-    if (_context) {
-        [EAGLContext setCurrentContext: _context];
+
+- (void)createFramebuffer {
+    if (context && !defaultFramebuffer) {
+        [EAGLContext setCurrentContext: context];
+        
+        glGenFramebuffers(1, &defaultFramebuffer);
+        glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer);
+        
+        glGenRenderbuffers(1, &colorRenderbuffer);
+        glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer);
+        [context renderbufferStorage:GL_RENDERBUFFER fromDrawable:(CAEAGLLayer *)self.layer];
+        glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &framebufferWidth);
+        glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &framebufferHeight);
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, colorRenderbuffer);
+        glGenRenderbuffers(1, &depthRenderbuffer);
+        glBindRenderbuffer(GL_RENDERBUFFER, depthRenderbuffer);
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, framebufferWidth, framebufferHeight);
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderbuffer);
+        
+        NSLog(@"Frame Buffer Size [%d x %d]\n", framebufferWidth, framebufferHeight);
+        NSLog(@"Device Size [%d x %d]\n", (int)gDeviceWidth, (int)gDeviceHeight);
     }
 }
 
+- (void)deleteFramebuffer {
+    if (context) {
+        [EAGLContext setCurrentContext: context];
+        if (defaultFramebuffer) {
+            glDeleteFramebuffers(1, &defaultFramebuffer);
+            defaultFramebuffer = 0;
+        }
+        
+        if(colorRenderbuffer)
+        {
+            glDeleteRenderbuffers(1, &colorRenderbuffer);
+            colorRenderbuffer = 0;
+        }
+    }
+}
+
+- (void)setFramebuffer {
+    if (context) {
+        [EAGLContext setCurrentContext:context];
+//        if (!defaultFramebuffer) {
+//            NSLog(@"ASDF... createFramebuffer...\n");
+//
+//            //[self performSelectorOnMainThread: @selector(createFramebuffer) withObject: nil waitUntilDone: YES];
+//
+//        }
+//
+        glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer);
+        glViewport(0, 0, framebufferWidth, framebufferHeight);
+    }
+}
+
+- (void)setContext {
+    if (context != NULL) {
+        [EAGLContext setCurrentContext: context];
+    }
+}
+
+- (BOOL)presentFramebuffer {
+    BOOL success = FALSE;
+    if (context) {
+        [EAGLContext setCurrentContext: context];
+        glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer);
+        success = [context presentRenderbuffer: GL_RENDERBUFFER];
+    }
+    return success;
+}
+
+//- (void)layoutSubviews {
+//    [self deleteFramebuffer];
+//}
+
+
 - (void)commit {
-    [_context presentRenderbuffer:GL_RENDERBUFFER];
+    if (context != NULL) {
+        [context presentRenderbuffer: GL_RENDERBUFFER];
+    }
 }
 
 - (void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event {

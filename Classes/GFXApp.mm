@@ -15,6 +15,10 @@
 #include "Balloon.hpp"
 #include "Util_ScreenFrame.h"
 #include "Game.hpp"
+//#include "OpenGLEngine.hpp"
+//#include "OpenGLViewController.h"
+
+
 
 GFXApp *gApp = 0;
 GFXApp::GFXApp() {
@@ -36,6 +40,8 @@ GFXApp::GFXApp() {
     mCamera.mDistance = 6.337314;
     mCamera.mRotationPrimary = 0.0f;
     mCamera.mRotationSecondary = 0.0f;
+    
+    
 }
 
 GFXApp::~GFXApp() {
@@ -44,7 +50,7 @@ GFXApp::~GFXApp() {
 
 void GFXApp::Load() {
     
-    
+    /*
     mSound1.Load("land.caf");
     mSound2.Load("match.caf");
     
@@ -70,12 +76,15 @@ void GFXApp::Load() {
     
     mDart.LoadOBJ("dart.obj");
     mDartMap.Load("dart_color");
+     
+     
     
     mBalloon.LoadOBJ("balloon.obj");
     mBalloonMap[0].Load("balloon_skin_01");
     mBalloonMap[1].Load("balloon_skin_02");
     mBalloonMap[2].Load("balloon_skin_03");
     mBalloonMap[3].Load("balloon_skin_04");
+    */
     mBalloonMap[4].Load("balloon_skin_05");
     //
     //
@@ -88,6 +97,9 @@ void GFXApp::Load() {
     //out the texture cache when we CHANGE resolution.
     //As long as we START with the RIGHT resolution,
     //then we will be fine...
+    
+    
+     
     AppShellSetImageFileScale(1);
     mChaosEgg1X.Load("gi_chaos_egg_mockup_1");
     mRay[0].Load("effect_ray_wide_1_0");
@@ -108,11 +120,26 @@ void GFXApp::Load() {
     mRay[3].Load("effect_ray_wide_4_0");
     
     
+    
+    mTestTR.SetRect(50.0f, 280.0f, 60.0f, 320.0f);
+    
+    mBufferPositions = Graphics::BufferArrayGenerate(sizeof(mTestTR.mVertex));
+    
+    
+    mBufferTextureCoords = Graphics::BufferArrayGenerate(sizeof(mTestTR.mTextureCoord));
+    
+    
+    
 }
 
 void GFXApp::LoadComplete() {
     //
+    //
+    //
     
+    core_sound_musicPlay("song1.m4a", true);
+    
+    //
     
     /*
     if (mLevelSelect == NULL) {
@@ -130,6 +157,8 @@ void GFXApp::LoadComplete() {
     //
     
     
+    /*
+    
     if (mGame == NULL) {
         mGame = new Game();
         mWindowMain.AddChild(mGame);
@@ -143,6 +172,7 @@ void GFXApp::LoadComplete() {
         mWindowTools.AddChild(mScreenTool);
     }
     
+    */
     
     //
     /*
@@ -187,6 +217,8 @@ void GFXApp::Update() {
 
 
 void GFXApp::Draw() {
+    
+    Graphics::Clear(0.025f, 0.022f, 0.045f, 1.0f);
 
     if (mIsLoadingComplete) {
         Graphics::RenderPassBegin(GFX_RENDER_PASS_3D_MAIN,
@@ -202,17 +234,58 @@ void GFXApp::Draw() {
                                   false); //Clear Depth
         //Draw2D();
         
+        Graphics::SetColor();
+        Graphics::PipelineStateSetSpriteNoBlending();
+        mBalloonMap[4].DrawQuad(0.0f, 0.0f, gDeviceWidth - 10.0f, gDeviceHeight - 10.0f);
         
-        Graphics::PipelineStateSetSpriteAlphaBlending();
+        
+        Graphics::SetColor(0.25f, 0.25f, 0.45f);
+        Graphics::PipelineStateSetShape2DNoBlending();
+        
+        Graphics::DrawLine(0.0f, 0.0f, gDeviceWidth, gDeviceHeight, 3.0f);
+        Graphics::DrawLine(gDeviceWidth, 0.0f, 0.0f, gDeviceHeight, 3.0f);
+        
+        
+        
+        Graphics::SetColor();
+        Graphics::PipelineStateSetSpriteNoBlending();
+        
+
+        
         Graphics::SetColor(1.0f, 1.0f, 1.0f, 1.0f);
         
         Graphics::MatrixProjectionResetOrtho();
         Graphics::MatrixModelViewReset();
         
-        mRay[0].Draw(10, 10);
-        mRay[1].Draw(50, 10);
-        mRay[2].Draw(100, 10);
-        mRay[3].Draw(150, 10);
+
+        
+        Graphics::SetColor(1.0f, 0.25f, 0.25f, 0.75f);
+        
+        mChaosEgg1X.Draw(10, 70, 1.0f, 60.0f);
+        
+        
+        Graphics::PipelineStateSetSpriteAlphaBlending();
+        mChaosEgg2X.Draw(150.0f, 100.0f, 1.0f, 20.0f);
+        
+        Graphics::SetColor();
+        
+        Graphics::PipelineStateSetSpriteAdditiveBlending();
+        mChaosEgg3X.Draw(300.0f, 100.0f, 1.0f, 20.0f);
+        
+        
+        mRay[0].Draw(40, 300);
+        
+        Graphics::PipelineStateSetSpriteWhiteBlending();
+        
+        mRay[1].Draw(50, 300);
+        
+        mRay[2].Draw(100, 300);
+        
+        mRay[3].Draw(150, 300);
+        
+        Graphics::SetColor(0.0f, 0.5f, 1.0f, 0.75f);
+        
+        
         
     }
 }
@@ -231,6 +304,9 @@ void GFXApp::SetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
 }
 
 void GFXApp::TouchDown(float pX, float pY, void *pData) {
+    
+    //core_sound_musicCrossFade("song2.mp3", 200, true);
+    //core_sound_musicFadeOut(40);
     
     TouchMove(pX, pY, pData);
     //

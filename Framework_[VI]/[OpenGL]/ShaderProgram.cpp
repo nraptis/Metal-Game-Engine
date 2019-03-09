@@ -12,8 +12,8 @@
 
 ShaderProgram::ShaderProgram(const char *pVertexPath, const char *pFragmentPath) {
     
-    mVertexProgramFile = pVertexPath;
     mFragmentProgramFile = pFragmentPath;
+    mVertexProgramFile = pVertexPath;
     
     mName = FString(pVertexPath);
     mName.RemoveExtension();
@@ -23,19 +23,14 @@ ShaderProgram::ShaderProgram(const char *pVertexPath, const char *pFragmentPath)
     mVertexShader = SHADER_INVALID_SHADER;
     mFragmentShader = SHADER_INVALID_SHADER;
     
-    mSlotUniforms = -1;
+    mSlotProjectionUniform = -1;
+    mSlotModelViewUniform = -1;
+    mSlotModulateUniform = -1;
     mSlotPositions = -1;
-    mSlotTextureCoords = -1;
-    mSlotNormals = -1;
-    mSlotUNormals = -1;
-    mSlotTangents = -1;
-    mSlotData = -1;
-    mSlotTextures = -1;
 }
 
 ShaderProgram::~ShaderProgram() {
     printf("Destroying Shader %s\n", mName.c());
-    
     Kill();
 }
 
@@ -49,13 +44,9 @@ bool ShaderProgram::IsValid() {
 void ShaderProgram::Use() {
     if (mProgram != SHADER_INVALID_PROGRAM && mProgram != 0) {
         glUseProgram(mProgram);
+    } else {
+        printf("Illegally Trying to use Shader Program [%d] [%s]\n", mProgram, mName.c());
     }
-}
-
-void ShaderProgram::SetUniformNames(const char *pVertexUniformName, const char *pFragmentUniformName) {
-    mVertexUniformName = pVertexUniformName;
-    mFragmentUniformName = pFragmentUniformName;
-    
 }
 
 void ShaderProgram::Compile() {
@@ -66,29 +57,63 @@ void ShaderProgram::Compile() {
     mVertexShader = ShaderCompileVertex(mVertexProgramFile.c());
     mFragmentShader = ShaderCompileFragment(mFragmentProgramFile.c());
     
-    
     glAttachShader(mProgram, mVertexShader);
     glAttachShader(mProgram, mFragmentShader);
     
     glLinkProgram(mProgram);
     
-    // 3
-    GLint linkSuccess;
-    glGetProgramiv(mProgram, GL_LINK_STATUS, &linkSuccess);
-    if (linkSuccess == GL_FALSE) {
-        printf("FAILED TO LINK SHADER [%s]\n", mName.c());
-        
-        GLchar messages[256];
+    GLint aLinkSuccess;
+    glGetProgramiv(mProgram, GL_LINK_STATUS, &aLinkSuccess);
+    if (aLinkSuccess == GL_FALSE) {
+        GLchar messages[512];
         glGetProgramInfoLog(mProgram, sizeof(messages), 0, &messages[0]);
-        printf("%s\n", messages);
-        
+        printf("Couldn't Link Shader [%s] MSG: [%s]\n", mName.c(), messages);
         Kill();
-        
         return;
     }
     
-    printf("Linking Shader [%s] Is Successful!\n", mName.c());
+    glUseProgram(mProgram);
     
+    mSlotProjectionUniform = glGetUniformLocation(mProgram, "ProjectionMatrix");
+    mSlotModelViewUniform = glGetUniformLocation(mProgram, "ModelViewMatrix");
+    mSlotModulateUniform = glGetUniformLocation(mProgram, "ModulateColor");
+    mSlotPositions = glGetAttribLocation(mProgram, "Positions");
+}
+
+void ShaderProgram::ArrayBufferData(int pIndex, int pOffset) {
+    
+    /*
+    void gfx_positionSetPointer(int pSize, unsigned int pOffset, unsigned int pStride)
+    {
+        glVertexAttribPointer(gGLSlotPosition, pSize, GL_FLOAT, GL_FALSE, (pStride << 2), (GLvoid*)(pOffset << 2));
+    }
+    
+    void gfx_texCoordSetPointer(int pSize, unsigned int pOffset, unsigned int pStride)
+    {
+        glVertexAttribPointer(gGLSlotTexCoord, pSize, GL_FLOAT, GL_FALSE, (pStride << 2), (GLvoid*)(pOffset << 2));
+    }
+    
+    void gfx_colorSetPointer(unsigned int pOffset, unsigned int pStride)
+    {
+        glVertexAttribPointer(gGLSlotColor, 4, GL_FLOAT, GL_FALSE, (pStride << 2), (GLvoid*)(pOffset << 2));
+    }
+    */
+}
+
+void ShaderProgram::ArrayBufferPositions(int pIndex, int pOffset) {
+    glBindBuffer(GL_ARRAY_BUFFER, pIndex);
+    glEnableVertexAttribArray(mSlotPositions);
+    int aStride = 2;
+    unsigned char *aOffset = NULL;
+    aOffset = &(aOffset[pOffset]);
+    glVertexAttribPointer(mSlotPositions, 2, GL_FLOAT, GL_FALSE, (aStride << 2), aOffset);
+}
+
+void ShaderProgram::ArrayBufferTextureCoords(int pIndex, int pOffset) {
+    
+}
+
+void ShaderProgram::ArrayBufferNormals(int pIndex, int pOffset) {
     
 }
 
@@ -145,3 +170,11 @@ unsigned int ShaderProgram::ShaderCompileFragment(const char *pShaderPath) {
     return ShaderCompile(pShaderPath, GL_FRAGMENT_SHADER);
 }
 
+void ShaderProgram::BindUniform(FUniforms *pUniform) {
+    //printf("***\nERROR [Not Implemented]\n***\n***\n...\n");
+    
+    
+    glUniformMatrix4fv(mSlotProjectionUniform, 1, 0, pUniform->mProjection.m);
+    glUniformMatrix4fv(mSlotModelViewUniform, 1, 0, pUniform->mModelView.m);
+    glUniform4f(mSlotModulateUniform, pUniform->mColor.mRed, pUniform->mColor.mGreen, pUniform->mColor.mBlue, pUniform->mColor.mAlpha);
+}

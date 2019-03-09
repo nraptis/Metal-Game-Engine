@@ -28,8 +28,8 @@ OpenGLEngine *gOpenGLEngine = NULL;
     [_openGLView setup];
     
     gOpenGLEngine = new OpenGLEngine();
+    [_openGLView setContext];
     gOpenGLEngine->SetUp();
-    
     [_openGLView active];
     
 }

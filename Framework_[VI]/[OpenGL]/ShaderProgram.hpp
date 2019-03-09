@@ -12,6 +12,7 @@
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 #include "FString.h"
+#include "FUniforms.hpp"
 
 #define SHADER_INVALID_PROGRAM 99999999
 #define SHADER_INVALID_SHADER 99999999
@@ -21,11 +22,13 @@ public:
     ShaderProgram(const char *pVertexPath, const char *pFragmentPath);
     ~ShaderProgram();
     
-    void                        SetUniformNames(const char *pVertexUniformName, const char *pFragmentUniformName);
+    virtual void                Compile();
+    virtual void                BindUniform(FUniforms *pUniform);
     
-    
-    
-    void                        Compile();
+    virtual void                ArrayBufferData(int pIndex, int pOffset);
+    virtual void                ArrayBufferPositions(int pIndex,int pOffset);
+    virtual void                ArrayBufferTextureCoords(int pIndex, int pOffset);
+    virtual void                ArrayBufferNormals(int pIndex, int pOffset);
     
     bool                        IsValid();
     
@@ -38,35 +41,25 @@ public:
     unsigned int                ShaderCompile(const char *pShaderPath, GLenum pShaderType);
     
     FString                     mName;
-    FString                     mVertexProgramFile;
     FString                     mFragmentProgramFile;
-    
-    FString                     mVertexUniformName;
-    FString                     mFragmentUniformName;
-    
+    FString                     mVertexProgramFile;
     
     unsigned int                mProgram;
     unsigned int                mVertexShader;
     unsigned int                mFragmentShader;
     
-    int                         mSlotUniforms;
+    int                         mSlotProjectionUniform;
+    int                         mSlotModelViewUniform;
+    int                         mSlotModulateUniform;
+    
     int                         mSlotPositions;
-    int                         mSlotTextureCoords;
-    int                         mSlotNormals;
-    int                         mSlotUNormals;
-    int                         mSlotTangents;
-    int                         mSlotData;
-    int                         mSlotTextures;
+    //int                         mSlotTextureCoords;
+    //int                         mSlotNormals;
+    //int                         mSlotUNormals;
+    //int                         mSlotTangents;
+    //int                         mSlotData;
     
-    
-    /*
-    struct TheStruct
-    {
-        vec3 first;
-        vec4 second;
-        mat4x3 third;
-    };
-    */
+    //int                         mSlotTexture;
     
 };
 

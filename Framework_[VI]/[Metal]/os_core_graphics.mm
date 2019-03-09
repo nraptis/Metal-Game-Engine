@@ -149,6 +149,12 @@ void Graphics::ThreadLock() {
     if (os_thread_lock_exists(gGraphicsThread) == false) {
         gGraphicsThread = os_create_thread_lock();
     }
+    
+    while (cGraphicsThreadLocked) {
+        printf("GFX Sleeping...\n");
+        usleep(256);
+    }
+    
     cGraphicsThreadLocked = true;
     os_lock_thread(gGraphicsThread);
     if (gGraphicsInterface) {

@@ -17,6 +17,10 @@ FUniforms::~FUniforms() {
     
 }
 
+unsigned int FUniforms::GetType() {
+    return UNIFORM_TYPE_BASIC;
+}
+
 unsigned int FUniforms::GetVertexSize() {
     return sizeof(float) * 32;
 }
@@ -49,6 +53,10 @@ FUniformsLightAmbient::~FUniformsLightAmbient() {
     
 }
 
+unsigned int FUniformsLightAmbient::GetType() {
+    return UNIFORM_TYPE_LIGHT_AMBIENT;
+}
+
 unsigned int FUniformsLightAmbient::GetVertexSize() {
     int aSize = FUniforms::GetVertexSize();
     return aSize;
@@ -74,14 +82,16 @@ void FUniformsLightAmbient::WriteFragmentToBuffer(void *pData, unsigned int pOff
     memcpy(aPtr, &mLight, aLightSize);
 }
 
-
-
 FUniformsLightAmbientDiffuse::FUniformsLightAmbientDiffuse() {
     
 }
 
 FUniformsLightAmbientDiffuse::~FUniformsLightAmbientDiffuse() {
     
+}
+
+unsigned int FUniformsLightAmbientDiffuse::GetType() {
+    return UNIFORM_TYPE_LIGHT_AMBIENT_DIFFUSE;
 }
 
 unsigned int FUniformsLightAmbientDiffuse::GetVertexSize() {
@@ -129,15 +139,16 @@ void FUniformsLightAmbientDiffuse::Print() {
     */
 }
 
-
-
-
 FUniformsLightPhong::FUniformsLightPhong() {
     
 }
 
 FUniformsLightPhong::~FUniformsLightPhong() {
     
+}
+
+unsigned int FUniformsLightPhong::GetType() {
+    return UNIFORM_TYPE_LIGHT_PHONG;
 }
 
 unsigned int FUniformsLightPhong::GetVertexSize() {

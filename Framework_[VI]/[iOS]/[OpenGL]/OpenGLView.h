@@ -14,7 +14,7 @@
 @interface OpenGLView : UIView
 
 @property (nonatomic, strong) CAEAGLLayer * _Nonnull eaglLayer;
-@property (nonatomic, strong) EAGLContext * _Nonnull context;
+//@property (nonatomic, strong) EAGLContext * _Nonnull context;
 
 //@property (nonatomic, assign) CAMetalLayer * _Nonnull metalLayer;
 @property (nonatomic, strong) CADisplayLink * _Nonnull displayLink;
@@ -24,6 +24,9 @@
 - (void)setup;
 - (void)setContext;
 - (void)commit;
+
+- (void)setFramebuffer;
+- (BOOL)presentFramebuffer;
 
 - (void)active;
 - (void)inactive;

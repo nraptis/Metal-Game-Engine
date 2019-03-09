@@ -79,6 +79,7 @@ void os_interface_mutex_leave() {
 NSMutableSet *gLockStrongReferenceSet = [[NSMutableSet alloc] init];
 FList gThreadLockList;
 pthread_mutex_t gThreadMutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t gGraphicsThreadMutex = PTHREAD_MUTEX_INITIALIZER;
 
 int os_create_thread_lock() {
     pthread_mutex_lock( &gThreadMutex );
@@ -137,6 +138,25 @@ void os_unlock_thread(int pLockIndex) {
     }
     pthread_mutex_unlock( &gThreadMutex );
 }
+
+void os_lock_graphics_thread(int pLockIndex) {
+    pthread_mutex_lock( &gGraphicsThreadMutex );
+    if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
+        RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[pLockIndex]);
+        [aContainer.lock lock];
+    }
+    pthread_mutex_unlock( &gGraphicsThreadMutex );
+}
+
+void os_unlock_graphics_thread(int pLockIndex) {
+    pthread_mutex_lock( &gGraphicsThreadMutex );
+    if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
+        RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[pLockIndex]);
+        [aContainer.lock unlock];
+    }
+    pthread_mutex_unlock( &gGraphicsThreadMutex );
+}
+
 
 bool os_fileExists(const char *pFilePath) {
     bool aReturn = false;

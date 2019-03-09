@@ -16,6 +16,7 @@
 #include "FMatrix.h"
 #include "FIndexList.h"
 #include "FUniforms.hpp"
+#include "ShaderProgram.hpp"
 
 #define GFX_RENDER_PASS_COUNT 2
 
@@ -251,12 +252,6 @@ public:
     //
     //
     //
-    static void                             DrawCube();
-    //
-    //
-    //
-    static void                             DrawSphere12(float x, float y, float z, float pRadius=1.0f);
-    //
     //
     //
     static void                             ArrayBufferData(int pIndex);
@@ -384,12 +379,16 @@ public:
     
     
     
-    
-    
-    //- (void)startRenderPass: (int)renderPass clearingColor: (BOOL)clearColor clearingDepth: (BOOL)clearDepth;
 
+    static void                             SetShaderProgram(ShaderProgram *pShaderProgram);
     
     
+    static void                             BlendEnable();
+    static void                             BlendDisable();
+    
+    static void                             BlendSetAlpha();
+    static void                             BlendSetAdditive();
+    static void                             BlendSetPremultiplied();
     
     
 };

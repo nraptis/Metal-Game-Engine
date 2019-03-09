@@ -13,6 +13,12 @@
 #include "FColor.hpp"
 #include "FLight.hpp"
 
+#define UNIFORM_TYPE_UNKNOWN -1
+#define UNIFORM_TYPE_BASIC 0
+#define UNIFORM_TYPE_LIGHT_AMBIENT 1
+#define UNIFORM_TYPE_LIGHT_AMBIENT_DIFFUSE 2
+#define UNIFORM_TYPE_LIGHT_PHONG 3
+
 /////////////////////////////
 //
 // Ideal case for uniforms:
@@ -35,6 +41,8 @@ public:
     
     FColor                                  mColor;
     
+    virtual unsigned int                    GetType();
+    
     virtual unsigned int                    GetVertexSize();
     virtual unsigned int                    GetFragmentSize();
     
@@ -48,6 +56,8 @@ public:
     virtual ~FUniformsLightAmbient();
     
     FLightAmbient                           mLight;
+    
+    virtual unsigned int                    GetType() override;
     
     virtual unsigned int                    GetVertexSize() override;
     virtual unsigned int                    GetFragmentSize() override;
@@ -65,6 +75,8 @@ public:
     
     void                                    Print();
     
+    virtual unsigned int                    GetType() override;
+    
     virtual unsigned int                    GetVertexSize() override;
     virtual unsigned int                    GetFragmentSize() override;
     
@@ -80,6 +92,8 @@ public:
     FLightPhong                             mLight;
     
     void                                    Print();
+    
+    virtual unsigned int                    GetType() override;
     
     virtual unsigned int                    GetVertexSize() override;
     virtual unsigned int                    GetFragmentSize() override;

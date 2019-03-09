@@ -8,20 +8,30 @@
 #include "FIndexBufferCache.hpp"
 #include "FFileTable.hpp"
 #include "OpenGLViewController.h"
-#include "VideoBuffer.hpp"
+#include "ShaderProgram.hpp"
 
 #if defined(WIN_32_ENV) || defined(MAC_ENVIRONMENT)
 //
+
+//
+#endif
+
 #ifndef glOrthof
 #define glOrthof glOrtho
 #endif
-//
-#endif
+
 //
 #ifndef GL_CLAMP_TO_EDGE
 #define GL_CLAMP_TO_EDGE GL_CLAMP
 //
 #endif
+
+
+static int                                  cArrayBufferDataOffset = -1;
+static int                                  cArrayBufferPositionsOffset = -1;
+static int                                  cArrayBufferTextureCoordsOffset = -1;
+static int                                  cArrayBufferNormalsOffset = -1;
+static int                                  cArrayBufferTangentsOffset = -1;
 
 static int                                  gGraphicsThread = -1;
 
@@ -36,16 +46,11 @@ static int                                  cBufferIndexTangents = -1;
 static int                                  cBufferIndexData = 0;
 static int                                  cBufferIndexTextures = 0;
 
-static float                                cClipRect[4];
 static float                                cClipRectBase[4];
 static bool                                 cClipEnabled = false;
 
-static float                                cEnvironmentColor[4];
 
-static float                                cFogColor[4];
-static float                                cFogDensity;
-static float                                cFogStart;
-static float                                cFogEnd;
+ShaderProgram                               *cShaderProgram = NULL;
 
 FMatrix                                     cMatrixProjection;
 FMatrix                                     cMatrixModelView;
@@ -54,13 +59,9 @@ FMatrix                                     cMatrixOrtho;
 FTextureRect                                cTileRect;
 
 //When we create buffers, we add them to this thing...
-FIntMap                                     cBufferArrayMap;
-FIntMap                                     cBufferElementMap;
-
 //VideoBuffer
 
 FUniforms                                   cUniform;
-FFloatBufferCacheByteAligned256             cUniformCache;
 FFloatBufferCacheByteAligned256             cVertexCache;
 FIndexBufferCache                           cIndexCache;
 
@@ -104,10 +105,16 @@ void Graphics::SetDeviceSize(float pWidth, float pHeight) {
 }
 
 void Graphics::PreRender() {
-    cUniformCache.Reset();
     cVertexCache.Reset();
     cIndexCache.Reset();
     cCurrentRenderPass = -1;
+    cShaderProgram = NULL;
+    
+    cArrayBufferDataOffset = -999;
+    cArrayBufferPositionsOffset = -999;
+    cArrayBufferTextureCoordsOffset = -999;
+    cArrayBufferNormalsOffset = -999;
+    cArrayBufferTangentsOffset = -999;
 }
 
 void Graphics::PostRender() {
@@ -122,15 +129,21 @@ void Graphics::ThreadLock() {
     if (os_thread_lock_exists(gGraphicsThread) == false) {
         gGraphicsThread = os_create_thread_lock();
     }
+    
+    while (cGraphicsThreadLocked) {
+        printf("GFX Sleeping...\n");
+        usleep(256);
+    }
+    
     cGraphicsThreadLocked = true;
-    os_lock_thread(gGraphicsThread);
+    os_lock_graphics_thread(gGraphicsThread);
     if (gGraphicsInterface) {
         gGraphicsInterface->SetContext();
     }
 }
 
 void Graphics::ThreadUnlock() {
-    os_unlock_thread(gGraphicsThread);
+    os_unlock_graphics_thread(gGraphicsThread);
     cGraphicsThreadLocked = false;
 }
 
@@ -148,6 +161,7 @@ void Graphics::DrawQuad(float pX1, float pY1, float pX2, float pY2, float pX3, f
     if (cVertexCache.mResult.mSuccess) {
         int aPositionsBufferIndex = cVertexCache.mResult.mBufferIndex;
         int aPositionsBufferOffset = cVertexCache.mResult.mBufferOffset;
+        
         BufferArrayWrite(aPositionsBufferIndex, cRectBuffer, aPositionsBufferOffset, sizeof(float) * 8);
         ArrayBufferPositions(aPositionsBufferIndex, aPositionsBufferOffset);
     }
@@ -234,6 +248,7 @@ void Graphics::DrawTriangle2D(float pX1, float pY1, float pX2, float pY2, float 
     if (cVertexCache.mResult.mSuccess) {
         int aPositionsBufferIndex = cVertexCache.mResult.mBufferIndex;
         int aPositionsBufferOffset = cVertexCache.mResult.mBufferOffset;
+        
         BufferArrayWrite(aPositionsBufferIndex, cRectBuffer, aPositionsBufferOffset, sizeof(float) * 6);
         ArrayBufferPositions(aPositionsBufferIndex, aPositionsBufferOffset);
     }
@@ -268,61 +283,40 @@ void Graphics::OutlineRectInside(FRect pRect, float pThickness) {
 void Graphics::SetColorSwatch(int pSwatchIndex, float pAlpha) {
     bool aSign = pSwatchIndex < 0;
     
-    if(aSign)
-    {
+    if (aSign) {
         pSwatchIndex = (-pSwatchIndex);
     }
     
-    if(pSwatchIndex >= 8)
-    {
+    if (pSwatchIndex >= 8) {
         pSwatchIndex = (pSwatchIndex % 8);
     }
     
-    if(aSign)
-    {
+    if (aSign) {
         pSwatchIndex = (8 - pSwatchIndex);
     }
     
-    if(pSwatchIndex==0)
-    {
+    if (pSwatchIndex==0) {
         Graphics::SetColor(1,0,0, pAlpha);
-    }
-    else if(pSwatchIndex==1)
-    {
+    } else if(pSwatchIndex == 1) {
         Graphics::SetColor(0,1,0, pAlpha);
-    }
-    else if(pSwatchIndex==2)
-    {
+    } else if(pSwatchIndex == 2) {
         Graphics::SetColor(0,0,1, pAlpha);
-    }
-    else if(pSwatchIndex==3)
-    {
+    } else if(pSwatchIndex == 3) {
         Graphics::SetColor(0.5f,1,1, pAlpha);
-    }
-    else if(pSwatchIndex==4)
-    {
+    } else if(pSwatchIndex == 4) {
         Graphics::SetColor(1,0.5f,1, pAlpha);
-    }
-    else if(pSwatchIndex==5)
-    {
+    } else if(pSwatchIndex==5) {
         Graphics::SetColor(1,1,0.5, pAlpha);
-    }
-    else if(pSwatchIndex==6)
-    {
+    } else if(pSwatchIndex==6) {
         Graphics::SetColor(1,0.5f,0.5, pAlpha);
-    }
-    else if(pSwatchIndex==7)
-    {
+    } else if(pSwatchIndex==7) {
         Graphics::SetColor(0.5f,1,0.5, pAlpha);
-    }
-    else
-    {
+    } else {
         Graphics::SetColor(0.5f,0.5f,1, pAlpha);
     }
 }
 
-void Graphics::SetColorSwatch(int pSwatchIndex)
-{
+void Graphics::SetColorSwatch(int pSwatchIndex) {
     SetColorSwatch(pSwatchIndex, 1.0f);
 }
 
@@ -570,12 +564,6 @@ void Graphics::ArrayBufferData(int pIndex) {
 
 void Graphics::ArrayBufferData(int pIndex, int pOffset) {
     
-    /*
-    BufferBindingWrapper *aWrapper = (__bridge BufferBindingWrapper *)cBufferBindMap.Get(pIndex);
-    if (aWrapper != NULL && aWrapper.buffer != NULL) {
-        [gMetalEngine.renderCommandEncoder setVertexBuffer: aWrapper.buffer offset: pOffset atIndex: cBufferIndexData];
-    }
-    */
 }
 
 void Graphics::ArrayBufferPositions(int pIndex) {
@@ -584,12 +572,18 @@ void Graphics::ArrayBufferPositions(int pIndex) {
 
 void Graphics::ArrayBufferPositions(int pIndex, int pOffset) {
     
-    /*
-    BufferBindingWrapper *aWrapper = (__bridge BufferBindingWrapper *)cBufferBindMap.Get(pIndex);
-    if (aWrapper != NULL && aWrapper.buffer != NULL) {
-        [gMetalEngine.renderCommandEncoder setVertexBuffer: aWrapper.buffer offset: pOffset atIndex: cBufferIndexPositions];
+    if (cShaderProgram == NULL) {
+        Log("ArrayBufferPositionsS Fails...\n");
+        return;
     }
-    */
+    
+    cShaderProgram->ArrayBufferPositions(pIndex, pOffset);
+
+    //virtual void                ArrayBufferData(int pIndex, int pSize, int pOffset);
+    //virtual void                ArrayBufferPositions(int pIndex, int pSize,int pOffset);
+    //virtual void                ArrayBufferTextureCoords(int pIndex, int pSize,int pOffset);
+    //virtual void                ArrayBufferNormals(int pIndex, int pSize,int pOffset);
+    
 }
 
 void Graphics::ArrayBufferTextureCoords(int pIndex) {
@@ -598,6 +592,12 @@ void Graphics::ArrayBufferTextureCoords(int pIndex) {
 
 void Graphics::ArrayBufferTextureCoords(int pIndex, int pOffset) {
     
+    if (cShaderProgram == NULL) {
+        Log("ArrayBufferTextureCoordsS Fails...\n");
+        return;
+    }
+    
+    cShaderProgram->ArrayBufferTextureCoords(pIndex, pOffset);
 }
 
 void Graphics::ArrayBufferNormals(int pIndex) {
@@ -624,6 +624,7 @@ void Graphics::ArrayWriteData(void *pData, int pCount) {
         if (cVertexCache.mResult.mSuccess) {
             int aPositionsBufferIndex = cVertexCache.mResult.mBufferIndex;
             int aPositionsBufferOffset = cVertexCache.mResult.mBufferOffset;
+            
             BufferArrayWrite(aPositionsBufferIndex, pData, aPositionsBufferOffset, pCount);
             ArrayBufferPositions(aPositionsBufferIndex, aPositionsBufferOffset);
         }
@@ -638,44 +639,11 @@ void Graphics::UniformBind() {
 }
 
 void Graphics::UniformBind(FUniforms *pUniforms) {
-    
-    int aBufferIndexVertex = -1;
-    int aBufferOffsetVertex = -1;
-    int aBufferIndexFragment = -1;
-    int aBufferOffsetFragment = -1;
-    
-    cUniformCache.Get(pUniforms->GetVertexSize());
-    if (cUniformCache.mResult.mSuccess) {
-        aBufferIndexVertex = cUniformCache.mResult.mBufferIndex;
-        aBufferOffsetVertex = cUniformCache.mResult.mBufferOffset;
+    if (cShaderProgram != NULL && pUniforms != NULL) {
+        cShaderProgram->BindUniform(pUniforms);
+    } else {
+        printf("** Illegally Trying To Bind [%x] [%x]\n", cShaderProgram, pUniforms);
     }
-    
-    cUniformCache.Get(pUniforms->GetFragmentSize());
-    if (cUniformCache.mResult.mSuccess) {
-        aBufferIndexFragment = cUniformCache.mResult.mBufferIndex;
-        aBufferOffsetFragment = cUniformCache.mResult.mBufferOffset;
-    }
-    
-    /*
-    BufferBindingWrapper *aWrapperVertex = (__bridge BufferBindingWrapper *)cBufferBindMap.Get(aBufferIndexVertex);
-    BufferBindingWrapper *aWrapperFragment = (__bridge BufferBindingWrapper *)cBufferBindMap.Get(aBufferIndexFragment);
-    
-    if (aWrapperVertex != NULL && aWrapperFragment != NULL) {
-        if (aWrapperVertex.buffer != NULL && aWrapperFragment != NULL) {
-            //
-            ///////////////////////////////////////////////////////
-            //
-            pUniforms->WriteVertexToBuffer(aWrapperVertex.buffer.contents, aBufferOffsetVertex);
-            [gMetalEngine.renderCommandEncoder setVertexBuffer: aWrapperVertex.buffer offset: aBufferOffsetVertex atIndex: cBufferIndexUniforms];
-            //
-            pUniforms->WriteFragmentToBuffer(aWrapperFragment.buffer.contents, aBufferOffsetFragment);
-            [gMetalEngine.renderCommandEncoder setFragmentBuffer: aWrapperFragment.buffer offset: aBufferOffsetFragment atIndex: cBufferIndexUniforms];
-            //
-            ///////////////////////////////////////////////////////
-            //
-        }
-    }
-    */
 }
 
 int Graphics::TextureGenerate(unsigned int *pData, int pWidth, int pHeight) {
@@ -684,7 +652,6 @@ int Graphics::TextureGenerate(unsigned int *pData, int pWidth, int pHeight) {
     if (aBindIndex == -1) {
         printf("Error Binding Texture [%d x %d]\n", pWidth, pHeight);
     } else {
-        printf("Success Binding Texture [%d x %d]\n", pWidth, pHeight);
         TextureSetData(aBindIndex, pData, pWidth, pHeight);
     }
     return aBindIndex;
@@ -710,7 +677,6 @@ void Graphics::TextureSetData(int pIndex, unsigned int *pData, int pWidth, int p
     TextureBind(pIndex);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pWidth, pHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, pData);
-    
 }
 
 void Graphics::TextureBind(int pIndex) {
@@ -732,6 +698,7 @@ int Graphics::BufferArrayGenerate(int pLength) {
         glGenBuffers(1, &aBindIndex);
         if (aBindIndex != 0) {
             printf("Create Buffer [%d] Sized[%d]\n", aBindIndex, pLength);
+            glBindBuffer(GL_ARRAY_BUFFER, aBindIndex);
             glBufferData(GL_ARRAY_BUFFER, pLength, 0, GL_DYNAMIC_DRAW);
         } else {
             GLenum aError = glGetError();
@@ -773,6 +740,9 @@ void Graphics::BufferArrayWrite(int pIndex, void *pData, int pLength) {
 void Graphics::BufferArrayWrite(int pIndex, void *pData, int pOffset, int pLength) {
     glBindBuffer(GL_ARRAY_BUFFER, pIndex);
     glBufferSubData(GL_ARRAY_BUFFER, pOffset, pLength, pData);
+    
+    //glBufferSubData (GLenum target, GLintptr offset, GLsizeiptr size, const GLvoid* data) OPENGLES_DEPRECATED(ios(3.0, 12.0), tvos(9.0, 12.0));
+    
 }
 
 void Graphics::BufferArrayDelete(int pIndex) {
@@ -1013,6 +983,7 @@ void Graphics::DrawModelIndexed(float *pPositions, int pPositionsCount, float *p
         if (cVertexCache.mResult.mSuccess) {
             int aTextureCoordsBufferIndex = cVertexCache.mResult.mBufferIndex;
             int aTextureCoordsBufferOffset = cVertexCache.mResult.mBufferOffset;
+            
             BufferArrayWrite(aTextureCoordsBufferIndex, pTextureCoords, aTextureCoordsBufferOffset, sizeof(float) * pTextureCoordsCount * 3);
             ArrayBufferTextureCoords(aTextureCoordsBufferIndex, aTextureCoordsBufferOffset);
         }
@@ -1073,6 +1044,7 @@ void Graphics::DrawModel(float *pPositions, float *pTextureCoords, float *pNorma
         if (cVertexCache.mResult.mSuccess) {
             int aNormalsBufferIndex = cVertexCache.mResult.mBufferIndex;
             int aNormalsBufferOffset = cVertexCache.mResult.mBufferOffset;
+            
             BufferArrayWrite(aNormalsBufferIndex, pTextureCoords, aNormalsBufferOffset, sizeof(float) * pCount * 3);
             ArrayBufferNormals(aNormalsBufferIndex, aNormalsBufferOffset);
         }
@@ -1087,11 +1059,11 @@ void Graphics::DrawTriangles(int pCount, float *pPositions, float *pTextureCoord
 }
 
 void Graphics::DrawTriangles(int pCount) {
-    
+    glDrawArrays(GL_TRIANGLES, 0, pCount);
 }
 
 void Graphics::DrawTriangleStrips(int pCount) {
-    
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, pCount);
 }
 
 void Graphics::DrawTrianglesIndexed(GFX_MODEL_INDEX_TYPE *pIndices, int pCount) {
@@ -1401,9 +1373,16 @@ void Graphics::DrawSprite(float *pPositions, float *pTextureCoords, FTexture *pT
 void Graphics::DrawSprite(float pX, float pY, float pScaleX, float pScaleY, float pScaleZ, float pRotation, float *pPositions, float *pTextureCoords, FTexture *pTexture) {
     FMatrix aHold = cMatrixModelView;
     FMatrix aModelView = cMatrixModelView;
-    aModelView.Translate(pX, pY);
-    aModelView.Scale(pScaleX, pScaleY, pScaleZ);
-    aModelView.Rotate(pRotation);
+    
+    if (pX != 0.0f || pY != 0.0f) {
+        aModelView.Translate(pX, pY);
+    }
+    if (pScaleX != 1.0f || pScaleY != 1.0f || pScaleZ != 1.0f) {
+        aModelView.Scale(pScaleX, pScaleY, pScaleZ);
+    }
+    if (pRotation != 0.0f) {
+        aModelView.Rotate(pRotation);
+    }
     MatrixModelViewSet(aModelView);
     
     DrawSprite(pPositions, pTextureCoords, pTexture);
@@ -1491,102 +1470,106 @@ void Graphics::DrawCurrentTile() {
     
 }
 
-void Graphics::DrawCube() {
-    static float aXYZ[72]={-0.5,0.5,-0.5,-0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,-0.5,-0.5,-0.5,-0.5,0.5,-0.5,-0.5,0.5,-0.5,0.5,-0.5,-0.5,0.5,-0.5,0.5,-0.5,0.5,0.5,-0.5,0.5,-0.5,-0.5,-0.5,-0.5,-0.5,0.5,0.5,-0.5,0.5,0.5,0.5,0.5,-0.5,0.5,0.5,-0.5,-0.5,0.5,0.5,0.5,-0.5,0.5,0.5,-0.5,-0.5,0.5,0.5,-0.5,0.5,-0.5,0.5,0.5,-0.5,0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,0.5};
-    static float aUVW[72]={1.00,1.00,0.00,1.00,0.00,0.00,0.00,0.00,0.00,0.00,1.00,0.00,0.00,1.00,0.00,1.00,1.00,0.00,1.00,0.00,0.00,0.00,0.00,0.00,0.00,1.00,0.00,1.00,1.00,0.00,1.00,0.00,0.00,0.00,0.00,0.00,0.00,1.00,0.00,1.00,1.00,0.00,1.00,0.00,0.00,0.00,0.00,0.00,0.00,1.00,0.00,1.00,1.00,0.00,1.00,0.00,0.00,0.00,0.00,0.00,0.00,1.00,0.00,1.00,1.00,0.00,1.00,0.00,0.00,0.00,0.00,0.00};
-    static float aNormal[72]={0.000000,1.000000,0.000000,0.000000,1.000000,0.000000,0.000000,1.000000,0.000000,0.000000,1.000000,0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,0.000000,-1.000000,0.000000,0.000000,-1.000000,0.000000,0.000000,-1.000000,0.000000,0.000000,-1.000000,1.000000,0.000000,0.000000,1.000000,0.000000,0.000000,1.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,-0.000000,1.000000,0.000000,-0.000000,1.000000,0.000000,-0.000000,1.000000,0.000000,-0.000000,1.000000,-1.000000,0.000000,0.000000,-1.000000,0.000000,0.000000,-1.000000,0.000000,0.000000,-1.000000,0.000000,0.000000};
-    
-    static GFX_MODEL_INDEX_TYPE aIndex[36]={0,1,2,2,3,0,4,5,6,6,7,4,8,9,10,10,11,8,12,13,14,14,15,12,16,17,18,18,19,16,20,21,22,22,23,20};
-    
-    //ArrayVertices(aXYZ);
-    //ArrayCoords(aUVW);
-    //ArrayNormals(aNormal);
-    //DrawTriangles(aIndex, 36);
-    
-}
-
 void Graphics::Ortho2D(float pLeft, float pRight, float pBottom, float pTop) {
+    //glOrthof(pLeft, pRight, pBottom, pTop, -1024.0f, 1024.0f);
+    //glOrthof
     
 }
 
 void Graphics::Ortho2D() {
+    //Ortho2D(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
     
 }
 
 
 
 void Graphics::PipelineStateSetShape2DNoBlending() {
-    Graphics::BufferSetIndicesShape();
-    //[gMetalPipeline pipelineStateSetShape2DNoBlending];
     
+    if (gOpenGLEngine) {
+        BlendDisable();
+        gOpenGLEngine->UseProgramShape();
+    }
 }
 
 void Graphics::PipelineStateSetShape2DAlphaBlending() {
-    Graphics::BufferSetIndicesShape();
-    //[gMetalPipeline pipelineStateSetShape2DAlphaBlending];
-    
+    if (gOpenGLEngine) {
+        BlendEnable();
+        BlendSetAlpha();
+        gOpenGLEngine->UseProgramShape();
+    }
 }
 
 void Graphics::PipelineStateSetShape2DAdditiveBlending() {
-    Graphics::BufferSetIndicesShape();
-    //[gMetalPipeline pipelineStateSetShape2DAdditiveBlending];
-    
+    if (gOpenGLEngine) {
+        BlendEnable();
+        BlendSetAdditive();
+        gOpenGLEngine->UseProgramShape();
+    }
 }
 
-
-
 void Graphics::PipelineStateSetShape3DNoBlending() {
+    
+    
     Graphics::BufferSetIndicesShape();
     //[gMetalPipeline pipelineStateSetShape3DNoBlending];
     
 }
 
 void Graphics::PipelineStateSetShape3DAlphaBlending() {
+    
+    
     Graphics::BufferSetIndicesShape();
     //[gMetalPipeline pipelineStateSetShape3DAlphaBlending];
     
 }
 
 void Graphics::PipelineStateSetShape3DAdditiveBlending() {
+    
+    
     Graphics::BufferSetIndicesShape();
     //[gMetalPipeline pipelineStateSetShape3DAdditiveBlending];
     
 }
 
 void Graphics::PipelineStateSetSpriteNoBlending() {
-    Graphics::BufferSetIndicesSprite();
-    //[gMetalPipeline pipelineStateSetSpriteNoBlending];
-    
     if (gOpenGLEngine) {
+        //UseProgramShape()
+        BlendDisable();
         gOpenGLEngine->UseProgramSprite();
     }
-    
 }
 
 void Graphics::PipelineStateSetSpriteAlphaBlending() {
-    Graphics::BufferSetIndicesSprite();
-    //[gMetalPipeline pipelineStateSetSpriteAlphaBlending];
-    
+    if (gOpenGLEngine) {
+        BlendEnable();
+        BlendSetAlpha();
+        gOpenGLEngine->UseProgramSprite();
+    }
 }
 
 void Graphics::PipelineStateSetSpriteAdditiveBlending() {
-    Graphics::BufferSetIndicesSprite();
-    
-    //[gMetalPipeline pipelineStateSetSpriteAdditiveBlending];
+    if (gOpenGLEngine) {
+        
+        BlendEnable();
+        BlendSetAdditive();
+        gOpenGLEngine->UseProgramSprite();
+    }
 }
 
 void Graphics::PipelineStateSetSpritePremultipliedBlending() {
-    Graphics::BufferSetIndicesSprite();
-    
-    //[gMetalPipeline pipelineStateSetSpritePremultipliedBlending];
-    
+    if (gOpenGLEngine) {
+        BlendEnable();
+        BlendSetPremultiplied();
+        gOpenGLEngine->UseProgramSprite();
+    }
 }
 
 void Graphics::PipelineStateSetSpriteWhiteBlending() {
-    Graphics::BufferSetIndicesSprite();
-    
-    //[gMetalPipeline pipelineStateSetSpriteWhiteBlending];
-    
+    if (gOpenGLEngine) {
+        BlendEnable();
+        BlendSetAlpha();
+        gOpenGLEngine->UseProgramSpriteWhite();
+    }
 }
 
 
@@ -1700,25 +1683,27 @@ void Graphics::RenderPassBegin(int pRenderPass, bool pClearColor, bool pClearDep
     
 }
 
+void Graphics::SetShaderProgram(ShaderProgram *pShaderProgram) {
+    cShaderProgram = pShaderProgram;
+}
 
-static float cSphere12XYZ[267]={0.0,-0.0,1.0,-0.0,0.5,0.9,-0.2,0.4,0.9,0.0,-0.0,1.0,-0.4,0.2,0.9,0.0,-0.0,1.0,-0.5,-0.0,0.9,0.0,-0.0,1.0,-0.4,-0.2,0.9,0.0,-0.0,1.0,-0.2,-0.4,0.9,0.0,-0.0,1.0,-0.0,-0.5,0.9,0.0,-0.0,1.0,0.2,-0.4,0.9,0.0,-0.0,1.0,0.4,-0.2,0.9,0.0,-0.0,1.0,0.5,-0.0,0.9,0.0,-0.0,1.0,0.4,0.2,0.9,0.0,-0.0,1.0,0.2,0.4,0.9,0.0,-0.0,1.0,-0.0,0.5,0.9,-0.0,0.9,0.5,-0.4,0.8,0.5,-0.8,0.4,0.5,-0.9,-0.0,0.5,-0.8,-0.4,0.5,-0.4,-0.8,0.5,-0.0,-0.9,0.5,0.4,-0.8,0.5,0.8,-0.4,0.5,0.9,-0.0,0.5,0.8,0.4,0.5,0.4,0.7,0.5,-0.0,0.9,0.5,-0.0,1.0,-0.0,-0.5,0.9,-0.0,-0.9,0.5,-0.0,-1.0,-0.0,-0.0,-0.9,-0.5,-0.0,-0.5,-0.9,-0.0,-0.0,-1.0,-0.0,0.5,-0.9,-0.0,0.9,-0.5,-0.0,1.0,-0.0,-0.0,0.9,0.5,-0.0,0.5,0.9,-0.0,-0.0,1.0,-0.0,-0.0,0.9,-0.5,-0.4,0.8,-0.5,-0.8,0.4,-0.5,-0.9,-0.0,-0.5,-0.8,-0.4,-0.5,-0.4,-0.8,-0.5,-0.0,-0.9,-0.5,0.4,-0.8,-0.5,0.8,-0.4,-0.5,0.9,-0.0,-0.5,0.8,0.4,-0.5,0.4,0.7,-0.5,-0.0,0.9,-0.5,-0.0,0.5,-0.9,-0.2,0.4,-0.9,-0.4,0.2,-0.9,-0.5,-0.0,-0.9,-0.4,-0.2,-0.9,-0.2,-0.4,-0.9,-0.0,-0.5,-0.9,0.2,-0.4,-0.9,0.4,-0.2,-0.9,0.5,-0.0,-0.9,0.4,0.2,-0.9,0.2,0.4,-0.9,-0.0,0.5,-0.9,0.0,-0.0,-1.0,0.0,-0.0,-1.0,0.0,-0.0,-1.0,0.0,-0.0,-1.0,0.0,-0.0,-1.0,0.0,-0.0,-1.0,0.0,-0.0,-1.0,0.0,-0.0,-1.0,0.0,-0.0,-1.0,0.0,-0.0,-1.0,0.0,-0.0,-1.0,0.0,-0.0,-1.0};
+void Graphics::BlendEnable() {
+    glEnable(GL_BLEND);
+}
 
-static float cSphere12UVW[267]={0.00,0.00,0.00,0.00,0.17,0.00,0.08,0.17,0.00,0.08,0.00,0.00,0.17,0.17,0.00,0.17,0.00,0.00,0.25,0.17,0.00,0.25,0.00,0.00,0.33,0.17,0.00,0.33,0.00,0.00,0.42,0.17,0.00,0.42,0.00,0.00,0.50,0.17,0.00,0.50,0.00,0.00,0.58,0.17,0.00,0.58,0.00,0.00,0.67,0.17,0.00,0.67,0.00,0.00,0.75,0.17,0.00,0.75,0.00,0.00,0.83,0.17,0.00,0.83,0.00,0.00,0.92,0.17,0.00,0.92,0.00,0.00,1.00,0.17,0.00,0.00,0.33,0.00,0.08,0.33,0.00,0.17,0.33,0.00,0.25,0.33,0.00,0.33,0.33,0.00,0.42,0.33,0.00,0.50,0.33,0.00,0.58,0.33,0.00,0.67,0.33,0.00,0.75,0.33,0.00,0.83,0.33,0.00,0.92,0.33,0.00,1.00,0.33,0.00,0.00,0.50,0.00,0.08,0.50,0.00,0.17,0.50,0.00,0.25,0.50,0.00,0.33,0.50,0.00,0.42,0.50,0.00,0.50,0.50,0.00,0.58,0.50,0.00,0.67,0.50,0.00,0.75,0.50,0.00,0.83,0.50,0.00,0.92,0.50,0.00,1.00,0.50,0.00,0.00,0.67,0.00,0.08,0.67,0.00,0.17,0.67,0.00,0.25,0.67,0.00,0.33,0.67,0.00,0.42,0.67,0.00,0.50,0.67,0.00,0.58,0.67,0.00,0.67,0.67,0.00,0.75,0.67,0.00,0.83,0.67,0.00,0.92,0.67,0.00,1.00,0.67,0.00,0.00,0.83,0.00,0.08,0.83,0.00,0.17,0.83,0.00,0.25,0.83,0.00,0.33,0.83,0.00,0.42,0.83,0.00,0.50,0.83,0.00,0.58,0.83,0.00,0.67,0.83,0.00,0.75,0.83,0.00,0.83,0.83,0.00,0.92,0.83,0.00,1.00,0.83,0.00,0.00,1.00,0.00,0.08,1.00,0.00,0.17,1.00,0.00,0.25,1.00,0.00,0.33,1.00,0.00,0.42,1.00,0.00,0.50,1.00,0.00,0.58,1.00,0.00,0.67,1.00,0.00,0.75,1.00,0.00,0.83,1.00,0.00,0.92,1.00,0.00};
+void Graphics::BlendDisable() {
+    glDisable(GL_BLEND);
+}
 
-static float cSphere12Normal[267]={-0.000000,-0.000000,1.000000,0.000000,0.530900,0.847435,-0.265450,0.459773,0.847435,-0.000000,-0.000000,1.000000,-0.459773,0.265450,0.847435,-0.000000,-0.000000,1.000000,-0.530900,0.000000,0.847435,-0.000000,-0.000000,1.000000,-0.459773,-0.265450,0.847435,-0.000000,-0.000000,1.000000,-0.265450,-0.459773,0.847435,-0.000000,-0.000000,1.000000,-0.000000,-0.530900,0.847435,-0.000000,-0.000000,1.000000,0.265450,-0.459773,0.847435,-0.000000,-0.000000,1.000000,0.459773,-0.265450,0.847435,-0.000000,-0.000000,1.000000,0.530900,-0.000000,0.847435,-0.000000,-0.000000,1.000000,0.459773,0.265450,0.847435,-0.000000,-0.000000,1.000000,0.265450,0.459773,0.847435,-0.000000,-0.000000,1.000000,0.000000,0.530900,0.847435,0.000000,0.875983,0.482342,-0.437992,0.758624,0.482342,-0.758624,0.437992,0.482342,-0.875983,0.000000,0.482342,-0.758624,-0.437991,0.482342,-0.437992,-0.758623,0.482342,-0.000000,-0.875983,0.482342,0.437991,-0.758624,0.482342,0.758623,-0.437992,0.482342,0.875983,-0.000001,0.482342,0.758624,0.437991,0.482342,0.437992,0.758623,0.482342,0.000000,0.875983,0.482342,0.000000,1.000000,-0.000000,-0.500000,0.866025,-0.000000,-0.866025,0.500000,-0.000000,-1.000000,0.000000,-0.000000,-0.866026,-0.500000,-0.000000,-0.500000,-0.866025,-0.000000,-0.000000,-1.000000,-0.000000,0.499999,-0.866026,-0.000000,0.866025,-0.500001,-0.000000,1.000000,-0.000001,-0.000000,0.866026,0.499999,-0.000000,0.500001,0.866025,-0.000000,0.000000,1.000000,-0.000000,0.000000,0.875983,-0.482342,-0.437992,0.758624,-0.482342,-0.758624,0.437992,-0.482342,-0.875983,0.000000,-0.482342,-0.758624,-0.437991,-0.482342,-0.437992,-0.758624,-0.482342,-0.000000,-0.875983,-0.482342,0.437991,-0.758624,-0.482342,0.758623,-0.437992,-0.482342,0.875983,-0.000001,-0.482342,0.758624,0.437991,-0.482342,0.437992,0.758623,-0.482342,0.000000,0.875983,-0.482342,0.000000,0.530900,-0.847435,-0.265450,0.459773,-0.847435,-0.459773,0.265450,-0.847435,-0.530900,0.000000,-0.847435,-0.459773,-0.265450,-0.847435,-0.265450,-0.459773,-0.847435,-0.000000,-0.530900,-0.847435,0.265450,-0.459773,-0.847435,0.459773,-0.265450,-0.847435,0.530900,-0.000000,-0.847435,0.459773,0.265450,-0.847435,0.265450,0.459773,-0.847435,0.000000,0.530900,-0.847435,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000};
+void Graphics::BlendSetAlpha() {
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
 
-static GFX_MODEL_INDEX_TYPE cSphere12Index[360]={0,1,2,3,2,4,5,4,6,7,6,8,9,8,10,11,10,12,13,12,14,15,14,16,17,16,18,19,18,20,21,20,22,23,22,24,1,25,26,1,26,2,2,26,27,2,27,4,4,27,28,4,28,6,6,28,29,6,29,8,8,29,30,8,30,10,10,30,31,10,31,12,12,31,32,12,32,14,14,32,33,14,33,16,16,33,34,16,34,18,18,34,35,18,35,20,20,35,36,20,36,22,22,36,37,22,37,24,25,38,39,25,39,26,26,39,40,26,40,27,27,40,41,27,41,28,28,41,42,28,42,29,29,42,43,29,43,30,30,43,44,30,44,31,31,44,45,31,45,32,32,45,46,32,46,33,33,46,47,33,47,34,34,47,48,34,48,35,35,48,49,35,49,36,36,49,50,36,50,37,38,51,52,38,52,39,39,52,53,39,53,40,40,53,54,40,54,41,41,54,55,41,55,42,42,55,56,42,56,43,43,56,57,43,57,44,44,57,58,44,58,45,45,58,59,45,59,46,46,59,60,46,60,47,47,60,61,47,61,48,48,61,62,48,62,49,49,62,63,49,63,50,51,64,65,51,65,52,52,65,66,52,66,53,53,66,67,53,67,54,54,67,68,54,68,55,55,68,69,55,69,56,56,69,70,56,70,57,57,70,71,57,71,58,58,71,72,58,72,59,59,72,73,59,73,60,60,73,74,60,74,61,61,74,75,61,75,62,62,75,76,62,76,63,77,65,64,78,66,65,79,67,66,80,68,67,81,69,68,82,70,69,83,71,70,84,72,71,85,73,72,86,74,73,87,75,74,88,76,75};
+void Graphics::BlendSetAdditive() {
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+}
 
-void Graphics::DrawSphere12(float x, float y, float z, float pRadius)
-{
-    //MatrixPush();
-    
-    //Translate(x, y, z);
-    
-    //Scale(pRadius);
-    
-    DrawModelIndexed(cSphere12XYZ, 267, cSphere12UVW, 267, cSphere12Normal, 267, cSphere12Index, 360, 0);
-    
-    //MatrixPop();
+void Graphics::BlendSetPremultiplied() {
+    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 }
 

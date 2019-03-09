@@ -14,7 +14,8 @@
 //... In BYTES (should be multiple of 4...)
 //524288
 //#define FLOAT_CACHE_SLICE_SIZE 32768
-#define FLOAT_CACHE_SLICE_SIZE 262144
+//#define FLOAT_CACHE_SLICE_SIZE 262144
+#define FLOAT_CACHE_SLICE_SIZE 65536
 //8192
 //16384
 //32768
@@ -56,26 +57,6 @@ public:
     int                             mInternalBufferOffset;
 };
 
-class FFloatBufferCache {
-public:
-    FFloatBufferCache();
-    ~FFloatBufferCache();
-    
-    //Delete all memory from video card... Will need to respawn...
-    void                            Purge();
-    
-    //Important... Reset this cache on every draw...
-    void                            Reset();
-    
-    void                            Get(int pSize);
-    
-    FFloatBufferCacheResult         mResult;
-    
-    FFloatBufferCacheSlice          *mCurrentSlice;
-    
-    FList                           mAvailableSlices;
-    FList                           mConsumedSlices;
-};
 
 class FFloatBufferCacheByteAligned256 {
 public:

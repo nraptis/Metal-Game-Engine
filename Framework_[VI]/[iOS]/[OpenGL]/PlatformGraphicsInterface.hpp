@@ -30,7 +30,7 @@ public:
     
     //Only gets called after IsReady is true...
     virtual void Initialize() override;
-    
+
     virtual float GetScale() override;
     
     // overrides
