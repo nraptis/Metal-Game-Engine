@@ -15,6 +15,7 @@
 #include "Balloon.hpp"
 #include "Util_ScreenFrame.h"
 #include "Game.hpp"
+#include "CameraMenu.hpp"
 //#include "OpenGLEngine.hpp"
 //#include "OpenGLViewController.h"
 
@@ -29,17 +30,19 @@ GFXApp::GFXApp() {
     mTestRot3 = 0.0f;
     
     mGame = NULL;
-    
     mLevelSelect = NULL;
     mLightScene = NULL;
     mScreenTool = NULL;
+    mCameraMenu = NULL;
     
+    /*
     mCamera.mFOV = 0.987429;
     mCamera.mTarget = FVec3(0.0f, 0.0f, 0.0f);
     mCamera.mDirection = FVec3(0.000000, 0.000000, 1.000000);
     mCamera.mDistance = 6.337314;
     mCamera.mRotationPrimary = 0.0f;
     mCamera.mRotationSecondary = 0.0f;
+    */
     
     
 }
@@ -141,6 +144,13 @@ void GFXApp::LoadComplete() {
     
     //
     
+    
+    if (mCameraMenu == NULL) {
+        mCameraMenu = new CameraMenu(&mCamera);
+        mWindowTools.AddChild(mCameraMenu);
+    }
+    
+    
     /*
     if (mLevelSelect == NULL) {
         mLevelSelect = new LevelSelectorScreen();
@@ -198,6 +208,11 @@ void GFXApp::LoadComplete() {
 }
 
 void GFXApp::Update() {
+    
+    mCamera.mRotationPrimary += 1.0f;
+    if (mCamera.mRotationPrimary >= 360.0f) {
+        mCamera.mRotationPrimary -= 360.0f;
+    }
     
     mTestRot1 += 0.5f;
     if (mTestRot1 >= 360.0f) {
@@ -284,6 +299,21 @@ void GFXApp::Draw() {
         mRay[3].Draw(150, 300);
         
         Graphics::SetColor(0.0f, 0.5f, 1.0f, 0.75f);
+        
+        
+        
+        Graphics::PipelineStateSetShape3DAlphaBlending();
+        
+        FMatrix aProjection = mCamera.GetProjection();
+        Graphics::MatrixProjectionSet(aProjection);
+        //Graphics::MatrixProjectionResetOrtho();
+        Graphics::MatrixModelViewReset();
+        Graphics::SetColor(1.0f, 0.5f, 0.75f, 0.75f);
+        
+        Graphics::DrawBox(0.0f, 0.0f, 0.0f, 4.0f, 2.0f, -1.0f, 2.0f);
+        
+        
+        Graphics::MatrixModelViewReset();
         
         
         

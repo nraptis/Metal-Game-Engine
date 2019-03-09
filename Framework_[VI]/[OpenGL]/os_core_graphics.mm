@@ -426,38 +426,6 @@ void Graphics::DrawBox(float x1, float y1, float z1, float x2, float y2, float z
         aReference = FVec3(1.0f, 1.0f, -((aAxis.mX + aAxis.mY) / aAxis.mZ));
     }
     
-    /*
-    if v.x == 0:
-        return Vector(1, 0, 0)
-        if v.y == 0:
-            return Vector(0, 1, 0)
-            if v.z == 0:
-                return Vector(0, 0, 1)
-                
-# arbitrarily set a = b = 1
-# then the equation simplifies to
-#     c = -(x + y)/z
-                return Vector(1, 1, -1.0 * (v.x + v.y) / v.z)
-    */
-    
-    /*
-    if (aFactorX > aFactorZ && aFactorY > aFactorZ) {
-        //Z is the smallest...
-        aReference = FVec3(-aReference.mY, aReference.mX, 0.0f);
-        
-        
-    } else if (aFactorX > aFactorY && aFactorZ > aFactorY) {
-        //Y is the smallest...
-        
-        aReference = FVec3(-aReference.mZ, 0.0f, aReference.mX);
-        
-        
-    } else {
-        //X is the smallest...
-        aReference = FVec3(0.0f, aReference.mZ, -aReference.mY);
-    }
-    */
-    
     aReference.Normalize();
     
     FVec3 aPerp1 = Rotate3DNormalized(aReference, aAxis, 0.0f + pRotation);
@@ -472,8 +440,6 @@ void Graphics::DrawBox(float x1, float y1, float z1, float x2, float y2, float z
     static float aCornerX2[4];
     static float aCornerY2[4];
     static float aCornerZ2[4];
-    
-    //printf("Dir[%.2f, %.2f, %.2f] Perp1[%.2f, %.2f, %.2f]\nPerp2[%.2f, %.2f, %.2f]\nPerp3[%.2f, %.2f, %.2f]\nPerp4[%.2f, %.2f, %.2f]\n", aAxis.mX, aAxis.mY, aAxis.mZ, aPerp1.mX, aPerp1.mY, aPerp1.mZ, aPerp2.mX, aPerp2.mY, aPerp2.mZ, aPerp3.mX, aPerp3.mY, aPerp3.mZ, aPerp4.mX, aPerp4.mY, aPerp4.mZ);
     
     float aSize = (pSize / 2.0f);
     aPerp1 *= aSize; aPerp2 *= aSize; aPerp3 *= aSize; aPerp4 *= aSize;
@@ -492,6 +458,8 @@ void Graphics::DrawBox(float x1, float y1, float z1, float x2, float y2, float z
     aCornerX2[2] = x2 + aPerp3.mX; aCornerY2[2] = y2 + aPerp3.mY; aCornerZ2[2] = z2 + aPerp3.mZ;
     aCornerX2[3] = x2 + aPerp4.mX; aCornerY2[3] = y2 + aPerp4.mY; aCornerZ2[3] = z2 + aPerp4.mZ;
     
+    //TODO: Do we want this?
+    UniformBind();
     
     DrawQuad(aCornerX1[0], aCornerY1[0], aCornerZ1[0], aCornerX2[0], aCornerY2[0], aCornerZ2[0],
              aCornerX1[1], aCornerY1[1], aCornerZ1[1], aCornerX2[1], aCornerY2[1], aCornerZ2[1]);
@@ -1484,10 +1452,9 @@ void Graphics::Ortho2D() {
 
 
 void Graphics::PipelineStateSetShape2DNoBlending() {
-    
     if (gOpenGLEngine) {
         BlendDisable();
-        gOpenGLEngine->UseProgramShape();
+        gOpenGLEngine->UseProgramShape2D();
     }
 }
 
@@ -1495,7 +1462,7 @@ void Graphics::PipelineStateSetShape2DAlphaBlending() {
     if (gOpenGLEngine) {
         BlendEnable();
         BlendSetAlpha();
-        gOpenGLEngine->UseProgramShape();
+        gOpenGLEngine->UseProgramShape2D();
     }
 }
 
@@ -1503,32 +1470,31 @@ void Graphics::PipelineStateSetShape2DAdditiveBlending() {
     if (gOpenGLEngine) {
         BlendEnable();
         BlendSetAdditive();
-        gOpenGLEngine->UseProgramShape();
+        gOpenGLEngine->UseProgramShape2D();
     }
 }
 
 void Graphics::PipelineStateSetShape3DNoBlending() {
-    
-    
-    Graphics::BufferSetIndicesShape();
-    //[gMetalPipeline pipelineStateSetShape3DNoBlending];
-    
+    if (gOpenGLEngine) {
+        BlendDisable();
+        gOpenGLEngine->UseProgramShape3D();
+    }
 }
 
 void Graphics::PipelineStateSetShape3DAlphaBlending() {
-    
-    
-    Graphics::BufferSetIndicesShape();
-    //[gMetalPipeline pipelineStateSetShape3DAlphaBlending];
-    
+    if (gOpenGLEngine) {
+        BlendEnable();
+        BlendSetAlpha();
+        gOpenGLEngine->UseProgramShape3D();
+    }
 }
 
 void Graphics::PipelineStateSetShape3DAdditiveBlending() {
-    
-    
-    Graphics::BufferSetIndicesShape();
-    //[gMetalPipeline pipelineStateSetShape3DAdditiveBlending];
-    
+    if (gOpenGLEngine) {
+        BlendEnable();
+        BlendSetAdditive();
+        gOpenGLEngine->UseProgramShape3D();
+    }
 }
 
 void Graphics::PipelineStateSetSpriteNoBlending() {

@@ -15,6 +15,7 @@
 #include "ShaderProgram.hpp"
 #include "ShaderProgramSprite.hpp"
 #include "ShaderProgramSpriteWhite.hpp"
+#include "ShaderProgramShape3D.hpp"
 
 class OpenGLEngine {
 public:
@@ -35,12 +36,15 @@ public:
     
     void                            UseProgram(ShaderProgram *pProgram);
     
-    void                            UseProgramShape();
+    void                            UseProgramShape2D();
+    void                            UseProgramShape3D();
+    
     void                            UseProgramSprite();
     void                            UseProgramSpriteWhite();
     
     
-    ShaderProgram                   *mShaderProgramShape;
+    ShaderProgram                   *mShaderProgramShape2D;
+    ShaderProgramShape3D            *mShaderProgramShape3D;
     ShaderProgramSprite             *mShaderProgramSprite;
     ShaderProgramSpriteWhite        *mShaderProgramSpriteWhite;
     

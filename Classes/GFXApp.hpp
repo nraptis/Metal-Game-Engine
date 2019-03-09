@@ -20,6 +20,7 @@ class Util_ScreenFrame;
 class LightConfigurationScene;
 class LevelSelectorScreen;
 class LightMenu;
+class CameraMenu;
 
 class Game;
 
@@ -56,7 +57,7 @@ public:
     
     FloatingCamera                          mCamera;
     
-    
+    CameraMenu                              *mCameraMenu;
     
     
     FModelDataPacked                        mGround;

@@ -41,8 +41,19 @@ void OpenGLEngine::SetUp() {
 
 void OpenGLEngine::BuildPrograms() {
     
-    mShaderProgramShape = new ShaderProgram("shape_vertex_shader.glsl", "shape_fragment_shader.glsl");
-    mShaderProgramShape->Compile();
+    mShaderProgramShape2D = new ShaderProgram("shape_2d_vertex_shader.glsl", "shape_2d_fragment_shader.glsl");
+    mShaderProgramShape2D->Compile();
+    
+    
+    mShaderProgramShape3D = new ShaderProgramShape3D("shape_3d_vertex_shader.glsl", "shape_3d_fragment_shader.glsl");
+    mShaderProgramShape3D->Compile();
+    
+    
+    
+    
+    
+    
+    
     
     
     mShaderProgramSprite = new ShaderProgramSprite("sprite_vertex_shader.glsl", "sprite_fragment_shader.glsl");
@@ -79,8 +90,12 @@ void OpenGLEngine::UseProgram(ShaderProgram *pProgram) {
     }
 }
 
-void OpenGLEngine::UseProgramShape() {
-    UseProgram(mShaderProgramShape);
+void OpenGLEngine::UseProgramShape2D() {
+    UseProgram(mShaderProgramShape2D);
+}
+
+void OpenGLEngine::UseProgramShape3D() {
+    UseProgram(mShaderProgramShape3D);
 }
 
 void OpenGLEngine::UseProgramSprite() {
