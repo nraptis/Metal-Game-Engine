@@ -9,6 +9,7 @@
 #include "OpenGLEngine.hpp"
 #include "FFile.hpp"
 #include "core_includes.h"
+#include "FApp.hpp"
 
 static int gRenderBuffer0 = NULL;
 static int gRenderBuffer1 = NULL;
@@ -65,6 +66,14 @@ void OpenGLEngine::BuildPrograms() {
 
 bool OpenGLEngine::IsReady() {
     return mIsReady;
+}
+
+void OpenGLEngine::Prerender() {
+    
+}
+
+void OpenGLEngine::Postrender() {
+    
 }
 
 void OpenGLEngine::UseProgram(ShaderProgram *pProgram) {

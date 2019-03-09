@@ -47,15 +47,17 @@ void PlatformGraphicsInterface::Kill() {
 }
 
 void PlatformGraphicsInterface::Prerender() {
-    
+    if (gOpenGLEngine) {
+        gOpenGLEngine->Prerender();
+    }
     //[gMetalEngine prerender];
 }
 
 
 void PlatformGraphicsInterface::Postrender() {
-    //[glView presentFramebuffer];
-    
-    //[gMetalEngine postrender];
+    if (gOpenGLEngine) {
+        gOpenGLEngine->Postrender();
+    }
 }
 
 bool PlatformGraphicsInterface::IsVSyncReady() {
@@ -91,11 +93,14 @@ bool PlatformGraphicsInterface::IsVSyncReady() {
 }
 
 void PlatformGraphicsInterface::SetContext() {
+    [gOpenGLView setContext];
     
 }
 
 
 void PlatformGraphicsInterface::Commit() {
+    
+    [gOpenGLView commit];
     
     //[gMetalEngine commit];
 }

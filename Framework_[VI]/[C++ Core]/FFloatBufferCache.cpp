@@ -21,14 +21,14 @@ FFloatBufferCacheResult::~FFloatBufferCacheResult() {
 }
 
 FFloatBufferCacheSlice::FFloatBufferCacheSlice() {
-    mFetchBufferIndex = Graphics::BufferGenerate(FLOAT_CACHE_SLICE_SIZE);
+    mFetchBufferIndex = Graphics::BufferArrayGenerate(FLOAT_CACHE_SLICE_SIZE);
     mFetchBufferOffset = 0;
     mFetchSuccess = false;
     mInternalBufferOffset = 0;
 }
 
 FFloatBufferCacheSlice::~FFloatBufferCacheSlice() {
-    Graphics::BufferDelete(mFetchBufferIndex);
+    Graphics::BufferArrayDelete(mFetchBufferIndex);
     mFetchBufferIndex = -1;
     mFetchBufferOffset = 0;
     mFetchSuccess = false;

@@ -724,6 +724,11 @@ void FApp::ThrottleUpdate() {
 void ThrottleDrawThread() {
     if (gGraphicsInterface) {
         
+        //Graphics::ThreadLock();
+        
+        if (gGraphicsInterface) {
+            gGraphicsInterface->SetContext();
+        }
         gGraphicsInterface->Prerender();
         Graphics::PreRender();
         gAppBase->Prerender();
@@ -739,6 +744,9 @@ void ThrottleDrawThread() {
         gGraphicsInterface->Postrender();
         
         gGraphicsInterface->Commit();
+        
+        //Graphics::ThreadUnlock();
+        
     }
 }
 

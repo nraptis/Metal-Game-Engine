@@ -24,6 +24,10 @@ public:
     
     void                        BuildPrograms();
     
+    void                        Prerender();
+    void                        Postrender();
+    
+    
     bool                        IsReady();
     bool                        mIsReady;
     

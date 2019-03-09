@@ -213,7 +213,7 @@ void FModelDataPacked::LoadOBJ(FFile *pFile) {
             mBufferVertex = cModelVertexCache.mResult.mBufferIndex;
             mBufferVertexOffset = cModelVertexCache.mResult.mBufferOffset;
             //
-            Graphics::BufferWrite(mBufferVertex, mData, mBufferVertexOffset, sizeof(float) * mDataCount);
+            Graphics::BufferArrayWrite(mBufferVertex, mData, mBufferVertexOffset, sizeof(float) * mDataCount);
         } else {
             printf("Unable to get vertex buffer space for model...\n");
             mBufferVertex = -1;
@@ -225,7 +225,7 @@ void FModelDataPacked::LoadOBJ(FFile *pFile) {
             mBufferIndex = cModelIndexCache.mResult.mBufferIndex;
             mBufferIndexOffset = cModelIndexCache.mResult.mBufferOffset;
             //
-            Graphics::BufferWrite(mBufferIndex, mIndex, mBufferIndexOffset, sizeof(GFX_MODEL_INDEX_TYPE) * mIndexCount);
+            Graphics::BufferElementWrite(mBufferIndex, mIndex, mBufferIndexOffset, sizeof(GFX_MODEL_INDEX_TYPE) * mIndexCount);
         } else {
             printf("Unable to get index buffer space for model...\n");
             mBufferIndex = -1;

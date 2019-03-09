@@ -22,6 +22,7 @@
 @property (nonatomic, assign) int screenScale;
 
 - (void)setup;
+- (void)setContext;
 - (void)commit;
 
 - (void)active;

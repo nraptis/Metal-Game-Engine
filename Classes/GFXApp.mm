@@ -129,7 +129,7 @@ void GFXApp::LoadComplete() {
     //
     //
     
-    /*
+    
     if (mGame == NULL) {
         mGame = new Game();
         mWindowMain.AddChild(mGame);
@@ -142,7 +142,7 @@ void GFXApp::LoadComplete() {
         mScreenTool->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
         mWindowTools.AddChild(mScreenTool);
     }
-    */
+    
     
     //
     /*

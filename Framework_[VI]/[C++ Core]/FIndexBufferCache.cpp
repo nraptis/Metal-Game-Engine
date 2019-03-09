@@ -30,14 +30,14 @@ FIndexBufferCacheResult::~FIndexBufferCacheResult() {
 }
 
 FIndexBufferCacheSlice::FIndexBufferCacheSlice() {
-    mFetchBufferIndex = Graphics::BufferGenerate(INDEX_CACHE_SLICE_SIZE);
+    mFetchBufferIndex = Graphics::BufferElementGenerate(INDEX_CACHE_SLICE_SIZE);
     mFetchBufferOffset = 0;
     mFetchSuccess = false;
     mInternalBufferOffset = 0;
 }
 
 FIndexBufferCacheSlice::~FIndexBufferCacheSlice() {
-    Graphics::BufferDelete(mFetchBufferIndex);
+    Graphics::BufferElementDelete(mFetchBufferIndex);
     mFetchBufferIndex = -1;
     mFetchBufferOffset = 0;
     mFetchSuccess = false;

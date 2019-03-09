@@ -111,6 +111,12 @@
     }
 }
 
+- (void)setContext {
+    if (_context) {
+        [EAGLContext setCurrentContext: _context];
+    }
+}
+
 - (void)commit {
     [_context presentRenderbuffer:GL_RENDERBUFFER];
 }

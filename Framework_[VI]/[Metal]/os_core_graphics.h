@@ -228,12 +228,21 @@ public:
     
     
     //Buffers...
-    static int                              BufferGenerate(int pLength);
-    static int                              BufferGenerate(void *pData, int pLength); /* Length in BYTES */
-    static void                             BufferWrite(int pIndex, void *pData, int pLength); /* Length in BYTES */
-    static void                             BufferWrite(int pIndex, void *pData, int pOffset, int pLength); /* Length in BYTES */
+    static int                              BufferArrayGenerate(int pLength);
+    static int                              BufferArrayGenerate(void *pData, int pLength); /* Length in BYTES */
+    static void                             BufferArrayWrite(int pIndex, void *pData, int pLength); /* Length in BYTES */
+    static void                             BufferArrayWrite(int pIndex, void *pData, int pOffset, int pLength); /* Length in BYTES */
     
-    static void                             BufferDelete(int pIndex);
+    static void                             BufferArrayDelete(int pIndex);
+    
+    
+    
+    static int                              BufferElementGenerate(int pLength);
+    static int                              BufferElementGenerate(void *pData, int pLength); /* Length in BYTES */
+    static void                             BufferElementWrite(int pIndex, void *pData, int pLength); /* Length in BYTES */
+    static void                             BufferElementWrite(int pIndex, void *pData, int pOffset, int pLength); /* Length in BYTES */
+    
+    static void                             BufferElementDelete(int pIndex);
     //
     //
     //
