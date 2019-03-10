@@ -65,7 +65,7 @@ import javax.microedition.khronos.opengles.GL10;
  *   bit depths). Failure to do so would result in an EGL_BAD_MATCH error.
  */
 class GL2JNIView extends GLSurfaceView {
-    private static String TAG = "GL2JNIView";
+    private static String TAG = "???";
     private static final boolean DEBUG = false;
 
     public GL2JNIView(Context context) {
@@ -104,7 +104,8 @@ class GL2JNIView extends GLSurfaceView {
                              new ConfigChooser(5, 6, 5, 0, depth, stencil) );
 
         /* Set the renderer responsible for frame rendering */
-        setRenderer(new Renderer());
+        //setRenderer(new Renderer());
+
     }
 
     private static class ContextFactory implements GLSurfaceView.EGLContextFactory {

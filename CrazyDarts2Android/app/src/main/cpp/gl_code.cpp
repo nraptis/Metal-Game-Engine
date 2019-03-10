@@ -22,6 +22,9 @@
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
 
+#include "core_app_shell.h"
+#include "os_core_graphics.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -55,6 +58,7 @@ auto gFragmentShader =
     "}\n";
 
 GLuint loadShader(GLenum shaderType, const char* pSource) {
+
     GLuint shader = glCreateShader(shaderType);
     if (shader) {
         glShaderSource(shader, 1, &pSource, NULL);
@@ -127,6 +131,11 @@ bool setupGraphics(int w, int h) {
     printGLString("Renderer", GL_RENDERER);
     printGLString("Extensions", GL_EXTENSIONS);
 
+    FString aString = "Nick Raptis is Hacking Android Bitch";
+
+    LOGI("%s", aString.c());
+    //AppShellInitialize(ENV_ANDROID);
+
     LOGI("setupGraphics(%d, %d)", w, h);
     gProgram = createProgram(gVertexShader, gFragmentShader);
     if (!gProgram) {
@@ -169,16 +178,16 @@ void renderFrame() {
 }
 
 extern "C" {
-    JNIEXPORT void JNICALL Java_com_android_gl2jni_GL2JNILib_init(JNIEnv * env, jobject obj,  jint width, jint height);
-    JNIEXPORT void JNICALL Java_com_android_gl2jni_GL2JNILib_step(JNIEnv * env, jobject obj);
+    JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_init(JNIEnv * env, jobject obj,  jint width, jint height);
+    JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_step(JNIEnv * env, jobject obj);
 };
 
-JNIEXPORT void JNICALL Java_com_android_gl2jni_GL2JNILib_init(JNIEnv * env, jobject obj,  jint width, jint height)
+JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_init(JNIEnv * env, jobject obj,  jint width, jint height)
 {
     setupGraphics(width, height);
 }
 
-JNIEXPORT void JNICALL Java_com_android_gl2jni_GL2JNILib_step(JNIEnv * env, jobject obj)
+JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_step(JNIEnv * env, jobject obj)
 {
     renderFrame();
 }
