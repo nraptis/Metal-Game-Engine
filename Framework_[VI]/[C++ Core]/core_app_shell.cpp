@@ -68,6 +68,7 @@ void AppShellInitialize(int pEnvironment) {
     
     gGraphicsInterface = new PlatformGraphicsInterface();
     
+    os_initialize_outlets();
     core_sound_initialize();
     social_Init();
 

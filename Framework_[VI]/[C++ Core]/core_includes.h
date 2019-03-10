@@ -43,6 +43,7 @@
 
 #include <stdint.h>
 #include <math.h>
+#include <unistd.h>
 
 #include "FTouchManager.h"
 #include "FRandomizer.hpp"

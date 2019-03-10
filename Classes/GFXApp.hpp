@@ -33,6 +33,10 @@ public:
     virtual void                            Draw();
     void                                    DrawTest();
     
+    void                                    Draw3D();
+    void                                    Draw2D();
+    
+    
     virtual void                            Load();
     virtual void                            LoadComplete();
     

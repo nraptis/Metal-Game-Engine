@@ -25,6 +25,8 @@
 
 #define Log printf
 
+void os_initialize_outlets();
+
 void os_sleep(int pTime);
 
 unsigned int os_system_time();

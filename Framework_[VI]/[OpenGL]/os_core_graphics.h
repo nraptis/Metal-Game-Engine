@@ -1,11 +1,6 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
-//#import <OpenGLES/ES1/gl.h>
-//#import <OpenGLES/ES1/glext.h>
-#import <OpenGLES/ES2/gl.h>
-#import <OpenGLES/ES2/glext.h>
-
 #include "OpenGLEngine.hpp"
 #include "FColor.hpp"
 #include "FRect.h"
@@ -55,7 +50,10 @@ public:
     Graphics();
     ~Graphics();
     
+    
+    static void                             SetDeviceScale(float pScale);
     static void                             SetDeviceSize(float pWidth, float pHeight);
+    
     
     static bool                             ThreadIsLocked();
     static void                             ThreadLock();

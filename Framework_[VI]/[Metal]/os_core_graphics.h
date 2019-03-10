@@ -48,6 +48,8 @@ public:
     Graphics();
     ~Graphics();
     
+    
+    static void                             SetDeviceScale(float pScale);
     static void                             SetDeviceSize(float pWidth, float pHeight);
     
     

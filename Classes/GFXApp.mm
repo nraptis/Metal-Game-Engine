@@ -230,6 +230,84 @@ void GFXApp::Update() {
     }
 }
 
+void GFXApp::Draw3D() {
+    Graphics::PipelineStateSetShape3DAlphaBlending();
+    
+    FMatrix aProjection = mCamera.GetProjection();
+    Graphics::MatrixProjectionSet(aProjection);
+    //Graphics::MatrixProjectionResetOrtho();
+    Graphics::MatrixModelViewReset();
+    Graphics::SetColor(1.0f, 0.5f, 0.75f, 0.75f);
+    
+    Graphics::DrawBox(0.0f, 0.0f, 0.0f, 4.0f, 2.0f, -1.0f, 2.0f);
+    
+    
+    Graphics::MatrixModelViewReset();
+}
+
+void GFXApp::Draw2D() {
+    
+    Graphics::SetColor();
+    Graphics::MatrixProjectionResetOrtho();
+    Graphics::MatrixModelViewReset();
+    Graphics::PipelineStateSetSpriteAlphaBlending();
+    
+    Graphics::SetColor(0.125f);
+    mBalloonMap[4].DrawQuad(0.0f, 0.0f, gDeviceWidth - 10.0f, gDeviceHeight - 10.0f);
+    
+    
+    Graphics::SetColor(0.25f, 0.25f, 0.45f);
+    Graphics::PipelineStateSetShape2DNoBlending();
+    
+    Graphics::DrawLine(0.0f, 0.0f, gDeviceWidth, gDeviceHeight, 3.0f);
+    Graphics::DrawLine(gDeviceWidth, 0.0f, 0.0f, gDeviceHeight, 3.0f);
+    
+    
+    Graphics::SetColor();
+    Graphics::PipelineStateSetSpriteNoBlending();
+    
+    
+    
+    Graphics::SetColor(1.0f, 1.0f, 1.0f, 1.0f);
+    
+    
+    
+    
+    
+    Graphics::SetColor(1.0f, 0.25f, 0.25f, 0.75f);
+    
+    mChaosEgg1X.Draw(10, 70, 1.0f, 60.0f);
+    
+    
+    Graphics::PipelineStateSetSpriteAlphaBlending();
+    mChaosEgg2X.Draw(150.0f, 100.0f, 1.0f, 20.0f);
+    
+    Graphics::SetColor();
+    
+    Graphics::PipelineStateSetSpriteAdditiveBlending();
+    mChaosEgg3X.Draw(300.0f, 100.0f, 1.0f, 20.0f);
+    
+    
+    mRay[0].Draw(40, 300);
+    
+    Graphics::PipelineStateSetSpriteWhiteBlending();
+    
+    mRay[1].Draw(50, 300);
+    
+    mRay[2].Draw(100, 300);
+    
+    Graphics::PipelineStateSetSpriteAdditiveBlending();
+    
+    mRay[3].Draw(150, 300);
+    
+    Graphics::SetColor(0.0f, 0.5f, 1.0f, 0.75f);
+    
+    /*
+     
+     */
+    
+}
+
 
 void GFXApp::Draw() {
     
@@ -241,79 +319,27 @@ void GFXApp::Draw() {
                                   true); //Clear Depth
         
         if (mGame) mGame->Draw3D();
-        
         if (mLevelSelect) mLevelSelect->mPage1->Draw3D();
+        
+        
+        Draw3D();
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         Graphics::RenderPassBegin(GFX_RENDER_PASS_2D_MAIN,
                                   false, //Clear Color
                                   false); //Clear Depth
-        //Draw2D();
         
-        Graphics::SetColor();
-        Graphics::PipelineStateSetSpriteNoBlending();
-        mBalloonMap[4].DrawQuad(0.0f, 0.0f, gDeviceWidth - 10.0f, gDeviceHeight - 10.0f);
+        Draw2D();
         
         
-        Graphics::SetColor(0.25f, 0.25f, 0.45f);
-        Graphics::PipelineStateSetShape2DNoBlending();
-        
-        Graphics::DrawLine(0.0f, 0.0f, gDeviceWidth, gDeviceHeight, 3.0f);
-        Graphics::DrawLine(gDeviceWidth, 0.0f, 0.0f, gDeviceHeight, 3.0f);
-        
-        
-        
-        Graphics::SetColor();
-        Graphics::PipelineStateSetSpriteNoBlending();
-        
-
-        
-        Graphics::SetColor(1.0f, 1.0f, 1.0f, 1.0f);
-        
-        Graphics::MatrixProjectionResetOrtho();
-        Graphics::MatrixModelViewReset();
-        
-
-        
-        Graphics::SetColor(1.0f, 0.25f, 0.25f, 0.75f);
-        
-        mChaosEgg1X.Draw(10, 70, 1.0f, 60.0f);
-        
-        
-        Graphics::PipelineStateSetSpriteAlphaBlending();
-        mChaosEgg2X.Draw(150.0f, 100.0f, 1.0f, 20.0f);
-        
-        Graphics::SetColor();
-        
-        Graphics::PipelineStateSetSpriteAdditiveBlending();
-        mChaosEgg3X.Draw(300.0f, 100.0f, 1.0f, 20.0f);
-        
-        
-        mRay[0].Draw(40, 300);
-        
-        Graphics::PipelineStateSetSpriteWhiteBlending();
-        
-        mRay[1].Draw(50, 300);
-        
-        mRay[2].Draw(100, 300);
-        
-        mRay[3].Draw(150, 300);
-        
-        Graphics::SetColor(0.0f, 0.5f, 1.0f, 0.75f);
-        
-        
-        
-        Graphics::PipelineStateSetShape3DAlphaBlending();
-        
-        FMatrix aProjection = mCamera.GetProjection();
-        Graphics::MatrixProjectionSet(aProjection);
-        //Graphics::MatrixProjectionResetOrtho();
-        Graphics::MatrixModelViewReset();
-        Graphics::SetColor(1.0f, 0.5f, 0.75f, 0.75f);
-        
-        Graphics::DrawBox(0.0f, 0.0f, 0.0f, 4.0f, 2.0f, -1.0f, 2.0f);
-        
-        
-        Graphics::MatrixModelViewReset();
         
         
         

@@ -35,6 +35,10 @@
 
 using namespace std;
 
+void os_initialize_outlets() {
+    printf("Initialize Outlets...\n");
+}
+
 void os_execute_on_main_thread(void (*pFunc)()) {
     if ([NSThread isMainThread]) {
         pFunc();

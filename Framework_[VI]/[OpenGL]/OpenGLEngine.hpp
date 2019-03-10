@@ -9,9 +9,6 @@
 #ifndef OpenGLEngine_hpp
 #define OpenGLEngine_hpp
 
-#import <OpenGLES/ES2/gl.h>
-#import <OpenGLES/ES2/glext.h>
-
 #include "ShaderProgram.hpp"
 #include "ShaderProgramSprite.hpp"
 #include "ShaderProgramSpriteWhite.hpp"
@@ -48,19 +45,8 @@ public:
     ShaderProgramSprite             *mShaderProgramSprite;
     ShaderProgramSpriteWhite        *mShaderProgramSpriteWhite;
     
-    
-    GLint                           framebufferWidth;
-    GLint                           framebufferHeight;
-    
-    // The OpenGL ES names for the framebuffer and renderbuffer used to render to this view.
-    GLuint                          defaultFramebuffer;
-    GLuint                          colorRenderbuffer;
-    GLuint                          depthRenderbuffer;
-    
-    //int                         mSpriteProgram;
-    
-    
 };
 
+extern OpenGLEngine *gOpenGLEngine;
 
 #endif /* OpenGLEngine_hpp */

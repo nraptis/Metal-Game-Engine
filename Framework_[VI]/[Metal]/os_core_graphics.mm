@@ -97,6 +97,8 @@ static float                                cRectBuffer[12];
 //static int                                cTextureBindIndex = -1;
 static bool                                 cGraphicsThreadLocked = false;
 
+static float                                cDeviceScale = 1.0f;
+
 Graphics::Graphics() {
     //cTextureBindIndex=-1;
     //MaterialSetDefault();
@@ -115,6 +117,11 @@ void Graphics::Flush() {
 
 void Graphics::Initialize() {
     
+}
+
+
+void Graphics::SetDeviceScale(float pScale) {
+    cDeviceScale = pScale;
 }
 
 void Graphics::SetDeviceSize(float pWidth, float pHeight) {
@@ -156,14 +163,14 @@ void Graphics::ThreadLock() {
     }
     
     cGraphicsThreadLocked = true;
-    os_lock_thread(gGraphicsThread);
+    os_lock_graphics_thread(gGraphicsThread);
     if (gGraphicsInterface) {
         gGraphicsInterface->SetContext();
     }
 }
 
 void Graphics::ThreadUnlock() {
-    os_unlock_thread(gGraphicsThread);
+    os_unlock_graphics_thread(gGraphicsThread);
     cGraphicsThreadLocked = false;
 }
 
@@ -531,6 +538,7 @@ void Graphics::DrawBox(float x1, float y1, float z1, float x2, float y2, float z
     aCornerX2[2] = x2 + aPerp3.mX; aCornerY2[2] = y2 + aPerp3.mY; aCornerZ2[2] = z2 + aPerp3.mZ;
     aCornerX2[3] = x2 + aPerp4.mX; aCornerY2[3] = y2 + aPerp4.mY; aCornerZ2[3] = z2 + aPerp4.mZ;
     
+    UniformBind();
     
     DrawQuad(aCornerX1[0], aCornerY1[0], aCornerZ1[0], aCornerX2[0], aCornerY2[0], aCornerZ2[0],
              aCornerX1[1], aCornerY1[1], aCornerZ1[1], aCornerX2[1], aCornerY2[1], aCornerZ2[1]);

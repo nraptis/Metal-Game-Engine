@@ -4,6 +4,7 @@
 #define APP_SHELL_OS_H
 
 #define CURRENT_ENV ENV_IOS
+//#define CURRENT_ENV ENV_ANDROID
 
 extern "C"
 {

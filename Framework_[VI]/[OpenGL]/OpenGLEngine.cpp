@@ -11,10 +11,7 @@
 #include "core_includes.h"
 #include "FApp.hpp"
 
-//static int gFrameBuffer = NULL;
-//static int gRenderBuffer0 = NULL;
-//static int gRenderBuffer1 = NULL;
-//static int gDepthBuffer = NULL;
+OpenGLEngine *gOpenGLEngine = NULL;
 
 OpenGLEngine::OpenGLEngine() {
     mIsReady = false;

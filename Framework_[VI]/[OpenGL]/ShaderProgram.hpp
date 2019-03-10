@@ -9,8 +9,6 @@
 #ifndef ShaderProgram_hpp
 #define ShaderProgram_hpp
 
-#import <OpenGLES/ES2/gl.h>
-#import <OpenGLES/ES2/glext.h>
 #include "FString.h"
 #include "FUniforms.hpp"
 
@@ -38,7 +36,7 @@ public:
     
     unsigned int                ShaderCompileVertex(const char *pShaderPath);
     unsigned int                ShaderCompileFragment(const char *pShaderPath);
-    unsigned int                ShaderCompile(const char *pShaderPath, GLenum pShaderType);
+    unsigned int                ShaderCompile(const char *pShaderPath, unsigned int pShaderType);
     
     FString                     mName;
     FString                     mFragmentProgramFile;

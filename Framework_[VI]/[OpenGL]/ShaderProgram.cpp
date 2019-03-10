@@ -140,7 +140,7 @@ void ShaderProgram::Kill() {
     mProgram = SHADER_INVALID_PROGRAM;
 }
 
-unsigned int ShaderProgram::ShaderCompile(const char *pShaderPath, GLenum pShaderType) {
+unsigned int ShaderProgram::ShaderCompile(const char *pShaderPath, unsigned int  pShaderType) {
     unsigned int aShader = 0;
     FFile aFile;
     aFile.Load(pShaderPath);

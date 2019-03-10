@@ -24,4 +24,4 @@
 
 extern CAEAGLLayer *gOpenGLLayer;
 extern OpenGLView *gOpenGLView;
-extern OpenGLEngine *gOpenGLEngine;
+

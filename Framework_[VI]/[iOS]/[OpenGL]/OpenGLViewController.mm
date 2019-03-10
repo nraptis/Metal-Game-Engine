@@ -11,7 +11,7 @@
 
 CAEAGLLayer *gOpenGLLayer = NULL;
 OpenGLView *gOpenGLView = NULL;
-OpenGLEngine *gOpenGLEngine = NULL;
+
 
 @interface OpenGLViewController ()
 {
