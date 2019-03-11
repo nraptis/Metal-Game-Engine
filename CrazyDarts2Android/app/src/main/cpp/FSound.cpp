@@ -197,12 +197,11 @@ void FSoundInstance::Destroy()
 */
 
 
-FSound::FSound()
-{
+FSound::FSound() {
 	mSoundData = core_sound_spawn_data();
-    
-    mSoundData->mSound = this;
-    
+    if (mSoundData) {
+        mSoundData->mSound = this;
+    }
     mDidLoad = false;
 }
 

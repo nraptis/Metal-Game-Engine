@@ -59,7 +59,7 @@ FCanvas::FCanvas() {
 }
 
 FCanvas::~FCanvas() {
-    //printf("Dealloc[%LX]\n", this);
+    //Log("Dealloc[%LX]\n", this);
     //gNotify.Unregister(this);
     if (mWindow) {
         FWindow *aWindow = mWindow;
@@ -75,7 +75,7 @@ void FCanvas::Kill() {
     }
 }
 
-void FCanvas::Layout() { /* printf("----Layout(%s)\n", mName.c()); */ }
+void FCanvas::Layout() { /* Log("----Layout(%s)\n", mName.c()); */ }
 void FCanvas::Update() { }
 void FCanvas::Draw() {
     if (mColor.mAlpha != 0.0f) {

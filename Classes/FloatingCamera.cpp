@@ -32,18 +32,18 @@ FloatingCamera::~FloatingCamera() {
 
 void FloatingCamera::Print() {
     
-    printf("*** BEGIN FloatingCamera ***\n");
+    Log("*** BEGIN FloatingCamera ***\n");
     
-    printf("mFOV = %f;\n", mFOV);
+    Log("mFOV = %f;\n", mFOV);
     
-    printf("mTarget = FVec3(%f, %f, %f);\n", mTarget.mX, mTarget.mY, mTarget.mZ);
-    printf("mDirection = FVec3(%f, %f, %f);\n", mDirection.mX, mDirection.mY, mDirection.mZ);
+    Log("mTarget = FVec3(%f, %f, %f);\n", mTarget.mX, mTarget.mY, mTarget.mZ);
+    Log("mDirection = FVec3(%f, %f, %f);\n", mDirection.mX, mDirection.mY, mDirection.mZ);
     
-    printf("mDistance = %f;\n", mDistance);
-    printf("mRotationPrimary = %f;\n", mRotationPrimary);
-    printf("mRotationSecondary = %f;\n", mRotationSecondary);
+    Log("mDistance = %f;\n", mDistance);
+    Log("mRotationPrimary = %f;\n", mRotationPrimary);
+    Log("mRotationSecondary = %f;\n", mRotationSecondary);
     
-    printf("*** END FloatingCamera ***\n");
+    Log("*** END FloatingCamera ***\n");
 }
 
 FMatrix FloatingCamera::GetProjection() {

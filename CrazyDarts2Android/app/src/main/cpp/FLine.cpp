@@ -137,7 +137,7 @@ bool FLine::SegmentSegmentIntersection(float pL_1_x1, float pL_1_y1, float pL_1_
          float aHitY = aSlope1 * aHitX + aOffset1;
          //float aHitX = (aOffset1 - aHitX) / aSlope1;
 
-         printf("Collide: %f %f  Slope1 = %f  Slope2 = %f   B1 = %f   B2 = %f\n", aHitX, aHitY, aSlope1, aSlope2, aOffset1, aOffset2);
+         Log("Collide: %f %f  Slope1 = %f  Slope2 = %f   B1 = %f   B2 = %f\n", aHitX, aHitY, aSlope1, aSlope2, aOffset1, aOffset2);
 
          intersection->mX = aHitX;
          intersection->mY = aHitY;

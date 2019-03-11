@@ -62,17 +62,17 @@ PhongConfiguration::~PhongConfiguration() {
 
 void PhongConfiguration::Print() {
     
-    printf("**** BEGIN PhongConfiguration... ***\n");
+    Log("**** BEGIN PhongConfiguration... ***\n");
     
-    printf("mDirectionRotationPrimary = %f;\n", mDirectionRotationPrimary);
-    printf("mDirectionRotationSecondary = %f;\n", mDirectionRotationSecondary);
+    Log("mDirectionRotationPrimary = %f;\n", mDirectionRotationPrimary);
+    Log("mDirectionRotationSecondary = %f;\n", mDirectionRotationSecondary);
     
-    printf("mEyeRotationPrimary = %f;\n", mEyeRotationPrimary);
-    printf("mEyeRotationSecondary = %f;\n", mEyeRotationSecondary);
+    Log("mEyeRotationPrimary = %f;\n", mEyeRotationPrimary);
+    Log("mEyeRotationSecondary = %f;\n", mEyeRotationSecondary);
     
     mUniform.Print();
     
-    printf("**** END PhongConfiguration... ***\n");
+    Log("**** END PhongConfiguration... ***\n");
     
 }
 

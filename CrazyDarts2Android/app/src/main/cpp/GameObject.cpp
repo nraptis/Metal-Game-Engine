@@ -116,7 +116,7 @@ void GameObject::Kill() {
 
 FVec2 GameObject::GetScreenPos() {
     FVec2 aResult;
-    printf("WARNING: Not Implemented... SCREEN POS...\n");
+    Log("WARNING: Not Implemented... SCREEN POS...\n");
     aResult.mX = mX;
     aResult.mY = mY;
     return aResult;

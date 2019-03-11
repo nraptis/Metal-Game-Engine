@@ -74,7 +74,7 @@ void ToolMenuHeader::Draw() {
 }
 
 void ToolMenuHeader::Notify(void *pSender, const char *pNotification) {
-    printf("Header Notify: [%s][%s]\n", ((FCanvas *)pSender)->mName.c(), pNotification);
+    Log("Header Notify: [%s][%s]\n", ((FCanvas *)pSender)->mName.c(), pNotification);
     if (FString(pNotification) == "button_click") {
         if (pSender == &mButtonClose) {
             if (mMenu) { mMenu->Kill(); }
@@ -93,7 +93,7 @@ void ToolMenuHeader::Notify(void *pSender, const char *pNotification) {
             //UIImagePicker *aImagePicker = new UIImagePicker();
             //gTool->AddChild(aImagePicker);
             //aImagePicker->FillWithAny();
-            //printf("Minimize Button...\n");
+            //Log("Minimize Button...\n");
 
         }
     }

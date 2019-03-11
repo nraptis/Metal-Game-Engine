@@ -29,6 +29,7 @@
 #include "os_core_includes.h"
 #include "os_core_outlets.h"
 #include "os_core_sound.h"
+
 #include "os_core_graphics.h"
 
 #include <string.h>
@@ -105,6 +106,11 @@ extern bool gIsLargeScreen;
 extern bool gIsRetina;
 
 extern int gEnvironment;
+
+
+extern int gQuadBufferPosition;
+extern int gQuadBufferTextureCoord;
+
 
 extern int gImageFileScale;
 

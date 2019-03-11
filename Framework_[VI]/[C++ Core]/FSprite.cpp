@@ -61,7 +61,7 @@ void FSprite::LoadNode(FImageBundler *pImageBundler, FImageBundlerLoadNode *pNod
         return;
     }
     
-    //printf("Sprite Loading With Node [%d %d %d %d]\n", pNode->mX, pNode->mY, pNode->mWidth, pNode->mHeight);
+    //Log("Sprite Loading With Node [%d %d %d %d]\n", pNode->mX, pNode->mY, pNode->mWidth, pNode->mHeight);
     
     Kill();
     
@@ -201,7 +201,7 @@ void FSprite::Load(FTexture *pTexture, int pX, int pY, int pWidth, int pHeight) 
         return;
     }
     
-    //printf("Sprite Loading With Texture [%d %d %d %d]\n", pX, pY, pWidth, pHeight);
+    //Log("Sprite Loading With Texture [%d %d %d %d]\n", pX, pY, pWidth, pHeight);
     
     Kill();
     if (pTexture) {

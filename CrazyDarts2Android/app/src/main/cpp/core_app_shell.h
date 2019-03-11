@@ -33,6 +33,10 @@ void AppShellSetSafeAreaInsets(int pInsetUp, int pInsetRight, int pInsetDown, in
 void AppShellInitialize(int pEnvironment);
 
 
+// THEN call THIS...
+void AppShellLoad();
+
+
 
 //
 void AppShellSetOSVersion(float pOSVersion);
@@ -45,6 +49,9 @@ void AppShellSetImageFileScale(int pScale);
 ////
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
+
+
+void AppShellFrame();
 
 //void AppShellLoad();
 //void AppShellLoadComplete();

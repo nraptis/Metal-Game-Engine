@@ -7,6 +7,7 @@
 //
 
 #include "core_includes.h"
+#include "os_core_graphics.h"
 #include "ShaderProgramSprite.hpp"
 
 ShaderProgramSprite::ShaderProgramSprite(const char *pVertexPath, const char *pFragmentPath) : ShaderProgram(pVertexPath, pFragmentPath) {
@@ -51,7 +52,7 @@ void ShaderProgramSprite::BindUniform(FUniforms *pUniform) {
         
         
     } else {
-        printf("Uniform wrong type? [%x]\n", pUniform);
+        Log("Uniform wrong type? [%x]\n", pUniform);
     }
 }
 

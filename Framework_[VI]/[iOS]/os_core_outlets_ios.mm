@@ -23,6 +23,8 @@
 #include <math.h>
 #include <cstdlib>
 #include <dirent.h>
+#include <chrono>
+
 
 #include <pthread.h>
 #include <sys/utsname.h>
@@ -31,12 +33,10 @@
 #import <mach/mach_host.h>
 #import <mach/mach_time.h>
 
-#import "RecursiveLockWrapper.h"
-
 using namespace std;
 
 void os_initialize_outlets() {
-    printf("Initialize Outlets...\n");
+    Log("Initialize Outlets...\n");
 }
 
 void os_execute_on_main_thread(void (*pFunc)()) {
@@ -80,85 +80,37 @@ void os_interface_mutex_leave() {
     pthread_mutex_unlock( &gInterfaceMutex );
 }
 
-NSMutableSet *gLockStrongReferenceSet = [[NSMutableSet alloc] init];
-FList gThreadLockList;
-pthread_mutex_t gThreadMutex = PTHREAD_MUTEX_INITIALIZER;
-pthread_mutex_t gGraphicsThreadMutex = PTHREAD_MUTEX_INITIALIZER;
-
 int os_create_thread_lock() {
-    pthread_mutex_lock( &gThreadMutex );
-    RecursiveLockWrapper *aContainer = [[RecursiveLockWrapper alloc] init];
-    [gLockStrongReferenceSet addObject: aContainer];
-    aContainer.lock = [[NSRecursiveLock alloc] init];
-    int aResult = gThreadLockList.mCount;
-    gThreadLockList.Add((__bridge void *)aContainer);
-    pthread_mutex_unlock( &gThreadMutex );
-    return aResult;
+    return -1;
 }
 
 bool os_thread_lock_exists(int pLockIndex) {
-    if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
-        return true;
-    }
+
     return false;
 }
 
 void os_delete_thread_lock(int pLockIndex) {
-    pthread_mutex_lock( &gThreadMutex );
-    if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
-        RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[pLockIndex]);
-        [aContainer.lock unlock];
-        [gLockStrongReferenceSet removeObject: aContainer];
-        gThreadLockList.RemoveAtIndex(pLockIndex);
-    }
-    pthread_mutex_unlock( &gThreadMutex );
+    
 }
 
 void os_delete_all_thread_locks() {
-    pthread_mutex_lock( &gThreadMutex );
-    for (int i=0;i<gThreadLockList.mCount;i++) {
-        RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[i]);
-        [aContainer.lock unlock];
-    }
-    gThreadLockList.RemoveAll();
-    [gLockStrongReferenceSet removeAllObjects];
-    pthread_mutex_unlock( &gThreadMutex );
+    
 }
 
 void os_lock_thread(int pLockIndex) {
-    pthread_mutex_lock( &gThreadMutex );
-    if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
-        RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[pLockIndex]);
-        [aContainer.lock lock];
-    }
-    pthread_mutex_unlock( &gThreadMutex );
+    
 }
 
 void os_unlock_thread(int pLockIndex) {
-    pthread_mutex_lock( &gThreadMutex );
-    if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
-        RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[pLockIndex]);
-        [aContainer.lock unlock];
-    }
-    pthread_mutex_unlock( &gThreadMutex );
+    
 }
 
 void os_lock_graphics_thread(int pLockIndex) {
-    pthread_mutex_lock( &gGraphicsThreadMutex );
-    if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
-        RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[pLockIndex]);
-        [aContainer.lock lock];
-    }
-    pthread_mutex_unlock( &gGraphicsThreadMutex );
+    
 }
 
 void os_unlock_graphics_thread(int pLockIndex) {
-    pthread_mutex_lock( &gGraphicsThreadMutex );
-    if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
-        RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[pLockIndex]);
-        [aContainer.lock unlock];
-    }
-    pthread_mutex_unlock( &gGraphicsThreadMutex );
+    
 }
 
 
@@ -187,12 +139,25 @@ void os_log(const char *pMessage)
 }
 
 unsigned int os_system_time() {
+    
+    unsigned long aMili =
+    chrono::system_clock::now().time_since_epoch() /
+    chrono::milliseconds(1);
+    
+    return aMili;
+    
+    //timeval aTime;
+    //gettimeofday(&aTime, NULL);
+    //return aTime.tv_usec * 1000 + aTime.tv_usec / 1000;
+    
+    /*
     const int64_t aMillion = 1000000;
     static mach_timebase_info_data_t aInfo;
     if (aInfo.denom == 0) {
         mach_timebase_info(&aInfo);
     }
     return (int)((mach_absolute_time()*aInfo.numer)/(aMillion*aInfo.denom));
+    */
 }
 
 unsigned char *os_read_file(const char *pFileName, unsigned int &pLength) {

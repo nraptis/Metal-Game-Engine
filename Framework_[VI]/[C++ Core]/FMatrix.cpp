@@ -259,7 +259,7 @@ void FMatrix::OffsetPerspectiveCenter(float pOffsetX, float pOffsetY) {
 void FMatrix::Print() {
     int aIndex = 0;
     for (int n=0;n<4;n++) {
-        printf("M[%d-%d] [%.2f %.2f %.2f %.2f]\n", 100, n, m[aIndex + 0], m[aIndex + 1], m[aIndex + 2], m[aIndex + 3]);
+        Log("M[%d-%d] [%.2f %.2f %.2f %.2f]\n", 100, n, m[aIndex + 0], m[aIndex + 1], m[aIndex + 2], m[aIndex + 3]);
         aIndex += 4;
     }
 }

@@ -80,9 +80,9 @@ void OpenGLEngine::UseProgram(ShaderProgram *pProgram) {
         pProgram->Use();
     } else {
         if (pProgram) {
-            printf("Could Not Use Program [%s]", pProgram->mName.c());
+            Log("Could Not Use Program [%s]", pProgram->mName.c());
         } else {
-            printf("Could Not Use Program [???]");
+            Log("Could Not Use Program [???]");
         }
     }
 }

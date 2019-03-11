@@ -22,6 +22,7 @@
 
 #include "FString.h"
 #include "FList.hpp"
+#include "os_core_includes.h"
 
 void Log(const char *pText, ...);
 

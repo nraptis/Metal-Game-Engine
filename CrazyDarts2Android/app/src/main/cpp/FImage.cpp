@@ -116,7 +116,7 @@ void FImage::Load(char *pFile) {
         while ((aResourcePath != 0) && (aDidLoad == false)) {
             LoadDirect(aResourcePath);
             if((mWidth > 0) && (mHeight > 0) && (mData != NULL)) {
-                //printf("Scale {Default} (%d) [%d x %d] => Img[%s]\n", mScale, mWidth, mHeight, aFile.c());
+                //Log("Scale {Default} (%d) [%d x %d] => Img[%s]\n", mScale, mWidth, mHeight, aFile.c());
                 aDidLoad = true;
             }
             else aResourcePath = gRes.GetNextResourcePath();
@@ -2075,7 +2075,7 @@ unsigned int AverageColors(unsigned int pColor1, unsigned int pColor2) {
  unsigned int *aWriteData=pMask->mData;
  for(int i=0;i<aArea;i++)
  {
- //printf("WriteData: %x\n", *aWriteData);
+ //Log("WriteData: %x\n", *aWriteData);
  if(((*aWriteData)&0xFF)==0)
  {
  aMaskLinear[i]=1;
@@ -2814,7 +2814,7 @@ void FImage::Resize(int theNewWidth, int theNewHeight, FImage *theImage)
  if( (src == NULL) || (dst == NULL) || (0 == dw) || (0 == dh) ||
  (0 == sw) || (0 == sh))
  {
- printf("params error\n");
+ Log("params error\n");
  return -1;
  }
  nv12_nearest_scale(src, dst, sw, sh, dw, dh);
@@ -2827,8 +2827,8 @@ void FImage::Resize(int theNewWidth, int theNewHeight, FImage *theImage)
  {
  if(argc!=7)
  {
- printf("Input Error!\n");
- printf("Usage :  <Input NV12file> <Output NV12file>
+ Log("Input Error!\n");
+ Log("Usage :  <Input NV12file> <Output NV12file>
  <sw><sh> <dw> <dh>");
  return 0;
  }
@@ -2839,7 +2839,7 @@ void FImage::Resize(int theNewWidth, int theNewHeight, FImage *theImage)
  inputfp = fopen(argv[1], "rb");
  if (!inputfp)
  {
- fprintf(stderr, "fopen failed for input file[%s]\n",argv[1]);
+ fLog(stderr, "fopen failed for input file[%s]\n",argv[1]);
  return -1;
  }
  
@@ -2847,7 +2847,7 @@ void FImage::Resize(int theNewWidth, int theNewHeight, FImage *theImage)
  
  if (!outputfp)
  {
- fprintf(stderr, "fopen failed for output file[%s]\n",argv[2]);
+ fLog(stderr, "fopen failed for output file[%s]\n",argv[2]);
  return -1;
  }
  
@@ -2858,7 +2858,7 @@ void FImage::Resize(int theNewWidth, int theNewHeight, FImage *theImage)
  
  if(sw <= 0 || sh <= 0 || dw <= 0 || dh <=0)
  {
- fprintf(stderr, "parameter error [sw= %d,sh= %d,dw= %d,dh= %d]\n",sw,sh,dw,dh);
+ fLog(stderr, "parameter error [sw= %d,sh= %d,dw= %d,dh= %d]\n",sw,sh,dw,dh);
  return -1;
  }
  
@@ -2881,7 +2881,7 @@ void FImage::Resize(int theNewWidth, int theNewHeight, FImage *theImage)
  clock_t finish = clock();
  float duration = (float)(finish-start)/CLOCKS_PER_SEC;
  float fps = 1000 / duration;
- printf("nv12Scaling:%d*%d-->%d*%d,time cost:%6.2ffps\n",sw,sh,dw,dh,fps);
+ Log("nv12Scaling:%d*%d-->%d*%d,time cost:%6.2ffps\n",sw,sh,dw,dh,fps);
  
  fwrite(pOutBuffer, 1 , outPixels, outputfp);
  

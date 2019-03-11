@@ -147,18 +147,17 @@ void core_sound_musicCrossFade(const char *pFilePath, int pDurationTicks, bool p
 }
 
 void core_sound_musicFadeOut(int pDurationTicks) {
-    [gMusicPlayer musicFadeOutWithDurationTicks: pDurationTicks];
+
 }
 
 void core_sound_musicStop() {
-    [gMusicPlayer musicStop];
+
 }
 
 bool core_sound_musicIsPlaying() {
     bool aResult = false;
     
-    aResult = [gMusicPlayer musicIsPlaying];
-    
+
     return aResult;
 }
 
@@ -188,7 +187,7 @@ void core_sound_stopAllEffects() {
 }
 
 FSoundData *core_sound_spawn_data() {
-    return new FSoundDataIOS();
+    return NULL;
 }
 
 void core_sound_unloadEffects() {
@@ -200,7 +199,7 @@ void core_sound_reloadEffects() {
 }
 
 void core_sound_update() {
-    [gMusicPlayer updateFade];
+
 }
 
 void core_sound_active() {

@@ -25,7 +25,7 @@ Balloon::Balloon() {
 }
 
 Balloon::~Balloon() {
-    //printf("Balloon has died [%LX]\n", this);
+    //Log("Balloon has died [%LX]\n", this);
 }
 
 void Balloon::Update() {

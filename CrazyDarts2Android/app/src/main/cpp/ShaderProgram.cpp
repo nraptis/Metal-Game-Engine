@@ -30,7 +30,7 @@ ShaderProgram::ShaderProgram(const char *pVertexPath, const char *pFragmentPath)
 }
 
 ShaderProgram::~ShaderProgram() {
-    printf("Destroying Shader %s\n", mName.c());
+    Log("Destroying Shader %s\n", mName.c());
     Kill();
 }
 
@@ -45,12 +45,12 @@ void ShaderProgram::Use() {
     if (mProgram != SHADER_INVALID_PROGRAM && mProgram != 0) {
         glUseProgram(mProgram);
     } else {
-        printf("Illegally Trying to use Shader Program [%d] [%s]\n", mProgram, mName.c());
+        Log("Illegally Trying to use Shader Program [%d] [%s]\n", mProgram, mName.c());
     }
 }
 
 void ShaderProgram::Compile() {
-    printf("ShaderProgram::Compile(%s)\n", mName.c());
+    Log("ShaderProgram::Compile(%s)\n", mName.c());
     
     mProgram = glCreateProgram();
     
@@ -67,7 +67,7 @@ void ShaderProgram::Compile() {
     if (aLinkSuccess == GL_FALSE) {
         GLchar messages[512];
         glGetProgramInfoLog(mProgram, sizeof(messages), 0, &messages[0]);
-        printf("Couldn't Link Shader [%s] MSG: [%s]\n", mName.c(), messages);
+        Log("Couldn't Link Shader [%s] MSG: [%s]\n", mName.c(), messages);
         Kill();
         return;
     }
@@ -155,8 +155,8 @@ unsigned int ShaderProgram::ShaderCompile(const char *pShaderPath, unsigned int 
         if (aCompileSuccess == GL_FALSE) {
             GLchar aErrorMessage[1024];
             glGetShaderInfoLog(aShader, sizeof(aErrorMessage), 0, &aErrorMessage[0]);
-            printf("Shader Error!\n");
-            printf("%s", aErrorMessage);
+            Log("Shader Error!\n");
+            Log("%s", aErrorMessage);
         }
     }
     return aShader;
@@ -171,7 +171,7 @@ unsigned int ShaderProgram::ShaderCompileFragment(const char *pShaderPath) {
 }
 
 void ShaderProgram::BindUniform(FUniforms *pUniform) {
-    //printf("***\nERROR [Not Implemented]\n***\n***\n...\n");
+    //Log("***\nERROR [Not Implemented]\n***\n***\n...\n");
     
     
     glUniformMatrix4fv(mSlotProjectionUniform, 1, 0, pUniform->mProjection.m);

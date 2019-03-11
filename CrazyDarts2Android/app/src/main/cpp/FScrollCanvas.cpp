@@ -185,7 +185,7 @@ void FScrollCanvas::PanEnd(float pX, float pY, float pSpeedX, float pSpeedY) {
     mScrollFlingDir[0] = (pSpeedX);
     mScrollFlingDir[1] = (pSpeedY);
     mScrollFlingSpeed = aSpeed;
-    //printf("mScrollFlingSpeed: %f\n", mScrollFlingSpeed);
+    //Log("mScrollFlingSpeed: %f\n", mScrollFlingSpeed);
     
     if (mScrollFlingSpeed > 40.0f) {
         mScrollFlingSpeed = 40.0f;

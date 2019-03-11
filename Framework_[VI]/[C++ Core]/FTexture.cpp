@@ -114,9 +114,9 @@ void FTexture::Load(FImage *pImage) {
         //if (Graphics::ThreadIsLocked()) {
         //    mBindIndex = Graphics::TextureGenerate(pImage->mData, mExpandedWidth, mExpandedHeight);
         //} else {
-            Graphics::ThreadLock();
-            mBindIndex = Graphics::TextureGenerate(pImage->mData, mExpandedWidth, mExpandedHeight);
-            Graphics::ThreadUnlock();
+            //Graphics::ThreadLock();
+        mBindIndex = Graphics::TextureGenerate(pImage->mData, mExpandedWidth, mExpandedHeight);
+            //Graphics::ThreadUnlock();
         //}
     } else {
         mDidFailLoad = true;

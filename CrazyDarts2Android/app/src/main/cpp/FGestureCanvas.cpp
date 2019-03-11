@@ -117,7 +117,7 @@ void FGestureCanvas::BaseUpdate() {
         mTouch[i]->mTimer++;
         if (mTouch[i]->mHistoryMoveCount > 0) {
             if ((mTouch[i]->mTimer - mTouch[i]->mHistoryMoveTime[i]) > 500) {
-                printf("Touch Expire [%LX] (%d - %d) [%d]\n", mTouch[i]->mData, mTouch[i]->mTimer, mTouch[i]->mHistoryMoveTime[i], mTouch[i]->mTimer - mTouch[i]->mHistoryMoveTime[i]);
+                Log("Touch Expire [%LX] (%d - %d) [%d]\n", mTouch[i]->mData, mTouch[i]->mTimer, mTouch[i]->mHistoryMoveTime[i], mTouch[i]->mTimer - mTouch[i]->mHistoryMoveTime[i]);
                 aKillTouchIndex = i;
             }
         } else {
@@ -128,7 +128,7 @@ void FGestureCanvas::BaseUpdate() {
     }
     
     if (aKillTouchIndex != -1) {
-        printf("Kill Touch: %LX\n", mTouch[aKillTouchIndex]->mData);
+        Log("Kill Touch: %LX\n", mTouch[aKillTouchIndex]->mData);
         FTrackedTouch *aReleasedTouch = mTouch[aKillTouchIndex];
         for (int i=aKillTouchIndex+1;i<mTouchCount;i++) {
             mTouch[i-1] = mTouch[i];

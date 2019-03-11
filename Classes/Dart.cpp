@@ -35,7 +35,7 @@ Dart::Dart() {
 }
 
 Dart::~Dart() {
-    //printf("Dart has died [%LX]\n", this);
+    //Log("Dart has died [%LX]\n", this);
 }
 
 void Dart::Update() {
@@ -110,7 +110,6 @@ void Dart::Draw() {
     
     //FVec2 aConverted = gGame->ConvertSceneCoordsToScreen(mX, mY);
     Graphics::DrawPoint(aTipPoint.mX, aTipPoint.mY);
-    
 }
 
 void Dart::Draw3D() {
@@ -163,7 +162,7 @@ FVec2 Dart::GetTipPoint() {
 
 void Dart::Fling(float pVelocityX, float pVelocityY) {
     if (mSpawnAnimation) {
-        printf("Forcing spawn animation to complete...\n");
+        Log("Forcing spawn animation to complete...\n");
         SpawnAnimationForceComplete();
     }
     mIdle = false;

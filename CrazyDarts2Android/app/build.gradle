@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 28
+    //buildToolsVersion "22.0.1"
     defaultConfig {
         applicationId "com.froggy.game"
         minSdkVersion 19
@@ -13,6 +14,11 @@ android {
             cmake {
                 cppFlags ""
             }
+        }
+        ndk {
+            moduleName "HelloJNI"
+            ldLibs "OpenSLES", "log"
+            stl "stlport_shared"
         }
     }
     buildTypes {

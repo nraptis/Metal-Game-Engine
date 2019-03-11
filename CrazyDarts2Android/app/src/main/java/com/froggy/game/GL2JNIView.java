@@ -44,7 +44,9 @@ import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.egl.EGLDisplay;
+import javax.microedition.khronos.egl.EGLSurface;
 import javax.microedition.khronos.opengles.GL10;
+import android.opengl.EGL14;
 
 /**
  * A simple GLSurfaceView sub-class that demonstrate how to perform
@@ -68,8 +70,28 @@ class GL2JNIView extends GLSurfaceView {
     private static String TAG = "???";
     private static final boolean DEBUG = false;
 
+    private ContextFactory mFactory;
+
+    public void SetContext() {
+        System.out.println("Setting GLContext [" + mFactory + "]");
+
+
+        if (mFactory != null) {
+            mFactory.SetContext(this);
+        }
+
+
+        //if (eglMakeCurrent(mEglDisplay, surface, surface, mEglContext) == EGL_FALSE)
+        //{
+        //}
+
+    }
+
     public GL2JNIView(Context context) {
         super(context);
+
+        JavaOutlets.setContext(context);
+
         init(false, 0, 0);
     }
 
@@ -92,7 +114,8 @@ class GL2JNIView extends GLSurfaceView {
         /* Setup the context factory for 2.0 rendering.
          * See ContextFactory class definition below
          */
-        setEGLContextFactory(new ContextFactory());
+        mFactory = new ContextFactory();
+        setEGLContextFactory(mFactory );
 
         /* We need to choose an EGLConfig that matches the format of
          * our surface exactly. This is going to be done in our
@@ -104,20 +127,33 @@ class GL2JNIView extends GLSurfaceView {
                              new ConfigChooser(5, 6, 5, 0, depth, stencil) );
 
         /* Set the renderer responsible for frame rendering */
-        //setRenderer(new Renderer());
+        setRenderer(new Renderer());
+        //setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+
+
 
     }
 
     private static class ContextFactory implements GLSurfaceView.EGLContextFactory {
         private static int EGL_CONTEXT_CLIENT_VERSION = 0x3098;
+
+
+        public void SetContext(GLSurfaceView surface) {
+
+        }
+
         public EGLContext createContext(EGL10 egl, EGLDisplay display, EGLConfig eglConfig) {
             Log.w(TAG, "creating OpenGL ES 2.0 context");
+
             checkEglError("Before eglCreateContext", egl);
-            int[] attrib_list = {EGL_CONTEXT_CLIENT_VERSION, 2, EGL10.EGL_NONE };
-            EGLContext context = egl.eglCreateContext(display, eglConfig, EGL10.EGL_NO_CONTEXT, attrib_list);
+            int[] aContextAttribs = {EGL_CONTEXT_CLIENT_VERSION, 2, EGL10.EGL_NONE };
+            EGLContext aContext = egl.eglCreateContext(display, eglConfig, EGL10.EGL_NO_CONTEXT, aContextAttribs);
             checkEglError("After eglCreateContext", egl);
-            return context;
+
+            return aContext;
         }
+
+
 
         public void destroyContext(EGL10 egl, EGLDisplay display, EGLContext context) {
             egl.eglDestroyContext(display, context);
@@ -325,12 +361,48 @@ class GL2JNIView extends GLSurfaceView {
     }
 
     private static class Renderer implements GLSurfaceView.Renderer {
+
+        private boolean mDidInitialize = false;
+        private boolean mDidFlagGraphicsReady= false;
+
+
         public void onDrawFrame(GL10 gl) {
+
+            if (mDidInitialize == true && mDidFlagGraphicsReady == false) {
+                mDidFlagGraphicsReady = true;
+                GL2JNILib.NativeAppShellGraphicsReady();
+            }
+
             GL2JNILib.step();
         }
 
+
         public void onSurfaceChanged(GL10 gl, int width, int height) {
-            GL2JNILib.init(width, height);
+
+
+            if (mDidInitialize  == false) {
+                mDidInitialize = true;
+                GL2JNILib.NativeAppShellInitialize(width, height);
+
+
+                Runnable aRunnable = new Runnable() {
+                    public void run() {
+                        System.out.println("Runnable Thread Backgrounding!!!");
+                        GL2JNILib.NativeAppShellDetachRunLoop();
+
+                        //JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_NativeAppShellInitialize(JNIEnv * env, jobject obj,  jint width, jint height);
+                        //JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_step(JNIEnv * env, jobject obj);
+                        //JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_NativeAppShellGraphicsReady(JNIEnv * env, jobject obj);
+                        //JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_NativeAppShellDetachRunLoop(JNIEnv * env, jobject obj)
+
+
+                    }
+                };
+                new Thread(aRunnable).start();
+
+
+            }
+
         }
 
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {

@@ -48,15 +48,15 @@ void FWindow::AddChild(FCanvas &pCanvas) {
 }
 
 void FWindow::PrintTempList(const char *pName) {
-    printf("List[%s] => {", pName);
+    Log("List[%s] => {", pName);
     for (int i=0;i<mTemp.mCount;i++) {
         FCanvas *aCanvas = ((FCanvas *)mTemp.mData[i]);
-        printf("%s", aCanvas->mName.c());
+        Log("%s", aCanvas->mName.c());
         if (i < mTemp.mCount - 1) {
-            printf(", ");
+            Log(", ");
         }
     }
-    printf("}\n\n");
+    Log("}\n\n");
 }
 
 void FWindow::Update() {
@@ -222,15 +222,18 @@ void FWindow::SetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
         mVirtualFrameWidth = pWidth;
         mVirtualFrameHeight = pHeight;
         mRoot.SetFrame(pX, pY, pWidth, pHeight);
+        
+        //RegisterFrameDidUpdate(&mRoot);
     }
 }
 
 void FWindow::SetSafeAreaInsets(int pInsetUp, int pInsetRight, int pInsetDown, int pInsetLeft) {
-    if (mSafeAreaInsetTop != pInsetUp || mSafeAreaInsetRight != pInsetRight ||
+    if (mSafeAreaInsetTop != pInsetUp || mSafeAreaInsetRight != pInsetRight || mSafeAreaInsetBottom != pInsetDown || mSafeAreaInsetLeft != pInsetLeft) {
+        
         //
-        printf("FWindow::SetSafeAreaInsets(%d, %d, %d, %d)\n", pInsetUp, pInsetRight, pInsetDown, pInsetLeft);
+        Log("FWindow::SetSafeAreaInsets(%d, %d, %d, %d)\n", pInsetUp, pInsetRight, pInsetDown, pInsetLeft);
         //
-        mSafeAreaInsetBottom != pInsetDown || mSafeAreaInsetLeft != pInsetLeft) {
+        
         mSafeAreaInsetTop = pInsetUp;
         mSafeAreaInsetRight = pInsetRight;
         mSafeAreaInsetBottom = pInsetDown;

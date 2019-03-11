@@ -55,6 +55,11 @@ int gImageFileScale = 1;
 bool gIsLargeScreen = false;
 bool gIsRetina = false;
 
+int gQuadBufferPosition = -1;
+int gQuadBufferTextureCoord = -1;
+
+
+
 void AppShellInitialize(int pEnvironment) {
     gEnvironment = pEnvironment;
 
@@ -72,7 +77,7 @@ void AppShellInitialize(int pEnvironment) {
     core_sound_initialize();
     social_Init();
 
-    if(gAppBase)(gAppBase)->BaseInitialize();
+    //if(gAppBase)(gAppBase)->BaseInitialize();
     //gTouch.Initialize(pEnvironment);
     
     //sSoundList.mUnique = true;
@@ -216,9 +221,16 @@ void AppShellInitialize(int pEnvironment) {
 
 }
 
+void AppShellLoad() {
+    if (gAppBase) {
+        gAppBase->BaseLoad();
+        gAppBase->BaseLoadComplete();
+    }
+}
+
 void AppShellSetDeviceSize(int pWidth, int pHeight) {
     
-    printf("Device Size Set: [%d x %d]\n", pWidth, pHeight);
+    Log("Device Size Set: [%d x %d]\n", pWidth, pHeight);
     
 	gDeviceWidth = (float)pWidth;
 	gDeviceHeight = (float)pHeight;
@@ -237,7 +249,7 @@ void AppShellSetDeviceSize(int pWidth, int pHeight) {
             aApp->BaseSetVirtualFrame(5.0f, 5.0f, gDeviceWidth - 10.0f, gDeviceHeight - 10.0f);
         }
     } else {
-        printf("Error: Expected gAppBase not NULL\n");
+        Log("Error: Expected gAppBase not NULL\n");
     }
     
     //TODO: Remove Kludge
@@ -298,6 +310,11 @@ void AppShellSetImageFileScale(int pScale) {
     gImageFileScale = pScale;
     
     if (gAppBase) gAppBase->BaseSetImageFileScale(pScale);
+}
+
+
+void AppShellFrame() {
+    if (gAppBase) gAppBase->BaseFrame();
 }
 
 void AppShellTouchDownDroid(float pX, float pY, int pIndex, int pCount) {

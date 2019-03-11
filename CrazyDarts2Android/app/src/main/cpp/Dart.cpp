@@ -21,8 +21,8 @@ Dart::Dart() {
     mDeathTimer = 5000;
     mTimer = 0;
     
-    mModel = &gApp->mDart;
-    mSprite = &gApp->mDartMap;
+    //mModel = &gApp->mDart;
+    //mSprite = &gApp->mDartMap;
     mUniform = &(gGame->mRenderer->mUniformPhong);
     
     mVelX = 0.0f;
@@ -35,7 +35,7 @@ Dart::Dart() {
 }
 
 Dart::~Dart() {
-    //printf("Dart has died [%LX]\n", this);
+    //Log("Dart has died [%LX]\n", this);
 }
 
 void Dart::Update() {
@@ -163,7 +163,7 @@ FVec2 Dart::GetTipPoint() {
 
 void Dart::Fling(float pVelocityX, float pVelocityY) {
     if (mSpawnAnimation) {
-        printf("Forcing spawn animation to complete...\n");
+        Log("Forcing spawn animation to complete...\n");
         SpawnAnimationForceComplete();
     }
     mIdle = false;

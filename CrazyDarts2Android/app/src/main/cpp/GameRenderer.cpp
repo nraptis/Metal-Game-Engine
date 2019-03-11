@@ -13,7 +13,6 @@ GameRenderer::GameRenderer(Game *pGame, FloatingCamera *pCamera) {
     mGame = pGame;
     mCamera = pCamera;
     //
-    mDart = &gApp->mDart;
     
     mLightDirRotationPrimaryBase = 34.064598;
     mLightDirRotationSecondaryBase = 49.372952;

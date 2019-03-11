@@ -15,6 +15,9 @@
 #include "Dart.hpp"
 #include "Balloon.hpp"
 
+#define GAME_WIDTH 768
+#define GAME_HEIGHT 1280
+
 class Game : public FCanvas {
 public:
     Game();

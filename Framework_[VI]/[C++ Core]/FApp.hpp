@@ -31,17 +31,17 @@ public:
     virtual void                                Load() {}
     virtual void                                LoadComplete() {}
 
-    virtual void                                Update(){}
-    virtual void                                Draw(){}
-    virtual void                                DrawOver(){}
+    virtual void                                Update() {}
+    virtual void                                Draw() {}
+    virtual void                                DrawOver() {}
     
-    virtual void                                Prerender(){}
-    virtual void                                Postrender(){}
+    virtual void                                Prerender() { }
+    virtual void                                Postrender() { }
     
-    virtual void                                TouchDown(float pX, float pY, void *pData){}
-    virtual void                                TouchMove(float pX, float pY, void *pData){}
-    virtual void                                TouchUp(float pX, float pY, void *pData){}
-    virtual void                                TouchFlush(){}
+    virtual void                                TouchDown(float pX, float pY, void *pData) { }
+    virtual void                                TouchMove(float pX, float pY, void *pData) { }
+    virtual void                                TouchUp(float pX, float pY, void *pData) { }
+    virtual void                                TouchFlush() { }
     virtual void                                MouseDown(float pX, float pY, int pButton);
     virtual void                                MouseMove(float pX, float pY);
     virtual void                                MouseUp(float pX, float pY, int pButton);
@@ -90,11 +90,16 @@ public:
     void                                        ProcessKeyUp(int pKey);
 
     void                                        BaseLoad();
+    
+    //mFrameController.Active();
+    
+    //Externally, we are getting a "frame" ...
+    void                                        BaseFrame();
+    
     void                                        BaseUpdate();
     void                                        BaseDraw();
     void                                        BaseSetDeviceSize(int pWidth, int pHeight);
     void                                        BaseSetVirtualFrame(int pX, int pY, int pWidth, int pHeight);
-    
     void                                        BaseSetSafeAreaInsets(int pInsetUp, int pInsetRight, int pInsetDown, int pInsetLeft);
     
     void                                        BaseInitialize();
@@ -120,16 +125,10 @@ public:
     void                                        BaseMouseWheel(int pDirection);
     
     
-    void                                        MainRunLoop();
-    
-    
     void                                        BaseQuit();
     virtual void                                Quit();
     bool                                        ShouldQuit();
     bool                                        mQuit;
-    
-    
-    
     
     
     void                                        FrameController();
@@ -147,13 +146,10 @@ public:
     void                                        ThrottleUpdate();
     void                                        ThrottleDraw();
     
-    void                                        EnqueueInitialLoad();
-    void                                        (*mLoadFunc)(void *pArgs);
+    
     bool                                        mIsLoadEnqueued;
     bool                                        mIsLoading;
     bool                                        mIsLoadingComplete;
-    
-    bool                                        mTriggerLoadComplete;
     
     
     

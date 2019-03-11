@@ -71,18 +71,18 @@ bool PlatformGraphicsInterface::IsVSyncReady() {
     double aTime = CACurrentMediaTime() * 60.0f;
     double aLinkTime = mLastTime * 60.0f;
     double aDiff = (aTime - aLinkTime);
-    //printf("---Time[%f] LinkTime[%f]  (%f)\n", aTime, aLinkTime, aDiff);
+    //Log("---Time[%f] LinkTime[%f]  (%f)\n", aTime, aLinkTime, aDiff);
     
     int aFudge = 0;
     while (aDiff < 1.0f && aFudge < 2000) {
         usleep(200);
         aTime = CACurrentMediaTime() * 60.0f;
         aDiff = (aTime - aLinkTime);
-        //printf(">Time[%f] LinkTime[%f]  (%f)\n", aTime, aLinkTime, aDiff);
+        //Log(">Time[%f] LinkTime[%f]  (%f)\n", aTime, aLinkTime, aDiff);
         aFudge++;
     }
     if (aFudge > 1) {
-        //printf("Sleeps[%d]\n", aFudge);
+        //Log("Sleeps[%d]\n", aFudge);
     }
     
     
@@ -102,15 +102,15 @@ bool PlatformGraphicsInterface::IsVSyncReady() {
     aOutOut++;
     if (aOutOut >= 60) {
         aOutOut = 0;
-        printf("aFrameTime = %f\n", aFrameTime);
+        Log("aFrameTime = %f\n", aFrameTime);
     }
     
     if (aFrameTime > 16.7) {
-        //printf("VSync is redy\n");
+        //Log("VSync is redy\n");
         mLastTime = gMetalView.displayLink.timestamp;
         return true;
     } else {
-        //printf("VSync is NOT redy\n");
+        //Log("VSync is NOT redy\n");
     }
 
     

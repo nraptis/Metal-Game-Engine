@@ -8,6 +8,7 @@
 
 #include "FUniforms.hpp"
 #include "os_core_graphics.h"
+#include "core_includes.h"
 
 FUniforms::FUniforms() {
     
@@ -124,18 +125,18 @@ void FUniformsLightAmbientDiffuse::WriteFragmentToBuffer(void *pData, unsigned i
 void FUniformsLightAmbientDiffuse::Print() {
     
     /*
-    printf("*** BEGIN FUniformsLightAmbientDiffuse ***\n");
+    Log("*** BEGIN FUniformsLightAmbientDiffuse ***\n");
     
-    printf("mDiffuse.mRed = %f;\n", mDiffuse.mRed);
-    printf("mDiffuse.mGreen = %f;\n", mDiffuse.mGreen);
-    printf("mDiffuse.mBlue = %f;\n", mDiffuse.mBlue);
-    printf("mDiffuse.mIntensity = %f;\n", mDiffuse.mIntensity);
-    printf("***\n");
-    printf("mDiffuse.mDirX = %f;\n", mDiffuse.mDirX);
-    printf("mDiffuse.mDirY = %f;\n", mDiffuse.mDirY);
-    printf("mDiffuse.mDirZ = %f;\n", mDiffuse.mDirZ);
+    Log("mDiffuse.mRed = %f;\n", mDiffuse.mRed);
+    Log("mDiffuse.mGreen = %f;\n", mDiffuse.mGreen);
+    Log("mDiffuse.mBlue = %f;\n", mDiffuse.mBlue);
+    Log("mDiffuse.mIntensity = %f;\n", mDiffuse.mIntensity);
+    Log("***\n");
+    Log("mDiffuse.mDirX = %f;\n", mDiffuse.mDirX);
+    Log("mDiffuse.mDirY = %f;\n", mDiffuse.mDirY);
+    Log("mDiffuse.mDirZ = %f;\n", mDiffuse.mDirZ);
     
-    printf("*** END FUniformsLightAmbientDiffuse ***\n");
+    Log("*** END FUniformsLightAmbientDiffuse ***\n");
     */
 }
 
@@ -187,39 +188,39 @@ void FUniformsLightPhong::Print() {
     
     
     
-    printf("*** BEGIN FUniformsLightPhong ***\n");
+    Log("*** BEGIN FUniformsLightPhong ***\n");
     
     
-    printf("mLight.mAmbientIntensity = %f;\n", mLight.mAmbientIntensity);
-    printf("mLight.mDiffuseIntensity = %f;\n", mLight.mDiffuseIntensity);
-    printf("mLight.mSpecularIntensity = %f;\n", mLight.mSpecularIntensity);
+    Log("mLight.mAmbientIntensity = %f;\n", mLight.mAmbientIntensity);
+    Log("mLight.mDiffuseIntensity = %f;\n", mLight.mDiffuseIntensity);
+    Log("mLight.mSpecularIntensity = %f;\n", mLight.mSpecularIntensity);
     
-    printf("mLight.mRed = %f;\n", mLight.mRed);
-    printf("mLight.mGreen = %f;\n", mLight.mGreen);
-    printf("mLight.mBlue = %f;\n", mLight.mBlue);
+    Log("mLight.mRed = %f;\n", mLight.mRed);
+    Log("mLight.mGreen = %f;\n", mLight.mGreen);
+    Log("mLight.mBlue = %f;\n", mLight.mBlue);
     
     
-    printf("mLight.mDirX = %f;\n", mLight.mDirX);
-    printf("mLight.mDirY = %f;\n", mLight.mDirY);
-    printf("mLight.mDirZ = %f;\n", mLight.mDirZ);
+    Log("mLight.mDirX = %f;\n", mLight.mDirX);
+    Log("mLight.mDirY = %f;\n", mLight.mDirY);
+    Log("mLight.mDirZ = %f;\n", mLight.mDirZ);
 
-    printf("mLight.mShininess = %f;\n", mLight.mShininess);
+    Log("mLight.mShininess = %f;\n", mLight.mShininess);
     
-    printf("******* For Uni **********\n");
+    Log("******* For Uni **********\n");
     
-    printf("mUniform.mLight.mAmbientIntensity = %f;\n", mLight.mAmbientIntensity);
-    printf("mUniform.mLight.mDiffuseIntensity = %f;\n", mLight.mDiffuseIntensity);
-    printf("mUniform.mLight.mSpecularIntensity = %f;\n", mLight.mSpecularIntensity);
+    Log("mUniform.mLight.mAmbientIntensity = %f;\n", mLight.mAmbientIntensity);
+    Log("mUniform.mLight.mDiffuseIntensity = %f;\n", mLight.mDiffuseIntensity);
+    Log("mUniform.mLight.mSpecularIntensity = %f;\n", mLight.mSpecularIntensity);
     
-    printf("mUniform.mLight.mRed = %f;\n", mLight.mRed);
-    printf("mUniform.mLight.mGreen = %f;\n", mLight.mGreen);
-    printf("mUniform.mLight.mBlue = %f;\n", mLight.mBlue);
+    Log("mUniform.mLight.mRed = %f;\n", mLight.mRed);
+    Log("mUniform.mLight.mGreen = %f;\n", mLight.mGreen);
+    Log("mUniform.mLight.mBlue = %f;\n", mLight.mBlue);
     
-    printf("mUniform.mLight.mDirX = %f;\n", mLight.mDirX);
-    printf("mUniform.mLight.mDirY = %f;\n", mLight.mDirY);
-    printf("mUniform.mLight.mDirZ = %f;\n", mLight.mDirZ);
+    Log("mUniform.mLight.mDirX = %f;\n", mLight.mDirX);
+    Log("mUniform.mLight.mDirY = %f;\n", mLight.mDirY);
+    Log("mUniform.mLight.mDirZ = %f;\n", mLight.mDirZ);
     
-    printf("mUniform.mLight.mShininess = %f;\n", mLight.mShininess);
+    Log("mUniform.mLight.mShininess = %f;\n", mLight.mShininess);
     
-    printf("*** END FUniformsLightPhong ***\n");
+    Log("*** END FUniformsLightPhong ***\n");
 }

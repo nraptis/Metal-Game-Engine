@@ -16,6 +16,8 @@
 
 // OpenGL ES 2.0 code
 
+#import "GFXApp.hpp"
+
 #include <jni.h>
 #include <android/log.h>
 
@@ -182,9 +184,27 @@ extern "C" {
     JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_step(JNIEnv * env, jobject obj);
 };
 
-JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_init(JNIEnv * env, jobject obj,  jint width, jint height)
-{
+JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_init(JNIEnv * env, jobject obj,  jint width, jint height)  {
+
+    LOGI("C++ Initialization\n");
+
+    unsigned int a = os_system_time();
+
+    LOGI("Time is %d\n", a);
+
+    GFXApp *aApp = new GFXApp();
+    //gApp = new GFXApp();
+
     setupGraphics(width, height);
+
+    //AppShellSetDeviceSize(width, height);
+    //AppShellSetVirtualFrame(10, 10, width - 20, height - 20);
+
+
+    //AppShellInitialize(ENV_ANDROID);
+
+    //AppShellInitialize(ENV_ANDROID);
+
 }
 
 JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_step(JNIEnv * env, jobject obj)

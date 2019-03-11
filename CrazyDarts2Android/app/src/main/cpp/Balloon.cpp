@@ -19,13 +19,12 @@ Balloon::Balloon() {
     
     mColor.mAlpha = 0.25f;
     
-    mModel = &gApp->mBalloon;
-    mSprite = &gApp->mBalloonMap[gRand.Get(5)];
+
     mUniform = &(gGame->mRenderer->mUniformPhong);
 }
 
 Balloon::~Balloon() {
-    //printf("Balloon has died [%LX]\n", this);
+    //Log("Balloon has died [%LX]\n", this);
 }
 
 void Balloon::Update() {

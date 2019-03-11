@@ -45,6 +45,9 @@ int kDeviceHeight = 768;
     
     AppShellSetDeviceSize(kDeviceWidth, kDeviceHeight);
     AppShellSetVirtualFrame(0, 0, kDeviceWidth, kDeviceHeight);
+    AppShellSetDeviceSize(kDeviceWidth, kDeviceHeight);
+    
+    
     AppShellSetImageFileScale(1);
     
     char aBundlePath[2048];
@@ -113,6 +116,8 @@ int kDeviceHeight = 768;
     //...
     
     [_rootViewController setup];
+    
+    AppShellLoad();
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

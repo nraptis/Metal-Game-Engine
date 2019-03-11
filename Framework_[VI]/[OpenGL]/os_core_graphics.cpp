@@ -9,6 +9,8 @@
 #include "ShaderProgram.hpp"
 #include "OpenGLEngine.hpp"
 
+#include "FSpriteBufferCache.hpp"
+
 
 #if defined(WIN_32_ENV) || defined(MAC_ENVIRONMENT)
 //
@@ -52,6 +54,8 @@ static float                                cDeviceScale = 1.0f;
 static float                                cClipRectBase[4];
 static bool                                 cClipEnabled = false;
 
+
+FSpriteBufferCache                          cSpriteCache;
 
 ShaderProgram                               *cShaderProgram = NULL;
 
@@ -105,6 +109,8 @@ void Graphics::SetDeviceSize(float pWidth, float pHeight) {
 void Graphics::PreRender() {
     cVertexCache.Reset();
     cIndexCache.Reset();
+    cSpriteCache.Reset();
+    
     cCurrentRenderPass = -1;
     cShaderProgram = NULL;
     
@@ -129,7 +135,7 @@ void Graphics::ThreadLock() {
     }
     
     while (cGraphicsThreadLocked) {
-        printf("GFX Sleeping...\n");
+        Log("GFX Sleeping...\n");
         usleep(256);
     }
     
@@ -155,6 +161,11 @@ void Graphics::DrawQuad(float pX1, float pY1, float pX2, float pY2, float pX3, f
     cRectBuffer[6] = pX4;
     cRectBuffer[7] = pY4;
     
+    int aBufferPosition = cSpriteCache.Get();
+    BufferArrayWrite(aBufferPosition, cRectBuffer, 0, sizeof(float) * 8);
+    ArrayBufferPositions(aBufferPosition, 0);
+
+    /*
     cVertexCache.Get(sizeof(float) * 8);
     if (cVertexCache.mResult.mSuccess) {
         int aPositionsBufferIndex = cVertexCache.mResult.mBufferIndex;
@@ -163,6 +174,7 @@ void Graphics::DrawQuad(float pX1, float pY1, float pX2, float pY2, float pX3, f
         BufferArrayWrite(aPositionsBufferIndex, cRectBuffer, aPositionsBufferOffset, sizeof(float) * 8);
         ArrayBufferPositions(aPositionsBufferIndex, aPositionsBufferOffset);
     }
+     */
     //
     //
     //
@@ -608,7 +620,7 @@ void Graphics::UniformBind(FUniforms *pUniforms) {
     if (cShaderProgram != NULL && pUniforms != NULL) {
         cShaderProgram->BindUniform(pUniforms);
     } else {
-        printf("** Illegally Trying To Bind [%x] [%x]\n", cShaderProgram, pUniforms);
+        Log("** Illegally Trying To Bind [%x] [%x]\n", cShaderProgram, pUniforms);
     }
 }
 
@@ -616,7 +628,7 @@ int Graphics::TextureGenerate(unsigned int *pData, int pWidth, int pHeight) {
     int aBindIndex = -1;
     glGenTextures(1, (GLuint*)(&aBindIndex));
     if (aBindIndex == -1) {
-        printf("Error Binding Texture [%d x %d]\n", pWidth, pHeight);
+        Log("Error Binding Texture [%d x %d]\n", pWidth, pHeight);
     } else {
         TextureSetData(aBindIndex, pData, pWidth, pHeight);
     }
@@ -663,16 +675,16 @@ int Graphics::BufferArrayGenerate(int pLength) {
     if (pLength > 0) {
         glGenBuffers(1, &aBindIndex);
         if (aBindIndex != 0) {
-            printf("Create Buffer [%d] Sized[%d]\n", aBindIndex, pLength);
+            Log("Create Buffer [%d] Sized[%d]\n", aBindIndex, pLength);
             glBindBuffer(GL_ARRAY_BUFFER, aBindIndex);
             glBufferData(GL_ARRAY_BUFFER, pLength, 0, GL_DYNAMIC_DRAW);
         } else {
             GLenum aError = glGetError();
             
-            printf("Failed To Make Buffer[%d] Err[%d]\n", pLength, aError);
+            Log("Failed To Make Buffer[%d] Err[%d]\n", pLength, aError);
         }
     } else {
-        printf("Creating Invalid Sized Buffer... [%d]\n", pLength);
+        Log("Creating Invalid Sized Buffer... [%d]\n", pLength);
     }
     
     
@@ -694,7 +706,7 @@ int Graphics::BufferArrayGenerate(void *pData, int pLength) {
     if (aBindIndex != -1) {
         BufferArrayWrite(aBindIndex, pData, pLength);
     } else {
-        printf("Failed To Make Buffer[%d]\n", pLength);
+        Log("Failed To Make Buffer[%d]\n", pLength);
     }
     return aBindIndex;
 }
@@ -723,13 +735,13 @@ int Graphics::BufferElementGenerate(int pLength) {
     if (pLength > 0) {
         glGenBuffers(1, &aBindIndex);
         if (aBindIndex != -1) {
-            printf("Create Element Buffer [%d] Sized[%d]\n", aBindIndex, pLength);
+            Log("Create Element Buffer [%d] Sized[%d]\n", aBindIndex, pLength);
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, pLength, 0, GL_DYNAMIC_DRAW);
         } else {
-            printf("Failed To Make Element Buffer[%d]\n", pLength);
+            Log("Failed To Make Element Buffer[%d]\n", pLength);
         }
     } else {
-        printf("Creating Invalid Sized Element Buffer... [%d]\n", pLength);
+        Log("Creating Invalid Sized Element Buffer... [%d]\n", pLength);
     }
     
     
@@ -742,7 +754,7 @@ int Graphics::BufferElementGenerate(void *pData, int pLength) {
     if (aBindIndex != -1) {
         BufferElementWrite(aBindIndex, pData, pLength);
     } else {
-        printf("Failed To Make Element Buffer[%d]\n", pLength);
+        Log("Failed To Make Element Buffer[%d]\n", pLength);
     }
     return aBindIndex;
 }
@@ -1303,6 +1315,22 @@ void Graphics::RenderTriangle(float pX1, float pY1, float pX2, float pY2, float 
 }
 
 void Graphics::DrawSpriteSetup(float *pPositions, float *pTextureCoords) {
+    
+    
+    //gQuadBufferPosition = Graphics::BufferArrayGenerate(sizeof(float) * 4);
+    //gQuadBufferTextureCoord = Graphics::BufferArrayGenerate(sizeof(float) * 4);
+    
+    int aBufferPosition = cSpriteCache.Get();
+    
+        BufferArrayWrite(aBufferPosition, pPositions, 0, sizeof(float) * 8);
+        ArrayBufferPositions(aBufferPosition, 0);
+    
+    int aBufferTextureCoord = cSpriteCache.Get();
+    
+        BufferArrayWrite(aBufferTextureCoord, pTextureCoords, 0, sizeof(float) * 8);
+        ArrayBufferTextureCoords(aBufferTextureCoord, 0);
+
+    /*
     cVertexCache.Get(sizeof(float) * 8);
     if (cVertexCache.mResult.mSuccess) {
         int aPositionsBufferIndex = cVertexCache.mResult.mBufferIndex;
@@ -1318,6 +1346,8 @@ void Graphics::DrawSpriteSetup(float *pPositions, float *pTextureCoords) {
         BufferArrayWrite(aTextureCoordsBufferIndex, pTextureCoords, aTextureCoordsBufferOffset, sizeof(float) * 8);
         ArrayBufferTextureCoords(aTextureCoordsBufferIndex, aTextureCoordsBufferOffset);
     }
+    */
+    
 }
 
 void Graphics::DrawSprite(float *pPositions, float *pTextureCoords, FTexture *pTexture) {

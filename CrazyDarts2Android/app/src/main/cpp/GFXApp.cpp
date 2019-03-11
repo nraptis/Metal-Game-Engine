@@ -16,24 +16,43 @@
 #include "Util_ScreenFrame.h"
 #include "Game.hpp"
 #include "CameraMenu.hpp"
+
 //#include "OpenGLEngine.hpp"
 //#include "OpenGLViewController.h"
-
 
 
 GFXApp *gApp = 0;
 GFXApp::GFXApp() {
     gApp = this;
     
-    mTestRot1 = 0.0f;
-    mTestRot2 = 0.0f;
-    mTestRot3 = 0.0f;
-    
     mGame = NULL;
     mLevelSelect = NULL;
     mLightScene = NULL;
     mScreenTool = NULL;
     mCameraMenu = NULL;
+    
+    mTracker[0].mDir = -1;
+    mTracker[0].mX = gDeviceWidth;
+    mTracker[0].mY = 100.0f;
+    mTracker[0].mSpeed = 1.0f;
+    
+    mTracker[1].mDir = 1;
+    mTracker[1].mX = 0.0f;
+    mTracker[1].mY = 200.0f;
+    mTracker[1].mSpeed = 1.5f;
+    
+    
+    mTracker[2].mDir = -1;
+    mTracker[2].mX = gDeviceWidth;
+    mTracker[2].mY = 300.0f;
+    mTracker[2].mSpeed = 2.0f;
+    
+    mTracker[3].mDir = 1;
+    mTracker[3].mX = 0.0f;
+    mTracker[3].mY = 400.0f;
+    mTracker[3].mSpeed = 3.0f;
+    
+    
     
     /*
     mCamera.mFOV = 0.987429;
@@ -52,7 +71,9 @@ GFXApp::~GFXApp() {
 }
 
 void GFXApp::Load() {
-    
+
+    mSound1.Load("land.caf");
+    mSound2.Load("match.caf");
     /*
     mSound1.Load("land.caf");
     mSound2.Load("match.caf");
@@ -92,9 +113,6 @@ void GFXApp::Load() {
     //
     //
     //
-    printf("mBalloon[%d][%d]\n", mBalloon.mDataCount, mBalloon.mIndexCount);
-    //
-    //
     //
     //We need to have differently named files OR clean
     //out the texture cache when we CHANGE resolution.
@@ -122,34 +140,27 @@ void GFXApp::Load() {
     mChaosEgg4X.Load("gi_chaos_egg_mockup_4");
     mRay[3].Load("effect_ray_wide_4_0");
     
-    
-    
-    mTestTR.SetRect(50.0f, 280.0f, 60.0f, 320.0f);
-    
-    mBufferPositions = Graphics::BufferArrayGenerate(sizeof(mTestTR.mVertex));
-    
-    
-    mBufferTextureCoords = Graphics::BufferArrayGenerate(sizeof(mTestTR.mTextureCoord));
-    
-    
-    
 }
 
 void GFXApp::LoadComplete() {
     //
     //
     //
-    
+
+    Log("Playing Music... NO");
+    core_sound_musicPlay("song1.m4a", true);
+    /*
     core_sound_musicPlay("song1.m4a", true);
     
     //
+    
     
     
     if (mCameraMenu == NULL) {
         mCameraMenu = new CameraMenu(&mCamera);
         mWindowTools.AddChild(mCameraMenu);
     }
-    
+    */
     
     /*
     if (mLevelSelect == NULL) {
@@ -208,26 +219,102 @@ void GFXApp::LoadComplete() {
 }
 
 void GFXApp::Update() {
+
+    if (gRand.Get(60) == 10) {
+        mSound1.Play();
+    }
+    if (gRand.Get(60) == 14) {
+        mSound2.Play();
+    }
     
+    for (int i=0;i<4;i++) {
+        mTracker[i].Update();
+    }
+
     mCamera.mRotationPrimary += 1.0f;
     if (mCamera.mRotationPrimary >= 360.0f) {
         mCamera.mRotationPrimary -= 360.0f;
     }
+}
+
+void GFXApp::Draw3D() {
+    /*
+    Graphics::PipelineStateSetShape3DAlphaBlending();
     
-    mTestRot1 += 0.5f;
-    if (mTestRot1 >= 360.0f) {
-        mTestRot1 -= 360.0f;
-    }
+    FMatrix aProjection = mCamera.GetProjection();
+    Graphics::MatrixProjectionSet(aProjection);
+    //Graphics::MatrixProjectionResetOrtho();
+    Graphics::MatrixModelViewReset();
+    Graphics::SetColor(1.0f, 0.5f, 0.75f, 0.75f);
     
-    mTestRot2 -= 0.5f;
-    if (mTestRot2 <= 0.0f) {
-        mTestRot2 += 360.0f;
-    }
+    Graphics::DrawBox(0.0f, 0.0f, 0.0f, 4.0f, 2.0f, -1.0f, 2.0f);
     
-    mTestRot3 += 1.25f;
-    if (mTestRot3 >= 360.0f) {
-        mTestRot3 -= 360.0f;
-    }
+    
+    Graphics::MatrixModelViewReset();
+    */
+}
+
+void GFXApp::Draw2D() {
+    
+    Graphics::SetColor();
+    Graphics::MatrixProjectionResetOrtho();
+    Graphics::MatrixModelViewReset();
+    Graphics::PipelineStateSetSpriteAlphaBlending();
+    
+    Graphics::SetColor(0.125f);
+    mBalloonMap[4].DrawQuad(0.0f, 0.0f, gDeviceWidth - 10.0f, gDeviceHeight - 10.0f);
+    
+    
+    Graphics::SetColor(0.25f, 0.25f, 0.45f);
+    Graphics::PipelineStateSetShape2DNoBlending();
+    
+    Graphics::DrawLine(0.0f, 0.0f, gDeviceWidth, gDeviceHeight, 3.0f);
+    Graphics::DrawLine(gDeviceWidth, 0.0f, 0.0f, gDeviceHeight, 3.0f);
+    
+    
+    Graphics::SetColor();
+    Graphics::PipelineStateSetSpriteNoBlending();
+    
+    
+    
+    Graphics::SetColor(1.0f, 1.0f, 1.0f, 1.0f);
+    
+    
+    
+    
+    
+    Graphics::SetColor(1.0f, 0.25f, 0.25f, 0.75f);
+    
+    mChaosEgg1X.Draw(10, 70, 1.0f, 60.0f);
+    
+    
+    Graphics::PipelineStateSetSpriteAlphaBlending();
+    mChaosEgg2X.Draw(150.0f, 100.0f, 1.0f, 20.0f);
+    
+    Graphics::SetColor();
+    
+    Graphics::PipelineStateSetSpriteAdditiveBlending();
+    mChaosEgg3X.Draw(300.0f, 100.0f, 1.0f, 20.0f);
+    
+    
+    mRay[0].Draw(40, 300);
+    
+    Graphics::PipelineStateSetSpriteWhiteBlending();
+    
+    mRay[1].Draw(50, 300);
+    
+    mRay[2].Draw(100, 300);
+    
+    Graphics::PipelineStateSetSpriteAdditiveBlending();
+    
+    mRay[3].Draw(150, 300);
+    
+    Graphics::SetColor(0.0f, 0.5f, 1.0f, 0.75f);
+    
+    /*
+     
+     */
+    
 }
 
 
@@ -241,79 +328,38 @@ void GFXApp::Draw() {
                                   true); //Clear Depth
         
         if (mGame) mGame->Draw3D();
-        
         if (mLevelSelect) mLevelSelect->mPage1->Draw3D();
+        
+        
+        Draw3D();
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         Graphics::RenderPassBegin(GFX_RENDER_PASS_2D_MAIN,
                                   false, //Clear Color
                                   false); //Clear Depth
-        //Draw2D();
         
-        Graphics::SetColor();
-        Graphics::PipelineStateSetSpriteNoBlending();
-        mBalloonMap[4].DrawQuad(0.0f, 0.0f, gDeviceWidth - 10.0f, gDeviceHeight - 10.0f);
-        
-        
-        Graphics::SetColor(0.25f, 0.25f, 0.45f);
-        Graphics::PipelineStateSetShape2DNoBlending();
-        
-        Graphics::DrawLine(0.0f, 0.0f, gDeviceWidth, gDeviceHeight, 3.0f);
-        Graphics::DrawLine(gDeviceWidth, 0.0f, 0.0f, gDeviceHeight, 3.0f);
-        
-        
-        
-        Graphics::SetColor();
-        Graphics::PipelineStateSetSpriteNoBlending();
-        
-
-        
-        Graphics::SetColor(1.0f, 1.0f, 1.0f, 1.0f);
-        
-        Graphics::MatrixProjectionResetOrtho();
-        Graphics::MatrixModelViewReset();
-        
-
-        
-        Graphics::SetColor(1.0f, 0.25f, 0.25f, 0.75f);
-        
-        mChaosEgg1X.Draw(10, 70, 1.0f, 60.0f);
+        Draw2D();
         
         
         Graphics::PipelineStateSetSpriteAlphaBlending();
-        mChaosEgg2X.Draw(150.0f, 100.0f, 1.0f, 20.0f);
         
-        Graphics::SetColor();
-        
-        Graphics::PipelineStateSetSpriteAdditiveBlending();
-        mChaosEgg3X.Draw(300.0f, 100.0f, 1.0f, 20.0f);
-        
-        
-        mRay[0].Draw(40, 300);
-        
-        Graphics::PipelineStateSetSpriteWhiteBlending();
-        
-        mRay[1].Draw(50, 300);
-        
-        mRay[2].Draw(100, 300);
-        
-        Graphics::PipelineStateSetSpriteAdditiveBlending();
-        
-        mRay[3].Draw(150, 300);
-        
-        Graphics::SetColor(0.0f, 0.5f, 1.0f, 0.75f);
-        
-        Graphics::PipelineStateSetShape3DAlphaBlending();
-        
-        FMatrix aProjection = mCamera.GetProjection();
-        Graphics::MatrixProjectionSet(aProjection);
-        //Graphics::MatrixProjectionResetOrtho();
-        Graphics::MatrixModelViewReset();
-        Graphics::SetColor(1.0f, 0.5f, 0.75f, 0.75f);
-        
-        Graphics::DrawBox(0.0f, 0.0f, 0.0f, 4.0f, 2.0f, -1.0f, 2.0f);
-        
-        
-        Graphics::MatrixModelViewReset();
+        for (int i=0;i<4;i++) {
+            
+            float aX = mTracker[i].mX;
+            float aY = mTracker[i].mY;
+            
+            mChaosEgg3X.Draw(aX, aY, 1.25f, 40.0f);
+            
+            
+        }
         
         
         

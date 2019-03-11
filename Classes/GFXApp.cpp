@@ -15,25 +15,41 @@
 #include "Balloon.hpp"
 #include "Util_ScreenFrame.h"
 #include "Game.hpp"
+#include "GameContainer.hpp"
 #include "CameraMenu.hpp"
-//#include "OpenGLEngine.hpp"
-//#include "OpenGLViewController.h"
-
-
 
 GFXApp *gApp = 0;
 GFXApp::GFXApp() {
     gApp = this;
     
-    mTestRot1 = 0.0f;
-    mTestRot2 = 0.0f;
-    mTestRot3 = 0.0f;
-    
-    mGame = NULL;
+    mGameContainer = NULL;
     mLevelSelect = NULL;
     mLightScene = NULL;
     mScreenTool = NULL;
     mCameraMenu = NULL;
+    
+    mTracker[0].mDir = -1;
+    mTracker[0].mX = gDeviceWidth;
+    mTracker[0].mY = 100.0f;
+    mTracker[0].mSpeed = 1.0f;
+    
+    mTracker[1].mDir = 1;
+    mTracker[1].mX = 0.0f;
+    mTracker[1].mY = 200.0f;
+    mTracker[1].mSpeed = 1.5f;
+    
+    
+    mTracker[2].mDir = -1;
+    mTracker[2].mX = gDeviceWidth;
+    mTracker[2].mY = 300.0f;
+    mTracker[2].mSpeed = 2.0f;
+    
+    mTracker[3].mDir = 1;
+    mTracker[3].mX = 0.0f;
+    mTracker[3].mY = 400.0f;
+    mTracker[3].mSpeed = 3.0f;
+    
+    
     
     /*
     mCamera.mFOV = 0.987429;
@@ -53,9 +69,10 @@ GFXApp::~GFXApp() {
 
 void GFXApp::Load() {
     
-    /*
     mSound1.Load("land.caf");
     mSound2.Load("match.caf");
+    
+    mGameAreaMarker.Load("game_area_marker");
     
     
     mPalmTrunk.LoadOBJ("palm_tree_trunk_01.obj");
@@ -79,20 +96,18 @@ void GFXApp::Load() {
     
     mDart.LoadOBJ("dart.obj");
     mDartMap.Load("dart_color");
-     
-     
+    
     
     mBalloon.LoadOBJ("balloon.obj");
     mBalloonMap[0].Load("balloon_skin_01");
     mBalloonMap[1].Load("balloon_skin_02");
     mBalloonMap[2].Load("balloon_skin_03");
     mBalloonMap[3].Load("balloon_skin_04");
-    */
     mBalloonMap[4].Load("balloon_skin_05");
     //
     //
     //
-    printf("mBalloon[%d][%d]\n", mBalloon.mDataCount, mBalloon.mIndexCount);
+    Log("mBalloon[%d][%d]\n", mBalloon.mDataCount, mBalloon.mIndexCount);
     //
     //
     //
@@ -122,17 +137,6 @@ void GFXApp::Load() {
     mChaosEgg4X.Load("gi_chaos_egg_mockup_4");
     mRay[3].Load("effect_ray_wide_4_0");
     
-    
-    
-    mTestTR.SetRect(50.0f, 280.0f, 60.0f, 320.0f);
-    
-    mBufferPositions = Graphics::BufferArrayGenerate(sizeof(mTestTR.mVertex));
-    
-    
-    mBufferTextureCoords = Graphics::BufferArrayGenerate(sizeof(mTestTR.mTextureCoord));
-    
-    
-    
 }
 
 void GFXApp::LoadComplete() {
@@ -140,16 +144,19 @@ void GFXApp::LoadComplete() {
     //
     //
     
+    
+    /*
     core_sound_musicPlay("song1.m4a", true);
     
     //
+    
     
     
     if (mCameraMenu == NULL) {
         mCameraMenu = new CameraMenu(&mCamera);
         mWindowTools.AddChild(mCameraMenu);
     }
-    
+    */
     
     /*
     if (mLevelSelect == NULL) {
@@ -166,23 +173,16 @@ void GFXApp::LoadComplete() {
     //
     //
     
-    
-    /*
-    
-    if (mGame == NULL) {
-        mGame = new Game();
-        mWindowMain.AddChild(mGame);
+    if (mGameContainer == NULL) {
+        mGameContainer = new GameContainer();
+        mWindowMain.AddChild(mGameContainer);
     }
-    
-    //
     
     if (mScreenTool == NULL) {
         mScreenTool = new Util_ScreenFrame();
         mScreenTool->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
         mWindowTools.AddChild(mScreenTool);
     }
-    
-    */
     
     //
     /*
@@ -209,28 +209,20 @@ void GFXApp::LoadComplete() {
 
 void GFXApp::Update() {
     
+    
+    for (int i=0;i<4;i++) {
+        mTracker[i].Update();
+    }
+    
+    
     mCamera.mRotationPrimary += 1.0f;
     if (mCamera.mRotationPrimary >= 360.0f) {
         mCamera.mRotationPrimary -= 360.0f;
     }
-    
-    mTestRot1 += 0.5f;
-    if (mTestRot1 >= 360.0f) {
-        mTestRot1 -= 360.0f;
-    }
-    
-    mTestRot2 -= 0.5f;
-    if (mTestRot2 <= 0.0f) {
-        mTestRot2 += 360.0f;
-    }
-    
-    mTestRot3 += 1.25f;
-    if (mTestRot3 >= 360.0f) {
-        mTestRot3 -= 360.0f;
-    }
 }
 
 void GFXApp::Draw3D() {
+    /*
     Graphics::PipelineStateSetShape3DAlphaBlending();
     
     FMatrix aProjection = mCamera.GetProjection();
@@ -243,6 +235,7 @@ void GFXApp::Draw3D() {
     
     
     Graphics::MatrixModelViewReset();
+    */
 }
 
 void GFXApp::Draw2D() {
@@ -318,7 +311,7 @@ void GFXApp::Draw() {
                                   true, //Clear Color
                                   true); //Clear Depth
         
-        if (mGame) mGame->Draw3D();
+        if (mGameContainer) mGameContainer->Draw3D();
         if (mLevelSelect) mLevelSelect->mPage1->Draw3D();
         
         
@@ -340,6 +333,17 @@ void GFXApp::Draw() {
         Draw2D();
         
         
+        Graphics::PipelineStateSetSpriteAlphaBlending();
+        
+        for (int i=0;i<4;i++) {
+            
+            float aX = mTracker[i].mX;
+            float aY = mTracker[i].mY;
+            
+            mChaosEgg3X.Draw(aX, aY, 1.25f, 40.0f);
+            
+            
+        }
         
         
         
@@ -347,8 +351,8 @@ void GFXApp::Draw() {
 }
 
 void GFXApp::SetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
-    if (mGame) {
-        mGame->SetFrame(0.0f, 0.0f, pWidth, pHeight);
+    if (mGameContainer) {
+        mGameContainer->SetFrame(0.0f, 0.0f, pWidth, pHeight);
     }
     if (mLevelSelect) {
         mLevelSelect->SetFrame(0.0f, 0.0f, pWidth, pHeight);

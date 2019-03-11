@@ -18,8 +18,11 @@ NS_ASSUME_NONNULL_BEGIN
 @interface RootViewController : UIViewController
 
 - (void)setup;
-
 - (BOOL)isLandscape;
+
+- (void) active;
+- (void) inactive;
+
 
 @end
 

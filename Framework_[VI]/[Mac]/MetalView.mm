@@ -37,6 +37,8 @@ CVReturn displayCallback(CVDisplayLinkRef CV_NONNULL displayLink,
     // without semaphore, we could
     // control frame from here..
     
+    AppShellFrame();
+    
     return kCVReturnSuccess;
 }
 

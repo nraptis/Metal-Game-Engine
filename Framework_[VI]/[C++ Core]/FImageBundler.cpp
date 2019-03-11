@@ -90,7 +90,7 @@ void FImageBundler::AddImage(const char*pImagePath) {
     if (aImage. mWidth == 0) aImage.Load(aPath + FString(".JPEG"));
 
     if (aImage.mWidth == 0) {
-        printf("** Image Bundler FAILED [%s] **\n\n", pImagePath);
+        Log("** Image Bundler FAILED [%s] **\n\n", pImagePath);
         return;
     }
 

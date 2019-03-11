@@ -43,11 +43,10 @@ FApp::FApp() {
     //
     //
     //
-    mLoadFunc = NULL;
-    mIsLoadEnqueued = false;
+    
     mIsLoading = false;
     mIsLoadingComplete = false;
-    mTriggerLoadComplete = false;
+    
     //
     //
     //
@@ -62,6 +61,7 @@ FApp::FApp() {
     //
     //
     //
+    Log("The Time Is [%d]\n", os_system_time());
     RecoverTime();
 }
 
@@ -74,14 +74,35 @@ void FApp::BaseInitialize() {
     if (mDidInitialize == false) {
         mDidInitialize = true;
         mImageLoadDirectoryList += new FString("");
-        if(gDirBundle.mLength > 0)mImageLoadDirectoryList += new FString(gDirBundle.c());
-        if(gDirDocuments.mLength > 0)mImageLoadDirectoryList += new FString(gDirDocuments.c());
+        if (gDirBundle.mLength > 0) mImageLoadDirectoryList += new FString(gDirBundle.c());
+        if (gDirDocuments.mLength > 0) mImageLoadDirectoryList += new FString(gDirDocuments.c());
         
         mImageLoadExtensionList += new FString("jpg");
         mImageLoadExtensionList += new FString("png");
 
         mImageLoadMutableSuffixList += new FString("");
         mImageLoadSuffixList += new FString("");
+        
+        
+        
+        //For now we just load in main thread...
+        //AppShellLoad();
+        
+        
+        while (gGraphicsInterface->IsReady() == false) {
+            os_sleep(16);
+        }
+        
+        Graphics::SetDeviceSize(gDeviceWidth, gDeviceHeight);
+        
+        
+        //Initialize the graphics interface...
+        gGraphicsInterface->Initialize();
+        
+        os_sleep(10);
+        
+        //Initialize the graphics engine...
+        Graphics::Initialize();
         
         Initialize();
     }
@@ -128,6 +149,40 @@ void FApp::BaseSetSafeAreaInsets(int pInsetUp, int pInsetRight, int pInsetDown, 
     mWindowModal.SetSafeAreaInsets(gSafeAreaInsetTop + 0.5f, gSafeAreaInsetRight + 0.5f, gSafeAreaInsetBottom + 0.5f, gSafeAreaInsetLeft + 0.5f);
     mWindowTools.SetSafeAreaInsets(gSafeAreaInsetTop + 0.5f, gSafeAreaInsetRight + 0.5f, gSafeAreaInsetBottom + 0.5f, gSafeAreaInsetLeft + 0.5f);
     SetSafeAreaInsets(pInsetUp, pInsetRight, pInsetDown, pInsetLeft);
+}
+
+//Externally, we are getting a "frame" ...
+void FApp::BaseFrame() {
+
+    if (mDidInitialize == false) {
+        BaseInitialize();
+    }
+
+    //for (int i=0;i<aUpdateCount;i++) {
+    BaseUpdate();
+    //}
+    
+    
+    
+    if (gGraphicsInterface) {
+        gGraphicsInterface->SetContext();
+    }
+    gGraphicsInterface->Prerender();
+    Graphics::PreRender();
+    gAppBase->Prerender();
+    //
+    ////
+    //
+    BaseDraw();
+    //
+    ////
+    //
+    
+    gAppBase->Postrender();
+    Graphics::PostRender();
+    gGraphicsInterface->Postrender();
+    
+    gGraphicsInterface->Commit();
 }
 
 void FApp::BaseUpdate() {
@@ -206,8 +261,6 @@ void FApp::BaseDraw() {
     Graphics::MatrixModelViewReset();
     DrawOver();
     
-    
-    
     if (mIsLoadingComplete && Graphics::RenderPass() == GFX_RENDER_PASS_2D_MAIN) {
         Graphics::MatrixProjectionResetOrtho();
         Graphics::MatrixModelViewReset();
@@ -241,6 +294,13 @@ void FApp::BaseLoad() {
         BaseInitialize();
     }
     
+    mIsLoading = true;
+    
+    if (gQuadBufferPosition == -1) {
+        gQuadBufferPosition = Graphics::BufferArrayGenerate(sizeof(float) * 8);
+        gQuadBufferTextureCoord = Graphics::BufferArrayGenerate(sizeof(float) * 8);
+    }
+    
     gImageBundler.Load("bundle_sys_font_bold", "bundle_sys_font_bold_512");
     if (gImageBundler.mBundleWidth > 32 && gImageBundler.mBundleHeight > 32) {
         mSysFontBold.Load("sys_font_bold_256_", "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+-=.,()[]!/");
@@ -272,7 +332,6 @@ void FApp::BaseLoadComplete() {
     
     mIsLoading = false;
     mIsLoadingComplete = true;
-    mTriggerLoadComplete = false;
     
     mSysFont.SetKern(32, 65, -13); mSysFont.SetKern(32, 84, -4); mSysFont.SetKern(32, 89, -4); mSysFont.SetKern(121, 46, -17); mSysFont.SetKern(121, 44, -17); mSysFont.SetKern(119, 46, -13); mSysFont.SetKern(119, 44, -13); mSysFont.SetKern(118, 46, -17); mSysFont.SetKern(118, 44, -17); mSysFont.SetKern(114, 46, -13); mSysFont.SetKern(49, 49, -17); mSysFont.SetKern(65, 32, -13); mSysFont.SetKern(65, 84, -17); mSysFont.SetKern(65, 86, -17); mSysFont.SetKern(65, 87, -9); mSysFont.SetKern(65, 89, -17); mSysFont.SetKern(65, 118, -4); mSysFont.SetKern(65, 119, -4); mSysFont.SetKern(65, 121, -4); mSysFont.SetKern(114, 44, -13); mSysFont.SetKern(70, 44, -25); mSysFont.SetKern(70, 46, -25); mSysFont.SetKern(70, 65, -13); mSysFont.SetKern(76, 32, -9); mSysFont.SetKern(76, 84, -17); mSysFont.SetKern(76, 86, -17); mSysFont.SetKern(76, 87, -17); mSysFont.SetKern(76, 89, -17); mSysFont.SetKern(76, 121, -9); mSysFont.SetKern(102, 102, -4); mSysFont.SetKern(80, 32, -4); mSysFont.SetKern(80, 44, -30); mSysFont.SetKern(80, 46, -30); mSysFont.SetKern(80, 65, -17); mSysFont.SetKern(82, 84, -4); mSysFont.SetKern(82, 86, -4); mSysFont.SetKern(82, 87, -4); mSysFont.SetKern(82, 89, -4); mSysFont.SetKern(84, 32, -4); mSysFont.SetKern(84, 44, -25); mSysFont.SetKern(84, 45, -13); mSysFont.SetKern(84, 46, -25); mSysFont.SetKern(84, 58, -25); mSysFont.SetKern(89, 118, -13); mSysFont.SetKern(84, 65, -17); mSysFont.SetKern(84, 79, -4); mSysFont.SetKern(84, 97, -25); mSysFont.SetKern(84, 99, -25); mSysFont.SetKern(84, 101, -25); mSysFont.SetKern(84, 105, -9); mSysFont.SetKern(84, 111, -25); mSysFont.SetKern(84, 114, -9); mSysFont.SetKern(84, 115, -25); mSysFont.SetKern(84, 117, -9); mSysFont.SetKern(84, 119, -13); mSysFont.SetKern(84, 121, -13); mSysFont.SetKern(86, 44, -21); mSysFont.SetKern(86, 45, -13); mSysFont.SetKern(86, 46, -21); mSysFont.SetKern(86, 58, -9); mSysFont.SetKern(89, 117, -13); mSysFont.SetKern(86, 65, -17); mSysFont.SetKern(86, 97, -17); mSysFont.SetKern(86, 101, -13); mSysFont.SetKern(86, 105, -4); mSysFont.SetKern(86, 111, -13); mSysFont.SetKern(86, 114, -9); mSysFont.SetKern(86, 117, -9); mSysFont.SetKern(86, 121, -9); mSysFont.SetKern(87, 44, -13); mSysFont.SetKern(87, 45, -4); mSysFont.SetKern(87, 46, -13); mSysFont.SetKern(87, 58, -4); mSysFont.SetKern(89, 113, -21); mSysFont.SetKern(87, 65, -9); mSysFont.SetKern(87, 97, -9); mSysFont.SetKern(87, 101, -4); mSysFont.SetKern(89, 112, -17); mSysFont.SetKern(87, 111, -4); mSysFont.SetKern(87, 114, -4); mSysFont.SetKern(87, 117, -4); mSysFont.SetKern(87, 121, -2); mSysFont.SetKern(89, 32, -4); mSysFont.SetKern(89, 44, -30); mSysFont.SetKern(89, 45, -21); mSysFont.SetKern(89, 46, -30); mSysFont.SetKern(89, 58, -13); mSysFont.SetKern(89, 111, -21); mSysFont.SetKern(89, 65, -17); mSysFont.SetKern(89, 97, -17); mSysFont.SetKern(89, 101, -21); mSysFont.SetKern(89, 105, -9);
     
@@ -574,6 +633,7 @@ void FApp::BaseInactive() {
         mWindowMain.Inactive();
         mWindowModal.Inactive();
         mWindowTools.Inactive();
+        
         core_sound_stopAll();
         core_sound_inactive();
         if (gEnvironment == ENV_ANDROID) {
@@ -597,6 +657,7 @@ void FApp::BaseActive() {
         mWindowMain.Active();
         mWindowModal.Active();
         mWindowTools.Active();
+        
         core_sound_active();
         core_sound_musicResume();
     }
@@ -660,53 +721,17 @@ void FApp::SystemProcess() {
 }
 
 void FApp::Throttle() {
-    if (mActive == true && mIsLoadEnqueued == true) {
-        mIsLoadEnqueued = false;
-        mIsLoading = true;
-        mIsLoadingComplete = false;
-        mTriggerLoadComplete = false;
-        void *aArgs = (void*)0xAADEADAA;
-        os_detach_thread(mLoadFunc, aArgs);
-        mLoadFunc = NULL;
-    }
-    
+
     ThrottleLock();
-    if (mTriggerLoadComplete) {
-        BaseLoadComplete();
-    }
+
+    
     FrameController();
     ThrottleUnlock();
     
     
 }
 
-void FApp::MainRunLoop() {
-    
-    //For now we just load in main thread...
-    //AppShellLoad();
-    EnqueueInitialLoad();
-    
-    
-    while (gGraphicsInterface->IsReady() == false) {
-        os_sleep(16);
-    }
-    
-    Graphics::SetDeviceSize(gDeviceWidth, gDeviceHeight);
-    
-    
-    //Initialize the graphics interface...
-    gGraphicsInterface->Initialize();
-    
-    os_sleep(10);
-    
-    //Initialize the graphics engine...
-    Graphics::Initialize();
-    
-    //Go to main running loop...
-    while (!ShouldQuit()) {
-        Throttle();
-    }
-}
+
 
 void FApp::RecoverTime() {
     mFrame.mBaseUpdateTime = os_system_time();
@@ -716,13 +741,15 @@ void FApp::RecoverTime() {
 }
 
 void FApp::ThrottleUpdate() {
+    
+    BaseFrame();
     gAppBase->BaseUpdate();
 }
 
 void ThrottleDrawThread() {
     if (gGraphicsInterface) {
         
-        Graphics::ThreadLock();
+        //Graphics::ThreadLock();
         
         if (gGraphicsInterface) {
             gGraphicsInterface->SetContext();
@@ -743,7 +770,8 @@ void ThrottleDrawThread() {
         
         gGraphicsInterface->Commit();
         
-        Graphics::ThreadUnlock();
+        //Graphics::ThreadUnlock();
+        
         
     }
 }
@@ -777,20 +805,6 @@ void FApp::ThrottleDraw() {
     
 }
 
-void LoadingThread(void *pArgs) {
-    gGraphicsInterface->SetContext();
-    
-    gAppBase->BaseLoad();
-    
-    gAppBase->mTriggerLoadComplete = true;
-}
-
-void FApp::EnqueueInitialLoad() {
-    mLoadFunc = LoadingThread;
-    mIsLoadEnqueued = true;
-    mIsLoading = true;
-    mIsLoadingComplete = false;
-}
 
 void FApp::FrameController() {
     static unsigned int aLastDrawTime = 0;
@@ -937,7 +951,7 @@ void FApp::FrameController() {
                         aFPSTimer++;
                         if (aFPSTimer >= 60) {
                             aFPSTimer = 0;
-                            //printf("FPS: %d\n", mFPS);
+                            //Log("FPS: %d\n", mFPS);
                         }
                     }
                     //TODO:

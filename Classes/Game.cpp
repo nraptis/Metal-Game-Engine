@@ -16,6 +16,13 @@ Game::Game() {
     
     gGame = this;
     
+    
+    
+    
+    SetWidth(GAME_WIDTH);
+    SetHeight(GAME_HEIGHT);
+    SetTransformAnchor(0.5f, 0.5f);
+    
     mCamera = new FloatingCamera();
     mRenderer = new GameRenderer(this, mCamera);
     
@@ -161,7 +168,7 @@ void Game::Layout() {
     //mHitZoneLeft = ConvertScreenXToScene(-aHitZonePaddingH);
     
     mCamera->mDistance = mCamera->mDistance;
-    printf("mCamera->mDistance = %f\n", mCamera->mDistance);
+    Log("mCamera->mDistance = %f\n", mCamera->mDistance);
     
     
     
@@ -198,7 +205,7 @@ void Game::Layout() {
     if (mHeight < mWidth) aPlayAreaPadding = mHeight;
     
     aPlayAreaPadding = aPlayAreaPadding * 0.065f;
-    //printf("aPlayAreaPadding = %f\n", aPlayAreaPadding);
+    //Log("aPlayAreaPadding = %f\n", aPlayAreaPadding);
     
     if (aPlayAreaPadding < 24.0f) {
         aPlayAreaPadding = 24.0f;
@@ -257,7 +264,7 @@ void Game::Layout() {
     mGravity = aGravity2D * aVelocityFactor;
     
     
-    //printf("Gravity = %.3f\n", mGravity);
+    //Log("Gravity = %.3f\n", mGravity);
     
     
     mBalloonList.Free();
@@ -345,7 +352,7 @@ void Game::Update() {
     mBalloonList.Update();
     
     EnumList(Balloon, aBalloon, mBalloonList.mObjectList) {
-        //printf("Balloon[%x]\n", aBalloon);
+        //Log("Balloon[%x]\n", aBalloon);
         
     }
     
@@ -417,6 +424,8 @@ void Game::Draw() {
     
     Graphics::PipelineStateSetSpriteAlphaBlending();
     Graphics::SetColor();
+    
+    gApp->mGameAreaMarker.Draw(0.0f, 0.0f);
     
     /*
     gApp->mChaosEgg1X.Draw(mWidth2 / 2.0f + 20.0f, 200.0f, 1.5f, 0.0f);
@@ -643,11 +652,11 @@ FVec3 Game::ConvertScreenCoordsToScene(float pX, float pY) {
 }
 
 float Game::ConvertScreenXToScene(float pX) {
-    return ((pX - mWidth2) / gDeviceWidth2) * mCamera->mDistance * mCamera->mAspect;
+    return (mTransformAbsolute.mScale * (pX - mWidth2) / gDeviceWidth2) * mCamera->mDistance * mCamera->mAspect;
 }
 
 float Game::ConvertScreenYToScene(float pY) {
-    return ((pY - mHeight2) / gDeviceHeight2) * mCamera->mDistance;
+    return (mTransformAbsolute.mScale * (pY - mHeight2) / gDeviceHeight2) * mCamera->mDistance;
 }
 
 
@@ -659,11 +668,11 @@ FVec2 Game::ConvertSceneCoordsToScreen(float pX, float pY) {
 }
 
 float Game::ConvertSceneXToScreen(float pX) {
-    return (pX * gDeviceWidth2) / (mCamera->mDistance * mCamera->mAspect) + mWidth2;
+    return (pX * gDeviceWidth2) / (mTransformAbsolute.mScale * mCamera->mDistance * mCamera->mAspect) + mWidth2;
 }
 
 float Game::ConvertSceneYToScreen(float pY) {
-    return ((pY * gDeviceHeight2) / (mCamera->mDistance)) + mHeight2;
+    return ((pY * gDeviceHeight2) / (mTransformAbsolute.mScale * mCamera->mDistance)) + mHeight2;
     
     //return ((pY - mHeight2) / gDeviceHeight2) * mCamera->mDistance;
 }
@@ -712,14 +721,14 @@ void Game::ReleaseDart() {
             
             aReleaseFactor = FAnimation::EaseInCirc(aReleaseFactor) * 0.5f + aReleaseFactor * 0.5f;
             
-            //printf("Release Factor: %f\n", aReleaseFactor);
+            //Log("Release Factor: %f\n", aReleaseFactor);
             
             float aReleaseVelocity = mDartReleaseVelocityMin + (mDartReleaseVelocityMax - mDartReleaseVelocityMin) * aReleaseFactor;
             
             mCurrentDart->Fling(aSceneDirX * aReleaseVelocity, aSceneDirY * aReleaseVelocity);
             
         } else {
-            printf("Fizzle? This should never trigger...\n");
+            Log("Fizzle? This should never trigger...\n");
             delete mCurrentDart;
         }
         
@@ -764,7 +773,7 @@ void Game::ResetDartTouch() {
             aFactorDistance = 1.0f;
         }
         
-        printf("Animation Factors Rot[%f] Dist[%f]\n", aFactorRotation, aFactorDistance);
+        Log("Animation Factors Rot[%f] Dist[%f]\n", aFactorRotation, aFactorDistance);
         
         float aAnimationFactor = aFactorRotation;
         if (aFactorDistance > aFactorRotation) aAnimationFactor = aFactorDistance;
@@ -776,10 +785,10 @@ void Game::ResetDartTouch() {
         
         mDartResetAnimationTime = (int)(aTime + 0.5f);
         
-        printf("mDartResetStartRotation = %f..\nmDartResetRotationLength = %f\n", mDartResetStartRotation, mDartResetRotationLength);
+        Log("mDartResetStartRotation = %f..\nmDartResetRotationLength = %f\n", mDartResetStartRotation, mDartResetRotationLength);
         
     } else {
-        printf("Dart => No Pull\n");
+        Log("Dart => No Pull\n");
         mDartTouch = NULL;
         mIsDartBeingPulled = false;
         mDartResetAnimation = false;

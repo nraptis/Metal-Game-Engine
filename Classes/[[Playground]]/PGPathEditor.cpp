@@ -86,7 +86,7 @@ void PGPathEditor::TouchDown(float pX, float pY, void *pData) {
             aX /= mSprite->mWidth;
             aY /= mSprite->mHeight;
 
-            printf("CGPointMake(x: %.6f, y: %.6f)\n", aX, aY);
+            Log("CGPointMake(x: %.6f, y: %.6f)\n", aX, aY);
         }
     }
     */

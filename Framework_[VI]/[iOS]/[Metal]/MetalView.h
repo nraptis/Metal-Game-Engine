@@ -21,5 +21,9 @@
 
 - (void)setup;
 
+- (void)startAnimating;
+- (void)stopAnimating;
+
+
 @end
 

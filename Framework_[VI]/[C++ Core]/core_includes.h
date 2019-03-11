@@ -107,6 +107,11 @@ extern bool gIsRetina;
 
 extern int gEnvironment;
 
+
+extern int gQuadBufferPosition;
+extern int gQuadBufferTextureCoord;
+
+
 extern int gImageFileScale;
 
 extern FString gDirDocuments;

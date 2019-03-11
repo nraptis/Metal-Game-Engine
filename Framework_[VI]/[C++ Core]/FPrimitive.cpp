@@ -102,7 +102,7 @@ float PolygonPath::Get(float pPercent, float *pArray)
             
             
             
-            //printf("Input P: %f (%d - %d) (%f - %f)   \n", pPercent, aStartIndex, aEndIndex, aStartPercent, aEndPercent);
+            //Log("Input P: %f (%d - %d) (%f - %f)   \n", pPercent, aStartIndex, aEndIndex, aStartPercent, aEndPercent);
             
             if(pPercent<aStartPercent)
             {
@@ -555,7 +555,7 @@ void FDrawNodeList::Draw(FSprite *pSprite, bool pStrips)
     
     
     //FString aStr = mIndexList.GetPrintString("asdf");
-    //printf("%s\n\n", aStr.c());
+    //Log("%s\n\n", aStr.c());
     
     
     Graphics::ArrayWriteData(aPtr, mCountNodes * sizeof(FDrawNode));
@@ -991,28 +991,28 @@ void FDrawNodeMesh::Print(float pCenterX, float pCenterY)
 {
     FString aMeshName = "mMesh";
     
-    printf("%s.Size(%d);\n", aMeshName.c(), mCountNodes);
+    Log("%s.Size(%d);\n", aMeshName.c(), mCountNodes);
     
     for(int i=0;i<mCountNodes;i++)
     {
-        printf("%s.Set(%d, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f);\n", aMeshName.c(), i, (mData[i].mX - pCenterX), (mData[i].mY - pCenterY), mData[i].mZ, mData[i].mU, mData[i].mV, mData[i].mW, mData[i].mR, mData[i].mG, mData[i].mB, mData[i].mA);
+        Log("%s.Set(%d, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f);\n", aMeshName.c(), i, (mData[i].mX - pCenterX), (mData[i].mY - pCenterY), mData[i].mZ, mData[i].mU, mData[i].mV, mData[i].mW, mData[i].mR, mData[i].mG, mData[i].mB, mData[i].mA);
     }
     
-    printf("\n");
+    Log("\n");
     
     int aBreak = 0;
     for(int i=0;i<mConLinkCount;i++)
     {
-        printf("%s.AddConnection(%d, %d);", aMeshName.c(), mConLink1[i], mConLink2[i]);
+        Log("%s.AddConnection(%d, %d);", aMeshName.c(), mConLink1[i], mConLink2[i]);
         
         aBreak++;
         if(aBreak == 3)
         {
-            printf("\n");
+            Log("\n");
             aBreak = 0;
         }
     }
-    printf("\n");
+    Log("\n");
 }
 
 

@@ -68,27 +68,27 @@ ALCdevice *gAudioDevice = NULL;
 
 void interruptionListener( void *inUserData, UInt32 inInterruption)
 {
-    printf("Session interrupted! --- %s ---\n", inInterruption == kAudioSessionBeginInterruption ? "Begin Interruption" : "End Interruption");
+    Log("Session interrupted! --- %s ---\n", inInterruption == kAudioSessionBeginInterruption ? "Begin Interruption" : "End Interruption");
     
     if ( inInterruption == kAudioSessionBeginInterruption ) {
-        printf("Audio interrupted.\n" );
+        Log("Audio interrupted.\n" );
         //iphonePauseMusic();
         core_sound_musicPause();
         alcMakeContextCurrent( NULL );
         //AudioSessionSetActive( false );
         
     } else if ( inInterruption == kAudioSessionEndInterruption ) {
-        printf("Audio restored.\n" );
+        Log("Audio restored.\n" );
         
         OSStatus r = AudioSessionSetActive( true );
         if ( r != kAudioSessionNoError ) {
-            printf( "AudioSessionSetActive( true ) failed: 0x%x\n", r );
+            Log( "AudioSessionSetActive( true ) failed: 0x%x\n", r );
         } else {
-            printf( "AudioSessionSetActive( true ) succeeded.\n" );
+            Log( "AudioSessionSetActive( true ) succeeded.\n" );
         }
         alcMakeContextCurrent(gAudioContext);
         if( alcGetError(gAudioDevice) != ALC_NO_ERROR ) {
-            printf("Failed to alcMakeContextCurrent\n");
+            Log("Failed to alcMakeContextCurrent\n");
             
         }
         //iphoneResumeMusic();
@@ -112,7 +112,7 @@ void core_sound_initialize()
      UInt32  propOtherAudioIsPlaying = 'othr'; // kAudioSessionProperty_OtherAudioIsPlaying
      UInt32  size = sizeof( otherAudioIsPlaying );
      AudioSessionGetProperty( propOtherAudioIsPlaying, &size, &otherAudioIsPlaying );
-     printf("OtherAudioIsPlaying = %d\n", otherAudioIsPlaying );
+     Log("OtherAudioIsPlaying = %d\n", otherAudioIsPlaying );
      
      if ( otherAudioIsPlaying ) {
      UInt32 audioCategory = kAudioSessionCategory_AmbientSound;
@@ -124,12 +124,12 @@ void core_sound_initialize()
     
     gAudioDevice = alcOpenDevice( NULL );
     if( gAudioDevice == NULL ) {
-        printf( "Failed to alcOpenDevice\n" );
+        Log( "Failed to alcOpenDevice\n" );
     }
     
     gAudioContext = alcCreateContext( gAudioDevice, NULL );
     if( gAudioContext == NULL ) {
-        printf("Failed to create audio context\n");
+        Log("Failed to create audio context\n");
         return;
     }
     
@@ -137,7 +137,7 @@ void core_sound_initialize()
     alcGetError(gAudioDevice);
     alcMakeContextCurrent(gAudioContext);
     if( alcGetError(gAudioDevice) != ALC_NO_ERROR ) {
-        printf("Failed to alcMakeContextCurrent\n" );
+        Log("Failed to alcMakeContextCurrent\n" );
         return;
     }
     

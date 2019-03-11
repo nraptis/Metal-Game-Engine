@@ -7,7 +7,7 @@
 //
 
 #define METAL_MODE 1
-#undef METAL_MODE
+//#undef METAL_MODE
 
 #import "RootViewController.h"
 #import "AppDelegate.h"
@@ -45,8 +45,11 @@ RootViewController *gRootBase = NULL;
     self.view.backgroundColor = [UIColor blackColor];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        gAppBase->MainRunLoop();
+        //gAppBase->MainRunLoop();
     });
+    
+    //gAppBase->BaseInitialize();
+    
 }
 
 
@@ -88,5 +91,25 @@ RootViewController *gRootBase = NULL;
 - (BOOL)prefersStatusBarHidden {
     return true;
 }
+
+- (void) active {
+    
+#ifdef METAL_MODE
+    [gMetalView startAnimating];
+#else
+    
+#endif
+    
+
+}
+
+- (void) inactive {
+#ifdef METAL_MODE
+    [gMetalView stopAnimating];
+#else
+    
+#endif
+}
+
 
 @end

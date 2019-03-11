@@ -55,9 +55,7 @@
     //
     //
     //
-    _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayCallback)];
-    [_displayLink setPreferredFramesPerSecond: 60];
-    [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode: NSDefaultRunLoopMode];
+    
     //
     //
     //
@@ -68,6 +66,26 @@
 }
 
 - (void)displayCallback {
+    //...
+    AppShellFrame();
+}
+
+- (void)startAnimating {
+    
+    if (_displayLink == NULL) {
+        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayCallback)];
+        [_displayLink setPreferredFramesPerSecond: 60];
+        [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode: NSDefaultRunLoopMode];
+    }
+    
+    
+}
+
+- (void)stopAnimating {
+    if (_displayLink) {
+        [_displayLink invalidate];
+        _displayLink = nil;
+    }
     
 }
 
