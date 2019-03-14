@@ -16,40 +16,6 @@
 #include "FloatingCamera.hpp"
 #include "FUniforms.hpp"
 
-
-class ScreenTracker {
-    
-public:
-    ScreenTracker() {
-        float mX=0.0f;
-        float mY=0.0f;
-        float mSpeed=1.0f;
-        int mDir=1;
-    }
-    
-    void Update() {
-        if (mDir == -1) {
-            mX -= mSpeed;
-            if (mX <= 0.0f) {
-                mX =0.0f;
-                mDir = 1;
-            }
-        } else {
-            mX += mSpeed;
-            if (mX >= gDeviceWidth) {
-                mX = gDeviceWidth;
-                mDir = -1;
-            }
-        }
-        
-    }
-    
-    float mX;
-    float mY;
-    float mSpeed;
-    int mDir;
-};
-
 class Util_ScreenFrame;
 class LightConfigurationScene;
 class LevelSelectorScreen;
@@ -86,8 +52,6 @@ public:
     
     void                                    Draw3D();
     void                                    Draw2D();
-    
-    ScreenTracker                           mTracker[4];
     
     FloatingCamera                          mCamera;
     
@@ -135,6 +99,8 @@ public:
     LevelSelectorScreen                     *mLevelSelect;
     LightConfigurationScene                 *mLightScene;
     Util_ScreenFrame                        *mScreenTool;
+    
+    bool                                    mLayoutGame;
     
 };
 

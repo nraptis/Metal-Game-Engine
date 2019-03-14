@@ -22,10 +22,10 @@ float gAppHeight = 768.0f;
 float gAppWidth2 = (gAppWidth / 2.0f);
 float gAppHeight2 = (gAppHeight / 2.0f);
 
-float gSafeAreaInsetTop = 32.0f;
-float gSafeAreaInsetRight = 32.0f;
-float gSafeAreaInsetBottom = 64.0f;
-float gSafeAreaInsetLeft = 80.0f;
+float gSafeAreaInsetTop = 0.0f;
+float gSafeAreaInsetRight = 0.0f;
+float gSafeAreaInsetBottom = 0.0f;
+float gSafeAreaInsetLeft = 0.0f;
 
 
 float gOSVersion = 1.0f;
@@ -264,8 +264,12 @@ void AppShellSetDeviceSize(int pWidth, int pHeight) {
         Log("Error: Expected gAppBase not NULL\n");
     }
     
+    //
     //TODO: Remove Kludge
-    AppShellSetSafeAreaInsets(44.0f, 5.0f, 50.0f, 5.0f);
+    //
+    //AppShellSetSafeAreaInsets(24.0f, 5.0f, 90.0f, 5.0f);
+    //
+    //
 }
 
 void AppShellSetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {

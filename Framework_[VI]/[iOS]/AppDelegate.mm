@@ -112,11 +112,11 @@ int kDeviceHeight = 320;
         kDeviceHeight = aHold;
     }
     
-    
     _window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
     _window.rootViewController = self.rootViewController;
     [_window makeKeyAndVisible];
     
+    AppShellSetSafeAreaInsets(_window.safeAreaInsets.top, _window.safeAreaInsets.right, _window.safeAreaInsets.bottom, _window.safeAreaInsets.left);
     // ...
     
     [_rootViewController loadViewIfNeeded];

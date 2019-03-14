@@ -5,6 +5,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.*;
+
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -13,24 +19,14 @@ import android.graphics.Matrix;
 import android.media.MediaPlayer;
 import android.util.Log;
 
+
+
 public class JavaOutlets
 {
 	private static Context mContext;
-	private static GL2JNIView mGL;
-
 	private static MediaPlayer mMusicPlayer;
 
-	// private FileInputStream mMusicInputStream;
-
-	// = new FileInputStream(mediaFile);
-	// mPlayer.setDataSource(fis.getFD());
-
-	public static void setGL(GL2JNIView g)
-	{
-		Log.i("NDKHelper", "setGL:" + g);
-		mGL = g;
-
-	}
+	private ArrayList<Semaphore> mLockList = new ArrayList<Semaphore>();
 
 	public static void setContext(Context c)
 	{
@@ -71,20 +67,13 @@ public class JavaOutlets
 	}
 
 
-	public void setOpenGLContext()
-	{
-		System.out.println("The Javas... setOpenGLContext()");
-		mGL.SetContext();
-
-	}
-
-
 	//
 	// Load Bitmap
 	// Java helper is useful decoding PNG, TIFF etc rather than linking libPng
 	// etc separately
 	//
 
+	/*
 	private int nextPOT(int i)
 	{
 		int pot = 1;
@@ -94,20 +83,73 @@ public class JavaOutlets
 		}
 		return pot;
 	}
+	*/
+
+
+
+	public int createThreadLock() {
+		System.out.println("JAVA::createThreadLock[....]...!");
+
+		int aResult = mLockList.size();
+
+		Semaphore aSemaphore = new Semaphore(1);
+		mLockList.add(aSemaphore);
+
+		//ReentrantLock aLock = new ReentrantLock();
+		//mLockList.add(aLock);
+		return aResult;
+	}
+
+	public boolean doesThreadLockExist(int pLockIndex) {
+		if (pLockIndex >= 0 && pLockIndex < mLockList.size()) {
+			return true;
+		}
+		return false;
+	}
+
+	public void lockThread(int pLockIndex) {
+		if (pLockIndex >= 0 && pLockIndex < mLockList.size()) {
+			try {
+				mLockList.get(pLockIndex).acquire();
+			}catch (InterruptedException exc) {
+				System.out.println("** SEMAPHORE FAILURE **");
+				System.out.println(exc);
+			}
+		}
+	}
+
+	public void unlockThread(int pLockIndex) {
+		if (pLockIndex >= 0 && pLockIndex < mLockList.size()) {
+			mLockList.get(pLockIndex).release();
+			//mLockList.get(pLockIndex).unlock();
+		}
+	}
+
+	public void deleteThreadLock(int pLockIndex) {
+		if (pLockIndex >= 0 && pLockIndex < mLockList.size()) {
+			//mLockList.get(pLockIndex).unlock();
+			mLockList.get(pLockIndex).release();
+			mLockList.remove(pLockIndex);
+		}
+	}
+
+	public void deleteAllThreadLocks() {
+		for (int i=0;i<mLockList.size();i++) {
+			//mLockList.get(i).unlock();
+			mLockList.get(i).release();
+		}
+		mLockList.clear();
+	}
 
 	public void JavaLog(String pText) {
 		if (pText.length() <= 0)
 			pText = " ";
-
 		Log.i("c++", pText);
 	}
 
-	public boolean fileExists(String pPath)
-	{
+	public boolean fileExists(String pPath) {
 		boolean aReturn = false;
-
-		try
-		{
+		try {
 			InputStream is = mContext.getResources().getAssets().open(pPath);
 			int aLength = is.available();
 			if(aLength > 0)
@@ -115,116 +157,72 @@ public class JavaOutlets
 				aReturn = true;
 			}
 			is.close();
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 
 		}
-
 		return aReturn;
 	}
 
-	public int readFileLength(String pPath)
-	{
-		System.out.println("READING FILE [" + pPath + "]...!");
-
-
+	public int readFileLength(String pPath) {
 		int aReturn = 0;
-
-		try
-		{
+		try {
 			InputStream is = mContext.getResources().getAssets().open(pPath);
-
 			aReturn = is.available();
-
 			is.close();
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 
 		}
-
-		if(aReturn == 0)
-		{
+		if (aReturn == 0) {
 			File aFile = new File(pPath);
-
-			try
-			{
+			try {
 				FileInputStream aStream = new FileInputStream(aFile);
-
 				aReturn = aStream.available();
-
 				aStream.close();
-
-			}
-			catch (Exception e)
-			{
+			} catch (Exception e) {
 				System.out.println("SECONF FILE ERROR = " + e);
 
 			}
-
-
 		}
-
 		return aReturn;
 	}
 
-	public void readFileData(String pPath, byte[] pData)
-	{
-
+	public void readFileData(String pPath, byte[] pData) {
 		boolean aDidRead = false;
-
-		try
-		{
+		try {
 			InputStream is = mContext.getResources().getAssets().open(pPath);
 			int aLength = is.available();
-
-			if(aLength > 0)
-			{
+			if(aLength > 0) {
 				is.read(pData);
 				aDidRead = true;
 			}
-
 			is.close();
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
 
 		}
 
-
-		if(aDidRead == false)
-		{
+		if(aDidRead == false) {
 			File aFile = new File(pPath);
-
-			try
-			{
+			try {
 				FileInputStream aStream = new FileInputStream(aFile);
-
 				int aLength = aStream.available();
 
-				if(aLength > 0)
-				{
+				if (aLength > 0) {
 					aStream.read(pData);
 					aDidRead = true;
 				}
-
 				aStream.close();
-
-			}
-			catch (Exception e)
-			{
+			} catch (Exception e) {
 
 			}
 		}
 	}
 
-	public boolean writeFileData(String pPath, byte[] pData, int pLength)
-	{
-
+	public boolean writeFileData(String pPath, byte[] pData, int pLength) {
 		boolean aReturn = false;
 
 		System.out.println("OS - Writing File {" + pPath + "} - " + pLength);
+
 
 		String aString = pData.toString();
 
@@ -270,6 +268,7 @@ public class JavaOutlets
 		return aReturn;
 	}
 
+	/*
 	private Bitmap scaleBitmap(Bitmap bitmapToScale, float newWidth, float newHeight)
 	{
 		if (bitmapToScale == null)
@@ -324,6 +323,7 @@ public class JavaOutlets
 
 		return bitmap;
 	}
+	*/
 
 	public Bitmap loadBitmap(String path)
 	{
@@ -443,12 +443,11 @@ public class JavaOutlets
 	*/
 
 
-	public AssetManager getAssetManager()
-	{
+	public AssetManager getAssetManager() {
 		AssetManager aAssetManager = mContext.getResources().getAssets();
 
-		//System.out.println("Asset Manager");
-		//System.out.println(aAssetManager.toString());
+		System.out.println("Asset Manager");
+		System.out.println(aAssetManager.toString());
 
 
 		return aAssetManager;
@@ -456,7 +455,7 @@ public class JavaOutlets
 
 	//
 
-	public static native void setAssetManager(AssetManager assetManager);
+	//public static native void setAssetManager(AssetManager assetManager);
 	//public static native boolean createMusicPlayer(AssetManager assetManager, String filename);
 	//public static native boolean setMusicPlaying(boolean pPlaying);
 

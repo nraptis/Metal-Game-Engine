@@ -1,35 +1,4 @@
-/*
- * Copyright (C) 2009 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.froggy.game;
-/*
- * Copyright (C) 2008 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 
 import android.content.Context;
@@ -39,6 +8,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.support.v4.view.MotionEventCompat;
 
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
@@ -48,24 +18,7 @@ import javax.microedition.khronos.egl.EGLSurface;
 import javax.microedition.khronos.opengles.GL10;
 import android.opengl.EGL14;
 
-/**
- * A simple GLSurfaceView sub-class that demonstrate how to perform
- * OpenGL ES 2.0 rendering into a GL Surface. Note the following important
- * details:
- *
- * - The class must use a custom context factory to enable 2.0 rendering.
- *   See ContextFactory class definition below.
- *
- * - The class must use a custom EGLConfigChooser to be able to select
- *   an EGLConfig that supports 2.0. This is done by providing a config
- *   specification to eglChooseConfig() that has the attribute
- *   EGL10.ELG_RENDERABLE_TYPE containing the EGL_OPENGL_ES2_BIT flag
- *   set. See ConfigChooser class definition below.
- *
- * - The class must select the surface's format, then choose an EGLConfig
- *   that matches it exactly (with regards to red/green/blue/alpha channels
- *   bit depths). Failure to do so would result in an EGL_BAD_MATCH error.
- */
+
 class GL2JNIView extends GLSurfaceView {
     private static String TAG = "???";
     private static final boolean DEBUG = false;
@@ -74,17 +27,6 @@ class GL2JNIView extends GLSurfaceView {
 
     public void SetContext() {
         System.out.println("Setting GLContext [" + mFactory + "]");
-
-
-        if (mFactory != null) {
-            mFactory.SetContext(this);
-        }
-
-
-        //if (eglMakeCurrent(mEglDisplay, surface, surface, mEglContext) == EGL_FALSE)
-        //{
-        //}
-
     }
 
     public GL2JNIView(Context context) {
@@ -134,13 +76,46 @@ class GL2JNIView extends GLSurfaceView {
 
     }
 
+
+    @Override
+    public boolean onTouchEvent(MotionEvent e)
+    {
+        int aAction = MotionEventCompat.getActionMasked(e);
+        int aActionIndex = MotionEventCompat.getActionIndex(e);
+
+        int aPointerCount = MotionEventCompat.getPointerCount(e);
+
+        for (int i = (aPointerCount - 1); i >= 0; i--)
+        {
+            // float aX = MotionEventCompat.getX(e, aActionIndex);
+            // float aY = MotionEventCompat.getY(e, aActionIndex);
+
+            float aX = MotionEventCompat.getX(e, i);
+            float aY = MotionEventCompat.getY(e, i);
+
+            int aIndex = i;
+
+            if (i == aActionIndex) {
+                if (aAction == MotionEvent.ACTION_MOVE) {
+                    GL2JNILib.NativeAppShellTouchMove(aX, aY, aIndex,
+                            aPointerCount);
+                } else if (aAction == MotionEvent.ACTION_DOWN || aAction == MotionEvent.ACTION_POINTER_DOWN) {
+                    GL2JNILib.NativeAppShellTouchBegin(aX, aY, aIndex, aPointerCount);
+                } else if (aAction == MotionEvent.ACTION_UP || aAction == MotionEvent.ACTION_POINTER_UP) {
+                    GL2JNILib.NativeAppShellTouchRelease(aX, aY, aIndex, aPointerCount);
+                } else if (aAction == MotionEvent.ACTION_CANCEL) {
+                    GL2JNILib.NativeAppShellTouchCancel(aX, aY, aIndex, aPointerCount);
+                }
+            } else {
+                GL2JNILib.NativeAppShellTouchMove(aX, aY, aIndex, aPointerCount);
+            }
+        }
+        return true;
+    }
+
+
     private static class ContextFactory implements GLSurfaceView.EGLContextFactory {
         private static int EGL_CONTEXT_CLIENT_VERSION = 0x3098;
-
-
-        public void SetContext(GLSurfaceView surface) {
-
-        }
 
         public EGLContext createContext(EGL10 egl, EGLDisplay display, EGLConfig eglConfig) {
             Log.w(TAG, "creating OpenGL ES 2.0 context");
@@ -152,8 +127,6 @@ class GL2JNIView extends GLSurfaceView {
 
             return aContext;
         }
-
-
 
         public void destroyContext(EGL10 egl, EGLDisplay display, EGLContext context) {
             egl.eglDestroyContext(display, context);
@@ -211,10 +184,8 @@ class GL2JNIView extends GLSurfaceView {
             egl.eglChooseConfig(display, s_configAttribs2, configs, numConfigs, num_config);
 
             if (DEBUG) {
-                 printConfigs(egl, display, configs);
+                printConfigs(egl, display, configs);
             }
-            /* Now return the "best" one
-             */
             return chooseConfig(egl, display, configs);
         }
 
@@ -365,42 +336,18 @@ class GL2JNIView extends GLSurfaceView {
         private boolean mDidInitialize = false;
         private boolean mDidFlagGraphicsReady= false;
 
-
         public void onDrawFrame(GL10 gl) {
-
             if (mDidInitialize == true && mDidFlagGraphicsReady == false) {
                 mDidFlagGraphicsReady = true;
                 GL2JNILib.NativeAppShellGraphicsReady();
             }
-
-            GL2JNILib.step();
+            GL2JNILib.NativeAppShellFrame();
         }
 
-
         public void onSurfaceChanged(GL10 gl, int width, int height) {
-
-
             if (mDidInitialize  == false) {
                 mDidInitialize = true;
                 GL2JNILib.NativeAppShellInitialize(width, height);
-
-
-                Runnable aRunnable = new Runnable() {
-                    public void run() {
-                        System.out.println("Runnable Thread Backgrounding!!!");
-                        GL2JNILib.NativeAppShellDetachRunLoop();
-
-                        //JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_NativeAppShellInitialize(JNIEnv * env, jobject obj,  jint width, jint height);
-                        //JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_step(JNIEnv * env, jobject obj);
-                        //JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_NativeAppShellGraphicsReady(JNIEnv * env, jobject obj);
-                        //JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_NativeAppShellDetachRunLoop(JNIEnv * env, jobject obj)
-
-
-                    }
-                };
-                new Thread(aRunnable).start();
-
-
             }
 
         }

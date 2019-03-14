@@ -30,9 +30,6 @@ void os_delete_all_thread_locks();
 void os_lock_thread(int pLockIndex);
 void os_unlock_thread(int pLockIndex);
 
-void os_lock_graphics_thread(int pLockIndex);
-void os_unlock_graphics_thread(int pLockIndex);
-
 void os_execute_on_main_thread(void (*pFunc)());
 
 void os_message_box(const char *pTitle, const char *pBody);

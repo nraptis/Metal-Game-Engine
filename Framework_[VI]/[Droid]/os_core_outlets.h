@@ -20,9 +20,20 @@
 #ifndef APP_OUTLETS_H
 #define APP_OUTLETS_H
 
-#include "FString.h"
-#include "FList.hpp"
-#include "os_core_includes.h"
+//#include "FString.h"
+//#include "FList.hpp"
+
+#include <SLES/OpenSLES.h>
+#include <SLES/OpenSLES_Android.h>
+#include <jni.h>
+class FList;
+class FString;
+
+//#include "os_core_includes.h"
+
+
+void os_set_graphics_context();
+
 
 void Log(const char *pText, ...);
 
@@ -87,7 +98,7 @@ void os_getAllResources(const char *pFilePath, FList *pList);
 
 
 JNIEnv *os_getJNIEnv();
-static jclass os_getClassID(JNIEnv *pEnv);
+jclass os_getClassID(JNIEnv *pEnv);
 jmethodID os_getMethodInfo(const char *methodName, const char *paramCode);
 
 static jstring getExternalFilesDir( JNIEnv *env );

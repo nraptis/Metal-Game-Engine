@@ -15,44 +15,18 @@
 #include "Balloon.hpp"
 #include "Util_ScreenFrame.h"
 #include "Game.hpp"
+#include "GameContainer.hpp"
 #include "CameraMenu.hpp"
-
-//#include "OpenGLEngine.hpp"
-//#include "OpenGLViewController.h"
-
 
 GFXApp *gApp = 0;
 GFXApp::GFXApp() {
     gApp = this;
     
-    mGame = NULL;
+    mGameContainer = NULL;
     mLevelSelect = NULL;
     mLightScene = NULL;
     mScreenTool = NULL;
     mCameraMenu = NULL;
-    
-    mTracker[0].mDir = -1;
-    mTracker[0].mX = gDeviceWidth;
-    mTracker[0].mY = 100.0f;
-    mTracker[0].mSpeed = 1.0f;
-    
-    mTracker[1].mDir = 1;
-    mTracker[1].mX = 0.0f;
-    mTracker[1].mY = 200.0f;
-    mTracker[1].mSpeed = 1.5f;
-    
-    
-    mTracker[2].mDir = -1;
-    mTracker[2].mX = gDeviceWidth;
-    mTracker[2].mY = 300.0f;
-    mTracker[2].mSpeed = 2.0f;
-    
-    mTracker[3].mDir = 1;
-    mTracker[3].mX = 0.0f;
-    mTracker[3].mY = 400.0f;
-    mTracker[3].mSpeed = 3.0f;
-    
-    
     
     /*
     mCamera.mFOV = 0.987429;
@@ -63,6 +37,7 @@ GFXApp::GFXApp() {
     mCamera.mRotationSecondary = 0.0f;
     */
     
+    mLayoutGame = true;
     
 }
 
@@ -72,11 +47,12 @@ GFXApp::~GFXApp() {
 
 void GFXApp::Load() {
 
-    mSound1.Load("land.caf");
-    mSound2.Load("match.caf");
+    mDirtySound.Load("match.caf");
     /*
     mSound1.Load("land.caf");
     mSound2.Load("match.caf");
+    
+    mGameAreaMarker.Load("game_area_marker");
     
     
     mPalmTrunk.LoadOBJ("palm_tree_trunk_01.obj");
@@ -100,17 +76,18 @@ void GFXApp::Load() {
     
     mDart.LoadOBJ("dart.obj");
     mDartMap.Load("dart_color");
-     
-     
+    */
     
     mBalloon.LoadOBJ("balloon.obj");
     mBalloonMap[0].Load("balloon_skin_01");
     mBalloonMap[1].Load("balloon_skin_02");
     mBalloonMap[2].Load("balloon_skin_03");
     mBalloonMap[3].Load("balloon_skin_04");
-    */
     mBalloonMap[4].Load("balloon_skin_05");
     //
+    //
+    //
+    Log("mBalloon[%d][%d]\n", mBalloon.mDataCount, mBalloon.mIndexCount);
     //
     //
     //
@@ -142,16 +119,19 @@ void GFXApp::Load() {
     
 }
 
+extern float ccccc = 0.0f;
+
 void GFXApp::LoadComplete() {
     //
     //
     //
-
-    Log("Playing Music... NO");
-    core_sound_musicPlay("song1.m4a", true);
-    /*
-    core_sound_musicPlay("song1.m4a", true);
     
+    
+
+    core_sound_musicPlay("song2.mp3", true);
+
+
+    /*
     //
     
     
@@ -177,24 +157,20 @@ void GFXApp::LoadComplete() {
     //
     //
     
-    
-    /*
-    
-    if (mGame == NULL) {
-        mGame = new Game();
-        mWindowMain.AddChild(mGame);
+    if (mGameContainer == NULL) {
+        mGameContainer = new GameContainer();
+        mWindowMain.AddChild(mGameContainer);
     }
-    
-    //
     
     if (mScreenTool == NULL) {
         mScreenTool = new Util_ScreenFrame();
         mScreenTool->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
         mWindowTools.AddChild(mScreenTool);
     }
-    
-    */
-    
+
+
+
+
     //
     /*
     if (mLightScene == NULL) {
@@ -215,26 +191,37 @@ void GFXApp::LoadComplete() {
         }
     }
     */
+    mLayoutGame = true;
     
 }
 
 void GFXApp::Update() {
 
-    if (gRand.Get(60) == 10) {
-        mSound1.Play();
-    }
-    if (gRand.Get(60) == 14) {
-        mSound2.Play();
-    }
-    
-    for (int i=0;i<4;i++) {
-        mTracker[i].Update();
+    ccccc += 2.0f;
+    if (ccccc  >= 360.0f) {
+        ccccc -= 360.0f;
     }
 
     mCamera.mRotationPrimary += 1.0f;
     if (mCamera.mRotationPrimary >= 360.0f) {
         mCamera.mRotationPrimary -= 360.0f;
     }
+    
+    /*
+    if (mLayoutGame) {
+        if (mGameContainer) {
+            mLayoutGame = false;
+            //mGameContainer->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
+            
+            mWindowMain.RegisterFrameDidUpdate(mGameContainer);
+            mWindowMain.RegisterFrameDidUpdate(mGameContainer->mContainer);
+            mWindowMain.RegisterFrameDidUpdate(mGameContainer->mGame);
+            
+        }
+    }
+    */
+    
+    
 }
 
 void GFXApp::Draw3D() {
@@ -289,12 +276,12 @@ void GFXApp::Draw2D() {
     
     
     Graphics::PipelineStateSetSpriteAlphaBlending();
-    mChaosEgg2X.Draw(150.0f, 100.0f, 1.0f, 20.0f);
+    mChaosEgg2X.Draw(150.0f, 100.0f, 1.0f, ccccc );
     
     Graphics::SetColor();
     
     Graphics::PipelineStateSetSpriteAdditiveBlending();
-    mChaosEgg3X.Draw(300.0f, 100.0f, 1.0f, 20.0f);
+    mChaosEgg3X.Draw(300.0f, 100.0f, 1.0f, -ccccc );
     
     
     mRay[0].Draw(40, 300);
@@ -310,10 +297,10 @@ void GFXApp::Draw2D() {
     mRay[3].Draw(150, 300);
     
     Graphics::SetColor(0.0f, 0.5f, 1.0f, 0.75f);
+
+    mChaosEgg3X.Draw(mDDDX, mDDDY, 1.0f, -ccccc );
+
     
-    /*
-     
-     */
     
 }
 
@@ -327,11 +314,12 @@ void GFXApp::Draw() {
                                   true, //Clear Color
                                   true); //Clear Depth
         
-        if (mGame) mGame->Draw3D();
-        if (mLevelSelect) mLevelSelect->mPage1->Draw3D();
+        //if (mGameContainer) mGameContainer->Draw3D();
+        //if (mLevelSelect) mLevelSelect->mPage1->Draw3D();
         
         
-        Draw3D();
+        //Draw3D();
+        
         
         
         
@@ -348,39 +336,36 @@ void GFXApp::Draw() {
         
         Draw2D();
         
-        
         Graphics::PipelineStateSetSpriteAlphaBlending();
-        
-        for (int i=0;i<4;i++) {
-            
-            float aX = mTracker[i].mX;
-            float aY = mTracker[i].mY;
-            
-            mChaosEgg3X.Draw(aX, aY, 1.25f, 40.0f);
-            
-            
-        }
-        
-        
         
     }
 }
 
 void GFXApp::SetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
-    if (mGame) {
-        mGame->SetFrame(0.0f, 0.0f, pWidth, pHeight);
+    if (mGameContainer) {
+        mGameContainer->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
     }
     if (mLevelSelect) {
-        mLevelSelect->SetFrame(0.0f, 0.0f, pWidth, pHeight);
-        mLevelSelect->mPage1->SetFrame(0.0f, 0.0f, pWidth, pHeight);
-        mLevelSelect->mPage2->SetFrame(pWidth, 0.0f, pWidth, pHeight);
-        mLevelSelect->mPage3->SetFrame(pWidth + pWidth, 0.0f, pWidth, pHeight);
+        mLevelSelect->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
+        mLevelSelect->mPage1->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
+        mLevelSelect->mPage2->SetFrame(gVirtualDevWidth, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
+        mLevelSelect->mPage3->SetFrame(gVirtualDevWidth + gVirtualDevWidth, 0.0f, gVirtualDevHeight, gVirtualDevHeight);
         
     }
+    
+    mLayoutGame = true;
 }
 
 void GFXApp::TouchDown(float pX, float pY, void *pData) {
-    
+
+    if (mIsLoadingComplete) {
+        Log("PLAYING DIRTY SOUND...\n?");
+        mDirtySound.Play();
+    }
+
+    mDDDX = pX;
+    mDDDY = pY;
+
     //core_sound_musicCrossFade("song2.mp3", 200, true);
     //core_sound_musicFadeOut(40);
     
@@ -419,7 +404,10 @@ void GFXApp::TouchDown(float pX, float pY, void *pData) {
 }
 
 void GFXApp::TouchMove(float pX, float pY, void *pData) {
-    
+
+    mDDDX = pX;
+    mDDDY = pY;
+
     float aPercentY = pY / gDeviceHeight;
     
     aPercentY = (0.5 - aPercentY);
@@ -455,4 +443,9 @@ void GFXApp::KeyUp(int pKey) {
 
 void GFXApp::SetDeviceSize(int pWidth, int pHeight) {
     
+    if (mGameContainer) {
+        mGameContainer->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
+    }
+    
+    mLayoutGame = true;
 }

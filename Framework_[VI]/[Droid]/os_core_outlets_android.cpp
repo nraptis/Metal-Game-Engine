@@ -6,8 +6,11 @@
 //  Copyright (c) 2013 Nick Raptis Inc. All rights reserved.
 //
 
+
 #include "os_core_outlets.h"
 #include "core_includes.h"
+#include "FList.hpp"
+#include "FString.h"
 
 #include <sys/time.h>
 #include <sys/stat.h>
@@ -25,13 +28,10 @@
 #include <pthread.h>
 #include <sys/utsname.h>
 
-//#import <mach/mach.h>
-//#import <mach/mach_host.h>
-//#import <mach/mach_time.h>
 
 using namespace std;
 
-#define JAVA_OUTLET_CLASS "com/example/android/opengl/JavaOutlets"
+#define JAVA_OUTLET_CLASS "com/froggy/game/JavaOutlets"
 
 jobject _objJNIHelper = 0;
 jclass _clsJNIHelper = 0;
@@ -39,10 +39,12 @@ jclass _clsJNIHelper = 0;
 char mPrintBuffer[2048];
 
 void Log(const char *pText, ...) {
+
     if ((pText != 0) && (_objJNIHelper != 0)) {
+
         JNIEnv *env = os_getJNIEnv();
         if (env) {
-            
+
             va_list argptr;
             va_start(argptr, pText);
             vsprintf(mPrintBuffer, pText, argptr);
@@ -75,7 +77,6 @@ void os_initialize_outlets() {
 }
 
 JNIEnv *os_getJNIEnv() {
-    
     JNIEnv *aENV = 0;
     if (gJVM != 0) {
         jint ret = gJVM->GetEnv((void**)&aENV, JNI_VERSION_1_4);
@@ -216,7 +217,28 @@ void os_unlock_graphics_thread(int pLockIndex) {
 
 bool os_fileExists(const char *pFilePath) {
     bool aReturn = false;
-    if (pFilePath) aReturn = access(pFilePath,0) == 0;
+
+    jmethodID aMethodID = 0;
+
+    if((gJVM != 0) && (pFilePath != 0))
+    {
+        JNIEnv *aENV = os_getJNIEnv();
+
+        jclass aClass = os_getClassID(aENV);
+
+        if((aENV != 0) && (aClass != 0))
+        {
+            aMethodID = aENV->GetMethodID(aClass, "fileExists", "(Ljava/lang/String;)Z");
+
+            if(aMethodID)
+            {
+                jstring aPath = aENV->NewStringUTF(pFilePath);
+                aReturn = aENV->CallBooleanMethod(_objJNIHelper, aMethodID, aPath);
+                aENV->DeleteLocalRef(aPath);
+            }
+        }
+    }
+
     return aReturn;
 }
 
@@ -242,67 +264,108 @@ unsigned int os_system_time() {
 }
 
 unsigned char *os_read_file(const char *pFileName, unsigned int &pLength) {
-    Log("1 - [%s]\n", pFileName);
-    
+
     pLength = 0;
     unsigned char *aData = 0;
 
+    jmethodID aMethodID = 0;
 
-    
+    if((gJVM != 0) && (pFileName != 0)) {
+        JNIEnv *aEnv = os_getJNIEnv();
+
+        jclass aClass = os_getClassID(aEnv);
+
+        if ((aEnv != 0) && (aClass != 0)) {
+            aMethodID = aEnv->GetMethodID(aClass, "readFileLength", "(Ljava/lang/String;)I");
+
+            if(aMethodID) {
+                jstring aFileName = aEnv->NewStringUTF(pFileName);
+
+                pLength = aEnv->CallIntMethod(_objJNIHelper, aMethodID, aFileName);
+
+                if(pLength > 0) {
+                    aMethodID = aEnv->GetMethodID(aClass, "readFileData", "(Ljava/lang/String;[B)V");
+
+                    if(aMethodID)
+                    {
+                        jbyteArray aArray = aEnv->NewByteArray(pLength + 1);
+
+                        aEnv->CallVoidMethod(_objJNIHelper, aMethodID, aFileName, aArray);
+
+                        jbyte *aByte = aEnv->GetByteArrayElements(aArray, 0);
+
+                        aData = new unsigned char [pLength];
+
+                        memcpy(aData, aByte, pLength);
+
+                        aEnv->ReleaseByteArrayElements(aArray, aByte, 0);
+                        aEnv->DeleteLocalRef(aArray);
+
+                        Log("** LOADED [%s] [%d]\n", pFileName, pLength);
+                    }
+                    else
+                    {
+                        pLength = 0;
+                    }
+                }
+                else
+                {
+                    pLength = 0;
+                }
+
+                aEnv->DeleteLocalRef(aFileName);
+            }
+        }
+    }
+
     return aData;
+
+
     
 }
 
 bool os_write_file(const char *pFileName, unsigned char *pData, unsigned int pLength)
 {
-    if(pFileName == 0)
+    bool aReturn = false;
+
+    jmethodID aMethodID = 0;
+
+    if((gJVM != 0) && (pFileName != 0) && (pLength > 0))
     {
-        return false;
-    }
-    
-    int aFile = creat(pFileName,S_IREAD|S_IWRITE);
-    //int aFile = creat(pFileName,S_IWRITE);
-    //Log("File 1.1 = [%d]\n", aFile);
-    
-    close(aFile);
-    
-    aFile = open(pFileName, O_RDWR);
-    //Log("File 1.2 = [%d]\n", aFile);
-    
-    
-    if(aFile != -1)
-    {
-        write(aFile, pData, pLength);
-        close(aFile);
-        
-        return true;
-    }
-    else
-    {
-        FString aPath = FString(gDirDocuments + pFileName);
-        
-        //Log("Write Path = [%s]\n", aPath.c());
-        
-        aFile = creat(aPath.c(), S_IREAD|S_IWRITE);
-        //Log("File.1 2 = [%d]\n", aFile);
-        
-        
-        //aFile = creat(aPath.c(),S_IWRITE);
-        close(aFile);
-        
-        aFile = open(aPath.c(), O_RDWR);
-        //Log("File 2.2 = [%d]\n", aFile);
-        
-        if(aFile != -1)
+        JNIEnv *aEnv = os_getJNIEnv();
+        jclass aClass = os_getClassID(aEnv);
+
+        if((aEnv != 0) && (aClass != 0))
         {
-            write(aFile, pData, pLength);
-            close(aFile);
-            
-            return true;
+            aMethodID = aEnv->GetMethodID(aClass, "writeFileData", "(Ljava/lang/String;[BI)Z");
+
+            if(aMethodID)
+            {
+                jbyteArray aArray = aEnv->NewByteArray(pLength + 1);
+                jbyte *aByte = aEnv->GetByteArrayElements(aArray, 0);
+
+                memcpy(aByte, pData, pLength);
+
+                jstring aPath = aEnv->NewStringUTF(pFileName);
+                aReturn = aEnv->CallBooleanMethod(_objJNIHelper, aMethodID, aPath, aArray, pLength);
+                aEnv->DeleteLocalRef(aPath);
+
+                if((aReturn == false) && (gDirDocuments.mLength > 0))
+                {
+                    FString aDocPath = gDirDocuments + pFileName;
+
+                    aPath = aEnv->NewStringUTF(aDocPath.c());
+                    aReturn = aEnv->CallBooleanMethod(_objJNIHelper, aMethodID, aPath, aArray, pLength);
+                    aEnv->DeleteLocalRef(aPath);
+
+                }
+
+                aEnv->ReleaseByteArrayElements(aArray, aByte, 0);
+                aEnv->DeleteLocalRef(aArray);
+            }
         }
     }
-    
-    return false;
+    return aReturn;
 }
 
 FString os_getBundleDirectory()
@@ -326,16 +389,219 @@ FString os_getDocumentsDirectory() {
 
 void os_load_image_to_buffer(char *pFile, unsigned int *pData)
 {
+    jmethodID aMethodID;
+    JNIEnv *aEnv = os_getJNIEnv();
 
+    if(aEnv)
+    {
+        jstring aJavaFileName = aEnv->NewStringUTF(pFile);
+        aMethodID = aEnv->GetMethodID(_clsJNIHelper, "loadBitmap", "(Ljava/lang/String;)Landroid/graphics/Bitmap;");
+
+        jobject aBitmap = aEnv->CallObjectMethod(_objJNIHelper, aMethodID, aJavaFileName);
+        aEnv->DeleteLocalRef(aJavaFileName);
+
+        if(aBitmap)
+        {
+            aMethodID = aEnv->GetMethodID(_clsJNIHelper, "getBitmapWidth", "(Landroid/graphics/Bitmap;)I");
+            int aWidth = aEnv->CallIntMethod(_objJNIHelper, aMethodID, aBitmap);
+
+            aMethodID = aEnv->GetMethodID(_clsJNIHelper, "getBitmapHeight", "(Landroid/graphics/Bitmap;)I");
+            int aHeight = aEnv->CallIntMethod(_objJNIHelper, aMethodID, aBitmap);
+
+            if((aWidth > 0) && (aHeight > 0))
+            {
+                int aArea = aWidth * aHeight;
+
+                jintArray aArray = aEnv->NewIntArray(aArea);
+
+                aMethodID = aEnv->GetMethodID(_clsJNIHelper, "getBitmapPixels", "(Landroid/graphics/Bitmap;[I)V");
+                aEnv->CallVoidMethod(_objJNIHelper, aMethodID, aBitmap, aArray);
+
+                aMethodID = aEnv->GetMethodID(_clsJNIHelper, "closeBitmap", "(Landroid/graphics/Bitmap;)V");
+                aEnv->CallVoidMethod(_objJNIHelper, aMethodID, aBitmap);
+
+                //aData = new unsigned int[aArea];
+                jint *aPixels = aEnv->GetIntArrayElements(aArray, 0);
+
+                unsigned char *aPixelBytesOriginal = (unsigned char *)aPixels;
+                unsigned char *aDataBytesOriginal = (unsigned char *)pData;
+
+                unsigned char *aPixelBytes = aPixelBytesOriginal;
+                unsigned char *aDataBytes = aDataBytesOriginal;
+
+                int aByteLength = aArea * 4;
+
+                unsigned char *aPixelShelf = &(aPixelBytesOriginal[aByteLength]);
+
+                aPixelBytes = &(aPixelBytesOriginal[2]);
+                aDataBytes = &(aDataBytesOriginal[0]);
+                while(aPixelBytes < aPixelShelf)
+                {
+                    *aDataBytes = *aPixelBytes;
+                    aPixelBytes += 4;
+                    aDataBytes += 4;
+                }
+
+                aPixelBytes = &(aPixelBytesOriginal[1]);
+                aDataBytes = &(aDataBytesOriginal[1]);
+                while(aPixelBytes < aPixelShelf)
+                {
+                    *aDataBytes = *aPixelBytes;
+                    aPixelBytes += 4;
+                    aDataBytes += 4;
+                }
+
+                aPixelBytes = &(aPixelBytesOriginal[0]);
+                aDataBytes = &(aDataBytesOriginal[2]);
+                while(aPixelBytes < aPixelShelf)
+                {
+                    *aDataBytes = *aPixelBytes;
+                    aPixelBytes += 4;
+                    aDataBytes += 4;
+                }
+
+                aPixelBytes = &(aPixelBytesOriginal[3]);
+                aDataBytes = &(aDataBytesOriginal[3]);
+                while(aPixelBytes < aPixelShelf)
+                {
+                    *aDataBytes = *aPixelBytes;
+                    aPixelBytes += 4;
+                    aDataBytes += 4;
+                }
+
+                aEnv->ReleaseIntArrayElements(aArray, aPixels, 0);
+                aEnv->DeleteLocalRef(aArray);
+            }
+            else
+            {
+                aMethodID = aEnv->GetMethodID(_clsJNIHelper, "closeBitmap", "(Landroid/graphics/Bitmap;)V");
+                aEnv->CallVoidMethod(_objJNIHelper, aMethodID, aBitmap);
+            }
+        }
+    }
+}
+
+void os_set_graphics_context() {
+    jmethodID aMethodID;
+    JNIEnv *aEnv = os_getJNIEnv();
+
+    if(aEnv)
+    {
+        aMethodID = aEnv->GetMethodID(_clsJNIHelper, "setOpenGLContext", "()V");
+
+        //aMethodID = aEnv->GetMethodID(_clsJNIHelper, "closeBitmap", "(Landroid/graphics/Bitmap;)V");
+        aEnv->CallVoidMethod(_objJNIHelper, aMethodID);
+
+
+    }
 }
 
 unsigned int *os_load_image(char *pFile,int &pWidth, int &pHeight) {
     pWidth = 0;
     pHeight = 0;
-    
+
+    Log("Load Bitmap... [%s]\n", pFile);
+
     unsigned int *aData = 0;
 
+    jmethodID aMethodID;
+    JNIEnv *aEnv = os_getJNIEnv();
 
+    if(aEnv)
+    {
+        jstring aJavaFileName = aEnv->NewStringUTF(pFile);
+        aMethodID = aEnv->GetMethodID(_clsJNIHelper, "loadBitmap", "(Ljava/lang/String;)Landroid/graphics/Bitmap;");
+
+        jobject aBitmap = aEnv->CallObjectMethod(_objJNIHelper, aMethodID, aJavaFileName);
+        aEnv->DeleteLocalRef(aJavaFileName);
+
+        Log("Load Bitmap 2... [%s]\n", pFile);
+
+        if(aBitmap)
+        {
+
+            aMethodID = aEnv->GetMethodID(_clsJNIHelper, "getBitmapWidth", "(Landroid/graphics/Bitmap;)I");
+            pWidth = aEnv->CallIntMethod(_objJNIHelper, aMethodID, aBitmap);
+
+            aMethodID = aEnv->GetMethodID(_clsJNIHelper, "getBitmapHeight", "(Landroid/graphics/Bitmap;)I");
+            pHeight = aEnv->CallIntMethod(_objJNIHelper, aMethodID, aBitmap);
+
+            Log("Load Bitmap 3... [%d x %d]\n", pWidth, pHeight);
+
+            if((pWidth > 0) && (pHeight > 0))
+            {
+                int aArea = pWidth * pHeight;
+
+                jintArray aArray = aEnv->NewIntArray(aArea);
+
+                aMethodID = aEnv->GetMethodID(_clsJNIHelper, "getBitmapPixels", "(Landroid/graphics/Bitmap;[I)V");
+                aEnv->CallVoidMethod(_objJNIHelper, aMethodID, aBitmap, aArray);
+
+                aMethodID = aEnv->GetMethodID(_clsJNIHelper, "closeBitmap", "(Landroid/graphics/Bitmap;)V");
+                aEnv->CallVoidMethod(_objJNIHelper, aMethodID, aBitmap);
+
+                aData = new unsigned int[aArea];
+                jint *aPixels = aEnv->GetIntArrayElements(aArray, 0);
+
+                unsigned char *aPixelBytesOriginal = (unsigned char *)aPixels;
+                unsigned char *aDataBytesOriginal = (unsigned char *)aData;
+
+                unsigned char *aPixelBytes = aPixelBytesOriginal;
+                unsigned char *aDataBytes = aDataBytesOriginal;
+
+                int aByteLength = aArea * 4;
+
+                unsigned char *aPixelShelf = &(aPixelBytesOriginal[aByteLength]);
+
+                aPixelBytes = &(aPixelBytesOriginal[2]);
+                aDataBytes = &(aDataBytesOriginal[0]);
+                while(aPixelBytes < aPixelShelf)
+                {
+                    *aDataBytes = *aPixelBytes;
+                    aPixelBytes += 4;
+                    aDataBytes += 4;
+                }
+
+                aPixelBytes = &(aPixelBytesOriginal[1]);
+                aDataBytes = &(aDataBytesOriginal[1]);
+                while(aPixelBytes < aPixelShelf)
+                {
+                    *aDataBytes = *aPixelBytes;
+                    aPixelBytes += 4;
+                    aDataBytes += 4;
+                }
+
+                aPixelBytes = &(aPixelBytesOriginal[0]);
+                aDataBytes = &(aDataBytesOriginal[2]);
+                while(aPixelBytes < aPixelShelf)
+                {
+                    *aDataBytes = *aPixelBytes;
+                    aPixelBytes += 4;
+                    aDataBytes += 4;
+                }
+
+                aPixelBytes = &(aPixelBytesOriginal[3]);
+                aDataBytes = &(aDataBytesOriginal[3]);
+                while(aPixelBytes < aPixelShelf)
+                {
+                    *aDataBytes = *aPixelBytes;
+                    aPixelBytes += 4;
+                    aDataBytes += 4;
+                }
+
+                aEnv->ReleaseIntArrayElements(aArray, aPixels, 0);
+                aEnv->DeleteLocalRef(aArray);
+            }
+            else
+            {
+                aMethodID = aEnv->GetMethodID(_clsJNIHelper, "closeBitmap", "(Landroid/graphics/Bitmap;)V");
+                aEnv->CallVoidMethod(_objJNIHelper, aMethodID, aBitmap);
+
+                pWidth = 0;
+                pHeight = 0;
+            }
+        }
+    }
     return aData;
 }
 

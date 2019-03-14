@@ -199,7 +199,7 @@ public:
     static float                                   HelperEaseOutElastic(float pPercent, float b, float c, float d, float pAmplitude, float pPeriod);
     static float                                   HelperEaseOutBounce(float pPercent, float c, float pAmplitude);
     static float                                   HelperEaseSinProgress(float pValue);
-    static float                                   HelpterEaseSmoothBeginEndMixFactor(float pValue);
+    static float                                   HelperEaseSmoothBeginEndMixFactor(float pValue);
 
 
 

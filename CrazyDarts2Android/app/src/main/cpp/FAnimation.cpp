@@ -953,7 +953,7 @@ float FAnimation::EaseOutInBounce(float pPercent, float pAmplitude)
 float FAnimation::EaseInCurve(float pPercent)
 {
     const float sinProgress = HelperEaseSinProgress(pPercent);
-    const float mix = HelpterEaseSmoothBeginEndMixFactor(pPercent);
+    const float mix = HelperEaseSmoothBeginEndMixFactor(pPercent);
     return sinProgress * mix + pPercent * (1.0f - mix);
 
     //const qreal sinProgress = qt_sinProgress(t);
@@ -967,7 +967,7 @@ float FAnimation::EaseInCurve(float pPercent)
 float FAnimation::EaseOutCurve(float pPercent)
 {
     const float sinProgress = HelperEaseSinProgress(pPercent);
-    const float mix = HelpterEaseSmoothBeginEndMixFactor(1 - pPercent);
+    const float mix = HelperEaseSmoothBeginEndMixFactor(1 - pPercent);
     return sinProgress * mix + pPercent * (1 - mix);
     
     //const qreal sinProgress = qt_sinProgress(t);
@@ -1073,7 +1073,7 @@ float FAnimation::HelperEaseSinProgress(float value)
     return sin((value * PI) - PI_2) / 2 + float(0.5);
 }
 
-float FAnimation::HelpterEaseSmoothBeginEndMixFactor(float value)
+float FAnimation::HelperEaseSmoothBeginEndMixFactor(float value)
 {
     return MinC(MaxC(1 - value * 2 + float(0.3), float(0.0)), float(1.0));
     

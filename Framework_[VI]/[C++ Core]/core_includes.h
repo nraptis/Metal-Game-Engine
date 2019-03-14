@@ -299,9 +299,10 @@ static FList sSpriteList;
 #define __KEY__DOWNARROW       __KEY__DOWN            /* DownArrow on arrow keypad */
 #define __KEY__PGDN            __KEY__NEXT            /* PgDn on arrow keypad */
 
+/*
 enum FKeys
 {
-	m0 = __KEY__0,
+	mKey0 = __KEY__0,
 	m1 = __KEY__1,
 	m2 = __KEY__2,
 	m3 = __KEY__3,
@@ -466,6 +467,7 @@ enum FKeys
 
 	mNullKey
 };
+*/
 
 extern const char           *gKeyName[256];
 extern bool 				gKeyPressed[256];

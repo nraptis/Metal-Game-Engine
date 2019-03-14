@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#include "RecursiveLockWrapper.h"
+
 #include "os_core_outlets.h"
 #include "core_includes.h"
 
@@ -39,6 +41,7 @@ void os_initialize_outlets() {
     Log("Initialize Outlets...\n");
 }
 
+/*
 void os_execute_on_main_thread(void (*pFunc)()) {
     if ([NSThread isMainThread]) {
         pFunc();
@@ -48,6 +51,7 @@ void os_execute_on_main_thread(void (*pFunc)()) {
         });
     }
 }
+*/
 
 void os_detach_thread(void (*theFunction)(void *theArg), void* theArg) {
     pthread_t aThread;
@@ -58,7 +62,7 @@ void os_detach_thread(void (*theFunction)(void *theArg), void* theArg) {
 }
 
 void os_sleep(int pTime) {
-    usleep(pTime * 1000);
+    usleep(pTime * 100);
 }
 
 bool os_updates_in_background() {
@@ -70,8 +74,22 @@ bool os_draws_in_background() {
 }
 
 
-pthread_mutex_t gInterfaceMutex = PTHREAD_MUTEX_INITIALIZER;
 
+/*
+pthread_mutex_t gFrameMutex = PTHREAD_MUTEX_INITIALIZER;
+
+void os_frame_mutex_enter() {
+    printf("os_frame_mutex_enter()\n");
+    pthread_mutex_lock( &gFrameMutex );
+}
+
+void os_frame_mutex_leave() {
+    printf("os_frame_mutex_leave()\n");
+    pthread_mutex_unlock( &gFrameMutex );
+}
+
+
+pthread_mutex_t gInterfaceMutex = PTHREAD_MUTEX_INITIALIZER;
 void os_interface_mutex_enter() {
     pthread_mutex_lock( &gInterfaceMutex );
 }
@@ -79,38 +97,97 @@ void os_interface_mutex_enter() {
 void os_interface_mutex_leave() {
     pthread_mutex_unlock( &gInterfaceMutex );
 }
+*/
+
+pthread_mutex_t gThreadMutex = PTHREAD_MUTEX_INITIALIZER;
+NSMutableSet *gLockStrongReferenceSet = [[NSMutableSet alloc] init];
+FList gThreadLockList;
+
+//Since having a collision when creating locks can cause a potential
+//freeze-up, we need to make sure only one lock uperation occurs at
+//any one time... Mutexes lock up, so we do it the old fashioned way.
+//volatile static bool gLockActionActive = false;
 
 int os_create_thread_lock() {
-    return -1;
+    //while (gLockActionActive) {
+    //    usleep(200);
+    //}
+    //gLockActionActive = true;
+    pthread_mutex_lock( &gThreadMutex );
+    RecursiveLockWrapper *aContainer = [[RecursiveLockWrapper alloc] init];
+    [gLockStrongReferenceSet addObject: aContainer];
+    aContainer.lock = [[NSRecursiveLock alloc] init];
+    int aResult = gThreadLockList.mCount;
+    gThreadLockList.Add((__bridge void *)aContainer);
+    //gLockActionActive = false;
+    pthread_mutex_unlock( &gThreadMutex );
+    return aResult;
 }
 
 bool os_thread_lock_exists(int pLockIndex) {
-
+    if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
+        return true;
+    }
     return false;
 }
 
 void os_delete_thread_lock(int pLockIndex) {
-    
+    //while (gLockActionActive) {
+    //    usleep(200);
+    //}
+    //gLockActionActive = true;
+    pthread_mutex_lock( &gThreadMutex );
+    if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
+        RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[pLockIndex]);
+        [aContainer.lock unlock];
+        [gLockStrongReferenceSet removeObject: aContainer];
+        gThreadLockList.RemoveAtIndex(pLockIndex);
+    }
+    pthread_mutex_unlock( &gThreadMutex );
+    //gLockActionActive = false;
 }
 
 void os_delete_all_thread_locks() {
+    //while (gLockActionActive) {
+    //    usleep(200);
+    //}
+    //gLockActionActive = true;
+    pthread_mutex_lock( &gThreadMutex );
+    for (int i=0;i<gThreadLockList.mCount;i++) {
+        RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[i]);
+        [aContainer.lock unlock];
+    }
+    gThreadLockList.RemoveAll();
+    [gLockStrongReferenceSet removeAllObjects];
+    pthread_mutex_unlock( &gThreadMutex );
     
+    //gLockActionActive = false;
 }
 
 void os_lock_thread(int pLockIndex) {
+    //while (gLockActionActive) {
+    //    usleep(200);
+    //}
     
+    //gLockActionActive = true;
+    if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
+        RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[pLockIndex]);
+        [aContainer.lock lock];
+    }
+    
+    //gLockActionActive = false;
 }
 
 void os_unlock_thread(int pLockIndex) {
-    
-}
-
-void os_lock_graphics_thread(int pLockIndex) {
-    
-}
-
-void os_unlock_graphics_thread(int pLockIndex) {
-    
+    //while (gLockActionActive) {
+    //    usleep(200);
+    //}
+    //gLockActionActive = true;
+    if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
+        RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[pLockIndex]);
+        [aContainer.lock unlock];
+    }
+    //gLockActionActive = false;
 }
 
 
@@ -144,7 +221,7 @@ unsigned int os_system_time() {
     chrono::system_clock::now().time_since_epoch() /
     chrono::milliseconds(1);
     
-    return aMili;
+    return (unsigned int)aMili;
     
     //timeval aTime;
     //gettimeofday(&aTime, NULL);

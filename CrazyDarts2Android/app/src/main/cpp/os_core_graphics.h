@@ -1,6 +1,20 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
+#include "os_core_app_shell.h"
+
+#if (CURRENT_ENV == ENV_IOS)
+#import <OpenGLES/ES2/gl.h>
+#import <OpenGLES/ES2/glext.h>
+#endif
+
+#if (CURRENT_ENV == ENV_ANDROID)
+#include <GLES2/gl2.h>
+#include <GLES2/gl2ext.h>
+#include <EGL/egl.h>
+#include <GLES/gl.h>
+#endif
+
 
 #include "OpenGLEngine.hpp"
 #include "FColor.hpp"
@@ -54,11 +68,6 @@ public:
     
     static void                             SetDeviceScale(float pScale);
     static void                             SetDeviceSize(float pWidth, float pHeight);
-    
-    
-    static bool                             ThreadIsLocked();
-    static void                             ThreadLock();
-    static void                             ThreadUnlock();
     
     static void                             Flush();
     

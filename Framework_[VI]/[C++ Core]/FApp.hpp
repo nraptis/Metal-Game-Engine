@@ -4,8 +4,10 @@
 #include "core_includes.h"
 #include "FFont.hpp"
 
+#define FRAME_TIME_CAPTURE_COUNT 200
+
 class PlatformGraphicsInterface;
-//class UMainCanvas;
+
 
 class FApp
 {
@@ -17,6 +19,7 @@ public:
 protected:
     bool                                        mDidInitialize;
     
+    bool                                        mDidDetachFrameController;
     bool                                        mDidUpdate;
     
 public:
@@ -124,14 +127,15 @@ public:
     void                                        BaseMouseUp(float pX, float pY, int pButton);
     void                                        BaseMouseWheel(int pDirection);
     
+    void                                        MainRunLoop();
     
     void                                        BaseQuit();
     virtual void                                Quit();
     bool                                        ShouldQuit();
     bool                                        mQuit;
     
-    
     void                                        FrameController();
+    
     
     int                                         mSystemLock;
     void                                        SystemLock();
@@ -139,15 +143,15 @@ public:
     void                                        SystemProcess();
     
     
+    int                                         mInterfaceLock;
+    void                                        InterfaceLock();
+    void                                        InterfaceUnlock();
+    
+    
     int                                         mThrottleLock;
     void                                        ThrottleLock();
     void                                        ThrottleUnlock();
-    void                                        Throttle();
-    void                                        ThrottleUpdate();
-    void                                        ThrottleDraw();
     
-    
-    bool                                        mIsLoadEnqueued;
     bool                                        mIsLoading;
     bool                                        mIsLoadingComplete;
     
@@ -155,12 +159,12 @@ public:
     
     //void os_execute_on_main_thread(void (*pFunc)());
     
-    
     //
     // Control stuff...
     //
     
     bool                                        mDidInitializeGraphicsInterface;
+    
     
     float                                       mUpdatesPerSecond;
     int                                         mUpdateMultiplier;
@@ -168,7 +172,6 @@ public:
     int                                         mSkipDrawTick;
     
     void                                        RecoverTime();
-    inline void                                 CatchUp() { RecoverTime(); }
     
     struct Frame {
         unsigned int                            mBaseUpdateTime;
@@ -177,9 +180,15 @@ public:
         float                                   mDesiredUpdate;
     }                                           mFrame;
     
-    int                                         mFPS;
-    int                                         mFPSDisplay;
-    int                                         mFPSDisplayTimer;
+    int                                         GetUPS();
+    int                                         GetFPS();
+    
+    
+    int                                         mFrameCaptureUpdateCount;
+    int                                         mFrameCaptureUpdateTime[FRAME_TIME_CAPTURE_COUNT];
+    
+    int                                         mFrameCaptureDrawCount;
+    int                                         mFrameCaptureDrawTime[FRAME_TIME_CAPTURE_COUNT];
     
     
 };

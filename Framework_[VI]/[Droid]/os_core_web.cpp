@@ -7,6 +7,7 @@
 //
 
 #include "os_core_web.h"
+#include "os_core_outlets.h"
 
 #include <iostream>
 #include <vector>
@@ -23,7 +24,7 @@ void os_web_Update()
 
 void os_web_HTTPRequestMake(const char *pURL, int pRequestID)
 {
-    printf("os_web_HTTPRequestMake(%s, %d)\n\n", pURL, pRequestID);
+    Log("os_web_HTTPRequestMake(%s, %d)\n\n", pURL, pRequestID);
 }
 
 bool os_web_HTTPRequestDidComplete(int pRequestID)

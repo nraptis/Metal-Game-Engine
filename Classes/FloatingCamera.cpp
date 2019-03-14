@@ -47,28 +47,23 @@ void FloatingCamera::Print() {
 }
 
 FMatrix FloatingCamera::GetProjection() {
+    
     mAspect = gDeviceWidth / gDeviceHeight;
     
     FMatrix aPerspective = FMatrixCreatePerspective(mFOV, mAspect, 0.01f, 255.0f);
+    //The screen starts at the bottom in this coordinate space.
     aPerspective.Scale(1.0f, -1.0f, 1.0f);
-    
     aPerspective.OffsetPerspectiveCenter(mCenterOffset.mX, mCenterOffset.mY);
     
-    
+    //Rotate your eyeball around your fixed target...
     FVec3 aEye = FVec3(0.0f, 0.0f, 1.0f);
     aEye = Rotate3D(aEye, FVec3(1.0f, 0.0f, 0.0f), mRotationSecondary);
     aEye = Rotate3D(aEye, FVec3(0.0f, 1.0f, 0.0f), mRotationPrimary);
     
-    
-    
-    
+    //We are always looking at 0,0,0, direction is usually (0.0f, 1.0f, 0.0f) for us...
     FMatrix aCamera = FMatrixCreateLookAt(aEye.mX * mDistance, aEye.mY * mDistance, aEye.mZ * mDistance,
                                           0.0f, 0.0f, 0.0f,
                                           mDirection.mX, mDirection.mY, mDirection.mZ);
-    //
-    //
+    
     return FMatrixMultiply(aPerspective, aCamera);
-    //
-    //return aCamera;
-    //
 }

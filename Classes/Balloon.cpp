@@ -17,11 +17,11 @@ Balloon::Balloon() {
     mDeathTimer = 5000;
     mTimer = 0;
     
-    mColor.mAlpha = 0.25f;
+    mColor.mAlpha = 1.0f;
     
     mModel = &gApp->mBalloon;
     mSprite = &gApp->mBalloonMap[gRand.Get(5)];
-    mUniform = &(gGame->mRenderer->mUniformPhong);
+    mUniform = &(gGame->mRenderer->mUniformPhongBalloon);
 }
 
 Balloon::~Balloon() {
@@ -29,7 +29,7 @@ Balloon::~Balloon() {
 }
 
 void Balloon::Update() {
-    mSpin += mSpinSpeed;
+    mTransform3D.mSpin += mSpinSpeed;
 }
 
 void Balloon::Draw() {
@@ -37,10 +37,13 @@ void Balloon::Draw() {
     Graphics::PipelineStateSetShape2DNoBlending();
     Graphics::SetColor(1.0f, 0.25f, 0.25f, 0.35f);
     
-    FVec2 aConverted = gGame->ConvertSceneCoordsToScreen(mX, mY);
-    Graphics::DrawPoint(aConverted.mX, aConverted.mY);
+    Graphics::DrawPoint(mTransform.mX, mTransform.mY);
 }
 
 void Balloon::Draw3D() {
+    
+    //((FUniformsLightPhong *)mUniform)->mLight.mShininess = 58.0f;
+    //((FUniformsLightPhong *)mUniform)->mLight.mSpecularIntensity = 1.0f;
+    
     GameObject::Draw3D();
 }

@@ -22,10 +22,10 @@ float gAppHeight = 768.0f;
 float gAppWidth2 = (gAppWidth / 2.0f);
 float gAppHeight2 = (gAppHeight / 2.0f);
 
-float gSafeAreaInsetTop = 32.0f;
-float gSafeAreaInsetRight = 32.0f;
-float gSafeAreaInsetBottom = 64.0f;
-float gSafeAreaInsetLeft = 80.0f;
+float gSafeAreaInsetTop = 0.0f;
+float gSafeAreaInsetRight = 0.0f;
+float gSafeAreaInsetBottom = 0.0f;
+float gSafeAreaInsetLeft = 0.0f;
 
 
 float gOSVersion = 1.0f;
@@ -61,21 +61,30 @@ int gQuadBufferTextureCoord = -1;
 
 
 void AppShellInitialize(int pEnvironment) {
-    gEnvironment = pEnvironment;
+
+	gEnvironment = pEnvironment;
 
 	FList aResourceList;
-    
+
 	os_getAllResources(gDirBundle.c(), &aResourceList);
 	os_getAllResources(gDirDocuments.c(), &aResourceList);
 
 	EnumList(FString, aPath, aResourceList)gRes.AddResource(aPath->c());
 	FreeList(FString, aResourceList);
-    
-    gGraphicsInterface = new PlatformGraphicsInterface();
-    
-    os_initialize_outlets();
-    core_sound_initialize();
-    social_Init();
+
+	gGraphicsInterface = new PlatformGraphicsInterface();
+
+	os_initialize_outlets();
+
+	Log("AppShellInitialize(%d :: 4)\n", pEnvironment);
+
+	core_sound_initialize();
+
+    Log("AppShellInitialize(%d :: 5)\n", pEnvironment);
+
+	social_Init();
+
+    Log("AppShellInitialize(%d :: 6)\n", pEnvironment);
 
     //if(gAppBase)(gAppBase)->BaseInitialize();
     //gTouch.Initialize(pEnvironment);
@@ -244,16 +253,32 @@ void AppShellSetDeviceSize(int pWidth, int pHeight) {
 
             //TODO: Toggle for crop tool...
             //aApp->BaseSetVirtualFrame(gVirtualDevX, gVirtualDevY, gVirtualDevWidth, gVirtualDevHeight);
-
+            
+            
+            float aAspectRatio = 768.0f / 1024.0f;
+            
+            
+            float aPadding = 5.0f;
+            float aVirtualHeight = round(gDeviceHeight - (aPadding * 2.0f));
+            float aVirtualWidth = round(gDeviceHeight * aAspectRatio);
+            float aVirtualX = round(gDeviceWidth - (5.0 + aVirtualWidth));
+            float aVirtualY = aPadding;
+            
             //TODO:
-            aApp->BaseSetVirtualFrame(5.0f, 5.0f, gDeviceWidth - 10.0f, gDeviceHeight - 10.0f);
+            AppShellSetVirtualFrame(aVirtualX, aVirtualY, aVirtualWidth, aVirtualHeight);
+            
+            //aApp->BaseSetVirtualFrame(aVirtualX, aVirtualY, aVirtualWidth, aVirtualHeight);
         }
     } else {
         Log("Error: Expected gAppBase not NULL\n");
     }
     
+    //
     //TODO: Remove Kludge
-    AppShellSetSafeAreaInsets(44.0f, 5.0f, 50.0f, 5.0f);
+    //
+    //AppShellSetSafeAreaInsets(24.0f, 5.0f, 90.0f, 5.0f);
+    //
+    //
 }
 
 void AppShellSetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
@@ -261,7 +286,9 @@ void AppShellSetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
 	gVirtualDevY = (float)pY;
 	gVirtualDevWidth = (float)pWidth;
 	gVirtualDevHeight = (float)pHeight;
-
+    
+    //printf("Set Virtual Frame [%d %d %d %d]\n", gVirtualDevX, gVirtualDevY, gVirtualDevWidth, gVirtualDevHeight);
+    
     gAppWidth = (float)pWidth;
     gAppHeight = (float)pHeight;
     gAppWidth2 = (gAppWidth / 2.0f);

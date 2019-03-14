@@ -14,6 +14,12 @@
 #include "FloatingCamera.hpp"
 #include "Dart.hpp"
 #include "Balloon.hpp"
+#include "Transform2D.hpp"
+#include "Transform3D.hpp"
+
+
+#define GAME_WIDTH 768
+#define GAME_HEIGHT 1280
 
 class Game : public FCanvas {
 public:
@@ -38,16 +44,18 @@ public:
     
     virtual void                                Notify(void *pSender, const char *pNotification) override;
     
-    FVec3                                       ConvertScreenCoordsToScene(float pX, float pY);
-    float                                       ConvertScreenXToScene(float pX);
-    float                                       ConvertScreenYToScene(float pY);
+    void                                        Convert2DTransformTo3D(Transform2D *p2D, Transform3D *p3D);
     
+    FVec3                                       Convert2DCoordsTo3D(float pX, float pY);
+    float                                       Convert2DXTo3D(float pX);
+    float                                       Convert2DYTo3D(float pY);
     
-    FVec2                                       ConvertSceneCoordsToScreen(float pX, float pY);
-    float                                       ConvertSceneXToScreen(float pX);
-    float                                       ConvertSceneYToScreen(float pY);
+    FVec2                                       Convert3DCoordsTo2D(float pX, float pY);
+    float                                       Convert3DXTo2D(float pX);
+    float                                       Convert3DYTo2D(float pY);
     
-    
+    float                                       mRenderShiftX;
+    float                                       mRenderShiftY;
     
     GameRenderer                                *mRenderer;
     FloatingCamera                              *mCamera;
@@ -64,8 +72,6 @@ public:
     
     void                                        ResetDartTouch();
     void                                        ReleaseDart();
-    
-    
     
     float                                       mDartReleaseVelocityMin;
     float                                       mDartReleaseVelocityMax;

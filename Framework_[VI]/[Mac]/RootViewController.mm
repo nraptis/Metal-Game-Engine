@@ -69,7 +69,6 @@ RootViewController *gRootBase = NULL;
 - (void)loadView {
     self.view = [[NSView alloc] initWithFrame:NSMakeRect(0.0, 0.0, gDeviceWidth, gDeviceHeight)];
     self.view.layer = [[CALayer alloc] init];
-    
     NSColor *aColor = [NSColor colorWithCalibratedRed: 0.0f
                                                 green: 0.0f
                                                  blue: 0.0f

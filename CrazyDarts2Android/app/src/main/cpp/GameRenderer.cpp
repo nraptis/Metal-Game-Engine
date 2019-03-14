@@ -13,6 +13,7 @@ GameRenderer::GameRenderer(Game *pGame, FloatingCamera *pCamera) {
     mGame = pGame;
     mCamera = pCamera;
     //
+    mDart = &gApp->mDart;
     
     mLightDirRotationPrimaryBase = 34.064598;
     mLightDirRotationSecondaryBase = 49.372952;
@@ -152,6 +153,20 @@ void GameRenderer::DumpLightsToUniforms() {
     mUniformPhong.mLight.mSpecularIntensity = aLightSpecular;
     mUniformPhong.mColor = FColor(1.0f, 1.0f, 1.0f, 1.0f);
     mUniformPhong.mProjection.Set(aProjection);
+    
+    
+    mUniformPhongBalloon.mLight.mRed = aLightRed;
+    mUniformPhongBalloon.mLight.mGreen = aLightGreen;
+    mUniformPhongBalloon.mLight.mBlue = aLightBlue;
+    mUniformPhongBalloon.mLight.mDirX = mLightDirX;
+    mUniformPhongBalloon.mLight.mDirY = mLightDirY;
+    mUniformPhongBalloon.mLight.mDirZ = mLightDirZ;
+    mUniformPhongBalloon.mLight.mAmbientIntensity = 0.0f;
+    mUniformPhongBalloon.mLight.mDiffuseIntensity = aLightDiffuse;
+    mUniformPhongBalloon.mLight.mSpecularIntensity = 60.0f;
+    mUniformPhongBalloon.mLight.mShininess = 90.0f;
+    mUniformPhongBalloon.mColor = FColor(1.0f, 1.0f, 1.0f, 0.05);
+    mUniformPhongBalloon.mProjection.Set(aProjection);
     
     mUniformDiffuse.mLight.mRed = aLightRed;
     mUniformDiffuse.mLight.mGreen = aLightGreen;

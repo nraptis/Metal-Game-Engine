@@ -9,7 +9,6 @@
 #include <assert.h>
 #include <jni.h>
 
-#include "OpenSLES.h"
 #include "os_core_sound.h"
 #include "os_core_includes.h"
 
@@ -693,9 +692,9 @@ int GetFileDescriptor(const char *pFileName, off_t &pStartIndex, off_t &pLength)
     //pLength = 0;
 
     jmethodID aMethodID = 0;
-    if((gJVM != 0) && (pFileName != 0))
-    {
-        JNIEnv *aEnv = os_getJNIEnv();
+    if ((gJVM != 0) && (pFileName != 0)) {
+        bool aDetach = false;
+        JNIEnv *aEnv = os_getJNIEnv(&aDetach);
         jclass aClass = os_getClassID(aEnv);
 
         if((aEnv != 0) && (aClass != 0))
@@ -731,6 +730,9 @@ int GetFileDescriptor(const char *pFileName, off_t &pStartIndex, off_t &pLength)
                     }
                 }
             }
+        }
+        if (aDetach) {
+            gJVM->DetachCurrentThread();
         }
     }
 
@@ -799,31 +801,41 @@ void shutdown()
 
 void core_sound_initialize()
 {
+    Log("core_sound_initialize(0)\n");
+
     SLresult aResult;
 
     // create engine
+    Log("core_sound_initialize(1)\n");
     aResult = slCreateEngine(&sAudioEngineObject, 0, NULL, 0, NULL, NULL);
     //assert(SL_RESULT_SUCCESS == aResult);
 
+    Log("core_sound_initialize(2)\n");
     aResult = (*sAudioEngineObject)->Realize(sAudioEngineObject, SL_BOOLEAN_FALSE);
     //assert(SL_RESULT_SUCCESS == aResult);
 
+    Log("core_sound_initialize(3)\n");
     aResult = (*sAudioEngineObject)->GetInterface(sAudioEngineObject, SL_IID_ENGINE, &sAudioEngine);
     //assert(SL_RESULT_SUCCESS == aResult);
 
+    Log("core_sound_initialize(4)\n");
     const SLInterfaceID ids[1] = {SL_IID_ENVIRONMENTALREVERB};
     const SLboolean req[1] = {SL_BOOLEAN_FALSE};
 
+    Log("core_sound_initialize(5)\n");
     aResult = (*sAudioEngine)->CreateOutputMix(sAudioEngine, &outputMixObject, 1, ids, req);
     //assert(SL_RESULT_SUCCESS == aResult);
 
+    Log("core_sound_initialize(6)\n");
     aResult = (*outputMixObject)->Realize(outputMixObject, SL_BOOLEAN_FALSE);
     //assert(SL_RESULT_SUCCESS == aResult);
 
+    Log("core_sound_initialize(7)\n");
     aResult = (*outputMixObject)->GetInterface(outputMixObject, SL_IID_ENVIRONMENTALREVERB, &outputMixEnvironmentalReverb);
 
     if(SL_RESULT_SUCCESS == aResult)
     {
+        Log("core_sound_initialize(8)\n");
         aResult = (*outputMixEnvironmentalReverb)->SetEnvironmentalReverbProperties(outputMixEnvironmentalReverb, &reverbSettings);
 
         //(void)result;
@@ -834,25 +846,47 @@ void core_sound_initialize()
     }
 }
 
-bool core_sound_load(FSound *pSound, const char *pFileName, int pInstanceCount)
-{
-    bool aDidLoad = false;
-
+bool core_sound_load(FSound *pSound, const char *pFileName, int pInstanceCount) {
     Log("Loading Sound [%s]\n", pFileName);
 
     if(pInstanceCount <= 0)pInstanceCount = 1;
     if(pInstanceCount > 10)pInstanceCount = 10;
     int aLoadedInstanceCount = 0;
 
-    if(pSound != 0)
-    {
+    if (pSound != 0) {
         FSoundDataAndroid *aSoundData = (FSoundDataAndroid *)pSound->mSoundData;
-        if(aSoundData)
-        {
+        if (aSoundData) {
 
+            FFile aFile;
+            aFile.Load(pFileName);
+
+            if (aFile.mLength > 0) {
+                aSoundData->mData = new unsigned char [aFile.mLength];
+                memcpy(aSoundData->mData, aFile.mData, aFile.mLength);
+
+                aSoundData->mDataLength = aFile.mLength;
+
+                pSound->mDidLoad = true;
+
+                Log("SOUND [%s] LENGTH = [%d] INST[%d]\n", pFileName, aSoundData->mDataLength, pInstanceCount);
+
+                for (int i=0;i<pInstanceCount;i++) {
+                    FSoundInstanceAndroid *aInstance = new FSoundInstanceAndroid();
+                    aInstance->mSound = pSound;
+                    pSound->mInstances += aInstance;
+
+                }
+
+                return true;
+            }
+
+
+
+            /*
             jmethodID aMethodID = 0;
 
-            JNIEnv *aEnv = os_getJNIEnv();
+            bool aDetach = false;
+            JNIEnv *aEnv = os_getJNIEnv(&aDetach);
             jclass aClass = os_getClassID(aEnv);
 
             if((pFileName != 0) && (aEnv != 0) && (aClass != 0))
@@ -884,6 +918,9 @@ bool core_sound_load(FSound *pSound, const char *pFileName, int pInstanceCount)
                                         Log("SOUND FAIL 1 - [%s]\n", pFileName);
 
                                         AAsset_close(aAsset);
+                                        if (aDetach) {
+                                            gJVM->DetachCurrentThread();
+                                        }
                                         return false;
                                     }
 
@@ -897,6 +934,9 @@ bool core_sound_load(FSound *pSound, const char *pFileName, int pInstanceCount)
                                         //Log("SOUND FAIL 2 - [%s]\n", pFileName);
 
                                         AAsset_close(aAsset);
+                                        if (aDetach) {
+                                            gJVM->DetachCurrentThread();
+                                        }
                                         return false;
                                     }
 
@@ -927,88 +967,76 @@ bool core_sound_load(FSound *pSound, const char *pFileName, int pInstanceCount)
                     }
                 }
             }
+            if (aDetach) {
+                gJVM->DetachCurrentThread();
+            }
+            */
+
         }
     }
-
-    return aDidLoad;
+    return false;
 }
 
-
-
-void core_sound_play(FSound *pSound)
-{
+void core_sound_play(FSound *pSound) {
     core_sound_play(pSound, 1.0f);
 }
 
-void core_sound_play(FSound *pSound, float pVolume)
-{
+void core_sound_play(FSound *pSound, float pVolume) {
     core_sound_playPitched(pSound, 1.0f, pVolume);
 }
 
-void core_sound_playPitched(FSound *pSound, float pPitch, float pVolume)
-{
-    if(pSound)
-    {
+void core_sound_playPitched(FSound *pSound, float pPitch, float pVolume) {
+
+
+    Log("core_sound_playPitched(0)[%s]\n", pSound->mFileName.c());
+    if (pSound) {
+        Log("core_sound_playPitched(4)[%s]\n", pSound->mFileName.c());
         FSoundDataAndroid *aSoundData = (FSoundDataAndroid *)(pSound->mSoundData);
-
-        if((pSound->mDidLoad == true) && (aSoundData != 0))
-        {
+        if ((pSound->mDidLoad == true) && (aSoundData != 0)) {
+            Log("core_sound_playPitched(5)[%s]\n", pSound->mFileName.c());
             FSoundInstanceAndroid *aInstanceCheck = (FSoundInstanceAndroid *)(pSound->mInstances.Fetch(0));
-
-            if(aInstanceCheck)
-            {
+            if (aInstanceCheck) {
+                Log("core_sound_playPitched(88)[%s]\n", pSound->mFileName.c());
                 FSoundInstanceAndroid *aInstancePlay = 0;
-
-                if(core_sound_instance_isPlaying((FSoundInstance *)aInstanceCheck) == false)
-                {
+                if (core_sound_instance_isPlaying((FSoundInstance *)aInstanceCheck) == false) {
+                    Log("core_sound_playPitched(7)[%s]\n", pSound->mFileName.c());
                     aInstancePlay = aInstanceCheck;
                     pSound->mInstances.RotateFrontToBack();
-                }
-                else
-                {
-                    EnumList(FSoundInstanceAndroid, aInstance, pSound->mInstances)
-                    {
-                        if(core_sound_instance_isPlaying((FSoundInstance *)aInstance) == false)
-                        {
+                } else {
+                    EnumList (FSoundInstanceAndroid, aInstance, pSound->mInstances) {
+                        if (core_sound_instance_isPlaying((FSoundInstance *)aInstance) == false) {
+                            Log("core_sound_playPitched(HIT)[%s]\n", pSound->mFileName.c());
                             aInstancePlay = aInstance;
                         }
                     }
                 }
-
-                if(aInstancePlay)
-                {
+                if (aInstancePlay) {
+                    Log("core_sound_playPitched(FINAL)[%s]\n", pSound->mFileName.c());
                     //cEffectPool.Play(aInstancePlay, pVolume);
                     cEffectPool.PlayPitched(aInstancePlay, pVolume, pPitch);
-
                 }
             }
         }
     }
+    Log("core_sound_playPitched(Exit)[%s]\n", pSound->mFileName.c());
 }
 
-void core_sound_stop(FSound *pSound)
-{
-    if(pSound)
-    {
-        EnumList(FSoundInstance, aFSoundInstance, pSound->mInstances)
-        {
+void core_sound_stop(FSound *pSound) {
+    if (pSound) {
+        EnumList (FSoundInstance, aFSoundInstance, pSound->mInstances) {
             aFSoundInstance->Stop();
         }
     }
 }
 
-void core_sound_clear(FSound *pSound)
-{
-    if(pSound)
-    {
+void core_sound_clear(FSound *pSound) {
+    if (pSound) {
         FSoundDataAndroid *aSoundData = (FSoundDataAndroid *)(pSound->mSoundData);
 
-        if(aSoundData)
-        {
+        if (aSoundData) {
             delete aSoundData->mData;
             aSoundData->mData = 0;
             aSoundData->mDataLength = 0;
-
             aSoundData->mDidLoad = false;
         }
 
@@ -1029,40 +1057,28 @@ void core_sound_clear(FSound *pSound)
     }
 }
 
-bool core_sound_isPlaying(FSound *pSound)
-{
+bool core_sound_isPlaying(FSound *pSound) {
     bool aReturn = false;
-
-    if(pSound)
-    {
-        EnumList(FSoundInstance, aInstance, pSound->mInstances)
-        {
-            if(core_sound_instance_isPlaying(aInstance))
-            {
+    if (pSound) {
+        EnumList(FSoundInstance, aInstance, pSound->mInstances) {
+            if (core_sound_instance_isPlaying(aInstance)) {
                 aReturn = true;
                 break;
             }
         }
     }
-
     return aReturn;
 }
 
-bool core_sound_didLoad(FSound *pSound)
-{
+bool core_sound_didLoad(FSound *pSound) {
     bool aReturn = false;
-
-    if(pSound)
-    {
-        EnumList(FSoundInstance, aInstance, pSound->mInstances)
-        {
-            if(aInstance->mDidLoad == true)
-            {
+    if (pSound) {
+        EnumList(FSoundInstance, aInstance, pSound->mInstances) {
+            if (aInstance->mDidLoad == true) {
                 aReturn = true;
             }
         }
     }
-
     return aReturn;
 }
 
@@ -1151,20 +1167,17 @@ bool core_sound_didLoad(FSound *pSound)
 */
 
 
-void core_sound_setVolume(float pVolume)
-{
+void core_sound_setVolume(float pVolume) {
     gVolumeSound = pVolume;
 }
 
-float core_sound_getVolume()
-{
+float core_sound_getVolume() {
     return gVolumeSound;
 }
 
 
 
-void core_sound_instance_play(FSoundInstance *pInstance, float pVolume)
-{
+void core_sound_instance_play(FSoundInstance *pInstance, float pVolume) {
     cEffectPool.Play((FSoundInstanceAndroid *)pInstance, pVolume);
 }
 
@@ -1394,39 +1407,31 @@ void core_sound_musicPlay(const char *pFileName, bool pLoop)
     FString aFilePath = FString(pFileName);
     aFilePath.RemoveExtension();
 
-
     FMusicBuffer *aBuffer = 0;
-    EnumList(FMusicBuffer, aCheckBuffer, cMusicBufferList)
-    {
-        if(aCheckBuffer->mName == aFilePath)
-        {
+    EnumList (FMusicBuffer, aCheckBuffer, cMusicBufferList) {
+        if (aCheckBuffer->mName == aFilePath) {
             aBuffer = aCheckBuffer;
             break;
         }
     }
 
-    if(aBuffer == 0)
-    {
+    if (aBuffer == 0) {
         aBuffer = new FMusicBuffer();
         aBuffer->Initialize(pFileName);
         cMusicBufferList.Add(aBuffer);
     }
 
-    if(aBuffer != 0)
-    {
-        if(cMusicBufferFading)
-        {
+    if (aBuffer != 0) {
+        if (cMusicBufferFading) {
             cMusicBufferFading->Stop();
             cMusicBufferFading = 0;
         }
 
-        if(cMusicBuffer)
-        {
+        if (cMusicBuffer) {
             cMusicBufferFading = cMusicBuffer;
             cMusicBuffer = 0;
             cMusicBufferFading->Stop();
         }
-
         cMusicBuffer = aBuffer;
         cMusicBuffer->Play(pLoop);
     }

@@ -42,6 +42,8 @@ public:
     float                               mLightDiffuseBase;
     float                               mLightSpecularBase;
     
+    
+    FUniformsLightPhong                 mUniformPhongBalloon;
     FUniformsLightPhong                 mUniformPhong;
     FUniformsLightAmbientDiffuse        mUniformDiffuse;
     FUniformsLightAmbient               mUniformAmbient;

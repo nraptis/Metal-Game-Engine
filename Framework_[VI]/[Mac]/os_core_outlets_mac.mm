@@ -164,39 +164,21 @@ void os_delete_all_thread_locks() {
 }
 
 void os_lock_thread(int pLockIndex) {
-    pthread_mutex_lock( &gThreadMutex );
+    //pthread_mutex_lock( &gThreadMutex );
     if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
         RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[pLockIndex]);
         [aContainer.lock lock];
     }
-    pthread_mutex_unlock( &gThreadMutex );
+    //pthread_mutex_unlock( &gThreadMutex );
 }
 
 void os_unlock_thread(int pLockIndex) {
-    pthread_mutex_lock( &gThreadMutex );
+    //pthread_mutex_lock( &gThreadMutex );
     if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
         RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[pLockIndex]);
         [aContainer.lock unlock];
     }
-    pthread_mutex_unlock( &gThreadMutex );
-}
-
-void os_lock_graphics_thread(int pLockIndex) {
-    pthread_mutex_lock( &gGraphicsThreadMutex );
-    if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
-        RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[pLockIndex]);
-        [aContainer.lock lock];
-    }
-    pthread_mutex_unlock( &gGraphicsThreadMutex );
-}
-
-void os_unlock_graphics_thread(int pLockIndex) {
-    pthread_mutex_lock( &gGraphicsThreadMutex );
-    if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
-        RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[pLockIndex]);
-        [aContainer.lock unlock];
-    }
-    pthread_mutex_unlock( &gGraphicsThreadMutex );
+    //pthread_mutex_unlock( &gThreadMutex );
 }
 
 bool os_fileExists(const char *pFilePath) {

@@ -49,12 +49,10 @@ public:
     void                    *PopFirst();
     void                    *PopLast();
     
-	
 	void					RemoveFirst(void *pItem);
 	inline void				DeleteFirst(void *pItem) { RemoveFirst(pItem); }
 	void					RemoveLast(void *pItem);
 	inline void				DeleteLast(void *pItem) { RemoveLast(pItem); }
-    
     
     void                    MoveObjectUp(void *pItem);
     void                    MoveObjectDown(void *pItem);
@@ -66,11 +64,9 @@ public:
 	void					MoveToLast(void *pItem);
 	void					Swap(void *pItem1, void *pItem2);
     
-    
     void                    RotateFrontToBack();
     void                    RotateBackToFront();
     
-	
 	void					Print();
     
     void                    *FetchClosest(int pIndex);

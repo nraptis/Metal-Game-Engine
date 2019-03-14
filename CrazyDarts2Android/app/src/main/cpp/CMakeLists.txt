@@ -4,8 +4,8 @@ cmake_minimum_required(VERSION 3.4.1)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall")
 
 add_library(gl2jni SHARED
-
 		__DROID.cpp
+        SpawnWave.cpp
         Balloon.cpp
         CameraMenu.cpp
         core_app_shell.cpp
@@ -74,13 +74,13 @@ add_library(gl2jni SHARED
         FWindow.cpp
         FXML.cpp
         Game.cpp
+		GameContainer.cpp
         GameObject.cpp
         GameRenderer.cpp
         GFXApp.cpp
         GraphicsInterface.cpp
         LevelSelectorScreen.cpp
         LightConfigurationScene.cpp
-        native-lib.cpp
         OpenGLEngine.cpp
         os_core_app_shell_android.cpp
         os_core_graphics.cpp
@@ -124,8 +124,9 @@ add_library(gl2jni SHARED
         UISlider.cpp
         UIStepper.cpp
         Util_ScreenFrame.cpp
-
-
+		Transform3D.cpp
+		Transform2D.cpp
+		LevelData.cpp
         )
 
 # add lib dependencies

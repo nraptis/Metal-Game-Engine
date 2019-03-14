@@ -21,8 +21,8 @@ Dart::Dart() {
     mDeathTimer = 5000;
     mTimer = 0;
     
-    //mModel = &gApp->mDart;
-    //mSprite = &gApp->mDartMap;
+    mModel = &gApp->mDart;
+    mSprite = &gApp->mDartMap;
     mUniform = &(gGame->mRenderer->mUniformPhong);
     
     mVelX = 0.0f;
@@ -39,7 +39,8 @@ Dart::~Dart() {
 }
 
 void Dart::Update() {
-    mSpin += mSpinSpeed;
+    mTransform3D.mSpin += mSpinSpeed;
+    
     if (mSpawnAnimation) {
         
         float aSpawnAnimationPercent = ((float)mSpawnAnimationTimer) / ((float)mSpawnAnimationTime);
@@ -47,11 +48,11 @@ void Dart::Update() {
         float aPercent = FAnimation::EaseInCurve(aSpawnAnimationPercent);
         float aPercentInv = (1.0f - aPercent);
         
-        mOffsetZ = -aPercentInv * gGame->mCamera->mDistance * 0.125f;
-        mOffsetY = aPercentInv * gGame->mCamera->mDistance * 0.1f;
+        //mOffsetZ = -aPercentInv * gGame->mCamera->mDistance * 0.125f;
+        mTransform.mOffsetY = aPercentInv * 70.0f;
         
-        mOffsetRotationX = -aPercentInv * 220.0f;
-        mOffsetScale = 0.25f + aPercent * 0.75f;
+        mTransform3D.mRotationX = -aPercentInv * 220.0f;
+        mTransform.mOffsetScale = 0.25f + aPercent * 0.75f;
         
         mColor.mRed = aPercent;
         mColor.mGreen = aPercent;
@@ -71,20 +72,22 @@ void Dart::Update() {
         mTimer++;
         
         //We are flying through space...
-        mX += mVelX;
-        mY += mVelY;
+        
+        mTransform.mX += mVelX;
+        mTransform.mY += mVelY;
+        
         mVelY += gGame->mGravity;
         //
         if (fabsf(mVelX) > 0.001f || fabsf(mVelY) > 0.001f) {
             mTargetRotation = FaceTarget(-mVelX, -mVelY);
         }
         //
-        float aAngleDiff = DistanceBetweenAngles(mRotation2D, mTargetRotation);
-        if (aAngleDiff > 2.0f) { mRotation2D += 1.0f; }
-        if (aAngleDiff < -2.0f) { mRotation2D -= 1.0f; }
-        aAngleDiff = DistanceBetweenAngles(mRotation2D, mTargetRotation);
-        mRotation2D += aAngleDiff * 0.035f;
-        //
+        float aAngleDiff = DistanceBetweenAngles(mTransform.mRotation, mTargetRotation);
+        if (aAngleDiff > 2.0f) { mTransform.mRotation += 1.0f; }
+        if (aAngleDiff < -2.0f) { mTransform.mRotation -= 1.0f; }
+        aAngleDiff = DistanceBetweenAngles(mTransform.mRotation, mTargetRotation);
+        mTransform.mRotation += aAngleDiff * 0.035f;
+        
         --mDeathTimer;
         if (mDeathTimer <= 0) { Kill(); }
         
@@ -96,21 +99,25 @@ void Dart::Update() {
 
 void Dart::Draw() {
     
+    /*
     Graphics::PipelineStateSetShape2DNoBlending();
     Graphics::SetColor(0.5f, 0.8f, 0.25f, 0.5f);
     
-    FVec2 aConverted = gGame->ConvertSceneCoordsToScreen(mX, mY);
-    Graphics::DrawPoint(aConverted.mX, aConverted.mY);
+    Graphics::DrawPoint(mTransform.mX, mTransform.mY);
+    
     
     FVec2 aTipPoint = GetTipPoint();
-    aTipPoint = gGame->ConvertSceneCoordsToScreen(aTipPoint.mX, aTipPoint.mY);
+    
+    Graphics::SetColor(0.25f, 0.25f, 1.0f, 0.75f);
+    
+    Graphics::DrawLine(mTransform.mX, mTransform.mY, aTipPoint.mX, aTipPoint.mY);
     
     Graphics::SetColor(1.0f, 0.25f, 0.25f, 0.5f);
     
     
-    //FVec2 aConverted = gGame->ConvertSceneCoordsToScreen(mX, mY);
+    //FVec2 aConverted = gGame->Convert3DCoordsTo2D(mX, mY);
     Graphics::DrawPoint(aTipPoint.mX, aTipPoint.mY);
-    
+    */
 }
 
 void Dart::Draw3D() {
@@ -134,16 +141,16 @@ void Dart::SpawnAnimationForceComplete() {
         mSpawnAnimation = false;
         mSpawnAnimationTimer = 0;
         
-        mOffsetX = 0.0f;
-        mOffsetY = 0.0f;
-        mOffsetZ = 0.0f;
+        mTransform.mOffsetX = 0.0f;
+        mTransform.mOffsetY = 0.0f;
+        mTransform.mOffsetZ = 0.0f;
         
-        mOffsetRotation2D = 0.0f;
+        mTransform.mOffsetRotation = 0.0f;
         
-        mOffsetRotationX = 0.0f;
-        mOffsetRotationZ = 0.0f;
+        mTransform3D.mRotationX = 0.0f;
+        mTransform3D.mRotationZ = 0.0f;
         
-        mOffsetScale = 1.0f;
+        mTransform.mOffsetScale = 1.0f;
         
         mColor.mRed = 1.0f;
         mColor.mGreen = 1.0f;
@@ -153,11 +160,12 @@ void Dart::SpawnAnimationForceComplete() {
 }
 
 FVec2 Dart::GetTipPoint() {
-    float aDistFromCenter = 2.125f * (mScale * mOffsetScale);
-    FVec2 aDir = AngleToVector(mRotation2D + mOffsetRotation2D);
+    float aScale = mTransform.mScale * mTransform.mOffsetScale;
+    float aDistFromCenter = 48.0f * (aScale);
+    FVec2 aDir = AngleToVector(mTransform.mRotation + mTransform.mOffsetRotation);
     FVec2 aResult;
-    aResult.mX = mX + aDir.mX * aDistFromCenter * mScaleX;
-    aResult.mY = mY + aDir.mY * aDistFromCenter * mScaleY;
+    aResult.mX = mTransform.mX + aDir.mX * aDistFromCenter * mTransform.mScaleX;
+    aResult.mY = mTransform.mY + aDir.mY * aDistFromCenter * mTransform.mScaleY;
     return aResult;
 }
 

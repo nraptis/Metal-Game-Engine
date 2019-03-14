@@ -219,6 +219,7 @@ void FSound::Clear()
 
 void FSound::Play(float pVolume)
 {
+    Log("FSound::Play(");
     core_sound_play(this, pVolume);
 }
 
@@ -289,6 +290,17 @@ void FSound::Load(const char *pFileName, int pDuplicates)
         for (int i=0;i<aExtensionCount;i++) {
             if (aDidLoad == false) {
                 aFileName = gDirBundle + FString(aFileNameBase) + aExtension[i];
+                aDidLoad = core_sound_load(this, aFileName.c(), pDuplicates);
+                if (aDidLoad) {
+                    mFileName = aFileName;
+                }
+            }
+        }
+    }
+    if ((aDidLoad == false) && (gDirDocuments.mLength > 0)) {
+        for (int i=0;i<aExtensionCount;i++) {
+            if (aDidLoad == false) {
+                aFileName = gDirDocuments + FString(aFileNameBase) + aExtension[i];
                 aDidLoad = core_sound_load(this, aFileName.c(), pDuplicates);
                 if (aDidLoad) {
                     mFileName = aFileName;

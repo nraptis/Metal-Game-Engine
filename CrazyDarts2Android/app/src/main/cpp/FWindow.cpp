@@ -222,6 +222,8 @@ void FWindow::SetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
         mVirtualFrameWidth = pWidth;
         mVirtualFrameHeight = pHeight;
         mRoot.SetFrame(pX, pY, pWidth, pHeight);
+        
+        //RegisterFrameDidUpdate(&mRoot);
     }
 }
 

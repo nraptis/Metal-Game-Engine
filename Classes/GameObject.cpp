@@ -7,38 +7,13 @@
 //
 
 #include "GameObject.hpp"
+#include "Game.hpp"
 
 GameObject::GameObject() {
     
     mUniform = NULL;
     mModel = NULL;
     mSprite = NULL;
-    
-    mX = 0.0f;
-    mY = 0.0f;
-    mZ = 0.0f;
-    
-    mOffsetX = 0.0f;
-    mOffsetY = 0.0f;
-    mOffsetZ = 0.0f;
-    
-    mRotation2D = 0.0f;
-    
-    mOffsetRotation2D = 0.0f;
-    
-    mOffsetRotationX = 0.0f;
-    mOffsetRotationZ = 0.0f;
-    
-    mSpin = 0.0f;
-    
-    mScale = 1.0f;
-    
-    mOffsetScale = 1.0f;
-    
-    mScaleX = 1.0f;
-    mScaleY = 1.0f;
-    mScaleZ = 1.0f;
-    
 }
 
 GameObject::~GameObject() {
@@ -59,37 +34,37 @@ void GameObject::Draw3D() {
     if (mModel != NULL && mSprite != NULL) {
         
         if (mUniform != NULL) {
+            gGame->Convert2DTransformTo3D(&mTransform, &mTransform3D);
             
             mModelView.Reset();
             
             //We start by translation...?
-            mModelView.Translate(mX + mOffsetX, mY + mOffsetY, mZ + mOffsetZ);
+            
+            mModelView.Translate(mTransform3D.mX, mTransform3D.mY, mTransform3D.mZ);
             
             //All of our models are exported with X 90 degrees wrong...
             mModelView.RotateX(90.0f);
             
-            if (mOffsetRotationX != 0.0f) {
-                mModelView.RotateX(mOffsetRotationX);
+            if (mTransform3D.mRotationX != 0.0f) {
+                mModelView.RotateX(mTransform3D.mRotationX);
             }
             
-            if (mOffsetRotationZ != 0.0f) {
-                mModelView.RotateZ(mOffsetRotationZ);
+            if (mTransform3D.mRotationZ != 0.0f) {
+                mModelView.RotateZ(mTransform3D.mRotationZ);
             }
             
             //Now we do a 2-D rotation...
-            if (mRotation2D != 0.0f || mOffsetRotation2D != 0.0f) {
-                mModelView.RotateY(mRotation2D + mOffsetRotation2D);
+            if (mTransform3D.mRotation2D != 0.0f) {
+                mModelView.RotateY(mTransform3D.mRotation2D);
             }
             
             //Now we spin around the Y axis...
-            if (mSpin != 0.0f) {
-                mModelView.RotateZ(mSpin);
+            if (mTransform3D.mSpin != 0.0f) {
+                mModelView.RotateZ(mTransform3D.mSpin);
             }
             
             //Now we scale down...
-            mModelView.Scale(mScaleX * mScale * mOffsetScale,
-                             mScaleY * mScale * mOffsetScale,
-                             mScaleZ * mScale * mOffsetScale);
+            mModelView.Scale(mTransform3D.mScaleX * mTransform3D.mScale, mTransform3D.mScaleY * mTransform3D.mScale, mTransform3D.mScaleZ * mTransform3D.mScale);
             
             //Assign the model view to the uniform...
             mUniform->mModelView.Set(mModelView);
@@ -113,15 +88,6 @@ void GameObject::Draw3D() {
 void GameObject::Kill() {
     FObject::Kill();
 }
-
-FVec2 GameObject::GetScreenPos() {
-    FVec2 aResult;
-    Log("WARNING: Not Implemented... SCREEN POS...\n");
-    aResult.mX = mX;
-    aResult.mY = mY;
-    return aResult;
-}
-
 
 
 

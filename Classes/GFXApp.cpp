@@ -28,29 +28,6 @@ GFXApp::GFXApp() {
     mScreenTool = NULL;
     mCameraMenu = NULL;
     
-    mTracker[0].mDir = -1;
-    mTracker[0].mX = gDeviceWidth;
-    mTracker[0].mY = 100.0f;
-    mTracker[0].mSpeed = 1.0f;
-    
-    mTracker[1].mDir = 1;
-    mTracker[1].mX = 0.0f;
-    mTracker[1].mY = 200.0f;
-    mTracker[1].mSpeed = 1.5f;
-    
-    
-    mTracker[2].mDir = -1;
-    mTracker[2].mX = gDeviceWidth;
-    mTracker[2].mY = 300.0f;
-    mTracker[2].mSpeed = 2.0f;
-    
-    mTracker[3].mDir = 1;
-    mTracker[3].mX = 0.0f;
-    mTracker[3].mY = 400.0f;
-    mTracker[3].mSpeed = 3.0f;
-    
-    
-    
     /*
     mCamera.mFOV = 0.987429;
     mCamera.mTarget = FVec3(0.0f, 0.0f, 0.0f);
@@ -60,6 +37,7 @@ GFXApp::GFXApp() {
     mCamera.mRotationSecondary = 0.0f;
     */
     
+    mLayoutGame = true;
     
 }
 
@@ -184,6 +162,7 @@ void GFXApp::LoadComplete() {
         mWindowTools.AddChild(mScreenTool);
     }
     
+    
     //
     /*
     if (mLightScene == NULL) {
@@ -204,21 +183,32 @@ void GFXApp::LoadComplete() {
         }
     }
     */
+    mLayoutGame = true;
     
 }
 
 void GFXApp::Update() {
     
-    
-    for (int i=0;i<4;i++) {
-        mTracker[i].Update();
-    }
-    
-    
     mCamera.mRotationPrimary += 1.0f;
     if (mCamera.mRotationPrimary >= 360.0f) {
         mCamera.mRotationPrimary -= 360.0f;
     }
+    
+    /*
+    if (mLayoutGame) {
+        if (mGameContainer) {
+            mLayoutGame = false;
+            //mGameContainer->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
+            
+            mWindowMain.RegisterFrameDidUpdate(mGameContainer);
+            mWindowMain.RegisterFrameDidUpdate(mGameContainer->mContainer);
+            mWindowMain.RegisterFrameDidUpdate(mGameContainer->mGame);
+            
+        }
+    }
+    */
+    
+    
 }
 
 void GFXApp::Draw3D() {
@@ -295,9 +285,7 @@ void GFXApp::Draw2D() {
     
     Graphics::SetColor(0.0f, 0.5f, 1.0f, 0.75f);
     
-    /*
-     
-     */
+    
     
 }
 
@@ -311,11 +299,12 @@ void GFXApp::Draw() {
                                   true, //Clear Color
                                   true); //Clear Depth
         
-        if (mGameContainer) mGameContainer->Draw3D();
-        if (mLevelSelect) mLevelSelect->mPage1->Draw3D();
+        //if (mGameContainer) mGameContainer->Draw3D();
+        //if (mLevelSelect) mLevelSelect->mPage1->Draw3D();
         
         
-        Draw3D();
+        //Draw3D();
+        
         
         
         
@@ -332,35 +321,24 @@ void GFXApp::Draw() {
         
         Draw2D();
         
-        
         Graphics::PipelineStateSetSpriteAlphaBlending();
-        
-        for (int i=0;i<4;i++) {
-            
-            float aX = mTracker[i].mX;
-            float aY = mTracker[i].mY;
-            
-            mChaosEgg3X.Draw(aX, aY, 1.25f, 40.0f);
-            
-            
-        }
-        
-        
         
     }
 }
 
 void GFXApp::SetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
     if (mGameContainer) {
-        mGameContainer->SetFrame(0.0f, 0.0f, pWidth, pHeight);
+        mGameContainer->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
     }
     if (mLevelSelect) {
-        mLevelSelect->SetFrame(0.0f, 0.0f, pWidth, pHeight);
-        mLevelSelect->mPage1->SetFrame(0.0f, 0.0f, pWidth, pHeight);
-        mLevelSelect->mPage2->SetFrame(pWidth, 0.0f, pWidth, pHeight);
-        mLevelSelect->mPage3->SetFrame(pWidth + pWidth, 0.0f, pWidth, pHeight);
+        mLevelSelect->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
+        mLevelSelect->mPage1->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
+        mLevelSelect->mPage2->SetFrame(gVirtualDevWidth, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
+        mLevelSelect->mPage3->SetFrame(gVirtualDevWidth + gVirtualDevWidth, 0.0f, gVirtualDevHeight, gVirtualDevHeight);
         
     }
+    
+    mLayoutGame = true;
 }
 
 void GFXApp::TouchDown(float pX, float pY, void *pData) {
@@ -439,4 +417,9 @@ void GFXApp::KeyUp(int pKey) {
 
 void GFXApp::SetDeviceSize(int pWidth, int pHeight) {
     
+    if (mGameContainer) {
+        mGameContainer->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
+    }
+    
+    mLayoutGame = true;
 }

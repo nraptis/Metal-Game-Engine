@@ -77,6 +77,7 @@ static float                                cRectBuffer[12];
 
 volatile static bool                        cGraphicsThreadLocked = false;
 
+
 Graphics::Graphics() {
     
 }
@@ -123,32 +124,6 @@ void Graphics::PreRender() {
 
 void Graphics::PostRender() {
     cCurrentRenderPass = -1;
-}
-
-bool Graphics::ThreadIsLocked() {
-    return cGraphicsThreadLocked;
-}
-
-void Graphics::ThreadLock() {
-    if (os_thread_lock_exists(gGraphicsThread) == false) {
-        gGraphicsThread = os_create_thread_lock();
-    }
-    
-    while (cGraphicsThreadLocked) {
-        Log("GFX Sleeping...\n");
-        usleep(256);
-    }
-    
-    cGraphicsThreadLocked = true;
-    os_lock_graphics_thread(gGraphicsThread);
-    if (gGraphicsInterface) {
-        gGraphicsInterface->SetContext();
-    }
-}
-
-void Graphics::ThreadUnlock() {
-    os_unlock_graphics_thread(gGraphicsThread);
-    cGraphicsThreadLocked = false;
 }
 
 void Graphics::DrawQuad(float pX1, float pY1, float pX2, float pY2, float pX3, float pY3, float pX4, float pY4) {

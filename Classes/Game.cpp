@@ -16,8 +16,8 @@ Game::Game() {
     
     gGame = this;
     
-    
-    
+    mRenderShiftX = 0.0f;
+    mRenderShiftY = 0.0f;
     
     SetWidth(GAME_WIDTH);
     SetHeight(GAME_HEIGHT);
@@ -29,7 +29,10 @@ Game::Game() {
     mDartSpawnX = gDeviceWidth2;
     mDartSpawnY = gDeviceHeight2;
     
-    mGravity = 0.01f;
+    mDartReleaseVelocityMin = 12.0f;
+    mDartReleaseVelocityMax = 42.0f;
+    
+    mGravity = 0.24f;
     
     mPlayAreaTop = 0.0f;
     mPlayAreaRight = 0.0f;
@@ -105,8 +108,6 @@ void Game::Layout() {
     
     mDartTouch = NULL;
     
-    
-    
     //We re-compute the center of our game window...
     float aAbsoluteCenterX = gAppBase->mWindowMain.mRoot.mX + gAppBase->mWindowMain.mRoot.mWidth2;
     float aAbsoluteCenterY = gAppBase->mWindowMain.mRoot.mY + gAppBase->mWindowMain.mRoot.mHeight2;
@@ -116,7 +117,6 @@ void Game::Layout() {
     float aGameHeight = mHeight - (gSafeAreaInsetTop + gSafeAreaInsetBottom);
     
     mDartSpawnX = (int)(gSafeAreaInsetLeft + (aGameWidth / 2.0f) + 0.5f);
-    
     
     float aSpawnShiftY = aGameHeight / 4.0f;
     if (aSpawnShiftY < 70.0f) aSpawnShiftY = 70.0f;
@@ -152,8 +152,8 @@ void Game::Layout() {
         // seem to work out, se we calibrate the camera
         // by easing towards the best distance...
         //
-        float aTestSceneLeft = ConvertScreenXToScene(0.0f);
-        float aTestSceneRight = ConvertScreenXToScene(mWidth);
+        float aTestSceneLeft = Convert2DXTo3D(0.0f);
+        float aTestSceneRight = Convert2DXTo3D(mWidth);
         float aExpectedWidth = 34.0f;
         float aActualWidth = (aTestSceneRight - aTestSceneLeft);
         if (aActualWidth < aExpectedWidth) {
@@ -163,9 +163,9 @@ void Game::Layout() {
         }
     }
     
-    //mHitZoneRight = ConvertScreenXToScene(mWidth + aHitZonePaddingH);
-    //mHitZoneBottom = ConvertScreenYToScene(mHeight + aHitZonePaddingV);
-    //mHitZoneLeft = ConvertScreenXToScene(-aHitZonePaddingH);
+    //mHitZoneRight = Convert2DXTo3D(mWidth + aHitZonePaddingH);
+    //mHitZoneBottom = Convert2DYTo3D(mHeight + aHitZonePaddingV);
+    //mHitZoneLeft = Convert2DXTo3D(-aHitZonePaddingH);
     
     mCamera->mDistance = mCamera->mDistance;
     Log("mCamera->mDistance = %f\n", mCamera->mDistance);
@@ -181,16 +181,16 @@ void Game::Layout() {
     float aHitZonePaddingH = 12.0f;
     float aHitZonePaddingV = 60.0f;
     
-    mHitZoneTop = ConvertScreenYToScene(-aHitZonePaddingV);
-    mHitZoneRight = ConvertScreenXToScene(mWidth + aHitZonePaddingH);
-    mHitZoneBottom = ConvertScreenYToScene(mHeight + aHitZonePaddingV);
-    mHitZoneLeft = ConvertScreenXToScene(-aHitZonePaddingH);
+    mHitZoneTop = Convert2DYTo3D(-aHitZonePaddingV);
+    mHitZoneRight = Convert2DXTo3D(mWidth + aHitZonePaddingH);
+    mHitZoneBottom = Convert2DYTo3D(mHeight + aHitZonePaddingV);
+    mHitZoneLeft = Convert2DXTo3D(-aHitZonePaddingH);
     
     
-    mGameAreaTop = ConvertScreenYToScene(0.0f);
-    mGameAreaRight = ConvertScreenXToScene(mWidth);
-    mGameAreaBottom = ConvertScreenYToScene(mHeight);
-    mGameAreaLeft = ConvertScreenXToScene(0.0f);
+    mGameAreaTop = Convert2DYTo3D(0.0f);
+    mGameAreaRight = Convert2DXTo3D(mWidth);
+    mGameAreaBottom = Convert2DYTo3D(mHeight);
+    mGameAreaLeft = Convert2DXTo3D(0.0f);
     
     float aGameAreaWidth = mGameAreaRight - mGameAreaLeft;
     float aGameAreaHeight = mGameAreaBottom - mGameAreaTop;
@@ -217,27 +217,27 @@ void Game::Layout() {
     mPlayAreaBottom = mDartSpawnY - aPlayAreaPadding;
     mPlayAreaLeft = gSafeAreaInsetLeft + aPlayAreaPadding;
     
-    mPlayAreaTop = ConvertScreenYToScene(mPlayAreaTop);
-    mPlayAreaRight = ConvertScreenXToScene(mPlayAreaRight);
-    mPlayAreaBottom = ConvertScreenYToScene(mPlayAreaBottom);
-    mPlayAreaLeft = ConvertScreenXToScene(mPlayAreaLeft);
+    mPlayAreaTop = Convert2DYTo3D(mPlayAreaTop);
+    mPlayAreaRight = Convert2DXTo3D(mPlayAreaRight);
+    mPlayAreaBottom = Convert2DYTo3D(mPlayAreaBottom);
+    mPlayAreaLeft = Convert2DXTo3D(mPlayAreaLeft);
     
     
     float aSpawnZonePadding = 80.0f;
     
-    mSpawnZoneTop = ConvertScreenYToScene(-aSpawnZonePadding);
-    mSpawnZoneRight = ConvertScreenXToScene(mWidth + aSpawnZonePadding);
+    mSpawnZoneTop = Convert2DYTo3D(-aSpawnZonePadding);
+    mSpawnZoneRight = Convert2DXTo3D(mWidth + aSpawnZonePadding);
     mSpawnZoneBottom = mPlayAreaBottom;
-    mSpawnZoneLeft = ConvertScreenXToScene(-aSpawnZonePadding);
+    mSpawnZoneLeft = Convert2DXTo3D(-aSpawnZonePadding);
     
     float aKillZonePaddingTop = gDeviceHeight * 0.75f;
     float aKillZonePaddingBottom = gDeviceHeight * 0.5f;
     float aKillZonePaddingSides = gDeviceWidth * 0.5f + 200.0f;
     
-    mKillZoneTop = ConvertScreenYToScene(-aKillZonePaddingTop);
-    mKillZoneRight = ConvertScreenXToScene(mWidth + aKillZonePaddingSides);
-    mKillZoneBottom = ConvertScreenYToScene(mHeight + aKillZonePaddingBottom);
-    mKillZoneLeft = ConvertScreenXToScene(-aKillZonePaddingSides);
+    mKillZoneTop = Convert2DYTo3D(-aKillZonePaddingTop);
+    mKillZoneRight = Convert2DXTo3D(mWidth + aKillZonePaddingSides);
+    mKillZoneBottom = Convert2DYTo3D(mHeight + aKillZonePaddingBottom);
+    mKillZoneLeft = Convert2DXTo3D(-aKillZonePaddingSides);
     
     
     
@@ -251,36 +251,35 @@ void Game::Layout() {
     
     
     
-    float aVelocityFactor = aGameAreaMaxDimension / aScreenMaxDimension;
+    //float aVelocityFactor = aGameAreaMaxDimension / aScreenMaxDimension;
     
     //Takes ONE second to fly across screen...
-    float aMaxVelocity2D = aScreenMaxDimension * (1.90f / 100.0f);
-    float aMinVelocity2D = aScreenMaxDimension * (0.38f / 100.0f);
-    float aGravity2D = aScreenMaxDimension * (0.012 / 100.0f);
+    //float aMaxVelocity2D = aScreenMaxDimension * (1.90f / 100.0f);
+    //float aMinVelocity2D = aScreenMaxDimension * (0.38f / 100.0f);
+    //float aGravity2D = aScreenMaxDimension * (0.012 / 100.0f);
     
-    mDartReleaseVelocityMin = aMinVelocity2D * aVelocityFactor;
-    mDartReleaseVelocityMax = aMaxVelocity2D * aVelocityFactor;
     
-    mGravity = aGravity2D * aVelocityFactor;
     
     
     //Log("Gravity = %.3f\n", mGravity);
     
     
     mBalloonList.Free();
-    for (float xp = 0.125f;xp<=0.975f;xp+= 0.15f) {
+    
+    
+    for (float aX=0.0f;aX<=mWidth;aX += 127.0f) {
      
-        for (float yp = 0.125f;yp<=0.975f;yp+= 0.15f) {
+        for (float aY=0.0f;aY<=mHeight;aY += 140.0f) {
             
             Balloon *aBalloon = new Balloon();
             
-            aBalloon->mX = mGameAreaLeft + (mGameAreaRight - mGameAreaLeft) * xp;
-            aBalloon->mY = mGameAreaTop + (mGameAreaBottom - mGameAreaTop) * yp;
+            aBalloon->mTransform.mX = aX;
+            aBalloon->mTransform.mY = aY;
             
-            FVec2 aPos1 = ConvertSceneCoordsToScreen(aBalloon->mX, aBalloon->mY);
-            FVec2 aPos2 = ConvertSceneCoordsToScreen(mCurrentDart->mX, mCurrentDart->mY);
+            FVec2 aPos1 = FVec2(aBalloon->mTransform.mX, aBalloon->mTransform.mY);
+            FVec2 aPos2 = FVec2(mCurrentDart->mTransform.mX, mCurrentDart->mTransform.mY);
             
-            if (Distance(aPos1, aPos2) < 150.0f) {
+            if (Distance(aPos1, aPos2) < 420.0f) {
                 delete aBalloon;
             } else {
                 mBalloonList.Add(aBalloon);
@@ -310,13 +309,13 @@ void Game::Layout() {
         aDart2->mColor.mRed = aPercent;
         
         
-        aDart1->mX = 2.5f * ((float)(i + 1));
-        aDart2->mX = -2.5f * ((float)(i + 1));
+        aDart1->mTransform.mX = mWidth2 + 20.0f * ((float)(i + 1));
+        aDart1->mTransform.mY = 300.0f;
         
+        aDart2->mTransform.mX = mWidth2 - 20.0f * ((float)(i + 1));
+        aDart2->mTransform.mY = 400.0f;
         
     }
-    
-    
 }
 
 void Game::Update() {
@@ -343,8 +342,10 @@ void Game::Update() {
         if (--mCurrentDartRespawnTimer <= 0) {
             mCurrentDartRespawnTimer = 0;
             mCurrentDart = new Dart();
-            FVec3 aDartPos = ConvertScreenCoordsToScene(mDartSpawnX, mDartSpawnY);
-            mCurrentDart->SetPos(aDartPos);
+            
+            mCurrentDart->mTransform.mX = mDartSpawnX;
+            mCurrentDart->mTransform.mY = mDartSpawnY;
+            
             mCurrentDart->SpawnAnimation();
         }
     }
@@ -402,16 +403,27 @@ void Game::Update() {
     
     
     if (mCurrentDart) {
-        FVec3 aDartPos = ConvertScreenCoordsToScene(mDartSpawnX + mDartPullX, mDartSpawnY + mDartPullY);
+        
+        FVec3 aDartPos = Convert2DCoordsTo3D(mDartSpawnX + mDartPullX, mDartSpawnY + mDartPullY);
+        
+        mCurrentDart->mTransform.mX = mDartSpawnX + mDartPullX;
+        mCurrentDart->mTransform.mY = mDartSpawnY + mDartPullY;
+        
+        mCurrentDart->mTransform.mRotation = mDartPullRotation;
+        
+        
+        /*
+        FVec3 aDartPos = Convert2DCoordsTo3D(mDartSpawnX + mDartPullX, mDartSpawnY + mDartPullY);
         mCurrentDart->SetPos(aDartPos);
-        float aSceneDirX = ConvertScreenXToScene(mDartSpawnX + mDartPullX) - ConvertScreenXToScene(mDartSpawnX);
-        float aSceneDirY = ConvertScreenYToScene(mDartSpawnY + mDartPullY) - ConvertScreenYToScene(mDartSpawnY);
+        float aSceneDirX = Convert2DXTo3D(mDartSpawnX + mDartPullX) - Convert2DXTo3D(mDartSpawnX);
+        float aSceneDirY = Convert2DYTo3D(mDartSpawnY + mDartPullY) - Convert2DYTo3D(mDartSpawnY);
         float aScenePullLength = aSceneDirX * aSceneDirX + aSceneDirY * aSceneDirY;
         if (aScenePullLength > SQRT_EPSILON) {
             mCurrentDart->mRotation2D = FaceTarget(aSceneDirX, aSceneDirY);
         } else {
-            mCurrentDart->mRotation2D = mDartPullRotation;
+            mCurrentDart->mTransform. mRotation2D = mDartPullRotation;
         }
+        */
     }
 }
 
@@ -425,7 +437,13 @@ void Game::Draw() {
     Graphics::PipelineStateSetSpriteAlphaBlending();
     Graphics::SetColor();
     
-    gApp->mGameAreaMarker.Draw(0.0f, 0.0f);
+    
+    Graphics::PipelineStateSetShape2DNoBlending();
+    Graphics::OutlineRectInside(0.0f, 0.0f, mWidth, mHeight, 2.0f);
+    
+    //gApp->mGameAreaMarker.Draw(0.0f, 0.0f);
+    
+    
     
     /*
     gApp->mChaosEgg1X.Draw(mWidth2 / 2.0f + 20.0f, 200.0f, 1.5f, 0.0f);
@@ -497,6 +515,7 @@ void Game::Draw() {
         aPullLength = (float)(sqrtf(aPullLength));
         aPullPercent = (aPullLength - mDartPullbackRangeMin) / (mDartPullbackRangeMax - mDartPullbackRangeMin);
     }
+    aPullPercent *= 1.10f;
     if (aPullPercent > 1.0f) aPullPercent = 1.0f;
     if (aPullPercent < 0.0f) aPullPercent = 0.0f;
     aPullPercent = FAnimation::EaseInCirc(aPullPercent) * 0.5f + aPullPercent * 0.5f;
@@ -643,38 +662,53 @@ void Game::Notify(void *pSender, const char *pNotification) {
     
 }
 
-FVec3 Game::ConvertScreenCoordsToScene(float pX, float pY) {
+void Game::Convert2DTransformTo3D(Transform2D *p2D, Transform3D *p3D) {
+ 
+    if (p2D == NULL) return;
+    if (p3D == NULL) return;
+    
+    p3D->mX = Convert2DXTo3D(p2D->mX + p2D->mOffsetX);
+    p3D->mY = Convert2DYTo3D(p2D->mY + p2D->mOffsetY);
+    //p3D->mZ = ???
+    
+    p3D->mScale = p2D->mScale * p2D->mOffsetScale;
+    
+    p3D->mScaleX = p2D->mScaleX;
+    p3D->mScaleY = p2D->mScaleY;
+    //p3D->mScaleZ = ???;
+    
+    p3D->mRotation2D = p2D->mRotation + p2D->mOffsetRotation;
+}
+
+FVec3 Game::Convert2DCoordsTo3D(float pX, float pY) {
     FVec3 aResult;
-    aResult.mX = ConvertScreenXToScene(pX);
-    aResult.mY = ConvertScreenYToScene(pY);
+    aResult.mX = Convert2DXTo3D(pX);
+    aResult.mY = Convert2DYTo3D(pY);
     aResult.mZ = 0.0f;
     return aResult;
 }
 
-float Game::ConvertScreenXToScene(float pX) {
-    return (mTransformAbsolute.mScale * (pX - mWidth2) / gDeviceWidth2) * mCamera->mDistance * mCamera->mAspect;
+float Game::Convert2DXTo3D(float pX) {
+    return (mTransformAbsolute.mScale * (pX - mWidth2 + mRenderShiftX) / gDeviceWidth2) * mCamera->mDistance * mCamera->mAspect;
 }
 
-float Game::ConvertScreenYToScene(float pY) {
-    return (mTransformAbsolute.mScale * (pY - mHeight2) / gDeviceHeight2) * mCamera->mDistance;
+float Game::Convert2DYTo3D(float pY) {
+    return (mTransformAbsolute.mScale * (pY - mHeight2 + mRenderShiftY) / gDeviceHeight2) * mCamera->mDistance;
 }
 
-
-FVec2 Game::ConvertSceneCoordsToScreen(float pX, float pY) {
+FVec2 Game::Convert3DCoordsTo2D(float pX, float pY) {
     FVec2 aResult;
-    aResult.mX = ConvertSceneXToScreen(pX);
-    aResult.mY = ConvertSceneYToScreen(pY);
+    aResult.mX = Convert3DXTo2D(pX);
+    aResult.mY = Convert3DYTo2D(pY);
     return aResult;
 }
 
-float Game::ConvertSceneXToScreen(float pX) {
-    return (pX * gDeviceWidth2) / (mTransformAbsolute.mScale * mCamera->mDistance * mCamera->mAspect) + mWidth2;
+float Game::Convert3DXTo2D(float pX) {
+    return (pX * gDeviceWidth2) / (mTransformAbsolute.mScale * mCamera->mDistance * mCamera->mAspect) + mWidth2 - mRenderShiftX;
 }
 
-float Game::ConvertSceneYToScreen(float pY) {
-    return ((pY * gDeviceHeight2) / (mTransformAbsolute.mScale * mCamera->mDistance)) + mHeight2;
-    
-    //return ((pY - mHeight2) / gDeviceHeight2) * mCamera->mDistance;
+float Game::Convert3DYTo2D(float pY) {
+    return ((pY * gDeviceHeight2) / (mTransformAbsolute.mScale * mCamera->mDistance)) + mHeight2 - mRenderShiftY;
 }
 
 void Game::ReleaseDart() {
@@ -682,13 +716,7 @@ void Game::ReleaseDart() {
     if (mCurrentDart) {
         
         //Dart *aDart = mCurrentDart;
-        
-        
         //mCurrentDart = NULL;
-        
-        
-        
-        
         
         //How much kapow do we give this dart?
         float aReleaseFactor = 0.0f;
@@ -696,8 +724,40 @@ void Game::ReleaseDart() {
         float aDiffX = -mDartPullX;
         float aDiffY = -mDartPullY;
         
-        float aSceneDirX = ConvertScreenXToScene(mDartSpawnX) - ConvertScreenXToScene(mDartSpawnX + mDartPullX);
-        float aSceneDirY = ConvertScreenYToScene(mDartSpawnY) - ConvertScreenYToScene(mDartSpawnY + mDartPullY);
+        float aPullLength = aDiffX * aDiffX + aDiffY * aDiffY;
+        
+        if (aPullLength > SQRT_EPSILON) {
+            
+            mDartList.Add(mCurrentDart);
+            
+            aPullLength = (float)(sqrtf(aPullLength));
+            
+            aDiffX /= aPullLength;
+            aDiffY /= aPullLength;
+            
+            
+            aReleaseFactor = (aPullLength - mDartPullbackRangeMin) / (mDartPullbackRangeMax - mDartPullbackRangeMin);
+            aReleaseFactor *= 1.10f;
+            if (aReleaseFactor < 0.0f) aReleaseFactor = 0.0f;
+            if (aReleaseFactor > 1.0f) aReleaseFactor = 1.0f;
+            
+            aReleaseFactor = FAnimation::EaseInCirc(aReleaseFactor) * 0.5f + aReleaseFactor * 0.5f;
+            
+            //Log("Release Factor: %f\n", aReleaseFactor);
+            
+            float aReleaseVelocity = mDartReleaseVelocityMin + (mDartReleaseVelocityMax - mDartReleaseVelocityMin) * aReleaseFactor;
+            
+            mCurrentDart->Fling(aDiffX * aReleaseVelocity, aDiffY * aReleaseVelocity);
+            
+        } else {
+            Log("Fizzle? This should never trigger...\n");
+            delete mCurrentDart;
+        }
+        
+        
+        /*
+        float aSceneDirX = Convert2DXTo3D(mDartSpawnX) - Convert2DXTo3D(mDartSpawnX + mDartPullX);
+        float aSceneDirY = Convert2DYTo3D(mDartSpawnY) - Convert2DYTo3D(mDartSpawnY + mDartPullY);
         
         float aPullLength = aDiffX * aDiffX + aDiffY * aDiffY;
         float aScenePullLength = aSceneDirX * aSceneDirX + aSceneDirY * aSceneDirY;
@@ -731,6 +791,7 @@ void Game::ReleaseDart() {
             Log("Fizzle? This should never trigger...\n");
             delete mCurrentDart;
         }
+        */
         
         mCurrentDart = NULL;
         mDartTouch = NULL;
@@ -804,10 +865,12 @@ void Game::ResetDartTouch() {
 
 bool Game::IsGameObjectOutsideKillZone(GameObject *pObject) {
     if (pObject != NULL) {
+        /*
         if (pObject->mX < mKillZoneLeft) { return true; }
         if (pObject->mX > mKillZoneRight) { return true; }
         if (pObject->mY < mKillZoneTop) { return true; }
         if (pObject->mY > mKillZoneBottom) { return true; }
+        */
     }
     return false;
 }

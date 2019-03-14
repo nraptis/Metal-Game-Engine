@@ -52,12 +52,6 @@ public:
     static void                             SetDeviceScale(float pScale);
     static void                             SetDeviceSize(float pWidth, float pHeight);
     
-    
-    
-    static bool                             ThreadIsLocked();
-    static void                             ThreadLock();
-    static void                             ThreadUnlock();
-    
     static void                             Flush();
     
     
@@ -66,18 +60,12 @@ public:
     static void                             PreRender();
     static void                             PostRender();
     
-    
-    
-    
     static void                             BufferSetIndicesShape();
     static void                             BufferSetIndicesShapeNode();
     static void                             BufferSetIndicesSprite();
     static void                             BufferSetIndicesSimpleModel();
     static void                             BufferSetIndicesSimpleModelIndexed();
     static void                             BufferSetIndicesModelIndexed();
-    
-    
-    
     
     static void                             BufferSetUniformsIndex(int pIndex);
     static void                             BufferSetPositionsIndex(int pIndex);

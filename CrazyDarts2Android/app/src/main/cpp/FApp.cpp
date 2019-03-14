@@ -17,7 +17,16 @@ PlatformGraphicsInterface *gGraphicsInterface = NULL;
 FApp::FApp() {
     gAppBase = this;
     
+    mFrameCaptureUpdateCount = 0;
+    
+    
+    mFrameCaptureDrawCount = 0;
+    
+    
+    
+    
     mDidInitialize = false;
+    mDidDetachFrameController = false;
     mDidUpdate = false;
     mActive = true;
     
@@ -52,16 +61,12 @@ FApp::FApp() {
     //
     mSkipDrawTick = 0;
     mUpdateMultiplier = 1;
-    mFPS = 60;
-    mFPSDisplay = 60;
-    mFPSDisplayTimer = 0;
-    
     
     mUpdatesPerSecond = 100.0f;
     //
     //
     //
-    Log("The Time Is [%d]\n", os_system_time());
+
     RecoverTime();
 }
 
@@ -151,44 +156,74 @@ void FApp::BaseSetSafeAreaInsets(int pInsetUp, int pInsetRight, int pInsetDown, 
     SetSafeAreaInsets(pInsetUp, pInsetRight, pInsetDown, pInsetLeft);
 }
 
+void AppFrameThread(void *pArgs) {
+    printf("AppFrameThread(%X)\m", pArgs);
+    
+    gAppBase->MainRunLoop();
+}
+
 //Externally, we are getting a "frame" ...
 void FApp::BaseFrame() {
 
     if (mDidInitialize == false) {
         BaseInitialize();
     }
+    
+    if (mDidDetachFrameController == false) {
+        mDidDetachFrameController = true;
+        os_detach_thread(AppFrameThread, (void*)0xB00BFACE);
+    }
 
     //for (int i=0;i<aUpdateCount;i++) {
-    BaseUpdate();
+    //BaseUpdate();
     //}
     
+    if (mDidUpdate) {
+        
+        ThrottleLock();
     
-    
-    if (gGraphicsInterface) {
-        gGraphicsInterface->SetContext();
+        if (gGraphicsInterface) {
+            gGraphicsInterface->SetContext();
+        }
+        gGraphicsInterface->Prerender();
+        Graphics::PreRender();
+        gAppBase->Prerender();
+        //
+        ////
+        //
+        BaseDraw();
+        //
+        ////
+        //
+        
+        gAppBase->Postrender();
+        Graphics::PostRender();
+        gGraphicsInterface->Postrender();
+        
+        gGraphicsInterface->Commit();
+        
+        ThrottleUnlock();
     }
-    gGraphicsInterface->Prerender();
-    Graphics::PreRender();
-    gAppBase->Prerender();
-    //
-    ////
-    //
-    BaseDraw();
-    //
-    ////
-    //
-    
-    gAppBase->Postrender();
-    Graphics::PostRender();
-    gGraphicsInterface->Postrender();
-    
-    gGraphicsInterface->Commit();
 }
 
 void FApp::BaseUpdate() {
     if (mDidInitialize == false) {
         BaseInitialize();
     }
+    
+    
+    int aSlot = 0;
+    if (mFrameCaptureUpdateCount < FRAME_TIME_CAPTURE_COUNT) {
+        aSlot = mFrameCaptureUpdateCount;
+        ++mFrameCaptureUpdateCount;
+    } else {
+        for (int i=1;i<FRAME_TIME_CAPTURE_COUNT;i++) {
+            mFrameCaptureUpdateTime[i-1] = mFrameCaptureUpdateTime[i];
+        }
+        aSlot = FRAME_TIME_CAPTURE_COUNT - 1;
+    }
+    mFrameCaptureUpdateTime[aSlot] = os_system_time();
+    
     
     //if (mLo == false) {
     //    gTouch.Reset();
@@ -197,9 +232,9 @@ void FApp::BaseUpdate() {
     
     mDidUpdate = true;
     
-    os_interface_mutex_enter();
+    InterfaceLock();
     gTouch.Update();
-    os_interface_mutex_leave();
+    InterfaceUnlock();
     
     
     Update();
@@ -209,25 +244,23 @@ void FApp::BaseUpdate() {
     mWindowTools.Update();
     
     core_sound_update();
-    
-    if (mFPSDisplayTimer == 0) {
-        
-        mFPSDisplay = mFPS;
-        mFPSDisplayTimer = 20;
-    } else {
-        --mFPSDisplayTimer;
-    }
+
     
 }
 
 void FApp::BaseDraw() {
-    if (mDidUpdate == false) {
-        BaseUpdate();
+
+    int aSlot = 0;
+    if (mFrameCaptureDrawCount < FRAME_TIME_CAPTURE_COUNT) {
+        aSlot = mFrameCaptureDrawCount;
+        ++mFrameCaptureDrawCount;
+    } else {
+        for (int i=1;i<FRAME_TIME_CAPTURE_COUNT;i++) {
+            mFrameCaptureDrawTime[i-1] = mFrameCaptureDrawTime[i];
+        }
+        aSlot = FRAME_TIME_CAPTURE_COUNT - 1;
     }
-    
-    //if (mDidLoad == false) {
-    //    return;
-    //}
+    mFrameCaptureDrawTime[aSlot] = os_system_time();
     
 
     //Graphics::ViewportSet(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
@@ -267,10 +300,9 @@ void FApp::BaseDraw() {
         Graphics::SetColor();
         Graphics::PipelineStateSetSpritePremultipliedBlending();
         Graphics::BufferSetIndicesSprite();
-        mSysFontBold.Draw(FString("FPS = ") + FString(mFPSDisplay), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 16.0f);
+        mSysFont.Draw(FString("FPS = ") + FString(GetFPS()), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 6.0f);
+        mSysFont.Draw(FString("UPS = ") + FString(GetUPS()), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 6.0f + 42.0f);
     }
-    
-    
     
     if (mIsLoadingComplete && Graphics::RenderPass() == GFX_RENDER_PASS_2D_MAIN) {
         Graphics::PipelineStateSetShape2DAlphaBlending();
@@ -409,8 +441,7 @@ void FApp::BaseLoadComplete() {
     mSysFontBold.SetStride(63, -5, 137); mSysFontBold.SetStride(64, -10, 218); mSysFontBold.SetStride(65, -17, 162); mSysFontBold.SetStride(66, 0, 162); mSysFontBold.SetStride(67, -6, 162); mSysFontBold.SetStride(68, -1, 162); mSysFontBold.SetStride(69, -1, 149); mSysFontBold.SetStride(70, 0, 137); mSysFontBold.SetStride(71, -6, 174); mSysFontBold.SetStride(72, 0, 162); mSysFontBold.SetStride(73, -2, 62); mSysFontBold.SetStride(74, -13, 125); mSysFontBold.SetStride(75, 0, 162); mSysFontBold.SetStride(76, 0, 137); mSysFontBold.SetStride(77, -1, 187); mSysFontBold.SetStride(78, 0, 162); mSysFontBold.SetStride(79, -7, 174); mSysFontBold.SetStride(80, -1, 149); mSysFontBold.SetStride(81, -7, 174); mSysFontBold.SetStride(82, 0, 162); mSysFontBold.SetStride(83, -9, 149); mSysFontBold.SetStride(84, -11, 137); mSysFontBold.SetStride(85, -1, 162); mSysFontBold.SetStride(86, -17, 149); mSysFontBold.SetStride(87, -16, 211); mSysFontBold.SetStride(88, -16, 149); mSysFontBold.SetStride(89, -17, 149); mSysFontBold.SetStride(90, -14, 137); mSysFontBold.SetStride(91, -1, 75); mSysFontBold.SetStride(92, -17, 62); mSysFontBold.SetStride(93, -12, 75); mSysFontBold.SetStride(94, -4, 131); mSysFontBold.SetStride(95, -19, 125); mSysFontBold.SetStride(96, -12, 75); mSysFontBold.SetStride(97, -9, 125); mSysFontBold.SetStride(98, -2, 137); mSysFontBold.SetStride(99, -7, 125); mSysFontBold.SetStride(100, -8, 137); mSysFontBold.SetStride(101, -10, 125); mSysFontBold.SetStride(102, -14, 75); mSysFontBold.SetStride(103, -8, 137); mSysFontBold.SetStride(104, -1, 137); mSysFontBold.SetStride(105, -1, 62); mSysFontBold.SetStride(106, -27, 62); mSysFontBold.SetStride(107, -2, 125); mSysFontBold.SetStride(108, -1, 62); mSysFontBold.SetStride(109, -3, 199); mSysFontBold.SetStride(110, -1, 137); mSysFontBold.SetStride(111, -8, 137); mSysFontBold.SetStride(112, -2, 137); mSysFontBold.SetStride(113, -7, 137); mSysFontBold.SetStride(114, -2, 87); mSysFontBold.SetStride(115, -11, 125); mSysFontBold.SetStride(116, -13, 75); mSysFontBold.SetStride(117, -1, 137); mSysFontBold.SetStride(118, -15, 125); mSysFontBold.SetStride(119, -16, 174); mSysFontBold.SetStride(120, -15, 125); mSysFontBold.SetStride(121, -15, 123); mSysFontBold.SetStride(122, -13, 112); mSysFontBold.SetStride(123, -10, 87); mSysFontBold.SetStride(124, 3, 63); mSysFontBold.SetStride(125, -12, 87); mSysFontBold.SetStride(126, -9, 131); mSysFontBold.SetStride(164, -11, 125); mSysFontBold.SetStride(167, -10, 125); mSysFontBold.SetStride(169, -18, 165); mSysFontBold.SetStride(188, -7, 187); mSysFontBold.SetStride(189, -7, 187); mSysFontBold.SetStride(198, -26, 224);
     
     LoadComplete();
-    
-    
+
     BaseSetDeviceSize(gDeviceWidth, gDeviceHeight);
     BaseSetVirtualFrame(gVirtualDevX, gVirtualDevY, gVirtualDevWidth, gVirtualDevHeight);
     BaseSetSafeAreaInsets(gSafeAreaInsetTop, gSafeAreaInsetRight, gSafeAreaInsetBottom, gSafeAreaInsetLeft);
@@ -442,93 +473,93 @@ void FApp::KeyUp(int pKey) {
 }
 
 void FApp::BaseTouchDown(float pX, float pY, void *pData) {
-    os_interface_mutex_enter();
+    InterfaceLock();
     gTouch.BaseTouchDown(pX, pY, pData);
-    os_interface_mutex_leave();
+    InterfaceUnlock();
 }
 
 void FApp::BaseTouchMove(float pX, float pY, void *pData) {
-    os_interface_mutex_enter();
+    InterfaceLock();
     gTouch.BaseTouchMove(pX, pY, pData);
-    os_interface_mutex_leave();
+    InterfaceUnlock();
 }
 
 void FApp::BaseTouchUp(float pX, float pY, void *pData) {
-    os_interface_mutex_enter();
+    InterfaceLock();
     gTouch.BaseTouchUp(pX, pY, pData);
-    os_interface_mutex_leave();
+    InterfaceUnlock();
 }
 
 void FApp::BaseTouchCanceled(float pX, float pY, void *pData) {
-    os_interface_mutex_enter();
+    InterfaceLock();
     gTouch.BaseTouchCanceled(pX, pY, pData);
-    os_interface_mutex_leave();
+    InterfaceUnlock();
 }
 
 void FApp::BaseTouchDownDroid(float pX, float pY, int pIndex, int pCount) {
-    os_interface_mutex_enter();
+    InterfaceLock();
     gTouch.BaseTouchDownDroid(pX, pY, pIndex, pCount);
-    os_interface_mutex_leave();
+    InterfaceUnlock();
 }
 
 void FApp::BaseTouchMoveDroid(float pX, float pY, int pIndex, int pCount) {
-    os_interface_mutex_enter();
+    InterfaceLock();
     gTouch.BaseTouchMoveDroid(pX, pY, pIndex, pCount);
-    os_interface_mutex_leave();
+    InterfaceUnlock();
 }
 
 void FApp::BaseTouchUpDroid(float pX, float pY, int pIndex, int pCount) {
-    os_interface_mutex_enter();
+    InterfaceLock();
     gTouch.BaseTouchUpDroid(pX, pY, pIndex, pCount);
-    os_interface_mutex_leave();
+    InterfaceUnlock();
 }
 
 void FApp::BaseTouchCanceledDroid(float pX, float pY, int pIndex, int pCount) {
-    os_interface_mutex_enter();
+    InterfaceLock();
     gTouch.BaseTouchCanceledDroid(pX, pY, pIndex, pCount);
-    os_interface_mutex_leave();
+    InterfaceUnlock();
 }
 
 void FApp::BaseMouseDown(float pX, float pY, int pButton) {
-    os_interface_mutex_enter();
+    InterfaceLock();
     gTouch.BaseMouseDown(pX, pY, pButton);
-    os_interface_mutex_leave();
+    InterfaceUnlock();
     
 }
 
 void FApp::BaseMouseMove(float pX, float pY) {
-    os_interface_mutex_enter();
+    InterfaceLock();
     gTouch.BaseMouseMove(pX, pY);
-    os_interface_mutex_leave();
+    InterfaceUnlock();
 }
 
 void FApp::BaseMouseUp(float pX, float pY, int pButton) {
-    os_interface_mutex_enter();
+    InterfaceLock();
     gTouch.BaseMouseUp(pX, pY, pButton);
-    os_interface_mutex_leave();
+    InterfaceUnlock();
 }
 
 void FApp::BaseMouseWheel(int pDirection) {
-    os_interface_mutex_enter();
+    InterfaceLock();
     gTouch.BaseMouseWheel(pDirection);
-    os_interface_mutex_leave();
+    InterfaceUnlock();
 }
 
 void FApp::BaseKeyDown(int pKey) {
     if ((pKey >= 0) && (pKey < 256)) {
-        os_interface_mutex_enter();
+        InterfaceLock();
         gKeyPressed[pKey] = true;
         gTouch.EnqueueKeyDown(pKey);
-        os_interface_mutex_leave();
+        InterfaceUnlock();
     }
 }
 
 void FApp::BaseKeyUp(int pKey) {
     if ((pKey >= 0) && (pKey < 256)) {
-        os_interface_mutex_enter();
+        InterfaceLock();
         gKeyPressed[pKey] = false;
         gTouch.EnqueueKeyUp(pKey);
-        os_interface_mutex_leave();
+        InterfaceUnlock();
     }
 }
 
@@ -626,9 +657,9 @@ void FApp::BaseInactive() {
         ProcessTouchFlush();
         Inactive();
         
-        os_interface_mutex_enter();
+        InterfaceLock();
         gTouch.Inactive();
-        os_interface_mutex_leave();
+        InterfaceUnlock();
         
         mWindowMain.Inactive();
         mWindowModal.Inactive();
@@ -650,9 +681,9 @@ void FApp::BaseActive() {
             gTextureCache.ReloadAllTextures();
         }
         
-        os_interface_mutex_enter();
+        InterfaceLock();
         gTouch.Active();
-        os_interface_mutex_leave();
+        InterfaceUnlock();
         
         mWindowMain.Active();
         mWindowModal.Active();
@@ -712,6 +743,18 @@ void FApp::SystemUnlock() {
     os_unlock_thread(mSystemLock);
 }
 
+
+void FApp::InterfaceLock() {
+    if (os_thread_lock_exists(mInterfaceLock) == false) {
+        mInterfaceLock = os_create_thread_lock();
+    }
+    os_lock_thread(mInterfaceLock);
+}
+
+void FApp::InterfaceUnlock() {
+    os_unlock_thread(mInterfaceLock);
+}
+
 void FApp::SystemProcess() {
     if (gGraphicsInterface) {
         SystemLock();
@@ -720,18 +763,17 @@ void FApp::SystemProcess() {
     }
 }
 
-void FApp::Throttle() {
-
-    ThrottleLock();
-
+void FApp::MainRunLoop() {
     
-    FrameController();
-    ThrottleUnlock();
+     while (gGraphicsInterface->IsReady() == false) {
+         printf("Waiting for Graphics Module...\n");
+         usleep(400);
+     }
     
-    
+     while (!ShouldQuit()) {
+         FrameController();
+     }
 }
-
-
 
 void FApp::RecoverTime() {
     mFrame.mBaseUpdateTime = os_system_time();
@@ -739,72 +781,6 @@ void FApp::RecoverTime() {
     mFrame.mBreakUpdate = true;
     mFrame.mDesiredUpdate = 0;
 }
-
-void FApp::ThrottleUpdate() {
-    
-    BaseFrame();
-    gAppBase->BaseUpdate();
-}
-
-void ThrottleDrawThread() {
-    if (gGraphicsInterface) {
-        
-        //Graphics::ThreadLock();
-        
-        if (gGraphicsInterface) {
-            gGraphicsInterface->SetContext();
-        }
-        gGraphicsInterface->Prerender();
-        Graphics::PreRender();
-        gAppBase->Prerender();
-        //
-        ////
-        //
-        gAppBase->BaseDraw();
-        //
-        ////
-        //
-        gAppBase->Postrender();
-        Graphics::PostRender();
-        gGraphicsInterface->Postrender();
-        
-        gGraphicsInterface->Commit();
-        
-        //Graphics::ThreadUnlock();
-        
-        
-    }
-}
-
-void FApp::ThrottleDraw() {
-    //void (*pFunc)() = FApp::ThrottleDrawThread();
-    //void (*pFunc)() = FApp::ThrottleDrawThread();
-    
-    //void (*aFunc)() = ThrottleDrawThread;
-    //os_execute_on_main_thread(aFunc);
-    
-    //void (*aFunc)() = ThrottleDrawThread;
-    //os_execute_on_main_thread(ThrottleDrawThread);
-    ThrottleDrawThread();
-    
-    /*
-     Graphics::ThreadLock();
-     
-     if (gGraphicsInterface) {
-     gGraphicsInterface->Prerender();
-     
-     AppShellDraw();
-     
-     gGraphicsInterface->Render();
-     gGraphicsInterface->Postrender();
-     gGraphicsInterface->Commit();
-     }
-     
-     Graphics::ThreadUnlock();
-     */
-    
-}
-
 
 void FApp::FrameController() {
     static unsigned int aLastDrawTime = 0;
@@ -857,7 +833,7 @@ void FApp::FrameController() {
         mFrame.mDesiredUpdate *= (float)mUpdatesPerSecond / 100.0f;
         
         if (mFrame.mDesiredUpdate < mFrame.mCurrentUpdateNumber) {
-            CatchUp();
+            RecoverTime();
         }
         
         mFrame.mBreakUpdate=false;
@@ -867,10 +843,7 @@ void FApp::FrameController() {
         unsigned int aFrameStart = os_system_time();
         
         if (aUpdateCheck > 0) {
-            int aAccum = 0;
-            //
-            // Update until we've reached our desired update number...
-            //
+            
             while (mFrame.mCurrentUpdateNumber < (int)mFrame.mDesiredUpdate && !mFrame.mBreakUpdate) {
                 aShouldDraw = true;
                 
@@ -883,83 +856,10 @@ void FApp::FrameController() {
                 // Process the actual update
                 //
                 mFrame.mCurrentUpdateNumber++;
-                ThrottleUpdate();
                 
-                if (mUpdateMultiplier>1) {
-                    for (int aCount=1;aCount<mUpdateMultiplier;aCount++) {
-                        mFrame.mCurrentUpdateNumber += 1;
-                        ThrottleUpdate();
-                    }
-                } else {
-                    // If we're updating too much, we want to force drawing at 4FPS.
-                    if ( ++aAccum > (mUpdatesPerSecond / 4.0f)) {
-                        CatchUp();
-                        break;
-                    }
-                }
-                
-                //if (mInBackground && mIdleWhenInBackground) break;
-                //OS_Core::Sleep(0);
-            }
-            
-            //*
-            {
-                //
-                // If we've finished our updates, draw!
-                // (But only draw if something happened, or
-                // the draw would be completely redundant)
-                //
-                static unsigned int aLastDraw = 0;
-                
-                //VSync stuff? Doesn't work...
-                if (gGraphicsInterface->IsVSyncReady() == false) {
-                    aShouldDraw = false;
-                }
-                
-                if (mSkipDrawTick > 0) {
-                    mSkipDrawTick--;
-                    aShouldDraw = false;
-                }
-                
-                if (aShouldDraw) {
-                    unsigned int aBeforeDraw = os_system_time();
-                    
-                    ThrottleDraw();
-                    
-                    aLastDraw = os_system_time();
-                    
-                    aLastDrawTime=_max(0, aLastDraw - aBeforeDraw);
-                    
-                    //
-                    // Calculate FPS...
-                    // This gets clipped down to 60, the vertical refresh, because
-                    // when we lower the app's update time, the FPS goes through the
-                    // roof.  I am not sure why this happens at this point... I would
-                    // think it was from skipped ThrottleUpdate calls, but if we skip
-                    // those, then ShouldDraw shouldn't be happening at all...
-                    //
-                    unsigned int aFrameTime = _max(0, os_system_time() - aFrameStart);
-                    
-                    if (aFrameTime > 0) {
-                        //mFPS = _min(60, 1000 / aFrameTime);
-                        mFPS = 1000 / aFrameTime;
-                        //if (mFPS > 57) {
-                        //    mFPS = 60;
-                        //}
-                        
-                        static int aFPSTimer = 0;
-                        aFPSTimer++;
-                        if (aFPSTimer >= 60) {
-                            aFPSTimer = 0;
-                            //Log("FPS: %d\n", mFPS);
-                        }
-                    }
-                    //TODO:
-                    //
-                    // If we're loading, draw less frequently.
-                    //
-                    //if (!mLoadComplete) mSkipDraw=5;
-                }
+                ThrottleLock();
+                BaseUpdate();
+                ThrottleUnlock();
             }
         }
     }
@@ -978,6 +878,30 @@ void FApp::FrameController() {
 
 
 
+int FApp::GetUPS() {
+    int aResult = 100;
+    if (mFrameCaptureUpdateCount > 2) {
+        int aTimeDiff = (int)(mFrameCaptureUpdateTime[mFrameCaptureUpdateCount - 1] - mFrameCaptureUpdateTime[0]);
+        float aSecondsEllapsed = ((float)aTimeDiff) / 1000.0f;
+        if (aTimeDiff > 0) {
+            aResult = (int)(((float)mFrameCaptureUpdateCount) / aSecondsEllapsed);
+            
+        }
+    }
+    return aResult;
+}
 
+int FApp::GetFPS() {
+    int aResult = 60;
+    if (mFrameCaptureDrawCount > 2) {
+        int aTimeDiff = (int)(mFrameCaptureDrawTime[mFrameCaptureDrawCount - 1] - mFrameCaptureDrawTime[0]);
+        float aSecondsEllapsed = ((float)aTimeDiff) / 1000.0f;
+        if (aTimeDiff > 0) {
+            aResult = (int)(((float)mFrameCaptureDrawCount) / aSecondsEllapsed);
+            
+        }
+    }
+    return aResult;
+}
 
 
