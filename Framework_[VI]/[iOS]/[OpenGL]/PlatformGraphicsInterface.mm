@@ -32,7 +32,7 @@ float PlatformGraphicsInterface::GetScale() {
 
 bool PlatformGraphicsInterface::IsReady() {
     if (gOpenGLEngine != NULL) {
-        return gOpenGLEngine->IsReady();
+        return true;
     }
     return false;
 }

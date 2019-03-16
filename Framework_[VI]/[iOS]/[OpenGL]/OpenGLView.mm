@@ -47,8 +47,16 @@
     //
     //
     //
+    
+    //TODO: Make Screen Scale Right...
+    
     _screenScale = (int)([UIScreen mainScreen].scale + 0.5f);
+    //_screenScale = 1;
+    
+    
+    Graphics::SetDeviceScale(_screenScale);
     Log("SCREEN SCALE: [[%d]]\n", _screenScale);
+    
     //
     
     self.multipleTouchEnabled = YES;
@@ -56,6 +64,9 @@
     
     _eaglLayer = (CAEAGLLayer*) self.layer;
     _eaglLayer.opaque = YES;
+    
+    NSLog(@"EAGLE Scale: %f\n", _eaglLayer.contentsScale);
+    
     gOpenGLLayer = _eaglLayer;
     
     EAGLRenderingAPI api = kEAGLRenderingAPIOpenGLES2;

@@ -14,6 +14,9 @@ GameContainer *gGameContainer = NULL;
 
 GameContainer::GameContainer() {
     
+    mName = "{{Game Container}}";
+    
+    
     SetWidth(1000.0f);
     SetHeight(1000.0f);
     
@@ -28,13 +31,10 @@ GameContainer::GameContainer() {
     //mContainer->SetTransformRotation(2.0f);
     
     AddChild(mContainer);
-    
+    mContainer->mName = "{Container}";
     
     mGame = new Game();
     mContainer->AddChild(mGame);
-    
-    mInitialLayoutTick = 2;
-    mLayoutRefresh = true;
     
 }
 
@@ -84,33 +84,9 @@ void GameContainer::Layout() {
         
         
     }
-    
-    mLayoutRefresh = true;
-    
-    //float aWidth = mWidth;
-    
 }
 
 void GameContainer::Update() {
-    
-    if (mInitialLayoutTick > 0) {
-        mInitialLayoutTick--;
-        if (mInitialLayoutTick <= 0) {
-            mLayoutRefresh = true;
-            
-        }
-    }
-    if (mLayoutRefresh) {
-        mLayoutRefresh = false;
-        
-        //mWindow->RegisterFrameDidUpdate(mContainer);
-        //mWindow->RegisterFrameDidUpdate(mGame);
-        
-        mContainer->BaseLayout();
-        mGame->BaseLayout();
-        
-        
-    }
     
 }
 

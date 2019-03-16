@@ -54,6 +54,9 @@ static float                                cDeviceScale = 1.0f;
 static float                                cClipRectBase[4];
 static bool                                 cClipEnabled = false;
 
+static bool                                 cDidTearDown = false;
+
+
 
 FSpriteBufferCache                          cSpriteCache;
 
@@ -95,8 +98,37 @@ void Graphics::Initialize() {
     
 }
 
-void Graphics::SetDeviceScale(float pScale) {
+// When we get a new content, we SET UP.
+void Graphics::SetUp() {
     
+    Log("Graphics::SetUp(torn:%d)\n", cDidTearDown);
+    
+    gOpenGLEngine->SetUp();
+    
+    if (cDidTearDown) {
+        cDidTearDown = false;
+        
+        gOpenGLEngine->SetUp();
+        gTextureCache.ReloadAllTextures();
+        
+    }
+    
+}
+
+//Before we lose out content, we TEAR DOWN.
+void Graphics::TearDown() {
+    
+    Log("Graphics::TearDown()\n");
+    
+    cDidTearDown = true;
+    gTextureCache.UnloadAllTextures();
+    
+    
+}
+
+
+void Graphics::SetDeviceScale(float pScale) {
+    cDeviceScale = pScale;
 }
 
 void Graphics::SetDeviceSize(float pWidth, float pHeight) {
@@ -466,15 +498,15 @@ void Graphics::DrawBox(float x1, float y1, float z1, float x2, float y2, float z
 }
 
 void Graphics::DepthEnable() {
-    
+    glEnable(GL_DEPTH_TEST);
 }
 
 void Graphics::DepthDisable() {
-    
+    glDisable(GL_DEPTH_TEST);
 }
 
 void Graphics::DepthClear() {
-    
+    glClear(GL_DEPTH_BUFFER_BIT);
 }
 
 void Graphics::Clear(float pRed, float pGreen, float pBlue, float pAlpha) {
@@ -516,7 +548,11 @@ void Graphics::ArrayBufferData(int pIndex) {
 }
 
 void Graphics::ArrayBufferData(int pIndex, int pOffset) {
-    
+    if (cShaderProgram == NULL) {
+        Log("ArrayBufferPositionsS Fails...\n");
+        return;
+    }
+    cShaderProgram->ArrayBufferData(pIndex, pOffset);
 }
 
 void Graphics::ArrayBufferPositions(int pIndex) {
@@ -524,19 +560,11 @@ void Graphics::ArrayBufferPositions(int pIndex) {
 }
 
 void Graphics::ArrayBufferPositions(int pIndex, int pOffset) {
-    
     if (cShaderProgram == NULL) {
         Log("ArrayBufferPositionsS Fails...\n");
         return;
     }
-    
     cShaderProgram->ArrayBufferPositions(pIndex, pOffset);
-
-    //virtual void                ArrayBufferData(int pIndex, int pSize, int pOffset);
-    //virtual void                ArrayBufferPositions(int pIndex, int pSize,int pOffset);
-    //virtual void                ArrayBufferTextureCoords(int pIndex, int pSize,int pOffset);
-    //virtual void                ArrayBufferNormals(int pIndex, int pSize,int pOffset);
-    
 }
 
 void Graphics::ArrayBufferTextureCoords(int pIndex) {
@@ -544,13 +572,24 @@ void Graphics::ArrayBufferTextureCoords(int pIndex) {
 }
 
 void Graphics::ArrayBufferTextureCoords(int pIndex, int pOffset) {
-    
     if (cShaderProgram == NULL) {
         Log("ArrayBufferTextureCoordsS Fails...\n");
         return;
     }
-    
     cShaderProgram->ArrayBufferTextureCoords(pIndex, pOffset);
+}
+
+
+void Graphics::ArrayBufferColors(int pIndex) {
+    ArrayBufferColors(pIndex, 0);
+}
+
+void Graphics::ArrayBufferColors(int pIndex, int pOffset) {
+    if (cShaderProgram == NULL) {
+        Log("ArrayBufferColorsS Fails...\n");
+        return;
+    }
+    cShaderProgram->ArrayBufferColors(pIndex, pOffset);
 }
 
 void Graphics::ArrayBufferNormals(int pIndex) {
@@ -569,17 +608,15 @@ void Graphics::ArrayBufferTangents(int pIndex, int pOffset) {
     
 }
 
-
-
 void Graphics::ArrayWriteData(void *pData, int pCount) {
     if (pCount > 0) {
         cVertexCache.Get(pCount);
         if (cVertexCache.mResult.mSuccess) {
-            int aPositionsBufferIndex = cVertexCache.mResult.mBufferIndex;
-            int aPositionsBufferOffset = cVertexCache.mResult.mBufferOffset;
+            int aDataBufferIndex = cVertexCache.mResult.mBufferIndex;
+            int aDataBufferOffset = cVertexCache.mResult.mBufferOffset;
             
-            BufferArrayWrite(aPositionsBufferIndex, pData, aPositionsBufferOffset, pCount);
-            ArrayBufferPositions(aPositionsBufferIndex, aPositionsBufferOffset);
+            BufferArrayWrite(aDataBufferIndex, pData, aDataBufferOffset, pCount);
+            ArrayBufferData(aDataBufferIndex, aDataBufferOffset);
         }
     }
 }
@@ -650,7 +687,11 @@ int Graphics::BufferArrayGenerate(int pLength) {
     if (pLength > 0) {
         glGenBuffers(1, &aBindIndex);
         if (aBindIndex != 0) {
+            
+            if (pLength > 128) {
             Log("Create Buffer [%d] Sized[%d]\n", aBindIndex, pLength);
+            }
+            
             glBindBuffer(GL_ARRAY_BUFFER, aBindIndex);
             glBufferData(GL_ARRAY_BUFFER, pLength, 0, GL_DYNAMIC_DRAW);
         } else {
@@ -662,18 +703,11 @@ int Graphics::BufferArrayGenerate(int pLength) {
         Log("Creating Invalid Sized Buffer... [%d]\n", pLength);
     }
     
-    
-    
     return aBindIndex;
-    
     
     //glBindBuffer(GL_ARRAY_BUFFER, pBufferIndex);
     //glBufferData(GL_ARRAY_BUFFER, pSize * 4, pData, GL_STATIC_DRAW);
-    
     //GL_ELEMENT_ARRAY_BUFFER
-    
-    //
-    
 }
 
 int Graphics::BufferArrayGenerate(void *pData, int pLength) {
@@ -691,7 +725,7 @@ void Graphics::BufferArrayWrite(int pIndex, void *pData, int pLength) {
 }
 
 void Graphics::BufferArrayWrite(int pIndex, void *pData, int pOffset, int pLength) {
-    glBindBuffer(GL_ARRAY_BUFFER, pIndex);
+    if (pIndex != -1) { glBindBuffer(GL_ARRAY_BUFFER, pIndex); }
     glBufferSubData(GL_ARRAY_BUFFER, pOffset, pLength, pData);
     
     //glBufferSubData (GLenum target, GLintptr offset, GLsizeiptr size, const GLvoid* data) OPENGLES_DEPRECATED(ios(3.0, 12.0), tvos(9.0, 12.0));
@@ -711,7 +745,7 @@ int Graphics::BufferElementGenerate(int pLength) {
         glGenBuffers(1, &aBindIndex);
         if (aBindIndex != -1) {
             Log("Create Element Buffer [%d] Sized[%d]\n", aBindIndex, pLength);
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, pLength, 0, GL_DYNAMIC_DRAW);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, pLength, 0, GL_STATIC_DRAW);
         } else {
             Log("Failed To Make Element Buffer[%d]\n", pLength);
         }
@@ -845,6 +879,15 @@ void Graphics::ClipEnable() {
     if (cClipEnabled == false) {
         cClipEnabled = true;
         
+
+        glEnable(GL_SCISSOR_TEST);
+        
+        /*
+        glEnable(GLenum(GL_SCISSOR_TEST))
+        glScissor(GLint(clipRect.origin.x), GLint(clipRect.origin.y), GLsizei(clipRect.size.width), GLsizei(clipRect.size.height))
+        */
+        
+        
     }
 }
 
@@ -852,7 +895,8 @@ void Graphics::ClipDisable() {
     //if (cClipEnabled) {
     cClipEnabled = false;
     //Clip(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
-    
+
+    glDisable(GL_SCISSOR_TEST);
 }
 
 
@@ -860,6 +904,7 @@ void Graphics::ClipDisable() {
 //static double cClipPlane[4][4] = { { 0.0f, 1.0f, 0.0f, 0.0f }, { 1.0f, 0.0f, 0.0f, 0.0f }, { -1.0f, 0.0f, 0.0f, 512.0f }, { 0.0f, -1.0f, 0.0f, 512.0f } };
 
 void Graphics::Clip(float pX, float pY, float pWidth, float pHeight) {
+    
     int aMaxX = gDeviceWidth * cDeviceScale;
     int aMaxY = gDeviceHeight * cDeviceScale;
     int aLeft = roundf(pX);
@@ -887,13 +932,8 @@ void Graphics::Clip(float pX, float pY, float pWidth, float pHeight) {
     if (aWidth < 0) { return; }
     if (aHeight < 0) { return; }
     
-    /*
-    cScissorRect.x = NSUInteger(aLeft);
-    cScissorRect.y = NSUInteger(aTop);
-    cScissorRect.width = NSUInteger(aWidth);
-    cScissorRect.height = NSUInteger(aHeight);
-    [gMetalEngine.renderCommandEncoder setScissorRect: cScissorRect];
-    */
+    glScissor(aLeft, gDeviceHeight * cDeviceScale - (aTop + aHeight), aWidth, aHeight);
+    
 }
 
 void Graphics::ClipSetAppFrame(float pX, float pY, float pWidth, float pHeight) {
@@ -960,7 +1000,9 @@ void Graphics::DrawModelIndexed(float *pPositions, int pPositionsCount, float *p
     //DrawTriangles(pCount);
     
     
-    DrawTrianglesIndexed(pIndex, pCount / 3);
+    //DrawTrianglesIndexed(pIndex, pCount / 3);
+    DrawTrianglesIndexed(pIndex, pCount);
+    
 }
 
 void Graphics::DrawModelIndexed(float *pPositions, int pPositionsCount, float *pTextureCoords, int pTextureCoordsCount, float *pNormals, int pNormalsCount, GFX_MODEL_INDEX_TYPE *pIndex, FTexture *pTexture, int pStartIndex, int pEndIndex) {
@@ -1020,32 +1062,42 @@ void Graphics::DrawTriangleStrips(int pCount) {
 }
 
 void Graphics::DrawTrianglesIndexed(GFX_MODEL_INDEX_TYPE *pIndices, int pCount) {
-    if (pIndices != NULL && pCount > 0) {
-        cIndexCache.Get(sizeof(GFX_MODEL_INDEX_TYPE) * pCount);
-        if (cIndexCache.mResult.mSuccess) {
-            int aIndexBufferIndex = cIndexCache.mResult.mBufferIndex;
-            int aIndexBufferOffset = cIndexCache.mResult.mBufferOffset;
-            
-            /*
-            BufferBindingWrapper *aWrapper = (__bridge BufferBindingWrapper *)cBufferBindMap.Get(aIndexBufferIndex);
-            if (aWrapper != NULL) {
-                if (aWrapper.buffer) {
-                    unsigned char *aAddress = (unsigned char *)aWrapper.buffer.contents;
-                    aAddress = &(aAddress[aIndexBufferOffset]);
-                    memcpy(aAddress, pIndices, pCount * sizeof(GFX_MODEL_INDEX_TYPE));
-                    [gMetalEngine.renderCommandEncoder drawIndexedPrimitives: MTLPrimitiveTypeTriangle indexCount: pCount indexType: MTLIndexTypeUInt16 indexBuffer: aWrapper.buffer indexBufferOffset: aIndexBufferOffset];
-                }
-            }
-            */
-        }
-    }
+    glDrawElements(GL_TRIANGLES, pCount, GFX_MODEL_INDEX_GL_TYPE, pIndices);
 }
 
 void Graphics::DrawTrianglesIndexedFromPackedBuffers(int pVertexBuffer, int pVertexBufferOffset,
                                                                               int pIndexBuffer , int pIndexBufferOffset,
                                                      int pCount, FTexture *pTexture) {
-    
     Graphics::TextureBind(pTexture);
+    
+    //glDrawArrays
+    
+    
+    
+    //Graphics::ArrayBufferData(<#int pIndex#>)
+    //Graphics::ArrayBufferPositions(-1, 0);
+    //Graphics::ArrayBufferTextureCoords(-1, sizeof(float) * 3);
+    //Graphics::ArrayBufferNormals(-1, sizeof(float) * 6);
+    
+    
+    Graphics::ArrayBufferData(pVertexBuffer, pVertexBufferOffset);
+    Graphics::ArrayBufferPositions(-1, 0);
+    Graphics::ArrayBufferTextureCoords(-1, sizeof(float) * 3);
+    Graphics::ArrayBufferNormals(-1, sizeof(float) * 6);
+    Graphics::TextureBind(pTexture);
+    //Graphics::UniformBind(&mUniAmb);
+    
+    
+    unsigned char *aOffset = NULL;
+    aOffset = &(aOffset[pIndexBufferOffset]);
+    
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pIndexBuffer);
+    //glDrawElements(GL_TRIANGLES, pCount / 3, GFX_MODEL_INDEX_GL_TYPE, aOffset);
+    
+    //glDrawArraysInstancedEXT(GL_TRIANGLES, pIndexBufferOffset, <#GLsizei count#>, pCount)
+    
+    //Graphics::DrawTrianglesIndexed(mMonolith.mIndex, mMonolith.mIndexCount);
     
     /*
     BufferBindingWrapper *aWrapperVertex = (__bridge BufferBindingWrapper *)cBufferBindMap.Get(pVertexBuffer);
@@ -1072,28 +1124,19 @@ void Graphics::DrawTrianglesIndexedFromPackedBuffers(int pVertexBuffer, int pVer
     
 }
 
+void Graphics::DrawTrianglesIndexedWithPackedBuffers(int pVertexBuffer, int pVertexBufferOffset, GFX_MODEL_INDEX_TYPE *pIndices, int pCount, FTexture *pTexture) {
+    Graphics::TextureBind(pTexture);
+    Graphics::ArrayBufferData(pVertexBuffer, pVertexBufferOffset);
+    Graphics::ArrayBufferPositions(-1, 0);
+    Graphics::ArrayBufferTextureCoords(-1, sizeof(float) * 3);
+    Graphics::ArrayBufferNormals(-1, sizeof(float) * 6);
+    Graphics::DrawTrianglesIndexed(pIndices, pCount);
+}
+
 
 
 void Graphics::DrawTriangleStripsIndexed(GFX_MODEL_INDEX_TYPE *pIndices, int pCount) {
-    if (pIndices != NULL && pCount > 0) {
-        cIndexCache.Get(sizeof(GFX_MODEL_INDEX_TYPE) * pCount);
-        if (cIndexCache.mResult.mSuccess) {
-            int aIndexBufferIndex = cIndexCache.mResult.mBufferIndex;
-            int aIndexBufferOffset = cIndexCache.mResult.mBufferOffset;
-            
-            /*
-            BufferBindingWrapper *aWrapper = (__bridge BufferBindingWrapper *)cBufferBindMap.Get(aIndexBufferIndex);
-            if (aWrapper != NULL) {
-                if (aWrapper.buffer) {
-                    unsigned char *aAddress = (unsigned char *)aWrapper.buffer.contents;
-                    aAddress = &(aAddress[aIndexBufferOffset]);
-                    memcpy(aAddress, pIndices, pCount * sizeof(GFX_MODEL_INDEX_TYPE));
-                    [gMetalEngine.renderCommandEncoder drawIndexedPrimitives: MTLPrimitiveTypeTriangleStrip indexCount: pCount indexType: MTLIndexTypeUInt16 indexBuffer: aWrapper.buffer indexBufferOffset: aIndexBufferOffset];
-                }
-            }
-            */
-        }
-    }
+    glDrawElements(GL_TRIANGLE_STRIP, pCount, GFX_MODEL_INDEX_GL_TYPE, pIndices);
 }
 
 void Graphics::MatrixProjectionSet(FMatrix &pMatrix) {
@@ -1502,7 +1545,6 @@ void Graphics::PipelineStateSetShape3DAdditiveBlending() {
 
 void Graphics::PipelineStateSetSpriteNoBlending() {
     if (gOpenGLEngine) {
-        //UseProgramShape()
         BlendDisable();
         gOpenGLEngine->UseProgramSprite();
     }
@@ -1518,7 +1560,6 @@ void Graphics::PipelineStateSetSpriteAlphaBlending() {
 
 void Graphics::PipelineStateSetSpriteAdditiveBlending() {
     if (gOpenGLEngine) {
-        
         BlendEnable();
         BlendSetAdditive();
         gOpenGLEngine->UseProgramSprite();
@@ -1542,105 +1583,138 @@ void Graphics::PipelineStateSetSpriteWhiteBlending() {
 }
 
 
-void Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending() {
-    Graphics::BufferSetIndicesModelIndexed();
-    //[gMetalPipeline pipelineStateSetModelIndexedLightedPhongNoBlending];
-    
-    
-}
-
-void Graphics::PipelineStateSetModelIndexedLightedPhongAlphaBlending() {
-    Graphics::BufferSetIndicesModelIndexed();
-    //[gMetalPipeline pipelineStateSetModelIndexedLightedPhongAlphaBlending];
-    
-    
-}
-
-void Graphics::PipelineStateSetModelIndexedLightedAmbientDiffuseNoBlending() {
-    Graphics::BufferSetIndicesModelIndexed();
-    //[gMetalPipeline pipelineStateSetModelIndexedLightedAmbientDiffuseNoBlending];
-    
-}
-
-void Graphics::PipelineStateSetModelIndexedLightedAmbientDiffuseAlphaBlending() {
-    Graphics::BufferSetIndicesModelIndexed();
-    //[gMetalPipeline pipelineStateSetModelIndexedLightedAmbientDiffuseAlphaBlending];
-    
-    
-}
-
-void Graphics::PipelineStateSetModelIndexedLightedAmbientNoBlending() {
-    Graphics::BufferSetIndicesModelIndexed();
-    //[gMetalPipeline pipelineStateSetModelIndexedLightedAmbientNoBlending];
-    
-}
-
-void Graphics::PipelineStateSetModelIndexedLightedAmbientAlphaBlending() {
-    Graphics::BufferSetIndicesModelIndexed();
-    //[gMetalPipeline pipelineStateSetModelIndexedLightedAmbientAlphaBlending];
-    
-}
-
-void Graphics::PipelineStateSetModelIndexedNoBlending() {
-    Graphics::BufferSetIndicesModelIndexed();
-    //[gMetalPipeline pipelineStateSetModelIndexedNoBlending];
-    
-}
-
-void Graphics::PipelineStateSetModelIndexedAlphaBlending() {
-    Graphics::BufferSetIndicesModelIndexed();
-    //[gMetalPipeline pipelineStateSetModelIndexedAlphaBlending];
-    
-}
-
-void Graphics::PipelineStateSetSimpleModelIndexedNoBlending() {
-    Graphics::BufferSetIndicesSimpleModelIndexed();
-    //[gMetalPipeline pipelineStateSetSimpleModelIndexedNoBlending];
-    
-}
-
-void Graphics::PipelineStateSetSimpleModelIndexedAlphaBlending() {
-    Graphics::BufferSetIndicesSimpleModelIndexed();
-    //[gMetalPipeline pipelineStateSetSimpleModelAlphaBlending];
-    
-}
-
-void Graphics::PipelineStateSetSimpleModelNoBlending() {
-    Graphics::BufferSetIndicesSimpleModel();
-    //[gMetalPipeline pipelineStateSetSimpleModelNoBlending];
-    
-}
-
-void Graphics::PipelineStateSetSimpleModelAlphaBlending() {
-    Graphics::BufferSetIndicesSimpleModel();
-    //[gMetalPipeline pipelineStateSetSimpleModelAlphaBlending];
-    
-}
-
-
-
-
-
 void Graphics::PipelineStateSetShapeNodeNoBlending() {
-    Graphics::BufferSetIndicesShapeNode();
-    
-    //[gMetalPipeline pipelineStateSetShapeNodeNoBlending];
-    
+    if (gOpenGLEngine) {
+        BlendDisable();
+        gOpenGLEngine->UseProgramShapeNode();
+    }
 }
 
 void Graphics::PipelineStateSetShapeNodeAlphaBlending() {
-    Graphics::BufferSetIndicesShapeNode();
-    
-    //[gMetalPipeline pipelineStateSetShapeNodeAlphaBlending];
-    
+    if (gOpenGLEngine) {
+        BlendEnable();
+        BlendSetAlpha();
+        gOpenGLEngine->UseProgramShapeNode();
+    }
 }
 
 void Graphics::PipelineStateSetShapeNodeAdditiveBlending() {
-    Graphics::BufferSetIndicesShapeNode();
-    
-    //[gMetalPipeline pipelineStateSetShapeNodeAdditiveBlending];
-    
+    if (gOpenGLEngine) {
+        BlendEnable();
+        BlendSetAdditive();
+        gOpenGLEngine->UseProgramShapeNode();
+    }
 }
+
+
+void Graphics::PipelineStateSetSimpleModelNoBlending() {
+    if (gOpenGLEngine) {
+        BlendDisable();
+        gOpenGLEngine->UseProgramSimpleModel();
+    }
+}
+
+void Graphics::PipelineStateSetSimpleModelAlphaBlending() {
+    if (gOpenGLEngine) {
+        BlendEnable();
+        BlendSetAlpha();
+        gOpenGLEngine->UseProgramSimpleModel();
+    }
+}
+
+void Graphics::PipelineStateSetSimpleModelIndexedNoBlending() {
+    if (gOpenGLEngine) {
+        BlendDisable();
+        gOpenGLEngine->UseProgramSimpleModelIndexed();
+    }
+}
+
+void Graphics::PipelineStateSetSimpleModelIndexedAlphaBlending() {
+    if (gOpenGLEngine) {
+        BlendEnable();
+        BlendSetAlpha();
+        gOpenGLEngine->UseProgramSimpleModelIndexed();
+    }
+}
+
+
+
+void Graphics::PipelineStateSetModelIndexedNoBlending() {
+    if (gOpenGLEngine) {
+        BlendDisable();
+        gOpenGLEngine->UseProgramModelIndexed();
+    }
+}
+
+void Graphics::PipelineStateSetModelIndexedAlphaBlending() {
+    if (gOpenGLEngine) {
+        BlendEnable();
+        BlendSetAlpha();
+        gOpenGLEngine->UseProgramModelIndexed();
+    }
+}
+
+
+void Graphics::PipelineStateSetModelIndexedLightedAmbientNoBlending() {
+    if (gOpenGLEngine) {
+        BlendDisable();
+        gOpenGLEngine->UseProgramModelIndexedAmbient();
+    }
+}
+
+void Graphics::PipelineStateSetModelIndexedLightedAmbientAlphaBlending() {
+    if (gOpenGLEngine) {
+        BlendEnable();
+        BlendSetAlpha();
+        gOpenGLEngine->UseProgramModelIndexedAmbient();
+    }
+}
+
+void Graphics::PipelineStateSetModelIndexedLightedAmbientDiffuseNoBlending() {
+    if (gOpenGLEngine) {
+        BlendDisable();
+        gOpenGLEngine->UseProgramModelIndexedAmbientDiffuse();
+    }
+}
+
+void Graphics::PipelineStateSetModelIndexedLightedAmbientDiffuseAlphaBlending() {
+    if (gOpenGLEngine) {
+        BlendEnable();
+        BlendSetAlpha();
+        gOpenGLEngine->UseProgramModelIndexedAmbientDiffuse();
+    }
+}
+
+
+
+void Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending() {
+    if (gOpenGLEngine) {
+        BlendDisable();
+        gOpenGLEngine->UseProgramModelIndexedPhong();
+    }
+}
+
+void Graphics::PipelineStateSetModelIndexedLightedPhongAlphaBlending() {
+    if (gOpenGLEngine) {
+        BlendEnable();
+        BlendSetAlpha();
+        gOpenGLEngine->UseProgramModelIndexedPhong();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 int Graphics::RenderPass() {
     return cCurrentRenderPass;
@@ -1648,6 +1722,14 @@ int Graphics::RenderPass() {
 
 void Graphics::RenderPassBegin(int pRenderPass, bool pClearColor, bool pClearDepth) {
     cCurrentRenderPass = pRenderPass;
+    
+    if (pClearDepth) {
+        Graphics::DepthClear();
+    }
+    if (pClearColor) {
+        Graphics::Clear(0.0f, 0.35f, 0.0f);
+    }
+    
     //[gMetalEngine startRenderPass:pRenderPass clearingColor: pClearColor clearingDepth: pClearDepth];
     
 }

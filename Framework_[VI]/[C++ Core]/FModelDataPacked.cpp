@@ -40,8 +40,9 @@ FModelDataPacked::FModelDataPacked() {
     mBufferVertex = -1;
     mBufferVertexOffset = 0;
     
-    mBufferIndex = -1;
-    mBufferIndexOffset = 0;
+    //mBufferIndex = -1;
+    //mBufferIndexOffset = 0;
+    
 }
 
 FModelDataPacked::~FModelDataPacked() {
@@ -208,6 +209,12 @@ void FModelDataPacked::LoadOBJ(FFile *pFile) {
             }
         }
         
+        
+        mBufferVertex = Graphics::BufferArrayGenerate(sizeof(float) * mDataCount);
+        Graphics::BufferArrayWrite(mBufferVertex, mData, 0, sizeof(float) * mDataCount);
+        //mBufferIndex = Graphics::BufferElementGenerate(sizeof(GFX_MODEL_INDEX_TYPE) * mIndexCount);
+        
+        /*
         cModelVertexCache.Get(sizeof(float) * mDataCount);
         if (cModelVertexCache.mResult.mSuccess) {
             mBufferVertex = cModelVertexCache.mResult.mBufferIndex;
@@ -219,7 +226,9 @@ void FModelDataPacked::LoadOBJ(FFile *pFile) {
             mBufferVertex = -1;
             mBufferVertexOffset = -1;
         }
+        */
         
+        /*
         cModelIndexCache.Get(sizeof(GFX_MODEL_INDEX_TYPE) * mIndexCount);
         if (cModelIndexCache.mResult.mSuccess) {
             mBufferIndex = cModelIndexCache.mResult.mBufferIndex;
@@ -231,6 +240,8 @@ void FModelDataPacked::LoadOBJ(FFile *pFile) {
             mBufferIndex = -1;
             mBufferIndexOffset = -1;
         }
+        */
+        
         
         //Log("Loaded Packed Model [%s] VB[i:%d s:%lu o:%d] IB[i:%d s:%d o:%d]\n", mFileName.c(), mBufferVertex, mDataCount * sizeof(float), mBufferVertexOffset, mBufferIndex, mIndexCount * sizeof(GFX_MODEL_INDEX_TYPE), mBufferIndexOffset);
     }

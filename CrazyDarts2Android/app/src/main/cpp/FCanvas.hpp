@@ -82,6 +82,9 @@ public:
     virtual ~FCanvas();
 
     virtual void                                Layout();
+    virtual void                                LayoutTransform();
+    
+    
     virtual void                                Update();
     virtual void                                Draw();
 
@@ -270,7 +273,13 @@ public:
     //When the frame updates, we need to re-layout the parent and children.
     void                                        FrameDidUpdate();
 
+    //The frame has changed.. May be called multiple times.
     virtual void                                BaseLayout();
+    
+    virtual void                                BaseLayoutTransform();
+    
+    
+    
     virtual void                                BaseUpdate();
     virtual void                                BaseDraw();
 

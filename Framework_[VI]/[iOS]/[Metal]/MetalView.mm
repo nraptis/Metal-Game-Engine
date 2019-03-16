@@ -43,6 +43,10 @@
     //
     //
     //
+    
+    [self setMultipleTouchEnabled: YES];
+    
+    //
     _screenScale = (int)([UIScreen mainScreen].scale + 0.5f);
     printf("SCREEN SCALE: [[%d]]\n", _screenScale);
     //

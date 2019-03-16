@@ -17,11 +17,13 @@ Balloon::Balloon() {
     mDeathTimer = 5000;
     mTimer = 0;
     
-    mColor.mAlpha = 1.0f;
     
     mModel = &gApp->mBalloon;
     mSprite = &gApp->mBalloonMap[gRand.Get(5)];
     mUniform = &(gGame->mRenderer->mUniformPhongBalloon);
+    
+    mVelX = 0.0f;
+    mVelY = 0.0f;
 }
 
 Balloon::~Balloon() {
@@ -30,6 +32,10 @@ Balloon::~Balloon() {
 
 void Balloon::Update() {
     mTransform3D.mSpin += mSpinSpeed;
+    
+    mTransform.mX += mVelX;
+    mTransform.mY += mVelY;
+    
 }
 
 void Balloon::Draw() {

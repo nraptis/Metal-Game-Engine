@@ -125,11 +125,21 @@ class GL2JNIView extends GLSurfaceView {
             EGLContext aContext = egl.eglCreateContext(display, eglConfig, EGL10.EGL_NO_CONTEXT, aContextAttribs);
             checkEglError("After eglCreateContext", egl);
 
+            //Might need to reload textures!! LOOL!!
+            System.out.println("CREATED THE CONTEXT!!!!!!!\n");
+            //GL2JNILib.NativeAppShellResume();
+
             return aContext;
         }
 
         public void destroyContext(EGL10 egl, EGLDisplay display, EGLContext context) {
+
+            //GL2JNILib.NativeAppShellPause();
+
             egl.eglDestroyContext(display, context);
+
+            System.out.println("KILLED THE CONTEXT!!!!!!!\n");
+
         }
     }
 

@@ -26,6 +26,7 @@ public:
     virtual void                ArrayBufferData(int pIndex, int pOffset);
     virtual void                ArrayBufferPositions(int pIndex,int pOffset);
     virtual void                ArrayBufferTextureCoords(int pIndex, int pOffset);
+    virtual void                ArrayBufferColors(int pIndex, int pOffset);
     virtual void                ArrayBufferNormals(int pIndex, int pOffset);
     
     bool                        IsValid();

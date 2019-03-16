@@ -49,6 +49,13 @@ public:
     ~Graphics();
     
     
+    // When we get a new content, we SET UP.
+    static void                             SetUp();
+    
+    //Before we lose out content, we TEAR DOWN.
+    static void                             TearDown();
+    
+    
     static void                             SetDeviceScale(float pScale);
     static void                             SetDeviceSize(float pWidth, float pHeight);
     
@@ -70,6 +77,8 @@ public:
     static void                             BufferSetUniformsIndex(int pIndex);
     static void                             BufferSetPositionsIndex(int pIndex);
     static void                             BufferSetTextureCoordsIndex(int pIndex);
+    static void                             BufferSetColorsIndex(int pIndex);
+    
     static void                             BufferSetNormalsIndex(int pIndex);
     static void                             BufferSetTangentsIndex(int pIndex);
     static void                             BufferSetUNormalsIndex(int pIndex);
@@ -257,6 +266,9 @@ public:
     static void                             ArrayBufferTextureCoords(int pIndex);
     static void                             ArrayBufferTextureCoords(int pIndex, int pOffset);
     //
+    static void                             ArrayBufferColors(int pIndex);
+    static void                             ArrayBufferColors(int pIndex, int pOffset);
+    //
     static void                             ArrayBufferNormals(int pIndex);
     static void                             ArrayBufferNormals(int pIndex, int pOffset);
     //
@@ -280,10 +292,10 @@ public:
     static void                             DrawTriangleStrips(int pCount);
     
     static void                             DrawTrianglesIndexed(GFX_MODEL_INDEX_TYPE *pIndices, int pCount);
+    static void                             DrawTrianglesIndexedWithPackedBuffers(int pVertexBuffer, int pVertexBufferOffset, GFX_MODEL_INDEX_TYPE *pIndices, int pCount, FTexture *pTexture);
     
-    static void                             DrawTrianglesIndexedFromPackedBuffers(int pVertexBuffer, int pVertexBufferOffset,
-                                                                                  int pIndexBuffer , int pIndexBufferOffset,
-                                                                                  int pCount, FTexture *pTexture);
+    
+    
     
     
     

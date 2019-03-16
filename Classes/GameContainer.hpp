@@ -39,15 +39,11 @@ public:
     Game                                        *mGame;
     FCanvas                                     *mContainer;
     
-    bool                                        mLayoutRefresh;
-    int                                         mInitialLayoutTick;
-    
     //Including Safe Area...
     float                                       mInterfaceLeftWidth;
     float                                       mInterfaceRightWidth;
     float                                       mInterfaceTopHeight;
     float                                       mInterfaceBottomHeight;
-    
     
 };
 

@@ -47,7 +47,6 @@ public:
     virtual void                            TouchUp(float pX, float pY, void *pData) override;
     virtual void                            TouchFlush() override;
     
-    
     GameContainer                           *mGameContainer;
     
     void                                    Draw3D();
@@ -56,6 +55,13 @@ public:
     FloatingCamera                          mCamera;
     
     CameraMenu                              *mCameraMenu;
+    
+    FModelData                              mSnail;
+    FSprite                                 mSnailMap;
+    
+    FModelDataPacked                        mRocket;
+    FSprite                                 mRocketMap;
+    
     
     FModelDataPacked                        mGround;
     FSprite                                 mGroundMixedMap;
@@ -91,19 +97,45 @@ public:
     
     
     FSprite                                 mGameAreaMarker;
-
+    
+    
+    FSound                                  mSound1;
+    FSound                                  mSound2;
+    
     LevelSelectorScreen                     *mLevelSelect;
     LightConfigurationScene                 *mLightScene;
     Util_ScreenFrame                        *mScreenTool;
     
-    bool                                    mLayoutGame;
-
-    FSound                                  mDirtySound;
-
-    float                                   mDDDX;
-    float                                   mDDDY;
-
-
+    
+    UIRoundedRect                           mTestRR;
+    
+    
+    FUniformsLightAmbient                   mUniAmb;
+    FUniformsLightAmbientDiffuse            mUniDiff;
+    FUniformsLightPhong                     mUniPhong;
+    
+    
+    
+    int                                     mLoadGame;
+    
+    void                                    *mTestTouch1;
+    void                                    *mTestTouch2;
+    
+    float                                   mTestX1;
+    float                                   mTestY1;
+    
+    float                                   mTestX2;
+    float                                   mTestY2;
+    
+    float                                   mTestSin1;
+    float                                   mTestSin2;
+    
+    
+    float                                   mAmbientRoll1;
+    float                                   mAmbientRoll2;
+    
+    
+    
 };
 
 extern GFXApp *gApp;

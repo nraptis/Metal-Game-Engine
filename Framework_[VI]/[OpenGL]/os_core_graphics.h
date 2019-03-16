@@ -72,6 +72,14 @@ public:
     
     static void                             Initialize();
     
+    // When we get a new content, we SET UP.
+    static void                             SetUp();
+    
+    //Before we lose out content, we TEAR DOWN.
+    static void                             TearDown();
+    
+    
+    
     static void                             PreRender();
     static void                             PostRender();
     
@@ -270,6 +278,10 @@ public:
     static void                             ArrayBufferTextureCoords(int pIndex);
     static void                             ArrayBufferTextureCoords(int pIndex, int pOffset);
     //
+    
+    static void                             ArrayBufferColors(int pIndex);
+    static void                             ArrayBufferColors(int pIndex, int pOffset);
+    //
     static void                             ArrayBufferNormals(int pIndex);
     static void                             ArrayBufferNormals(int pIndex, int pOffset);
     //
@@ -297,6 +309,12 @@ public:
     static void                             DrawTrianglesIndexedFromPackedBuffers(int pVertexBuffer, int pVertexBufferOffset,
                                                                                   int pIndexBuffer , int pIndexBufferOffset,
                                                                                   int pCount, FTexture *pTexture);
+    
+    static void                             DrawTrianglesIndexedWithPackedBuffers(int pVertexBuffer,
+                                                                                  int pVertexBufferOffset,
+                                                                                  GFX_MODEL_INDEX_TYPE *pIndices,
+                                                                                  int pCount,
+                                                                                  FTexture *pTexture);
     
     
     

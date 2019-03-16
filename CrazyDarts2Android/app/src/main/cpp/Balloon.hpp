@@ -11,10 +11,6 @@
 
 #include "FSprite.h"
 #include "FModelDataPacked.hpp"
-
-//class  {
-
-
 #include "GameObject.hpp"
 
 class Balloon : public GameObject {
@@ -31,6 +27,8 @@ public:
     int                                     mDeathTimer;
     int                                     mTimer;
     
+    float                                   mVelX;
+    float                                   mVelY;
 };
 
 

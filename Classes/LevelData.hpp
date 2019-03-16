@@ -9,14 +9,32 @@
 #ifndef LevelData_hpp
 #define LevelData_hpp
 
+#include "GameObject.hpp"
+#include "LevelWave.hpp"
+#include "LevelSection.hpp"
+
 class LevelData {
 public:
     LevelData();
     virtual ~LevelData();
     
-    virtual void                    Update();
-    virtual void                    Dispose();
-    virtual void                    Print(const char *pName);
+    void                            Update();
+    
+    void                            Dispose();
+    void                            DisposeObject(GameObject *pObject);
+    void                            DisposeSection(LevelSection *pLevelSection);
+    
+    
+    void                            Print(const char *pName);
+    
+    
+    void                            AddSection(LevelSection *pLevelSection);
+    FList                           mSectionList;
+    LevelSection                    *mCurrentSection;
+    int                             mCurrentSectionIndex;
+    
+    
+    int                             mInitialDelay;
     
     
     

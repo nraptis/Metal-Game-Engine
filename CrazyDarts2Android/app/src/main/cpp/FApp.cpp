@@ -23,6 +23,7 @@ FApp::FApp() {
     mFrameCaptureDrawCount = 0;
     
     
+    mIsGraphicsSetUpEnqueued = false;
     
     
     mDidInitialize = false;
@@ -56,17 +57,11 @@ FApp::FApp() {
     mIsLoading = false;
     mIsLoadingComplete = false;
     
-    //
-    //
-    //
-    mSkipDrawTick = 0;
+    
     mUpdateMultiplier = 1;
     
     mUpdatesPerSecond = 100.0f;
-    //
-    //
-    //
-
+    
     RecoverTime();
 }
 
@@ -93,9 +88,8 @@ void FApp::BaseInitialize() {
         //For now we just load in main thread...
         //AppShellLoad();
         
-        
         while (gGraphicsInterface->IsReady() == false) {
-            os_sleep(16);
+            os_sleep(10);
         }
         
         Graphics::SetDeviceSize(gDeviceWidth, gDeviceHeight);
@@ -108,6 +102,7 @@ void FApp::BaseInitialize() {
         
         //Initialize the graphics engine...
         Graphics::Initialize();
+        Graphics::SetUp();
         
         Initialize();
     }
@@ -157,7 +152,7 @@ void FApp::BaseSetSafeAreaInsets(int pInsetUp, int pInsetRight, int pInsetDown, 
 }
 
 void AppFrameThread(void *pArgs) {
-    printf("AppFrameThread(%X)\m", pArgs);
+    Log("AppFrameThread(%X)\m", pArgs);
     
     gAppBase->MainRunLoop();
 }
@@ -169,13 +164,21 @@ void FApp::BaseFrame() {
         BaseInitialize();
     }
     
+    if (mIsGraphicsSetUpEnqueued) {
+        mIsGraphicsSetUpEnqueued = false;
+        Graphics::SetUp();
+    }
+    
     if (mDidDetachFrameController == false) {
         mDidDetachFrameController = true;
         os_detach_thread(AppFrameThread, (void*)0xB00BFACE);
+        
     }
-
+    
     //for (int i=0;i<aUpdateCount;i++) {
     //BaseUpdate();
+    
+    
     //}
     
     if (mDidUpdate) {
@@ -232,9 +235,12 @@ void FApp::BaseUpdate() {
     
     mDidUpdate = true;
     
-    InterfaceLock();
+    //InterfaceLock();
+    
     gTouch.Update();
-    InterfaceUnlock();
+    
+    //InterfaceUnlock();
+    
     
     
     Update();
@@ -270,7 +276,8 @@ void FApp::BaseDraw() {
     //FMatrix aScreenProjection = FMatrixCreateOrtho(0.0f, gDeviceWidth, gDeviceHeight, 0.0f, -1024.0f, 1024.0f);
     //Graphics::MatrixProjectionSet(aScreenProjection);
     Graphics::MatrixModelViewReset();
-    Graphics::Clear(0.0f, 0.0f, 0.0f);
+    //Graphics::Clear(0.0f, 0.0f, 0.0f);
+    
     
     Graphics::TextureSetClamp();
     
@@ -441,7 +448,8 @@ void FApp::BaseLoadComplete() {
     mSysFontBold.SetStride(63, -5, 137); mSysFontBold.SetStride(64, -10, 218); mSysFontBold.SetStride(65, -17, 162); mSysFontBold.SetStride(66, 0, 162); mSysFontBold.SetStride(67, -6, 162); mSysFontBold.SetStride(68, -1, 162); mSysFontBold.SetStride(69, -1, 149); mSysFontBold.SetStride(70, 0, 137); mSysFontBold.SetStride(71, -6, 174); mSysFontBold.SetStride(72, 0, 162); mSysFontBold.SetStride(73, -2, 62); mSysFontBold.SetStride(74, -13, 125); mSysFontBold.SetStride(75, 0, 162); mSysFontBold.SetStride(76, 0, 137); mSysFontBold.SetStride(77, -1, 187); mSysFontBold.SetStride(78, 0, 162); mSysFontBold.SetStride(79, -7, 174); mSysFontBold.SetStride(80, -1, 149); mSysFontBold.SetStride(81, -7, 174); mSysFontBold.SetStride(82, 0, 162); mSysFontBold.SetStride(83, -9, 149); mSysFontBold.SetStride(84, -11, 137); mSysFontBold.SetStride(85, -1, 162); mSysFontBold.SetStride(86, -17, 149); mSysFontBold.SetStride(87, -16, 211); mSysFontBold.SetStride(88, -16, 149); mSysFontBold.SetStride(89, -17, 149); mSysFontBold.SetStride(90, -14, 137); mSysFontBold.SetStride(91, -1, 75); mSysFontBold.SetStride(92, -17, 62); mSysFontBold.SetStride(93, -12, 75); mSysFontBold.SetStride(94, -4, 131); mSysFontBold.SetStride(95, -19, 125); mSysFontBold.SetStride(96, -12, 75); mSysFontBold.SetStride(97, -9, 125); mSysFontBold.SetStride(98, -2, 137); mSysFontBold.SetStride(99, -7, 125); mSysFontBold.SetStride(100, -8, 137); mSysFontBold.SetStride(101, -10, 125); mSysFontBold.SetStride(102, -14, 75); mSysFontBold.SetStride(103, -8, 137); mSysFontBold.SetStride(104, -1, 137); mSysFontBold.SetStride(105, -1, 62); mSysFontBold.SetStride(106, -27, 62); mSysFontBold.SetStride(107, -2, 125); mSysFontBold.SetStride(108, -1, 62); mSysFontBold.SetStride(109, -3, 199); mSysFontBold.SetStride(110, -1, 137); mSysFontBold.SetStride(111, -8, 137); mSysFontBold.SetStride(112, -2, 137); mSysFontBold.SetStride(113, -7, 137); mSysFontBold.SetStride(114, -2, 87); mSysFontBold.SetStride(115, -11, 125); mSysFontBold.SetStride(116, -13, 75); mSysFontBold.SetStride(117, -1, 137); mSysFontBold.SetStride(118, -15, 125); mSysFontBold.SetStride(119, -16, 174); mSysFontBold.SetStride(120, -15, 125); mSysFontBold.SetStride(121, -15, 123); mSysFontBold.SetStride(122, -13, 112); mSysFontBold.SetStride(123, -10, 87); mSysFontBold.SetStride(124, 3, 63); mSysFontBold.SetStride(125, -12, 87); mSysFontBold.SetStride(126, -9, 131); mSysFontBold.SetStride(164, -11, 125); mSysFontBold.SetStride(167, -10, 125); mSysFontBold.SetStride(169, -18, 165); mSysFontBold.SetStride(188, -7, 187); mSysFontBold.SetStride(189, -7, 187); mSysFontBold.SetStride(198, -26, 224);
     
     LoadComplete();
-
+    
+    
     BaseSetDeviceSize(gDeviceWidth, gDeviceHeight);
     BaseSetVirtualFrame(gVirtualDevX, gVirtualDevY, gVirtualDevWidth, gVirtualDevHeight);
     BaseSetSafeAreaInsets(gSafeAreaInsetTop, gSafeAreaInsetRight, gSafeAreaInsetBottom, gSafeAreaInsetLeft);
@@ -661,6 +669,7 @@ void FApp::BaseInactive() {
         gTouch.Inactive();
         InterfaceUnlock();
         
+        
         mWindowMain.Inactive();
         mWindowModal.Inactive();
         mWindowTools.Inactive();
@@ -668,7 +677,10 @@ void FApp::BaseInactive() {
         core_sound_stopAll();
         core_sound_inactive();
         if (gEnvironment == ENV_ANDROID) {
-            gTextureCache.UnloadAllTextures();
+            
+            Graphics::TearDown();
+            
+            //gTextureCache.UnloadAllTextures();
         }
     }
 }
@@ -678,7 +690,10 @@ void FApp::BaseActive() {
         mActive = true;
         Active();
         if (gEnvironment == ENV_ANDROID) {
-            gTextureCache.ReloadAllTextures();
+            mIsGraphicsSetUpEnqueued = true;
+            
+            
+            //gTextureCache.ReloadAllTextures();
         }
         
         InterfaceLock();
@@ -766,7 +781,7 @@ void FApp::SystemProcess() {
 void FApp::MainRunLoop() {
     
      while (gGraphicsInterface->IsReady() == false) {
-         printf("Waiting for Graphics Module...\n");
+         Log("Waiting for Graphics Module...\n");
          usleep(400);
      }
     
@@ -783,13 +798,8 @@ void FApp::RecoverTime() {
 }
 
 void FApp::FrameController() {
-    static unsigned int aLastDrawTime = 0;
-    
-    //TODO: Windows app running in the background...
-    //What do we want to do here? LOL!
-    //
-    // If the App is minimized, we don't do anything here but sleep and Pump and SystemProcess
-    //
+
+    ThrottleLock();
     
     if (mActive == false) {
         if (os_updates_in_background()) {
@@ -838,9 +848,7 @@ void FApp::FrameController() {
         
         mFrame.mBreakUpdate=false;
         bool aShouldDraw = false;
-        //bool aShouldDraw = true;
         int aUpdateCheck = (int)mFrame.mDesiredUpdate - mFrame.mCurrentUpdateNumber;
-        unsigned int aFrameStart = os_system_time();
         
         if (aUpdateCheck > 0) {
             
@@ -857,12 +865,13 @@ void FApp::FrameController() {
                 //
                 mFrame.mCurrentUpdateNumber++;
                 
-                ThrottleLock();
                 BaseUpdate();
-                ThrottleUnlock();
             }
         }
     }
+    
+    
+    ThrottleUnlock();
     
     
     

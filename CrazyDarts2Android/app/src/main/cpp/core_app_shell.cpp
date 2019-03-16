@@ -61,30 +61,21 @@ int gQuadBufferTextureCoord = -1;
 
 
 void AppShellInitialize(int pEnvironment) {
-
-	gEnvironment = pEnvironment;
+    gEnvironment = pEnvironment;
 
 	FList aResourceList;
-
+    
 	os_getAllResources(gDirBundle.c(), &aResourceList);
 	os_getAllResources(gDirDocuments.c(), &aResourceList);
 
 	EnumList(FString, aPath, aResourceList)gRes.AddResource(aPath->c());
 	FreeList(FString, aResourceList);
-
-	gGraphicsInterface = new PlatformGraphicsInterface();
-
-	os_initialize_outlets();
-
-	Log("AppShellInitialize(%d :: 4)\n", pEnvironment);
-
-	core_sound_initialize();
-
-    Log("AppShellInitialize(%d :: 5)\n", pEnvironment);
-
-	social_Init();
-
-    Log("AppShellInitialize(%d :: 6)\n", pEnvironment);
+    
+    gGraphicsInterface = new PlatformGraphicsInterface();
+    
+    os_initialize_outlets();
+    core_sound_initialize();
+    social_Init();
 
     //if(gAppBase)(gAppBase)->BaseInitialize();
     //gTouch.Initialize(pEnvironment);
@@ -287,7 +278,7 @@ void AppShellSetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
 	gVirtualDevWidth = (float)pWidth;
 	gVirtualDevHeight = (float)pHeight;
     
-    //printf("Set Virtual Frame [%d %d %d %d]\n", gVirtualDevX, gVirtualDevY, gVirtualDevWidth, gVirtualDevHeight);
+    //Log("Set Virtual Frame [%d %d %d %d]\n", gVirtualDevX, gVirtualDevY, gVirtualDevWidth, gVirtualDevHeight);
     
     gAppWidth = (float)pWidth;
     gAppHeight = (float)pHeight;

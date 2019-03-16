@@ -36,7 +36,9 @@ void ShaderProgramShape3D::BindUniform(FUniforms *pUniform) {
 }
 
 void ShaderProgramShape3D::ArrayBufferPositions(int pIndex, int pOffset) {
-    glBindBuffer(GL_ARRAY_BUFFER, pIndex);
+    
+    if (pIndex != -1) if (pIndex != -1) { glBindBuffer(GL_ARRAY_BUFFER, pIndex); }
+    
     glEnableVertexAttribArray(mSlotPositions);
     int aStride = 3;
     unsigned char *aOffset = NULL;

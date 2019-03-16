@@ -7,7 +7,7 @@
 //
 
 #define METAL_MODE 1
-#undef METAL_MODE
+//#undef METAL_MODE
 
 #import "RootViewController.h"
 #import "AppDelegate.h"
@@ -21,7 +21,6 @@
 #import "FApp.hpp"
 
 RootViewController *gRootBase = NULL;
-
 
 @interface RootViewController ()
 
@@ -47,9 +46,6 @@ RootViewController *gRootBase = NULL;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         //gAppBase->MainRunLoop();
     });
-    
-    //gAppBase->BaseInitialize();
-    
 }
 
 

@@ -106,14 +106,6 @@ void GameRenderer::Draw3D() {
         mGame->mCurrentDart->Draw3D();
     }
     
-    
-    EnumList(Dart, aDart, mGame->mDemoDartList) {
-        aDart->Draw3D();
-    }
-    
-    
-    //
-    //
     Graphics::DepthDisable();
     Graphics::CullFacesSetBack();
 }
@@ -161,9 +153,9 @@ void GameRenderer::DumpLightsToUniforms() {
     mUniformPhongBalloon.mLight.mDirX = mLightDirX;
     mUniformPhongBalloon.mLight.mDirY = mLightDirY;
     mUniformPhongBalloon.mLight.mDirZ = mLightDirZ;
-    mUniformPhongBalloon.mLight.mAmbientIntensity = 0.0f;
+    mUniformPhongBalloon.mLight.mAmbientIntensity = 0.5f;
     mUniformPhongBalloon.mLight.mDiffuseIntensity = aLightDiffuse;
-    mUniformPhongBalloon.mLight.mSpecularIntensity = 60.0f;
+    mUniformPhongBalloon.mLight.mSpecularIntensity = 50.0f;
     mUniformPhongBalloon.mLight.mShininess = 90.0f;
     mUniformPhongBalloon.mColor = FColor(1.0f, 1.0f, 1.0f, 0.05);
     mUniformPhongBalloon.mProjection.Set(aProjection);

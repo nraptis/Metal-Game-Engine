@@ -165,11 +165,10 @@ public:
     
     bool                                        mDidInitializeGraphicsInterface;
     
+    bool                                        mIsGraphicsSetUpEnqueued;
     
     float                                       mUpdatesPerSecond;
     int                                         mUpdateMultiplier;
-    
-    int                                         mSkipDrawTick;
     
     void                                        RecoverTime();
     

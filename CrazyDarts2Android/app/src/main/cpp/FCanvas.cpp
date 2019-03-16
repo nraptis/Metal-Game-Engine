@@ -75,7 +75,9 @@ void FCanvas::Kill() {
     }
 }
 
-void FCanvas::Layout() { /* Log("----Layout(%s)\n", mName.c()); */ }
+void FCanvas::Layout() { }
+void FCanvas::LayoutTransform() { }
+
 void FCanvas::Update() { }
 void FCanvas::Draw() {
     if (mColor.mAlpha != 0.0f) {
@@ -400,6 +402,14 @@ void FCanvas::BaseNotify(void *pSender, const char *pNotification) {
 void FCanvas::BaseLayout() {
     Layout();
 }
+
+void FCanvas::BaseLayoutTransform() {
+    LayoutTransform();
+    EnumList(FCanvas, aCanvas, mChildren) {
+        aCanvas->BaseLayoutTransform();
+    }
+}
+
 
 void FCanvas::BaseUpdate() {
     mDidUpdate=true;

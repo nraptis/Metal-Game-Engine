@@ -151,14 +151,14 @@ void LightConfigurationScene::Draw3D() {
     Graphics::SetColor();
     
     Graphics::UniformBind(&mPhong.mUniform);
-    Graphics::DrawTrianglesIndexedFromPackedBuffers(aTrunk->mBufferVertex, aTrunk->mBufferVertexOffset, aTrunk->mBufferIndex, aTrunk->mBufferIndexOffset, aTrunk->mIndexCount, gApp->mPalmTrunkMap.mTexture);
+    //Graphics::DrawTrianglesIndexedFromPackedBuffers(aTrunk->mBufferVertex, aTrunk->mBufferVertexOffset, aTrunk->mBufferIndex, aTrunk->mBufferIndexOffset, aTrunk->mIndexCount, gApp->mPalmTrunkMap.mTexture);
     
     if (mDisableLight) {
         Graphics::UniformBind();
     } else {
         Graphics::UniformBind(&mPhong.mUniform);
     }
-    Graphics::DrawTrianglesIndexedFromPackedBuffers(aTree->mBufferVertex, aTree->mBufferVertexOffset, aTree->mBufferIndex, aTree->mBufferIndexOffset, aTree->mIndexCount, gApp->mPalmLeavesMap.mTexture);
+    //Graphics::DrawTrianglesIndexedFromPackedBuffers(aTree->mBufferVertex, aTree->mBufferVertexOffset, aTree->mBufferIndex, aTree->mBufferIndexOffset, aTree->mIndexCount, gApp->mPalmLeavesMap.mTexture);
     
     aModelView.Reset();
     aModelView.Translate(mDummyObjectX, mDummyObjectY, mDummyObjectZ);
@@ -182,7 +182,7 @@ void LightConfigurationScene::Draw3D() {
     }
     
     //Graphics::DrawTrianglesIndexedFromPackedBuffers(aBalloon->mBufferVertex, aBalloon->mBufferVertexOffset, aBalloon->mBufferIndex, aBalloon->mBufferIndexOffset, aBalloon->mIndexCount, gApp->mBalloonMap[3].mTexture);
-    Graphics::DrawTrianglesIndexedFromPackedBuffers(aDart->mBufferVertex, aDart->mBufferVertexOffset, aDart->mBufferIndex, aDart->mBufferIndexOffset, aDart->mIndexCount, gApp->mDartMap.mTexture);
+    //Graphics::DrawTrianglesIndexedFromPackedBuffers(aDart->mBufferVertex, aDart->mBufferVertexOffset, aDart->mBufferIndex, aDart->mBufferIndexOffset, aDart->mIndexCount, gApp->mDartMap.mTexture);
     
     
     
@@ -206,9 +206,7 @@ void LightConfigurationScene::Draw3D() {
         Graphics::UniformBind(&mPhong.mUniform);
     }
     
-    Graphics::DrawTrianglesIndexedFromPackedBuffers(aDart->mBufferVertex, aDart->mBufferVertexOffset, aDart->mBufferIndex, aDart->mBufferIndexOffset, aDart->mIndexCount, gApp->mDartMap.mTexture);
-    
-    
+    //Graphics::DrawTrianglesIndexedFromPackedBuffers(aDart->mBufferVertex, aDart->mBufferVertexOffset, aDart->mBufferIndex, aDart->mBufferIndexOffset, aDart->mIndexCount, gApp->mDartMap.mTexture);
     
     aModelView.Reset();
     Graphics::MatrixModelViewSet(aModelView);

@@ -1,5 +1,5 @@
 uniform lowp vec4 ModulateColor;
-varying lowp vec2 TextureCoordsOut;
+varying mediump vec2 TextureCoordsOut;
 uniform sampler2D Texture;
 
 void main(void) {

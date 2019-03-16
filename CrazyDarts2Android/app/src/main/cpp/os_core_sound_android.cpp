@@ -824,11 +824,15 @@ void core_sound_initialize()
 
     Log("core_sound_initialize(5)\n");
     aResult = (*sAudioEngine)->CreateOutputMix(sAudioEngine, &outputMixObject, 1, ids, req);
-    //assert(SL_RESULT_SUCCESS == aResult);
+    if (aResult != SL_RESULT_SUCCESS) {
+        Log("SL Result: %d\n", aResult);
+    }
 
     Log("core_sound_initialize(6)\n");
     aResult = (*outputMixObject)->Realize(outputMixObject, SL_BOOLEAN_FALSE);
-    //assert(SL_RESULT_SUCCESS == aResult);
+    if (aResult != SL_RESULT_SUCCESS) {
+        Log("SL Result: %d\n", aResult);
+    }
 
     Log("core_sound_initialize(7)\n");
     aResult = (*outputMixObject)->GetInterface(outputMixObject, SL_IID_ENVIRONMENTALREVERB, &outputMixEnvironmentalReverb);
@@ -998,13 +1002,13 @@ void core_sound_playPitched(FSound *pSound, float pPitch, float pVolume) {
             if (aInstanceCheck) {
                 Log("core_sound_playPitched(88)[%s]\n", pSound->mFileName.c());
                 FSoundInstanceAndroid *aInstancePlay = 0;
-                if (core_sound_instance_isPlaying((FSoundInstance *)aInstanceCheck) == false) {
+                if (core_sound_instance_isPlaying((FSoundInstanceAndroid *)aInstanceCheck) == false) {
                     Log("core_sound_playPitched(7)[%s]\n", pSound->mFileName.c());
                     aInstancePlay = aInstanceCheck;
                     pSound->mInstances.RotateFrontToBack();
                 } else {
                     EnumList (FSoundInstanceAndroid, aInstance, pSound->mInstances) {
-                        if (core_sound_instance_isPlaying((FSoundInstance *)aInstance) == false) {
+                        if (core_sound_instance_isPlaying((FSoundInstanceAndroid *)aInstance) == false) {
                             Log("core_sound_playPitched(HIT)[%s]\n", pSound->mFileName.c());
                             aInstancePlay = aInstance;
                         }

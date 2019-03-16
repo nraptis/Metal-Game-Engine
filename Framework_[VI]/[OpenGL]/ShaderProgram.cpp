@@ -101,7 +101,7 @@ void ShaderProgram::ArrayBufferData(int pIndex, int pOffset) {
 }
 
 void ShaderProgram::ArrayBufferPositions(int pIndex, int pOffset) {
-    glBindBuffer(GL_ARRAY_BUFFER, pIndex);
+    if (pIndex != -1) { glBindBuffer(GL_ARRAY_BUFFER, pIndex); }
     glEnableVertexAttribArray(mSlotPositions);
     int aStride = 2;
     unsigned char *aOffset = NULL;
@@ -110,6 +110,10 @@ void ShaderProgram::ArrayBufferPositions(int pIndex, int pOffset) {
 }
 
 void ShaderProgram::ArrayBufferTextureCoords(int pIndex, int pOffset) {
+    
+}
+
+void ShaderProgram::ArrayBufferColors(int pIndex, int pOffset) {
     
 }
 

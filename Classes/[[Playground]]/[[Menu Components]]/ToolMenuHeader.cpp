@@ -74,7 +74,7 @@ void ToolMenuHeader::Draw() {
 }
 
 void ToolMenuHeader::Notify(void *pSender, const char *pNotification) {
-    Log("Header Notify: [%s][%s]\n", ((FCanvas *)pSender)->mName.c(), pNotification);
+    
     if (FString(pNotification) == "button_click") {
         if (pSender == &mButtonClose) {
             if (mMenu) { mMenu->Kill(); }

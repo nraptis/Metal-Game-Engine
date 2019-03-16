@@ -12,7 +12,7 @@
 FloatingCamera::FloatingCamera() {
     mFOV = M_PI_2;
     
-    mAspect = gAppWidth / gAppHeight;
+    mAspect = gDeviceWidth / gDeviceHeight;
     //mAspect = 1.0f;
     
     mTarget = FVec3(0.0f, 0.0f, 0.0f);

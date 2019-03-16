@@ -72,8 +72,9 @@ public:
     int                         mBufferVertex;
     int                         mBufferVertexOffset;
     
-    int                         mBufferIndex;
-    int                         mBufferIndexOffset;
+    //int                         mBufferIndex;
+    //int                         mBufferIndexOffset;
+    
     
 };
 

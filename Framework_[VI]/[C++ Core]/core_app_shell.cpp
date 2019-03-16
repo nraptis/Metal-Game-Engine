@@ -278,7 +278,7 @@ void AppShellSetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
 	gVirtualDevWidth = (float)pWidth;
 	gVirtualDevHeight = (float)pHeight;
     
-    //printf("Set Virtual Frame [%d %d %d %d]\n", gVirtualDevX, gVirtualDevY, gVirtualDevWidth, gVirtualDevHeight);
+    //Log("Set Virtual Frame [%d %d %d %d]\n", gVirtualDevX, gVirtualDevY, gVirtualDevWidth, gVirtualDevHeight);
     
     gAppWidth = (float)pWidth;
     gAppHeight = (float)pHeight;

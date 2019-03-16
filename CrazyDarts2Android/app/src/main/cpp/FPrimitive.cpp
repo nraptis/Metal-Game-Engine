@@ -559,6 +559,26 @@ void FDrawNodeList::Draw(FSprite *pSprite, bool pStrips)
     
     
     Graphics::ArrayWriteData(aPtr, mCountNodes * sizeof(FDrawNode));
+    
+    
+    Graphics::ArrayBufferPositions(-1, 0);
+    Graphics::ArrayBufferTextureCoords(-1, sizeof(float) * 3);
+    Graphics::ArrayBufferColors(-1, sizeof(float) * 6);
+    
+    //Graphics::ArrayBuffer(-1, sizeof(float) * 3);
+    
+    
+    
+    
+    
+    //TODO: We are changing this code for DATA...
+    
+    //BufferArrayWrite(aPositionsBufferIndex, pPositions, aPositionsBufferOffset, sizeof(float) * pCount * 3);
+    
+    //ArrayBufferPositions(aPositionsBufferIndex, aPositionsBufferOffset);
+    //ArrayBufferTextureCoords(aTextureCoordsBufferIndex, aTextureCoordsBufferOffset);
+    
+    
     Graphics::UniformBind();
     
     //TODO: Smurf?

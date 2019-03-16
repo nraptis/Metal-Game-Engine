@@ -28,6 +28,26 @@ GFXApp::GFXApp() {
     mScreenTool = NULL;
     mCameraMenu = NULL;
     
+    
+    mTestTouch1 = NULL;
+    mTestTouch2 = NULL;
+    
+    mTestX1 = 300.0f;
+    mTestY1 = 300.0f;
+    
+    mTestX2 = 50.0f;
+    mTestY2 = 360.0f;
+    
+    mTestSin1 = 0.0f;
+    mTestSin2 = 180.0f;
+    
+    
+    mAmbientRoll1 = 0.0f;
+    mAmbientRoll2 = 0.0f;
+    
+    
+    
+    
     /*
     mCamera.mFOV = 0.987429;
     mCamera.mTarget = FVec3(0.0f, 0.0f, 0.0f);
@@ -37,8 +57,7 @@ GFXApp::GFXApp() {
     mCamera.mRotationSecondary = 0.0f;
     */
     
-    mLayoutGame = true;
-    
+    mLoadGame = 20;
 }
 
 GFXApp::~GFXApp() {
@@ -46,9 +65,22 @@ GFXApp::~GFXApp() {
 }
 
 void GFXApp::Load() {
-
-    mDirtySound.Load("match.caf");
-    /*
+    
+    
+    mRocket.mUseNormals = false;
+    mRocket.LoadOBJ("rocket.obj");
+    mRocketMap.Load("rocket_uvw");
+    
+    
+    
+    mSnail.LoadOBJ("snail.obj");
+    mSnailMap.Load("snail_uvw");
+    
+    
+    
+    
+    
+    
     mSound1.Load("land.caf");
     mSound2.Load("match.caf");
     
@@ -76,7 +108,7 @@ void GFXApp::Load() {
     
     mDart.LoadOBJ("dart.obj");
     mDartMap.Load("dart_color");
-    */
+    
     
     mBalloon.LoadOBJ("balloon.obj");
     mBalloonMap[0].Load("balloon_skin_01");
@@ -119,28 +151,29 @@ void GFXApp::Load() {
     
 }
 
-extern float ccccc = 0.0f;
-
 void GFXApp::LoadComplete() {
     //
     //
     //
     
+    mTestRR.SetRect(gDeviceWidth - 200, gDeviceHeight - 300.0f, 150.0f, 200.0f);
+    mTestRR.SetColorTop(1.0f, 0.25f, 0.25f, 0.66f);
+    mTestRR.SetColorBottom(0.0f, 1.0f, 0.5f, 1.0f);
     
-
+    
+    
+    
     core_sound_musicPlay("song2.mp3", true);
-
-
-    /*
+    
     //
-    
-    
-    
+
     if (mCameraMenu == NULL) {
         mCameraMenu = new CameraMenu(&mCamera);
         mWindowTools.AddChild(mCameraMenu);
+        mCameraMenu->SetFrame(30.0f, gDeviceHeight - 90.0f, 260.0f, 240.0f);
+        mCameraMenu->Collapse();
     }
-    */
+    
     
     /*
     if (mLevelSelect == NULL) {
@@ -150,9 +183,6 @@ void GFXApp::LoadComplete() {
     }
     */
     
-    //
-    //
-    //
     //
     //
     //
@@ -167,10 +197,8 @@ void GFXApp::LoadComplete() {
         mScreenTool->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
         mWindowTools.AddChild(mScreenTool);
     }
-
-
-
-
+    
+    
     //
     /*
     if (mLightScene == NULL) {
@@ -191,58 +219,248 @@ void GFXApp::LoadComplete() {
         }
     }
     */
-    mLayoutGame = true;
-    
 }
 
 void GFXApp::Update() {
-
-    ccccc += 2.0f;
-    if (ccccc  >= 360.0f) {
-        ccccc -= 360.0f;
+    if (mIsLoadingComplete) {
+        if (mLoadGame > 0) {
+            --mLoadGame;
+            if (mLoadGame == 0 && mGameContainer != NULL) {
+                Log("Loading Game...\n");
+                mGameContainer->mGame->Load();
+            }
+        }
     }
-
-    mCamera.mRotationPrimary += 1.0f;
+    
+    
+    mCamera.mRotationPrimary += 0.05f;
     if (mCamera.mRotationPrimary >= 360.0f) {
         mCamera.mRotationPrimary -= 360.0f;
     }
     
-    /*
-    if (mLayoutGame) {
-        if (mGameContainer) {
-            mLayoutGame = false;
-            //mGameContainer->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
-            
-            mWindowMain.RegisterFrameDidUpdate(mGameContainer);
-            mWindowMain.RegisterFrameDidUpdate(mGameContainer->mContainer);
-            mWindowMain.RegisterFrameDidUpdate(mGameContainer->mGame);
-            
-        }
-    }
-    */
+    
+    
+    mTestSin1 += 3.0f;
+    if (mTestSin1 >= 360.0f) mTestSin1 -= 360.0f;
+    
+    mTestSin2 -= 0.35f;
+    if (mTestSin2 <= 0.0f) mTestSin2 += 360.0f;
+    
+    
+    
+    mAmbientRoll1 += gRand.GetFloat(0.5f) + 1.0f;
+    if (mAmbientRoll1 >= 360.0f) mAmbientRoll1 -= 360.0f;
+    
+    mAmbientRoll2 += gRand.GetFloat(0.65f) + 2.0f;
+    if (mAmbientRoll2 >= 360.0f) mAmbientRoll2 -= 360.0f;
+    
     
     
 }
 
 void GFXApp::Draw3D() {
-    /*
-    Graphics::PipelineStateSetShape3DAlphaBlending();
     
     FMatrix aProjection = mCamera.GetProjection();
+    
+    
+    mUniAmb.mProjection = aProjection;
+    mUniAmb.mModelView.Reset();
+    mUniAmb.mModelView.Scale(0.35f);
+    mUniAmb.mModelView.Translate(2.0f, -1.5f);
+    mUniAmb.mModelView.RotateX(40.0f);
+    mUniAmb.mLight.mAmbientIntensity = (Sin(mAmbientRoll1) + 1.0f) / 2.0f;
+    
+    
+    mUniDiff.mProjection = aProjection;
+    mUniDiff.mModelView.Reset();
+    mUniDiff.mModelView.Scale(0.66f);
+    mUniDiff.mModelView.Translate(-2.0f, 2.0f);
+    mUniDiff.mModelView.RotateY(-60.0f);
+    
+    mUniDiff.mLight.mGreen = 0.5f;
+    mUniDiff.mLight.mAmbientIntensity = 0.125f;
+    mUniDiff.mLight.mDiffuseIntensity = 3.0f;
+    mUniDiff.mLight.mDirZ = (Sin(mAmbientRoll1) + 1.0f) / 2.0f;
+    
+    
+    mUniPhong.mProjection = aProjection;
+    mUniPhong.mModelView.Reset();
+    mUniPhong.mModelView.Scale(2.0f);
+    mUniPhong.mModelView.Translate(-1.0f, -1.0f, 1.25f);
+    mUniPhong.mModelView.RotateZ(60.0f);
+    
+    mUniPhong.mLight.mAmbientIntensity = 0.0f;
+    mUniPhong.mLight.mDiffuseIntensity = (Sin(mAmbientRoll1) + 1.0f) / 4.0f + 0.25f;
+    mUniPhong.mLight.mSpecularIntensity = 10.0f;
+    mUniPhong.mLight.mDirZ = (Sin(mAmbientRoll2) + 1.0f) / 2.0f;
+    
+    //FUniformsLightAmbient                   mUniAmb;
+    //FUniformsLightAmbientDiffuse            mUniDiff;
+    //FUniformsLightPhong                     mUniPhong;
+    
+    
+    Graphics::PipelineStateSetShape3DAlphaBlending();
+    Graphics::CullFacesSetDisabled();
+    Graphics::DepthEnable();
+    
+    
     Graphics::MatrixProjectionSet(aProjection);
     //Graphics::MatrixProjectionResetOrtho();
     Graphics::MatrixModelViewReset();
     Graphics::SetColor(1.0f, 0.5f, 0.75f, 0.75f);
     
-    Graphics::DrawBox(0.0f, 0.0f, 0.0f, 4.0f, 2.0f, -1.0f, 2.0f);
-    
-    
+    Graphics::DrawBox(0.0f, 0.0f, 0.0f, 1.0f, 2.0f, -1.0f, 0.125f);
     Graphics::MatrixModelViewReset();
+    
+    
+    
+    Graphics::PipelineStateSetSimpleModelNoBlending();
+    
+    Graphics::SetColor();
+    
+    Graphics::UniformBind();
+    
+    //.LoadOBJ("snail.obj");
+    //.Load("snail_uvw");
+    
+    Graphics::DrawModel(mSnail.mXYZ, mSnail.mUVW, NULL, mSnail.mUVWCount, mSnailMap.mTexture);
+    
+    
+    FMatrix aModelView = Graphics::MatrixModelViewGet();
+    aModelView.Translate(5.0f, 0.0f);
+    Graphics::MatrixModelViewSet(aModelView);
+    
+    Graphics::UniformBind();
+    Graphics::DrawModel(mSnail.mXYZ, mSnail.mUVW, NULL, mSnail.mUVWCount, mSnailMap.mTexture);
+    
+    aModelView = Graphics::MatrixModelViewGet();
+    aModelView.Reset();
+    aModelView.Translate(-2.0f, 0.0f);
+    
+    aModelView.RotateY(-20.0f);
+    Graphics::MatrixModelViewSet(aModelView);
+    
+    
+    Graphics::PipelineStateSetSimpleModelIndexedNoBlending();
+    
+    
+    Graphics::ArrayBufferData(mRocket.mBufferVertex, mRocket.mBufferVertexOffset);
+    Graphics::ArrayBufferPositions(-1, 0);
+    Graphics::ArrayBufferTextureCoords(-1, sizeof(float) * 3);
+    Graphics::TextureBind(mRocketMap.mTexture);
+    Graphics::UniformBind();
+    Graphics::DrawTrianglesIndexed(mRocket.mIndex, mRocket.mIndexCount);
+    
+    //Graphics::DrawModelIndexed(mRocket.mXYZ, mRocket.mXYZCount, mRocket.mUVW, mRocket.mUVWCount, 0, 0, mRocket.mIndex, mRocket.mIndexCount, mRocketMap.mTexture);
+    
+    aModelView = Graphics::MatrixModelViewGet();
+    aModelView.Reset();
+    aModelView.Translate(1.0f, -2.0f, 1.0f);
+    Graphics::MatrixModelViewSet(aModelView);
+    
+    
+    
+    /*
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mRocket.mBufferIndex);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, mRocket.mIndexCount * sizeof(GFX_MODEL_INDEX_GL_TYPE), &(mRocket.mIndex), GL_STATIC_DRAW);
+    
+    Graphics::ArrayBufferData(mRocket.mBufferVertex, mRocket.mBufferVertexOffset);
+    Graphics::ArrayBufferPositions(-1, 0);
+    Graphics::ArrayBufferTextureCoords(-1, sizeof(float) * 3);
+    Graphics::TextureBind(mRocketMap.mTexture);
+    Graphics::UniformBind();
+    
+    
+    glDrawElements(GL_TRIANGLES, 00, GFX_MODEL_INDEX_GL_TYPE, 0);
+     
     */
+    
+    //mBufferSlotIndex
+    
+    //Graphics::DrawTrianglesIndexed(0, mRocket.mIndexCount);
+    
+    
+    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mRocket.mBufferIndex);
+    
+    //glBufferData(GL_ELEMENT_ARRAY_BUFFER, mRocket.mIndexCount * sizeof(GFX_MODEL_INDEX_GL_TYPE), &(mRocket.mIndex), GL_STATIC_DRAW);
+    
+    //glBufferSubData(GL_ELEMENT_ARRAY_BUFFER,
+    //                mRocket.mBufferIndexOffset, mRocket.mIndexCount * sizeof(GFX_MODEL_INDEX_GL_TYPE), mRocket.mIndex);
+    
+    
+    //glDrawElements(GL_TRIANGLES, 30, GFX_MODEL_INDEX_GL_TYPE, 0);
+    
+    
+    
+    
+    
+    
+    //Graphics::DrawModelIndexed(mRocket.mXYZ, mRocket.mXYZCount, mRocket.mUVW, mRocket.mUVWCount, 0, 0, mRocket.mIndex, mRocket.mIndexCount, mRocketMap.mTexture);
+    
+    
+    Graphics::PipelineStateSetModelIndexedNoBlending();
+    aModelView = Graphics::MatrixModelViewGet();
+    aModelView.Reset();
+    aModelView.Translate(0.25f, 2.0f, -1.0f);
+    Graphics::MatrixModelViewSet(aModelView);
+    
+    
+    Graphics::ArrayBufferData(mPalmTrunk.mBufferVertex, mPalmTrunk.mBufferVertexOffset);
+    Graphics::ArrayBufferPositions(-1, 0);
+    Graphics::ArrayBufferTextureCoords(-1, sizeof(float) * 3);
+    Graphics::TextureBind(mPalmTrunkMap.mTexture);
+    Graphics::UniformBind();
+    Graphics::DrawTrianglesIndexed(mPalmTrunk.mIndex, mPalmTrunk.mIndexCount);
+    
+    
+    
+    
+    
+    Graphics::PipelineStateSetModelIndexedLightedAmbientNoBlending();
+    //Graphics::PipelineStateSetModelIndexedAlphaBlending();
+    Graphics::ArrayBufferData(mMonolith.mBufferVertex, mMonolith.mBufferVertexOffset);
+    Graphics::ArrayBufferPositions(-1, 0);
+    Graphics::ArrayBufferTextureCoords(-1, sizeof(float) * 3);
+    Graphics::ArrayBufferNormals(-1, sizeof(float) * 6);
+    Graphics::TextureBind(mMonolithMap.mTexture);
+    Graphics::UniformBind(&mUniAmb);
+    Graphics::DrawTrianglesIndexed(mMonolith.mIndex, mMonolith.mIndexCount);
+    
+    
+    
+
+    
+    Graphics::PipelineStateSetModelIndexedLightedAmbientDiffuseAlphaBlending();
+    Graphics::ArrayBufferData(mMonolith.mBufferVertex, mMonolith.mBufferVertexOffset);
+    Graphics::ArrayBufferPositions(-1, 0);
+    Graphics::ArrayBufferTextureCoords(-1, sizeof(float) * 3);
+    Graphics::ArrayBufferNormals(-1, sizeof(float) * 6);
+    Graphics::TextureBind(mMonolithMap.mTexture);
+    Graphics::UniformBind(&mUniDiff);
+    Graphics::DrawTrianglesIndexed(mMonolith.mIndex, mMonolith.mIndexCount);
+    
+    
+    
+    
+    
+    Graphics::PipelineStateSetModelIndexedLightedPhongAlphaBlending();
+    Graphics::ArrayBufferData(mMonolith.mBufferVertex, mMonolith.mBufferVertexOffset);
+    Graphics::ArrayBufferPositions(-1, 0);
+    Graphics::ArrayBufferTextureCoords(-1, sizeof(float) * 3);
+    Graphics::ArrayBufferNormals(-1, sizeof(float) * 6);
+    Graphics::TextureBind(mMonolithMap.mTexture);
+    Graphics::UniformBind(&mUniPhong);
+    Graphics::DrawTrianglesIndexed(mMonolith.mIndex, mMonolith.mIndexCount);
+    
+    
+    
+    
+    
+    Graphics::DepthDisable();
 }
 
 void GFXApp::Draw2D() {
-    
+
     Graphics::SetColor();
     Graphics::MatrixProjectionResetOrtho();
     Graphics::MatrixModelViewReset();
@@ -276,12 +494,12 @@ void GFXApp::Draw2D() {
     
     
     Graphics::PipelineStateSetSpriteAlphaBlending();
-    mChaosEgg2X.Draw(150.0f, 100.0f, 1.0f, ccccc );
+    mChaosEgg2X.Draw(150.0f, 100.0f, 1.0f, 20.0f);
     
     Graphics::SetColor();
     
     Graphics::PipelineStateSetSpriteAdditiveBlending();
-    mChaosEgg3X.Draw(300.0f, 100.0f, 1.0f, -ccccc );
+    mChaosEgg3X.Draw(300.0f, 100.0f, 1.0f, 20.0f);
     
     
     mRay[0].Draw(40, 300);
@@ -296,10 +514,25 @@ void GFXApp::Draw2D() {
     
     mRay[3].Draw(150, 300);
     
-    Graphics::SetColor(0.0f, 0.5f, 1.0f, 0.75f);
-
-    mChaosEgg3X.Draw(mDDDX, mDDDY, 1.0f, -ccccc );
-
+    Graphics::SetColor();
+    
+    
+    
+    
+    
+    mMonolithMap.Draw(mTestX1, mTestY1, 0.125f, Sin(mTestSin1) * 40.0f, -1);
+    mChaosEgg2X.Draw(mTestX2, mTestY2, 0.5f, mTestSin2, -1);
+    
+    
+    
+    //Graphics::PipelineStateSetShapeNodeNoBlending();
+    //mTestRR.Draw();
+    
+    
+    
+    //mPackedBuffer = Graphics::BufferArrayGenerate(100 * sizeof(float));
+    //mPackedBuffer =
+    
     
     
 }
@@ -307,28 +540,17 @@ void GFXApp::Draw2D() {
 
 void GFXApp::Draw() {
     
-    Graphics::Clear(0.025f, 0.022f, 0.045f, 1.0f);
 
     if (mIsLoadingComplete) {
         Graphics::RenderPassBegin(GFX_RENDER_PASS_3D_MAIN,
                                   true, //Clear Color
                                   true); //Clear Depth
         
-        //if (mGameContainer) mGameContainer->Draw3D();
+        if (mGameContainer) mGameContainer->Draw3D();
         //if (mLevelSelect) mLevelSelect->mPage1->Draw3D();
         
         
-        //Draw3D();
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        Draw3D();
         
         Graphics::RenderPassBegin(GFX_RENDER_PASS_2D_MAIN,
                                   false, //Clear Color
@@ -350,22 +572,22 @@ void GFXApp::SetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
         mLevelSelect->mPage1->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
         mLevelSelect->mPage2->SetFrame(gVirtualDevWidth, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
         mLevelSelect->mPage3->SetFrame(gVirtualDevWidth + gVirtualDevWidth, 0.0f, gVirtualDevHeight, gVirtualDevHeight);
-        
     }
-    
-    mLayoutGame = true;
 }
 
 void GFXApp::TouchDown(float pX, float pY, void *pData) {
-
-    if (mIsLoadingComplete) {
-        Log("PLAYING DIRTY SOUND...\n?");
-        mDirtySound.Play();
+    
+    if (mTestTouch1 == NULL) {
+        mTestTouch1 = pData;
+        mTestX1 = pX;
+        mTestY1 = pY;
+    } else if (mTestTouch2 == NULL) {
+        mTestTouch2 = pData;
+        mTestX2 = pX;
+        mTestY2 = pY;
     }
-
-    mDDDX = pX;
-    mDDDY = pY;
-
+    
+    
     //core_sound_musicCrossFade("song2.mp3", 200, true);
     //core_sound_musicFadeOut(40);
     
@@ -404,10 +626,17 @@ void GFXApp::TouchDown(float pX, float pY, void *pData) {
 }
 
 void GFXApp::TouchMove(float pX, float pY, void *pData) {
-
-    mDDDX = pX;
-    mDDDY = pY;
-
+    
+    
+    if (mTestTouch1 == pData) {
+        mTestX1 = pX;
+        mTestY1 = pY;
+    } else if (mTestTouch2 == pData) {
+        mTestX2 = pX;
+        mTestY2 = pY;
+    }
+    
+    
     float aPercentY = pY / gDeviceHeight;
     
     aPercentY = (0.5 - aPercentY);
@@ -422,11 +651,16 @@ void GFXApp::TouchMove(float pX, float pY, void *pData) {
 }
 
 void GFXApp::TouchUp(float pX, float pY, void *pData) {
-    
+    if (mTestTouch1 == pData) {
+        mTestTouch1 = NULL;
+    } else if (mTestTouch2 == pData) {
+        mTestTouch2 = NULL;
+    }
 }
 
 void GFXApp::TouchFlush() {
-    
+    mTestTouch1 = NULL;
+    mTestTouch2 = NULL;
 }
 
 void GFXApp::MouseWheel(int pDirection) {
@@ -442,10 +676,7 @@ void GFXApp::KeyUp(int pKey) {
 }
 
 void GFXApp::SetDeviceSize(int pWidth, int pHeight) {
-    
     if (mGameContainer) {
         mGameContainer->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
     }
-    
-    mLayoutGame = true;
 }

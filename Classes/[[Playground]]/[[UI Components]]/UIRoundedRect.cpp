@@ -97,10 +97,7 @@ void UIRoundedRect::Draw() {
         mRefresh = false;
     }
     
-    Graphics::BufferSetIndicesShapeNode();
     Graphics::PipelineStateSetShapeNodeAlphaBlending();
-    
-    
     mNodeList.DrawTriStrips();
 }
 

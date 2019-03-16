@@ -11,9 +11,11 @@
 
 #include "GFXApp.hpp"
 #include "GameRenderer.hpp"
+#include "GameLevelController.hpp"
 #include "FloatingCamera.hpp"
 #include "Dart.hpp"
 #include "Balloon.hpp"
+#include "LevelData.hpp"
 #include "Transform2D.hpp"
 #include "Transform3D.hpp"
 
@@ -28,6 +30,7 @@ public:
     
     virtual void                                SetFrame(float pX, float pY, float pWidth, float pHeight) override;
     
+    virtual void                                LayoutTransform() override;
     virtual void                                Layout() override;
     virtual void                                Update() override;
     virtual void                                Draw() override;
@@ -57,6 +60,9 @@ public:
     float                                       mRenderShiftX;
     float                                       mRenderShiftY;
     
+    LevelData                                   *mLevelData;
+    GameLevelController                         *mLevelController;
+    
     GameRenderer                                *mRenderer;
     FloatingCamera                              *mCamera;
     
@@ -67,8 +73,6 @@ public:
     
     Dart                                        *mCurrentDart;
     int                                         mCurrentDartRespawnTimer;
-    
-    FList                                       mDemoDartList;
     
     void                                        ResetDartTouch();
     void                                        ReleaseDart();
@@ -136,6 +140,8 @@ public:
     
     
     
+    
+    void                                        Load();
     
     
 };

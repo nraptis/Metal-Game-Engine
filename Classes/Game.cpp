@@ -14,6 +14,9 @@ Game *gGame = NULL;
 
 Game::Game() {
     
+    mName = "[Game]";
+    
+    
     gGame = this;
     
     mRenderShiftX = 0.0f;
@@ -23,7 +26,13 @@ Game::Game() {
     SetHeight(GAME_HEIGHT);
     SetTransformAnchor(0.5f, 0.5f);
     
+    mLevelController = new GameLevelController(this);
+    mLevelData = NULL;
+    
     mCamera = new FloatingCamera();
+    
+    mCamera->mAspect = ((float)GAME_WIDTH) / ((float)GAME_HEIGHT);
+    
     mRenderer = new GameRenderer(this, mCamera);
     
     mDartSpawnX = gDeviceWidth2;
@@ -81,6 +90,16 @@ Game::Game() {
     mDartResetAnimationTick = 0;
     mDartResetAnimationTime = 200;
     
+    
+    
+    mTestPath.AddMove(100.0f, 100.0f);
+    mTestPath.AddMove(230.0f, 80.0f);
+    mTestPath.AddStop(500.0f, 360.0f);
+    mTestPath.AddWait(80);
+    mTestPath.AddMove(600.0f, 700.0f);
+    
+    
+    
 }
 
 Game::~Game() {
@@ -104,7 +123,12 @@ void Game::SetFrame(float pX, float pY, float pWidth, float pHeight) {
     
 }
 
-void Game::Layout() {
+void Game::LayoutTransform() {
+    
+    if (mCamera) {
+        mCamera->mAspect = gDeviceWidth / gDeviceHeight;
+        
+    }
     
     mDartTouch = NULL;
     
@@ -162,19 +186,6 @@ void Game::Layout() {
             mCamera->mDistance -= 0.05f;
         }
     }
-    
-    //mHitZoneRight = Convert2DXTo3D(mWidth + aHitZonePaddingH);
-    //mHitZoneBottom = Convert2DYTo3D(mHeight + aHitZonePaddingV);
-    //mHitZoneLeft = Convert2DXTo3D(-aHitZonePaddingH);
-    
-    mCamera->mDistance = mCamera->mDistance;
-    Log("mCamera->mDistance = %f\n", mCamera->mDistance);
-    
-    
-    
-    
-    
-    
     
     
     //Keep in mind, the hit zone we are expanding based on screen size...
@@ -242,7 +253,7 @@ void Game::Layout() {
     
     
     
-
+    
     
     
     
@@ -258,64 +269,11 @@ void Game::Layout() {
     //float aMinVelocity2D = aScreenMaxDimension * (0.38f / 100.0f);
     //float aGravity2D = aScreenMaxDimension * (0.012 / 100.0f);
     
-    
-    
-    
     //Log("Gravity = %.3f\n", mGravity);
+}
+
+void Game::Layout() {
     
-    
-    mBalloonList.Free();
-    
-    
-    for (float aX=0.0f;aX<=mWidth;aX += 127.0f) {
-     
-        for (float aY=0.0f;aY<=mHeight;aY += 140.0f) {
-            
-            Balloon *aBalloon = new Balloon();
-            
-            aBalloon->mTransform.mX = aX;
-            aBalloon->mTransform.mY = aY;
-            
-            FVec2 aPos1 = FVec2(aBalloon->mTransform.mX, aBalloon->mTransform.mY);
-            FVec2 aPos2 = FVec2(mCurrentDart->mTransform.mX, mCurrentDart->mTransform.mY);
-            
-            if (Distance(aPos1, aPos2) < 420.0f) {
-                delete aBalloon;
-            } else {
-                mBalloonList.Add(aBalloon);
-            }
-            
-            
-            
-        }
-    }
-    
-    
-    if (mDemoDartList.mCount <= 0) {
-        for (int i=0;i<14;i++) {
-            Dart *aDart = new Dart();
-            mDemoDartList.Add(aDart);
-        }
-    }
-    
-    int aDartIndex = 0;
-    for (int i=0;i<7;i++) {
-        Dart *aDart1 = (Dart *)(mDemoDartList[aDartIndex++]);
-        Dart *aDart2 = (Dart *)(mDemoDartList[aDartIndex++]);
-        
-        float aPercent = ((float)i) / ((float)6);
-        
-        aDart1->mColor.mRed = aPercent;
-        aDart2->mColor.mRed = aPercent;
-        
-        
-        aDart1->mTransform.mX = mWidth2 + 20.0f * ((float)(i + 1));
-        aDart1->mTransform.mY = 300.0f;
-        
-        aDart2->mTransform.mX = mWidth2 - 20.0f * ((float)(i + 1));
-        aDart2->mTransform.mY = 400.0f;
-        
-    }
 }
 
 void Game::Update() {
@@ -351,14 +309,7 @@ void Game::Update() {
     }
     
     mBalloonList.Update();
-    
-    EnumList(Balloon, aBalloon, mBalloonList.mObjectList) {
-        //Log("Balloon[%x]\n", aBalloon);
-        
-    }
-    
     mDartList.Update();
-    
     
     if (mDartTouch != NULL && mDartResetAnimation == false) {
         float aDiffX = mDartTargetPullX - mDartPullX;
@@ -425,6 +376,8 @@ void Game::Update() {
         }
         */
     }
+    
+    mLevelController->Update();
 }
 
 void Game::Draw() {
@@ -530,6 +483,8 @@ void Game::Draw() {
     }
     
     
+    mTestPath.Draw();
+    
 }
 
 void Game::Draw3D() {
@@ -543,38 +498,6 @@ void Game::Draw3D() {
     
     Graphics::PipelineStateSetShape3DAlphaBlending();
     Graphics::DepthDisable();
-    
-    if (false) {
-        FMatrix aProjection = mCamera->GetProjection();
-        FMatrix aModelView;
-        Graphics::MatrixProjectionSet(aProjection);
-        Graphics::MatrixModelViewReset();
-        
-        Graphics::SetColor(0.75f, 0.75f, 1.0f, 0.5f);
-        Graphics::UniformBind();
-        Graphics::DrawQuad(mKillZoneLeft, mKillZoneTop, 0.0f, mKillZoneRight, mKillZoneTop, 0.0f,
-                           mKillZoneLeft, mKillZoneBottom, 0.0f, mKillZoneRight, mKillZoneBottom, 0.0f);
-        
-        Graphics::SetColor(1.0f, 0.125f, 0.25f, 0.125f);
-        Graphics::UniformBind();
-        Graphics::DrawQuad(mGameAreaLeft, mGameAreaTop, 0.0f, mGameAreaRight, mGameAreaTop, 0.0f,
-                           mGameAreaLeft, mGameAreaBottom, 0.0f, mGameAreaRight, mGameAreaBottom, 0.0f);
-        
-        Graphics::SetColor(0.125f, 0.85f, 0.075f, 0.15f);
-        Graphics::UniformBind();
-        Graphics::DrawQuad(mPlayAreaLeft, mPlayAreaTop, 0.0f, mPlayAreaRight, mPlayAreaTop, 0.0f,
-                           mPlayAreaLeft, mPlayAreaBottom, 0.0f, mPlayAreaRight, mPlayAreaBottom, 0.0f);
-        
-        Graphics::SetColor(0.77f, 0.77f, 0.77f, 0.5f);
-        Graphics::UniformBind();
-        Graphics::DrawQuad(mHitZoneLeft, mHitZoneTop, 0.0f, mHitZoneRight, mHitZoneTop, 0.0f,
-                           mHitZoneLeft, mHitZoneBottom, 0.0f, mHitZoneRight, mHitZoneBottom, 0.0f);
-        
-        Graphics::SetColor(0.55f, 0.08f, 0.08f, 0.5f);
-        Graphics::UniformBind();
-        Graphics::DrawQuad(mSpawnZoneLeft, mSpawnZoneTop, 0.0f, mSpawnZoneRight, mSpawnZoneTop, 0.0f,
-                           mSpawnZoneLeft, mSpawnZoneBottom, 0.0f, mSpawnZoneRight, mSpawnZoneBottom, 0.0f);
-    }
 }
 
 void Game::TouchDown(float pX, float pY, void *pData) {
@@ -589,6 +512,7 @@ void Game::TouchDown(float pX, float pY, void *pData) {
         ResetDartTouch();
         return;
     }
+    
     if (mDartTouch == NULL && mDartResetAnimation == false && mCurrentDart != NULL) {
         float aDistanceSquared = DistanceSquared(pX, pY, mDartSpawnX, mDartSpawnY);
         if (aDistanceSquared <= mDartPullbackGrabRangeSquared) {
@@ -715,9 +639,6 @@ void Game::ReleaseDart() {
     
     if (mCurrentDart) {
         
-        //Dart *aDart = mCurrentDart;
-        //mCurrentDart = NULL;
-        
         //How much kapow do we give this dart?
         float aReleaseFactor = 0.0f;
         
@@ -735,15 +656,12 @@ void Game::ReleaseDart() {
             aDiffX /= aPullLength;
             aDiffY /= aPullLength;
             
-            
             aReleaseFactor = (aPullLength - mDartPullbackRangeMin) / (mDartPullbackRangeMax - mDartPullbackRangeMin);
             aReleaseFactor *= 1.10f;
             if (aReleaseFactor < 0.0f) aReleaseFactor = 0.0f;
             if (aReleaseFactor > 1.0f) aReleaseFactor = 1.0f;
             
             aReleaseFactor = FAnimation::EaseInCirc(aReleaseFactor) * 0.5f + aReleaseFactor * 0.5f;
-            
-            //Log("Release Factor: %f\n", aReleaseFactor);
             
             float aReleaseVelocity = mDartReleaseVelocityMin + (mDartReleaseVelocityMax - mDartReleaseVelocityMin) * aReleaseFactor;
             
@@ -797,7 +715,8 @@ void Game::ReleaseDart() {
         mDartTouch = NULL;
         ResetDartTouch();
         
-        mCurrentDartRespawnTimer = 6 + gRand.Get(3);
+        mCurrentDartRespawnTimer = 8;
+        
     }
     
     //ResetDartTouch();
@@ -834,22 +753,14 @@ void Game::ResetDartTouch() {
             aFactorDistance = 1.0f;
         }
         
-        Log("Animation Factors Rot[%f] Dist[%f]\n", aFactorRotation, aFactorDistance);
-        
         float aAnimationFactor = aFactorRotation;
         if (aFactorDistance > aFactorRotation) aAnimationFactor = aFactorDistance;
         
         float aTime = 5.0f + aAnimationFactor * 40.0f;
         
-        
-        
-        
         mDartResetAnimationTime = (int)(aTime + 0.5f);
         
-        Log("mDartResetStartRotation = %f..\nmDartResetRotationLength = %f\n", mDartResetStartRotation, mDartResetRotationLength);
-        
     } else {
-        Log("Dart => No Pull\n");
         mDartTouch = NULL;
         mIsDartBeingPulled = false;
         mDartResetAnimation = false;
@@ -873,4 +784,65 @@ bool Game::IsGameObjectOutsideKillZone(GameObject *pObject) {
         */
     }
     return false;
+}
+
+
+void Game::Load() {
+    
+    Log("Game::Load()\n");
+    
+    LevelSection *aSection = NULL;
+    LevelWave *aWave = NULL;
+    
+    LevelData *aLevel = new LevelData();
+    
+    //Create level section (1 of 2) (A)
+    aSection = new LevelSection();
+    aLevel->AddSection(aSection);
+    
+    //  A does not animate in.
+    //  A does not animate out.
+    
+    //  Greate spawn wave group (1 of 2).
+    //      Wave 1: one balloon flies in from the left.
+    aWave = new LevelWave();
+    aWave->mRight = false;
+    aSection->AddWave(aWave);
+    //      Wave 2: one balloon flies across from the right.
+    aWave = new LevelWave();
+    aWave->mRight = true;
+    aSection->AddWave(aWave);
+    
+    
+    //  Greate spawn wave (2 of 2).
+    //      Wave 1: Group of 4 balloons flies down from the top...
+    
+    //
+    
+    //Create level section (2 of 2) (B)
+    
+    //  B animates in from the left.
+    
+    //  B has 2 "blockers"
+    //      Blocker 1 is at (X: 25%, Y: 25%)
+    //      Blocker 2 is at (X: 75%, Y: 25%)
+    
+    //  Greate spawn wave group (1 of 2).
+    //      Wave 1: one balloon flies across from the left.
+    //      Wave 2: one balloon flies across from the right.
+    
+    //  Greate spawn wave (2 of 2).
+    //      Wave 1: Group of 2 balloons flies in from the left...
+    //      Wave 2: Group of 2 balloons flies in from the right...
+    
+    
+    
+    
+    
+    
+    
+    
+    mLevelData = aLevel;
+    mLevelController->Setup(mLevelData);
+    
 }

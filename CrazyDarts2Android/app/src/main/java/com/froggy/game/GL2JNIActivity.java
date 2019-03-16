@@ -51,15 +51,16 @@ public class GL2JNIActivity extends Activity {
     }
 
     @Override protected void onPause() {
+        System.out.println("onPause()\n");
         super.onPause();
         mView.onPause();
         GL2JNILib.NativeAppShellPause();
     }
 
     @Override protected void onResume() {
+        System.out.println("onResume()\n");
         super.onResume();
         mView.onResume();
-
         GL2JNILib.NativeAppShellResume();
     }
 

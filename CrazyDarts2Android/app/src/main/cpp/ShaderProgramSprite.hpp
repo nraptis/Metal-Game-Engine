@@ -11,7 +11,7 @@
 
 #include "ShaderProgram.hpp"
 
-class ShaderProgramSprite : public ShaderProgram {
+class ShaderProgramSprite: public ShaderProgram {
 public:
     ShaderProgramSprite(const char *pVertexPath, const char *pFragmentPath);
     virtual void                Compile() override;

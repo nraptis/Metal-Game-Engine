@@ -23,6 +23,7 @@ FApp::FApp() {
     mFrameCaptureDrawCount = 0;
     
     
+    mIsGraphicsSetUpEnqueued = false;
     
     
     mDidInitialize = false;
@@ -56,17 +57,11 @@ FApp::FApp() {
     mIsLoading = false;
     mIsLoadingComplete = false;
     
-    //
-    //
-    //
-    mSkipDrawTick = 0;
+    
     mUpdateMultiplier = 1;
     
     mUpdatesPerSecond = 100.0f;
-    //
-    //
-    //
-    Log("The Time Is [%d]\n", os_system_time());
+    
     RecoverTime();
 }
 
@@ -93,9 +88,8 @@ void FApp::BaseInitialize() {
         //For now we just load in main thread...
         //AppShellLoad();
         
-        
         while (gGraphicsInterface->IsReady() == false) {
-            os_sleep(16);
+            os_sleep(10);
         }
         
         Graphics::SetDeviceSize(gDeviceWidth, gDeviceHeight);
@@ -108,6 +102,7 @@ void FApp::BaseInitialize() {
         
         //Initialize the graphics engine...
         Graphics::Initialize();
+        Graphics::SetUp();
         
         Initialize();
     }
@@ -157,7 +152,7 @@ void FApp::BaseSetSafeAreaInsets(int pInsetUp, int pInsetRight, int pInsetDown, 
 }
 
 void AppFrameThread(void *pArgs) {
-    printf("AppFrameThread(%X)\m", pArgs);
+    Log("AppFrameThread(%X)\m", pArgs);
     
     gAppBase->MainRunLoop();
 }
@@ -169,13 +164,20 @@ void FApp::BaseFrame() {
         BaseInitialize();
     }
     
+    if (mIsGraphicsSetUpEnqueued) {
+        mIsGraphicsSetUpEnqueued = false;
+        Graphics::SetUp();
+    }
+    
     if (mDidDetachFrameController == false) {
         mDidDetachFrameController = true;
         os_detach_thread(AppFrameThread, (void*)0xB00BFACE);
+        
     }
-
+    
     //for (int i=0;i<aUpdateCount;i++) {
     //BaseUpdate();
+    
     
     //}
     
@@ -233,9 +235,12 @@ void FApp::BaseUpdate() {
     
     mDidUpdate = true;
     
-    InterfaceLock();
+    //InterfaceLock();
+    
     gTouch.Update();
-    InterfaceUnlock();
+    
+    //InterfaceUnlock();
+    
     
     
     Update();
@@ -271,7 +276,8 @@ void FApp::BaseDraw() {
     //FMatrix aScreenProjection = FMatrixCreateOrtho(0.0f, gDeviceWidth, gDeviceHeight, 0.0f, -1024.0f, 1024.0f);
     //Graphics::MatrixProjectionSet(aScreenProjection);
     Graphics::MatrixModelViewReset();
-    Graphics::Clear(0.0f, 0.0f, 0.0f);
+    //Graphics::Clear(0.0f, 0.0f, 0.0f);
+    
     
     Graphics::TextureSetClamp();
     
@@ -663,6 +669,7 @@ void FApp::BaseInactive() {
         gTouch.Inactive();
         InterfaceUnlock();
         
+        
         mWindowMain.Inactive();
         mWindowModal.Inactive();
         mWindowTools.Inactive();
@@ -670,7 +677,10 @@ void FApp::BaseInactive() {
         core_sound_stopAll();
         core_sound_inactive();
         if (gEnvironment == ENV_ANDROID) {
-            gTextureCache.UnloadAllTextures();
+            
+            Graphics::TearDown();
+            
+            //gTextureCache.UnloadAllTextures();
         }
     }
 }
@@ -680,7 +690,10 @@ void FApp::BaseActive() {
         mActive = true;
         Active();
         if (gEnvironment == ENV_ANDROID) {
-            gTextureCache.ReloadAllTextures();
+            mIsGraphicsSetUpEnqueued = true;
+            
+            
+            //gTextureCache.ReloadAllTextures();
         }
         
         InterfaceLock();
@@ -768,7 +781,7 @@ void FApp::SystemProcess() {
 void FApp::MainRunLoop() {
     
      while (gGraphicsInterface->IsReady() == false) {
-         printf("Waiting for Graphics Module...\n");
+         Log("Waiting for Graphics Module...\n");
          usleep(400);
      }
     
@@ -785,13 +798,8 @@ void FApp::RecoverTime() {
 }
 
 void FApp::FrameController() {
-    static unsigned int aLastDrawTime = 0;
-    
-    //TODO: Windows app running in the background...
-    //What do we want to do here? LOL!
-    //
-    // If the App is minimized, we don't do anything here but sleep and Pump and SystemProcess
-    //
+
+    ThrottleLock();
     
     if (mActive == false) {
         if (os_updates_in_background()) {
@@ -840,9 +848,7 @@ void FApp::FrameController() {
         
         mFrame.mBreakUpdate=false;
         bool aShouldDraw = false;
-        //bool aShouldDraw = true;
         int aUpdateCheck = (int)mFrame.mDesiredUpdate - mFrame.mCurrentUpdateNumber;
-        unsigned int aFrameStart = os_system_time();
         
         if (aUpdateCheck > 0) {
             
@@ -859,12 +865,13 @@ void FApp::FrameController() {
                 //
                 mFrame.mCurrentUpdateNumber++;
                 
-                ThrottleLock();
                 BaseUpdate();
-                ThrottleUnlock();
             }
         }
     }
+    
+    
+    ThrottleUnlock();
     
     
     

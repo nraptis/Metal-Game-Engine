@@ -99,10 +99,18 @@ add_library(gl2jni SHARED
         PhongLightMenu.cpp
         PlatformGraphicsInterface.cpp
         ScreenTransformMenu.cpp
-        ShaderProgram.cpp
-        ShaderProgramShape3D.cpp
-        ShaderProgramSprite.cpp
-        ShaderProgramSpriteWhite.cpp
+		ShaderProgramSpriteWhite.cpp
+		ShaderProgramSpriteNode.cpp
+		ShaderProgramSprite.cpp
+		ShaderProgramSimpleModelIndexed.cpp
+		ShaderProgramSimpleModel.cpp
+		ShaderProgramShapeNode.cpp
+		ShaderProgramShape3D.cpp
+		ShaderProgramModelIndexedLightedPhong.cpp
+		ShaderProgramModelIndexedLightedAmbientDiffuse.cpp
+		ShaderProgramModelIndexedLightedAmbient.cpp
+		ShaderProgramModelIndexed.cpp
+		ShaderProgram.cpp
         ToolMenu.cpp
         ToolMenuHeader.cpp
         ToolMenuModalUnderlay.cpp
@@ -127,6 +135,10 @@ add_library(gl2jni SHARED
 		Transform3D.cpp
 		Transform2D.cpp
 		LevelData.cpp
+		GameLevelController.cpp
+		LevelSection.cpp
+		LevelSelectorScreen.cpp
+		LevelWave.cpp
         )
 
 # add lib dependencies

@@ -14,36 +14,84 @@
 #include "ShaderProgramSpriteWhite.hpp"
 #include "ShaderProgramShape3D.hpp"
 
+#include "ShaderProgramShapeNode.hpp"
+#include "ShaderProgramSpriteNode.hpp"
+#include "ShaderProgramSimpleModel.hpp"
+#include "ShaderProgramSimpleModelIndexed.hpp"
+#include "ShaderProgramModelIndexed.hpp"
+#include "ShaderProgramModelIndexedLightedAmbient.hpp"
+#include "ShaderProgramModelIndexedLightedAmbientDiffuse.hpp"
+#include "ShaderProgramModelIndexedLightedPhong.hpp"
+
 class OpenGLEngine {
 public:
     
     OpenGLEngine();
     ~OpenGLEngine();
     
-    void                            SetUp();
+    void                                SetUp();
+    void                                TearDown();
     
-    void                            BuildPrograms();
+    void                                BuildPrograms();
     
-    void                            Prerender();
-    void                            Postrender();
-    
-    
-    bool                            IsReady();
-    bool                            mIsReady;
-    
-    void                            UseProgram(ShaderProgram *pProgram);
-    
-    void                            UseProgramShape2D();
-    void                            UseProgramShape3D();
-    
-    void                            UseProgramSprite();
-    void                            UseProgramSpriteWhite();
+    void                                Prerender();
+    void                                Postrender();
     
     
-    ShaderProgram                   *mShaderProgramShape2D;
-    ShaderProgramShape3D            *mShaderProgramShape3D;
-    ShaderProgramSprite             *mShaderProgramSprite;
-    ShaderProgramSpriteWhite        *mShaderProgramSpriteWhite;
+    bool                                IsReady();
+    bool                                mIsReady;
+    
+    void                                UseProgram(ShaderProgram *pProgram);
+    
+    void                                UseProgramShape2D();
+    void                                UseProgramShape3D();
+    
+    void                                UseProgramSprite();
+    void                                UseProgramSpriteWhite();
+    void                                UseProgramShapeNode();
+    void                                UseProgramSimpleModel();
+    void                                UseProgramSimpleModelIndexed();
+    void                                UseProgramModelIndexed();
+    
+    
+    void                                            UseProgramModelIndexedAmbient();
+    void                                            UseProgramModelIndexedAmbientDiffuse();
+    void                                            UseProgramModelIndexedPhong();
+    
+    
+    
+    
+    
+    ShaderProgram                                   *mShaderProgramShape2D;
+    ShaderProgramShape3D                            *mShaderProgramShape3D;
+    ShaderProgramSprite                             *mShaderProgramSprite;
+    ShaderProgramSpriteWhite                        *mShaderProgramSpriteWhite;
+    
+    
+    
+    ShaderProgramShapeNode                          *mShaderProgramShapeNode;//ShaderProgramShapeNode
+    ShaderProgramSpriteNode                         *mShaderProgramSpriteNode;//ShaderProgramSpriteNode
+    ShaderProgramSimpleModel                        *mShaderProgramSimpleModel;//ShaderProgramSimpleModel
+    ShaderProgramSimpleModelIndexed                 *mShaderProgramSimpleModelIndexed;
+    
+    ShaderProgramModelIndexed                       *mShaderProgramModelIndexed;
+    
+    ShaderProgramModelIndexedLightedAmbient         *mShaderProgramModelIndexedLightedAmbient;
+    
+    ShaderProgramModelIndexedLightedAmbientDiffuse  *mShaderProgramModelIndexedLightedAmbientDiffuse;
+    
+    ShaderProgramModelIndexedLightedPhong           *mShaderProgramModelIndexedLightedPhong;
+    
+    
+    
+    //model_lighted_phong_vertex_shader.glsl
+    
+    //model_lighted_phong_vertex_shader.glsl
+    //model_lighted_ambient_diffuse_fragment_shader.glsl
+    //model_lighted_ambient_diffuse_vertex_shader.glsl
+    
+    //model_lighted_phong_fragment_shader.glsl
+    
     
 };
 

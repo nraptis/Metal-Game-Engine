@@ -129,15 +129,15 @@ void FWindow::Update() {
             }
         }
     }
-
+    
     if (!mTransformUpdateBucket.IsEmpty()) {
         mTemp.RemoveAll();
         mTransformUpdateBucket.AddCanvasesToListAndRemoveAll(&mTemp);
         EnumList(FCanvas, aCanvas, mTemp) {
             aCanvas->ComputeAbsoluteTransformation();
+            aCanvas->BaseLayoutTransform();
         }
     }
-
     mRoot.BaseUpdate();
 }
 
@@ -222,23 +222,15 @@ void FWindow::SetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
         mVirtualFrameWidth = pWidth;
         mVirtualFrameHeight = pHeight;
         mRoot.SetFrame(pX, pY, pWidth, pHeight);
-        
-        //RegisterFrameDidUpdate(&mRoot);
     }
 }
 
 void FWindow::SetSafeAreaInsets(int pInsetUp, int pInsetRight, int pInsetDown, int pInsetLeft) {
     if (mSafeAreaInsetTop != pInsetUp || mSafeAreaInsetRight != pInsetRight || mSafeAreaInsetBottom != pInsetDown || mSafeAreaInsetLeft != pInsetLeft) {
-        
-        //
-        Log("FWindow::SetSafeAreaInsets(%d, %d, %d, %d)\n", pInsetUp, pInsetRight, pInsetDown, pInsetLeft);
-        //
-        
         mSafeAreaInsetTop = pInsetUp;
         mSafeAreaInsetRight = pInsetRight;
         mSafeAreaInsetBottom = pInsetDown;
         mSafeAreaInsetLeft = pInsetLeft;
-        
         RegisterFrameDidUpdate(&mRoot);
     }
 }

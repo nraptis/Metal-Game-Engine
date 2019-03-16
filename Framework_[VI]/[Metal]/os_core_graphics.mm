@@ -45,6 +45,7 @@ static int                  cCurrentRenderPass = -1;
 static int                  cBufferIndexUniforms = 2;
 static int                  cBufferIndexPositions = 0;
 static int                  cBufferIndexTextureCoords = 1;
+static int                  cBufferIndexColors = -1;
 static int                  cBufferIndexNormals = -1;
 static int                  cBufferIndexUNormals = -1;
 static int                  cBufferIndexTangents = -1;
@@ -116,6 +117,14 @@ void Graphics::Initialize() {
     
 }
 
+// When we get a new content, we SET UP.
+void Graphics::SetUp() {
+    
+}
+
+void Graphics::TearDown() {
+    
+}
 
 void Graphics::SetDeviceScale(float pScale) {
     cDeviceScale = pScale;
@@ -125,7 +134,8 @@ void Graphics::SetDeviceSize(float pWidth, float pHeight) {
  
     FMatrix aOrtho = FMatrixCreateOrtho(0.0f, pWidth, pHeight, 0.0f, -2048.0f, 2048.0f);
     cMatrixOrtho.Set(aOrtho);
-    Graphics::ViewportSet(0.0f, 0.0f, pWidth, pHeight);
+    
+    //Graphics::ViewportSet(0.0f, 0.0f, pWidth, pHeight);
     Graphics::ClipSetAppFrame(0.0f, 0.0f, pWidth, pHeight);
     
     cTileRect.SetRect(0.0f, 0.0f, pWidth, pHeight);
@@ -581,6 +591,7 @@ void Graphics::ArrayBufferData(int pIndex) {
 }
 
 void Graphics::ArrayBufferData(int pIndex, int pOffset) {
+    if (pIndex == -1) { return; }
     BufferBindingWrapper *aWrapper = (__bridge BufferBindingWrapper *)cBufferBindMap.Get(pIndex);
     if (aWrapper != NULL && aWrapper.buffer != NULL) {
         [gMetalEngine.renderCommandEncoder setVertexBuffer: aWrapper.buffer offset: pOffset atIndex: cBufferIndexData];
@@ -592,6 +603,7 @@ void Graphics::ArrayBufferPositions(int pIndex) {
 }
 
 void Graphics::ArrayBufferPositions(int pIndex, int pOffset) {
+    if (pIndex == -1) { return; }
     BufferBindingWrapper *aWrapper = (__bridge BufferBindingWrapper *)cBufferBindMap.Get(pIndex);
     if (aWrapper != NULL && aWrapper.buffer != NULL) {
         [gMetalEngine.renderCommandEncoder setVertexBuffer: aWrapper.buffer offset: pOffset atIndex: cBufferIndexPositions];
@@ -603,9 +615,23 @@ void Graphics::ArrayBufferTextureCoords(int pIndex) {
 }
 
 void Graphics::ArrayBufferTextureCoords(int pIndex, int pOffset) {
+    if (pIndex == -1) { return; }
     BufferBindingWrapper *aWrapper = (__bridge BufferBindingWrapper *)cBufferBindMap.Get(pIndex);
     if (aWrapper != NULL && aWrapper.buffer != NULL) {
         [gMetalEngine.renderCommandEncoder setVertexBuffer: aWrapper.buffer offset: pOffset atIndex: cBufferIndexTextureCoords];
+    }
+}
+
+
+void Graphics::ArrayBufferColors(int pIndex) {
+    ArrayBufferColors(pIndex, 0);
+}
+
+void Graphics::ArrayBufferColors(int pIndex, int pOffset) {
+    if (pIndex == -1) { return; }
+    BufferBindingWrapper *aWrapper = (__bridge BufferBindingWrapper *)cBufferBindMap.Get(pIndex);
+    if (aWrapper != NULL && aWrapper.buffer != NULL) {
+        [gMetalEngine.renderCommandEncoder setVertexBuffer: aWrapper.buffer offset: pOffset atIndex: cBufferIndexColors];
     }
 }
 
@@ -614,6 +640,7 @@ void Graphics::ArrayBufferNormals(int pIndex) {
 }
 
 void Graphics::ArrayBufferNormals(int pIndex, int pOffset) {
+    if (pIndex == -1) { return; }
     BufferBindingWrapper *aWrapper = (__bridge BufferBindingWrapper *)cBufferBindMap.Get(pIndex);
     if (aWrapper != NULL && aWrapper.buffer != NULL) {
         [gMetalEngine.renderCommandEncoder setVertexBuffer: aWrapper.buffer offset: pOffset atIndex: cBufferIndexNormals];
@@ -625,6 +652,7 @@ void Graphics::ArrayBufferTangents(int pIndex) {
 }
 
 void Graphics::ArrayBufferTangents(int pIndex, int pOffset) {
+    if (pIndex == -1) { return; }
     BufferBindingWrapper *aWrapper = (__bridge BufferBindingWrapper *)cBufferBindMap.Get(pIndex);
     if (aWrapper != NULL && aWrapper.buffer != NULL) {
         [gMetalEngine.renderCommandEncoder setVertexBuffer: aWrapper.buffer offset: pOffset atIndex: cBufferIndexTangents];
@@ -872,6 +900,10 @@ void Graphics::BufferSetTextureCoordsIndex(int pIndex) {
     cBufferIndexTextureCoords = pIndex;
 }
 
+void Graphics::BufferSetColorsIndex(int pIndex) {
+    cBufferIndexColors = pIndex;
+}
+
 void Graphics::BufferSetNormalsIndex(int pIndex) {
     cBufferIndexNormals = pIndex;
 }
@@ -895,6 +927,7 @@ void Graphics::BufferSetTexturesIndex(int pIndex) {
 void Graphics::BufferSetIndicesShape() {
     Graphics::BufferSetPositionsIndex(GFX_BUFFER_INDEX_POSITIONS_SHAPE);
     Graphics::BufferSetTextureCoordsIndex(-1);
+    Graphics::BufferSetColorsIndex(-1);
     Graphics::BufferSetNormalsIndex(-1);
     Graphics::BufferSetTangentsIndex(-1);
     Graphics::BufferSetUNormalsIndex(-1);
@@ -905,6 +938,7 @@ void Graphics::BufferSetIndicesShape() {
 void Graphics::BufferSetIndicesShapeNode() {
     Graphics::BufferSetPositionsIndex(GFX_BUFFER_INDEX_DATA_SHAPE_NODE);
     Graphics::BufferSetTextureCoordsIndex(-1);
+    Graphics::BufferSetColorsIndex(-1);
     Graphics::BufferSetNormalsIndex(-1);
     Graphics::BufferSetTangentsIndex(-1);
     Graphics::BufferSetUNormalsIndex(-1);
@@ -915,6 +949,7 @@ void Graphics::BufferSetIndicesShapeNode() {
 void Graphics::BufferSetIndicesSprite() {
     Graphics::BufferSetPositionsIndex(GFX_BUFFER_INDEX_POSITIONS_SPRITE);
     Graphics::BufferSetTextureCoordsIndex(GFX_BUFFER_INDEX_TEXTURE_COORDS_SPRITE);
+    Graphics::BufferSetColorsIndex(-1);
     Graphics::BufferSetNormalsIndex(-1);
     Graphics::BufferSetTangentsIndex(-1);
     Graphics::BufferSetUNormalsIndex(-1);
@@ -925,6 +960,7 @@ void Graphics::BufferSetIndicesSprite() {
 void Graphics::BufferSetIndicesSimpleModel() {
     Graphics::BufferSetPositionsIndex(GFX_BUFFER_INDEX_POSITIONS_SIMPLE_MODEL);
     Graphics::BufferSetTextureCoordsIndex(GFX_BUFFER_INDEX_TEXTURE_COORDS_SIMPLE_MODEL);
+    Graphics::BufferSetColorsIndex(-1);
     Graphics::BufferSetNormalsIndex(-1);
     Graphics::BufferSetTangentsIndex(-1);
     Graphics::BufferSetUNormalsIndex(-1);
@@ -935,6 +971,7 @@ void Graphics::BufferSetIndicesSimpleModel() {
 void Graphics::BufferSetIndicesSimpleModelIndexed() {
     Graphics::BufferSetPositionsIndex(-1);
     Graphics::BufferSetTextureCoordsIndex(-1);
+    Graphics::BufferSetColorsIndex(-1);
     Graphics::BufferSetNormalsIndex(-1);
     Graphics::BufferSetTangentsIndex(-1);
     Graphics::BufferSetUNormalsIndex(-1);
@@ -945,6 +982,7 @@ void Graphics::BufferSetIndicesSimpleModelIndexed() {
 void Graphics::BufferSetIndicesModelIndexed() {
     Graphics::BufferSetPositionsIndex(-1);
     Graphics::BufferSetTextureCoordsIndex(-1);
+    Graphics::BufferSetColorsIndex(-1);
     Graphics::BufferSetNormalsIndex(-1);
     Graphics::BufferSetTangentsIndex(-1);
     Graphics::BufferSetUNormalsIndex(-1);
@@ -1185,6 +1223,7 @@ void Graphics::DrawTrianglesIndexed(GFX_MODEL_INDEX_TYPE *pIndices, int pCount) 
     }
 }
 
+/*
 void Graphics::DrawTrianglesIndexedFromPackedBuffers(int pVertexBuffer, int pVertexBufferOffset,
                                                                               int pIndexBuffer , int pIndexBufferOffset,
                                                      int pCount, FTexture *pTexture) {
@@ -1210,6 +1249,44 @@ void Graphics::DrawTrianglesIndexedFromPackedBuffers(int pVertexBuffer, int pVer
     
     [gMetalEngine.renderCommandEncoder setVertexBuffer: aWrapperVertex.buffer offset: pVertexBufferOffset atIndex: cBufferIndexData];
     [gMetalEngine.renderCommandEncoder drawIndexedPrimitives: MTLPrimitiveTypeTriangle indexCount: pCount indexType: MTLIndexTypeUInt16 indexBuffer: aWrapperIndex.buffer indexBufferOffset: pIndexBufferOffset];
+    
+}
+*/
+
+void Graphics::DrawTrianglesIndexedWithPackedBuffers(int pVertexBuffer, int pVertexBufferOffset, GFX_MODEL_INDEX_TYPE *pIndices, int pCount, FTexture *pTexture) {
+    //Graphics::TextureBind(pTexture);
+    //Graphics::ArrayBufferData(pVertexBuffer, pVertexBufferOffset);
+    //Graphics::ArrayBufferPositions(-1, 0);
+    //Graphics::ArrayBufferTextureCoords(-1, sizeof(float) * 3);
+    //Graphics::ArrayBufferNormals(-1, sizeof(float) * 6);
+    //Graphics::DrawTrianglesIndexed(pIndices, pCount);
+    
+    
+    Graphics::TextureBind(pTexture);
+    
+    BufferBindingWrapper *aWrapperVertex = (__bridge BufferBindingWrapper *)cBufferBindMap.Get(pVertexBuffer);
+    
+    if (aWrapperVertex == NULL) {
+        return;
+    }
+    if (aWrapperVertex.buffer == NULL) {
+        return;
+    }
+    
+    //unsigned char *aAddressVertex = (unsigned char *)aWrapperVertex.buffer.contents;
+    //aAddressVertex = &(aAddressVertex[pVertexBufferOffset]);
+    
+    //unsigned char *aAddressIndex = (unsigned char *)aWrapperIndex.buffer.contents;
+    //aAddressIndex = &(aAddressIndex[pIndexBufferOffset]);
+    
+    [gMetalEngine.renderCommandEncoder setVertexBuffer: aWrapperVertex.buffer offset: pVertexBufferOffset atIndex: cBufferIndexData];
+    
+    DrawTrianglesIndexed(pIndices, pCount);
+    
+    
+    //[gMetalEngine.renderCommandEncoder drawIndexedPrimitives: MTLPrimitiveTypeTriangle indexCount: pCount indexType: MTLIndexTypeUInt16 indexBuffer: aWrapperIndex.buffer indexBufferOffset: pIndexBufferOffset];
+    
+    
     
 }
 
