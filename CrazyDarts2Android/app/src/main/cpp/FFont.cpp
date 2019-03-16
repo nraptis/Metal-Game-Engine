@@ -72,12 +72,13 @@ void FFont::Load(char *pFilePrefix, char *pCharacters) {
     if (pCharacters) {
         while (*pCharacters) {
             aIndex = (int)((unsigned char)(*pCharacters));
-            aPath = FString(aPrefixString.c()) + FString((*pCharacters));
+            //aPath = FString(aPrefixString.c()) + FString((*pCharacters));
+            //mCharacterSprite[aIndex].Load(aPath);
+            //if (mCharacterSprite[aIndex].mWidth <= 0) {
+            aPath = FString(aPrefixString.c()) + FString(aIndex);
             mCharacterSprite[aIndex].Load(aPath);
-            if (mCharacterSprite[aIndex].mWidth <= 0) {
-                aPath = FString(aPrefixString.c()) + FString(aIndex);
-                mCharacterSprite[aIndex].Load(aPath);
-            }
+            //}
+        
             if(mCharacterStrideX[aIndex] <= 0.0f)mCharacterStrideX[aIndex] = mCharacterSprite[aIndex].mWidth;
             if(mPointSize < mCharacterSprite[aIndex].mHeight)mPointSize = mCharacterSprite[aIndex].mHeight;
             mCharacterStrideX[aIndex] = mCharacterSprite[aIndex].mWidth;

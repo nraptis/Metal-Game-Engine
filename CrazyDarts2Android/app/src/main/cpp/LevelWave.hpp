@@ -10,6 +10,7 @@
 #define LevelWave_hpp
 
 #include "GameObject.hpp"
+#include "LevelWaveChunk.hpp"
 
 class LevelWave {
 public:
@@ -26,6 +27,9 @@ public:
     bool                                mIsComplete;
     bool                                mRight;
     int                                 mAliveTimer;
+    
+    
+    
     
 };
 

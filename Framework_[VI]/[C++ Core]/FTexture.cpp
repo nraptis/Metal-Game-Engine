@@ -127,9 +127,9 @@ void FTexture::Load(FImage *pImage) {
 void FTexture::Unload() {
     if (mBindIndex != -1) {
         Graphics::TextureDelete(mBindIndex);
-        mBindIndex = -1;
-        mDidFailLoad = false;
     }
+    mBindIndex = -1;
+    mDidFailLoad = false;
 }
 
 float FTexture::GetStartU() {

@@ -20,7 +20,7 @@ FTextureCacheNode::~FTextureCacheNode() {
 }
 
 FTextureCache::FTextureCache() {
-    mAutoMode = false;
+    mAutoMode = true;
 }
 
 FTextureCache::~FTextureCache() {
@@ -51,9 +51,11 @@ void FTextureCache::UnloadAllTextures() {
 
 void FTextureCache::ReloadAllTextures() {
     EnumList (FTextureCacheNode, aNode, mNodeList) {
-        Log("~~Reloading Node[%s] (%d)\n", aNode->mTexture->mFileName.c(), aNode->mBindCount);
+        Log("~~Reloading Node[%s] BI[%d] (%d)\n", aNode->mTexture->mFileName.c(), aNode->mTexture->mBindIndex, aNode->mBindCount);
         if(aNode->mBindCount > 0) {
             aNode->mTexture->Realize();
+            Log("Reloaded [%s] [%d x %d] Ind(%d)\n", aNode->mTexture->mFileName.c(), aNode->mTexture->mWidth,
+                aNode->mTexture->mHeight, aNode->mTexture->mBindIndex);
         }
     }
 }

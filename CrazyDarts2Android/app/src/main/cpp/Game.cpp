@@ -90,6 +90,16 @@ Game::Game() {
     mDartResetAnimationTick = 0;
     mDartResetAnimationTime = 200;
     
+    
+    
+    mTestPath.AddMove(100.0f, 100.0f);
+    mTestPath.AddMove(230.0f, 80.0f);
+    mTestPath.AddStop(500.0f, 360.0f);
+    mTestPath.AddWait(80);
+    mTestPath.AddMove(600.0f, 700.0f);
+    
+    
+    
 }
 
 Game::~Game() {
@@ -473,6 +483,8 @@ void Game::Draw() {
     }
     
     
+    mTestPath.Draw();
+    
 }
 
 void Game::Draw3D() {
@@ -486,38 +498,6 @@ void Game::Draw3D() {
     
     Graphics::PipelineStateSetShape3DAlphaBlending();
     Graphics::DepthDisable();
-    
-    if (false) {
-        FMatrix aProjection = mCamera->GetProjection();
-        FMatrix aModelView;
-        Graphics::MatrixProjectionSet(aProjection);
-        Graphics::MatrixModelViewReset();
-        
-        Graphics::SetColor(0.75f, 0.75f, 1.0f, 0.5f);
-        Graphics::UniformBind();
-        Graphics::DrawQuad(mKillZoneLeft, mKillZoneTop, 0.0f, mKillZoneRight, mKillZoneTop, 0.0f,
-                           mKillZoneLeft, mKillZoneBottom, 0.0f, mKillZoneRight, mKillZoneBottom, 0.0f);
-        
-        Graphics::SetColor(1.0f, 0.125f, 0.25f, 0.125f);
-        Graphics::UniformBind();
-        Graphics::DrawQuad(mGameAreaLeft, mGameAreaTop, 0.0f, mGameAreaRight, mGameAreaTop, 0.0f,
-                           mGameAreaLeft, mGameAreaBottom, 0.0f, mGameAreaRight, mGameAreaBottom, 0.0f);
-        
-        Graphics::SetColor(0.125f, 0.85f, 0.075f, 0.15f);
-        Graphics::UniformBind();
-        Graphics::DrawQuad(mPlayAreaLeft, mPlayAreaTop, 0.0f, mPlayAreaRight, mPlayAreaTop, 0.0f,
-                           mPlayAreaLeft, mPlayAreaBottom, 0.0f, mPlayAreaRight, mPlayAreaBottom, 0.0f);
-        
-        Graphics::SetColor(0.77f, 0.77f, 0.77f, 0.5f);
-        Graphics::UniformBind();
-        Graphics::DrawQuad(mHitZoneLeft, mHitZoneTop, 0.0f, mHitZoneRight, mHitZoneTop, 0.0f,
-                           mHitZoneLeft, mHitZoneBottom, 0.0f, mHitZoneRight, mHitZoneBottom, 0.0f);
-        
-        Graphics::SetColor(0.55f, 0.08f, 0.08f, 0.5f);
-        Graphics::UniformBind();
-        Graphics::DrawQuad(mSpawnZoneLeft, mSpawnZoneTop, 0.0f, mSpawnZoneRight, mSpawnZoneTop, 0.0f,
-                           mSpawnZoneLeft, mSpawnZoneBottom, 0.0f, mSpawnZoneRight, mSpawnZoneBottom, 0.0f);
-    }
 }
 
 void Game::TouchDown(float pX, float pY, void *pData) {

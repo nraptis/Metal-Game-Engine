@@ -34,6 +34,8 @@ void Log(const char *pText, ...);
 void os_initialize_outlets();
 
 
+void os_commitRender();
+
 void os_sleep(int pTime);
 
 unsigned int os_system_time();

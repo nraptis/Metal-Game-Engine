@@ -461,15 +461,15 @@ void GFXApp::Draw3D() {
 
 void GFXApp::Draw2D() {
     
-    return;
+    //return;
     
     Graphics::SetColor();
     Graphics::MatrixProjectionResetOrtho();
     Graphics::MatrixModelViewReset();
     Graphics::PipelineStateSetSpriteAlphaBlending();
     
-    Graphics::SetColor(0.125f);
-    mBalloonMap[4].DrawQuad(0.0f, 0.0f, gDeviceWidth - 10.0f, gDeviceHeight - 10.0f);
+    //Graphics::SetColor(0.125f);
+    //mBalloonMap[4].DrawQuad(0.0f, 0.0f, gDeviceWidth - 10.0f, gDeviceHeight - 10.0f);
     
     
     Graphics::SetColor(0.25f, 0.25f, 0.45f);
@@ -552,14 +552,25 @@ void GFXApp::Draw() {
         //if (mLevelSelect) mLevelSelect->mPage1->Draw3D();
         
         
-        //Draw3D();
+        Draw3D();
+        
+        if (gRand.Get(14) == 10) {
+            for (int i=0;i<10;i++) {
+                Draw3D();
+            }
+        }
         
         
         Graphics::RenderPassBegin(GFX_RENDER_PASS_2D_MAIN,
                                   false, //Clear Color
                                   false); //Clear Depth
         
-        //Draw2D();
+        Draw2D();
+        if (gRand.Get(14) == 10) {
+            for (int i=0;i<10;i++) {
+                Draw2D();
+            }
+        }
         
         
         Graphics::PipelineStateSetSpriteAlphaBlending();

@@ -139,6 +139,9 @@ add_library(gl2jni SHARED
 		LevelSection.cpp
 		LevelSelectorScreen.cpp
 		LevelWave.cpp
+        LevelWaveChunk.cpp
+        LevelWaveFormation.cpp
+        LevelWavePath.cpp
         )
 
 # add lib dependencies

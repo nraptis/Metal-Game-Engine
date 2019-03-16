@@ -10,9 +10,6 @@ void os_initialize_outlets();
 
 void os_detach_thread(void (*theFunction)(void *theArg), void* theArg);
 
-void os_interface_mutex_enter();
-void os_interface_mutex_leave();
-
 bool os_fileExists(const char *pFilePath);
 
 void os_sleep(int pTime);

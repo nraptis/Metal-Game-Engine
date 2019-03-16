@@ -16,6 +16,7 @@
 #include "Dart.hpp"
 #include "Balloon.hpp"
 #include "LevelData.hpp"
+#include "LevelWavePath.hpp"
 #include "Transform2D.hpp"
 #include "Transform3D.hpp"
 
@@ -138,8 +139,7 @@ public:
     float                                       mKillZoneLeft;
     bool                                        IsGameObjectOutsideKillZone(GameObject *pObject);
     
-    
-    
+    LevelWavePath                               mTestPath;
     
     void                                        Load();
     

@@ -161,18 +161,16 @@ void GFXApp::LoadComplete() {
     mTestRR.SetColorBottom(0.0f, 1.0f, 0.5f, 1.0f);
     
     
+    //core_sound_musicPlay("song2.mp3", true);
     
-    
-    core_sound_musicPlay("song2.mp3", true);
-    
-    //
-
+    /*
     if (mCameraMenu == NULL) {
         mCameraMenu = new CameraMenu(&mCamera);
         mWindowTools.AddChild(mCameraMenu);
         mCameraMenu->SetFrame(30.0f, gDeviceHeight - 90.0f, 260.0f, 240.0f);
         mCameraMenu->Collapse();
     }
+    */
     
     
     /*
@@ -192,11 +190,13 @@ void GFXApp::LoadComplete() {
         mWindowMain.AddChild(mGameContainer);
     }
     
+    /*
     if (mScreenTool == NULL) {
         mScreenTool = new Util_ScreenFrame();
         mScreenTool->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
         mWindowTools.AddChild(mScreenTool);
     }
+    */
     
     
     //
@@ -460,14 +460,16 @@ void GFXApp::Draw3D() {
 }
 
 void GFXApp::Draw2D() {
-
+    
+    //return;
+    
     Graphics::SetColor();
     Graphics::MatrixProjectionResetOrtho();
     Graphics::MatrixModelViewReset();
     Graphics::PipelineStateSetSpriteAlphaBlending();
     
-    Graphics::SetColor(0.125f);
-    mBalloonMap[4].DrawQuad(0.0f, 0.0f, gDeviceWidth - 10.0f, gDeviceHeight - 10.0f);
+    //Graphics::SetColor(0.125f);
+    //mBalloonMap[4].DrawQuad(0.0f, 0.0f, gDeviceWidth - 10.0f, gDeviceHeight - 10.0f);
     
     
     Graphics::SetColor(0.25f, 0.25f, 0.45f);
@@ -551,12 +553,25 @@ void GFXApp::Draw() {
         
         
         Draw3D();
+
+        if (gRand.Get(14) == 10) {
+            for (int i=0;i<100;i++) {
+                Draw3D();
+            }
+        }
+        
         
         Graphics::RenderPassBegin(GFX_RENDER_PASS_2D_MAIN,
                                   false, //Clear Color
                                   false); //Clear Depth
         
         Draw2D();
+        if (gRand.Get(14) == 10) {
+            for (int i=0;i<100;i++) {
+                Draw2D();
+            }
+        }
+        
         
         Graphics::PipelineStateSetSpriteAlphaBlending();
         

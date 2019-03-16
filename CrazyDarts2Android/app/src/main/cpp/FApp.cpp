@@ -24,6 +24,7 @@ FApp::FApp() {
     
     
     mIsGraphicsSetUpEnqueued = false;
+    mGraphicsSetUpEnqueuedTimer = 0;
     
     
     mDidInitialize = false;
@@ -165,8 +166,16 @@ void FApp::BaseFrame() {
     }
     
     if (mIsGraphicsSetUpEnqueued) {
-        mIsGraphicsSetUpEnqueued = false;
-        Graphics::SetUp();
+        if (mGraphicsSetUpEnqueuedTimer > 0) {
+            mGraphicsSetUpEnqueuedTimer -= 1;
+            Log("mGraphicsSetUpEnqueuedTimer=%d\n", mGraphicsSetUpEnqueuedTimer);
+            //return;
+
+        } else {
+            mIsGraphicsSetUpEnqueued = false;
+            Graphics::SetUp();
+        }
+
     }
     
     if (mDidDetachFrameController == false) {
@@ -177,12 +186,12 @@ void FApp::BaseFrame() {
     
     //for (int i=0;i<aUpdateCount;i++) {
     //BaseUpdate();
-    
-    
-    //}
-    
-    if (mDidUpdate) {
-        
+
+    while (mDidUpdate == false) {
+        Log("Waiting for An Update...\n");
+        os_sleep(18);
+    }
+
         ThrottleLock();
     
         if (gGraphicsInterface) {
@@ -206,7 +215,8 @@ void FApp::BaseFrame() {
         gGraphicsInterface->Commit();
         
         ThrottleUnlock();
-    }
+
+
 }
 
 void FApp::BaseUpdate() {
@@ -676,12 +686,14 @@ void FApp::BaseInactive() {
         
         core_sound_stopAll();
         core_sound_inactive();
-        if (gEnvironment == ENV_ANDROID) {
-            
-            Graphics::TearDown();
-            
-            //gTextureCache.UnloadAllTextures();
-        }
+        
+        #if (CURRENT_ENV == ENV_ANDROID)
+
+        
+                Graphics::TearDown();
+        
+        #endif
+        
     }
 }
 
@@ -691,7 +703,7 @@ void FApp::BaseActive() {
         Active();
         if (gEnvironment == ENV_ANDROID) {
             mIsGraphicsSetUpEnqueued = true;
-            
+            mGraphicsSetUpEnqueuedTimer = 8;
             
             //gTextureCache.ReloadAllTextures();
         }
@@ -782,7 +794,7 @@ void FApp::MainRunLoop() {
     
      while (gGraphicsInterface->IsReady() == false) {
          Log("Waiting for Graphics Module...\n");
-         usleep(400);
+         os_sleep(18);
      }
     
      while (!ShouldQuit()) {

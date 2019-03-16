@@ -85,8 +85,7 @@ Graphics::Graphics() {
     
 }
 
-Graphics::~Graphics()
-{
+Graphics::~Graphics() {
     
 }
 
@@ -98,21 +97,14 @@ void Graphics::Initialize() {
     
 }
 
-// When we get a new content, we SET UP.
 void Graphics::SetUp() {
-    
     Log("Graphics::SetUp(torn:%d)\n", cDidTearDown);
-    
     gOpenGLEngine->SetUp();
-    
     if (cDidTearDown) {
         cDidTearDown = false;
-        
         gOpenGLEngine->SetUp();
         gTextureCache.ReloadAllTextures();
-        
     }
-    
 }
 
 //Before we lose out content, we TEAR DOWN.

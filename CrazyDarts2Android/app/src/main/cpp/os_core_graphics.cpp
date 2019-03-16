@@ -107,12 +107,9 @@ void Graphics::SetUp() {
     
     if (cDidTearDown) {
         cDidTearDown = false;
-        
         gOpenGLEngine->SetUp();
         gTextureCache.ReloadAllTextures();
-        
     }
-    
 }
 
 //Before we lose out content, we TEAR DOWN.
@@ -1727,7 +1724,7 @@ void Graphics::RenderPassBegin(int pRenderPass, bool pClearColor, bool pClearDep
         Graphics::DepthClear();
     }
     if (pClearColor) {
-        Graphics::Clear(0.0f, 0.35f, 0.0f);
+        Graphics::Clear(0.0f, 0.0f, 0.0f);
     }
     
     //[gMetalEngine startRenderPass:pRenderPass clearingColor: pClearColor clearingDepth: pClearDepth];

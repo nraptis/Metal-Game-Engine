@@ -168,6 +168,26 @@ bool os_draws_in_background() {
     return true;
 }
 
+void os_commitRender() {
+    jmethodID aMethodID = 0;
+    if (gJVM != 0) {
+        bool aDetach = false;
+        JNIEnv *aEnv = os_getJNIEnv(&aDetach);
+        if (aEnv != 0) {
+            jclass aClass = os_getClassID(aEnv);
+            if (aClass != 0) {
+                aMethodID = aEnv->GetMethodID(aClass, "commitRender", "()V");
+                if (aMethodID) {
+                    aEnv->CallVoidMethod(_objJNIHelper, aMethodID);
+                }
+            }
+        }
+        if (aDetach) { gJVM->DetachCurrentThread(); }
+    }
+}
+//
+////
+
 int os_create_thread_lock() {
     int aResult = -1;
     jmethodID aMethodID = 0;

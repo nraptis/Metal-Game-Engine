@@ -92,5 +92,7 @@ void PlatformGraphicsInterface::Commit() {
     
     //[gOpenGLView commit];
     //[gMetalEngine commit];
+
+    os_commitRender();
 }
 

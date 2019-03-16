@@ -70,7 +70,10 @@ class GL2JNIView extends GLSurfaceView {
 
         /* Set the renderer responsible for frame rendering */
         setRenderer(new Renderer());
-        //setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+        //setRenderMode(GLSurfaceView.);
+        setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+
+
 
 
 

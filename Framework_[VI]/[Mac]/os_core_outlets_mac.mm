@@ -51,8 +51,10 @@
 
 using namespace std;
 
+FList gThreadLockList;
+
 void os_initialize_outlets() {
-    
+    gThreadLockList.Size(128);
 }
 
 void os_detach_thread(void (*theFunction)(void *theArg), void* theArg) {
@@ -107,30 +109,17 @@ bool os_draws_in_background() {
     return true;
 }
 
-pthread_mutex_t gInterfaceMutex = PTHREAD_MUTEX_INITIALIZER;
-
-void os_interface_mutex_enter() {
-    pthread_mutex_lock( &gInterfaceMutex );
-}
-
-void os_interface_mutex_leave() {
-    pthread_mutex_unlock( &gInterfaceMutex );
-}
-
 
 NSMutableSet *gLockStrongReferenceSet = [[NSMutableSet alloc] init];
-FList gThreadLockList;
-pthread_mutex_t gThreadMutex = PTHREAD_MUTEX_INITIALIZER;
-pthread_mutex_t gGraphicsThreadMutex = PTHREAD_MUTEX_INITIALIZER;
 
 int os_create_thread_lock() {
-    pthread_mutex_lock( &gThreadMutex );
     RecursiveLockWrapper *aContainer = [[RecursiveLockWrapper alloc] init];
     [gLockStrongReferenceSet addObject: aContainer];
-    aContainer.lock = [[NSRecursiveLock alloc] init];
+    //aContainer.lock = [[NSRecursiveLock alloc] init];
+    aContainer.semaphore = dispatch_semaphore_create(1);
+    
     int aResult = gThreadLockList.mCount;
     gThreadLockList.Add((__bridge void *)aContainer);
-    pthread_mutex_unlock( &gThreadMutex );
     return aResult;
 }
 
@@ -142,43 +131,39 @@ bool os_thread_lock_exists(int pLockIndex) {
 }
 
 void os_delete_thread_lock(int pLockIndex) {
-    pthread_mutex_lock( &gThreadMutex );
     if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
         RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[pLockIndex]);
-        [aContainer.lock unlock];
+        //[aContainer.lock unlock];
+        dispatch_semaphore_signal(aContainer.semaphore);
         [gLockStrongReferenceSet removeObject: aContainer];
         gThreadLockList.RemoveAtIndex(pLockIndex);
     }
-    pthread_mutex_unlock( &gThreadMutex );
 }
 
 void os_delete_all_thread_locks() {
-    pthread_mutex_lock( &gThreadMutex );
     for (int i=0;i<gThreadLockList.mCount;i++) {
         RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[i]);
-        [aContainer.lock unlock];
+        //[aContainer.lock unlock];
+        dispatch_semaphore_signal(aContainer.semaphore);
     }
     gThreadLockList.RemoveAll();
     [gLockStrongReferenceSet removeAllObjects];
-    pthread_mutex_unlock( &gThreadMutex );
 }
 
 void os_lock_thread(int pLockIndex) {
-    //pthread_mutex_lock( &gThreadMutex );
     if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
         RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[pLockIndex]);
-        [aContainer.lock lock];
+        //[aContainer.lock lock];
+        dispatch_semaphore_signal(aContainer.semaphore);
     }
-    //pthread_mutex_unlock( &gThreadMutex );
 }
 
 void os_unlock_thread(int pLockIndex) {
-    //pthread_mutex_lock( &gThreadMutex );
     if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
         RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[pLockIndex]);
-        [aContainer.lock unlock];
+        //[aContainer.lock unlock];
+        dispatch_semaphore_signal(aContainer.semaphore);
     }
-    //pthread_mutex_unlock( &gThreadMutex );
 }
 
 bool os_fileExists(const char *pFilePath) {

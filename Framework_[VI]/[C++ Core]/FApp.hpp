@@ -166,6 +166,8 @@ public:
     bool                                        mDidInitializeGraphicsInterface;
     
     bool                                        mIsGraphicsSetUpEnqueued;
+    int                                         mGraphicsSetUpEnqueuedTimer;
+    
     
     float                                       mUpdatesPerSecond;
     int                                         mUpdateMultiplier;

@@ -17,6 +17,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.MediaPlayer;
+import android.provider.Settings;
 import android.util.Log;
 
 
@@ -25,6 +26,7 @@ public class JavaOutlets
 {
 	private static Context mContext;
 	private static MediaPlayer mMusicPlayer;
+	private static GL2JNIView mOpenGL;
 
 	private ArrayList<Semaphore> mLockList = new ArrayList<Semaphore>();
 
@@ -32,6 +34,11 @@ public class JavaOutlets
 	{
 		Log.i("NDKHelper", "setContext:" + c);
 		mContext = c;
+	}
+
+	public static void setOpenGL(GL2JNIView glv)
+	{
+		mOpenGL = glv;
 	}
 
 	public static void PrintMemory()
@@ -84,6 +91,16 @@ public class JavaOutlets
 		return pot;
 	}
 	*/
+
+	public void commitRender() {
+		//System.out.println("COMMIT RENDER {JAVA}");
+
+		if (mOpenGL != null) {
+			mOpenGL.requestRender();
+		}
+
+	}
+
 
 
 

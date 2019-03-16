@@ -33,7 +33,6 @@ public:
     float                           mWidth;
     float                           mRotation;
     
-    
     float                           mLineX1;
     float                           mLineY1;
     float                           mLineX2;

@@ -48,6 +48,8 @@ public class GL2JNIActivity extends Activity {
 
         mView = new GL2JNIView(getApplication());
 	    setContentView(mView);
+        mOutlets.setOpenGL(mView);
+
     }
 
     @Override protected void onPause() {

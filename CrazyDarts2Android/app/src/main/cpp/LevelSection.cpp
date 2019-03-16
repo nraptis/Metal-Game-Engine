@@ -32,7 +32,7 @@ void LevelSection::Update() {
     
     if (mDelay > 0) {
         --mDelay;
-        Log("LevelSection::Delay(%d)\n", mDelay);
+        //Log("LevelSection::Delay(%d)\n", mDelay);
         
         if (mDelay <= 0) {
             Log("About to spawn First Wave...\n");
