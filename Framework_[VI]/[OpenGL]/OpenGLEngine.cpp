@@ -62,6 +62,43 @@ void OpenGLEngine::SetUp() {
 }
 
 void OpenGLEngine::TearDown() {
+    delete mShaderProgramShape2D;
+    mShaderProgramShape2D = NULL;
+    
+    delete mShaderProgramShape3D;
+    mShaderProgramShape3D = NULL;
+    
+    delete mShaderProgramSprite;
+    mShaderProgramSprite = NULL;
+    
+    delete mShaderProgramSpriteWhite;
+    mShaderProgramSpriteWhite = NULL;
+    
+    delete mShaderProgramShapeNode;
+    mShaderProgramShapeNode = NULL;
+    
+    delete mShaderProgramSpriteNode;
+    mShaderProgramSpriteNode = NULL;
+    
+    delete mShaderProgramSimpleModel;
+    mShaderProgramSimpleModel = NULL;
+    
+    delete mShaderProgramSimpleModelIndexed;
+    mShaderProgramSimpleModelIndexed = NULL;
+    
+    delete mShaderProgramModelIndexed;
+    mShaderProgramModelIndexed = NULL;
+    
+    delete mShaderProgramModelIndexedLightedAmbient;
+    mShaderProgramModelIndexedLightedAmbient = NULL;
+    
+    delete mShaderProgramModelIndexedLightedAmbientDiffuse;
+    mShaderProgramModelIndexedLightedAmbientDiffuse = NULL;
+    
+    delete mShaderProgramModelIndexedLightedPhong;
+    mShaderProgramModelIndexedLightedPhong = NULL;
+    
+    
     
     
     mIsReady = false;

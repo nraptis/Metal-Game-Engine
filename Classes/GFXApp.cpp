@@ -163,13 +163,14 @@ void GFXApp::LoadComplete() {
     
     //core_sound_musicPlay("song2.mp3", true);
     
-    
+    /*
     if (mCameraMenu == NULL) {
         mCameraMenu = new CameraMenu(&mCamera);
         mWindowTools.AddChild(mCameraMenu);
         mCameraMenu->SetFrame(30.0f, gDeviceHeight - 90.0f, 260.0f, 240.0f);
         mCameraMenu->Collapse();
     }
+    */
     
     
     
@@ -535,10 +536,6 @@ void GFXApp::Draw2D() {
     
     Graphics::SetColor();
     
-    
-    
-    
-    
     mMonolithMap.Draw(mTestX1, mTestY1, 0.125f, Sin(mTestSin1) * 40.0f, -1);
     mChaosEgg2X.Draw(mTestX2, mTestY2, 0.5f, mTestSin2, -1);
     
@@ -569,25 +566,28 @@ void GFXApp::Draw() {
         //if (mLevelSelect) mLevelSelect->mPage1->Draw3D();
         
         
+        /*
         Draw3D();
-        
         if (gRand.Get(14) == 10) {
-            for (int i=0;i<10;i++) {
+            for (int i=0;i<60;i++) {
                 Draw3D();
             }
         }
+        */
         
         
         Graphics::RenderPassBegin(GFX_RENDER_PASS_2D_MAIN,
                                   false, //Clear Color
                                   false); //Clear Depth
         
+        /*
         Draw2D();
         if (gRand.Get(14) == 10) {
-            for (int i=0;i<10;i++) {
+            for (int i=0;i<60;i++) {
                 Draw2D();
             }
         }
+        */
         
         
         Graphics::PipelineStateSetSpriteAlphaBlending();

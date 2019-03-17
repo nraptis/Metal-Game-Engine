@@ -108,6 +108,7 @@ void GameRenderer::Draw3D() {
     
     Graphics::DepthDisable();
     Graphics::CullFacesSetBack();
+    
 }
 
 

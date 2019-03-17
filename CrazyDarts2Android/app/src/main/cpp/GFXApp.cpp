@@ -81,7 +81,7 @@ void GFXApp::Load() {
 
 
 
-    mSound1.Load("amb_frog_1.wav");
+    mSound1.Load("treasure_collect.caf");
     //mSound2.Load("match.caf");
 
     

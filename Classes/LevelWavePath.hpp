@@ -32,7 +32,6 @@ class LevelWavePathNode {
 public:
     LevelWavePathNode();
     ~LevelWavePathNode();
-    
     float                       mX;
     float                       mY;
     int                         mType;
@@ -59,15 +58,21 @@ public:
     void                        Draw();
     void                        Finalize();
     
+    bool                        mSmooth;
+    
     float                       mSpeed;
     
-    
     FList                       mNodeList;
+    FPointList                  mSegmentList;
     
+    FPointList                  mPath;
     
-    FPointList                  mRendumList;
+    float                       mTestPer;
     
+    float                       mTempX;
+    float                       mTempY;
     
+    int                         mDemoIndex;
     
 };
 

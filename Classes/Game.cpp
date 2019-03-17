@@ -100,6 +100,21 @@ Game::Game() {
     
     
     
+    mTestPath1.AddStop(100.0f, 500.0f);
+    mTestPath1.AddMove(300.0f, 200.0f);
+    
+    mTestPath2.AddMove(300.0f, 60.0f);
+    mTestPath2.AddMove(200.0f, 120.0f);
+    mTestPath2.AddMove(300.0f, 170.0f);
+    mTestPath2.AddMove(200.0f, 240.0f);
+    
+    
+    //LevelWavePath                               mTestPath2;
+    //LevelWavePath                               mTestPath3;
+    
+    
+    
+    
 }
 
 Game::~Game() {
@@ -485,6 +500,53 @@ void Game::Draw() {
     
     mTestPath.Draw();
     
+    mTestPath1.Draw();
+    mTestPath2.Draw();
+    
+    
+    float aDemoX = 40.0f;
+    float aDemoY = 400.0f;
+    
+    
+    
+    float aDist = 600.0f;
+    float aCutoffDist = 200.0f;
+    
+    float aEndX = aDemoX + aDist;
+    float aEndY = aDemoY;
+    
+    float aSpeedX = 3.0f;
+    
+    float aDecelerationX = (aSpeedX * aSpeedX) / (2.0f * aCutoffDist);
+    
+    Graphics::SetColor(1.0f, 0.0f, 0.0f, 1.0f);
+    Graphics::DrawPoint(aEndX, aEndY, 20.0f);
+    
+    
+    while (aDist > 0.0f) {
+        
+        Graphics::SetColor(1.0f, 1.0f, 0.25f, 0.35f);
+        Graphics::DrawPoint(aDemoX, aDemoY, 1.0f);
+        
+        aDemoX += aSpeedX;
+        aDist -= aSpeedX;
+        
+        if (aDist < aCutoffDist) {
+            aSpeedX -= aDecelerationX;
+        }
+        if (aSpeedX <= 0.0f) { break; }
+        
+        //aDist
+        
+    }
+    
+    //aDecelerationX = (aDiffSpeedX * aDiffSpeedX) / (2.0f * aDist);
+    
+    
+    
+    
+    
+    
 }
 
 void Game::Draw3D() {
@@ -495,8 +557,6 @@ void Game::Draw3D() {
     }
     
     Graphics::ClipDisable();
-    
-    Graphics::PipelineStateSetShape3DAlphaBlending();
     Graphics::DepthDisable();
 }
 

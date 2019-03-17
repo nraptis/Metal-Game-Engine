@@ -691,11 +691,9 @@ void FApp::BaseInactive() {
         core_sound_stopAll();
         core_sound_inactive();
         
-        #if (CURRENT_ENV == ENV_ANDROID) || (CURRENT_ENV == ENV_IOS)
-
-        
-                Graphics::TearDown();
-        
+        #if (CURRENT_ENV == ENV_ANDROID)
+        //|| (CURRENT_ENV == ENV_IOS)
+        Graphics::TearDown();
         #endif
         
     }
@@ -706,11 +704,11 @@ void FApp::BaseActive() {
         mActive = true;
         Active();
         
-#if (CURRENT_ENV == ENV_ANDROID) || (CURRENT_ENV == ENV_IOS)
-        
+        #if (CURRENT_ENV == ENV_ANDROID)
+        //|| (CURRENT_ENV == ENV_IOS)
         mIsGraphicsSetUpEnqueued = true;
-        mGraphicsSetUpEnqueuedTimer = 8;
-#endif
+        mGraphicsSetUpEnqueuedTimer = 4;
+        #endif
         
         InterfaceLock();
         gTouch.Active();

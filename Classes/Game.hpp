@@ -141,6 +141,13 @@ public:
     
     LevelWavePath                               mTestPath;
     
+    
+    LevelWavePath                               mTestPath1;
+    LevelWavePath                               mTestPath2;
+    LevelWavePath                               mTestPath3;
+    
+    
+    
     void                                        Load();
     
     
