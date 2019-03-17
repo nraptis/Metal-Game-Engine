@@ -11,6 +11,7 @@
 
 #include "FString.h"
 #include "FUniforms.hpp"
+#include "FBuffer.hpp"
 
 #define SHADER_INVALID_PROGRAM 99999999
 #define SHADER_INVALID_SHADER 99999999
@@ -23,16 +24,15 @@ public:
     virtual void                Compile();
     virtual void                BindUniform(FUniforms *pUniform);
     
-    virtual void                ArrayBufferData(int pIndex, int pOffset);
-    virtual void                ArrayBufferPositions(int pIndex,int pOffset);
-    virtual void                ArrayBufferTextureCoords(int pIndex, int pOffset);
-    virtual void                ArrayBufferColors(int pIndex, int pOffset);
-    virtual void                ArrayBufferNormals(int pIndex, int pOffset);
+    virtual void                ArrayBufferData(FBuffer *pBuffer, int pOffset);
+    virtual void                ArrayBufferPositions(FBuffer *pBuffer, int pOffset);
+    virtual void                ArrayBufferTextureCoords(FBuffer *pBuffer, int pOffset);
+    virtual void                ArrayBufferColors(FBuffer *pBuffer, int pOffset);
+    virtual void                ArrayBufferNormals(FBuffer *pBuffer, int pOffset);
     
     bool                        IsValid();
     
     void                        Use();
-    
     void                        Kill();
     
     unsigned int                ShaderCompileVertex(const char *pShaderPath);
@@ -52,13 +52,6 @@ public:
     int                         mSlotModulateUniform;
     
     int                         mSlotPositions;
-    //int                         mSlotTextureCoords;
-    //int                         mSlotNormals;
-    //int                         mSlotUNormals;
-    //int                         mSlotTangents;
-    //int                         mSlotData;
-    
-    //int                         mSlotTexture;
     
 };
 

@@ -15,18 +15,10 @@
 
 class FSprite;
 class FImage;
-class FTexture
-{
+class FTexture {
 public:
     FTexture(const char *pFileName);
-    FTexture();
-    
     virtual ~FTexture();
-
-    void                                    Initialize(const char *pFilePath);
-    void                                    Initialize();
-
-    bool                                    IsValid();
     
     FString                                 mFileName;
 
@@ -38,6 +30,7 @@ public:
     int                                     mBindIndex;
     
     bool                                    mDidFailLoad;
+    bool                                    mDidUnload;
     
     int                                     mWidth;
     int                                     mHeight;
@@ -57,37 +50,36 @@ public:
     float                                   GetEndV();
 };
 
-class FTextureRect
-{
+class FTextureRect {
 public:
     
     FTextureRect();
     virtual ~FTextureRect();
     
-    float                                   mVertex[8];
-    float                                   mTextureCoord[8];
+    float                                   mPositions[8];
+    float                                   mTextureCoords[8];
     
     void                                    Set(FTexture *pTexture, float pX=0, float pY=0);
     
-    inline float                            GetStartU(){return mTextureCoord[0];}
-    inline float                            GetStartV(){return mTextureCoord[1];}
-    inline float                            GetEndU(){return mTextureCoord[6];}
-    inline float                            GetEndV(){return mTextureCoord[7];}
+    inline float                            GetStartU(){return mTextureCoords[0];}
+    inline float                            GetStartV(){return mTextureCoords[1];}
+    inline float                            GetEndU(){return mTextureCoords[6];}
+    inline float                            GetEndV(){return mTextureCoords[7];}
     
-    inline float                            GetStartX(){return mVertex[0];}
-    inline float                            GetStartY(){return mVertex[1];}
-    inline float                            GetEndX(){return mVertex[6];}
-    inline float                            GetEndY(){return mVertex[7];}
+    inline float                            GetStartX(){return mPositions[0];}
+    inline float                            GetStartY(){return mPositions[1];}
+    inline float                            GetEndX(){return mPositions[6];}
+    inline float                            GetEndY(){return mPositions[7];}
 
-    inline void                             SetStartU(float pU){mTextureCoord[0]=pU;mTextureCoord[4]=pU;}
-    inline void                             SetStartV(float pV){mTextureCoord[1]=pV;mTextureCoord[3]=pV;}
-    inline void                             SetEndU(float pU){mTextureCoord[6]=pU;mTextureCoord[2]=pU;}
-    inline void                             SetEndV(float pV){mTextureCoord[7]=pV;mTextureCoord[5]=pV;}
+    inline void                             SetStartU(float pU){mTextureCoords[0]=pU;mTextureCoords[4]=pU;}
+    inline void                             SetStartV(float pV){mTextureCoords[1]=pV;mTextureCoords[3]=pV;}
+    inline void                             SetEndU(float pU){mTextureCoords[6]=pU;mTextureCoords[2]=pU;}
+    inline void                             SetEndV(float pV){mTextureCoords[7]=pV;mTextureCoords[5]=pV;}
     
-    inline void                             SetStartX(float pX){mVertex[0]=pX;mVertex[4]=pX;}
-    inline void                             SetStartY(float pY){mVertex[1]=pY;mVertex[3]=pY;}
-    inline void                             SetEndX(float pX){mVertex[6]=pX;mVertex[2]=pX;}
-    inline void                             SetEndY(float pY){mVertex[7]=pY;mVertex[5]=pY;}
+    inline void                             SetStartX(float pX){mPositions[0]=pX;mPositions[4]=pX;}
+    inline void                             SetStartY(float pY){mPositions[1]=pY;mPositions[3]=pY;}
+    inline void                             SetEndX(float pX){mPositions[6]=pX;mPositions[2]=pX;}
+    inline void                             SetEndY(float pY){mPositions[7]=pY;mPositions[5]=pY;}
     
     void                                    SetUVQuad(float pStartU, float pStartV, float pEndU, float pEndV);
     void                                    SetUVRect(float pStartU, float pStartV, float pWidthU, float pHeightV);
@@ -98,15 +90,14 @@ public:
     void                                    SetQuad(float pX1, float pY1, float pX2, float pY2, float pX3, float pY3, float pX4, float pY4);
 };
 
-class FTextureTriangle
-{
+class FTextureTriangle {
 public:
     
     FTextureTriangle();
     virtual ~FTextureTriangle();
     
-    float                                   mTextureCoord[6];
-    float                                   mVertex[6];
+    float                                   mTextureCoords[6];
+    float                                   mPositions[6];
     
     void                                    SetXYTriangle(float pX1, float pY1, float pX2, float pY2, float pX3, float pY3);
     void                                    SetUVTriangle(float pU1, float pV1, float pU2, float pV2, float pU3, float pV3);

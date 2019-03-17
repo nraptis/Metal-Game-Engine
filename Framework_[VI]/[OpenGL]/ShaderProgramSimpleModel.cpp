@@ -57,10 +57,10 @@ void ShaderProgramSimpleModel::BindUniform(FUniforms *pUniform) {
     }
 }
 
-void ShaderProgramSimpleModel::ArrayBufferPositions(int pIndex, int pOffset) {
-    
-    if (pIndex != -1) if (pIndex != -1) { glBindBuffer(GL_ARRAY_BUFFER, pIndex); }
-    
+void ShaderProgramSimpleModel::ArrayBufferPositions(FBuffer *pBuffer, int pOffset) {
+    if (pBuffer != NULL && pBuffer->mBindIndex != -1) {
+        glBindBuffer(GL_ARRAY_BUFFER, pBuffer->mBindIndex);
+    }
     glEnableVertexAttribArray(mSlotPositions);
     int aStride = 3;
     unsigned char *aOffset = NULL;
@@ -69,8 +69,10 @@ void ShaderProgramSimpleModel::ArrayBufferPositions(int pIndex, int pOffset) {
 }
 
 
-void ShaderProgramSimpleModel::ArrayBufferTextureCoords(int pIndex, int pOffset) {
-    if (pIndex != -1) { glBindBuffer(GL_ARRAY_BUFFER, pIndex); }
+void ShaderProgramSimpleModel::ArrayBufferTextureCoords(FBuffer *pBuffer, int pOffset) {
+    if (pBuffer != NULL && pBuffer->mBindIndex != -1) {
+        glBindBuffer(GL_ARRAY_BUFFER, pBuffer->mBindIndex);
+    }
     glEnableVertexAttribArray(mSlotTextureCoords);
     int aStride = 3;
     unsigned char *aOffset = NULL;

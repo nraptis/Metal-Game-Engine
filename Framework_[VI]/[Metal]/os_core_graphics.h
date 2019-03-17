@@ -10,6 +10,7 @@
 #include "FMatrix.h"
 #include "FIndexList.h"
 #include "FUniforms.hpp"
+#include "FBuffer.hpp"
 
 #define GFX_RENDER_PASS_COUNT 2
 
@@ -78,7 +79,6 @@ public:
     static void                             BufferSetPositionsIndex(int pIndex);
     static void                             BufferSetTextureCoordsIndex(int pIndex);
     static void                             BufferSetColorsIndex(int pIndex);
-    
     static void                             BufferSetNormalsIndex(int pIndex);
     static void                             BufferSetTangentsIndex(int pIndex);
     static void                             BufferSetUNormalsIndex(int pIndex);
@@ -184,7 +184,11 @@ public:
     static void                             MatrixModelViewReset();
     
     static FMatrix                          MatrixProjectionGet();
+    static void                             MatrixProjectionGet(FMatrix *pMatrix);
+    
     static FMatrix                          MatrixModelViewGet();
+    static void                             MatrixModelViewGet(FMatrix *pMatrix);
+    
     
     static void                             CullFacesSetFront();
     static void                             CullFacesSetBack();
@@ -223,25 +227,19 @@ public:
     static void                             TextureDelete(int pIndex);
     static void                             TextureBind(int pIndex);
     static void                             TextureBind(FTexture *pTexture);
-    static bool								TextureValid(FTexture *pTexture);
     
     
     //Buffers...
     static int                              BufferArrayGenerate(int pLength);
-    static int                              BufferArrayGenerate(void *pData, int pLength); /* Length in BYTES */
-    static void                             BufferArrayWrite(int pIndex, void *pData, int pLength); /* Length in BYTES */
-    static void                             BufferArrayWrite(int pIndex, void *pData, int pOffset, int pLength); /* Length in BYTES */
-    
     static void                             BufferArrayDelete(int pIndex);
-    
+    static void                             BufferArrayWrite(FBuffer *pBuffer, void *pData, int pLength);
+    static void                             BufferArrayWrite(FBuffer *pBuffer, void *pData, int pOffset, int pLength);
     
     
     static int                              BufferElementGenerate(int pLength);
-    static int                              BufferElementGenerate(void *pData, int pLength); /* Length in BYTES */
-    static void                             BufferElementWrite(int pIndex, void *pData, int pLength); /* Length in BYTES */
-    static void                             BufferElementWrite(int pIndex, void *pData, int pOffset, int pLength); /* Length in BYTES */
-    
     static void                             BufferElementDelete(int pIndex);
+    static void                             BufferElementWrite(FBuffer *pBuffer, void *pData, int pLength);
+    static void                             BufferElementWrite(FBuffer *pBuffer, void *pData, int pOffset, int pLength);
     //
     //
     //
@@ -257,30 +255,31 @@ public:
     //
     //
     //
-    static void                             ArrayBufferData(int pIndex);
-    static void                             ArrayBufferData(int pIndex, int pOffset);
+    //FBuffer *pBuffer
+    static void                             ArrayBufferData(FBuffer *pBuffer);
+    static void                             ArrayBufferData(FBuffer *pBuffer, int pOffset);
     //
-    static void                             ArrayBufferPositions(int pIndex);
-    static void                             ArrayBufferPositions(int pIndex, int pOffset);
+    static void                             ArrayBufferPositions(FBuffer *pBuffer);
+    static void                             ArrayBufferPositions(FBuffer *pBuffer, int pOffset);
     //
-    static void                             ArrayBufferTextureCoords(int pIndex);
-    static void                             ArrayBufferTextureCoords(int pIndex, int pOffset);
+    static void                             ArrayBufferTextureCoords(FBuffer *pBuffer);
+    static void                             ArrayBufferTextureCoords(FBuffer *pBuffer, int pOffset);
     //
-    static void                             ArrayBufferColors(int pIndex);
-    static void                             ArrayBufferColors(int pIndex, int pOffset);
+    static void                             ArrayBufferColors(FBuffer *pBuffer);
+    static void                             ArrayBufferColors(FBuffer *pBuffer, int pOffset);
     //
-    static void                             ArrayBufferNormals(int pIndex);
-    static void                             ArrayBufferNormals(int pIndex, int pOffset);
+    static void                             ArrayBufferNormals(FBuffer *pBuffer);
+    static void                             ArrayBufferNormals(FBuffer *pBuffer, int pOffset);
     //
-    static void                             ArrayBufferTangents(int pIndex);
-    static void                             ArrayBufferTangents(int pIndex, int pOffset);
+    static void                             ArrayBufferTangents(FBuffer *pBuffer);
+    static void                             ArrayBufferTangents(FBuffer *pBuffer, int pOffset);
     //
     //
     ///////////////////////////////////////
     //
     //
     
-    static void                             ArrayWriteData(void *pData, int pCount);
+    static FBuffer                          *ArrayWriteData(void *pData, int pCount);
     
     
     //
@@ -292,7 +291,7 @@ public:
     static void                             DrawTriangleStrips(int pCount);
     
     static void                             DrawTrianglesIndexed(GFX_MODEL_INDEX_TYPE *pIndices, int pCount);
-    static void                             DrawTrianglesIndexedWithPackedBuffers(int pVertexBuffer, int pVertexBufferOffset, GFX_MODEL_INDEX_TYPE *pIndices, int pCount, FTexture *pTexture);
+    static void                             DrawTrianglesIndexedWithPackedBuffers(FBuffer *pVertexBuffer, int pVertexBufferOffset, GFX_MODEL_INDEX_TYPE *pIndices, int pCount, FTexture *pTexture);
     
     
     

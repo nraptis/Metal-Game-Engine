@@ -80,7 +80,7 @@ void ShaderProgram::Compile() {
     mSlotPositions = glGetAttribLocation(mProgram, "Positions");
 }
 
-void ShaderProgram::ArrayBufferData(int pIndex, int pOffset) {
+void ShaderProgram::ArrayBufferData(FBuffer *pBuffer, int pOffset) {
     
     /*
     void gfx_positionSetPointer(int pSize, unsigned int pOffset, unsigned int pStride)
@@ -100,8 +100,10 @@ void ShaderProgram::ArrayBufferData(int pIndex, int pOffset) {
     */
 }
 
-void ShaderProgram::ArrayBufferPositions(int pIndex, int pOffset) {
-    if (pIndex != -1) { glBindBuffer(GL_ARRAY_BUFFER, pIndex); }
+void ShaderProgram::ArrayBufferPositions(FBuffer *pBuffer, int pOffset) {
+    if (pBuffer != NULL && pBuffer->mBindIndex != -1) {
+        glBindBuffer(GL_ARRAY_BUFFER, pBuffer->mBindIndex);
+    }
     glEnableVertexAttribArray(mSlotPositions);
     int aStride = 2;
     unsigned char *aOffset = NULL;
@@ -109,15 +111,15 @@ void ShaderProgram::ArrayBufferPositions(int pIndex, int pOffset) {
     glVertexAttribPointer(mSlotPositions, 2, GL_FLOAT, GL_FALSE, (aStride << 2), aOffset);
 }
 
-void ShaderProgram::ArrayBufferTextureCoords(int pIndex, int pOffset) {
+void ShaderProgram::ArrayBufferTextureCoords(FBuffer *pBuffer, int pOffset) {
     
 }
 
-void ShaderProgram::ArrayBufferColors(int pIndex, int pOffset) {
+void ShaderProgram::ArrayBufferColors(FBuffer *pBuffer, int pOffset) {
     
 }
 
-void ShaderProgram::ArrayBufferNormals(int pIndex, int pOffset) {
+void ShaderProgram::ArrayBufferNormals(FBuffer *pBuffer, int pOffset) {
     
 }
 

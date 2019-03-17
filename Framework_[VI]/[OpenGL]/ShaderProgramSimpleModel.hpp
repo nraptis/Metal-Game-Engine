@@ -17,8 +17,8 @@ public:
     virtual void                Compile() override;
     virtual void                BindUniform(FUniforms *pUniform) override;
     
-    virtual void                ArrayBufferPositions(int pIndex,int pOffset) override;
-    virtual void                ArrayBufferTextureCoords(int pIndex, int pOffset) override;
+    virtual void                ArrayBufferPositions(FBuffer *pBuffer,int pOffset) override;
+    virtual void                ArrayBufferTextureCoords(FBuffer *pBuffer, int pOffset) override;
     
     int                         mSlotTextureCoords;
     int                         mSlotTexture;

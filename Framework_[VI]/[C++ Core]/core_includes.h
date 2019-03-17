@@ -59,6 +59,8 @@
 #include "FWindow.hpp"
 #include "FTexture.hpp"
 #include "FTextureCache.h"
+#include "FBufferCache.hpp"
+
 #include "FButton.h"
 #include "FMatrix.h"
 #include "FMath.h"
@@ -122,6 +124,8 @@ extern FRandomizer gRand;
 
 extern FTouchManager gTouch;
 extern FTextureCache gTextureCache;
+extern FBufferCache gBufferCache;
+
 extern FNotificationCenter gNotify;
 
 static FList sSoundList;

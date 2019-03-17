@@ -14,6 +14,7 @@
 #include "FFile.hpp"
 #include "FImage.hpp"
 #include "FSprite.h"
+#include "FBuffer.hpp"
 
 class FModelDataPacked {
 public:
@@ -36,44 +37,42 @@ public:
     inline void                 Load(char *pFile){Load((const char *)pFile);}
     inline void                 Load(FString pFile){Load((const char *)(pFile.c()));}
     
-    void                        Draw();
-    void                        Draw(FTexture *pTexture);
+    void                                Draw();
+    void                                Draw(FTexture *pTexture);
     
-    void                        Save(FFile *pFile);
-    void                        Save(const char *pFile);
+    void                                Save(FFile *pFile);
+    void                                Save(const char *pFile);
     
-    void                        LoadData(FFile *pFile);
-    void                        LoadData(const char *pFile);
+    void                                LoadData(FFile *pFile);
+    void                                LoadData(const char *pFile);
     
-    void                        LoadOBJ(FFile *pFile);
-    void                        LoadOBJ(const char *pFile);
+    void                                LoadOBJ(FFile *pFile);
+    void                                LoadOBJ(const char *pFile);
     
-    FString                     mFileName;
+    void                                WriteBuffers();
     
-    GFX_MODEL_INDEX_TYPE        *mIndex;
-    int                         mIndexCount;
+    FString                             mFileName;
     
-    float                       *mData;
-    int                         mDataCount;
+    GFX_MODEL_INDEX_TYPE                *mIndex;
+    int                                 mIndexCount;
     
-    bool                        mUseUVW;
-    bool                        mUseNormals;
-    bool                        mUseTangents;
-    bool                        mUseUNormals;
+    float                               *mData;
+    int                                 mDataCount;
     
-    bool                        mHasXYZ;
-    bool                        mHasUVW;
-    bool                        mHasNormals;
-    bool                        mHasTangents;
-    bool                        mHasUNormals;
+    bool                                mUseUVW;
+    bool                                mUseNormals;
+    bool                                mUseTangents;
+    bool                                mUseUNormals;
     
-    int                         mStride;
+    bool                                mHasXYZ;
+    bool                                mHasUVW;
+    bool                                mHasNormals;
+    bool                                mHasTangents;
+    bool                                mHasUNormals;
     
-    int                         mBufferVertex;
-    int                         mBufferVertexOffset;
+    int                                 mStride;
     
-    //int                         mBufferIndex;
-    //int                         mBufferIndexOffset;
+    FBuffer                             *mBuffer;
     
     
 };

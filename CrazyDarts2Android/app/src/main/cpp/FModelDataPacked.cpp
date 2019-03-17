@@ -37,8 +37,8 @@ FModelDataPacked::FModelDataPacked() {
     
     mStride = 0;
     
-    mBufferVertex = -1;
-    mBufferVertexOffset = 0;
+    mBuffer = NULL;
+    
     
     //mBufferIndex = -1;
     //mBufferIndexOffset = 0;
@@ -50,6 +50,9 @@ FModelDataPacked::~FModelDataPacked() {
 }
 
 void FModelDataPacked::Free() {
+    delete mBuffer;
+    mBuffer = NULL;
+    
     delete [] mIndex;
     mIndex = 0;
     mIndexCount = 0;
@@ -209,9 +212,11 @@ void FModelDataPacked::LoadOBJ(FFile *pFile) {
             }
         }
         
+        gPackedModelList.Add(this);
         
-        mBufferVertex = Graphics::BufferArrayGenerate(sizeof(float) * mDataCount);
-        Graphics::BufferArrayWrite(mBufferVertex, mData, 0, sizeof(float) * mDataCount);
+        mBuffer = new FBuffer(sizeof(float) * mDataCount, BUFFER_TYPE_ARRAY);
+        
+        WriteBuffers();
         //mBufferIndex = Graphics::BufferElementGenerate(sizeof(GFX_MODEL_INDEX_TYPE) * mIndexCount);
         
         /*
@@ -256,6 +261,10 @@ void FModelDataPacked::LoadOBJ(const char *pFile) {
     FFile aFile;
     aFile.Load(pFile);
     LoadOBJ(&aFile);
+}
+
+void FModelDataPacked::WriteBuffers() {
+    Graphics::BufferArrayWrite(mBuffer, mData, sizeof(float) * mDataCount);
 }
 
 void FModelDataPacked::Draw() {

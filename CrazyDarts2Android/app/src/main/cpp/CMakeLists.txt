@@ -16,6 +16,8 @@ add_library(gl2jni SHARED
         FAchievement.cpp
         FAnimation.cpp
         FApp.cpp
+		FBufferCache.cpp
+		FBuffer.cpp
         FButton.cpp
         FCanvas.cpp
         FColor.cpp
@@ -49,7 +51,6 @@ add_library(gl2jni SHARED
         FPointList.cpp
         FPolyPath.cpp
         FPrimitive.cpp
-	    FSpriteBufferCache.cpp
         FQuad.cpp
         FRandomizer.cpp
         FRect.cpp

@@ -61,8 +61,10 @@ void ShaderProgramModelIndexedLightedAmbient::BindUniform(FUniforms *pUniform) {
     }
 }
 
-void ShaderProgramModelIndexedLightedAmbient::ArrayBufferData(int pIndex, int pOffset) {
-    if (pIndex != -1) if (pIndex != -1) { glBindBuffer(GL_ARRAY_BUFFER, pIndex); }
+void ShaderProgramModelIndexedLightedAmbient::ArrayBufferData(FBuffer *pBuffer, int pOffset) {
+    if (pBuffer != NULL && pBuffer->mBindIndex != -1) {
+        glBindBuffer(GL_ARRAY_BUFFER, pBuffer->mBindIndex);
+    }
     glEnableVertexAttribArray(mSlotPositions);
     int aStride = 3 + 3 + 3;
     unsigned char *aOffset = NULL;
@@ -71,8 +73,10 @@ void ShaderProgramModelIndexedLightedAmbient::ArrayBufferData(int pIndex, int pO
     mDataOffset = pOffset;
 }
 
-void ShaderProgramModelIndexedLightedAmbient::ArrayBufferPositions(int pIndex, int pOffset) {
-    if (pIndex != -1) if (pIndex != -1) { glBindBuffer(GL_ARRAY_BUFFER, pIndex); }
+void ShaderProgramModelIndexedLightedAmbient::ArrayBufferPositions(FBuffer *pBuffer, int pOffset) {
+    if (pBuffer != NULL && pBuffer->mBindIndex != -1) {
+        glBindBuffer(GL_ARRAY_BUFFER, pBuffer->mBindIndex);
+    }
     glEnableVertexAttribArray(mSlotPositions);
     int aStride = 3 + 3 + 3;
     unsigned char *aOffset = NULL;
@@ -80,8 +84,10 @@ void ShaderProgramModelIndexedLightedAmbient::ArrayBufferPositions(int pIndex, i
     glVertexAttribPointer(mSlotPositions, 3, GL_FLOAT, GL_FALSE, (aStride << 2), aOffset);
 }
 
-void ShaderProgramModelIndexedLightedAmbient::ArrayBufferTextureCoords(int pIndex, int pOffset) {
-    if (pIndex != -1) if (pIndex != -1) { glBindBuffer(GL_ARRAY_BUFFER, pIndex); }
+void ShaderProgramModelIndexedLightedAmbient::ArrayBufferTextureCoords(FBuffer *pBuffer, int pOffset) {
+    if (pBuffer != NULL && pBuffer->mBindIndex != -1) {
+        glBindBuffer(GL_ARRAY_BUFFER, pBuffer->mBindIndex);
+    }
     glEnableVertexAttribArray(mSlotTextureCoords);
     int aStride = 3 + 3 + 3;
     unsigned char *aOffset = NULL;

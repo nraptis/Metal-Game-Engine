@@ -8,8 +8,7 @@
 #include "FFileTable.hpp"
 #include "ShaderProgram.hpp"
 #include "OpenGLEngine.hpp"
-
-#include "FSpriteBufferCache.hpp"
+#include "FModelDataPacked.hpp"
 
 
 #if defined(WIN_32_ENV) || defined(MAC_ENVIRONMENT)
@@ -58,8 +57,6 @@ static bool                                 cDidTearDown = false;
 
 
 
-FSpriteBufferCache                          cSpriteCache;
-
 ShaderProgram                               *cShaderProgram = NULL;
 
 FMatrix                                     cMatrixProjection;
@@ -104,6 +101,17 @@ void Graphics::SetUp() {
         cDidTearDown = false;
         gOpenGLEngine->SetUp();
         gTextureCache.ReloadAllTextures();
+        gBufferCache.ReloadAllBuffers();
+        
+        EnumList(FSprite, aSprite, gSpriteList) {
+            aSprite->WriteBuffers();
+            printf("Sprite Name: %s\n", aSprite->mFileName.c());
+        }
+        
+        EnumList(FModelDataPacked, aModel, gPackedModelList) {
+            aModel->WriteBuffers();
+        }
+        
     }
 }
 
@@ -114,7 +122,7 @@ void Graphics::TearDown() {
     
     cDidTearDown = true;
     gTextureCache.UnloadAllTextures();
-    
+    gBufferCache.UnloadAllBuffers();
     
 }
 
@@ -134,7 +142,6 @@ void Graphics::SetDeviceSize(float pWidth, float pHeight) {
 void Graphics::PreRender() {
     cVertexCache.Reset();
     cIndexCache.Reset();
-    cSpriteCache.Reset();
     
     cCurrentRenderPass = -1;
     cShaderProgram = NULL;
@@ -151,6 +158,13 @@ void Graphics::PostRender() {
 }
 
 void Graphics::DrawQuad(float pX1, float pY1, float pX2, float pY2, float pX3, float pY3, float pX4, float pY4) {
+    
+    FBuffer *aBufferPosition = gBufferCache.GetArrayBuffer(sizeof(float) * 8);
+    
+    if (aBufferPosition == NULL) { return; }
+    if (aBufferPosition->mBindIndex == -1) { return; }
+    
+    
     cRectBuffer[0] = pX1;
     cRectBuffer[1] = pY1;
     cRectBuffer[2] = pX2;
@@ -160,19 +174,18 @@ void Graphics::DrawQuad(float pX1, float pY1, float pX2, float pY2, float pX3, f
     cRectBuffer[6] = pX4;
     cRectBuffer[7] = pY4;
     
-    int aBufferPosition = cSpriteCache.Get();
     BufferArrayWrite(aBufferPosition, cRectBuffer, 0, sizeof(float) * 8);
     ArrayBufferPositions(aBufferPosition, 0);
-
+    
     /*
-    cVertexCache.Get(sizeof(float) * 8);
-    if (cVertexCache.mResult.mSuccess) {
-        int aPositionsBufferIndex = cVertexCache.mResult.mBufferIndex;
-        int aPositionsBufferOffset = cVertexCache.mResult.mBufferOffset;
-        
-        BufferArrayWrite(aPositionsBufferIndex, cRectBuffer, aPositionsBufferOffset, sizeof(float) * 8);
-        ArrayBufferPositions(aPositionsBufferIndex, aPositionsBufferOffset);
-    }
+     cVertexCache.Get(sizeof(float) * 8);
+     if (cVertexCache.mResult.mSuccess) {
+     FBuffer *aPositionsBuffer = cVertexCache.mResult.mBuffer;
+     int aPositionsBufferOffset = cVertexCache.mResult.mBufferOffset;
+     
+     BufferArrayWrite(aPositionsBufferIndex, cRectBuffer, aPositionsBufferOffset, sizeof(float) * 8);
+     ArrayBufferPositions(aPositionsBufferIndex, aPositionsBufferOffset);
+     }
      */
     //
     //
@@ -202,18 +215,29 @@ void Graphics::DrawQuad(float x1, float y1, float z1, float x2, float y2, float 
     cRectBuffer[10]=y4;
     cRectBuffer[11]=z4;
     
-    cVertexCache.Get(sizeof(float) * 12);
-    if (cVertexCache.mResult.mSuccess) {
-        int aPositionsBufferIndex = cVertexCache.mResult.mBufferIndex;
-        int aPositionsBufferOffset = cVertexCache.mResult.mBufferOffset;
-        BufferArrayWrite(aPositionsBufferIndex, cRectBuffer, aPositionsBufferOffset, sizeof(float) * 12);
-        ArrayBufferPositions(aPositionsBufferIndex, aPositionsBufferOffset);
+    
+    FBuffer *aPositionsBuffer = gBufferCache.GetArrayBuffer(sizeof(float) * 12);
+    if (aPositionsBuffer != NULL && aPositionsBuffer->mBindIndex != -1) {
+        BufferArrayWrite(aPositionsBuffer, cRectBuffer, 0, sizeof(float) * 12);
+        ArrayBufferPositions(aPositionsBuffer, 0);
+        DrawTriangleStrips(4);
     }
     
-    //TODO: Bind Uni?
-    //This will MESS UP menu ??
-    //UniformBind();
-    DrawTriangleStrips(4);
+    
+    /*
+     cVertexCache.Get(sizeof(float) * 12);
+     if (cVertexCache.mResult.mSuccess) {
+     FBuffer *aPositionsBuffer = cVertexCache.mResult.mBuffer;
+     int aPositionsBufferOffset = cVertexCache.mResult.mBufferOffset;
+     BufferArrayWrite(aPositionsBuffer, cRectBuffer, aPositionsBufferOffset, sizeof(float) * 12);
+     ArrayBufferPositions(aPositionsBuffer, aPositionsBufferOffset);
+     }
+     
+     //TODO: Bind Uni?
+     //This will MESS UP menu ??
+     //UniformBind();
+     DrawTriangleStrips(4);
+     */
 }
 
 
@@ -255,11 +279,10 @@ void Graphics::DrawTriangle2D(float pX1, float pY1, float pX2, float pY2, float 
     //
     cVertexCache.Get(sizeof(float) * 6);
     if (cVertexCache.mResult.mSuccess) {
-        int aPositionsBufferIndex = cVertexCache.mResult.mBufferIndex;
+        FBuffer *aPositionsBuffer = cVertexCache.mResult.mBuffer;
         int aPositionsBufferOffset = cVertexCache.mResult.mBufferOffset;
-        
-        BufferArrayWrite(aPositionsBufferIndex, cRectBuffer, aPositionsBufferOffset, sizeof(float) * 6);
-        ArrayBufferPositions(aPositionsBufferIndex, aPositionsBufferOffset);
+        BufferArrayWrite(aPositionsBuffer, cRectBuffer, aPositionsBufferOffset, sizeof(float) * 6);
+        ArrayBufferPositions(aPositionsBuffer, aPositionsBufferOffset);
     }
     //
     UniformBind();
@@ -337,17 +360,17 @@ void Graphics::DrawLine(float pX1, float pY1, float pX2, float pY2, float pThick
     float aDirX = pX2 - pX1;
     float aDirY = pY2 - pY1;
     float aDist = sqrtf((aDirX * aDirX) + (aDirY * aDirY));
-
+    
     aDirX /= aDist;
     aDirY /= aDist;
-
+    
     float aHold = aDirX;
     
     aDirX=-aDirY;
     aDirY=aHold;
     aDirX*=pThickness;
     aDirY*=pThickness;
-
+    
     DrawQuad(pX2-aDirX, pY2-aDirY, pX2+aDirX, pY2+aDirY, pX1-aDirX, pY1-aDirY, pX1+aDirX, pY1+aDirY);
 }
 
@@ -535,82 +558,100 @@ void Graphics::TextureSetFilterNearest() {
     
 }
 
-void Graphics::ArrayBufferData(int pIndex) {
-    ArrayBufferData(pIndex, 0);
+void Graphics::ArrayBufferData(FBuffer *pBuffer) {
+    ArrayBufferData(pBuffer, 0);
 }
 
-void Graphics::ArrayBufferData(int pIndex, int pOffset) {
+void Graphics::ArrayBufferData(FBuffer *pBuffer, int pOffset) {
     if (cShaderProgram == NULL) {
         Log("ArrayBufferPositionsS Fails...\n");
         return;
     }
-    cShaderProgram->ArrayBufferData(pIndex, pOffset);
+    cShaderProgram->ArrayBufferData(pBuffer, pOffset);
 }
 
-void Graphics::ArrayBufferPositions(int pIndex) {
-    ArrayBufferPositions(pIndex, 0);
+void Graphics::ArrayBufferPositions(FBuffer *pBuffer) {
+    ArrayBufferPositions(pBuffer, 0);
 }
 
-void Graphics::ArrayBufferPositions(int pIndex, int pOffset) {
+void Graphics::ArrayBufferPositions(FBuffer *pBuffer, int pOffset) {
     if (cShaderProgram == NULL) {
         Log("ArrayBufferPositionsS Fails...\n");
         return;
     }
-    cShaderProgram->ArrayBufferPositions(pIndex, pOffset);
+    cShaderProgram->ArrayBufferPositions(pBuffer, pOffset);
 }
 
-void Graphics::ArrayBufferTextureCoords(int pIndex) {
-    ArrayBufferTextureCoords(pIndex, 0);
+void Graphics::ArrayBufferTextureCoords(FBuffer *pBuffer) {
+    ArrayBufferTextureCoords(pBuffer, 0);
 }
 
-void Graphics::ArrayBufferTextureCoords(int pIndex, int pOffset) {
+void Graphics::ArrayBufferTextureCoords(FBuffer *pBuffer, int pOffset) {
     if (cShaderProgram == NULL) {
         Log("ArrayBufferTextureCoordsS Fails...\n");
         return;
     }
-    cShaderProgram->ArrayBufferTextureCoords(pIndex, pOffset);
+    cShaderProgram->ArrayBufferTextureCoords(pBuffer, pOffset);
 }
 
 
-void Graphics::ArrayBufferColors(int pIndex) {
-    ArrayBufferColors(pIndex, 0);
+void Graphics::ArrayBufferColors(FBuffer *pBuffer) {
+    ArrayBufferColors(pBuffer, 0);
 }
 
-void Graphics::ArrayBufferColors(int pIndex, int pOffset) {
+void Graphics::ArrayBufferColors(FBuffer *pBuffer, int pOffset) {
     if (cShaderProgram == NULL) {
         Log("ArrayBufferColorsS Fails...\n");
         return;
     }
-    cShaderProgram->ArrayBufferColors(pIndex, pOffset);
+    cShaderProgram->ArrayBufferColors(pBuffer, pOffset);
 }
 
-void Graphics::ArrayBufferNormals(int pIndex) {
-    ArrayBufferNormals(pIndex, 0);
+void Graphics::ArrayBufferNormals(FBuffer *pBuffer) {
+    ArrayBufferNormals(pBuffer, 0);
 }
 
-void Graphics::ArrayBufferNormals(int pIndex, int pOffset) {
-    
-}
-
-void Graphics::ArrayBufferTangents(int pIndex) {
-    ArrayBufferTangents(pIndex, 0);
-}
-
-void Graphics::ArrayBufferTangents(int pIndex, int pOffset) {
-    
-}
-
-void Graphics::ArrayWriteData(void *pData, int pCount) {
-    if (pCount > 0) {
-        cVertexCache.Get(pCount);
-        if (cVertexCache.mResult.mSuccess) {
-            int aDataBufferIndex = cVertexCache.mResult.mBufferIndex;
-            int aDataBufferOffset = cVertexCache.mResult.mBufferOffset;
-            
-            BufferArrayWrite(aDataBufferIndex, pData, aDataBufferOffset, pCount);
-            ArrayBufferData(aDataBufferIndex, aDataBufferOffset);
-        }
+void Graphics::ArrayBufferNormals(FBuffer *pBuffer, int pOffset) {
+    if (cShaderProgram == NULL) {
+        Log("ArrayBufferNormalsS Fails...\n");
+        return;
     }
+    cShaderProgram->ArrayBufferNormals(pBuffer, pOffset);
+}
+
+void Graphics::ArrayBufferTangents(FBuffer *pBuffer) {
+    ArrayBufferTangents(pBuffer, 0);
+}
+
+void Graphics::ArrayBufferTangents(FBuffer *pBuffer, int pOffset) {
+    //ShaderProgram->ArrayBufferTangents(<#int pIndex#>, <#int pOffset#>)
+    Log("BAD BAD BAD\n");
+    exit(0);
+}
+
+FBuffer *Graphics::ArrayWriteData(void *pData, int pCount) {
+    if (pCount > 0) {
+        
+        
+        FBuffer *aDataBuffer = gBufferCache.GetArrayBuffer(pCount);
+        if (aDataBuffer != NULL && aDataBuffer->mBindIndex != -1) {
+            BufferArrayWrite(aDataBuffer, pData, pCount);
+            ArrayBufferData(aDataBuffer);
+            return aDataBuffer;
+        }
+        
+        /*
+         cVertexCache.Get(pCount);
+         if (cVertexCache.mResult.mSuccess) {
+         FBuffer *aDataBuffer = cVertexCache.mResult.mBuffer;
+         int aDataBufferOffset = cVertexCache.mResult.mBufferOffset;
+         
+         BufferArrayWrite(aDataBuffer, pData, aDataBufferOffset, pCount);
+         ArrayBufferData(aDataBuffer, aDataBufferOffset);
+         }
+         */
+    }
+    return NULL;
 }
 
 void Graphics::UniformBind() {
@@ -645,16 +686,6 @@ void Graphics::TextureDelete(int pIndex) {
     }
 }
 
-bool Graphics::TextureValid(FTexture *pTexture) {
-    bool aResult = false;
-    if (pTexture) {
-        if (pTexture->IsValid()) {
-            aResult = true;
-        }
-    }
-    return aResult;
-}
-
 void Graphics::TextureSetData(int pIndex, unsigned int *pData, int pWidth, int pHeight) {
     TextureBind(pIndex);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -673,7 +704,7 @@ void Graphics::TextureBind(FTexture *pTexture) {
 
 
 
- 
+
 int Graphics::BufferArrayGenerate(int pLength) {
     unsigned int aBindIndex = 0;
     if (pLength > 0) {
@@ -681,7 +712,7 @@ int Graphics::BufferArrayGenerate(int pLength) {
         if (aBindIndex != 0) {
             
             if (pLength > 128) {
-            Log("Create Buffer [%d] Sized[%d]\n", aBindIndex, pLength);
+                Log("Create Buffer [%d] Sized[%d]\n", aBindIndex, pLength);
             }
             
             glBindBuffer(GL_ARRAY_BUFFER, aBindIndex);
@@ -702,24 +733,23 @@ int Graphics::BufferArrayGenerate(int pLength) {
     //GL_ELEMENT_ARRAY_BUFFER
 }
 
-int Graphics::BufferArrayGenerate(void *pData, int pLength) {
-    int aBindIndex = BufferArrayGenerate(pLength);
-    if (aBindIndex != -1) {
-        BufferArrayWrite(aBindIndex, pData, pLength);
-    } else {
-        Log("Failed To Make Buffer[%d]\n", pLength);
-    }
-    return aBindIndex;
-}
-
-void Graphics::BufferArrayWrite(int pIndex, void *pData, int pLength) {
-    BufferArrayWrite(pIndex, pData, 0, pLength);
-}
-
-void Graphics::BufferArrayWrite(int pIndex, void *pData, int pOffset, int pLength) {
-    if (pIndex != -1) { glBindBuffer(GL_ARRAY_BUFFER, pIndex); }
-    glBufferSubData(GL_ARRAY_BUFFER, pOffset, pLength, pData);
+void Graphics::BufferArrayWrite(FBuffer *pBuffer, void *pData, int pLength) {
+    //BufferArrayWrite(pBuffer, pData, 0, pLength);
     
+    if (pBuffer != NULL && pBuffer->mBindIndex != -1) {
+        glBindBuffer(GL_ARRAY_BUFFER, pBuffer->mBindIndex);
+        glBufferData(GL_ARRAY_BUFFER, pLength, pData, GL_STATIC_DRAW);
+        //glBufferSubData(GL_ARRAY_BUFFER, pOffset, pLength, pData);
+        
+    }
+    
+}
+
+void Graphics::BufferArrayWrite(FBuffer *pBuffer, void *pData, int pOffset, int pLength) {
+    if (pBuffer != NULL && pBuffer->mBindIndex != -1) {
+        glBindBuffer(GL_ARRAY_BUFFER, pBuffer->mBindIndex);
+        glBufferSubData(GL_ARRAY_BUFFER, pOffset, pLength, pData);
+    }
     //glBufferSubData (GLenum target, GLintptr offset, GLsizeiptr size, const GLvoid* data) OPENGLES_DEPRECATED(ios(3.0, 12.0), tvos(9.0, 12.0));
     
 }
@@ -750,23 +780,16 @@ int Graphics::BufferElementGenerate(int pLength) {
     return aBindIndex;
 }
 
-int Graphics::BufferElementGenerate(void *pData, int pLength) {
-    int aBindIndex = BufferElementGenerate(pLength);
-    if (aBindIndex != -1) {
-        BufferElementWrite(aBindIndex, pData, pLength);
-    } else {
-        Log("Failed To Make Element Buffer[%d]\n", pLength);
+void Graphics::BufferElementWrite(FBuffer *pBuffer, void *pData, int pLength) {
+    BufferElementWrite(pBuffer, pData, 0, pLength);
+}
+
+void Graphics::BufferElementWrite(FBuffer *pBuffer, void *pData, int pOffset, int pLength) {
+    
+    if (pBuffer != NULL && pBuffer->mBindIndex != -1) {
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pBuffer->mBindIndex);
+        glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, pOffset, pLength, pData);
     }
-    return aBindIndex;
-}
-
-void Graphics::BufferElementWrite(int pIndex, void *pData, int pLength) {
-    BufferElementWrite(pIndex, pData, 0, pLength);
-}
-
-void Graphics::BufferElementWrite(int pIndex, void *pData, int pOffset, int pLength) {
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pIndex);
-    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, pOffset, pLength, pData);
 }
 
 void Graphics::BufferElementDelete(int pIndex) {
@@ -871,13 +894,13 @@ void Graphics::ClipEnable() {
     if (cClipEnabled == false) {
         cClipEnabled = true;
         
-
+        
         glEnable(GL_SCISSOR_TEST);
         
         /*
-        glEnable(GLenum(GL_SCISSOR_TEST))
-        glScissor(GLint(clipRect.origin.x), GLint(clipRect.origin.y), GLsizei(clipRect.size.width), GLsizei(clipRect.size.height))
-        */
+         glEnable(GLenum(GL_SCISSOR_TEST))
+         glScissor(GLint(clipRect.origin.x), GLint(clipRect.origin.y), GLsizei(clipRect.size.width), GLsizei(clipRect.size.height))
+         */
         
         
     }
@@ -887,7 +910,7 @@ void Graphics::ClipDisable() {
     //if (cClipEnabled) {
     cClipEnabled = false;
     //Clip(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
-
+    
     glDisable(GL_SCISSOR_TEST);
 }
 
@@ -956,31 +979,31 @@ void Graphics::DrawModelIndexed(float *pPositions, int pPositionsCount, float *p
     if (pPositions != NULL && cBufferIndexPositions != -1 && pPositionsCount > 0) {
         cVertexCache.Get(sizeof(float) * pPositionsCount * 3);
         if (cVertexCache.mResult.mSuccess) {
-            int aPositionsBufferIndex = cVertexCache.mResult.mBufferIndex;
+            FBuffer *aPositionsBuffer = cVertexCache.mResult.mBuffer;
             int aPositionsBufferOffset = cVertexCache.mResult.mBufferOffset;
-            BufferArrayWrite(aPositionsBufferIndex, pPositions, aPositionsBufferOffset, sizeof(float) * pPositionsCount * 3);
-            ArrayBufferPositions(aPositionsBufferIndex, aPositionsBufferOffset);
+            BufferArrayWrite(aPositionsBuffer, pPositions, aPositionsBufferOffset, sizeof(float) * pPositionsCount * 3);
+            ArrayBufferPositions(aPositionsBuffer, aPositionsBufferOffset);
         }
     }
     
     if (pTextureCoords != NULL && cBufferIndexTextureCoords != -1 && pTextureCoordsCount > 0) {
         cVertexCache.Get(sizeof(float) * pTextureCoordsCount * 3);
         if (cVertexCache.mResult.mSuccess) {
-            int aTextureCoordsBufferIndex = cVertexCache.mResult.mBufferIndex;
+            FBuffer *aTextureCoordsBuffer = cVertexCache.mResult.mBuffer;
             int aTextureCoordsBufferOffset = cVertexCache.mResult.mBufferOffset;
-            
-            BufferArrayWrite(aTextureCoordsBufferIndex, pTextureCoords, aTextureCoordsBufferOffset, sizeof(float) * pTextureCoordsCount * 3);
-            ArrayBufferTextureCoords(aTextureCoordsBufferIndex, aTextureCoordsBufferOffset);
+            BufferArrayWrite(aTextureCoordsBuffer, pTextureCoords, aTextureCoordsBufferOffset, sizeof(float) * pTextureCoordsCount * 3);
+            ArrayBufferTextureCoords(aTextureCoordsBuffer, aTextureCoordsBufferOffset);
         }
     }
     
     if (pNormals != NULL && cBufferIndexNormals != -1 && pNormalsCount > 0) {
         cVertexCache.Get(sizeof(float) * pNormalsCount * 3);
         if (cVertexCache.mResult.mSuccess) {
-            int aNormalsBufferIndex = cVertexCache.mResult.mBufferIndex;
+            
+            FBuffer *aNormalsBuffer = cVertexCache.mResult.mBuffer;
             int aNormalsBufferOffset = cVertexCache.mResult.mBufferOffset;
-            BufferArrayWrite(aNormalsBufferIndex, pTextureCoords, aNormalsBufferOffset, sizeof(float) * pNormalsCount * 3);
-            ArrayBufferNormals(aNormalsBufferIndex, aNormalsBufferOffset);
+            BufferArrayWrite(aNormalsBuffer, pTextureCoords, aNormalsBufferOffset, sizeof(float) * pNormalsCount * 3);
+            ArrayBufferNormals(aNormalsBuffer, aNormalsBufferOffset);
         }
     }
     
@@ -1006,39 +1029,26 @@ void Graphics::DrawModel(float *pPositions, float *pTextureCoords, float *pNorma
         return;
     }
     
-    if (pPositions != NULL && cBufferIndexPositions != -1) {
-    cVertexCache.Get(sizeof(float) * pCount * 3);
-    if (cVertexCache.mResult.mSuccess) {
-        int aPositionsBufferIndex = cVertexCache.mResult.mBufferIndex;
-        int aPositionsBufferOffset = cVertexCache.mResult.mBufferOffset;
-        BufferArrayWrite(aPositionsBufferIndex, pPositions, aPositionsBufferOffset, sizeof(float) * pCount * 3);
-        ArrayBufferPositions(aPositionsBufferIndex, aPositionsBufferOffset);
-    }
-    }
+    FBuffer *aPositionsBuffer = gBufferCache.GetArrayBuffer(sizeof(float) * pCount * 3);
+    FBuffer *aTextureCoordsBuffer = gBufferCache.GetArrayBuffer(sizeof(float) * pCount * 3);
+    FBuffer *aNormalsBuffer = gBufferCache.GetArrayBuffer(sizeof(float) * pCount * 3);
     
-    if (pTextureCoords != NULL && cBufferIndexTextureCoords != -1) {
-        cVertexCache.Get(sizeof(float) * pCount * 3);
-        if (cVertexCache.mResult.mSuccess) {
-            int aTextureCoordsBufferIndex = cVertexCache.mResult.mBufferIndex;
-            int aTextureCoordsBufferOffset = cVertexCache.mResult.mBufferOffset;
-            BufferArrayWrite(aTextureCoordsBufferIndex, pTextureCoords, aTextureCoordsBufferOffset, sizeof(float) * pCount * 3);
-            ArrayBufferTextureCoords(aTextureCoordsBufferIndex, aTextureCoordsBufferOffset);
-        }
-    }
-    
-    if (pNormals != NULL && cBufferIndexNormals != -1) {
-        cVertexCache.Get(sizeof(float) * pCount * 3);
-        if (cVertexCache.mResult.mSuccess) {
-            int aNormalsBufferIndex = cVertexCache.mResult.mBufferIndex;
-            int aNormalsBufferOffset = cVertexCache.mResult.mBufferOffset;
+    if (aPositionsBuffer != NULL && aTextureCoordsBuffer != NULL && aNormalsBuffer != NULL) {\
+        if (aPositionsBuffer->mBindIndex != -1 && aTextureCoordsBuffer->mBindIndex != -1 && aNormalsBuffer->mBindIndex != -1) {
             
-            BufferArrayWrite(aNormalsBufferIndex, pTextureCoords, aNormalsBufferOffset, sizeof(float) * pCount * 3);
-            ArrayBufferNormals(aNormalsBufferIndex, aNormalsBufferOffset);
+            BufferArrayWrite(aPositionsBuffer, pPositions, sizeof(float) * pCount * 3);
+            ArrayBufferPositions(aPositionsBuffer);
+            
+            BufferArrayWrite(aTextureCoordsBuffer, pTextureCoords, sizeof(float) * pCount * 3);
+            ArrayBufferTextureCoords(aTextureCoordsBuffer);
+            
+            BufferArrayWrite(aNormalsBuffer, pTextureCoords, sizeof(float) * pCount * 3);
+            ArrayBufferNormals(aNormalsBuffer);
+            
+            TextureBind(pTexture);
+            DrawTriangles(pCount);
         }
     }
-    //
-    TextureBind(pTexture);
-    DrawTriangles(pCount);
 }
 
 void Graphics::DrawTriangles(int pCount, float *pPositions, float *pTextureCoords, float *pNormals) {
@@ -1057,71 +1067,13 @@ void Graphics::DrawTrianglesIndexed(GFX_MODEL_INDEX_TYPE *pIndices, int pCount) 
     glDrawElements(GL_TRIANGLES, pCount, GFX_MODEL_INDEX_GL_TYPE, pIndices);
 }
 
-void Graphics::DrawTrianglesIndexedFromPackedBuffers(int pVertexBuffer, int pVertexBufferOffset,
-                                                                              int pIndexBuffer , int pIndexBufferOffset,
-                                                     int pCount, FTexture *pTexture) {
-    Graphics::TextureBind(pTexture);
-    
-    //glDrawArrays
-    
-    
-    
-    //Graphics::ArrayBufferData(<#int pIndex#>)
-    //Graphics::ArrayBufferPositions(-1, 0);
-    //Graphics::ArrayBufferTextureCoords(-1, sizeof(float) * 3);
-    //Graphics::ArrayBufferNormals(-1, sizeof(float) * 6);
-    
-    
-    Graphics::ArrayBufferData(pVertexBuffer, pVertexBufferOffset);
-    Graphics::ArrayBufferPositions(-1, 0);
-    Graphics::ArrayBufferTextureCoords(-1, sizeof(float) * 3);
-    Graphics::ArrayBufferNormals(-1, sizeof(float) * 6);
-    Graphics::TextureBind(pTexture);
-    //Graphics::UniformBind(&mUniAmb);
-    
-    
-    unsigned char *aOffset = NULL;
-    aOffset = &(aOffset[pIndexBufferOffset]);
-    
-    
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pIndexBuffer);
-    //glDrawElements(GL_TRIANGLES, pCount / 3, GFX_MODEL_INDEX_GL_TYPE, aOffset);
-    
-    //glDrawArraysInstancedEXT(GL_TRIANGLES, pIndexBufferOffset, <#GLsizei count#>, pCount)
-    
-    //Graphics::DrawTrianglesIndexed(mMonolith.mIndex, mMonolith.mIndexCount);
-    
-    /*
-    BufferBindingWrapper *aWrapperVertex = (__bridge BufferBindingWrapper *)cBufferBindMap.Get(pVertexBuffer);
-    BufferBindingWrapper *aWrapperIndex = (__bridge BufferBindingWrapper *)cBufferBindMap.Get(pIndexBuffer);
-    
-    if (aWrapperVertex == NULL || aWrapperIndex == NULL) {
-        return;
-    }
-    
-    if (aWrapperVertex.buffer == NULL || aWrapperIndex.buffer == NULL) {
-        return;
-    }
-    
-    //unsigned char *aAddressVertex = (unsigned char *)aWrapperVertex.buffer.contents;
-    //aAddressVertex = &(aAddressVertex[pVertexBufferOffset]);
-    
-    //unsigned char *aAddressIndex = (unsigned char *)aWrapperIndex.buffer.contents;
-    //aAddressIndex = &(aAddressIndex[pIndexBufferOffset]);
-    
-    [gMetalEngine.renderCommandEncoder setVertexBuffer: aWrapperVertex.buffer offset: pVertexBufferOffset atIndex: cBufferIndexData];
-    [gMetalEngine.renderCommandEncoder drawIndexedPrimitives: MTLPrimitiveTypeTriangle indexCount: pCount indexType: MTLIndexTypeUInt16 indexBuffer: aWrapperIndex.buffer indexBufferOffset: pIndexBufferOffset];
-     
-    */
-    
-}
-
-void Graphics::DrawTrianglesIndexedWithPackedBuffers(int pVertexBuffer, int pVertexBufferOffset, GFX_MODEL_INDEX_TYPE *pIndices, int pCount, FTexture *pTexture) {
+void Graphics::DrawTrianglesIndexedWithPackedBuffers(FBuffer *pVertexBuffer, int pVertexBufferOffset, GFX_MODEL_INDEX_TYPE *pIndices, int pCount, FTexture *pTexture) {
+    if (pVertexBuffer == NULL || pVertexBuffer->mBindIndex == -1) { return; }
     Graphics::TextureBind(pTexture);
     Graphics::ArrayBufferData(pVertexBuffer, pVertexBufferOffset);
-    Graphics::ArrayBufferPositions(-1, 0);
-    Graphics::ArrayBufferTextureCoords(-1, sizeof(float) * 3);
-    Graphics::ArrayBufferNormals(-1, sizeof(float) * 6);
+    Graphics::ArrayBufferPositions(NULL, 0);
+    Graphics::ArrayBufferTextureCoords(NULL, sizeof(float) * 3);
+    Graphics::ArrayBufferNormals(NULL, sizeof(float) * 6);
     Graphics::DrawTrianglesIndexed(pIndices, pCount);
 }
 
@@ -1157,10 +1109,18 @@ FMatrix Graphics::MatrixProjectionGet() {
     return aResult;
 }
 
+void Graphics::MatrixProjectionGet(FMatrix *pMatrix) {
+    pMatrix->Set(cMatrixProjection);
+}
+
 FMatrix Graphics::MatrixModelViewGet() {
     FMatrix aResult;
     aResult.Set(cMatrixModelView);
     return aResult;
+}
+
+void Graphics::MatrixModelViewGet(FMatrix *pMatrix) {
+    pMatrix->Set(cMatrixModelView);
 }
 
 void Graphics::CullFacesSetFront() {
@@ -1324,40 +1284,28 @@ void Graphics::RenderTriangle(float pX1, float pY1, float pX2, float pY2, float 
     RenderTriangle(pX1, pY1, 0.0f, pX2, pY2, 0.0f, pX3, pY3, 0.0f);
 }
 
-void Graphics::DrawSpriteSetup(float *pPositions, float *pTextureCoords) {
+bool Graphics::DrawSpriteSetup(float *pPositions, float *pTextureCoords) {
     
     
     //gQuadBufferPosition = Graphics::BufferArrayGenerate(sizeof(float) * 4);
     //gQuadBufferTextureCoord = Graphics::BufferArrayGenerate(sizeof(float) * 4);
     
-    int aBufferPosition = cSpriteCache.Get();
+    FBuffer *aBufferPositions = gBufferCache.GetArrayBuffer(sizeof(float) * 8);
+    if (aBufferPositions == NULL) { return false; }
+    if (aBufferPositions->mBindIndex == -1) { return false; }
     
-        BufferArrayWrite(aBufferPosition, pPositions, 0, sizeof(float) * 8);
-        ArrayBufferPositions(aBufferPosition, 0);
+    FBuffer *aBufferTextureCoords = gBufferCache.GetArrayBuffer(sizeof(float) * 8);
+    if (aBufferTextureCoords == NULL) { return false; }
+    if (aBufferTextureCoords->mBindIndex == -1) { return false; }
     
-    int aBufferTextureCoord = cSpriteCache.Get();
     
-        BufferArrayWrite(aBufferTextureCoord, pTextureCoords, 0, sizeof(float) * 8);
-        ArrayBufferTextureCoords(aBufferTextureCoord, 0);
+    BufferArrayWrite(aBufferPositions, pPositions, sizeof(float) * 8);
+    ArrayBufferPositions(aBufferPositions);
+    
+    BufferArrayWrite(aBufferTextureCoords, pTextureCoords, sizeof(float) * 8);
+    ArrayBufferTextureCoords(aBufferTextureCoords);
 
-    /*
-    cVertexCache.Get(sizeof(float) * 8);
-    if (cVertexCache.mResult.mSuccess) {
-        int aPositionsBufferIndex = cVertexCache.mResult.mBufferIndex;
-        int aPositionsBufferOffset = cVertexCache.mResult.mBufferOffset;
-        BufferArrayWrite(aPositionsBufferIndex, pPositions, aPositionsBufferOffset, sizeof(float) * 8);
-        ArrayBufferPositions(aPositionsBufferIndex, aPositionsBufferOffset);
-    }
-    
-    cVertexCache.Get(sizeof(float) * 8);
-    if (cVertexCache.mResult.mSuccess) {
-        int aTextureCoordsBufferIndex = cVertexCache.mResult.mBufferIndex;
-        int aTextureCoordsBufferOffset = cVertexCache.mResult.mBufferOffset;
-        BufferArrayWrite(aTextureCoordsBufferIndex, pTextureCoords, aTextureCoordsBufferOffset, sizeof(float) * 8);
-        ArrayBufferTextureCoords(aTextureCoordsBufferIndex, aTextureCoordsBufferOffset);
-    }
-    */
-    
+    return true;
 }
 
 void Graphics::DrawSprite(float *pPositions, float *pTextureCoords, FTexture *pTexture) {
@@ -1366,14 +1314,12 @@ void Graphics::DrawSprite(float *pPositions, float *pTextureCoords, FTexture *pT
         return;
     }
     
-    DrawSpriteSetup(pPositions, pTextureCoords);
-    
-    
-    //
-    TextureBind(pTexture);
-    UniformBind();
-    //
-    DrawTriangleStrips(4);
+    if (DrawSpriteSetup(pPositions, pTextureCoords)) {
+        TextureBind(pTexture);
+        UniformBind();
+        //
+        DrawTriangleStrips(4);
+    }
 }
 
 void Graphics::DrawSprite(float pX, float pY, float pScaleX, float pScaleY, float pScaleZ, float pRotation, float *pPositions, float *pTextureCoords, FTexture *pTexture) {
@@ -1411,22 +1357,43 @@ void Graphics::DrawSpriteTriangle(float pX, float pY, float pScaleX, float pScal
     MatrixModelViewSet(aHold);
 }
 
-void Graphics::DrawSpriteTriangleSetup(float *pPositions, float *pTextureCoords) {
+bool Graphics::DrawSpriteTriangleSetup(float *pPositions, float *pTextureCoords) {
+    
+    
+    FBuffer *aBufferPositions = gBufferCache.GetArrayBuffer(sizeof(float) * 6);
+    if (aBufferPositions == NULL) { return false; }
+    if (aBufferPositions->mBindIndex == -1) { return false; }
+    
+    FBuffer *aBufferTextureCoords = gBufferCache.GetArrayBuffer(sizeof(float) * 6);
+    if (aBufferTextureCoords == NULL) { return false; }
+    if (aBufferTextureCoords->mBindIndex == -1) { return false; }
+    
+    
+    BufferArrayWrite(aBufferPositions, pPositions, sizeof(float) * 6);
+    ArrayBufferPositions(aBufferPositions);
+    
+    BufferArrayWrite(aBufferTextureCoords, pTextureCoords, sizeof(float) * 6);
+    ArrayBufferTextureCoords(aBufferTextureCoords);
+    
+    return true;
+    
+    /*
     cVertexCache.Get(sizeof(float) * 6);
     if (cVertexCache.mResult.mSuccess) {
-        int aPositionsBufferIndex = cVertexCache.mResult.mBufferIndex;
+        FBuffer *aPositionsBuffer = cVertexCache.mResult.mBuffer;
         int aPositionsBufferOffset = cVertexCache.mResult.mBufferOffset;
-        BufferArrayWrite(aPositionsBufferIndex, pPositions, aPositionsBufferOffset, sizeof(float) * 6);
-        ArrayBufferPositions(aPositionsBufferIndex, aPositionsBufferOffset);
+        BufferArrayWrite(aPositionsBuffer, pPositions, aPositionsBufferOffset, sizeof(float) * 6);
+        ArrayBufferPositions(aPositionsBuffer, aPositionsBufferOffset);
     }
     //
     cVertexCache.Get(sizeof(float) * 6);
     if (cVertexCache.mResult.mSuccess) {
-        int aTextureCoordsBufferIndex = cVertexCache.mResult.mBufferIndex;
+        FBuffer *aTextureCoordsBuffer = cVertexCache.mResult.mBuffer;
         int aTextureCoordsBufferOffset = cVertexCache.mResult.mBufferOffset;
-        BufferArrayWrite(aTextureCoordsBufferIndex, pTextureCoords, aTextureCoordsBufferOffset, sizeof(float) * 6);
-        ArrayBufferTextureCoords(aTextureCoordsBufferIndex, aTextureCoordsBufferOffset);
+        BufferArrayWrite(aTextureCoordsBuffer, pTextureCoords, aTextureCoordsBufferOffset, sizeof(float) * 6);
+        ArrayBufferTextureCoords(aTextureCoordsBuffer, aTextureCoordsBufferOffset);
     }
+    */
 }
 
 void Graphics::DrawSpriteTriangle(float *pPositions, float *pTextureCoords, FTexture *pTexture) {
@@ -1435,44 +1402,45 @@ void Graphics::DrawSpriteTriangle(float *pPositions, float *pTextureCoords, FTex
         return;
     }
     
-    DrawSpriteTriangleSetup(pPositions, pTextureCoords);
-    //
-    TextureBind(pTexture);
-    UniformBind();
-    //
-    DrawTriangleStrips(3);
+    if (DrawSpriteTriangleSetup(pPositions, pTextureCoords)) {
+        TextureBind(pTexture);
+        UniformBind();
+        //
+        DrawTriangleStrips(3);
+    }
 }
 
 void Graphics::DrawCurrentTile() {
     PipelineStateSetSpriteNoBlending();
-    MatrixProjectionResetOrtho();
-    MatrixModelViewReset();
-    UniformBind();
-    DrawSpriteSetup(cTileRect.mVertex, cTileRect.mTextureCoord);
-    DrawTriangleStrips(4);
+    if (DrawSpriteSetup(cTileRect.mPositions, cTileRect.mTextureCoords)) {
+        MatrixProjectionResetOrtho();
+        MatrixModelViewReset();
+        UniformBind();
+        DrawTriangleStrips(4);
+    }
     
     /*
-    cTileRect.SetRect(0.0f, 0.0f, gDeviceWidth2, gDeviceHeight2);
-    UniformBind();
-    DrawSpriteSetup(cTileRect.mVertex, cTileRect.mTextureCoord);
-    DrawTriangleStrips(4);
-    
-    
-    cTileRect.SetRect(gDeviceWidth2, 0.0f, gDeviceWidth2, gDeviceHeight2);
-    UniformBind();
-    DrawSpriteSetup(cTileRect.mVertex, cTileRect.mTextureCoord);
-    DrawTriangleStrips(4);
-    
-    cTileRect.SetRect(0.0f, gDeviceHeight2, gDeviceWidth2, gDeviceHeight2);
-    UniformBind();
-    DrawSpriteSetup(cTileRect.mVertex, cTileRect.mTextureCoord);
-    DrawTriangleStrips(4);
-    
-    cTileRect.SetRect(gDeviceWidth2, gDeviceHeight2, gDeviceWidth2, gDeviceHeight2);
-    UniformBind();
-    DrawSpriteSetup(cTileRect.mVertex, cTileRect.mTextureCoord);
-    DrawTriangleStrips(4);
-    */
+     cTileRect.SetRect(0.0f, 0.0f, gDeviceWidth2, gDeviceHeight2);
+     UniformBind();
+     DrawSpriteSetup(cTileRect.mVertex, cTileRect.mTextureCoord);
+     DrawTriangleStrips(4);
+     
+     
+     cTileRect.SetRect(gDeviceWidth2, 0.0f, gDeviceWidth2, gDeviceHeight2);
+     UniformBind();
+     DrawSpriteSetup(cTileRect.mVertex, cTileRect.mTextureCoord);
+     DrawTriangleStrips(4);
+     
+     cTileRect.SetRect(0.0f, gDeviceHeight2, gDeviceWidth2, gDeviceHeight2);
+     UniformBind();
+     DrawSpriteSetup(cTileRect.mVertex, cTileRect.mTextureCoord);
+     DrawTriangleStrips(4);
+     
+     cTileRect.SetRect(gDeviceWidth2, gDeviceHeight2, gDeviceWidth2, gDeviceHeight2);
+     UniformBind();
+     DrawSpriteSetup(cTileRect.mVertex, cTileRect.mTextureCoord);
+     DrawTriangleStrips(4);
+     */
     
 }
 

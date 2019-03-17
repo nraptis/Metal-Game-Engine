@@ -16,7 +16,7 @@ public:
     ShaderProgramShape3D(const char *pVertexPath, const char *pFragmentPath);
     virtual void                Compile() override;
     virtual void                BindUniform(FUniforms *pUniform) override;
-    virtual void                ArrayBufferPositions(int pIndex,int pOffset) override;
+    virtual void                ArrayBufferPositions(FBuffer *pBuffer,int pOffset) override;
 };
 
 

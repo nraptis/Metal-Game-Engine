@@ -327,23 +327,27 @@ void FAudioBufferPool::PlayPitched(FSoundInstanceAndroid *pInstance, float pVolu
         {
             FSoundDataAndroid *aSoundData = (FSoundDataAndroid *)(aSound->mSoundData);
 
-            Log("Playing Audio Buffer[%x %x]\n", (void *)aSound, (void *)aSoundData);
+            Log("Playing Audio Buffer 01 [%x %x]\n", (void *)aSound, (void *)aSoundData);
 
             if((aSound != 0) && (aSoundData != 0))
             {
+                Log("Playing Audio Buffer 02 [%x %x]\n", (void *)aSound, (void *)aSoundData);
                 FAudioBuffer *aBuffer = GetBuffer();
 
                 if((aBuffer != 0) && (aSound->mDidLoad == true))
                 {
+                    Log("Playing Audio Buffer 03 [%x %x]\n", (void *)aSound, (void *)aSoundData);
                     aBuffer->mInstance = pInstance;
 
                     SLresult aResult;
 
                     if(aBuffer->mBufferQueueInterface)
                     {
+                        Log("Playing Audio Buffer 04 [%x %x]\n", (void *)aSound, (void *)aSoundData);
 
                         if(aBuffer->mPlaybackRate != 0)
                         {
+                            Log("Playing Audio Buffer 05 [%x %x]\n", (void *)aSound, (void *)aSoundData);
                             SLpermille playbackRate = SLpermille(1000.0f * pPitch);
                             aResult = (*(aBuffer->mPlaybackRate))->SetRate((aBuffer->mPlaybackRate), playbackRate);
 
@@ -808,17 +812,18 @@ void core_sound_initialize()
     // create engine
     Log("core_sound_initialize(1)\n");
     aResult = slCreateEngine(&sAudioEngineObject, 0, NULL, 0, NULL, NULL);
-    //assert(SL_RESULT_SUCCESS == aResult);
+    assert(SL_RESULT_SUCCESS == aResult);
 
     Log("core_sound_initialize(2)\n");
     aResult = (*sAudioEngineObject)->Realize(sAudioEngineObject, SL_BOOLEAN_FALSE);
-    //assert(SL_RESULT_SUCCESS == aResult);
+    assert(SL_RESULT_SUCCESS == aResult);
 
     Log("core_sound_initialize(3)\n");
     aResult = (*sAudioEngineObject)->GetInterface(sAudioEngineObject, SL_IID_ENGINE, &sAudioEngine);
-    //assert(SL_RESULT_SUCCESS == aResult);
+    assert(SL_RESULT_SUCCESS == aResult);
 
     Log("core_sound_initialize(4)\n");
+    //const SLInterfaceID ids[1] = {SL_IID_ENVIRONMENTALREVERB};
     const SLInterfaceID ids[1] = {SL_IID_ENVIRONMENTALREVERB};
     const SLboolean req[1] = {SL_BOOLEAN_FALSE};
 

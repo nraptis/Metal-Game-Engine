@@ -42,8 +42,10 @@ void ShaderProgramSpriteWhite::BindUniform(FUniforms *pUniform) {
     }
 }
 
-void ShaderProgramSpriteWhite::ArrayBufferTextureCoords(int pIndex, int pOffset) {
-    if (pIndex != -1) { glBindBuffer(GL_ARRAY_BUFFER, pIndex); }
+void ShaderProgramSpriteWhite::ArrayBufferTextureCoords(FBuffer *pBuffer, int pOffset) {
+    if (pBuffer != NULL && pBuffer->mBindIndex != -1) {
+        glBindBuffer(GL_ARRAY_BUFFER, pBuffer->mBindIndex);
+    }
     glEnableVertexAttribArray(mSlotTextureCoords);
     int aStride = 2;
     unsigned char *aOffset = NULL;

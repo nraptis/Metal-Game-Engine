@@ -11,7 +11,7 @@
 #include "core_includes.h"
 
 FFloatBufferCacheResult::FFloatBufferCacheResult() {
-    mBufferIndex = -1;
+    mBuffer = NULL;
     mBufferOffset = 0;
     mSuccess = false;
 }
@@ -21,15 +21,15 @@ FFloatBufferCacheResult::~FFloatBufferCacheResult() {
 }
 
 FFloatBufferCacheSlice::FFloatBufferCacheSlice() {
-    mFetchBufferIndex = Graphics::BufferArrayGenerate(FLOAT_CACHE_SLICE_SIZE);
+    mFetchBuffer = new FBuffer(FLOAT_CACHE_SLICE_SIZE, BUFFER_TYPE_ARRAY);
     mFetchBufferOffset = 0;
     mFetchSuccess = false;
     mInternalBufferOffset = 0;
 }
 
 FFloatBufferCacheSlice::~FFloatBufferCacheSlice() {
-    Graphics::BufferArrayDelete(mFetchBufferIndex);
-    mFetchBufferIndex = -1;
+    delete mFetchBuffer;
+    mFetchBuffer = NULL;
     mFetchBufferOffset = 0;
     mFetchSuccess = false;
 }
@@ -82,7 +82,6 @@ void FFloatBufferCacheByteAligned256::Reset() {
 
 void FFloatBufferCacheByteAligned256::Get(int pSize) {
     if ((pSize % 256) != 0) {
-        int aHold = pSize;
         pSize = pSize >> 8;
         pSize = (pSize + 1) << 8;
     }
@@ -98,7 +97,7 @@ void FFloatBufferCacheByteAligned256::Get(int pSize) {
         mCurrentSlice->AttemptFetch(pSize);
         if (mCurrentSlice->mFetchSuccess) {
             mResult.mSuccess = true;
-            mResult.mBufferIndex = mCurrentSlice->mFetchBufferIndex;
+            mResult.mBuffer = mCurrentSlice->mFetchBuffer;
             mResult.mBufferOffset = mCurrentSlice->mFetchBufferOffset;
         } else {
             //There is no chance at success with this module...
@@ -110,7 +109,7 @@ void FFloatBufferCacheByteAligned256::Get(int pSize) {
     mCurrentSlice->AttemptFetch(pSize);
     if (mCurrentSlice->mFetchSuccess) {
         mResult.mSuccess = true;
-        mResult.mBufferIndex = mCurrentSlice->mFetchBufferIndex;
+        mResult.mBuffer = mCurrentSlice->mFetchBuffer;
         mResult.mBufferOffset = mCurrentSlice->mFetchBufferOffset;
     } else {
         if (mCurrentSlice->mInternalBufferOffset == 0) {
@@ -129,7 +128,7 @@ void FFloatBufferCacheByteAligned256::Get(int pSize) {
             mCurrentSlice->AttemptFetch(pSize);
             if (mCurrentSlice->mFetchSuccess) {
                 mResult.mSuccess = true;
-                mResult.mBufferIndex = mCurrentSlice->mFetchBufferIndex;
+                mResult.mBuffer = mCurrentSlice->mFetchBuffer;
                 mResult.mBufferOffset = mCurrentSlice->mFetchBufferOffset;
             } else {
                 //There is no chance at success with this module...
@@ -138,5 +137,3 @@ void FFloatBufferCacheByteAligned256::Get(int pSize) {
         }
     }
 }
-
-

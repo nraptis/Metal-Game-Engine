@@ -71,8 +71,10 @@ void ShaderProgramModelIndexedLightedAmbientDiffuse::BindUniform(FUniforms *pUni
     }
 }
 
-void ShaderProgramModelIndexedLightedAmbientDiffuse::ArrayBufferData(int pIndex, int pOffset) {
-    if (pIndex != -1) if (pIndex != -1) { glBindBuffer(GL_ARRAY_BUFFER, pIndex); }
+void ShaderProgramModelIndexedLightedAmbientDiffuse::ArrayBufferData(FBuffer *pBuffer, int pOffset) {
+    if (pBuffer != NULL && pBuffer->mBindIndex != -1) {
+        glBindBuffer(GL_ARRAY_BUFFER, pBuffer->mBindIndex);
+    }
     glEnableVertexAttribArray(mSlotPositions);
     int aStride = 3 + 3 + 3;
     unsigned char *aOffset = NULL;
@@ -81,8 +83,10 @@ void ShaderProgramModelIndexedLightedAmbientDiffuse::ArrayBufferData(int pIndex,
     mDataOffset = pOffset;
 }
 
-void ShaderProgramModelIndexedLightedAmbientDiffuse::ArrayBufferPositions(int pIndex, int pOffset) {
-    if (pIndex != -1) if (pIndex != -1) { glBindBuffer(GL_ARRAY_BUFFER, pIndex); }
+void ShaderProgramModelIndexedLightedAmbientDiffuse::ArrayBufferPositions(FBuffer *pBuffer, int pOffset) {
+    if (pBuffer != NULL && pBuffer->mBindIndex != -1) {
+        glBindBuffer(GL_ARRAY_BUFFER, pBuffer->mBindIndex);
+    }
     glEnableVertexAttribArray(mSlotPositions);
     int aStride = 3 + 3 + 3;
     unsigned char *aOffset = NULL;
@@ -90,8 +94,10 @@ void ShaderProgramModelIndexedLightedAmbientDiffuse::ArrayBufferPositions(int pI
     glVertexAttribPointer(mSlotPositions, 3, GL_FLOAT, GL_FALSE, (aStride << 2), aOffset);
 }
 
-void ShaderProgramModelIndexedLightedAmbientDiffuse::ArrayBufferTextureCoords(int pIndex, int pOffset) {
-    if (pIndex != -1) if (pIndex != -1) { glBindBuffer(GL_ARRAY_BUFFER, pIndex); }
+void ShaderProgramModelIndexedLightedAmbientDiffuse::ArrayBufferTextureCoords(FBuffer *pBuffer, int pOffset) {
+    if (pBuffer != NULL && pBuffer->mBindIndex != -1) {
+        glBindBuffer(GL_ARRAY_BUFFER, pBuffer->mBindIndex);
+    }
     glEnableVertexAttribArray(mSlotTextureCoords);
     int aStride = 3 + 3 + 3;
     unsigned char *aOffset = NULL;
@@ -101,8 +107,10 @@ void ShaderProgramModelIndexedLightedAmbientDiffuse::ArrayBufferTextureCoords(in
 
 
 
-void ShaderProgramModelIndexedLightedAmbientDiffuse::ArrayBufferNormals(int pIndex, int pOffset) {
-    if (pIndex != -1) if (pIndex != -1) { glBindBuffer(GL_ARRAY_BUFFER, pIndex); }
+void ShaderProgramModelIndexedLightedAmbientDiffuse::ArrayBufferNormals(FBuffer *pBuffer, int pOffset) {
+    if (pBuffer != NULL && pBuffer->mBindIndex != -1) {
+        glBindBuffer(GL_ARRAY_BUFFER, pBuffer->mBindIndex);
+    }
     glEnableVertexAttribArray(mSlotNormals);
     int aStride = 3 + 3 + 3;
     unsigned char *aOffset = NULL;

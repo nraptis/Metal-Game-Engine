@@ -76,7 +76,7 @@ void LevelWavePath::Finalize() {
     float aStartY = 0.0f;
     
     if (mNodeList.mCount <= 2) {
-        printf("ILLEGAL, TOO SMALL!!!\n");
+        Log("ILLEGAL, TOO SMALL!!!\n");
         return;
     }
     
@@ -84,7 +84,7 @@ void LevelWavePath::Finalize() {
         LevelWavePathNode *aNode = ((LevelWavePathNode *)mNodeList.mData[i]);
         
         if (aNode->mType == PATH_NODE_INVALID) {
-            printf("ILLEGAL PATH!!!");
+            Log("ILLEGAL PATH!!!");
             return;
         } else if (aNode->mType != PATH_NODE_WAIT) {
             aFirstNonStopIndex = i;
@@ -94,7 +94,7 @@ void LevelWavePath::Finalize() {
     }
     
     if (aFirstNonStopIndex == -1) {
-        printf("ILLEGAL PATH: ALL WAIT NDOES\n\n");
+        Log("ILLEGAL PATH: ALL WAIT NDOES\n\n");
         return;
     }
     
@@ -110,7 +110,7 @@ void LevelWavePath::Finalize() {
         LevelWavePathNode *aPrev = ((LevelWavePathNode *)mNodeList.mData[i-1]);
         LevelWavePathNode *aNode = ((LevelWavePathNode *)mNodeList.mData[i]);
         if (aPrev->mType == PATH_NODE_WAIT && aNode->mType == PATH_NODE_WAIT) {
-            printf("ILLEGAL PATH: 2 WAITS IN ROW...\n");
+            Log("ILLEGAL PATH: 2 WAITS IN ROW...\n");
             return;
         }
         
@@ -131,7 +131,7 @@ void LevelWavePath::Finalize() {
         if (aNode->mType == PATH_NODE_MOVE) aType = "MOVE";
         if (aNode->mType == PATH_NODE_INVALID) aType = "INVALID";
         
-        printf("Path [%d] {%s}  {%.3f, %.3f} \n", i, aType.c(), aNode->mX, aNode->mY);
+        Log("Path [%d] {%s}  {%.3f, %.3f} \n", i, aType.c(), aNode->mX, aNode->mY);
     }
     
     //cPointList
@@ -163,7 +163,7 @@ void LevelWavePath::Finalize() {
 }
 
 void LevelWavePath::AddSegmentBacktrackingFrom(int pIndex) {
-    printf("LevelWavePath::AddSegmentBacktrackingFrom(%d)\n", pIndex);
+    Log("LevelWavePath::AddSegmentBacktrackingFrom(%d)\n", pIndex);
     
     int aStartIndex = pIndex - 1;
     while (aStartIndex > 0) {
@@ -176,7 +176,7 @@ void LevelWavePath::AddSegmentBacktrackingFrom(int pIndex) {
         }
     }
     
-    printf("LevelWavePath::Backtracking(%d => %d)\n", aStartIndex, pIndex);
+    Log("LevelWavePath::Backtracking(%d => %d)\n", aStartIndex, pIndex);
     
     LevelWavePathNode *aPrev = ((LevelWavePathNode *)mNodeList.mData[aStartIndex]);
     
@@ -202,7 +202,7 @@ void LevelWavePath::AddSegmentBacktrackingFrom(int pIndex) {
     }
     
     if (aTotalDist <= 0) {
-        printf("BAD PATH CHUNK [LEN = %f]\n", aTotalDist);
+        Log("BAD PATH CHUNK [LEN = %f]\n", aTotalDist);
         return;
     }
     
@@ -252,7 +252,7 @@ void LevelWavePath::AddSegmentBacktrackingFrom(int pIndex) {
         aPrevY = aY;
     }
     
-    printf("Total Length: %f\n", aLength);
+    Log("Total Length: %f\n", aLength);
     
     
 }

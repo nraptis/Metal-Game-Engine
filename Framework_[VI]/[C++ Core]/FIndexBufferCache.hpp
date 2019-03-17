@@ -11,6 +11,7 @@
 
 #include "FList.hpp"
 #include "FIndexList.h"
+#include "FBuffer.hpp"
 
 #define INDEX_CACHE_SLICE_SIZE 32768
 //8192   16384   32768   65536
@@ -20,7 +21,8 @@ class FIndexBufferCacheResult {
 public:
     FIndexBufferCacheResult();
     ~FIndexBufferCacheResult();
-    int                             mBufferIndex;
+    
+    FBuffer                         *mBuffer;
     int                             mBufferOffset;
     bool                            mSuccess;
 };
@@ -41,7 +43,7 @@ public:
     //the requested number of bytes...
     bool                            mFetchSuccess;
     
-    int                             mFetchBufferIndex;
+    FBuffer                         *mFetchBuffer;
     int                             mFetchBufferOffset;
     
     int                             mInternalBufferOffset;

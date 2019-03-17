@@ -165,33 +165,31 @@ void FApp::BaseFrame() {
         BaseInitialize();
     }
     
-    if (mIsGraphicsSetUpEnqueued) {
-        if (mGraphicsSetUpEnqueuedTimer > 0) {
-            mGraphicsSetUpEnqueuedTimer -= 1;
-            Log("mGraphicsSetUpEnqueuedTimer=%d\n", mGraphicsSetUpEnqueuedTimer);
-            //return;
-
-        } else {
-            mIsGraphicsSetUpEnqueued = false;
-            Graphics::SetUp();
-        }
-
-    }
-    
     if (mDidDetachFrameController == false) {
         mDidDetachFrameController = true;
         os_detach_thread(AppFrameThread, (void*)0xB00BFACE);
         
     }
     
-    //for (int i=0;i<aUpdateCount;i++) {
-    //BaseUpdate();
-
+    if (mIsGraphicsSetUpEnqueued) {
+        if (mGraphicsSetUpEnqueuedTimer > 0) {
+            mGraphicsSetUpEnqueuedTimer -= 1;
+        } else {
+            mIsGraphicsSetUpEnqueued = false;
+            Graphics::SetUp();
+        }
+    }
+    
+    gBufferCache.Reset();
+    
     while (mDidUpdate == false) {
         Log("Waiting for An Update...\n");
         os_sleep(18);
     }
-
+    
+    //for (int i=0;i<aUpdateCount;i++) {
+    //BaseUpdate();
+    
         ThrottleLock();
     
         if (gGraphicsInterface) {
@@ -215,8 +213,7 @@ void FApp::BaseFrame() {
         gGraphicsInterface->Commit();
         
         ThrottleUnlock();
-
-
+    
 }
 
 void FApp::BaseUpdate() {
@@ -265,6 +262,12 @@ void FApp::BaseUpdate() {
 }
 
 void FApp::BaseDraw() {
+    
+    if (mActive == false) { return; }
+    if (mIsGraphicsSetUpEnqueued == true) {
+        printf("BLOCKING: SETUP...\n");
+        return;
+    }
 
     int aSlot = 0;
     if (mFrameCaptureDrawCount < FRAME_TIME_CAPTURE_COUNT) {
@@ -368,7 +371,8 @@ void FApp::BaseLoad() {
     mSysFont.mPointSize = 290.0f;
     
     gImageBundler.Clear();
-    gSpriteList.Clear();
+    //gSpriteList.Clear();
+    
     
     
     Load();
@@ -687,7 +691,7 @@ void FApp::BaseInactive() {
         core_sound_stopAll();
         core_sound_inactive();
         
-        #if (CURRENT_ENV == ENV_ANDROID)
+        #if (CURRENT_ENV == ENV_ANDROID) || (CURRENT_ENV == ENV_IOS)
 
         
                 Graphics::TearDown();
@@ -701,12 +705,12 @@ void FApp::BaseActive() {
     if(mActive == false) {
         mActive = true;
         Active();
-        if (gEnvironment == ENV_ANDROID) {
-            mIsGraphicsSetUpEnqueued = true;
-            mGraphicsSetUpEnqueuedTimer = 8;
-            
-            //gTextureCache.ReloadAllTextures();
-        }
+        
+#if (CURRENT_ENV == ENV_ANDROID) || (CURRENT_ENV == ENV_IOS)
+        
+        mIsGraphicsSetUpEnqueued = true;
+        mGraphicsSetUpEnqueuedTimer = 8;
+#endif
         
         InterfaceLock();
         gTouch.Active();

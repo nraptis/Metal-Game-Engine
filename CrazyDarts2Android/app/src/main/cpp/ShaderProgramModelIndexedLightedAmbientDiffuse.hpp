@@ -19,10 +19,10 @@ public:
     virtual void                Compile() override;
     virtual void                BindUniform(FUniforms *pUniform) override;
     
-    virtual void                ArrayBufferData(int pIndex, int pOffset) override;
-    virtual void                ArrayBufferPositions(int pIndex,int pOffset) override;
-    virtual void                ArrayBufferTextureCoords(int pIndex, int pOffset) override;
-    virtual void                ArrayBufferNormals(int pIndex, int pOffset) override;
+    virtual void                ArrayBufferData(FBuffer *pBuffer, int pOffset) override;
+    virtual void                ArrayBufferPositions(FBuffer *pBuffer,int pOffset) override;
+    virtual void                ArrayBufferTextureCoords(FBuffer *pBuffer, int pOffset) override;
+    virtual void                ArrayBufferNormals(FBuffer *pBuffer, int pOffset) override;
     
     int                         mSlotTextureCoords;
     int                         mSlotNormals;

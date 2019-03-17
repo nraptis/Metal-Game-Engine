@@ -22,10 +22,11 @@ public:
     void                                        *mKey;
     void                                        *mObject;
     
+    FHashMapNode                                *mListNext;
 private:
     
     FHashMapNode                                *mListPrev;
-    FHashMapNode                                *mListNext;
+    
     FHashMapNode                                *mTableNext;
     int                                         mTableIndex;
     
@@ -88,10 +89,12 @@ public:
     int                                         mKey;
     void                                        *mObject;
     
+    
+    FIntMapNode                                 *mListNext;
 private:
     
     FIntMapNode                                 *mListPrev;
-    FIntMapNode                                 *mListNext;
+    
     FIntMapNode                                 *mTableNext;
     int                                         mTableIndex;
     

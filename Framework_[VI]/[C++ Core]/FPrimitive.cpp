@@ -549,51 +549,30 @@ void FDrawNodeList::Draw(FSprite *pSprite, bool pStrips)
         }
     }
     
-    if (aUseTexture) {
-        Graphics::TextureBind(pSprite->mTexture);
-    }
+    
     
     
     //FString aStr = mIndexList.GetPrintString("asdf");
     //Log("%s\n\n", aStr.c());
     
     
-    Graphics::ArrayWriteData(aPtr, mCountNodes * sizeof(FDrawNode));
+    if (Graphics::ArrayWriteData(aPtr, mCountNodes * sizeof(FDrawNode))) {
+        
+        if (aUseTexture) {
+            Graphics::TextureBind(pSprite->mTexture);
+        }
     
-    
-    Graphics::ArrayBufferPositions(-1, 0);
-    Graphics::ArrayBufferTextureCoords(-1, sizeof(float) * 3);
-    Graphics::ArrayBufferColors(-1, sizeof(float) * 6);
-    
-    //Graphics::ArrayBuffer(-1, sizeof(float) * 3);
-    
-    
-    
-    
-    
-    //TODO: We are changing this code for DATA...
-    
-    //BufferArrayWrite(aPositionsBufferIndex, pPositions, aPositionsBufferOffset, sizeof(float) * pCount * 3);
-    
-    //ArrayBufferPositions(aPositionsBufferIndex, aPositionsBufferOffset);
-    //ArrayBufferTextureCoords(aTextureCoordsBufferIndex, aTextureCoordsBufferOffset);
-    
-    
-    Graphics::UniformBind();
-    
-    //TODO: Smurf?
-    //Graphics::DrawTriangleStripsIndexed(mIndexList.mIndex, mCountNodes);
-    Graphics::DrawTriangleStripsIndexed(mIndexList.mIndex, mCountNodes);
-    
-    
-    
-    //if (pStrips) Graphics::DrawTriangleStrips(mCountNodes);
-    //else Graphics::DrawTriangles(mCountNodes);
-    
-    //Graphics::TextureEnable();
-    //Graphics::EnableTextureCoordinateArray();
-    //Graphics::DisableColorArray();
-    
+        Graphics::ArrayBufferPositions(NULL, 0);
+        Graphics::ArrayBufferTextureCoords(NULL, sizeof(float) * 3);
+        Graphics::ArrayBufferColors(NULL, sizeof(float) * 6);
+        
+        Graphics::UniformBind();
+        
+        //TODO: Smurf?
+        //Graphics::DrawTriangleStripsIndexed(mIndexList.mIndex, mCountNodes);
+        Graphics::DrawTriangleStripsIndexed(mIndexList.mIndex, mCountNodes);
+
+    }
 }
 
 void FDrawNodeList::DrawNodes(int pHighlightIndex)

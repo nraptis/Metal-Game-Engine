@@ -481,10 +481,8 @@ void Game::Draw() {
     } else {
         
     }
-    
-    
+
     mTestPath.Draw();
-    
 }
 
 void Game::Draw3D() {
@@ -503,9 +501,10 @@ void Game::Draw3D() {
 void Game::TouchDown(float pX, float pY, void *pData) {
     
     if (gRand.GetBool()) {
-        gApp->mSound1.Play();
+        //gApp->mSound1.Play();
     } else {
-        gApp->mSound2.Play();
+        //gApp->mSound2.Play();
+
     }
     
     if (mDartTouch) {

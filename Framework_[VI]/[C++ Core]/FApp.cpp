@@ -180,6 +180,8 @@ void FApp::BaseFrame() {
         }
     }
     
+    gBufferCache.Reset();
+    
     while (mDidUpdate == false) {
         Log("Waiting for An Update...\n");
         os_sleep(18);
@@ -260,6 +262,12 @@ void FApp::BaseUpdate() {
 }
 
 void FApp::BaseDraw() {
+    
+    if (mActive == false) { return; }
+    if (mIsGraphicsSetUpEnqueued == true) {
+        printf("BLOCKING: SETUP...\n");
+        return;
+    }
 
     int aSlot = 0;
     if (mFrameCaptureDrawCount < FRAME_TIME_CAPTURE_COUNT) {
@@ -363,7 +371,8 @@ void FApp::BaseLoad() {
     mSysFont.mPointSize = 290.0f;
     
     gImageBundler.Clear();
-    gSpriteList.Clear();
+    //gSpriteList.Clear();
+    
     
     
     Load();

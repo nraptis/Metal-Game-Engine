@@ -77,7 +77,7 @@ void GameObject::Draw3D() {
             Graphics::UniformBind(mUniform);
         }
         
-        Graphics::DrawTrianglesIndexedWithPackedBuffers(mModel->mBufferVertex, mModel->mBufferVertexOffset, mModel->mIndex, mModel->mIndexCount, mSprite->mTexture);
+        Graphics::DrawTrianglesIndexedWithPackedBuffers(mModel->mBuffer, 0, mModel->mIndex, mModel->mIndexCount, mSprite->mTexture);
         
         
         //Graphics::DrawTrianglesIndexedFromPackedBuffers(mModel->mBufferVertex, mModel->mBufferVertexOffset, <#int pIndexBuffer#>, <#int pIndexBufferOffset#>, <#int pCount#>, <#FTexture *pTexture#>)

@@ -20,7 +20,7 @@
 #include "os_core_graphics.h"
 
 FIndexBufferCacheResult::FIndexBufferCacheResult() {
-    mBufferIndex = -1;
+    mBuffer = NULL;
     mBufferOffset = 0;
     mSuccess = false;
 }
@@ -30,15 +30,15 @@ FIndexBufferCacheResult::~FIndexBufferCacheResult() {
 }
 
 FIndexBufferCacheSlice::FIndexBufferCacheSlice() {
-    mFetchBufferIndex = Graphics::BufferElementGenerate(INDEX_CACHE_SLICE_SIZE);
+    mFetchBuffer = new FBuffer(INDEX_CACHE_SLICE_SIZE, BUFFER_TYPE_ELEMENT);
     mFetchBufferOffset = 0;
     mFetchSuccess = false;
     mInternalBufferOffset = 0;
 }
 
 FIndexBufferCacheSlice::~FIndexBufferCacheSlice() {
-    Graphics::BufferElementDelete(mFetchBufferIndex);
-    mFetchBufferIndex = -1;
+    delete mFetchBuffer;
+    mFetchBuffer = NULL;
     mFetchBufferOffset = 0;
     mFetchSuccess = false;
 }
@@ -102,7 +102,7 @@ void FIndexBufferCache::Get(int pSize) {
         mCurrentSlice->AttemptFetch(pSize);
         if (mCurrentSlice->mFetchSuccess) {
             mResult.mSuccess = true;
-            mResult.mBufferIndex = mCurrentSlice->mFetchBufferIndex;
+            mResult.mBuffer = mCurrentSlice->mFetchBuffer;
             mResult.mBufferOffset = mCurrentSlice->mFetchBufferOffset;
         } else {
             //There is no chance at success with this module...
@@ -114,7 +114,7 @@ void FIndexBufferCache::Get(int pSize) {
     mCurrentSlice->AttemptFetch(pSize);
     if (mCurrentSlice->mFetchSuccess) {
         mResult.mSuccess = true;
-        mResult.mBufferIndex = mCurrentSlice->mFetchBufferIndex;
+        mResult.mBuffer = mCurrentSlice->mFetchBuffer;
         mResult.mBufferOffset = mCurrentSlice->mFetchBufferOffset;
     } else {
         if (mCurrentSlice->mInternalBufferOffset == 0) {
@@ -134,7 +134,7 @@ void FIndexBufferCache::Get(int pSize) {
             mCurrentSlice->AttemptFetch(pSize);
             if (mCurrentSlice->mFetchSuccess) {
                 mResult.mSuccess = true;
-                mResult.mBufferIndex = mCurrentSlice->mFetchBufferIndex;
+                mResult.mBuffer = mCurrentSlice->mFetchBuffer;
                 mResult.mBufferOffset = mCurrentSlice->mFetchBufferOffset;
             } else {
                 //There is no chance at success with this module...

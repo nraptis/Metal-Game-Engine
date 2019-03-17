@@ -73,7 +73,7 @@ FTextureCacheNode *FTextureCache::GetNodeForTexture(FTexture *pTexture) {
                     break;
                 }
             }
-            aHashNode =aHashNode->mNext;
+            aHashNode = aHashNode->mNext;
         }
     }
     return aResult;

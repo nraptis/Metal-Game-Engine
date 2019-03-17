@@ -18,9 +18,9 @@ public:
     virtual void                Compile() override;
     virtual void                BindUniform(FUniforms *pUniform) override;
     
-    virtual void                ArrayBufferData(int pIndex, int pOffset) override;
-    virtual void                ArrayBufferPositions(int pIndex,int pOffset) override;
-    virtual void                ArrayBufferColors(int pIndex, int pOffset) override;
+    virtual void                ArrayBufferData(FBuffer *pBuffer, int pOffset) override;
+    virtual void                ArrayBufferPositions(FBuffer *pBuffer,int pOffset) override;
+    virtual void                ArrayBufferColors(FBuffer *pBuffer, int pOffset) override;
     
     
     int                         mSlotColors;

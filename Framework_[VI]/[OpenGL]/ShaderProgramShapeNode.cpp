@@ -42,8 +42,10 @@ void ShaderProgramShapeNode::BindUniform(FUniforms *pUniform) {
     }
 }
 
-void ShaderProgramShapeNode::ArrayBufferData(int pIndex, int pOffset) {
-    if (pIndex != -1) if (pIndex != -1) { glBindBuffer(GL_ARRAY_BUFFER, pIndex); }
+void ShaderProgramShapeNode::ArrayBufferData(FBuffer *pBuffer, int pOffset) {
+    if (pBuffer != NULL && pBuffer->mBindIndex != -1) {
+        glBindBuffer(GL_ARRAY_BUFFER, pBuffer->mBindIndex);
+    }
     glEnableVertexAttribArray(mSlotPositions);
     int aStride = 3 + 3 + 4;
     unsigned char *aOffset = NULL;
@@ -53,9 +55,10 @@ void ShaderProgramShapeNode::ArrayBufferData(int pIndex, int pOffset) {
     mDataOffset = pOffset;
 }
 
-void ShaderProgramShapeNode::ArrayBufferPositions(int pIndex, int pOffset) {
-    
-    if (pIndex != -1) if (pIndex != -1) { glBindBuffer(GL_ARRAY_BUFFER, pIndex); }
+void ShaderProgramShapeNode::ArrayBufferPositions(FBuffer *pBuffer, int pOffset) {
+    if (pBuffer != NULL && pBuffer->mBindIndex != -1) {
+        glBindBuffer(GL_ARRAY_BUFFER, pBuffer->mBindIndex);
+    }
     glEnableVertexAttribArray(mSlotPositions);
     int aStride = 3 + 3 + 4;
     unsigned char *aOffset = NULL;
@@ -64,8 +67,10 @@ void ShaderProgramShapeNode::ArrayBufferPositions(int pIndex, int pOffset) {
     
 }
 
-void ShaderProgramShapeNode::ArrayBufferColors(int pIndex, int pOffset) {
-    if (pIndex != -1) if (pIndex != -1) { glBindBuffer(GL_ARRAY_BUFFER, pIndex); }
+void ShaderProgramShapeNode::ArrayBufferColors(FBuffer *pBuffer, int pOffset) {
+    if (pBuffer != NULL && pBuffer->mBindIndex != -1) {
+        glBindBuffer(GL_ARRAY_BUFFER, pBuffer->mBindIndex);
+    }
     glEnableVertexAttribArray(mSlotPositions);
     int aStride = 3 + 3 + 4;
     unsigned char *aOffset = NULL;

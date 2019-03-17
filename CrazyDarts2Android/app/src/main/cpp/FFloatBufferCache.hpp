@@ -10,6 +10,7 @@
 #define FFloatBufferCache_hpp
 
 #include "FList.hpp"
+#include "FBuffer.hpp"
 
 //... In BYTES (should be multiple of 4...)
 //524288
@@ -17,23 +18,13 @@
 //#define FLOAT_CACHE_SLICE_SIZE 262144
 //#define FLOAT_CACHE_SLICE_SIZE 65536
 #define FLOAT_CACHE_SLICE_SIZE 65536
-//#define FLOAT_CACHE_SLICE_SIZE 256
-
-
-//8192
-//16384
-//32768
-//65536
-//131072
-//262144
-//524288
 
 class FFloatBufferCacheResult {
 public:
     FFloatBufferCacheResult();
     ~FFloatBufferCacheResult();
     
-    int                             mBufferIndex;
+    FBuffer                         *mBuffer;
     int                             mBufferOffset;
     bool                            mSuccess;
 };
@@ -55,7 +46,7 @@ public:
     //the requested number of bytes...
     bool                            mFetchSuccess;
     
-    int                             mFetchBufferIndex;
+    FBuffer                         *mFetchBuffer;
     int                             mFetchBufferOffset;
     
     int                             mInternalBufferOffset;

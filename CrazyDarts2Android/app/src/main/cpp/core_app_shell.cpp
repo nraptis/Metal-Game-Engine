@@ -48,6 +48,7 @@ FRandomizer gRand;
 FTouchManager gTouch;
 FNotificationCenter gNotify;
 FTextureCache gTextureCache;
+FBufferCache gBufferCache;
 
 int gEnvironment = ENV_IOS;
 int gImageFileScale = 1;

@@ -189,6 +189,7 @@ GLK_INLINE GLKFVec3 GLKFVec3MultiplyScalar(GLKFVec3 vector, float value)
 
 
 void FMatrix::Scale(float pScale) {
+    if (pScale != 1.0f) {
     m[0] *= pScale;
     m[1] *= pScale;
     m[2] *= pScale;
@@ -201,21 +202,28 @@ void FMatrix::Scale(float pScale) {
     m[9] *= pScale;
     m[10] *= pScale;
     m[11] *= pScale;
+    }
 }
 
 void FMatrix::Scale(float pScaleX, float pScaleY, float pScaleZ) {
+    if (pScaleX != 1.0f) {
     m[0] *= pScaleX;
     m[1] *= pScaleX;
     m[2] *= pScaleX;
     m[3] *= pScaleX;
+    }
+    if (pScaleY != 1.0f) {
     m[4] *= pScaleY;
     m[5] *= pScaleY;
     m[6] *= pScaleY;
     m[7] *= pScaleY;
+    }
+    if (pScaleZ != 1.0f) {
     m[8] *= pScaleZ;
     m[9] *= pScaleZ;
     m[10] *= pScaleZ;
     m[11] *= pScaleZ;
+    }
 }
 
 

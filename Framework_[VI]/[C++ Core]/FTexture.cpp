@@ -8,91 +8,36 @@
 #include "os_core_graphics.h"
 
 FTexture::FTexture(const char *pFileName) {
-    Initialize(pFileName);
-}
-
-FTexture::FTexture() {
-	mBindIndex = -1;
-	//mBundleTexture = 0;
-
-	mWidth = 0;
-	mHeight = 0;
-    
-    mScale = 1;
-    
-	mExpandedWidth = 0;
-	mExpandedHeight = 0;
-
-	mOffsetX = 0;
-	mOffsetY = 0;
-	//FTexture::FTexture();
-
-
-	//mFileNameBundle = "";
-
-	mDidFailLoad = false;
-
-    Initialize();
-}
-
-FTexture::~FTexture()
-{
-    
-}
-
-bool FTexture::IsValid()
-{
-    bool aResult = false;
-    
-    //(mBindIndex >= 0) && 
-    if((mExpandedWidth > 0) && (mExpandedHeight > 0))
-    {
-        aResult = true;
-    }
-    
-    return aResult;
-}
-
-void FTexture::Initialize(const char *pFilePath)
-{
-	mBindIndex = -1;
-	//mBundleTexture = 0;
-
-	mWidth = 0;
-	mHeight = 0;
-
-	mExpandedWidth = 0;
-	mExpandedHeight = 0;
-
-	mOffsetX = 0;
-	mOffsetY = 0;
-	//FTexture::FTexture();
-
-
-	//mFileNameBundle = "";
-
-	mDidFailLoad = false;
-
-    Initialize();
-    
-    mFileName = pFilePath;
+    mBindIndex = -1;
+    mWidth = 0;
+    mHeight = 0;
+    mExpandedWidth = 0;
+    mExpandedHeight = 0;
+    mOffsetX = 0;
+    mOffsetY = 0;
+    mDidFailLoad = false;
+    mDidUnload = false;
+    mFileName = pFileName;
     Realize();
 }
 
-void FTexture::Initialize()
-{
+FTexture::~FTexture() {
     
 }
 
-//Realize.. If we're gonna be
 void FTexture::Realize() {
     if ((mBindIndex == -1) && (mDidFailLoad == false)) {
+        
+        if (mDidUnload == true) {
+            AppShellSetImageFileScale(mScale);
+            mDidUnload = false;
+        }
+        
         FImage aImage;
         aImage.Load(mFileName);
         mScale = aImage.mScale;
         Load(&aImage);
     }
-    
 }
 
 void FTexture::Load(FImage *pImage) {
@@ -126,6 +71,7 @@ void FTexture::Load(FImage *pImage) {
 
 void FTexture::Unload() {
     if (mBindIndex != -1) {
+        mDidUnload = true;
         Graphics::TextureDelete(mBindIndex);
     }
     mBindIndex = -1;
@@ -148,21 +94,17 @@ float FTexture::GetStartV() {
     return aResult;
 }
 
-float FTexture::GetEndU()
-{
+float FTexture::GetEndU() {
     float aResult = 1.0f;
-    if(mExpandedWidth > 0)
-    {
+    if (mExpandedWidth > 0) {
         aResult = ((float)(mOffsetX + mWidth)) / ((float)mExpandedWidth);
     }
     return aResult;
 }
 
-float FTexture::GetEndV()
-{
+float FTexture::GetEndV() {
     float aResult = 1.0f;
-    if(mExpandedHeight > 0)
-    {
+    if (mExpandedHeight > 0) {
         aResult = ((float)(mOffsetY + mHeight)) / ((float)mExpandedHeight);
     }
     return aResult;
@@ -215,23 +157,23 @@ void FTexture::Remove(FSprite *pSprite)
 
 
 FTextureRect::FTextureRect() {
-    mVertex[0] = -128.0f;
-    mVertex[1] = -128.0f;
-    mVertex[2] = 128.0f;
-    mVertex[3] = -128.0f;
-    mVertex[4] = -128.0f;
-    mVertex[5] = 128.0f;
-    mVertex[6] = 128.0f;
-    mVertex[7] = 128.0f;
+    mPositions[0] = -128.0f;
+    mPositions[1] = -128.0f;
+    mPositions[2] = 128.0f;
+    mPositions[3] = -128.0f;
+    mPositions[4] = -128.0f;
+    mPositions[5] = 128.0f;
+    mPositions[6] = 128.0f;
+    mPositions[7] = 128.0f;
     
-    mTextureCoord[0] = 0.0f;
-    mTextureCoord[1] = 0.0f;
-    mTextureCoord[2] = 1.0f;
-    mTextureCoord[3] = 0.0f;
-    mTextureCoord[4] = 0.0f;
-    mTextureCoord[5] = 1.0f;
-    mTextureCoord[6] = 1.0f;
-    mTextureCoord[7] = 1.0f;
+    mTextureCoords[0] = 0.0f;
+    mTextureCoords[1] = 0.0f;
+    mTextureCoords[2] = 1.0f;
+    mTextureCoords[3] = 0.0f;
+    mTextureCoords[4] = 0.0f;
+    mTextureCoords[5] = 1.0f;
+    mTextureCoords[6] = 1.0f;
+    mTextureCoords[7] = 1.0f;
 }
 
 FTextureRect::~FTextureRect() {
@@ -280,33 +222,33 @@ void FTextureRect::SetRect(float pStartX, float pStartY, float pWidth, float pHe
 
 void FTextureRect::SetQuad(float pX1, float pY1, float pX2, float pY2, float pX3, float pY3, float pX4, float pY4)
 {
-    mVertex[0] = pX1;
-    mVertex[1] = pY1;
-    mVertex[2] = pX2;
-    mVertex[3] = pY2;
-    mVertex[4] = pX3;
-    mVertex[5] = pY3;
-    mVertex[6] = pX4;
-    mVertex[7] = pY4;
+    mPositions[0] = pX1;
+    mPositions[1] = pY1;
+    mPositions[2] = pX2;
+    mPositions[3] = pY2;
+    mPositions[4] = pX3;
+    mPositions[5] = pY3;
+    mPositions[6] = pX4;
+    mPositions[7] = pY4;
 }
 
 
 
 FTextureTriangle::FTextureTriangle()
 {
-    mVertex[0] = -128.0f;
-    mVertex[1] = -128.0f;
-    mVertex[2] = 128.0f;
-    mVertex[3] = -128.0f;
-    mVertex[4] = -128.0f;
-    mVertex[5] = 128.0f;
+    mPositions[0] = -128.0f;
+    mPositions[1] = -128.0f;
+    mPositions[2] = 128.0f;
+    mPositions[3] = -128.0f;
+    mPositions[4] = -128.0f;
+    mPositions[5] = 128.0f;
     
-    mTextureCoord[0] = 0.0f;
-    mTextureCoord[1] = 0.0f;
-    mTextureCoord[2] = 1.0f;
-    mTextureCoord[3] = 0.0f;
-    mTextureCoord[4] = 0.0f;
-    mTextureCoord[5] = 1.0f;
+    mTextureCoords[0] = 0.0f;
+    mTextureCoords[1] = 0.0f;
+    mTextureCoords[2] = 1.0f;
+    mTextureCoords[3] = 0.0f;
+    mTextureCoords[4] = 0.0f;
+    mTextureCoords[5] = 1.0f;
 }
 
 FTextureTriangle::~FTextureTriangle()
@@ -315,24 +257,24 @@ FTextureTriangle::~FTextureTriangle()
 }
 
 void FTextureTriangle::SetXYTriangle(float pX1, float pY1, float pX2, float pY2, float pX3, float pY3) {
-    mVertex[0] = pX1;
-    mVertex[1] = pY1;
-    mVertex[2] = pX2;
-    mVertex[3] = pY2;
-    mVertex[4] = pX3;
-    mVertex[5] = pY3;
+    mPositions[0] = pX1;
+    mPositions[1] = pY1;
+    mPositions[2] = pX2;
+    mPositions[3] = pY2;
+    mPositions[4] = pX3;
+    mPositions[5] = pY3;
 }
 
 //void FTextureTriangle::SetUVTriangle(float pX1, float pY1, float pX2, float pY2, float pX3, float pY3)
 void FTextureTriangle::SetUVTriangle(float pU1, float pV1, float pU2, float pV2, float pU3, float pV3) {
-    mTextureCoord[0] = pU1;
-    mTextureCoord[1] = pV1;
+    mTextureCoords[0] = pU1;
+    mTextureCoords[1] = pV1;
     
-    mTextureCoord[2] = pU2;
-    mTextureCoord[3] = pV2;
+    mTextureCoords[2] = pU2;
+    mTextureCoords[3] = pV2;
     
-    mTextureCoord[4] = pU3;
-    mTextureCoord[5] = pV3;
+    mTextureCoords[4] = pU3;
+    mTextureCoords[5] = pV3;
 }
 
 
