@@ -42,8 +42,6 @@ FResourceManager::~FResourceManager() {
 FResource *FResourceManager::AddResource(const char *pResourcePath, bool pPrint) {
     FResource *aResult = 0;
     
-    printf("Add Resource [%s]\n\n", pResourcePath);
-    
 	FString aName = ResourceName(pResourcePath);
     FString aFullPath = FString(pResourcePath);
 	FString aExtension = aFullPath.GetExtension();

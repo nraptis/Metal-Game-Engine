@@ -115,17 +115,10 @@ void FJSONNode::Print(int pDepth) {
         printf("[\n");
         
         for (int i=0;i<mListCount;i++) {
-            
             FJSONNode *aNode = mList[i];
-            
             aNode->Print(pDepth + 1);
-            
             if ((i < mListCount - 1)) printf(", ");
-            
-            
         }
-        
-        
         
         printf("\n");
         for (int i=0;i<pDepth;i++) { printf("\t"); }
@@ -186,7 +179,7 @@ void FJSON::Load(const char *pFile) {
 void FJSON::Parse(const char *pData, int pLength) {
     
     if (pData == NULL || pLength <= 2) {
-        printf("Invalid JSON\n");
+        Clear();
         return;
     }
     
@@ -195,26 +188,20 @@ void FJSON::Parse(const char *pData, int pLength) {
         aData[i] = pData[i];
     }
     aData[pLength] = 0;
-    printf("Parsing:\n%s\n", aData);
     
     FList aStack;
-    
     bool aDictionary = false;
     
     char *aPtr = aData;
     while ((*aPtr != 0) && IsWhiteSpace(*aPtr)) { aPtr++; }
     
     if (*aPtr == '{') {
-        printf("Root: Dictionary Element...\n");
         ++aPtr;
         aDictionary = true;
-        
     } else if (*aPtr == '[') {
-        printf("Root: Array Element...\n");
         ++aPtr;
         aDictionary = false;
     } else {
-        printf("Illegal Root!\n");
         goto JSON_PARSE_ERROR;
     }
     
@@ -237,20 +224,6 @@ void FJSON::Parse(const char *pData, int pLength) {
         }
     }
     
-    aStack.PopLast();
-    
-    
-    printf("Ptr = [%c]\n", *aPtr);
-    
-    //Very first thing we do is skip to 
-    
-    
-    
-    
-    
-    
-JSON_PARSE_SUCCESS:
-    
     printf("Parse Success!\n");
     
     mRoot->Print(0);
@@ -269,13 +242,8 @@ JSON_PARSE_ERROR:
 //Assume that we pass in character AFTER the "{"
 //with the parent node as last item on pStack
 char *FJSON::ParseHelperDictionary(char *pData, FList *pStack, bool *pSuccess) {
-    
-    printf("FJSON::ParseHelperDictionary()\n");
-    
     FJSONNode *aParent = (FJSONNode *)pStack->Last();
-    
     if (aParent == NULL) {
-        printf("Stack Underflow...\n");
         *pSuccess = false;
         return NULL;
     }
@@ -283,82 +251,47 @@ char *FJSON::ParseHelperDictionary(char *pData, FList *pStack, bool *pSuccess) {
     int aElementIndex = 0;
     char *aPtr = pData;
     while (*aPtr) {
-    
         while ((*aPtr != 0) && IsWhiteSpace(*aPtr)) { aPtr++; }
-        
         if (aElementIndex > 0) {
-            printf("Element > 0, is comma?\n");
             if (*aPtr == ',') {
                 aPtr += 1;
             } else if (*aPtr == '}') {
-                printf("End of Dictionary!!! }\n");
                 aPtr += 1;
                 goto ParseHelperDictionary_COMPLETE;
             } else {
-                printf("Multiple elements deep, no COMMA?!?!\n");
                 *pSuccess = false;
                 return NULL;
             }
         } else {
             if (*aPtr == '}') {
-                printf("Closing short dic\n");
                 ++aPtr;
                 goto ParseHelperDictionary_COMPLETE;
             }
         }
-        
         while ((*aPtr != 0) && IsWhiteSpace(*aPtr)) { aPtr++; }
-        
         if (*aPtr != '\"') {
-            printf("Dictionary, expected \"\n\n");
             *pSuccess = false;
             return NULL;
         }
         
         char *aEOQ = EndOfQuote(aPtr);
         if (aEOQ == NULL) {
-            printf("NO EOQ...\n");
             *pSuccess = false;
             return NULL;
         }
         
         char *aKey = GetQuotedString(aPtr, aEOQ);
-        
-        //FJSONNode *aNode = new FJSONNode();
-        //aNode->mKey =
-        //pStack->Add(aNode);
-        
-        
-        printf("DicKey: {%s}\n", aKey);
-        
         aPtr = aEOQ + 1;
         while ((*aPtr != 0) && IsWhiteSpace(*aPtr)) { aPtr++; }
         
         if (*aPtr != ':') {
-            printf("Dictionary, expected :\n\n");
             *pSuccess = false;
             delete aKey;
             return NULL;
         }
         ++aPtr;
-        
-        printf("InnerIner1 [%s]\n", aPtr);
-        
         while ((*aPtr != 0) && IsWhiteSpace(*aPtr)) { aPtr++; }
-        
-        
-        printf("InnerIner2 [%s]\n", aPtr);
-        
-        
-        
-        
-        
-        
-        printf("Dic Content Now [%s]\n", aPtr);
-        
-        
         if (*aPtr == '{') {
-            printf("Sub-Root: Dictionary Element...\n");
             ++aPtr;
             
             FJSONNode *aNode = new FJSONNode();
@@ -372,23 +305,23 @@ char *FJSON::ParseHelperDictionary(char *pData, FList *pStack, bool *pSuccess) {
                 return NULL;
             }
             
-        } else if (*aPtr == '[') {
-            printf("SUb-Root: Array Element... ERROR FOR NOW...\n");
-            ++aPtr;
+            pStack->PopLast();
             
+        } else if (*aPtr == '[') {
+            ++aPtr;
             FJSONNode *aNode = new FJSONNode();
             aNode->mKey = aKey;
             aNode->mType = JSON_TYPE_ARRAY;
             aParent->AddDictionary(aKey, aNode);
+            delete aKey;
             pStack->Add(aNode);
-            
-            
             aPtr = ParseHelperArray(aPtr, pStack, pSuccess);
             if (*pSuccess == false) {
                 return NULL;
             }
-        } else if (*aPtr == '\"') {
             
+            pStack->PopLast();
+        } else if (*aPtr == '\"') {
             aEOQ = EndOfQuote(aPtr);
             if (aEOQ == NULL) {
                 printf("NO Inner EOQ...\n");
@@ -399,9 +332,8 @@ char *FJSON::ParseHelperDictionary(char *pData, FList *pStack, bool *pSuccess) {
             
             FJSONNode *aValueNode = new FJSONNode();
             aValueNode->mValue = GetQuotedString(aPtr, aEOQ);
-            
             aParent->AddDictionary(aKey, aValueNode);
-            
+            delete aKey;
             aPtr = aEOQ;
             ++aPtr;
         } else if (IsNumber(*aPtr)) {
@@ -415,17 +347,13 @@ char *FJSON::ParseHelperDictionary(char *pData, FList *pStack, bool *pSuccess) {
             
             FJSONNode *aValueNode = new FJSONNode();
             aValueNode->mValue = GetNumber(aPtr, aEON);
-            
             aParent->AddDictionary(aKey, aValueNode);
             delete aKey;
-            printf("Value Node: %s\n", aValueNode->mValue);
-            
             aPtr = aEON;
             ++aPtr;
         } else if (IsAlphabetic(*aPtr)) {
             char *aEOA = EndOfAlphabetic(aPtr);
             if (aEOA == NULL) {
-                printf("NO Inner EOAAAAAA...\n");
                 *pSuccess = false;
                 delete aKey;
                 return NULL;
@@ -433,46 +361,29 @@ char *FJSON::ParseHelperDictionary(char *pData, FList *pStack, bool *pSuccess) {
             
             FJSONNode *aValueNode = new FJSONNode();
             aValueNode->mValue = GetNumber(aPtr, aEOA);
-            
             aParent->AddDictionary(aKey, aValueNode);
             delete aKey;
-            
-            printf("Alphabet Value Node: %s\n", aValueNode->mValue);
-            
             aPtr = aEOA;
             ++aPtr;
         } else {
-
             *pSuccess = false;
             delete aKey;
             return NULL;
-            
         }
-    
-    
-        
-        
-        
         ++aElementIndex;
     }
     
 ParseHelperDictionary_COMPLETE:
     
-    pStack->PopLast();
     return aPtr;
 }
 
 //Assume that we pass in character AFTER the "["
 //with the parent node as last item on pStack
-
 char *FJSON::ParseHelperArray(char *pData, FList *pStack, bool *pSuccess) {
-    
-    printf("FJSON::ParseHelperArray()\n");
-    
     FJSONNode *aParent = (FJSONNode *)pStack->Last();
     
     if (aParent == NULL) {
-        printf("Stack Underflow...\n");
         *pSuccess = false;
         return NULL;
     }
@@ -482,21 +393,17 @@ char *FJSON::ParseHelperArray(char *pData, FList *pStack, bool *pSuccess) {
     while (*aPtr) {
         while ((*aPtr != 0) && IsWhiteSpace(*aPtr)) { aPtr++; }
         if (aElementIndex > 0) {
-            printf("Element > 0, is comma?\n");
             if (*aPtr == ',') {
                 aPtr += 1;
             } else if (*aPtr == ']') {
-                printf("End of LONGFAT!!! }\n");
                 aPtr += 1;
                 goto ParseHelperArray_COMPLETE;
             } else {
-                printf("Multiple elements deep, no COMMA?!?!\n");
                 *pSuccess = false;
                 return NULL;
             }
         } else {
             if (*aPtr == '}') {
-                printf("Closing short arry\n");
                 ++aPtr;
                 goto ParseHelperArray_COMPLETE;
             }
@@ -504,81 +411,63 @@ char *FJSON::ParseHelperArray(char *pData, FList *pStack, bool *pSuccess) {
         
         while ((*aPtr != 0) && IsWhiteSpace(*aPtr)) { aPtr++; }
         
-        //We are in the meat of the array...
-        
         if (*aPtr == '{') {
-            
             ++aPtr;
-            
             FJSONNode *aNode = new FJSONNode();
             aNode->mType = JSON_TYPE_DICTIONARY;
             aParent->AddArray(aNode);
             pStack->Add(aNode);
-            
             aPtr = ParseHelperDictionary(aPtr, pStack, pSuccess);
             if (*pSuccess == false) {
                 return NULL;
             }
+            pStack->PopLast();
             
         } else if (*aPtr == '[') {
-
             ++aPtr;
-            
             FJSONNode *aNode = new FJSONNode();
             aNode->mType = JSON_TYPE_ARRAY;
             aParent->AddArray(aNode);
             pStack->Add(aNode);
-            
             aPtr = ParseHelperArray(aPtr, pStack, pSuccess);
             if (*pSuccess == false) {
                 return NULL;
             }
+            pStack->PopLast();
         } else if (*aPtr == '\"') {
             char *aEOQ = EndOfQuote(aPtr);
             if (aEOQ == NULL) {
-                printf("ARR: NO EOQ...\n");
                 *pSuccess = false;
                 return NULL;
             }
-            
             FJSONNode *aValueNode = new FJSONNode();
             aValueNode->mValue = GetQuotedString(aPtr, aEOQ);
             aParent->AddArray(aValueNode);
-            
-
             aPtr = aEOQ;
             ++aPtr;
         } else if (IsNumber(*aPtr)) {
             char *aEON = EndOfNumber(aPtr);
             if (aEON == NULL) {
-                printf("NO Inner EONNN...\n");
                 *pSuccess = false;
                 return NULL;
             }
-            
             FJSONNode *aValueNode = new FJSONNode();
             aValueNode->mValue = GetNumber(aPtr, aEON);
             aParent->AddArray(aValueNode);
-            
-            
             aPtr = aEON;
             ++aPtr;
         } else if (IsAlphabetic(*aPtr)) {
             char *aEOA = EndOfAlphabetic(aPtr);
             if (aEOA == NULL) {
-                printf("NO Inner EOAA...\n");
                 *pSuccess = false;
                 return NULL;
             }
-            
             FJSONNode *aValueNode = new FJSONNode();
             aValueNode->mValue = GetAlphabetic(aPtr, aEOA);
             aParent->AddArray(aValueNode);
-
             aPtr = aEOA;
             ++aPtr;
         } else {
-            printf("Illegal ARRAY ChildRENNZ?\n\n");
             *pSuccess = false;
             return NULL;
         }

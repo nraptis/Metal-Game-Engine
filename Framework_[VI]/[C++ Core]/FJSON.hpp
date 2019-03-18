@@ -13,17 +13,9 @@
 #include "FList.hpp"
 #include "FHashMap.hpp"
 
-//a string
-//a number
-//an object (JSON object)
-//an array
-//a boolean
-//null
-
 #define JSON_TYPE_UNDEFINED -1
 #define JSON_TYPE_DICTIONARY 0
 #define JSON_TYPE_ARRAY 1
-
 
 class FJSONNode {
 public:
@@ -63,11 +55,7 @@ public:
     
     FJSONNode                   *mRoot;
     
-    
-    
 private:
-    
-    //char                        *Skip
     
     inline bool                 IsWhiteSpace(char pChar) { return pChar <= 32; }
     inline bool                 IsNumber(char pChar) {
