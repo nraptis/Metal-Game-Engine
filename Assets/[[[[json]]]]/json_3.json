@@ -1,0 +1,31 @@
+[{
+	"Id": 1,
+	"FirstName": "Ken",
+	"LastName": "Sánchez",
+	"Info": {
+		"MiddleName": "J"
+	}
+}, {
+	"Id": 2,
+	"FirstName": "Terri",
+	"LastName": "Duffy",
+	"Info": {
+		"MiddleName": "Lee"
+	}
+}, {
+	"Id": 3,
+	"FirstName": "Roberto",
+	"LastName": "Tamburello"
+}, {
+	"Id": 4,
+	"FirstName": "Rob",
+	"LastName": "Walters"
+}, {
+	"Id": 5,
+	"FirstName": "Gail",
+	"LastName": "Erickson",
+	"Info": {
+		"Title": "Ms.",
+		"MiddleName": "A"
+	}
+}]

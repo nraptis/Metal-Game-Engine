@@ -10,6 +10,7 @@
 #define FHashMap_hpp
 
 #include "FList.hpp"
+#include "FString.h"
 
 class FHashMap;
 class FHashMapNode {
@@ -26,7 +27,6 @@ public:
 private:
     
     FHashMapNode                                *mListPrev;
-    
     FHashMapNode                                *mTableNext;
     int                                         mTableIndex;
     
@@ -126,8 +126,8 @@ public:
 public:
     void                                        Print();
     void                                        PrintList();
-    FIntMapNode                                *mListHead;
-    FIntMapNode                                *mListTail;
+    FIntMapNode                                 *mListHead;
+    FIntMapNode                                 *mListTail;
     
 protected:
     
@@ -135,11 +135,76 @@ protected:
     void                                        ListRemove(FIntMapNode *pNode);
     void                                        SetTableSize(int pSize);
     
-    FIntMapNode                                **mTable;
+    FIntMapNode                                 **mTable;
     int                                         mTableCount;
     int                                         mTableSize;
     
     FList                                       mQueue;
 };
+
+
+
+class FStringMap;
+class FStringMapNode {
+    friend class FStringMap;
+    
+public:
+    FStringMapNode();
+    virtual ~FStringMapNode();
+    
+    FString                                     mKey;
+    void                                        *mObject;
+    
+    FStringMapNode                              *mListNext;
+private:
+    
+    FStringMapNode                              *mListPrev;
+    FStringMapNode                              *mTableNext;
+    int                                         mTableIndex;
+    
+};
+
+class FStringMap {
+public:
+    FStringMap();
+    ~FStringMap();
+    
+    //
+    
+    void                                        Add(const char *pKey, void *pObject);
+    void                                        Remove(const char *pKey);
+    bool                                        Exists(const char *pKey);
+    void                                        *Get(const char *pKey);
+    
+    static unsigned int                         Hash(const char *pString);
+    
+    bool                                        IsEmpty();
+    
+    void                                        RemoveAll();
+    
+    void                                        AddObjectsToList(FList *pList);
+    void                                        AddObjectsToListAndRemoveAll(FList *pList);
+    
+public:
+    void                                        Print();
+    void                                        PrintList();
+    FStringMapNode                              *mListHead;
+    FStringMapNode                              *mListTail;
+    
+protected:
+    
+    void                                        ListAdd(FStringMapNode *pNode);
+    void                                        ListRemove(FStringMapNode *pNode);
+    void                                        SetTableSize(int pSize);
+    
+    FStringMapNode                                **mTable;
+    int                                         mTableCount;
+    int                                         mTableSize;
+    
+    FList                                       mQueue;
+};
+
+
+
 
 #endif /* FHashMap_hpp */

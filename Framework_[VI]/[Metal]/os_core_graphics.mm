@@ -12,9 +12,9 @@
 #import "MetalViewController.h"
 #import "FFileTable.hpp"
 
-#ifdef MAC_ENVIRONMENT
+#if (CURRENT_ENV == ENV_MAC)
 #import <Cocoa/Cocoa.h>
-#else
+#elif (CURRENT_ENV == ENV_IOS)
 #import <UIKit/UIKit.h>
 #endif
 
@@ -23,7 +23,9 @@
 
 #define GRAPHICS_CLIP_STACK_COUNT 256
 
-#if defined(WIN_32_ENV) || defined(MAC_ENVIRONMENT)
+//#if defined(WIN_32_ENV) || defined(MAC_ENVIRONMENT)
+
+#if (CURRENT_ENV == ENV_MAC) || (CURRENT_ENV == ENV_WIN32)
 //
 #ifndef glOrthof
 #define glOrthof glOrtho

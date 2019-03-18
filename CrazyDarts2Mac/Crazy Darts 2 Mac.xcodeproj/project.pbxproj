@@ -148,6 +148,7 @@
 		0DBABE78223A9EB5009A17A7 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBABE49223A9EB5009A17A7 /* Game.cpp */; };
 		0DBABE7E223AC5F8009A17A7 /* LevelSection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBABE7C223AC5F8009A17A7 /* LevelSection.cpp */; };
 		0DBABE81223AC61D009A17A7 /* LevelWave.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBABE7F223AC61D009A17A7 /* LevelWave.cpp */; };
+		0DDCA443223F22350080E2C5 /* FJSON.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DDCA441223F22340080E2C5 /* FJSON.cpp */; };
 		E1705008222232CF000C5127 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1705007222232CF000C5127 /* Assets.xcassets */; };
 		E17054B0222236F9000C5127 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E17054AC222236F9000C5127 /* Cocoa.framework */; };
 		E17054B1222236F9000C5127 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E17054AD222236F9000C5127 /* AVFoundation.framework */; };
@@ -434,6 +435,8 @@
 		0DBABE7D223AC5F8009A17A7 /* LevelSection.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelSection.hpp; sourceTree = "<group>"; };
 		0DBABE7F223AC61D009A17A7 /* LevelWave.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWave.cpp; sourceTree = "<group>"; };
 		0DBABE80223AC61D009A17A7 /* LevelWave.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelWave.hpp; sourceTree = "<group>"; };
+		0DDCA441223F22340080E2C5 /* FJSON.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FJSON.cpp; sourceTree = "<group>"; };
+		0DDCA442223F22340080E2C5 /* FJSON.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FJSON.hpp; sourceTree = "<group>"; };
 		E1705001222232CF000C5127 /* Crazy Darts 2 Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crazy Darts 2 Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1705007222232CF000C5127 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E170500C222232CF000C5127 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -510,6 +513,8 @@
 		0DB13BA12234B20B00A6F230 /* [C++ Core] */ = {
 			isa = PBXGroup;
 			children = (
+				0DDCA441223F22340080E2C5 /* FJSON.cpp */,
+				0DDCA442223F22340080E2C5 /* FJSON.hpp */,
 				0D3F8BED223D74CE007BB85B /* FBuffer.cpp */,
 				0D3F8BEE223D74CE007BB85B /* FBuffer.hpp */,
 				0D3F8BF0223D74D9007BB85B /* FBufferCache.cpp */,
@@ -977,6 +982,7 @@
 				0DBABE4B223A9EB5009A17A7 /* FloatingCamera.cpp in Sources */,
 				0DBABE65223A9EB5009A17A7 /* UISegmentButton.cpp in Sources */,
 				0DB13CA72234B20B00A6F230 /* FAnimation.cpp in Sources */,
+				0DDCA443223F22350080E2C5 /* FJSON.cpp in Sources */,
 				0DB13CB92234B20B00A6F230 /* FLight.cpp in Sources */,
 				0DB13CB42234B20B00A6F230 /* FVec3.cpp in Sources */,
 				0DB13CCB2234B20B00A6F230 /* FNotificationCenter.cpp in Sources */,

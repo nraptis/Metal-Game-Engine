@@ -20,7 +20,23 @@
 
 GFXApp *gApp = 0;
 GFXApp::GFXApp() {
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     gApp = this;
+    
     
     mGameContainer = NULL;
     mLevelSelect = NULL;
@@ -46,8 +62,6 @@ GFXApp::GFXApp() {
     mAmbientRoll2 = 0.0f;
     
     
-    
-    
     /*
     mCamera.mFOV = 0.987429;
     mCamera.mTarget = FVec3(0.0f, 0.0f, 0.0f);
@@ -65,6 +79,22 @@ GFXApp::~GFXApp() {
 }
 
 void GFXApp::Load() {
+    
+    //FJSON aJSON3;
+    //aJSON3.Load("json_3.yml");
+    
+    FJSON aJSON2;
+    aJSON2.Load("json_2.json");
+    
+    exit(0);
+    
+    
+    FJSON aJSON1;
+    aJSON1.Load("json_1");
+    
+    
+    
+    
     
     
     mRocket.mUseNormals = false;

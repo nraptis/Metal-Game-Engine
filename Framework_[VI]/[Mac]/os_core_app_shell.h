@@ -5,6 +5,7 @@
 
 #include "core_app_shell.h"
 
+#define ENV_MAC 2
 #define CURRENT_ENV ENV_MAC
 
 extern "C"

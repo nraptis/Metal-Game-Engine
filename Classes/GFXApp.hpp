@@ -15,6 +15,8 @@
 #include "UIRoundedRect.hpp"
 #include "FloatingCamera.hpp"
 #include "FUniforms.hpp"
+#include "FJSON.hpp"
+
 
 class Util_ScreenFrame;
 class LightConfigurationScene;

@@ -89,8 +89,7 @@ public:
 	float               GetParamSafeFloat(const char* pName);
 	bool                GetParamBool(const char* pName);
 	char                GetParamChar(const char* pName);
-
-
+    
 	int                 GetParamInt(const char* pName, int pDefault);
 	float               GetParamFloat(const char* pName, float pDefault);
 	float               GetParamSafeFloat(const char* pName, float pDefault);
