@@ -125,6 +125,11 @@ void ToolMenuSectionRow::Update() {
 }
 
 void ToolMenuSectionRow::Draw() {
+    
+    Graphics::PipelineStateSetShape2DAlphaBlending();
+    Graphics::SetColor();
+    
+    
     mSectionBackgroundOutline.Draw();
     mSectionBackground.Draw();
 }

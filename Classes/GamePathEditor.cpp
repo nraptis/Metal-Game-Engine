@@ -12,14 +12,15 @@
 #include "GameEditor.hpp"
 #include "FAnimation.h"
 
+#define PATH_CHAMFER_SIZE 70.0
+
 GamePathEditor::GamePathEditor(GameEditor *pEditor) {
     
     mEditor = pEditor;
     
     
-    mPathMode = PATH_MODE_EDIT;
+    mPathMode = PATH_MODE_CREATE;
     
-    mSelectedIndex = 1;
     mSelectedTouch = NULL;
     
     mName = "[GamePathEditor]";
@@ -27,6 +28,8 @@ GamePathEditor::GamePathEditor(GameEditor *pEditor) {
     SetWidth(gDeviceWidth);
     SetHeight(gDeviceHeight);
     
+    mConstrainXToPoint = false;
+    mConstrainYToPoint = false;
     
     mSelectPathStartX = 0.0f;
     mSelectPathStartY = 0.0f;
@@ -34,11 +37,11 @@ GamePathEditor::GamePathEditor(GameEditor *pEditor) {
     mSelectTouchStartX = 0.0f;
     mSelectTouchStartY = 0.0f;
     
-    
+    mPath = NULL;
     
     mMenuPaths = new EditorMenuPath(this);
     AddChild(mMenuPaths);
-    mMenuPaths->SetFrame(gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 40.0f, 360.0f, 500.0f);
+    mMenuPaths->SetFrame(gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 40.0f, 360.0f, 650.0f);
     
     
     mMenuControls = new EditorMenuPathControl(this);
@@ -61,19 +64,21 @@ void GamePathEditor::SetFrame(float pX, float pY, float pWidth, float pHeight) {
 
 void GamePathEditor::Layout() {
     
-    FPoint aSpawnZone1 = FPoint(gGame->mSpawnZoneLeft, gGame->mSpawnZoneTop);
-    aSpawnZone1 = FCanvas::Convert(aSpawnZone1, gGame, this);
-    
-    FPoint aSpawnZone2 = FPoint(gGame->mSpawnZoneRight, gGame->mSpawnZoneBottom);
-    aSpawnZone2 = FCanvas::Convert(aSpawnZone2, gGame, this);
-    
-    mSpawnZoneTop = aSpawnZone1.mY;
-    mSpawnZoneRight = aSpawnZone2.mX;
-    mSpawnZoneLeft = aSpawnZone1.mX;
-    mSpawnZoneBottom = aSpawnZone2.mY;
 }
 
 void GamePathEditor::Update() {
+    
+    if (mConstrainXToPoint && mConstrainYToPoint) {
+        mConstrainXToPoint = false;
+        mConstrainYToPoint = false;
+    }
+    
+    if (mPath != NULL) {
+        if (mPath->mSelectedIndex == -1) {
+            mConstrainXToPoint = false;
+            mConstrainYToPoint = false;
+        }
+    }
     
 }
 
@@ -84,58 +89,81 @@ void GamePathEditor::Draw() {
     Graphics::DrawRect(0.0f, 0.0f, mWidth, mHeight);
     
     
-    
-    Graphics::SetColor(0.6f, 0.6f, 0.6f, 0.5f);
-    mPath.DrawEdgesOpen(1.0f);
-    
-    Graphics::SetColor(0.85f, 0.85f, 0.85f, 0.5f);
-    for (int i=0;i<mPath.mCount;i++) {
-        if (i == mSelectedIndex) {
-            Graphics::DrawPoint(mPath.mX[i], mPath.mY[i], 8.0f);
-        } else {
-            Graphics::DrawPoint(mPath.mX[i], mPath.mY[i], 4.0f);
-        }
+    if (mPath) {
+        //mPath->Draw(true, mSelectedIndex);
     }
-    
-    for (int i=0;i<mPath.mCount;i++) {
-        if (i == mSelectedIndex) {
-            Graphics::SetColor(0.985f, 0.945f, 0.125f, 0.5f);
-            Graphics::DrawPoint(mPath.mX[i], mPath.mY[i], 6.0f);
-        } else {
-            Graphics::SetColor(0.125f, 0.125f, 0.85f, 0.5f);
-            Graphics::DrawPoint(mPath.mX[i], mPath.mY[i], 2.0f);
-        }
-    }
-
     
     
 }
 
 void GamePathEditor::TouchDown(float pX, float pY, void *pData) {
+    if (mPath != NULL) {
+        if (mConstrainXToPoint || mConstrainYToPoint) {
+            float aDist = 50.0f * 50.0f;
+            int aIndex = mPath->GetClosestIndex(pX, pY, aDist);
+            if (aIndex != -1 && mPath->mSelectedIndex != -1 && mPath->mSelectedIndex != aIndex) {
+                printf("SNAPPING %d to %d\n", aIndex, mPath->mSelectedIndex);
+                if (mConstrainXToPoint) {
+                    mPath->SnapX(aIndex);
+                }
+                if (mConstrainYToPoint) {
+                    mPath->SnapY(aIndex);
+                }
+                mConstrainXToPoint = false;
+                mConstrainYToPoint = false;
+            } else {
+                printf("CANNOT SNAP %d to %d\n", aIndex, mPath->mSelectedIndex);
+            }
+            
+            mSelectedTouch = NULL;
+            return;
+        }
+        
+        //mConstrainXToPoint = false;
+        //mConstrainYToPoint = false;
+        
+    }
+    
+    
     
     
     if (mPathMode == PATH_MODE_CREATE) {
-        mPath.Add(pX, pY);
+        
+        if (mPath) {
+            mPath->Add(pX, pY);
+            
+            mPath->mSelectedIndex = mPath->mNodeList.mCount - 1;
+        }
+        
     } else if (mPathMode == PATH_MODE_EDIT) {
         
-        if (mSelectedTouch == NULL) {
+        if (mSelectedTouch == NULL && mPath != NULL) {
             float aDist = 50.0f * 50.0f;
-            int aIndex = mPath.GetClosestIndex(pX, pY, aDist);
+            int aIndex = mPath->GetClosestIndex(pX, pY, aDist);
             if (aIndex != -1) {
-                mSelectedTouch = pData; mSelectedIndex = aIndex;
-                mSelectPathStartX = mPath.mX[aIndex]; mSelectPathStartY = mPath.mY[aIndex];
+                mSelectedTouch = pData;
+                mPath->mSelectedIndex = aIndex;
+                mSelectPathStartX = mPath->GetX(aIndex); mSelectPathStartY = mPath->GetY(aIndex);
                 mSelectTouchStartX = pX; mSelectTouchStartY = pY;
+                
             }
+        } else {
+            mSelectedTouch = NULL;
+            mPath->mSelectedIndex = -1;
         }
     } else if (mPathMode == PATH_MODE_SELECT) {
-        if (mSelectedTouch == NULL) {
+        if (mSelectedTouch == NULL && mPath != NULL) {
             float aDist = 50.0f * 50.0f;
-            int aIndex = mPath.GetClosestIndex(pX, pY, aDist);
+            int aIndex = mPath->GetClosestIndex(pX, pY, aDist);
             if (aIndex != -1) {
-                mSelectedTouch = pData; mSelectedIndex = aIndex;
-                mSelectPathStartX = mPath.mX[aIndex]; mSelectPathStartY = mPath.mY[aIndex];
+                mSelectedTouch = pData;
+                mPath->mSelectedIndex = aIndex;
+                mSelectPathStartX = mPath->GetX(aIndex); mSelectPathStartY = mPath->GetY(aIndex);
                 mSelectTouchStartX = pX; mSelectTouchStartY = pY;
             }
+        } else {
+            mSelectedTouch = NULL;
+            mPath->mSelectedIndex = -1;
         }
     }
     
@@ -149,10 +177,8 @@ void GamePathEditor::TouchDown(float pX, float pY, void *pData) {
 
 void GamePathEditor::TouchMove(float pX, float pY, void *pData) {
     if (mPathMode == PATH_MODE_EDIT) {
-        if (mSelectedTouch == pData) {
-            mPath.Set(mSelectedIndex,
-                      mSelectPathStartX + (pX - mSelectTouchStartX),
-                      mSelectPathStartY + (pY - mSelectTouchStartY));
+        if (mSelectedTouch == pData && mPath != NULL) {
+            mPath->Set(mPath->mSelectedIndex, mSelectPathStartX + (pX - mSelectTouchStartX), mSelectPathStartY + (pY - mSelectTouchStartY));
         }
     }
     
@@ -194,9 +220,64 @@ void GamePathEditor::Close() {
     
     printf("Hand-off the Path...\n");
     
-    
-    
-    
     mEditor->ClosePathEditor();
 }
 
+void GamePathEditor::SetUp(LevelWaveBlueprint *pWave) {
+    if (pWave == NULL) {
+        mPath = NULL;
+        return;
+    }
+    mPath = &(pWave->mPath);
+    mSelectedTouch = NULL;
+    
+    if (mPath->mNodeList.mCount > 0) {
+        mPathMode = PATH_MODE_SELECT;
+    } else {
+        mPathMode = PATH_MODE_CREATE;
+    }
+    
+    
+}
+
+void GamePathEditor::PathReset() {
+    if (mPath == NULL) { return; }
+    mPath->Clear();
+    
+}
+
+void GamePathEditor::PathDeletePoint() {
+    if (mPath == NULL) { return; }
+    if (mPath->mSelectedIndex == -1) { return; }
+    mPath->Remove(mPath->mSelectedIndex);
+}
+
+void GamePathEditor::ConstrainXToPoint() {
+    if (mPath == NULL) { return; }
+    if (mPath->mSelectedIndex == -1) { return; }
+    
+    mConstrainXToPoint = true;
+}
+
+void GamePathEditor::ConstrainYToPoint() {
+    if (mPath == NULL) { return; }
+    if (mPath->mSelectedIndex == -1) { return; }
+    
+    mConstrainYToPoint = true;
+}
+
+void GamePathEditor::ConstraintXToType(int pType) {
+    if (mPath == NULL) { return; }
+    if (mPath->mSelectedIndex == -1) { return; }
+    
+    mPath->SetSnapXType(pType);
+    
+}
+
+void GamePathEditor::ConstraintYToType(int pType) {
+    if (mPath == NULL) { return; }
+    if (mPath->mSelectedIndex == -1) { return; }
+    
+    mPath->SetSnapYType(pType);
+    
+}

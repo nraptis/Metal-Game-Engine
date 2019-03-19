@@ -28,6 +28,17 @@ public:
     ToolMenuSectionRow                      *mRowMain2;
     
     
+    ToolMenuPanel                           *mWavePanel;
+    ToolMenuSectionRow                      *mRowWave1;
+    UIButton                                *mButtonAddWave;
+    UIButton                                *mButtonDeleteWave;
+    UIButton                                *mButtonSelectNextWave;
+    UIButton                                *mButtonSelectPreviousWave;
+    
+    
+    
+    
+    
     ToolMenuPanel                           *mPathPanel;
     ToolMenuSectionRow                      *mRowPath1;
     UIButton                                *mButtonEditPaths;

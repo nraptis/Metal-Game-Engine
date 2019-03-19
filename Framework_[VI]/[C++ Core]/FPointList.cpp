@@ -181,13 +181,7 @@ int FPointList::Remove(int pIndex)
      */
 }
 
-void FPointList::Reset()
-{
-    mCount = 0;
-}
-
-void FPointList::Size(int pSize)
-{
+void FPointList::Size(int pSize) {
     if(pSize != mSize)
     {
         if(pSize <= 0)

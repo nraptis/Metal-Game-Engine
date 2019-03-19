@@ -118,6 +118,8 @@ int kDeviceHeight = 800;
     [_rootViewController setup];
     
     AppShellLoad();
+
+    
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

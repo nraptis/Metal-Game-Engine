@@ -25,6 +25,9 @@ GameEditor::GameEditor(Game *pGame) {
     
     mOverlay = NULL;
     
+    mCurrentSection = new LevelSectionBlueprint();
+    
+    
     mToolContainer = new FCanvas();
     mToolContainer->mName = "Tool Container";
     AddChild(mToolContainer);
@@ -61,14 +64,50 @@ void GameEditor::Layout() {
     
     FPoint aSpawnZone1 = FPoint(gGame->mSpawnZoneLeft, gGame->mSpawnZoneTop);
     aSpawnZone1 = FCanvas::Convert(aSpawnZone1, gGame, this);
-    
     FPoint aSpawnZone2 = FPoint(gGame->mSpawnZoneRight, gGame->mSpawnZoneBottom);
     aSpawnZone2 = FCanvas::Convert(aSpawnZone2, gGame, this);
-    
     mSpawnZoneTop = aSpawnZone1.mY;
     mSpawnZoneRight = aSpawnZone2.mX;
     mSpawnZoneLeft = aSpawnZone1.mX;
     mSpawnZoneBottom = aSpawnZone2.mY;
+    
+    
+    FPoint aPeekZone1 = FPoint(gGame->mPeekZoneLeft, gGame->mPeekZoneTop);
+    aPeekZone1 = FCanvas::Convert(aPeekZone1, gGame, this);
+    FPoint aPeekZone2 = FPoint(gGame->mPeekZoneRight, gGame->mPeekZoneBottom);
+    aPeekZone2 = FCanvas::Convert(aPeekZone2, gGame, this);
+    mPeekZoneTop = aPeekZone1.mY;
+    mPeekZoneRight = aPeekZone2.mX;
+    mPeekZoneLeft = aPeekZone1.mX;
+    mPeekZoneBottom = aPeekZone2.mY;
+    
+    
+    
+    FPoint aQuarterZone1 = FPoint(gGame->mQuarterZoneLeft, gGame->mQuarterZoneTop);
+    aQuarterZone1 = FCanvas::Convert(aQuarterZone1, gGame, this);
+    FPoint aQuarterZone2 = FPoint(gGame->mQuarterZoneRight, gGame->mQuarterZoneBottom);
+    aQuarterZone2 = FCanvas::Convert(aQuarterZone2, gGame, this);
+    mQuarterZoneTop = aQuarterZone1.mY;
+    mQuarterZoneRight = aQuarterZone2.mX;
+    mQuarterZoneLeft = aQuarterZone1.mX;
+    mQuarterZoneBottom = aQuarterZone2.mY;
+    
+    
+    
+    FPoint aPlayZone = FPoint(gGame->mPlayAreaTop, gGame->mPlayAreaBottom);
+    aPlayZone = FCanvas::Convert(aPlayZone, gGame, this);
+    mPlayZoneBottom = aPlayZone.mY;
+    
+    FPoint aCenter = FPoint((gGame->mPlayAreaLeft + gGame->mPlayAreaRight) / 2.0f,
+                            (gGame->mPlayAreaTop + gGame->mPlayAreaBottom) / 2.0f);
+    aCenter = FCanvas::Convert(aCenter, gGame, this);
+    mCenterH = aCenter.mX;
+    mCenterV = aCenter.mY;
+    
+    
+    
+    
+    
 }
 
 void GameEditor::Update() {
@@ -82,23 +121,42 @@ void GameEditor::Draw() {
     //Graphics::DrawRect(0.0f, 0.0f, mWidth, mHeight);
     
     
-    Graphics::PipelineStateSetSpriteAlphaBlending();
-    Graphics::SetColor(1.0f, 0.0f, 0.0f);
-    
-    Graphics::PipelineStateSetShape2DNoBlending();
-    Graphics::OutlineRectInside(0.0f, 0.0f, mWidth, mHeight, 2.0f);
 
+    Graphics::PipelineStateSetShape2DAlphaBlending();
     
     
+    float aMarkerMult = 1.0f;
+    float aMarkerOpacity = 1.0f;
     
-    
-    
+    Graphics::SetColor(1.0f * aMarkerMult, 0.0f * aMarkerMult, 0.0f * aMarkerMult, aMarkerOpacity);
     Graphics::DrawLine(mSpawnZoneLeft, mSpawnZoneTop, mSpawnZoneRight, mSpawnZoneTop);
     Graphics::DrawLine(mSpawnZoneLeft, mSpawnZoneTop, mSpawnZoneLeft, mSpawnZoneBottom);
     Graphics::DrawLine(mSpawnZoneRight, mSpawnZoneTop, mSpawnZoneRight, mSpawnZoneBottom);
     
+    Graphics::SetColor(0.65f * aMarkerMult, 0.45f * aMarkerMult, 0.75f * aMarkerMult, aMarkerOpacity);
+    Graphics::DrawLine(mPeekZoneLeft, mPeekZoneTop, mPeekZoneRight, mPeekZoneTop);
+    Graphics::DrawLine(mPeekZoneLeft, mPeekZoneTop, mPeekZoneLeft, mPeekZoneBottom);
+    Graphics::DrawLine(mPeekZoneRight, mPeekZoneTop, mPeekZoneRight, mPeekZoneBottom);
+    
+    Graphics::SetColor(0.25f * aMarkerMult, 0.25f * aMarkerMult, 0.25f * aMarkerMult, aMarkerOpacity);
+    Graphics::DrawLine(mCenterH, mSpawnZoneTop, mCenterH, mSpawnZoneBottom);
+    Graphics::DrawLine(mSpawnZoneLeft, mCenterV, mSpawnZoneRight, mCenterV);
     
     
+    Graphics::SetColor(1.0f * aMarkerMult, 1.0f * aMarkerMult, 0.015f * aMarkerMult, aMarkerOpacity);
+    Graphics::DrawLine(mQuarterZoneLeft, mQuarterZoneTop, mQuarterZoneRight, mQuarterZoneTop);
+    Graphics::DrawLine(mQuarterZoneLeft, mQuarterZoneBottom, mQuarterZoneRight, mQuarterZoneBottom);
+    Graphics::DrawLine(mQuarterZoneLeft, mQuarterZoneTop, mQuarterZoneLeft, mQuarterZoneBottom);
+    Graphics::DrawLine(mQuarterZoneRight, mQuarterZoneTop, mQuarterZoneRight, mQuarterZoneBottom);
+
+    
+    
+    
+    Graphics::SetColor();
+    
+    if (mCurrentSection) {
+        mCurrentSection->Draw();
+    }
     
     
     
@@ -141,6 +199,10 @@ void GameEditor::KeyDown(int pKey) {
 
 void GameEditor::KeyUp(int pKey) {
     
+    if (pKey == __KEY__W) {
+        
+    }
+    
 }
 
 void GameEditor::Notify(void *pSender, const char *pNotification) {
@@ -175,7 +237,38 @@ void GameEditor::SetOverlay(FCanvas *pCanvas) {
     
 }
 
+void GameEditor::WaveAdd() {
+    if (mCurrentSection == NULL) { printf("Must have mCurrentSection...\n"); return; }
+    mCurrentSection->WaveAdd();
+    OpenPathEditor();
+}
+
+void GameEditor::WaveRemove() {
+    if (mCurrentSection == NULL) { printf("Must have mCurrentSection...\n"); return; }
+    mCurrentSection->WaveRemove();
+}
+
+void GameEditor::WaveSelectNext() {
+    if (mCurrentSection == NULL) { printf("Must have mCurrentSection...\n"); return; }
+    mCurrentSection->WaveSelectNext();
+}
+
+void GameEditor::WaveSelectPrev() {
+    if (mCurrentSection == NULL) { printf("Must have mCurrentSection...\n"); return; }
+    mCurrentSection->WaveSelectPrev();
+}
+
+void GameEditor::WaveDeselect() {
+    if (mCurrentSection == NULL) { printf("Must have mCurrentSection...\n"); return; }
+    mCurrentSection->WaveDeselect();
+}
+
 void GameEditor::OpenPathEditor() {
+    if (mCurrentSection == NULL) { printf("Must have mCurrentSection...\n"); return; }
+    if (mCurrentSection->mCurrentWave == NULL) { printf("Must have wave...\n"); return; }
+    
+    mPathEditor->SetUp(mCurrentSection->mCurrentWave);
+    
     SetOverlay(mPathEditor);
 }
 

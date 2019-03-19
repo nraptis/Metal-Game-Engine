@@ -22,6 +22,8 @@
 
 - (void)setup;
 
+- (int)convertKey:(unichar)keycode;
+
 - (CGPoint)correctMousePos: (CGPoint)pos;
 
 @end

@@ -15,6 +15,7 @@
 static FPointList cPointList;
 static FPointList cDumpList;
 static FPolyPath cPolyPath;
+static FPointList cSegmentList;
 
 LevelWavePathNode::LevelWavePathNode() {
     mX = 0.0f;
@@ -43,7 +44,7 @@ LevelWavePath::~LevelWavePath() {
     
 }
 
-void LevelWavePath::Add(int pType, float pX, float pY) {
+void LevelWavePath::Add(int pType, float pX, float pY, int pWait) {
     //
     //
     //
@@ -51,94 +52,46 @@ void LevelWavePath::Add(int pType, float pX, float pY) {
     aNode->mX = pX;
     aNode->mY = pY;
     aNode->mType = pType;
-    //
+    aNode->mWaitTimer = pWait;
     mNodeList.Add(aNode);
 }
 
-void LevelWavePath::AddMove(float pX, float pY) {
-    Add(PATH_NODE_MOVE, pX, pY);
+void LevelWavePath::AddMove(float pX, float pY, int pWait) {
+    Add(PATH_NODE_NORMAL, pX, pY, pWait);
 }
 
-void LevelWavePath::AddStop(float pX, float pY) {
-    Add(PATH_NODE_STOP, pX, pY);
-}
-
-void LevelWavePath::AddWait(int pTime) {
-    LevelWavePathNode *aNode = new LevelWavePathNode();
-    aNode->mX = 444.0f;
-    aNode->mY = 1000.0f;
-    aNode->mType = PATH_NODE_WAIT;
-    aNode->mWaitTimer = pTime;
-    mNodeList.Add(aNode);
+void LevelWavePath::Reset() {
+    mDidFinalize = false;
+    for (int i=0;i<mNodeList.mCount;i++) {
+        LevelWavePathNode *aNode = ((LevelWavePathNode *)mNodeList.mData[i]);
+        delete aNode;
+    }
+    mNodeList.RemoveAll();
+    mPath.RemoveAll();
 }
 
 void LevelWavePath::Finalize() {
     
     mPath.Reset();
     
-    int aFirstNonStopIndex = -1;
-    
-    float aStartX = 0.0f;
-    float aStartY = 0.0f;
-    
     if (mNodeList.mCount < 2) {
         Log("ILLEGAL, TOO SMALL!!!\n");
         return;
     }
     
-    for (int i=0;i<mNodeList.mCount && aFirstNonStopIndex == -1;i++) {
-        LevelWavePathNode *aNode = ((LevelWavePathNode *)mNodeList.mData[i]);
-        
-        if (aNode->mType == PATH_NODE_INVALID) {
-            Log("ILLEGAL PATH!!!");
-            return;
-        } else if (aNode->mType != PATH_NODE_WAIT) {
-            aFirstNonStopIndex = i;
-            aStartX = aNode->mX;
-            aStartY = aNode->mY;
-        }
-    }
+    LevelWavePathNode *aFirstNode = ((LevelWavePathNode *)mNodeList.First());
+    float aStartX = aFirstNode->mX;
+    float aStartY = aFirstNode->mY;
     
     mTempX = aStartX;
     mTempY = aStartY;
-    
-    
-    if (aFirstNonStopIndex == -1) {
-        Log("ILLEGAL PATH: ALL WAIT NDOES\n\n");
-        return;
-    }
-    
-    for (int i=aFirstNonStopIndex-1;i>=0;i--) {
-        LevelWavePathNode *aNode = ((LevelWavePathNode *)mNodeList.mData[i]);
-        aNode->mX = aStartX;
-        aNode->mY = aStartY;
-    }
-    
-    float aLastX = aStartX;
-    float aLastY = aStartY;
-    for (int i=aFirstNonStopIndex+1;i<mNodeList.mCount;i++) {
-        LevelWavePathNode *aPrev = ((LevelWavePathNode *)mNodeList.mData[i-1]);
-        LevelWavePathNode *aNode = ((LevelWavePathNode *)mNodeList.mData[i]);
-        if (aPrev->mType == PATH_NODE_WAIT && aNode->mType == PATH_NODE_WAIT) {
-            Log("ILLEGAL PATH: 2 WAITS IN ROW...\n");
-            return;
-        }
-        
-        if (aNode->mType == PATH_NODE_WAIT) {
-            aNode->mX = aPrev->mX;
-            aNode->mY = aPrev->mY;
-        }
-    }
-    
     
     for (int i=0;i<mNodeList.mCount;i++) {
         LevelWavePathNode *aNode = ((LevelWavePathNode *)mNodeList.mData[i]);
         
         FString aType = "??";
         
-        if (aNode->mType == PATH_NODE_WAIT) aType = "WAIT";
-        if (aNode->mType == PATH_NODE_STOP) aType = "STOP";
-        if (aNode->mType == PATH_NODE_MOVE) aType = "MOVE";
+        if (aNode->mType == PATH_NODE_NORMAL) aType = "NORMAL";
         if (aNode->mType == PATH_NODE_INVALID) aType = "INVALID";
         
         Log("Path [%d] {%s}  {%.3f, %.3f} \n", i, aType.c(), aNode->mX, aNode->mY);
@@ -151,7 +104,7 @@ void LevelWavePath::Finalize() {
     while (aIndex < mNodeList.mCount) {
         LevelWavePathNode *aNode = ((LevelWavePathNode *)mNodeList.mData[aIndex]);
         if (aIndex > 0) {
-            if (aNode->mType == PATH_NODE_STOP || (aIndex == (mNodeList.mCount - 1))) {
+            if ((aNode->mWaitTimer > 0) || (aIndex == (mNodeList.mCount - 1))) {
                 LevelWavePath::AddSegmentBacktrackingFrom(aIndex);
                 
                 
@@ -163,29 +116,13 @@ void LevelWavePath::Finalize() {
             }
         }
         
-        if (aNode->mType == PATH_NODE_WAIT) {
+        if (aNode->mWaitTimer > 0) {
             for (int i=0;i<aNode->mWaitTimer && i < 80000;i++) {
                 mPath.Add(mTempX, mTempY);
             }
-            
         }
-        
-        
-        
-        
         ++aIndex;
     }
-    
-    
-    //int mNodeList.mCount
-    
-    
-    
-    
-    
-    
-    
-    
 }
 
 void LevelWavePath::AddSegmentBacktrackingFrom(int pIndex) {
@@ -194,8 +131,7 @@ void LevelWavePath::AddSegmentBacktrackingFrom(int pIndex) {
     int aStartIndex = pIndex - 1;
     while (aStartIndex > 0) {
         LevelWavePathNode *aNode = ((LevelWavePathNode *)mNodeList.mData[aStartIndex]);
-        
-        if (aNode->mType == PATH_NODE_STOP || aNode->mType == PATH_NODE_WAIT) {
+        if (aNode->mWaitTimer > 0) {
             break;
         } else {
             --aStartIndex;
@@ -295,8 +231,8 @@ void LevelWavePath::AddSegmentBacktrackingFrom(int pIndex) {
         aAccelerationEnabled = false;
     }
     
-    mSegmentList.Reset();
-    mSegmentList.Add(cDumpList.mX[0], cDumpList.mY[0]);
+    cSegmentList.Reset();
+    cSegmentList.Add(cDumpList.mX[0], cDumpList.mY[0]);
     float aCurrentDist = 0.00f;
     while (aSpeed > 0.05f && aCurrentDist < cPolyPath.mLength) {
         
@@ -316,29 +252,33 @@ void LevelWavePath::AddSegmentBacktrackingFrom(int pIndex) {
         float aInterpX = 0.0f;
         float aInterpY = 0.0f;
         cPolyPath.GetWithDist(aCurrentDist, aInterpX, aInterpY);
-        mSegmentList.Add(aInterpX, aInterpY);
+        cSegmentList.Add(aInterpX, aInterpY);
     }
     
     float aLastX = cDumpList.mX[cDumpList.mCount - 1];
     float aLastY = cDumpList.mY[cDumpList.mCount - 1];
     float aSegmentLastX = 0.0f;
     float aSegmentLastY = 0.0f;
-    if (mSegmentList.mCount > 0) {
-        aSegmentLastX = mSegmentList.mX[mSegmentList.mCount - 1];
-        aSegmentLastY = mSegmentList.mY[mSegmentList.mCount - 1];
+    if (cSegmentList.mCount > 0) {
+        aSegmentLastX = cSegmentList.mX[cSegmentList.mCount - 1];
+        aSegmentLastY = cSegmentList.mY[cSegmentList.mCount - 1];
     }
     
     float aDistanceToEnd = DistanceSquared(aLastX, aLastY, aSegmentLastX, aSegmentLastY);
     
     if (aDistanceToEnd > 0.5f) {
-        mSegmentList.Add(aLastX, aLastY);
+        cSegmentList.Add(aLastX, aLastY);
     } else {
-        mSegmentList.mX[mSegmentList.mCount - 1] = aLastX;
-        mSegmentList.mY[mSegmentList.mCount - 1] = aLastY;
+        cSegmentList.mX[cSegmentList.mCount - 1] = aLastX;
+        cSegmentList.mY[cSegmentList.mCount - 1] = aLastY;
     }
     mTempX = aLastX;
     mTempY = aLastY;
-    mPath.Add(&mSegmentList);
+    mPath.Add(&cSegmentList);
+    
+    
+    cSegmentList.Reset();
+    cPolyPath.Reset();
 }
 
 void LevelWavePath::Dump(bool pDecel) {
@@ -377,17 +317,12 @@ void LevelWavePath::Draw() {
     for (int i=0;i<mNodeList.mCount;i++) {
         aNode = ((LevelWavePathNode *)mNodeList.mData[i]);
 
-        if (aNode->mType == PATH_NODE_WAIT) {
+        if (aNode->mWaitTimer > 0) {
             Graphics::SetColor(0.125f, 0.25f, 0.88f, 0.5f);
             Graphics::OutlineRect(aNode->mX - 25.0f, aNode->mY - 25.0f, 50.0f, 50.0f, 3.0f);
         }
         
-        if (aNode->mType == PATH_NODE_STOP) {
-            Graphics::SetColor(1.0f, 0.65f, 0.0f, 0.5f);
-            Graphics::OutlineRect(aNode->mX - 15.0f, aNode->mY - 15.0f, 30.0f, 30.0f, 3.0f);
-        }
-        
-        if (aNode->mType == PATH_NODE_MOVE) {
+        if (aNode->mType == PATH_NODE_NORMAL) {
             Graphics::SetColor(0.125f, 0.88f, 0.125f, 0.6f);
             Graphics::OutlineRect(aNode->mX - 8.0f, aNode->mY - 8.0f, 16.0f, 16.0f, 3.0f);
         }
@@ -395,23 +330,20 @@ void LevelWavePath::Draw() {
     
     Graphics::SetColor(1.0f, 0.65f, 0.45f, 0.75f);
     
-    //mSegmentList.DrawPoints();
-    
-    
-    for (int i=0;i<mSegmentList.mCount;i++) {
-        
-        float aPercent = ((float)i) / ((float)(mSegmentList.mCount - 1));
-        Graphics::SetColor(aPercent, 0.25f, 0.25f, 0.75f);
-        Graphics::DrawPoint(mSegmentList.mX[i], mSegmentList.mY[i], 2.0f + aPercent);
-        
-    }
-    
-    
-    //Graphics::SetColor(0.25f, 0.125f, 0.65f, 0.75f);
-    //cPolyPath.DrawLerps();
     
     
     if (mPath.mCount > 0) {
+        
+        float aLastX = mPath.mX[0] - 100;
+        float aLastY = mPath.mY[0] - 100;
+        
+        for (int i=0;i<mPath.mCount;i++) {
+            float aPercent = ((float)i) / ((float)(mPath.mCount - 1));
+            Graphics::SetColor(aPercent, 0.25f, 0.25f, 0.75f);
+            Graphics::DrawPoint(mPath.mX[i], mPath.mY[i], 2.0f);
+        }
+        
+        
         mDemoIndex += 1;
         if (mDemoIndex >= mPath.mCount) { mDemoIndex = 0; }
         
@@ -423,55 +355,5 @@ void LevelWavePath::Draw() {
         
         
     }
-    
-    
-    
-    /*
-    //float aDistSpeed = (aDiffSpeedX * aDiffSpeedX) + (aDiffSpeedY * aDiffSpeedY);
-    
-    
-    float aDecelerationX = 0.0f;
-    float aDecelerationY = 0.0f;
-    
-    //float aDecelerationX = (pStartSpeed.mX * pStartSpeed.mX) / (2.0f * aDiffX);
-    //float aDecelerationY = (pStartSpeed.mY * pStartSpeed.mY) / (2.0f * aDiffY);
-    
-    bool aFail = true;
-    
-    
-    //a = (Vf*Vf - Vi*Vi)/(2 * d)
-    
-    if(aDist > 0.25f)
-    {
-        aDist = sqrtf(aDist);
-        if(aDiffSquaredX >= 0.5f)
-        {
-            //aDecelerationX = (pEndSpeed.mX * pEndSpeed.mX - pStartSpeed.mX * pStartSpeed.mX) / (2.0f * aDist);
-            //aDecelerationX = (pEndSpeed.mX * pEndSpeed.mX - pStartSpeed.mX * pStartSpeed.mX) / (2.0f * aDiffX);
-            aDecelerationX = (aDiffSpeedX * aDiffSpeedX) / (2.0f * aDiffX);
-            aDecelerationX = (aDiffSpeedX * aDiffSpeedX) / (2.0f * aDist);
-            
-            
-            //aDecelerationX = (aDiffSpeedX * aDiffSpeedX) / (2.0f * aDiffX);
-            
-            aFail = false;
-        }
-        
-        
-        if(aDiffSquaredY >= 0.5f)
-        {
-            //aDecelerationY = (pEndSpeed.mY * pEndSpeed.mY - pStartSpeed.mY * pStartSpeed.mY) / (2.0f * aDist);
-            //aDecelerationY = (pEndSpeed.mY * pEndSpeed.mY - pStartSpeed.mY * pStartSpeed.mY) / (2.0f * aDiffY);
-            aDecelerationY = (aDiffSpeedY * aDiffSpeedY) / (2.0f * aDiffY);
-            aDecelerationY = (aDiffSpeedY * aDiffSpeedY) / (2.0f * aDist);
-            
-            
-            //aDecelerationY = (aDiffSpeedY * aDiffSpeedY) / (2.0f * aDiffY);
-            
-            
-            aFail = false;
-        }
-    }
-    */
     
 }

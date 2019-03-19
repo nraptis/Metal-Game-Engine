@@ -25,7 +25,9 @@ public:
     float                   *mY;
 
     void                    Clear();
-    void                    Reset();
+    void                    Reset() { mCount = 0; }
+    void                    RemoveAll() { mCount = 0; }
+    
     
     
     void                    Add(FPointList *pList);

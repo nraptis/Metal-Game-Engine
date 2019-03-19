@@ -48,6 +48,10 @@ void ToolMenuSection::Update() {
 }
 
 void ToolMenuSection::Draw() {
+    Graphics::PipelineStateSetShape2DAlphaBlending();
+    Graphics::SetColor();
+    
+    
     mSectionBackgroundOutline.Draw();
     mSectionBackground.Draw();
 }

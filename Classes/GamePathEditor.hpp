@@ -10,11 +10,13 @@
 #define GamePathEditor_hpp
 
 #include "GFXApp.hpp"
-#include "FloatingCamera.hpp"
 #include "Game.hpp"
 #include "EditorMenuPathControl.hpp"
 #include "EditorMenuPath.hpp"
 #include "FPointList.h"
+#include "LevelWavePathBlueprint.hpp"
+#include "LevelWaveBlueprint.hpp"
+#include "LevelSectionBlueprint.hpp"
 
 #define PATH_MODE_CREATE 0
 #define PATH_MODE_EDIT 1
@@ -45,9 +47,8 @@ public:
     
     void                                        Load();
     
-    FPointList                                  mPath;
+    //FPointList                                  mPath;
     int                                         mPathMode;
-    int                                         mSelectedIndex;
     void                                        *mSelectedTouch;
     
     float                                       mSelectPathStartX;
@@ -56,21 +57,33 @@ public:
     float                                       mSelectTouchStartX;
     float                                       mSelectTouchStartY;
     
+    void                                        PathReset();
+    void                                        PathDeletePoint();
+    
+    void                                        ConstrainXToPoint();
+    bool                                        mConstrainXToPoint;
+    
+    void                                        ConstrainYToPoint();
+    bool                                        mConstrainYToPoint;
+    
+    void                                        ConstraintXToType(int pType);
+    void                                        ConstraintYToType(int pType);
+    
+    
     
     GameEditor                                  *mEditor;
     EditorMenuPathControl                       *mMenuControls;
     EditorMenuPath                              *mMenuPaths;
     
-    float                                       mSpawnZoneTop;
-    float                                       mSpawnZoneRight;
-    float                                       mSpawnZoneLeft;
-    float                                       mSpawnZoneBottom;
-    
     void                                        Close();
     
     
-    
     //Stuff for CD II
+    
+    void                                        SetUp(LevelWaveBlueprint *pWave);
+    LevelWavePathBlueprint                      *mPath;
+    
+    
     
     
 };

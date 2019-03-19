@@ -58,11 +58,7 @@ FApp::FApp() {
     mIsLoading = false;
     mIsLoadingComplete = false;
     
-    
-    mUpdateMultiplier = 1;
-    
-    mUpdatesPerSecond = 100000.0f;
-    
+    mUpdatesPerSecond = 100.0f;
     RecoverTime();
 }
 
@@ -84,12 +80,8 @@ void FApp::BaseInitialize() {
         mImageLoadMutableSuffixList += new FString("");
         mImageLoadSuffixList += new FString("");
         
-        
-        
-        //For now we just load in main thread...
-        //AppShellLoad();
-        
         while (gGraphicsInterface->IsReady() == false) {
+            printf("BaseInitialize:: Waiting for GFX...\n");
             os_sleep(10);
         }
         

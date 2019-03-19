@@ -170,7 +170,6 @@ public:
     
     
     float                                       mUpdatesPerSecond;
-    int                                         mUpdateMultiplier;
     
     void                                        RecoverTime();
     

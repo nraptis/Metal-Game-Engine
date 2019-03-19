@@ -130,6 +130,19 @@ public:
     float                                       mSpawnZoneBottom;
     float                                       mSpawnZoneLeft;
     
+    float                                       mPeekZoneTop;
+    float                                       mPeekZoneRight;
+    float                                       mPeekZoneBottom;
+    float                                       mPeekZoneLeft;
+    
+    
+    float                                       mQuarterZoneTop;
+    float                                       mQuarterZoneRight;
+    float                                       mQuarterZoneLeft;
+    float                                       mQuarterZoneBottom;
+    
+    
+    
     
     // Once darts, items, etc get into this area, they
     // are automatically killed. "Out of bounds"
@@ -139,20 +152,20 @@ public:
     float                                       mKillZoneLeft;
     bool                                        IsGameObjectOutsideKillZone(GameObject *pObject);
     
-    //LevelWavePath                               mTestPath;
-    //LevelWavePath                               mTestPath1;
-    //LevelWavePath                               mTestPath2;
-    //LevelWavePath                               mTestPath3;
-    
-    
-    
+    LevelWavePath                               mTestPath;
+    LevelWavePath                               mTestPath1;
+    LevelWavePath                               mTestPath2;
+    LevelWavePath                               mTestPath3;
     
     void                                        Load();
-    
     
     float                                       mEditorCursorX;
     float                                       mEditorCursorY;
     
+    
+#ifdef EDITOR_MODE
+    LevelWavePath                               mEditorPath;
+#endif
     
 };
 

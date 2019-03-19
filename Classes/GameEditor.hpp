@@ -15,6 +15,9 @@
 #include "Game.hpp"
 #include "EditorMenuSections.hpp"
 #include "GamePathEditor.hpp"
+#include "LevelWavePathBlueprint.hpp"
+#include "LevelWaveBlueprint.hpp"
+#include "LevelSectionBlueprint.hpp"
 
 class GameEditor : public FCanvas {
 public:
@@ -41,8 +44,21 @@ public:
     
     void                                        SetOverlay(FCanvas *pCanvas);
     
+    
+    
+    void                                        WaveAdd();
+    void                                        WaveRemove();
+    void                                        WaveSelectNext();
+    void                                        WaveSelectPrev();
+    void                                        WaveDeselect();
+    
+    
     void                                        OpenPathEditor();
     void                                        ClosePathEditor();
+    
+    
+    
+    LevelSectionBlueprint                       *mCurrentSection;
     
     
     
@@ -50,8 +66,11 @@ public:
     FCanvas                                     *mOverlay;
     
     
+    
+    
     Game                                        *mGame;
     GamePathEditor                              *mPathEditor;
+    
     
     EditorMenuSections                          *mMenuSections;
     
@@ -63,6 +82,22 @@ public:
     float                                       mSpawnZoneRight;
     float                                       mSpawnZoneLeft;
     float                                       mSpawnZoneBottom;
+    
+    float                                       mPeekZoneTop;
+    float                                       mPeekZoneRight;
+    float                                       mPeekZoneBottom;
+    float                                       mPeekZoneLeft;
+    
+    float                                       mQuarterZoneTop;
+    float                                       mQuarterZoneRight;
+    float                                       mQuarterZoneLeft;
+    float                                       mQuarterZoneBottom;
+    
+    float                                       mPlayZoneBottom;
+    
+    float                                       mCenterH;
+    float                                       mCenterV;
+    
     
 };
 

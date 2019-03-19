@@ -415,8 +415,11 @@ void AppShellKeyDown(int pKey) {
 }
 
 void AppShellKeyUp(int pKey) {
-    if (gAppBase) {
-        gAppBase->BaseKeyUp(pKey);
+    if (pKey >= 0 && pKey < 256) {
+        Log("AppShellKeyUp([%d]=>%s)\n", pKey, gKeyName[pKey]);
+        if (gAppBase) gAppBase->BaseKeyUp(pKey);
+    } else {
+        Log("AppShellIllegalKeyUp([%d]=>%s)\n", pKey, "???");
     }
 }
 

@@ -22,9 +22,6 @@ EditorMenuPathControl::EditorMenuPathControl(GamePathEditor *pEditor) : ToolMenu
     
     
     
-    
-    
-    
     mRowMain1 = new ToolMenuSectionRow();
     AddSection(mRowMain1);
     
@@ -56,6 +53,10 @@ void EditorMenuPathControl::Notify(void *pSender, const char *pNotification) {
         if (pSender == mButtonCloseEditor) {
             mEditor->Close();
         }
+        if (pSender == mButtonResetPath) {
+            mEditor->PathReset();
+        }
+        
     }
     
     if (FString(pNotification) == "segment") {

@@ -66,6 +66,17 @@ Game::Game() {
     mSpawnZoneBottom = 0.0f;
     mSpawnZoneLeft = 0.0f;
     
+    mPeekZoneTop = 0.0f;
+    mPeekZoneRight = 0.0f;
+    mPeekZoneBottom = 0.0f;
+    mPeekZoneLeft = 0.0f;
+    
+    mQuarterZoneTop = 0.0f;
+    mQuarterZoneRight = 0.0f;
+    mQuarterZoneLeft = 0.0f;
+    mQuarterZoneBottom = 0.0f;
+    
+    
     mKillZoneTop = 0.0f;
     mKillZoneRight = 0.0f;
     mKillZoneBottom = 0.0f;
@@ -94,23 +105,23 @@ Game::Game() {
     mDartResetAnimationTime = 200;
     
     
-    /*
+    
     mTestPath.AddMove(100.0f, 100.0f);
     mTestPath.AddMove(230.0f, 80.0f);
-    mTestPath.AddStop(500.0f, 360.0f);
-    mTestPath.AddWait(80);
+    mTestPath.AddMove(500.0f, 360.0f, 80);
+    //mTestPath.AddWait(80);
     mTestPath.AddMove(600.0f, 700.0f);
     
     
     
-    mTestPath1.AddStop(100.0f, 500.0f);
+    mTestPath1.AddMove(100.0f, 500.0f);
     mTestPath1.AddMove(300.0f, 200.0f);
     
     mTestPath2.AddMove(300.0f, 60.0f);
-    mTestPath2.AddMove(200.0f, 120.0f);
+    mTestPath2.AddMove(200.0f, 120.0f, 0);
     mTestPath2.AddMove(300.0f, 170.0f);
-    mTestPath2.AddMove(200.0f, 240.0f);
-    */
+    mTestPath2.AddMove(200.0f, 240.0f, 0);
+    
     
     //LevelWavePath                               mTestPath2;
     //LevelWavePath                               mTestPath3;
@@ -247,11 +258,30 @@ void Game::LayoutTransform() {
     mPlayAreaLeft = gSafeAreaInsetLeft + aPlayAreaPadding;
     
     float aSpawnZonePadding = 120.0f;
-    
     mSpawnZoneTop = -aSpawnZonePadding;
     mSpawnZoneRight = mWidth + aSpawnZonePadding;
     mSpawnZoneBottom = mHeight;
     mSpawnZoneLeft = -aSpawnZonePadding;
+    
+    
+    
+    float aPeekZonePadding = 90.0f;
+    mPeekZoneTop = aPeekZonePadding;
+    mPeekZoneRight = mWidth - aPeekZonePadding;
+    mPeekZoneBottom = mHeight;
+    mPeekZoneLeft = aPeekZonePadding;
+    
+    
+    
+    float aQuarterZoneHeight = mPlayAreaBottom;
+    mQuarterZoneTop = aQuarterZoneHeight / 4.0f;
+    mQuarterZoneRight = mWidth - mWidth / 4.0f;
+    mQuarterZoneLeft = mWidth / 4.0f;
+    mQuarterZoneBottom = mPlayAreaBottom - aQuarterZoneHeight / 4.0f;
+    
+    
+    
+    
     
     float aKillZonePaddingTop = gDeviceHeight * 0.75f;
     float aKillZonePaddingBottom = gDeviceHeight * 0.5f;
@@ -498,51 +528,14 @@ void Game::Draw() {
     //mTestPath.Draw();
     //mTestPath1.Draw();
     //mTestPath2.Draw();
-    
-    
-    
-    float aDemoX = 40.0f;
-    float aDemoY = 400.0f;
-    
-    
-    
-    float aDist = 600.0f;
-    float aCutoffDist = 200.0f;
-    
-    float aEndX = aDemoX + aDist;
-    float aEndY = aDemoY;
-    
-    float aSpeedX = 3.0f;
-    
-    float aDecelerationX = (aSpeedX * aSpeedX) / (2.0f * aCutoffDist);
-    
-    Graphics::SetColor(1.0f, 0.0f, 0.0f, 1.0f);
-    Graphics::DrawPoint(aEndX, aEndY, 20.0f);
-    
-    
-    while (aDist > 0.0f) {
-        
-        Graphics::SetColor(1.0f, 1.0f, 0.25f, 0.35f);
-        Graphics::DrawPoint(aDemoX, aDemoY, 1.0f);
-        
-        aDemoX += aSpeedX;
-        aDist -= aSpeedX;
-        
-        if (aDist < aCutoffDist) {
-            aSpeedX -= aDecelerationX;
-        }
-        if (aSpeedX <= 0.0f) { break; }
-        
-        //aDist
-        
-    }
-    
-    //aDecelerationX = (aDiffSpeedX * aDiffSpeedX) / (2.0f * aDist);
-    
+
     
 #ifdef EDITOR_MODE
     Graphics::PipelineStateSetShape2DNoBlending();
     Graphics::SetColor();
+    
+    mEditorPath.Draw();
+    
     //Graphics::DrawLine(mEditorCursorX - 20.0f, mEditorCursorY - 20.0f, mEditorCursorX + 20.0f, mEditorCursorY + 20.0f);
     //Graphics::DrawLine(mEditorCursorX + 20.0f, mEditorCursorY - 20.0f, mEditorCursorX - 20.0f, mEditorCursorY + 20.0f);
 #endif

@@ -14,19 +14,11 @@
 #include "FPointList.h"
 #include "FList.hpp"
 
-
-//We slow down to "stop" points
-#define PATH_NODE_STOP 0
-
-//Then we "wait" for some time
-#define PATH_NODE_WAIT 1
-
 //We move right through these points.
-#define PATH_NODE_MOVE 2
+#define PATH_NODE_NORMAL 0
 
 //We haven't decided anything.
 #define PATH_NODE_INVALID -1
-
 
 class LevelWavePathNode {
 public:
@@ -44,10 +36,9 @@ public:
     LevelWavePath();
     ~LevelWavePath();
     
-    void                        Add(int pType, float pX, float pY);
-    void                        AddMove(float pX, float pY);
-    void                        AddStop(float pX, float pY);
-    void                        AddWait(int pTime);
+    void                        Reset();
+    
+    void                        AddMove(float pX, float pY, int pWait = 0);
     
     bool                        mDidFinalize;
     
@@ -63,7 +54,6 @@ public:
     float                       mSpeed;
     
     FList                       mNodeList;
-    FPointList                  mSegmentList;
     
     FPointList                  mPath;
     
@@ -73,6 +63,9 @@ public:
     float                       mTempY;
     
     int                         mDemoIndex;
+    
+private:
+    void                        Add(int pType, float pX, float pY, int pWait);
     
 };
 

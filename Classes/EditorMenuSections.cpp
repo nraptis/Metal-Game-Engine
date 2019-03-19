@@ -45,6 +45,43 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     mRowMain2 = new ToolMenuSectionRow();
     AddSection(mRowMain2);
     
+    
+    
+    
+    mWavePanel = new ToolMenuPanel();
+    mWavePanel->SetTitle("Wave Panel");
+    AddSection(mWavePanel);
+    
+    mRowWave1 = new ToolMenuSectionRow();
+    mWavePanel->AddSection(mRowWave1);
+    
+    
+    mButtonAddWave = new UIButton();
+    mButtonAddWave->SetText("+ Wave");
+    mRowWave1->AddButton(mButtonAddWave);
+    
+    mButtonDeleteWave = new UIButton();
+    mButtonDeleteWave->SetText("- Wave");
+    mRowWave1->AddButton(mButtonDeleteWave);
+    
+    mButtonSelectNextWave = new UIButton();
+    mButtonSelectNextWave->SetText("Sel >");
+    mRowWave1->AddButton(mButtonSelectNextWave);
+    
+    mButtonSelectPreviousWave = new UIButton();
+    mButtonSelectPreviousWave->SetText("Sel <");
+    mRowWave1->AddButton(mButtonSelectPreviousWave);
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     mPathPanel = new ToolMenuPanel();
     mPathPanel->SetTitle("Path Editor");
@@ -189,9 +226,14 @@ void EditorMenuSections::Layout() {
 
 void EditorMenuSections::Notify(void *pSender, const char *pNotification) {
     if (FString(pNotification) == "button_click") {
-        if (pSender == mButtonEditPaths) {
-            mEditor->OpenPathEditor();
-        }
+        
+        if (pSender == mButtonEditPaths) { mEditor->OpenPathEditor(); }
+        
+        
+        if (pSender == mButtonAddWave) { mEditor->WaveAdd(); }
+        if (pSender == mButtonDeleteWave) { mEditor->WaveRemove(); }
+        if (pSender == mButtonSelectNextWave) { mEditor->WaveSelectNext(); }
+        if (pSender == mButtonSelectPreviousWave) { mEditor->WaveSelectPrev(); }
     }
     
     if (FString(pNotification) == "segment") {
