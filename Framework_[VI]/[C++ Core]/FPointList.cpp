@@ -14,6 +14,7 @@ FPointList::FPointList()
     mY=0;
     
     
+    
 }
 
 FPointList::~FPointList()
@@ -785,12 +786,9 @@ void FPointList::UntransformTranslate(float pX, float pY)
     TransformTranslate(-pX, -pY);
 }
 
-int FPointList::GetClosestIndex(float pX, float pY, float &pDist, int pIgnoreIndex1, int pIgnoreIndex2, int pIgnoreIndex3)
-{
+int FPointList::GetClosestIndex(float pX, float pY, float &pDist, int pIgnoreIndex1, int pIgnoreIndex2, int pIgnoreIndex3) {
     int aResult = -1;
-    
-    if(mCount > 0)
-    {
+    if (mCount > 0) {
         
         float aBestDist = 90.0f * 90.0f;
         
@@ -798,16 +796,12 @@ int FPointList::GetClosestIndex(float pX, float pY, float &pDist, int pIgnoreInd
         float aDiffY = 0.0f;
         float aDist = 0.0f;
         
-        for(int i=0;i<mCount;i++)
-        {
+        for (int i=0;i<mCount;i++) {
             aDiffX = mX[i] - pX;
             aDiffY = mY[i] - pY;
             aDist = aDiffX * aDiffX + aDiffY * aDiffY;
-            
-            if(aDist < aBestDist)
-            {
-                if((i != pIgnoreIndex1) && (i != pIgnoreIndex2) && (i != pIgnoreIndex3))
-                {
+            if (aDist < aBestDist) {
+                if ((i != pIgnoreIndex1) && (i != pIgnoreIndex2) && (i != pIgnoreIndex3)) {
                     aBestDist = aDist;
                     aResult = i;
                 
@@ -824,20 +818,17 @@ int FPointList::GetClosestIndex(float pX, float pY, float &pDist)
 {
     int aResult = -1;
     
-    if(mCount > 0)
-    {
+    if (mCount > 0) {
         aResult = 0;
         float aDiffX = mX[0] - pX;
         float aDiffY = mY[0] - pY;
         float aDist = aDiffX * aDiffX + aDiffY * aDiffY;
         pDist = aDist;
-        for(int i=1;i<mCount;i++)
-        {
+        for (int i=1;i<mCount;i++) {
             aDiffX = mX[i] - pX;
             aDiffY = mY[i] - pY;
             aDist = aDiffX * aDiffX + aDiffY * aDiffY;
-            if(aDist < pDist)
-            {
+            if (aDist < pDist) {
                 pDist = aDist;
                 aResult = i;
             }

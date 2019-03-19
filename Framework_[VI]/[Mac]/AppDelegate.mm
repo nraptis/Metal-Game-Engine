@@ -12,8 +12,8 @@
 //int kDeviceWidth = 480;
 //int kDeviceHeight = 320;
 
-int kDeviceWidth = 1280;
-int kDeviceHeight = 768;
+int kDeviceWidth = 1400;
+int kDeviceHeight = 800;
 
 @interface AppDelegate ()
 
@@ -27,8 +27,8 @@ int kDeviceHeight = 768;
     float aMonitorWidth = [NSScreen mainScreen].frame.size.width;
     float aMonitorHeight = [NSScreen mainScreen].frame.size.height;
     
-    float aMaxWidth = (int)(aMonitorWidth * 0.85f);
-    float aMaxHeight = (int)(aMonitorHeight * 0.75);
+    float aMaxWidth = (int)(aMonitorWidth * 0.95f);
+    float aMaxHeight = (int)(aMonitorHeight * 0.80f);
     
     if (kDeviceWidth > aMaxWidth) kDeviceWidth = aMaxWidth;
     if (kDeviceHeight > aMaxHeight) kDeviceHeight = aMaxHeight;
@@ -89,7 +89,7 @@ int kDeviceHeight = 768;
     
     _window = [[NSWindow alloc] initWithContentRect: aWindowFrame styleMask: aWindowStyle backing: NSBackingStoreBuffered defer: NO];
     
-    [_window setTitle:@"Mac Application"];
+    [_window setTitle:@"Space Lords of Doom"];
     [_window setOpaque: YES];
     [_window setHasShadow: YES];
     _window.contentViewController = self.rootViewController;

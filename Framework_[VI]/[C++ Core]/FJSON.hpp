@@ -13,9 +13,9 @@
 #include "FList.hpp"
 #include "FHashMap.hpp"
 
-#define JSON_TYPE_UNDEFINED -1
-#define JSON_TYPE_DICTIONARY 0
-#define JSON_TYPE_ARRAY 1
+#define JSON_TYPE_DATA 0
+#define JSON_TYPE_DICTIONARY 1
+#define JSON_TYPE_ARRAY 2
 
 class FJSONNode {
 public:
@@ -33,7 +33,6 @@ public:
     int                         mListSize;
     
     FStringMap                  *mInfo;
-    int                         mInfoCount;
     
     int                         mType;
     

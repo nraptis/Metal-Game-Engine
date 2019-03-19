@@ -12,7 +12,7 @@
 PGPath::PGPath() {
     //FPointList                  mPointListBase;
     //FPointList                  mPointList;
-
+    
 }
 
 PGPath::~PGPath() {

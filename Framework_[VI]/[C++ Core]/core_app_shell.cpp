@@ -250,14 +250,34 @@ void AppShellSetDeviceSize(int pWidth, int pHeight) {
             float aAspectRatio = 768.0f / 1024.0f;
             
             
-            float aPadding = 5.0f;
-            float aVirtualHeight = round(gDeviceHeight - (aPadding * 2.0f));
-            float aVirtualWidth = round(gDeviceHeight * aAspectRatio);
-            float aVirtualX = round(gDeviceWidth - (5.0 + aVirtualWidth));
-            float aVirtualY = aPadding;
             
-            //TODO:
-            AppShellSetVirtualFrame(aVirtualX, aVirtualY, aVirtualWidth, aVirtualHeight);
+            if (true) {
+                
+                
+                float aVirtualHeight = round(gDeviceHeight * 0.75f);
+                float aVirtualWidth = round(aVirtualHeight * aAspectRatio);
+                float aVirtualX = round(gDeviceWidth / 2.0f - (aVirtualWidth / 2.0f));
+                float aVirtualY = gDeviceHeight - (5.0f + aVirtualHeight);
+                
+                
+                
+                //TODO:
+                AppShellSetVirtualFrame(aVirtualX, aVirtualY, aVirtualWidth, aVirtualHeight);
+                
+            } else {
+                float aPadding = 5.0f;
+                float aVirtualHeight = round(gDeviceHeight - (aPadding * 2.0f));
+                float aVirtualWidth = round(gDeviceHeight * aAspectRatio);
+                float aVirtualX = round(gDeviceWidth / 2.0f - (aVirtualWidth / 2.0f));
+                float aVirtualY = aPadding;
+                
+                
+                
+                //TODO:
+                AppShellSetVirtualFrame(aVirtualX, aVirtualY, aVirtualWidth, aVirtualHeight);
+            }
+            
+            
             
             //aApp->BaseSetVirtualFrame(aVirtualX, aVirtualY, aVirtualWidth, aVirtualHeight);
         }

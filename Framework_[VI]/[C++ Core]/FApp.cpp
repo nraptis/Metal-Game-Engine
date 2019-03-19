@@ -61,7 +61,7 @@ FApp::FApp() {
     
     mUpdateMultiplier = 1;
     
-    mUpdatesPerSecond = 100.0f;
+    mUpdatesPerSecond = 100000.0f;
     
     RecoverTime();
 }
@@ -153,7 +153,7 @@ void FApp::BaseSetSafeAreaInsets(int pInsetUp, int pInsetRight, int pInsetDown, 
 }
 
 void AppFrameThread(void *pArgs) {
-    Log("AppFrameThread(%X)\m", pArgs);
+    Log("AppFrameThread(%X)\n", pArgs);
     
     gAppBase->MainRunLoop();
 }
@@ -242,11 +242,9 @@ void FApp::BaseUpdate() {
     
     mDidUpdate = true;
     
-    //InterfaceLock();
-    
+    InterfaceLock();
     gTouch.Update();
-    
-    //InterfaceUnlock();
+    InterfaceUnlock();
     
     
     
@@ -320,11 +318,15 @@ void FApp::BaseDraw() {
         Graphics::SetColor();
         Graphics::PipelineStateSetSpritePremultipliedBlending();
         Graphics::BufferSetIndicesSprite();
-        mSysFont.Draw(FString("FPS = ") + FString(GetFPS()), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 6.0f);
-        mSysFont.Draw(FString("UPS = ") + FString(GetUPS()), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 6.0f + 42.0f);
+        
+        
+        mSysFont.Draw(FString("FPS = ") + FString(GetFPS()), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 6.0f, 0.5f);
+        mSysFont.Draw(FString("UPS = ") + FString(GetUPS()), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 6.0f + 18.0f, 0.5f);
     }
     
     if (mIsLoadingComplete && Graphics::RenderPass() == GFX_RENDER_PASS_2D_MAIN) {
+        
+        /*
         Graphics::PipelineStateSetShape2DAlphaBlending();
         Graphics::SetColor(0.55f, 0.55f, 0.55f, 0.5f);
         Graphics::DrawLine(gVirtualDevX + gSafeAreaInsetLeft, gVirtualDevY, gVirtualDevX + gSafeAreaInsetLeft, gVirtualDevY + gVirtualDevHeight, 2.0f);
@@ -338,6 +340,7 @@ void FApp::BaseDraw() {
         Graphics::DrawLine(gVirtualDevX + gVirtualDevWidth - gSafeAreaInsetRight, gVirtualDevY, gVirtualDevX + gVirtualDevWidth - gSafeAreaInsetRight, gVirtualDevY + gVirtualDevHeight);
         Graphics::DrawLine(gVirtualDevX, gVirtualDevY + gSafeAreaInsetTop, gVirtualDevX + gVirtualDevWidth, gVirtualDevY + gSafeAreaInsetTop, 1.0f);
         Graphics::DrawLine(gVirtualDevX, gVirtualDevY + gVirtualDevHeight - gSafeAreaInsetBottom, gVirtualDevX + gVirtualDevWidth, gVirtualDevY + gVirtualDevHeight - gSafeAreaInsetBottom, 1.0f);
+        */
     }
 }
 
@@ -496,82 +499,108 @@ void FApp::KeyUp(int pKey) {
 
 void FApp::BaseTouchDown(float pX, float pY, void *pData) {
     InterfaceLock();
+    //ThrottleLock();
     gTouch.BaseTouchDown(pX, pY, pData);
+    //ThrottleUnlock();
     InterfaceUnlock();
 }
 
 void FApp::BaseTouchMove(float pX, float pY, void *pData) {
     InterfaceLock();
+    //ThrottleLock();
     gTouch.BaseTouchMove(pX, pY, pData);
+    //ThrottleUnlock();
     InterfaceUnlock();
 }
 
 void FApp::BaseTouchUp(float pX, float pY, void *pData) {
     InterfaceLock();
+    //ThrottleLock();
     gTouch.BaseTouchUp(pX, pY, pData);
+    //ThrottleUnlock();
     InterfaceUnlock();
 }
 
 void FApp::BaseTouchCanceled(float pX, float pY, void *pData) {
     InterfaceLock();
+    //ThrottleLock();
     gTouch.BaseTouchCanceled(pX, pY, pData);
+    //ThrottleUnlock();
     InterfaceUnlock();
 }
 
 void FApp::BaseTouchDownDroid(float pX, float pY, int pIndex, int pCount) {
     InterfaceLock();
+    //ThrottleLock();
     gTouch.BaseTouchDownDroid(pX, pY, pIndex, pCount);
+    //ThrottleUnlock();
     InterfaceUnlock();
 }
 
 void FApp::BaseTouchMoveDroid(float pX, float pY, int pIndex, int pCount) {
     InterfaceLock();
+    //ThrottleLock();
     gTouch.BaseTouchMoveDroid(pX, pY, pIndex, pCount);
+    //ThrottleUnlock();
     InterfaceUnlock();
 }
 
 void FApp::BaseTouchUpDroid(float pX, float pY, int pIndex, int pCount) {
     InterfaceLock();
+    //ThrottleLock();
     gTouch.BaseTouchUpDroid(pX, pY, pIndex, pCount);
+    //ThrottleUnlock();
     InterfaceUnlock();
 }
 
 void FApp::BaseTouchCanceledDroid(float pX, float pY, int pIndex, int pCount) {
     InterfaceLock();
+    //ThrottleLock();
     gTouch.BaseTouchCanceledDroid(pX, pY, pIndex, pCount);
+    //ThrottleUnlock();
     InterfaceUnlock();
 }
 
 void FApp::BaseMouseDown(float pX, float pY, int pButton) {
     InterfaceLock();
+    //ThrottleLock();
     gTouch.BaseMouseDown(pX, pY, pButton);
+    //ThrottleUnlock();
     InterfaceUnlock();
     
 }
 
 void FApp::BaseMouseMove(float pX, float pY) {
     InterfaceLock();
+    //ThrottleLock();
     gTouch.BaseMouseMove(pX, pY);
+    //ThrottleUnlock();
     InterfaceUnlock();
 }
 
 void FApp::BaseMouseUp(float pX, float pY, int pButton) {
     InterfaceLock();
+    //ThrottleLock();
     gTouch.BaseMouseUp(pX, pY, pButton);
+    //ThrottleUnlock();
     InterfaceUnlock();
 }
 
 void FApp::BaseMouseWheel(int pDirection) {
     InterfaceLock();
+    //ThrottleLock();
     gTouch.BaseMouseWheel(pDirection);
+    //ThrottleUnlock();
     InterfaceUnlock();
 }
 
 void FApp::BaseKeyDown(int pKey) {
     if ((pKey >= 0) && (pKey < 256)) {
         InterfaceLock();
+        //ThrottleLock();
         gKeyPressed[pKey] = true;
         gTouch.EnqueueKeyDown(pKey);
+        //ThrottleUnlock();
         InterfaceUnlock();
     }
 }
@@ -579,8 +608,10 @@ void FApp::BaseKeyDown(int pKey) {
 void FApp::BaseKeyUp(int pKey) {
     if ((pKey >= 0) && (pKey < 256)) {
         InterfaceLock();
+        //ThrottleLock();
         gKeyPressed[pKey] = false;
         gTouch.EnqueueKeyUp(pKey);
+        //ThrottleUnlock();
         InterfaceUnlock();
     }
 }
@@ -680,7 +711,9 @@ void FApp::BaseInactive() {
         Inactive();
         
         InterfaceLock();
+        //ThrottleLock();
         gTouch.Inactive();
+        //ThrottleUnlock();
         InterfaceUnlock();
         
         
@@ -711,7 +744,9 @@ void FApp::BaseActive() {
         #endif
         
         InterfaceLock();
+        //ThrottleLock();
         gTouch.Active();
+        //ThrottleUnlock();
         InterfaceUnlock();
         
         mWindowMain.Active();
@@ -771,7 +806,6 @@ void FApp::SystemLock() {
 void FApp::SystemUnlock() {
     os_unlock_thread(mSystemLock);
 }
-
 
 void FApp::InterfaceLock() {
     if (os_thread_lock_exists(mInterfaceLock) == false) {

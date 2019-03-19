@@ -139,16 +139,19 @@ public:
     float                                       mKillZoneLeft;
     bool                                        IsGameObjectOutsideKillZone(GameObject *pObject);
     
-    LevelWavePath                               mTestPath;
+    //LevelWavePath                               mTestPath;
+    //LevelWavePath                               mTestPath1;
+    //LevelWavePath                               mTestPath2;
+    //LevelWavePath                               mTestPath3;
     
-    
-    LevelWavePath                               mTestPath1;
-    LevelWavePath                               mTestPath2;
-    LevelWavePath                               mTestPath3;
     
     
     
     void                                        Load();
+    
+    
+    float                                       mEditorCursorX;
+    float                                       mEditorCursorY;
     
     
 };

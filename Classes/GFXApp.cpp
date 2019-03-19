@@ -18,26 +18,19 @@
 #include "GameContainer.hpp"
 #include "CameraMenu.hpp"
 
+#ifdef EDITOR_MODE
+class GameEditor;
+#include "GameEditor.hpp"
+#endif
+
 GFXApp *gApp = 0;
 GFXApp::GFXApp() {
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     gApp = this;
     
-    
+#ifdef EDITOR_MODE
+    mEditor = NULL;
+#endif
     mGameContainer = NULL;
     mLevelSelect = NULL;
     mLightScene = NULL;
@@ -80,17 +73,21 @@ GFXApp::~GFXApp() {
 
 void GFXApp::Load() {
     
-    //FJSON aJSON3;
-    //aJSON3.Load("json_3.yml");
+    /*
+    for (int i=0;i<1000;i++) {
+        FJSON aJSON3;
+        aJSON3.Load("json_3.yml");
+        
+        FJSON aJSON2;
+        aJSON2.Load("json_2.json");
     
-    FJSON aJSON2;
-    aJSON2.Load("json_2.json");
-    
-    exit(0);
-    
-    
-    FJSON aJSON1;
-    aJSON1.Load("json_1");
+        FJSON aJSON1;
+        aJSON1.Load("json_1");
+        
+        FJSON aJSON4;
+        aJSON4.Load("json_4");
+    }
+    */
     
     
     
@@ -219,6 +216,12 @@ void GFXApp::LoadComplete() {
     if (mGameContainer == NULL) {
         mGameContainer = new GameContainer();
         mWindowMain.AddChild(mGameContainer);
+        
+#ifdef EDITOR_MODE
+        mEditor = new GameEditor(mGameContainer->mGame);
+        mWindowTools.AddChild(mEditor);
+#endif
+        
     }
     
     /*
@@ -258,7 +261,8 @@ void GFXApp::Update() {
             --mLoadGame;
             if (mLoadGame == 0 && mGameContainer != NULL) {
                 Log("Loading Game...\n");
-                mGameContainer->mGame->Load();
+                //mGameContainer->mGame->Load();
+                
             }
         }
     }
@@ -628,6 +632,12 @@ void GFXApp::Draw() {
 void GFXApp::SetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
     if (mGameContainer) {
         mGameContainer->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
+        
+#ifdef EDITOR_MODE
+        mEditor->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+#endif
+        
+        
     }
     if (mLevelSelect) {
         mLevelSelect->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
@@ -740,5 +750,8 @@ void GFXApp::KeyUp(int pKey) {
 void GFXApp::SetDeviceSize(int pWidth, int pHeight) {
     if (mGameContainer) {
         mGameContainer->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
+#ifdef EDITOR_MODE
+        mEditor->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+#endif
     }
 }

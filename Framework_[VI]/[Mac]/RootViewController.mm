@@ -21,16 +21,7 @@ RootViewController *gRootBase = NULL;
 
 - (void)viewDidLoad {
     gRootBase = self;
-    
     [super viewDidLoad];
-    
-    //self.view.opaque = true;
-    //self.view.backgroundColor = [UIColor blackColor];
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        //gAppBase->MainRunLoop();
-    });
-    
 }
 
 - (void)setup {

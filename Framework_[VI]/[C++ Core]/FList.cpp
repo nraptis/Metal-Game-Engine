@@ -76,7 +76,9 @@ void FList::Add(FList &pList) {
 	if (aNewCount > mSize) {
         Size(aNewCount);
 	}
-	for (int i = 0;i<pList.mCount;i++) Add(pList.mData[i]);
+    for (int i = 0;i<pList.mCount;i++) {
+        Add(pList.mData[i]);
+    }
 }
 
 //TODO: Improve speed possible.

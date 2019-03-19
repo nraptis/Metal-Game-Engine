@@ -19,13 +19,31 @@ FJSONNode::FJSONNode() {
     mListSize = 0;
     
     mInfo = NULL;
-    mInfoCount = 0;
     
-    mType = JSON_TYPE_UNDEFINED;
+    mType = JSON_TYPE_DATA;
 }
 
 FJSONNode::~FJSONNode() {
+    //printf("Deleting JNode[%s]\n", mKey);
     
+    if (mList != NULL) {
+        for (int i=0;i<mListCount;i++) {
+            delete mList[i];
+        }
+        delete [] mList;
+        mList = NULL;
+    }
+    
+    if (mInfo != NULL) {
+        FStringMapNode *aNode = mInfo->mListHead;
+        while (aNode != NULL) {
+            FJSONNode *aJSONNode = ((FJSONNode *)aNode->mObject);
+            delete aJSONNode;
+            aNode = aNode->mListNext;
+        }
+        delete mInfo;
+        mInfo = NULL;
+    }
 }
 
 void FJSONNode::AddDictionary(const char *pKey, FJSONNode *pNode) {
@@ -138,7 +156,7 @@ FJSON::FJSON() {
 }
 
 FJSON::~FJSON() {
-    
+    Clear();
 }
 
 void FJSON::Clear() {
@@ -178,8 +196,8 @@ void FJSON::Load(const char *pFile) {
 
 void FJSON::Parse(const char *pData, int pLength) {
     
+    Clear();
     if (pData == NULL || pLength <= 2) {
-        Clear();
         return;
     }
     
@@ -224,15 +242,11 @@ void FJSON::Parse(const char *pData, int pLength) {
         }
     }
     
-    printf("Parse Success!\n");
-    
-    mRoot->Print(0);
-    
     delete [] aData;
     return;
     
 JSON_PARSE_ERROR:
-    printf("JSON PARSE ERROR...\n");
+    
     delete [] aData;
     delete mRoot;
     mRoot = NULL;
@@ -324,7 +338,6 @@ char *FJSON::ParseHelperDictionary(char *pData, FList *pStack, bool *pSuccess) {
         } else if (*aPtr == '\"') {
             aEOQ = EndOfQuote(aPtr);
             if (aEOQ == NULL) {
-                printf("NO Inner EOQ...\n");
                 *pSuccess = false;
                 delete aKey;
                 return NULL;
@@ -339,7 +352,6 @@ char *FJSON::ParseHelperDictionary(char *pData, FList *pStack, bool *pSuccess) {
         } else if (IsNumber(*aPtr)) {
             char *aEON = EndOfNumber(aPtr);
             if (aEON == NULL) {
-                printf("NO Inner EONNN...\n");
                 *pSuccess = false;
                 delete aKey;
                 return NULL;

@@ -16,6 +16,9 @@ Game::Game() {
     
     mName = "[Game]";
     
+    mEditorCursorX = 400.0f;
+    mEditorCursorY = 400.0f;
+    
     
     gGame = this;
     
@@ -91,7 +94,7 @@ Game::Game() {
     mDartResetAnimationTime = 200;
     
     
-    
+    /*
     mTestPath.AddMove(100.0f, 100.0f);
     mTestPath.AddMove(230.0f, 80.0f);
     mTestPath.AddStop(500.0f, 360.0f);
@@ -107,7 +110,7 @@ Game::Game() {
     mTestPath2.AddMove(200.0f, 120.0f);
     mTestPath2.AddMove(300.0f, 170.0f);
     mTestPath2.AddMove(200.0f, 240.0f);
-    
+    */
     
     //LevelWavePath                               mTestPath2;
     //LevelWavePath                               mTestPath3;
@@ -243,18 +246,12 @@ void Game::LayoutTransform() {
     mPlayAreaBottom = mDartSpawnY - aPlayAreaPadding;
     mPlayAreaLeft = gSafeAreaInsetLeft + aPlayAreaPadding;
     
-    mPlayAreaTop = Convert2DYTo3D(mPlayAreaTop);
-    mPlayAreaRight = Convert2DXTo3D(mPlayAreaRight);
-    mPlayAreaBottom = Convert2DYTo3D(mPlayAreaBottom);
-    mPlayAreaLeft = Convert2DXTo3D(mPlayAreaLeft);
+    float aSpawnZonePadding = 120.0f;
     
-    
-    float aSpawnZonePadding = 80.0f;
-    
-    mSpawnZoneTop = Convert2DYTo3D(-aSpawnZonePadding);
-    mSpawnZoneRight = Convert2DXTo3D(mWidth + aSpawnZonePadding);
-    mSpawnZoneBottom = mPlayAreaBottom;
-    mSpawnZoneLeft = Convert2DXTo3D(-aSpawnZonePadding);
+    mSpawnZoneTop = -aSpawnZonePadding;
+    mSpawnZoneRight = mWidth + aSpawnZonePadding;
+    mSpawnZoneBottom = mHeight;
+    mSpawnZoneLeft = -aSpawnZonePadding;
     
     float aKillZonePaddingTop = gDeviceHeight * 0.75f;
     float aKillZonePaddingBottom = gDeviceHeight * 0.5f;
@@ -498,10 +495,10 @@ void Game::Draw() {
     }
     
     
-    mTestPath.Draw();
+    //mTestPath.Draw();
+    //mTestPath1.Draw();
+    //mTestPath2.Draw();
     
-    mTestPath1.Draw();
-    mTestPath2.Draw();
     
     
     float aDemoX = 40.0f;
@@ -543,9 +540,12 @@ void Game::Draw() {
     //aDecelerationX = (aDiffSpeedX * aDiffSpeedX) / (2.0f * aDist);
     
     
-    
-    
-    
+#ifdef EDITOR_MODE
+    Graphics::PipelineStateSetShape2DNoBlending();
+    Graphics::SetColor();
+    //Graphics::DrawLine(mEditorCursorX - 20.0f, mEditorCursorY - 20.0f, mEditorCursorX + 20.0f, mEditorCursorY + 20.0f);
+    //Graphics::DrawLine(mEditorCursorX + 20.0f, mEditorCursorY - 20.0f, mEditorCursorX - 20.0f, mEditorCursorY + 20.0f);
+#endif
     
 }
 
