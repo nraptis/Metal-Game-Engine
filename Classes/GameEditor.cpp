@@ -46,6 +46,11 @@ GameEditor::GameEditor(Game *pGame) {
     
     
     SetOverlay(mToolContainer);
+    
+    
+    WaveAdd();
+    
+    //OpenPathEditor();
 }
 
 GameEditor::~GameEditor() {
@@ -103,6 +108,8 @@ void GameEditor::Layout() {
     aCenter = FCanvas::Convert(aCenter, gGame, this);
     mCenterH = aCenter.mX;
     mCenterV = aCenter.mY;
+    
+    
     
     
     

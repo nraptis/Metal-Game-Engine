@@ -13,6 +13,7 @@
 #include "FSlider.hpp"
 #include "UIRoundedRect.hpp"
 #include "UILabel.hpp"
+#include "UITextBox.hpp"
 
 class UIStepper : public ToolMenuSectionRow {
 public:
@@ -20,35 +21,34 @@ public:
     virtual ~UIStepper();
 
     virtual void                                Layout();
-
+    virtual void                                Update();
     virtual void                                Draw();
-
     virtual void                                Notify(void *pSender, const char *pNotification);
 
-    float                                       GetValue();
-    void                                        SetValue(float *pTargetValue);
-    float                                       *mTargetValue;
-    float                                       mValue;
 
-
+    void                                        SetText(const char *pText);
+    void                                        SetValue(int pValue);
+    void                                        SetTarget(int *pTarget);
+    int                                         *mTarget;
+    int                                         mValue;
+    
     UILabel                                     mLabelTitle;
-    UILabel                                     mLabelValue;
-
+    
+    
+    UITextBox                                   mTextBox;
+    
+    UIButton                                    mButtonZero;
+    
+    UIButton                                    mButtonAdd50;
+    UIButton                                    mButtonAdd10;
+    UIButton                                    mButtonAdd1;
+    UIButton                                    mButtonSub1;
+    UIButton                                    mButtonSub10;
+    UIButton                                    mButtonSub50;
+    
     float                                       mLabelTitleWidth;
-    float                                       mLabelValueWidth;
-
-    FSlider                                     mBaseSlider;
-    float                                       mBarHeight;
-    float                                       mBarHeightInner;
-
-    UIRoundedRect                               mRectBar;
-    UIRoundedRect                               mRectBarShine;
-
-    UIRoundedRect                               mRectThumb;
-    UIRoundedRect                               mRectThumbShine;
-
-    float                                       mPreviousDrawMin;
-    float                                       mPreviousDrawMax;
+    float                                       mTextBoxWidth;
+    
 };
 
 #endif

@@ -272,7 +272,12 @@ void FString::Set(const char *pString) {
 		for (int i = 0; i < aLength; i++) mData[i] = pString[i];
 		mLength = aLength;
 		FillNull();
-	}
+    } else if (pString == NULL) {
+        mLength = 0;
+        if (mData != NULL) {
+            mData[0] = 0;
+        }
+    }
 }
 
 void FString::Append(char pChar) {
@@ -350,8 +355,8 @@ void FString::Ins(const char *pString, int pLength, int pSlot)
 
 	if((pLength > 0) && (pSlot >= 0))
 	{
-		int aNewLength = pSlot + pLength;
-		if(aNewLength > mSize)Size(aNewLength + aNewLength / 2 + 1);
+        int aNewLength = pSlot + pLength;
+        if(aNewLength > mSize)Size(aNewLength + aNewLength / 2 + 1);
 
 
 		for(int i = 0; i < pLength; i++)
@@ -382,6 +387,24 @@ void FString::InsChars(char pChar, int pCount, int pSlot)
 
 		delete[] aChar;
 	}
+}
+
+void FString::Insert(char pChar, int pSlot) {
+    
+    if (pSlot < 0) { pSlot = 0; }
+    if (pSlot > mLength) { pSlot = mLength; }
+    
+    
+    int aNewLength = mLength + 1;
+    if (aNewLength > mSize) {
+        Size(aNewLength + aNewLength / 2 + 1);
+    }
+    
+    for (int i=mLength;i>pSlot;i--) {
+        mData[i] = mData[i-1];
+    }
+    mData[pSlot] = pChar;
+    mLength += 1;
 }
 
 FString FString::GetLastNumber()
@@ -766,7 +789,25 @@ void FString::Delete(char *theString)
 
 void FString::Delete(int thePosition, int theLength)
 {
-
+    if (thePosition < 0) {
+        theLength += thePosition;
+        thePosition = 0;
+    }
+    
+    int aEndIndex = thePosition + theLength;
+    if (aEndIndex > mLength) {
+        theLength -= (aEndIndex - mLength);
+    }
+    
+    if (theLength > 0) {
+        
+        for (int i=0;i<theLength;i++) {
+            mData[i + thePosition] = mData[i + thePosition + theLength];
+        }
+        mLength -= theLength;
+        mData[mLength] = 0;
+    }
+    
 
 
 	/*
@@ -795,6 +836,7 @@ void FString::Delete(int thePosition)
 
 FString FString::GetSubString(int thePosition, int theLength)
 {
+    /*
 	int aStartIndex = thePosition;
 	int aEndIndex = thePosition + theLength;
 
@@ -805,7 +847,7 @@ FString FString::GetSubString(int thePosition, int theLength)
 
 	FString aResult;
 
-	if((aStartIndex < mLength) && (mLength > 0) && (aLength > 0))
+	if ((aStartIndex < mLength) && (mLength > 0) && (aLength > 0))
 	{
 		aResult.Size(aLength);
 		int aPaste = 0;
@@ -820,6 +862,32 @@ FString FString::GetSubString(int thePosition, int theLength)
 		aResult.mLength = aPaste;
 	}
 	return aResult;
+    */
+    
+    
+    int aStartIndex = thePosition;
+    int aCeiling = thePosition + theLength;
+    
+    if (aStartIndex < 0) { aStartIndex = 0; }
+    if (aCeiling > mLength) { aCeiling = mLength; };
+    
+    int aLength = (aCeiling - aStartIndex);
+    
+    FString aResult;
+    
+    if ((aStartIndex < mLength) && (mLength > 0) && (aLength > 0)) {
+        aResult.Size(aLength);
+        int aPaste = 0;
+        while (aStartIndex < aCeiling) {
+            aResult.mData[aPaste] = mData[aStartIndex];
+            aStartIndex++;
+            aPaste++;
+        }
+        aResult.mData[aPaste] = 0;
+        aResult.mLength = aPaste;
+    }
+    return aResult;
+    
 }
 
 void FString::RemoveLeadingSpaces()

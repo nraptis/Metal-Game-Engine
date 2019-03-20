@@ -94,6 +94,8 @@ void GameContainer::Draw() {
     
     Graphics::PipelineStateSetShape2DAlphaBlending();
     
+    
+    /*
     Graphics::SetColor(1.0f, 0.0f, 0.25f, 0.25f);
     Graphics::DrawRect(0.0f, 0.0f, mInterfaceLeftWidth, mHeight);
     
@@ -107,6 +109,8 @@ void GameContainer::Draw() {
     
     Graphics::SetColor(1.0f, 0.5f, 0.0f, 0.25f);
     Graphics::DrawRect(0.0f, mHeight - mInterfaceBottomHeight, mWidth, mInterfaceBottomHeight);
+    */
+     
 }
 
 void GameContainer::Draw3D() {

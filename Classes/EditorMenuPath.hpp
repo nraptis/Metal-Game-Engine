@@ -23,13 +23,7 @@ public:
     virtual void                            Notify(void *pSender, const char *pNotification) override;
     
     
-    ToolMenuPanel                           *mPathControls;
-    ToolMenuSectionRow                      *mRowControls1;
-    UIButton                                *mButtonPrintPath;
-    UIButton                                *mButtonSavePath;
-    UIButton                                *mButtonLoadPath;
     
-    ToolMenuSectionRow                      *mRowControls2;
     
     
     
@@ -44,11 +38,26 @@ public:
     
 
     ToolMenuPanel                           *mPointsPanel;
+    
+    
+    
+    UIStepper                               *mStepperWait;
+    
+    ToolMenuSectionRow                      *mRowPointWait;
+    UITextBox                               *mTextBoxWait;
+    UIButton                                *mButtonResetWait;
+    
+    
+    
     ToolMenuSectionRow                      *mRowPointOptions;
     UICheckBox                              *mCheckBoxChamfer;
     UIButton                                *mButtonDeletePoint;
     
     ToolMenuPanel                           *mConstraintPanel;
+    
+    
+    
+    
     
     
     

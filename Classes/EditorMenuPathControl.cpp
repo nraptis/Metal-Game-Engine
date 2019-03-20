@@ -35,6 +35,35 @@ EditorMenuPathControl::EditorMenuPathControl(GamePathEditor *pEditor) : ToolMenu
     mRowMain1->AddButton(mButtonResetPath);
     
     
+    
+    
+    
+    mPathControls = new ToolMenuPanel();
+    mPathControls->SetTitle("Main Primary Enhance");
+    AddSection(mPathControls);
+    
+    mRowControls1 = new ToolMenuSectionRow();
+    mPathControls->AddSection(mRowControls1);
+    
+    mButtonSavePath = new UIButton();
+    mButtonSavePath->SetText("Save Path");
+    mRowControls1->AddButton(mButtonSavePath);
+    
+    mButtonPrintPath = new UIButton();
+    mButtonPrintPath->SetText("Print Path");
+    mRowControls1->AddButton(mButtonPrintPath);
+    
+    mRowControls2 = new ToolMenuSectionRow();
+    mPathControls->AddSection(mRowControls2);
+    
+    mButtonLoadPath = new UIButton();
+    mButtonLoadPath->SetText("Load Path");
+    mRowControls2->AddButton(mButtonLoadPath);
+    
+    
+    
+    
+    
     DeactivateCloseButton();
 }
 

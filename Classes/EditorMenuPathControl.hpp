@@ -25,6 +25,18 @@ public:
     UIButton                                *mButtonResetPath;
 
     
+    
+    
+    ToolMenuPanel                           *mPathControls;
+    ToolMenuSectionRow                      *mRowControls1;
+    UIButton                                *mButtonPrintPath;
+    UIButton                                *mButtonSavePath;
+    UIButton                                *mButtonLoadPath;
+    
+    ToolMenuSectionRow                      *mRowControls2;
+    
+    
+    
     GamePathEditor                          *mEditor;
     
 };

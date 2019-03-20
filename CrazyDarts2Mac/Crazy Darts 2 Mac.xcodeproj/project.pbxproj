@@ -157,6 +157,7 @@
 		0DBABE7E223AC5F8009A17A7 /* LevelSection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBABE7C223AC5F8009A17A7 /* LevelSection.cpp */; };
 		0DBABE81223AC61D009A17A7 /* LevelWave.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBABE7F223AC61D009A17A7 /* LevelWave.cpp */; };
 		0DD327A222413542002B0715 /* Constraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DD327A022413542002B0715 /* Constraint.cpp */; };
+		0DD327A52241D987002B0715 /* UITextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DD327A32241D987002B0715 /* UITextBox.cpp */; };
 		0DDCA443223F22350080E2C5 /* FJSON.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DDCA441223F22340080E2C5 /* FJSON.cpp */; };
 		0DEFD455223F2E660090BA17 /* GameEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DEFD453223F2E660090BA17 /* GameEditor.cpp */; };
 		E1705008222232CF000C5127 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1705007222232CF000C5127 /* Assets.xcassets */; };
@@ -463,6 +464,8 @@
 		0DBABE80223AC61D009A17A7 /* LevelWave.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelWave.hpp; sourceTree = "<group>"; };
 		0DD327A022413542002B0715 /* Constraint.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Constraint.cpp; sourceTree = "<group>"; };
 		0DD327A122413542002B0715 /* Constraint.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Constraint.hpp; sourceTree = "<group>"; };
+		0DD327A32241D987002B0715 /* UITextBox.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UITextBox.cpp; sourceTree = "<group>"; };
+		0DD327A42241D987002B0715 /* UITextBox.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UITextBox.hpp; sourceTree = "<group>"; };
 		0DDCA441223F22340080E2C5 /* FJSON.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FJSON.cpp; sourceTree = "<group>"; };
 		0DDCA442223F22340080E2C5 /* FJSON.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FJSON.hpp; sourceTree = "<group>"; };
 		0DEFD453223F2E660090BA17 /* GameEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameEditor.cpp; sourceTree = "<group>"; };
@@ -867,6 +870,8 @@
 				0DBABE1A223A9EB5009A17A7 /* UISlider.hpp */,
 				0DBABE26223A9EB5009A17A7 /* UIStepper.cpp */,
 				0DBABE17223A9EB5009A17A7 /* UIStepper.hpp */,
+				0DD327A32241D987002B0715 /* UITextBox.cpp */,
+				0DD327A42241D987002B0715 /* UITextBox.hpp */,
 			);
 			path = "[[UI Components]]";
 			sourceTree = "<group>";
@@ -1140,6 +1145,7 @@
 				0D03C4E0223FE4E0000F3CD5 /* EditorMenuSections.cpp in Sources */,
 				0DB13C852234B20B00A6F230 /* os_core_graphics.mm in Sources */,
 				0DBABE55223A9EB5009A17A7 /* CameraMenu.cpp in Sources */,
+				0DD327A52241D987002B0715 /* UITextBox.cpp in Sources */,
 				0D03C4E6223FE505000F3CD5 /* EditorMenuFlow.cpp in Sources */,
 				0DBABE60223A9EB5009A17A7 /* ToolMenuModalUnderlay.cpp in Sources */,
 				0DBABE58223A9EB5009A17A7 /* ToolMenuSectionRow.cpp in Sources */,

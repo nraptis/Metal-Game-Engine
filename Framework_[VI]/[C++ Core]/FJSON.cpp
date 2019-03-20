@@ -11,7 +11,7 @@
 
 
 FJSONNode::FJSONNode() {
-    mKey = NULL;
+    //mKey = NULL;
     mValue = NULL;
     
     mList = NULL;
@@ -20,7 +20,9 @@ FJSONNode::FJSONNode() {
     
     mInfo = NULL;
     
-    mType = JSON_TYPE_DATA;
+    mNodeType = JSON_NODE_TYPE_DATA;
+    mDataType = JSON_DATA_TYPE_FLAG;
+
 }
 
 FJSONNode::~FJSONNode() {
@@ -69,85 +71,6 @@ void FJSONNode::AddArray(FJSONNode *pNode) {
     }
     mList[mListCount++] = pNode;
 }
-
-void FJSONNode::Print() {
-    printf("JSON:\n");
-    
-    if (mInfo != NULL) {
-        FStringMapNode *aNode = mInfo->mListHead;
-        while (aNode != NULL) {
-            
-            printf("\t%s: ", aNode->mKey.c());
-            
-            ((FJSONNode *)aNode->mObject)->Print(2);
-            
-            aNode = aNode->mListNext;
-        }
-    }
-    
-}
-
-void FJSONNode::Print(int pDepth) {
-    
-    //printf("CD: %d\n", pDepth);
-    if (mValue != NULL) {
-        printf("%s", mValue);
-        return;
-    }
-    
-    for (int i=0;i<pDepth;i++) { printf("\t"); }
-    if (mKey != NULL) {
-        if (mInfo == NULL && mList == NULL) {
-            if (mType == JSON_TYPE_ARRAY) {
-                printf("[]\n");
-            } else {
-                printf("{}\n");
-            }
-            
-        }
-    }
-    
-    if (mInfo != NULL) {
-        FStringMapNode *aNode = mInfo->mListHead;
-        printf("{\n");
-        while (aNode != NULL) {
-            
-            printf("\n");
-            
-            for (int i=0;i<pDepth;i++) { printf("\t"); }
-            
-            printf("%s(%d): ", aNode->mKey.c(), pDepth);
-            
-            ((FJSONNode *)aNode->mObject)->Print(pDepth + 1);
-            
-            if (aNode->mListNext != NULL) printf(", ");
-            
-            aNode = aNode->mListNext;
-        }
-        printf("\n");
-        for (int i=0;i<pDepth;i++) { printf("\t"); }
-        printf("}\n");
-    }
-    
-    if (mListCount > 0) {
-        printf("[\n");
-        
-        for (int i=0;i<mListCount;i++) {
-            FJSONNode *aNode = mList[i];
-            aNode->Print(pDepth + 1);
-            if ((i < mListCount - 1)) printf(", ");
-        }
-        
-        printf("\n");
-        for (int i=0;i<pDepth;i++) { printf("\t"); }
-        printf("]\n");
-    }
-    
-    //if ()
-    
-}
-
-
 
 FJSON::FJSON() {
     mRoot = NULL;
@@ -228,14 +151,14 @@ void FJSON::Parse(const char *pData, int pLength) {
     
     if (aDictionary) {
         bool aSuccess = true;
-        mRoot->mType = JSON_TYPE_DICTIONARY;
+        mRoot->mNodeType = JSON_NODE_TYPE_DICTIONARY;
         ParseHelperDictionary(aPtr, &aStack, &aSuccess);
         if (aSuccess == false) {
             goto JSON_PARSE_ERROR;
         }
     } else {
         bool aSuccess = true;
-        mRoot->mType = JSON_TYPE_ARRAY;
+        mRoot->mNodeType = JSON_NODE_TYPE_ARRAY;
         ParseHelperArray(aPtr, &aStack, &aSuccess);
         if (aSuccess == false) {
             goto JSON_PARSE_ERROR;
@@ -309,8 +232,8 @@ char *FJSON::ParseHelperDictionary(char *pData, FList *pStack, bool *pSuccess) {
             ++aPtr;
             
             FJSONNode *aNode = new FJSONNode();
-            aNode->mKey = aKey;
-            aNode->mType = JSON_TYPE_DICTIONARY;
+            //aNode->mKey = aKey;
+            aNode->mNodeType = JSON_NODE_TYPE_DICTIONARY;
             aParent->AddDictionary(aKey, aNode);
             pStack->Add(aNode);
             
@@ -324,8 +247,8 @@ char *FJSON::ParseHelperDictionary(char *pData, FList *pStack, bool *pSuccess) {
         } else if (*aPtr == '[') {
             ++aPtr;
             FJSONNode *aNode = new FJSONNode();
-            aNode->mKey = aKey;
-            aNode->mType = JSON_TYPE_ARRAY;
+            //aNode->mKey = aKey;
+            aNode->mNodeType = JSON_NODE_TYPE_ARRAY;
             aParent->AddDictionary(aKey, aNode);
             delete aKey;
             pStack->Add(aNode);
@@ -344,6 +267,7 @@ char *FJSON::ParseHelperDictionary(char *pData, FList *pStack, bool *pSuccess) {
             }
             
             FJSONNode *aValueNode = new FJSONNode();
+            aValueNode->mDataType = JSON_DATA_TYPE_STRING;
             aValueNode->mValue = GetQuotedString(aPtr, aEOQ);
             aParent->AddDictionary(aKey, aValueNode);
             delete aKey;
@@ -358,6 +282,7 @@ char *FJSON::ParseHelperDictionary(char *pData, FList *pStack, bool *pSuccess) {
             }
             
             FJSONNode *aValueNode = new FJSONNode();
+            aValueNode->mDataType = JSON_DATA_TYPE_NUMBER;
             aValueNode->mValue = GetNumber(aPtr, aEON);
             aParent->AddDictionary(aKey, aValueNode);
             delete aKey;
@@ -372,6 +297,7 @@ char *FJSON::ParseHelperDictionary(char *pData, FList *pStack, bool *pSuccess) {
             }
             
             FJSONNode *aValueNode = new FJSONNode();
+            aValueNode->mDataType = JSON_DATA_TYPE_FLAG;
             aValueNode->mValue = GetNumber(aPtr, aEOA);
             aParent->AddDictionary(aKey, aValueNode);
             delete aKey;
@@ -426,7 +352,7 @@ char *FJSON::ParseHelperArray(char *pData, FList *pStack, bool *pSuccess) {
         if (*aPtr == '{') {
             ++aPtr;
             FJSONNode *aNode = new FJSONNode();
-            aNode->mType = JSON_TYPE_DICTIONARY;
+            aNode->mNodeType = JSON_NODE_TYPE_DICTIONARY;
             aParent->AddArray(aNode);
             pStack->Add(aNode);
             aPtr = ParseHelperDictionary(aPtr, pStack, pSuccess);
@@ -438,7 +364,7 @@ char *FJSON::ParseHelperArray(char *pData, FList *pStack, bool *pSuccess) {
         } else if (*aPtr == '[') {
             ++aPtr;
             FJSONNode *aNode = new FJSONNode();
-            aNode->mType = JSON_TYPE_ARRAY;
+            aNode->mNodeType = JSON_NODE_TYPE_ARRAY;
             aParent->AddArray(aNode);
             pStack->Add(aNode);
             aPtr = ParseHelperArray(aPtr, pStack, pSuccess);
@@ -453,6 +379,7 @@ char *FJSON::ParseHelperArray(char *pData, FList *pStack, bool *pSuccess) {
                 return NULL;
             }
             FJSONNode *aValueNode = new FJSONNode();
+            aValueNode->mDataType = JSON_DATA_TYPE_STRING;
             aValueNode->mValue = GetQuotedString(aPtr, aEOQ);
             aParent->AddArray(aValueNode);
             aPtr = aEOQ;
@@ -464,6 +391,7 @@ char *FJSON::ParseHelperArray(char *pData, FList *pStack, bool *pSuccess) {
                 return NULL;
             }
             FJSONNode *aValueNode = new FJSONNode();
+            aValueNode->mDataType = JSON_DATA_TYPE_NUMBER;
             aValueNode->mValue = GetNumber(aPtr, aEON);
             aParent->AddArray(aValueNode);
             aPtr = aEON;
@@ -475,6 +403,7 @@ char *FJSON::ParseHelperArray(char *pData, FList *pStack, bool *pSuccess) {
                 return NULL;
             }
             FJSONNode *aValueNode = new FJSONNode();
+            aValueNode->mDataType = JSON_DATA_TYPE_FLAG;
             aValueNode->mValue = GetAlphabetic(aPtr, aEOA);
             aParent->AddArray(aValueNode);
             aPtr = aEOA;
@@ -490,3 +419,134 @@ ParseHelperArray_COMPLETE:
     
     return aPtr;
 }
+
+
+void FJSON::Print() {
+    
+    printf("__JSON_BEGIN:\n");
+    FString aString = GetPrettyPrint();
+    printf("\n%s\n", aString.c());
+    printf("__JSON_END:\n");
+}
+
+//mRoot;
+
+FString FJSON::GetPrettyPrint() {
+    if (mRoot == NULL) {
+        FString aResult = "";
+        return aResult;
+    }
+    FString aResult;
+    OutputChunk(mRoot, NULL, 0, false, &aResult);
+    return aResult;
+}
+
+
+void FJSON::OutputChunk(FJSONNode *pNode, FJSONNode *pParent, int pDepth, bool pTabbed, FString *pOutput) {
+    if (pNode == NULL) { return; }
+    if (pTabbed == false) {
+        for (int i=0;i<pDepth;i++) {
+            pOutput->Append("\t");
+        }
+    }
+    if (pNode->mNodeType == JSON_NODE_TYPE_DICTIONARY) {
+        pOutput->Append("{");
+        if (pNode->mInfo != NULL) {
+            FStringMapNode *aMapNode = pNode->mInfo->mListHead;
+            pOutput->Append("\n");
+            while (aMapNode != NULL) {
+                for (int i=0;i<=pDepth;i++) {
+                    pOutput->Append("\t");
+                }
+                FJSONNode *aNode = (FJSONNode *)aMapNode->mObject;
+                pOutput->Append("\"");
+                pOutput->Append(aMapNode->mKey);
+                pOutput->Append("\"");
+                pOutput->Append(": ");
+                if (aNode->mNodeType == JSON_NODE_TYPE_DATA) {
+                    if (aNode->mDataType == JSON_DATA_TYPE_STRING) {
+                        pOutput->Append("\"");
+                        pOutput->Append(aNode->mValue);
+                        pOutput->Append("\"");
+                    } else {
+                        pOutput->Append(aNode->mValue);
+                    }
+                } else {
+                    OutputChunk(aNode, pNode, pDepth + 1, true, pOutput);
+                }
+                if (aMapNode->mListNext) {
+                    pOutput->Append(",\r\n");
+                } else {
+                    pOutput->Append("\r\n");
+                }
+                aMapNode = aMapNode->mListNext;
+            }
+            for (int i=0;i<pDepth;i++) {
+                pOutput->Append("\t");
+            }
+            pOutput->Append("}");
+        } else {
+            pOutput->Append("}");
+        }
+    } else {
+        pOutput->Append("[");
+        int aCount = pNode->mListCount;
+        if (aCount > 0 && pNode->mList != NULL) {
+            bool aMixedTypeChildren = false;
+            for (int i=0;i<aCount;i++) {
+                FJSONNode *aNode = pNode->mList[i];
+                if (aNode->mNodeType == JSON_NODE_TYPE_ARRAY ||
+                    aNode->mNodeType == JSON_NODE_TYPE_DICTIONARY) {
+                    aMixedTypeChildren = true;
+                }
+            }
+            if (aMixedTypeChildren == false) {
+                for (int i=0;i<aCount;i++) {
+                    FJSONNode *aNode = pNode->mList[i];
+                    if (aNode->mDataType == JSON_DATA_TYPE_STRING) {
+                        pOutput->Append("\"");
+                        pOutput->Append(aNode->mValue);
+                        pOutput->Append("\"");
+                    } else {
+                        pOutput->Append(aNode->mValue);
+                    }
+                    if (i < (aCount - 1)) {
+                        pOutput->Append(", ");
+                    }
+                }
+                pOutput->Append("]");
+            } else {
+                pOutput->Append("\n");
+                for (int i=0;i<aCount;i++) {
+                    FJSONNode *aNode = pNode->mList[i];
+                    for (int i=0;i<=pDepth;i++) {
+                        pOutput->Append("\t");
+                    }
+                    if (aNode->mNodeType == JSON_NODE_TYPE_DATA) {
+                        if (aNode->mDataType == JSON_DATA_TYPE_STRING) {
+                            pOutput->Append("\"");
+                            pOutput->Append(aNode->mValue);
+                            pOutput->Append("\"");
+                        } else {
+                            pOutput->Append(aNode->mValue);
+                        }
+                    } else {
+                        OutputChunk(aNode, pNode, pDepth + 1, true, pOutput);
+                    }
+                    if (i < (aCount - 1)) {
+                        pOutput->Append(",\r\n");
+                    } else {
+                        pOutput->Append("\r\n");
+                    }
+                }
+                for (int i=0;i<pDepth;i++) {
+                    pOutput->Append("\t");
+                }
+                pOutput->Append("]");
+            }
+        } else {
+            pOutput->Append("}");
+        }
+    }
+}
+

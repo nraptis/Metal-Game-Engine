@@ -150,7 +150,13 @@ public:
 	void					Ins(char *pString, int pLength, int pSlot){ Ins((const char *)pString, pLength, pSlot); }
 	void					Ins(FString &pString, int pLength, int pSlot){ Ins((const char *)(pString.mData), pLength, pSlot); }
 
-	void					InsChars(char pChar, int pCount, int pSlot);
+    void                    InsChars(char pChar, int pCount, int pSlot);
+    
+    
+    
+    void                    Insert(char pChar, int pSlot);
+    
+    
 
 
 

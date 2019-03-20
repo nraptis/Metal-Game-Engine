@@ -14,6 +14,8 @@
 #include "LevelWavePath.hpp"
 #include "FPoint.h"
 
+#define PATH_CHAMFER_SIZE 90.0
+
 class LevelWavePathBlueprintNode {
 public:
     LevelWavePathBlueprintNode();
@@ -49,6 +51,8 @@ public:
     void                                        Add(float pX, float pY);
     void                                        Remove(int pIndex);
     void                                        Clear();
+    
+    bool                                        mSmooth;
     
     int                                         mSelectedIndex;
     FList                                       mNodeList;

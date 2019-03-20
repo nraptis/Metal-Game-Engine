@@ -91,15 +91,6 @@ void FStringBuffer::SizeEnsure(int pSize)
     
 }
 
-void FStringBuffer::Append(const char *pString, int pCount)
-{
-    if(pCount <= 0)return;
-    
-    //Write(pString, 0, pCount);
-    WriteTerminate(pString, 0, pCount);
-}
-
-
 int FStringBuffer::WriteTerminate(const char *pString, int pIndex, int pCount)
 {
     int aIndex = Write(pString, pIndex, pCount);

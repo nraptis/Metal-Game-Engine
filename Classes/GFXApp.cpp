@@ -73,32 +73,9 @@ GFXApp::~GFXApp() {
 
 void GFXApp::Load() {
     
-    /*
-    for (int i=0;i<1000;i++) {
-        FJSON aJSON3;
-        aJSON3.Load("json_3.yml");
-        
-        FJSON aJSON2;
-        aJSON2.Load("json_2.json");
-    
-        FJSON aJSON1;
-        aJSON1.Load("json_1");
-        
-        FJSON aJSON4;
-        aJSON4.Load("json_4");
-    }
-    */
-    
-    
-    
-    
-    
-    
     mRocket.mUseNormals = false;
     mRocket.LoadOBJ("rocket.obj");
     mRocketMap.Load("rocket_uvw");
-    
-    
     
     mSnail.LoadOBJ("snail.obj");
     mSnailMap.Load("snail_uvw");

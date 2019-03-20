@@ -57,6 +57,8 @@ public:
     float                                       mSelectTouchStartX;
     float                                       mSelectTouchStartY;
     
+    
+    void                                        PathRefresh();
     void                                        PathReset();
     void                                        PathDeletePoint();
     

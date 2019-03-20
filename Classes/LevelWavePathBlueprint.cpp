@@ -30,7 +30,7 @@ LevelWavePathBlueprintNode::~LevelWavePathBlueprintNode() {
 }
 
 LevelWavePathBlueprint::LevelWavePathBlueprint() {
-    
+    mSmooth = true;
 }
 
 LevelWavePathBlueprint::~LevelWavePathBlueprint() {
@@ -134,7 +134,7 @@ void LevelWavePathBlueprint::Remove(int pIndex) {
             }
         }
         
-        if (mSelectedIndex > pIndex) {
+        if (mSelectedIndex >= pIndex) {
             mSelectedIndex--;
         }
         
@@ -283,7 +283,7 @@ void LevelWavePathBlueprint::Build(LevelWavePath *pPath) {
     if (pPath == NULL) { return; }
     
     pPath->Reset();
-    
+    pPath->mSmooth = mSmooth;
     
     for (int i=0;i<mNodeList.mCount;i++) {
         LevelWavePathBlueprintNode *aNode = (LevelWavePathBlueprintNode *)mNodeList.mData[i];
@@ -326,8 +326,58 @@ void LevelWavePathBlueprint::Build(LevelWavePath *pPath) {
     
     for (int i=0;i<mNodeList.mCount;i++) {
         LevelWavePathBlueprintNode *aNode = (LevelWavePathBlueprintNode *)mNodeList.mData[i];
-        FPoint aPoint = GetGamePos(aNode);
-        pPath->AddMove(aNode->mGameX, aNode->mGameY);
+        
+        
+        //PATH_CHAMFER_SIZE
+        
+        if (aNode->mChamfer &&
+            i > 0 &&
+            i < (mNodeList.mCount - 1)
+            && true
+            ) {
+            
+            LevelWavePathBlueprintNode *aPrevNode = (LevelWavePathBlueprintNode *)mNodeList.mData[i - 1];
+            LevelWavePathBlueprintNode *aNextNode = (LevelWavePathBlueprintNode *)mNodeList.mData[i + 1];
+            
+            float aDiffBackX = aPrevNode->mGameX - aNode->mGameX;
+            float aDiffBackY = aPrevNode->mGameY - aNode->mGameY;
+            
+            float aDiffNextX = aNextNode->mGameX - aNode->mGameX;
+            float aDiffNextY = aNextNode->mGameY - aNode->mGameY;
+            
+            float aLengthBack = aDiffBackX * aDiffBackX + aDiffBackY * aDiffBackY;
+            float aLengthNext = aDiffNextX * aDiffNextX + aDiffNextY * aDiffNextY;
+            
+            if (aLengthBack > SQRT_EPSILON) {
+                aLengthBack = sqrtf(aLengthBack);
+                aDiffBackX /= aLengthBack;
+                aDiffBackY /= aLengthBack;
+                
+            } else {
+                aDiffBackX = 0.0f;
+                aDiffBackY = -1.0f;
+            }
+            
+            if (aLengthNext > SQRT_EPSILON) {
+                aLengthNext = sqrtf(aLengthNext);
+                aDiffNextX /= aLengthNext;
+                aDiffNextY /= aLengthNext;
+                
+            } else {
+                aDiffNextX = 0.0f;
+                aDiffNextY = -1.0f;
+            }
+            
+            pPath->AddMove(aNode->mGameX + aDiffBackX * PATH_CHAMFER_SIZE,
+                           aNode->mGameY + aDiffBackY * PATH_CHAMFER_SIZE);
+            pPath->AddMove(aNode->mGameX + aDiffNextX * PATH_CHAMFER_SIZE,
+                           aNode->mGameY + aDiffNextY * PATH_CHAMFER_SIZE);
+        } else {
+            pPath->AddMove(aNode->mGameX, aNode->mGameY, aNode->mWaitTimer);
+        }
+    
+        
+        
     }
     
     

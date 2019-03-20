@@ -18,6 +18,7 @@ FWindow::FWindow() {
     mRoot.mConsumesTouches = false;
     mRoot.mDeleteWhenKilled = false;
     
+    mSelectedCanvas = NULL;
     
     mDeviceWidth = 800;
     mDeviceHeight = 600;
@@ -147,8 +148,11 @@ void FWindow::Draw() {
 
 bool FWindow::TouchDown(float pX, float pY, void *pData) {
     bool aConsumed = false;
+    mSelectedCanvas = NULL;
     FCanvas *aCollider = mRoot.BaseTouchDown(pX, pY, pX, pY, pData, false, aConsumed);
     if (aCollider) {
+        mSelectedCanvas = aCollider;
+        printf("Selected[%s]\n", mSelectedCanvas->mName.c());
         return aConsumed;
     }
     return false;

@@ -12,10 +12,15 @@
 #include "FString.h"
 #include "FList.hpp"
 #include "FHashMap.hpp"
+#include "FStringBuffer.h"
 
-#define JSON_TYPE_DATA 0
-#define JSON_TYPE_DICTIONARY 1
-#define JSON_TYPE_ARRAY 2
+#define JSON_NODE_TYPE_DATA 0
+#define JSON_NODE_TYPE_DICTIONARY 1
+#define JSON_NODE_TYPE_ARRAY 2
+
+#define JSON_DATA_TYPE_STRING 0
+#define JSON_DATA_TYPE_NUMBER 1
+#define JSON_DATA_TYPE_FLAG 2
 
 class FJSONNode {
 public:
@@ -25,8 +30,9 @@ public:
     void                        AddDictionary(const char *pKey, FJSONNode *pNode);
     void                        AddArray(FJSONNode *pNode);
     
-    const char                  *mKey;
+    //const char                  *mKey;
     const char                  *mValue;
+    int                         mDataType;
     
     FJSONNode                   **mList;
     int                         mListCount;
@@ -34,11 +40,7 @@ public:
     
     FStringMap                  *mInfo;
     
-    int                         mType;
-    
-    void                        Print();
-    void                        Print(int pDepth);
-    
+    int                         mNodeType;
 };
 
 class FJSON {
@@ -52,9 +54,15 @@ public:
     void                        Load(const char *pFile);
     void                        Parse(const char *pData, int pLength);
     
+    void                        Print();
+    FString                     GetPrettyPrint();
+    
     FJSONNode                   *mRoot;
     
 private:
+    
+    void                        OutputChunk(FJSONNode *pNode, FJSONNode *pParent, int pDepth, bool pTabbed, FString *pOutput);
+    
     
     inline bool                 IsWhiteSpace(char pChar) { return pChar <= 32; }
     inline bool                 IsNumber(char pChar) {

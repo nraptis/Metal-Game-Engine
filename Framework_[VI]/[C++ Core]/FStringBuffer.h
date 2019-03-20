@@ -26,12 +26,6 @@ public:
     void                                    SizeSet(int pSize);
     void                                    SizeEnsure(int pSize);
     
-    
-    void                                    Append(const char *pString, int pCount);
-    void                                    Append(const char *pString){Append(pString, FString::Length(pString));}
-    void                                    Append(char *pString){Append((const char *)(pString));}
-    void                                    Append(FString pString){Append((const char *)(pString.c()), pString.mLength);}
-
     int                                     WriteInt(int pNumber, int pIndex);
 
     int                                     Write(const char *pString, int pIndex, int pCount);

@@ -65,6 +65,7 @@ public:
     FWindow                                     mWindowModal;
     FWindow                                     mWindowTools;
     FWindow                                     *mSelectedInputWindow;
+    FCanvas                                     *mSelectedCanvas;
     
     int                                         mTimeSinceLastInteraction;
     

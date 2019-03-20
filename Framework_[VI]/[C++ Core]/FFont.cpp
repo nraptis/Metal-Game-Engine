@@ -149,6 +149,89 @@ void FFont::Draw(const char *pText, float pX, float pY, float pScale) {
     }
 }
 
+
+int FFont::GetCursor(float pTouchX, float pTouchY, const char *pText, float pX, float pY, float pScale) {
+    if (pTouchX < pX) { return 0; }
+    unsigned char aChar = 0;
+    float aDrawX = pX;
+    int aResult = 0;
+    int aCharIndex = -1;
+    int aCharIndexPrev = -1;
+    float aKern = 0.0f;
+    float aScale = (mDataScale * pScale);
+    float aBestDist = 4096.0f;
+    if (pText) {
+        unsigned char *aPtr = (unsigned char *)pText;
+        int aIndex = 1;
+        while (*aPtr) {
+            aKern = 0.0f;
+            aCharIndexPrev = aCharIndex;
+            aChar = *aPtr;
+            aCharIndex = aChar;
+            if (aCharIndexPrev != -1) {
+                aKern = mKern[aCharIndexPrev][aCharIndex];
+            }
+            
+            float aLeftX = aDrawX;
+            aDrawX += (mCharacterStrideX[aCharIndex] + aKern) * aScale;
+            
+            float aDistLeft = pTouchX - aLeftX;
+            if (aDistLeft < 0.0f) { aDistLeft = -aDistLeft; }
+            
+            float aDistRight = pTouchX - aDrawX;
+            if (aDistRight < 0.0f) { aDistRight = -aDistRight; }
+            
+            if (aDistLeft < aDistRight) {
+                if (aDistLeft < aBestDist) {
+                    aBestDist = aDistLeft;
+                    aResult = aIndex - 1;
+                }
+            } else {
+                if (aDistRight < aBestDist) {
+                    aBestDist = aDistRight;
+                    aResult = aIndex;
+                }
+            }
+            ++aPtr;
+            ++aIndex;
+        }
+    }
+    return aResult;
+}
+
+float FFont::LocationOfCursor(int pCursor, const char *pText, float pX, float pY, float pScale) {
+    if (pCursor <= 0) { return pX; }
+    unsigned char aChar = 0;
+    float aResult = pX;
+    int aCharIndex = -1;
+    int aCharIndexPrev = -1;
+    float aKern = 0.0f;
+    float aScale = (mDataScale * pScale);
+    if (pText) {
+        unsigned char *aPtr = (unsigned char *)pText;
+        int aIndex = 0;
+        while (*aPtr) {
+            if (aIndex == pCursor) { return aResult; }
+            aKern = 0.0f;
+            aCharIndexPrev = aCharIndex;
+            aChar = *aPtr;
+            aCharIndex = aChar;
+            if (aCharIndexPrev != -1) { aKern = mKern[aCharIndexPrev][aCharIndex]; }
+            
+            
+            
+            
+            aResult += (mCharacterStrideX[aCharIndex] + aKern) * aScale;
+
+            
+            ++aPtr;
+            ++aIndex;
+        }
+    }
+    
+    return aResult;
+}
+
 void FFont::Right(const char *pText, float pX, float pY) {
     float aWidth = Width(pText);
     Draw(pText, pX - aWidth, pY);
@@ -299,15 +382,6 @@ float FFont::PlotWidthCentered(char *pText, float *pArray) {
     return aWidth;
 }
 
-
-float FFont::Spacing(char pChar, char pNext) {
-    //if(pChar<=' ')return mSpaceWidth;
-    //FontLetter *aLetter=&mLetter[(unsigned int)((unsigned char)(pChar))];
-    //return (float)(mPadding+aLetter->mCharacterSprite.mWidth+aLetter->mSpacing[(unsigned int)((unsigned char)(pNext))]);
-    
-    return 0;
-}
-
 void FFont::PrintLoaded() {
     int aLoadedChars = 0;
     for(int i=0;i<256;i++) {
@@ -332,78 +406,6 @@ void FFont::PrintLoaded() {
     Log("____END_FONT____\n");
 }
 
-
-int FFont::LineCount(char *pString, float pWidth)
-{
-    float aSpaceWidth = mSpaceWidth * mDataScale;
-
-    int aLineHeight=0;
-    if(pString)
-    {
-        char *aSeek=pString;
-        while(*aSeek)aSeek++;
-        int aStringLength=(int)(aSeek-pString);
-        float aLength=0;
-        aSeek=pString;
-        while(*aSeek)
-        {
-            if(*aSeek<=' ')aLength += aSpaceWidth;
-            else aLength+=Spacing(*aSeek,*(aSeek+1));
-            aSeek++;
-        }
-        if(aLength<=pWidth)aLineHeight=1;
-        else
-        {
-            int aLineStart=0;
-            int aSeekIndex=0;
-            int aSpaceCount=0;
-            int aSpaceIndex;
-            while(aSeekIndex<aStringLength)
-            {
-                aSpaceCount=0;
-                aLength=0;
-                while(aSeekIndex<aStringLength && pString[aSeekIndex]<=' ')aSeekIndex++;
-                aLineStart=aSeekIndex;
-                while(aSeekIndex<aStringLength && aLength <= pWidth)
-{
-                    if(pString[aSeekIndex] <= ' ') {
-                        aSpaceCount++;
-                        aLength += aSpaceWidth;
-                    }
-                    else
-                    {
-                        //aLength+=mLetter[pString[aSeekIndex]].mCharacterSprite.mWidth
-                        //+mPadding+mLetter[pString[aSeekIndex]].
-                        //mSpacing[pString[aSeekIndex+1]];
-                        
-                    }
-                    aSeekIndex++;
-                }
-                if(aSeekIndex>aLineStart && aSeekIndex < aStringLength)
-                {
-                    aSpaceCount=0;
-                    for(int i=aLineStart;i<aSeekIndex;i++)if(pString[i]<=' ')aSpaceCount++;
-                    aSeekIndex--;
-                    if(aSeekIndex>aLineStart)
-                    {
-                        if(aSpaceCount>0)
-                        {
-                            aSpaceIndex=aSeekIndex;
-                            while(pString[aSpaceIndex]>' ')
-                            {
-                                aSpaceIndex--;
-                            }
-                            aSeekIndex=aSpaceIndex+1;
-                        }
-                    }
-                }
-                if(aSeekIndex<=aLineStart)aSeekIndex++;
-                aLineHeight++;
-            }
-        }
-    }
-    return aLineHeight;
-}
 
 FString FFont::CharToFileSafe(char c)
 {

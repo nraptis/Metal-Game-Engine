@@ -434,7 +434,7 @@ void Game::Draw() {
     
     
     Graphics::PipelineStateSetShape2DNoBlending();
-    Graphics::OutlineRectInside(0.0f, 0.0f, mWidth, mHeight, 2.0f);
+    Graphics::OutlineRectInside(0.0f, 0.0f, mWidth, mHeight, 1.0f);
     
     //gApp->mGameAreaMarker.Draw(0.0f, 0.0f);
     
@@ -483,6 +483,7 @@ void Game::Draw() {
     */
     
     
+    /*
     float aIndicatorCenterX = mDartSpawnX - mWidth * 0.1f;
     float aIndicatorCenterY = mDartSpawnY;
     
@@ -523,11 +524,8 @@ void Game::Draw() {
     } else {
         
     }
+    */
     
-    
-    //mTestPath.Draw();
-    //mTestPath1.Draw();
-    //mTestPath2.Draw();
 
     
 #ifdef EDITOR_MODE

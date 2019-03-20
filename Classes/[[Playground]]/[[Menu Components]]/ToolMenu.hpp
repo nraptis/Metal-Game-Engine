@@ -16,6 +16,8 @@
 #include "UIButton.hpp"
 #include "UISegment.hpp"
 #include "UICheckBox.hpp"
+#include "UITextBox.hpp"
+#include "UIStepper.hpp"
 #include "UIAlignmentPicker.hpp"
 #include "FScrollCanvas.hpp"
 #include "ToolMenuSection.hpp"

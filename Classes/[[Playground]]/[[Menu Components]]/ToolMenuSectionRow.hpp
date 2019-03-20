@@ -27,9 +27,12 @@ public:
     virtual void                            Notify(void *pSender, const char *pNotification);
 
     void                                    AddLabel(UILabel *pLabel);
+    void                                    AddTextBox(UITextBox *pTextBox);
+    
     void                                    AddButton(UIButton *pButton);
     void                                    AddCheckBox(UICheckBox *pCheckBox);
     void                                    AddAlignmentPicker(UIAlignmentPicker *pAlignmentPicker);
+    
 
     void                                    AddElement(UIElement *pElement);
 

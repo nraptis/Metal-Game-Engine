@@ -41,6 +41,7 @@ public:
     void                        AddMove(float pX, float pY, int pWait = 0);
     
     bool                        mDidFinalize;
+    bool                        mDidFailFinalize;
     
     void                        AddSegmentBacktrackingFrom(int pIndex);
     

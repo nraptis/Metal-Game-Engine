@@ -14,15 +14,17 @@
 #define UI_ELEMENT_UNKNOWN 1
 #define UI_ELEMENT_BUTTON 1
 #define UI_ELEMENT_LABEL 2
-#define UI_ELEMENT_ALIGNMENT_PICKER 3
-#define UI_ELEMENT_CHECKBOX 4
-#define UI_ELEMENT_SEGMENT 5
-#define UI_ELEMENT_STEPPER 6
+#define UI_ELEMENT_TEXT_BOX 3
+#define UI_ELEMENT_ALIGNMENT_PICKER 4
+#define UI_ELEMENT_CHECKBOX 5
+#define UI_ELEMENT_SEGMENT 6
+#define UI_ELEMENT_STEPPER 7
 
 class UIButton;
 class UILabel;
 class UICheckBox;
 class UIAlignmentPicker;
+class UITextBox;
 
 class UIElement {
 public:
@@ -33,10 +35,9 @@ public:
     void                        SetButton(UIButton *pButton);
     void                        SetCheckBox(UICheckBox *pCheckBox);
     void                        SetAlignmentPicker(UIAlignmentPicker *pAlignmentPicker);
-
-
-
-
+    void                        SetTextBox(UITextBox *pTextBox);
+    
+    
     FCanvas                     *mElement;
     int                         mType;
 

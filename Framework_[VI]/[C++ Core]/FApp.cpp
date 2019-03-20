@@ -21,7 +21,7 @@ FApp::FApp() {
     
     
     mFrameCaptureDrawCount = 0;
-    
+    mSelectedCanvas = NULL;
     
     mIsGraphicsSetUpEnqueued = false;
     mGraphicsSetUpEnqueuedTimer = 0;
@@ -610,14 +610,27 @@ void FApp::BaseKeyUp(int pKey) {
 
 void FApp::ProcessMouseDown(float pX, float pY, int pButton) {
     MouseDown(pX, pY, pButton);
+    
+    mSelectedCanvas = NULL;
+    
+    
     if (mWindowTools.MouseDown(pX, pY, pButton)) {
         mSelectedInputWindow = &mWindowTools;
+        mSelectedCanvas = mWindowTools.mSelectedCanvas;
     } else if (mWindowModal.MouseDown(pX, pY, pButton)) {
         mSelectedInputWindow = &mWindowModal;
+        mSelectedCanvas = mWindowModal.mSelectedCanvas;
     } else if (mWindowMain.MouseDown(pX, pY, pButton)) {
         mSelectedInputWindow = &mWindowMain;
+        mSelectedCanvas = mWindowMain.mSelectedCanvas;
     } else {
         mSelectedInputWindow = 0;
+    }
+    
+    if (mSelectedCanvas) {
+        printf("FAPP::Selected[%s]\n", mSelectedCanvas->mName.c());
+    } else {
+        
     }
 }
 
@@ -683,6 +696,7 @@ void FApp::ProcessTouchFlush() {
 }
 
 void FApp::ProcessKeyDown(int pKey) {
+    printf("ProcessKeyDown(%d)\n", pKey);
     mWindowMain.KeyDown(pKey);
     mWindowModal.KeyDown(pKey);
     mWindowTools.KeyDown(pKey);

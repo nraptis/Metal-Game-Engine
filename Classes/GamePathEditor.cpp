@@ -12,7 +12,7 @@
 #include "GameEditor.hpp"
 #include "FAnimation.h"
 
-#define PATH_CHAMFER_SIZE 70.0
+
 
 GamePathEditor::GamePathEditor(GameEditor *pEditor) {
     
@@ -41,21 +41,20 @@ GamePathEditor::GamePathEditor(GameEditor *pEditor) {
     
     mMenuPaths = new EditorMenuPath(this);
     AddChild(mMenuPaths);
-    mMenuPaths->SetFrame(gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 40.0f, 360.0f, 650.0f);
+    mMenuPaths->SetFrame(gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 40.0f, 360.0f, 680.0f);
     
     
     mMenuControls = new EditorMenuPathControl(this);
     AddChild(mMenuControls);
-    mMenuControls->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 16.0f + 360.0f), gSafeAreaInsetTop + 40.0f, 360.0f, 108.0f);
-    mMenuControls->mResizeDragAllowed = false;
+    mMenuControls->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 360.0f), gSafeAreaInsetTop + 40.0f, 360.0f, 480.0f);
+    
+    
     
 }
 
 GamePathEditor::~GamePathEditor() {
     
 }
-
-
 
 void GamePathEditor::SetFrame(float pX, float pY, float pWidth, float pHeight) {
     FCanvas::SetFrame(pX, pY, pWidth, pHeight);
@@ -238,6 +237,11 @@ void GamePathEditor::SetUp(LevelWaveBlueprint *pWave) {
     }
     
     
+}
+
+void GamePathEditor::PathRefresh() {
+    if (mPath == NULL) { return; }
+    mPath->Build();
 }
 
 void GamePathEditor::PathReset() {

@@ -22,6 +22,7 @@ LevelWavePathNode::LevelWavePathNode() {
     mY = 0.0f;
     mType = PATH_NODE_INVALID;
     mWaitTimer = 0;
+    
 
 }
 
@@ -33,6 +34,8 @@ LevelWavePath::LevelWavePath() {
     
     mSpeed = 3.0f;
     mDidFinalize = false;
+    mDidFailFinalize = false;
+    
     
     mSmooth = true;
     
@@ -54,6 +57,9 @@ void LevelWavePath::Add(int pType, float pX, float pY, int pWait) {
     aNode->mType = pType;
     aNode->mWaitTimer = pWait;
     mNodeList.Add(aNode);
+    mDidFailFinalize = false;
+    mDidFinalize = false;
+    
 }
 
 void LevelWavePath::AddMove(float pX, float pY, int pWait) {
@@ -62,6 +68,7 @@ void LevelWavePath::AddMove(float pX, float pY, int pWait) {
 
 void LevelWavePath::Reset() {
     mDidFinalize = false;
+    mDidFailFinalize = false;
     for (int i=0;i<mNodeList.mCount;i++) {
         LevelWavePathNode *aNode = ((LevelWavePathNode *)mNodeList.mData[i]);
         delete aNode;
@@ -73,9 +80,12 @@ void LevelWavePath::Reset() {
 void LevelWavePath::Finalize() {
     
     mPath.Reset();
+    mDidFailFinalize = false;
+    
     
     if (mNodeList.mCount < 2) {
         Log("ILLEGAL, TOO SMALL!!!\n");
+        mDidFailFinalize = true;
         return;
     }
     
@@ -291,7 +301,7 @@ void LevelWavePath::Draw() {
     if (mTestPer >= 1.0f) {
         mTestPer -= 1.0f;
     }
-    if (mDidFinalize == false) {
+    if (mDidFinalize == false && mDidFailFinalize == false) {
         Finalize();
     }
     

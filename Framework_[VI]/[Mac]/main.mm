@@ -15,7 +15,7 @@ int main(int argc, const char * argv[]) {
     
     gDirBundle = "/Users/nraptis/Desktop/Orbital/Assets/";
     gDirDocuments = "/Users/nraptis/Desktop/Orbital/Documents/";
-    gDirExport = "/Users/nicholasraptis/Desktop/[[Exports]]/";
+    gDirExport = "/Users/nraptis/Desktop/[[Exports]]/";
     
     gApp = new GFXApp();
     AppShellInitialize(ENV_MAC);

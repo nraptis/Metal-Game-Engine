@@ -63,6 +63,10 @@ public:
     
 //protected:
 
+    
+    FCanvas                                         *mSelectedCanvas;
+    
+    
     void                                            PrintTempList(const char *pName);
 
     //As bucket items are being processed, we empty them into the
