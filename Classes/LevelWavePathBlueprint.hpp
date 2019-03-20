@@ -13,8 +13,8 @@
 #include "Constraint.hpp"
 #include "LevelWavePath.hpp"
 #include "FPoint.h"
+#include "FJSON.hpp"
 
-#define PATH_CHAMFER_SIZE 90.0
 
 class LevelWavePathBlueprintNode {
 public:
@@ -22,17 +22,24 @@ public:
     ~LevelWavePathBlueprintNode();
     
     Constraint                                  mConstraint;
-    
     float                                       mX;
     float                                       mY;
+    
+    float                                       mBaseGameX;
+    float                                       mBaseGameY;
     
     float                                       mGameX;
     float                                       mGameY;
     
     int                                         mType;
     int                                         mWaitTimer;
+    int                                         mChamferSize;
     
-    bool                                        mChamfer;
+    void                                        ShiftX(float pShiftX);
+    void                                        ShiftY(float pShiftY);
+    
+    FJSONNode                                   *Save();
+    
 };
 
 class LevelWavePathBlueprint {
@@ -52,7 +59,11 @@ public:
     void                                        Remove(int pIndex);
     void                                        Clear();
     
+    LevelWavePathBlueprintNode                  *GetNode(int pIndex);
+    LevelWavePathBlueprintNode                  *GetNode();
+    
     bool                                        mSmooth;
+    float                                       mSpeed;
     
     int                                         mSelectedIndex;
     FList                                       mNodeList;
@@ -65,13 +76,14 @@ public:
     
     void                                        ApplyEditorConstraints();
     
-    
     FPoint                                      GetGamePos(LevelWavePathBlueprintNode *pNode);
     FPoint                                      GetGamePos(float pX, float pY);
     
-    
     void                                        Build();
     void                                        Build(LevelWavePath *pPath);
+    
+    FJSONNode                                   *Save();
+    
     
     
 };

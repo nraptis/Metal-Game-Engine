@@ -336,6 +336,16 @@ void FString::Truncate(int pSize)
 	}
 }
 
+char *FString::GetCharArray() {
+    int aLength = mLength;
+    if (aLength < 0) { aLength = 0; }
+    char *aResult = new char[aLength + 1];
+    for (int i=0;i<mLength;i++) {
+        aResult[i] = mData[i];
+    }
+    aResult[mLength] = 0;
+    return aResult;
+}
 
 void FString::Ins(const char *pString, int pLength, int pSlot)
 {

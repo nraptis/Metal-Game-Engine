@@ -127,6 +127,9 @@ public:
 	//
 	bool					        IsNumber();
 
+    
+    char                            *GetCharArray();
+    
 	//
 	//Get a subString of the FString.
 	//

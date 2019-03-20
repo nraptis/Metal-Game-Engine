@@ -661,3 +661,32 @@ void os_exportToPhotoLibrary(unsigned int *pData, int pWidth, int pHeight)
 {
     
 }
+
+bool os_is_shift_key_down() {
+    NSUInteger aFlags = [[NSApp currentEvent] modifierFlags];
+    if (aFlags & NSEventModifierFlagShift) {
+        NSLog(@"Shift");
+        return true;
+    }
+    //NSEventModifierFlagControl
+    return false;
+}
+
+bool os_is_control_key_down() {
+    NSUInteger aFlags = [[NSApp currentEvent] modifierFlags];
+    
+    if (aFlags & NSEventModifierFlagCommand) {
+        NSLog(@"Shift");
+        return true;
+    }
+    return false;
+}
+
+bool os_is_alt_key_down() {
+    NSUInteger aFlags = [[NSApp currentEvent] modifierFlags];
+    if (aFlags & NSEventModifierFlagOption) {
+        NSLog(@"OPTION");
+        return true;
+    }
+    return false;
+}

@@ -211,7 +211,9 @@ void UIStepper::SetValue(int pValue) {
         *mTarget = pValue;
     }
     mTextBox.mText = FString(pValue);
-    gNotify.Post(this, "stepper");
+    if (aNotify) {
+        gNotify.Post(this, "stepper");
+    }
 }
 
 void UIStepper::SetTarget(int *pTarget) {

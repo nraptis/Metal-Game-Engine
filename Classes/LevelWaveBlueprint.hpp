@@ -18,10 +18,7 @@ public:
     ~LevelWaveBlueprint();
     
     void                                        Draw(bool pSelected);
-    
-    
     LevelWavePathBlueprint                      mPath;
-    
     
 };
 

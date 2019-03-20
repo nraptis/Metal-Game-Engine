@@ -226,6 +226,203 @@ void GameEditor::Load() {
     
 }
 
+int GameEditor::ClosestXConstraint(float pX) {
+    int aResult = X_CONSTRAINT_LEFT_SPAWN;
+    float aBestDist = fabsf(mSpawnZoneLeft - pX);
+    
+    float aDist = fabsf(mPeekZoneLeft - pX);
+    if (aDist < aBestDist) {
+        aBestDist = aDist;
+        aResult = X_CONSTRAINT_LEFT_PEEK;
+    }
+    aDist = fabsf(mQuarterZoneLeft - pX);
+    if (aDist < aBestDist) {
+        aBestDist = aDist;
+        aResult = X_CONSTRAINT_LEFT_QUARTER;
+    }
+    aDist = fabsf(mCenterH - pX);
+    if (aDist < aBestDist) {
+        aBestDist = aDist;
+        aResult = X_CONSTRAINT_CENTER;
+    }
+    aDist = fabsf(mQuarterZoneRight - pX);
+    if (aDist < aBestDist) {
+        aBestDist = aDist;
+        aResult = X_CONSTRAINT_RIGHT_QUARTER;
+    }
+    aDist = fabsf(mPeekZoneRight - pX);
+    if (aDist < aBestDist) {
+        aBestDist = aDist;
+        aResult = X_CONSTRAINT_RIGHT_PEEK;
+    }
+    aDist = fabsf(mSpawnZoneRight - pX);
+    if (aDist < aBestDist) {
+        aBestDist = aDist;
+        aResult = X_CONSTRAINT_RIGHT_SPAWN;
+    }
+    return aResult;
+}
+
+int GameEditor::ClosestYConstraint(float pY) {
+    int aResult = Y_CONSTRAINT_TOP_SPAWN;
+    float aBestDist = fabsf(mSpawnZoneTop - pY);
+    
+    float aDist = fabsf(mPeekZoneTop - pY);
+    if (aDist < aBestDist) {
+        aBestDist = aDist;
+        aResult = Y_CONSTRAINT_TOP_PEEK;
+    }
+    
+    aDist = fabsf(mQuarterZoneTop - pY);
+    if (aDist < aBestDist) {
+        aBestDist = aDist;
+        aResult = Y_CONSTRAINT_TOP_QUARTER;
+    }
+    
+    aDist = fabsf(mCenterV - pY);
+    if (aDist < aBestDist) {
+        aBestDist = aDist;
+        aResult = Y_CONSTRAINT_CENTER;
+    }
+    
+    aDist = fabsf(mQuarterZoneBottom - pY);
+    if (aDist < aBestDist) {
+        aBestDist = aDist;
+        aResult = Y_CONSTRAINT_BOTTOM_QUARTER;
+    }
+    
+    aDist = fabsf(mPlayZoneBottom - pY);
+    if (aDist < aBestDist) {
+        aBestDist = aDist;
+        aResult = Y_CONSTRAINT_BOTTOM;
+    }
+    return aResult;
+}
+
+int GameEditor::NextXConstraintf(float pX) {
+    return NextXConstraint(ClosestXConstraint(pX));
+}
+
+int GameEditor::PrevXConstraintf(float pX) {
+    return PrevXConstraint(ClosestXConstraint(pX));
+}
+
+int GameEditor::NextYConstraintf(float pY) {
+    return NextYConstraint(ClosestYConstraint(pY));
+}
+
+int GameEditor::PrevYConstraintf(float pY) {
+    return PrevYConstraint(ClosestYConstraint(pY));
+}
+
+int GameEditor::NextXConstraint(int pConstraint) {
+    
+    if (pConstraint == X_CONSTRAINT_RIGHT_SPAWN || pConstraint == X_CONSTRAINT_RIGHT_PEEK) {
+        return X_CONSTRAINT_RIGHT_SPAWN;
+    }
+    
+    if (pConstraint == X_CONSTRAINT_RIGHT_QUARTER) {
+        return X_CONSTRAINT_RIGHT_PEEK;
+    }
+    
+    if (pConstraint == X_CONSTRAINT_CENTER) {
+        return X_CONSTRAINT_RIGHT_QUARTER;
+    }
+    
+    if (pConstraint == X_CONSTRAINT_LEFT_QUARTER) {
+        return X_CONSTRAINT_CENTER;
+    }
+    
+    if (pConstraint == X_CONSTRAINT_LEFT_PEEK) {
+        return X_CONSTRAINT_LEFT_QUARTER;
+    }
+    
+    if (pConstraint == X_CONSTRAINT_LEFT_SPAWN) {
+        return X_CONSTRAINT_LEFT_PEEK;
+    }
+    
+    return X_CONSTRAINT_LEFT_SPAWN;
+}
+
+int GameEditor::PrevXConstraint(int pConstraint) {
+    if (pConstraint == X_CONSTRAINT_LEFT_SPAWN || pConstraint == X_CONSTRAINT_LEFT_PEEK) {
+        return X_CONSTRAINT_LEFT_SPAWN;
+    }
+    
+    if (pConstraint == X_CONSTRAINT_LEFT_QUARTER) {
+        return X_CONSTRAINT_LEFT_PEEK;
+    }
+    
+    if (pConstraint == X_CONSTRAINT_CENTER) {
+        return X_CONSTRAINT_LEFT_QUARTER;
+    }
+    
+    if (pConstraint == X_CONSTRAINT_RIGHT_QUARTER) {
+        return X_CONSTRAINT_CENTER;
+    }
+    
+    if (pConstraint == X_CONSTRAINT_RIGHT_PEEK) {
+        return X_CONSTRAINT_RIGHT_QUARTER;
+    }
+    
+    if (pConstraint == X_CONSTRAINT_RIGHT_SPAWN) {
+        return X_CONSTRAINT_RIGHT_PEEK;
+    }
+    
+    return X_CONSTRAINT_RIGHT_SPAWN;
+}
+
+int GameEditor::NextYConstraint(int pConstraint) {
+    
+    if (pConstraint == Y_CONSTRAINT_BOTTOM || pConstraint == Y_CONSTRAINT_BOTTOM_QUARTER) {
+        return Y_CONSTRAINT_BOTTOM;
+    }
+    
+    if (pConstraint == Y_CONSTRAINT_BOTTOM_QUARTER) {
+        return Y_CONSTRAINT_BOTTOM;
+    }
+    
+    if (pConstraint == Y_CONSTRAINT_CENTER) {
+        return Y_CONSTRAINT_BOTTOM_QUARTER;
+    }
+    
+    if (pConstraint == Y_CONSTRAINT_TOP_QUARTER) {
+        return Y_CONSTRAINT_CENTER;
+    }
+    
+    if (pConstraint == Y_CONSTRAINT_TOP_PEEK) {
+        return Y_CONSTRAINT_TOP_QUARTER;
+    }
+    
+    if (pConstraint == Y_CONSTRAINT_TOP_SPAWN) {
+        return Y_CONSTRAINT_TOP_PEEK;
+    }
+    
+    return Y_CONSTRAINT_TOP_SPAWN;
+}
+
+int GameEditor::PrevYConstraint(int pConstraint) {
+    if (pConstraint == Y_CONSTRAINT_TOP_SPAWN || pConstraint == Y_CONSTRAINT_TOP_PEEK) {
+        return Y_CONSTRAINT_TOP_SPAWN;
+    }
+    
+    if (pConstraint == Y_CONSTRAINT_TOP_QUARTER) {
+        return Y_CONSTRAINT_TOP_PEEK;
+    }
+    
+    if (pConstraint == Y_CONSTRAINT_CENTER) {
+        return Y_CONSTRAINT_TOP_QUARTER;
+    }
+    if (pConstraint == Y_CONSTRAINT_BOTTOM_QUARTER) {
+        return Y_CONSTRAINT_CENTER;
+    }
+    if (pConstraint == Y_CONSTRAINT_BOTTOM) {
+        return Y_CONSTRAINT_BOTTOM_QUARTER;
+    }
+    return Y_CONSTRAINT_BOTTOM;
+}
+
+
 void GameEditor::SetOverlay(FCanvas *pCanvas) {
     
     if (mOverlay) {

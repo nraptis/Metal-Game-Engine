@@ -45,6 +45,23 @@ public:
     void                                        SetOverlay(FCanvas *pCanvas);
     
     
+    int                                         ClosestXConstraint(float pX);
+    int                                         ClosestYConstraint(float pY);
+    
+    
+    int                                         NextXConstraintf(float pX);
+    int                                         PrevXConstraintf(float pX);
+    int                                         NextYConstraintf(float pY);
+    int                                         PrevYConstraintf(float pY);
+    
+    int                                         NextXConstraint(int pConstraint);
+    int                                         PrevXConstraint(int pConstraint);
+    int                                         NextYConstraint(int pConstraint);
+    int                                         PrevYConstraint(int pConstraint);
+    
+    
+    
+    
     
     void                                        WaveAdd();
     void                                        WaveRemove();

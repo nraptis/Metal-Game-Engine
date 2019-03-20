@@ -36,9 +36,6 @@ public:
     UIButton                                *mButtonSelectPreviousWave;
     
     
-    
-    
-    
     ToolMenuPanel                           *mPathPanel;
     ToolMenuSectionRow                      *mRowPath1;
     UIButton                                *mButtonEditPaths;

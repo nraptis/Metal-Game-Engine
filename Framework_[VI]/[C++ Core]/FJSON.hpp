@@ -28,7 +28,18 @@ public:
     ~FJSONNode();
     
     void                        AddDictionary(const char *pKey, FJSONNode *pNode);
+    
+    void                        AddDictionaryInt(const char *pKey, int pValue);
+    void                        AddDictionaryBool(const char *pKey, bool pValue);
+    void                        AddDictionaryFloat(const char *pKey, float pValue);
+    void                        AddDictionaryString(const char *pKey, const char *pValue);
+    
+    
+    
+    
+    
     void                        AddArray(FJSONNode *pNode);
+    
     
     //const char                  *mKey;
     const char                  *mValue;

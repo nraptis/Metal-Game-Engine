@@ -59,6 +59,12 @@ EditorMenuPath::EditorMenuPath(GamePathEditor *pEditor) : ToolMenu() {
     gNotify.Register(this, mStepperWait, "stepper");
     
     
+    mStepperChamfer = new UIStepper();
+    mStepperChamfer->SetText("Chamfer:");
+    mPointsPanel->AddSection(mStepperChamfer);
+    gNotify.Register(this, mStepperChamfer, "stepper");
+    
+    
     
     
     mRowPointWait = new ToolMenuSectionRow();
@@ -75,13 +81,8 @@ EditorMenuPath::EditorMenuPath(GamePathEditor *pEditor) : ToolMenu() {
     mRowPointWait->AddButton(mButtonResetWait);
     
     
-    
     mRowPointOptions = new ToolMenuSectionRow();
     mPointsPanel->AddSection(mRowPointOptions);
-    
-    mCheckBoxChamfer = new UICheckBox();
-    mCheckBoxChamfer->SetText("Chamfer");
-    mRowPointOptions->AddCheckBox(mCheckBoxChamfer);
     
     mButtonDeletePoint = new UIButton();
     mButtonDeletePoint->SetText("Delete Point");
@@ -92,11 +93,8 @@ EditorMenuPath::EditorMenuPath(GamePathEditor *pEditor) : ToolMenu() {
     mConstraintPanel->SetTitle("Constraints");
     mPointsPanel->AddSection(mConstraintPanel);
     
-    
     mRowSnapPoints = new ToolMenuSectionRow();
     mConstraintPanel->AddSection(mRowSnapPoints);
-
-    
     
     mCheckBoxSnapX = new UICheckBox();
     mCheckBoxSnapX->SetText("Snap X To...");
@@ -107,7 +105,6 @@ EditorMenuPath::EditorMenuPath(GamePathEditor *pEditor) : ToolMenu() {
     mCheckBoxSnapY->SetText("Snap Y To...");
     mCheckBoxSnapY->SetTarget(&mEditor->mConstrainYToPoint);
     mRowSnapPoints->AddCheckBox(mCheckBoxSnapY);
-    
     
     mRowSnapX1 = new ToolMenuSectionRow();
     mConstraintPanel->AddSection(mRowSnapX1);
@@ -209,20 +206,6 @@ void EditorMenuPath::Layout() {
 
 void EditorMenuPath::Update() {
     ToolMenu::Update();
-  
-    if (mCheckBoxChamfer) {
-        bool aUnlink = true;
-        if (mEditor->mPath != NULL) {
-            LevelWavePathBlueprintNode *aNode = (LevelWavePathBlueprintNode *)mEditor->mPath->mNodeList.Fetch(mEditor->mPath->mSelectedIndex);
-            if (aNode) {
-                aUnlink = false;
-                mCheckBoxChamfer->SetTarget(&(aNode->mChamfer));
-            }
-        }
-        if (aUnlink) {
-            mCheckBoxChamfer->SetTarget(NULL);
-        }
-    }
     
     if (mCheckBoxSmooth) {
         bool aUnlink = true;
@@ -248,6 +231,23 @@ void EditorMenuPath::Update() {
             mStepperWait->SetTarget(NULL);
         }
     }
+    
+    if (mStepperChamfer) {
+        bool aUnlink = true;
+        if (mEditor->mPath != NULL) {
+            LevelWavePathBlueprintNode *aNode = (LevelWavePathBlueprintNode *)mEditor->mPath->mNodeList.Fetch(mEditor->mPath->mSelectedIndex);
+            if (aNode) {
+                aUnlink = false;
+                mStepperChamfer->SetTarget(&(aNode->mChamferSize));
+            }
+        }
+        if (aUnlink) {
+            mStepperChamfer->SetTarget(NULL);
+        }
+    }
+    
+    
+    
     
     
 }
@@ -281,6 +281,9 @@ void EditorMenuPath::Notify(void *pSender, const char *pNotification) {
         if (aStepper == mStepperWait) {
             mEditor->PathRefresh();
         }
+        if (aStepper == mStepperChamfer) {
+            mEditor->PathRefresh();
+        }
         
     }
     
@@ -295,11 +298,6 @@ void EditorMenuPath::Notify(void *pSender, const char *pNotification) {
         if (aCheckbox == mCheckBoxSmooth) {
             mEditor->mPath->Build();
         }
-        if (aCheckbox == mCheckBoxChamfer) {
-            mEditor->mPath->Build();
-        }
-        
-        
     }
     
     

@@ -52,7 +52,43 @@ void FJSONNode::AddDictionary(const char *pKey, FJSONNode *pNode) {
     if (mInfo == NULL) {
         mInfo = new FStringMap();
     }
+    mNodeType = JSON_NODE_TYPE_DICTIONARY;
     mInfo->Add(pKey, pNode);
+}
+
+void FJSONNode::AddDictionaryInt(const char *pKey, int pValue) {
+    FString aString;
+    aString.ParseInt(pValue);
+    FJSONNode *aValueNode = new FJSONNode();
+    aValueNode->mDataType = JSON_DATA_TYPE_NUMBER;
+    aValueNode->mValue = aString.GetCharArray();
+    AddDictionary(pKey, aValueNode);
+}
+
+void FJSONNode::AddDictionaryBool(const char *pKey, bool pValue) {
+    FString aString;
+    aString.ParseBool(pValue);
+    FJSONNode *aValueNode = new FJSONNode();
+    aValueNode->mDataType = JSON_DATA_TYPE_FLAG;
+    aValueNode->mValue = aString.GetCharArray();
+    AddDictionary(pKey, aValueNode);
+}
+
+void FJSONNode::AddDictionaryFloat(const char *pKey, float pValue) {
+    FString aString;
+    aString.ParseFloat(pValue);
+    FJSONNode *aValueNode = new FJSONNode();
+    aValueNode->mDataType = JSON_DATA_TYPE_NUMBER;
+    aValueNode->mValue = aString.GetCharArray();
+    AddDictionary(pKey, aValueNode);
+}
+
+void FJSONNode::AddDictionaryString(const char *pKey, const char *pValue) {
+    FString aString = pValue;
+    FJSONNode *aValueNode = new FJSONNode();
+    aValueNode->mDataType = JSON_DATA_TYPE_STRING;
+    aValueNode->mValue = aString.GetCharArray();
+    AddDictionary(pKey, aValueNode);
 }
 
 void FJSONNode::AddArray(FJSONNode *pNode) {
@@ -69,6 +105,7 @@ void FJSONNode::AddArray(FJSONNode *pNode) {
         delete [] mList;
         mList = aNewList;
     }
+    mNodeType = JSON_NODE_TYPE_ARRAY;
     mList[mListCount++] = pNode;
 }
 
@@ -469,7 +506,12 @@ void FJSON::OutputChunk(FJSONNode *pNode, FJSONNode *pParent, int pDepth, bool p
                         pOutput->Append(aNode->mValue);
                         pOutput->Append("\"");
                     } else {
-                        pOutput->Append(aNode->mValue);
+                        if (aNode->mValue && *(aNode->mValue)) {
+                            pOutput->Append(aNode->mValue);
+                        } else {
+                            pOutput->Append("0");
+                        }
+                        
                     }
                 } else {
                     OutputChunk(aNode, pNode, pDepth + 1, true, pOutput);
@@ -488,7 +530,7 @@ void FJSON::OutputChunk(FJSONNode *pNode, FJSONNode *pParent, int pDepth, bool p
         } else {
             pOutput->Append("}");
         }
-    } else {
+    } else if (pNode->mNodeType == JSON_NODE_TYPE_ARRAY) {
         pOutput->Append("[");
         int aCount = pNode->mListCount;
         if (aCount > 0 && pNode->mList != NULL) {
@@ -545,8 +587,10 @@ void FJSON::OutputChunk(FJSONNode *pNode, FJSONNode *pParent, int pDepth, bool p
                 pOutput->Append("]");
             }
         } else {
-            pOutput->Append("}");
+            pOutput->Append("]");
         }
+    } else {
+        pOutput->Append("0");
     }
 }
 

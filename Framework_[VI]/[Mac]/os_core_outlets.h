@@ -48,4 +48,9 @@ void os_exportJPEGImage(unsigned int *pData, const char *pFilePath, int pWidth, 
 void os_exportToPhotoLibrary(unsigned int *pData, int pWidth, int pHeight);
 
 
+bool os_is_shift_key_down();
+bool os_is_control_key_down();
+bool os_is_alt_key_down();
+
+
 #endif

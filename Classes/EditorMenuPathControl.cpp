@@ -86,6 +86,11 @@ void EditorMenuPathControl::Notify(void *pSender, const char *pNotification) {
             mEditor->PathReset();
         }
         
+        if (pSender == mButtonPrintPath) {
+            mEditor->PathPrint();
+        }
+        
+        
     }
     
     if (FString(pNotification) == "segment") {

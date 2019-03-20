@@ -22,13 +22,6 @@ public:
     virtual void                            Update() override;
     virtual void                            Notify(void *pSender, const char *pNotification) override;
     
-    
-    
-    
-    
-    
-    
-    
     ToolMenuPanel                           *mEditorPanel;
     UISegment                               *mSegmentMode;
     
@@ -36,21 +29,16 @@ public:
     UICheckBox                              *mCheckBoxSmooth;
     UICheckBox                              *mCheckBoxPreview;
     
-
     ToolMenuPanel                           *mPointsPanel;
     
-    
-    
     UIStepper                               *mStepperWait;
+    UIStepper                               *mStepperChamfer;
     
     ToolMenuSectionRow                      *mRowPointWait;
     UITextBox                               *mTextBoxWait;
     UIButton                                *mButtonResetWait;
     
-    
-    
     ToolMenuSectionRow                      *mRowPointOptions;
-    UICheckBox                              *mCheckBoxChamfer;
     UIButton                                *mButtonDeletePoint;
     
     ToolMenuPanel                           *mConstraintPanel;

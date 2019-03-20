@@ -696,7 +696,6 @@ void FApp::ProcessTouchFlush() {
 }
 
 void FApp::ProcessKeyDown(int pKey) {
-    printf("ProcessKeyDown(%d)\n", pKey);
     mWindowMain.KeyDown(pKey);
     mWindowModal.KeyDown(pKey);
     mWindowTools.KeyDown(pKey);

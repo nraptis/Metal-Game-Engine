@@ -10,23 +10,23 @@
 #define ConstraintBlueprint_hpp
 
 #define X_CONSTRAINT_NONE 0
-#define X_CONSTRAINT_TARGET 1000
-#define X_CONSTRAINT_LEFT_SPAWN 1
-#define X_CONSTRAINT_LEFT_PEEK 2
-#define X_CONSTRAINT_LEFT_QUARTER 3
-#define X_CONSTRAINT_CENTER 4
-#define X_CONSTRAINT_RIGHT_QUARTER 5
-#define X_CONSTRAINT_RIGHT_PEEK 6
-#define X_CONSTRAINT_RIGHT_SPAWN 7
+#define X_CONSTRAINT_TARGET 100
+#define X_CONSTRAINT_LEFT_SPAWN 200
+#define X_CONSTRAINT_LEFT_PEEK 300
+#define X_CONSTRAINT_LEFT_QUARTER 400
+#define X_CONSTRAINT_CENTER 500
+#define X_CONSTRAINT_RIGHT_QUARTER 600
+#define X_CONSTRAINT_RIGHT_PEEK 700
+#define X_CONSTRAINT_RIGHT_SPAWN 800
 
 #define Y_CONSTRAINT_NONE 0
-#define Y_CONSTRAINT_TARGET 1000
-#define Y_CONSTRAINT_TOP_SPAWN 1
-#define Y_CONSTRAINT_TOP_PEEK 2
-#define Y_CONSTRAINT_TOP_QUARTER 3
-#define Y_CONSTRAINT_CENTER 4
-#define Y_CONSTRAINT_BOTTOM_QUARTER 5
-#define Y_CONSTRAINT_BOTTOM 6
+#define Y_CONSTRAINT_TARGET 100
+#define Y_CONSTRAINT_TOP_SPAWN 200
+#define Y_CONSTRAINT_TOP_PEEK 300
+#define Y_CONSTRAINT_TOP_QUARTER 400
+#define Y_CONSTRAINT_CENTER 500
+#define Y_CONSTRAINT_BOTTOM_QUARTER 600
+#define Y_CONSTRAINT_BOTTOM 800
 
 class Constraint {
 public:
@@ -41,6 +41,13 @@ public:
     
     int                             mTargetX;
     int                             mTargetY;
+    
+    bool                            HasX();
+    bool                            HasY();
+    
+    float                           GameX(bool pOffset);
+    float                           GameY(bool pOffset);
+    
     
 };
 

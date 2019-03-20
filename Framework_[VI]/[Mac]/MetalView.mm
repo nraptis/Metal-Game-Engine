@@ -132,8 +132,6 @@ CVReturn displayCallback(CVDisplayLinkRef CV_NONNULL displayLink,
     if (keycode == ' ') return __KEY__SPACE;
     if (keycode == 127) return __KEY__DELETE;
     
-    
-    
     if (keycode == '0') return __KEY__0;
     if (keycode == '1') return __KEY__1;
     if (keycode == '2') return __KEY__2;
@@ -179,7 +177,7 @@ CVReturn displayCallback(CVDisplayLinkRef CV_NONNULL displayLink,
     NSString *aString = [theEvent charactersIgnoringModifiers];
     if ([aString length] > 0) {
         unichar aChar = [aString characterAtIndex: 0];
-        NSLog(@"UNICHAR[%d]\n", aChar);
+        NSLog(@"MAC KEY [%d]\n", aChar);
         int aKey = [self convertKey: aChar];
         AppShellKeyDown(aKey);
         return;
@@ -191,12 +189,16 @@ CVReturn displayCallback(CVDisplayLinkRef CV_NONNULL displayLink,
     NSString *aString = [theEvent charactersIgnoringModifiers];
     if ([aString length] > 0) {
         unichar aChar = [aString characterAtIndex: 0];
-        NSLog(@"UNICHAR[%d]\n", aChar);
         int aKey = [self convertKey: aChar];
         AppShellKeyUp(aKey);
         return;
     }
     [super keyUp:theEvent];
+}
+
+- (void)flagsChanged:(NSEvent *)theEvent {
+    //NSUInteger aFlags = [[NSApp currentEvent] modifierFlags];
+    
 }
 
 - (BOOL)acceptsFirstResponder {

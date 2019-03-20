@@ -20,18 +20,93 @@ static FPolyPath cPolyPath;
 LevelWavePathBlueprintNode::LevelWavePathBlueprintNode() {
     mX = 0.0f;
     mY = 0.0f;
+    
+    mBaseGameX = 0.0f;
+    mBaseGameY = 0.0f;
+    
+    mGameX = 0.0f;
+    mGameY = 0.0f;
+    
     mType = -1;
     mWaitTimer = 0;
-    mChamfer = false;
+    mChamferSize = 0;
 }
 
 LevelWavePathBlueprintNode::~LevelWavePathBlueprintNode() {
     
 }
 
+void LevelWavePathBlueprintNode::ShiftX(float pShiftX) {
+    if (mConstraint.mTypeX == X_CONSTRAINT_NONE) {
+        mX = mX + pShiftX;
+    } else {
+        mConstraint.mOffsetX += pShiftX;
+    }
+}
+
+void LevelWavePathBlueprintNode::ShiftY(float pShiftY) {
+    if (mConstraint.mTypeY == Y_CONSTRAINT_NONE) {
+        mY = mY + pShiftY;
+    } else {
+        mConstraint.mOffsetY += pShiftY;
+    }
+}
+
+FJSONNode *LevelWavePathBlueprintNode::Save() {
+    
+    FJSONNode *aExport = new FJSONNode();
+    aExport->mNodeType = JSON_NODE_TYPE_DICTIONARY;
+    
+    
+    if (mConstraint.mTypeX == X_CONSTRAINT_NONE) {
+        aExport->AddDictionaryFloat("x", mX);
+    } else {
+    
+    if (mConstraint.mTypeX != X_CONSTRAINT_NONE) {
+        aExport->AddDictionaryInt("x_con", mConstraint.mTypeX);
+    }
+    
+    if (mConstraint.mOffsetX != 0.0f) {
+        aExport->AddDictionaryFloat("x_con_offset", mConstraint.mOffsetX);
+    }
+    
+    if (mConstraint.mTargetX != -1 && mConstraint.mTypeX == X_CONSTRAINT_TARGET) {
+        aExport->AddDictionaryInt("x_con_target", mConstraint.mTargetX);
+    }
+        
+    }
+    
+    if (mConstraint.mTypeY == Y_CONSTRAINT_NONE) {
+        aExport->AddDictionaryFloat("y", mY);
+    } else {
+        if (mConstraint.mTypeY != Y_CONSTRAINT_NONE) {
+            aExport->AddDictionaryInt("y_con", mConstraint.mTypeY);
+        }
+        if (mConstraint.mOffsetY != 0.0f) {
+            aExport->AddDictionaryFloat("y_con_offset", mConstraint.mOffsetY);
+        }
+        if (mConstraint.mTargetY != -1 && mConstraint.mTypeY == Y_CONSTRAINT_TARGET) {
+            aExport->AddDictionaryInt("y_con_target", mConstraint.mTargetY);
+        }
+    }
+    
+    if (mChamferSize > 0) {
+        aExport->AddDictionaryInt("chamfer", mChamferSize);
+    }
+    
+    if (mWaitTimer > 0) {
+        aExport->AddDictionaryInt("wait", mWaitTimer);
+    }
+    
+    return aExport;
+}
+
 LevelWavePathBlueprint::LevelWavePathBlueprint() {
     mSmooth = true;
+    mSpeed = 12.0f;
 }
+
+
 
 LevelWavePathBlueprint::~LevelWavePathBlueprint() {
     
@@ -149,6 +224,17 @@ void LevelWavePathBlueprint::Clear() {
     mSelectedIndex = -1;
     ApplyEditorConstraints();
 }
+
+LevelWavePathBlueprintNode *LevelWavePathBlueprint::GetNode(int pIndex) {
+    LevelWavePathBlueprintNode *aResult = (LevelWavePathBlueprintNode *)mNodeList.Fetch(pIndex);
+    return aResult;
+}
+
+LevelWavePathBlueprintNode *LevelWavePathBlueprint::GetNode() {
+    LevelWavePathBlueprintNode *aResult = (LevelWavePathBlueprintNode *)mNodeList.Fetch(mSelectedIndex);
+    return aResult;
+}
+
 
 
 
@@ -289,25 +375,16 @@ void LevelWavePathBlueprint::Build(LevelWavePath *pPath) {
         LevelWavePathBlueprintNode *aNode = (LevelWavePathBlueprintNode *)mNodeList.mData[i];
         FPoint aPoint = GetGamePos(aNode);
         
-        //aPoint.mX = gRand.Get(1000.0f);
-        //aPoint.mY = gRand.Get(1000.0f);
+        if (aNode->mConstraint.HasX()) {
+            aPoint.mX = aNode->mConstraint.GameX(false);
+        }
         
-        if (aNode->mConstraint.mTypeX == X_CONSTRAINT_LEFT_SPAWN) { aPoint.mX = gGame->mSpawnZoneLeft; }
-        if (aNode->mConstraint.mTypeX == X_CONSTRAINT_LEFT_PEEK) { aPoint.mX = gGame->mPeekZoneLeft; }
-        if (aNode->mConstraint.mTypeX == X_CONSTRAINT_LEFT_QUARTER) { aPoint.mX = gGame->mQuarterZoneLeft; }
-        if (aNode->mConstraint.mTypeX == X_CONSTRAINT_CENTER) { aPoint.mX = gGame->mWidth2; }
-        if (aNode->mConstraint.mTypeX == X_CONSTRAINT_RIGHT_QUARTER) { aPoint.mX = gGame->mQuarterZoneRight; }
-        if (aNode->mConstraint.mTypeX == X_CONSTRAINT_RIGHT_PEEK) { aPoint.mX = gGame->mPeekZoneRight; }
-        if (aNode->mConstraint.mTypeX == X_CONSTRAINT_RIGHT_SPAWN) { aPoint.mX = gGame->mSpawnZoneRight; }
-        if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_TOP_SPAWN) { aPoint.mY = gGame->mSpawnZoneTop; }
-        if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_TOP_PEEK) { aPoint.mY = gGame->mPeekZoneTop; }
-        if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_TOP_QUARTER) { aPoint.mY = gGame->mQuarterZoneTop; }
-        if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_CENTER) { aPoint.mY = (gGame->mPlayAreaBottom + gGame->mPlayAreaTop) / 2.0f; }
-        if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_BOTTOM_QUARTER) { aPoint.mY = gEditor->mQuarterZoneBottom; }
-        if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_BOTTOM) { aPoint.mY = gGame->mPlayAreaBottom; }
+        if (aNode->mConstraint.HasY()) {
+            aPoint.mY = aNode->mConstraint.GameY(false);
+        }
         
-        aNode->mGameX = aPoint.mX;
-        aNode->mGameY = aPoint.mY;
+        aNode->mBaseGameX = aPoint.mX;
+        aNode->mBaseGameY = aPoint.mY;
     }
     
     for (int aLoops = 0;aLoops<40;aLoops++) {
@@ -315,26 +392,38 @@ void LevelWavePathBlueprint::Build(LevelWavePath *pPath) {
             LevelWavePathBlueprintNode *aNode = (LevelWavePathBlueprintNode *)mNodeList.mData[i];
             if (aNode->mConstraint.mTypeX == X_CONSTRAINT_TARGET) {
                 LevelWavePathBlueprintNode *aTarget = (LevelWavePathBlueprintNode *)mNodeList.mData[aNode->mConstraint.mTargetX];
-                if (aTarget != 0) { aNode->mGameX = aTarget->mGameX; }
+                if (aTarget != 0) { aNode->mBaseGameX = aTarget->mBaseGameX; }
             }
             if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_TARGET) {
                 LevelWavePathBlueprintNode *aTarget = (LevelWavePathBlueprintNode *)mNodeList.mData[aNode->mConstraint.mTargetY];
-                if (aTarget != 0) { aNode->mGameY = aTarget->mGameY; }
+                if (aTarget != 0) { aNode->mBaseGameY = aTarget->mBaseGameY; }
             }
         }
     }
     
     for (int i=0;i<mNodeList.mCount;i++) {
         LevelWavePathBlueprintNode *aNode = (LevelWavePathBlueprintNode *)mNodeList.mData[i];
+     
+        if (aNode->mConstraint.HasX() || aNode->mConstraint.mTypeX == X_CONSTRAINT_TARGET) {
+            aNode->mGameX = aNode->mBaseGameX + aNode->mConstraint.mOffsetX;
+        } else {
+            aNode->mGameX = aNode->mBaseGameX;
+        }
         
+        if (aNode->mConstraint.HasY() || aNode->mConstraint.mTypeY == Y_CONSTRAINT_TARGET) {
+            aNode->mGameY = aNode->mBaseGameY + aNode->mConstraint.mOffsetY;
+        } else {
+            aNode->mGameY = aNode->mBaseGameY;
+        }
+    }
+    
+    for (int i=0;i<mNodeList.mCount;i++) {
+        LevelWavePathBlueprintNode *aNode = (LevelWavePathBlueprintNode *)mNodeList.mData[i];
         
-        //PATH_CHAMFER_SIZE
-        
-        if (aNode->mChamfer &&
+        float aChamferSize = ((float) aNode->mChamferSize);
+        if (aNode->mChamferSize > 0 &&
             i > 0 &&
-            i < (mNodeList.mCount - 1)
-            && true
-            ) {
+            i < (mNodeList.mCount - 1)) {
             
             LevelWavePathBlueprintNode *aPrevNode = (LevelWavePathBlueprintNode *)mNodeList.mData[i - 1];
             LevelWavePathBlueprintNode *aNextNode = (LevelWavePathBlueprintNode *)mNodeList.mData[i + 1];
@@ -368,23 +457,36 @@ void LevelWavePathBlueprint::Build(LevelWavePath *pPath) {
                 aDiffNextY = -1.0f;
             }
             
-            pPath->AddMove(aNode->mGameX + aDiffBackX * PATH_CHAMFER_SIZE,
-                           aNode->mGameY + aDiffBackY * PATH_CHAMFER_SIZE);
-            pPath->AddMove(aNode->mGameX + aDiffNextX * PATH_CHAMFER_SIZE,
-                           aNode->mGameY + aDiffNextY * PATH_CHAMFER_SIZE);
+            
+            pPath->AddMove(aNode->mGameX + aDiffBackX * aChamferSize,
+                           aNode->mGameY + aDiffBackY * aChamferSize);
+            pPath->AddMove(aNode->mGameX + aDiffNextX * aChamferSize,
+                           aNode->mGameY + aDiffNextY * aChamferSize);
         } else {
             pPath->AddMove(aNode->mGameX, aNode->mGameY, aNode->mWaitTimer);
         }
+    }
+}
+
+FJSONNode *LevelWavePathBlueprint::Save() {
     
-        
-        
+    FJSONNode *aExport = new FJSONNode();
+    
+    aExport->AddDictionaryBool("blueprint", true);
+    aExport->AddDictionaryBool("smooth", mSmooth);
+    aExport->AddDictionaryFloat("speed", mSpeed);
+    
+    FJSONNode *aPathArray = new FJSONNode();
+    aExport->AddDictionary("path", aPathArray);
+    
+    for (int i=0;i<mNodeList.mCount;i++) {
+        LevelWavePathBlueprintNode *aNode = (LevelWavePathBlueprintNode *)mNodeList.mData[i];
+        aPathArray->AddArray(aNode->Save());
     }
     
-    
-    //PATH_CHAMFER_SIZE
-    
-    
+    return aExport;
 }
+
 
 
 

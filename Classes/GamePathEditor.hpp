@@ -60,6 +60,9 @@ public:
     
     void                                        PathRefresh();
     void                                        PathReset();
+    
+    void                                        PathPrint();
+    
     void                                        PathDeletePoint();
     
     void                                        ConstrainXToPoint();
@@ -70,6 +73,8 @@ public:
     
     void                                        ConstraintXToType(int pType);
     void                                        ConstraintYToType(int pType);
+    
+    
     
     
     

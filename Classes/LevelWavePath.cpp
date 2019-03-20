@@ -96,17 +96,6 @@ void LevelWavePath::Finalize() {
     mTempX = aStartX;
     mTempY = aStartY;
     
-    for (int i=0;i<mNodeList.mCount;i++) {
-        LevelWavePathNode *aNode = ((LevelWavePathNode *)mNodeList.mData[i]);
-        
-        FString aType = "??";
-        
-        if (aNode->mType == PATH_NODE_NORMAL) aType = "NORMAL";
-        if (aNode->mType == PATH_NODE_INVALID) aType = "INVALID";
-        
-        Log("Path [%d] {%s}  {%.3f, %.3f} \n", i, aType.c(), aNode->mX, aNode->mY);
-    }
-    
     int aIndex = 0;
     
     mDidFinalize = true;
@@ -136,7 +125,6 @@ void LevelWavePath::Finalize() {
 }
 
 void LevelWavePath::AddSegmentBacktrackingFrom(int pIndex) {
-    Log("LevelWavePath::AddSegmentBacktrackingFrom(%d)\n", pIndex);
     
     int aStartIndex = pIndex - 1;
     while (aStartIndex > 0) {
@@ -147,8 +135,6 @@ void LevelWavePath::AddSegmentBacktrackingFrom(int pIndex) {
             --aStartIndex;
         }
     }
-    
-    Log("LevelWavePath::Backtracking(%d => %d)\n", aStartIndex, pIndex);
     
     LevelWavePathNode *aPrev = ((LevelWavePathNode *)mNodeList.mData[aStartIndex]);
     
@@ -323,7 +309,6 @@ void LevelWavePath::Draw() {
         aPrev = aNode;
     }
     
-    
     for (int i=0;i<mNodeList.mCount;i++) {
         aNode = ((LevelWavePathNode *)mNodeList.mData[i]);
 
@@ -340,19 +325,12 @@ void LevelWavePath::Draw() {
     
     Graphics::SetColor(1.0f, 0.65f, 0.45f, 0.75f);
     
-    
-    
     if (mPath.mCount > 0) {
-        
-        float aLastX = mPath.mX[0] - 100;
-        float aLastY = mPath.mY[0] - 100;
-        
         for (int i=0;i<mPath.mCount;i++) {
             float aPercent = ((float)i) / ((float)(mPath.mCount - 1));
             Graphics::SetColor(aPercent, 0.25f, 0.25f, 0.75f);
             Graphics::DrawPoint(mPath.mX[i], mPath.mY[i], 2.0f);
         }
-        
         
         mDemoIndex += 1;
         if (mDemoIndex >= mPath.mCount) { mDemoIndex = 0; }
@@ -362,8 +340,5 @@ void LevelWavePath::Draw() {
         
         Graphics::SetColor(0.66f, 1.0f, 0.44f, 1.0f);
         Graphics::DrawPoint(aX, aY, 20.0f);
-        
-        
     }
-    
 }
