@@ -17,9 +17,22 @@ public:
     LevelWaveBlueprint();
     ~LevelWaveBlueprint();
     
+    void                                        Clear();
+    
     void                                        Draw(bool pSelected);
     LevelWavePathBlueprint                      mPath;
     
+    bool                                        mSmooth;
+    float                                       mSpeed;
+    
+    void                                        ApplyEditorConstraints();
+    
+    void                                        Build();
+    void                                        Build(LevelWavePath *pPath);
+    
+    FJSONNode                                   *Save();
+    void                                        Load(FJSONNode *pNode);
+    
 };
 
-#endif /* LevelWaveBlueprint_hpp */
+#endif

@@ -18,6 +18,7 @@
 #include "FJSON.hpp"
 
 #define EDITOR_MODE 1
+//#undef EDITOR_MODE
 
 #ifdef EDITOR_MODE
 class GameEditor;

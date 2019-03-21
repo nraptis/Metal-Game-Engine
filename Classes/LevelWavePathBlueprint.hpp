@@ -15,7 +15,7 @@
 #include "FPoint.h"
 #include "FJSON.hpp"
 
-
+class LevelWaveBlueprint;
 class LevelWavePathBlueprintNode {
 public:
     LevelWavePathBlueprintNode();
@@ -39,6 +39,7 @@ public:
     void                                        ShiftY(float pShiftY);
     
     FJSONNode                                   *Save();
+    void                                        Load(FJSONNode *pNode);
     
 };
 
@@ -48,6 +49,9 @@ public:
     LevelWavePathBlueprint();
     ~LevelWavePathBlueprint();
     
+    LevelWaveBlueprint                          *mWave;
+    
+    void                                        Clear();
     void                                        Draw(bool pSelected);
     
     int                                         GetClosestIndex(float pX, float pY, float &pDist);
@@ -57,13 +61,9 @@ public:
     
     void                                        Add(float pX, float pY);
     void                                        Remove(int pIndex);
-    void                                        Clear();
     
     LevelWavePathBlueprintNode                  *GetNode(int pIndex);
     LevelWavePathBlueprintNode                  *GetNode();
-    
-    bool                                        mSmooth;
-    float                                       mSpeed;
     
     int                                         mSelectedIndex;
     FList                                       mNodeList;
@@ -74,17 +74,11 @@ public:
     void                                        SetSnapXType(int pType);
     void                                        SetSnapYType(int pType);
     
-    void                                        ApplyEditorConstraints();
-    
-    FPoint                                      GetGamePos(LevelWavePathBlueprintNode *pNode);
-    FPoint                                      GetGamePos(float pX, float pY);
-    
-    void                                        Build();
-    void                                        Build(LevelWavePath *pPath);
+    FPoint                                      GetNormalizedPos(LevelWavePathBlueprintNode *pNode);
+    FPoint                                      GetNormalizedPos(float pX, float pY);
     
     FJSONNode                                   *Save();
-    
-    
+    void                                        Load(FJSONNode *pNode);
     
 };
 

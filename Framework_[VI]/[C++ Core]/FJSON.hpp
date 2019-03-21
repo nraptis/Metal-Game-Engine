@@ -14,6 +14,8 @@
 #include "FHashMap.hpp"
 #include "FStringBuffer.h"
 
+#define EnumJSONArray(_json_node, _subjson_node_name)for(FJSONNode **_enum_start=(FJSONNode**)_json_node->mList,**_enum_end=((_json_node->mListCount > 0)?((FJSONNode**)(&(_json_node->mList[_json_node->mListCount]))) : ((FJSONNode**)0)),*_subjson_node_name=((_json_node->mListCount > 0)?(*_enum_start):((FJSONNode*)0));_subjson_node_name!=((FJSONNode*)0);_subjson_node_name=(++_enum_start<_enum_end)?*_enum_start:NULL)
+
 #define JSON_NODE_TYPE_DATA 0
 #define JSON_NODE_TYPE_DICTIONARY 1
 #define JSON_NODE_TYPE_ARRAY 2
@@ -34,7 +36,20 @@ public:
     void                        AddDictionaryFloat(const char *pKey, float pValue);
     void                        AddDictionaryString(const char *pKey, const char *pValue);
     
+    FJSONNode                   *GetArray(const char *pKey);
+    FJSONNode                   *GetDictionary(const char *pKey);
+    FJSONNode                   *GetData(const char *pKey);
     
+    
+    int                         GetInt(const char *pKey, int pDefaultValue);
+    bool                        GetBool(const char *pKey, bool pDefaultValue);
+    float                       GetFloat(const char *pKey, float pDefaultValue);
+    FString                     GetString(const char *pKey, FString pDefaultValue);
+    
+    int                         IntValue(int pDefaultValue);
+    bool                        BoolValue(bool pDefaultValue);
+    float                       FloatValue(float pDefaultValue);
+    FString                     StringValue(FString pDefaultValue);
     
     
     
@@ -62,6 +77,7 @@ public:
     
     void                        Clear();
     
+    void                        Save(const char *pFile);
     void                        Load(const char *pFile);
     void                        Parse(const char *pData, int pLength);
     
@@ -91,7 +107,6 @@ private:
     }
     
     inline char                 *EndOfQuote(char *pChar) {
-        //Assumption *pChar = '\"'
         ++pChar;
         while (*pChar != 0) {
             if (*pChar == '\"') {
@@ -117,12 +132,9 @@ private:
         return NULL;
     }
     
-    
     inline char                 *GetQuotedString(char *pStart, char *pEnd) {
-        
         int aLength = (int)(pEnd - pStart);
         char *aResult = new char[aLength + 1];
-        
         char *aPaste = aResult;
         char *aCopy = pStart + 1;
         while (aCopy < pEnd) {
@@ -158,10 +170,7 @@ private:
         return aResult;
     }
     
-    
-    
     inline char                 *EndOfNumber(char *pChar) {
-        //Assumption *pChar = NUM
         ++pChar;
         while (IsNumber(*pChar)) {
             ++pChar;
@@ -170,9 +179,7 @@ private:
         return pChar;
     }
     
-    
     inline char                 *GetNumber(char *pStart, char *pEnd) {
-        
         int aLength = (int)(pEnd - pStart);
         char *aResult = new char[aLength + 1];
         char *aPaste = aResult;
@@ -183,8 +190,6 @@ private:
         *aPaste = 0;
         return aResult;
     }
-    
-    
     
     inline char                 *EndOfAlphabetic(char *pChar) {
         //Assumption *pChar = NUM
@@ -196,9 +201,7 @@ private:
         return pChar;
     }
     
-    
     inline char                 *GetAlphabetic(char *pStart, char *pEnd) {
-        
         int aLength = (int)(pEnd - pStart);
         char *aResult = new char[aLength + 1];
         char *aPaste = aResult;
@@ -210,9 +213,6 @@ private:
         return aResult;
     }
     
-    
-    
-    
     //Assume that we pass in character AFTER the "{"
     //with the parent node as last item on pStack
     char                        *ParseHelperDictionary(char *pData, FList *pStack, bool *pSuccess);
@@ -220,8 +220,6 @@ private:
     //Assume that we pass in character AFTER the "["
     //with the parent node as last item on pStack
     char                        *ParseHelperArray(char *pData, FList *pStack, bool *pSuccess);
-    
-    
 };
 
 

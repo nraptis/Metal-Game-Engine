@@ -38,18 +38,15 @@ GamePathEditor::GamePathEditor(GameEditor *pEditor) {
     mSelectTouchStartY = 0.0f;
     
     mPath = NULL;
+    mWave = NULL;
     
     mMenuPaths = new EditorMenuPath(this);
     AddChild(mMenuPaths);
     mMenuPaths->SetFrame(gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 40.0f, 360.0f, 680.0f);
     
-    
     mMenuControls = new EditorMenuPathControl(this);
     AddChild(mMenuControls);
     mMenuControls->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 360.0f), gSafeAreaInsetTop + 40.0f, 360.0f, 480.0f);
-    
-    
-    
 }
 
 GamePathEditor::~GamePathEditor() {
@@ -124,7 +121,7 @@ void GamePathEditor::TouchDown(float pX, float pY, void *pData) {
     }
     
     if (mPathMode == PATH_MODE_CREATE) {
-        if (mPath) {
+        if (mPath && mWave) {
             mPath->Add(pX, pY);
             mPath->mSelectedIndex = mPath->mNodeList.mCount - 1;
             
@@ -132,7 +129,7 @@ void GamePathEditor::TouchDown(float pX, float pY, void *pData) {
             if (aNode) {
                 aNode->mConstraint.mTypeX = gEditor->ClosestXConstraint(pX);
                 aNode->mConstraint.mTypeY = gEditor->ClosestYConstraint(pY);
-                mPath->ApplyEditorConstraints();
+                mWave->ApplyEditorConstraints();
                 
             }
         }
@@ -191,6 +188,10 @@ void GamePathEditor::KeyDown(int pKey) {
     bool aCtrl = os_is_control_key_down();
     bool aAlt = os_is_alt_key_down();
     
+    if (mWave == NULL) {
+        return;
+    }
+    
     if (mPath == NULL) {
         return;
     }
@@ -223,7 +224,7 @@ void GamePathEditor::KeyDown(int pKey) {
         if (pKey == __KEY__X) {
             if (aShift == false && aCtrl == true && aAlt == false) {
                 aNode->mConstraint.mOffsetX = 0.0f;
-                mPath->ApplyEditorConstraints();
+                mWave->ApplyEditorConstraints();
             } else {
                 mConstrainXToPoint = !mConstrainXToPoint;
             }
@@ -232,7 +233,7 @@ void GamePathEditor::KeyDown(int pKey) {
         if (pKey == __KEY__Y) {
             if (aShift == false && aCtrl == true && aAlt == false) {
                 aNode->mConstraint.mOffsetY = 0.0f;
-                mPath->ApplyEditorConstraints();
+                mWave->ApplyEditorConstraints();
             } else {
                 mConstrainYToPoint = !mConstrainYToPoint;
             }
@@ -262,7 +263,7 @@ void GamePathEditor::KeyDown(int pKey) {
             } else {
                 aNode->mConstraint.mTypeX = X_CONSTRAINT_LEFT_SPAWN;
             }
-            mPath->ApplyEditorConstraints();
+            mWave->ApplyEditorConstraints();
         }
         
         if (pKey == __KEY__U) {
@@ -281,7 +282,7 @@ void GamePathEditor::KeyDown(int pKey) {
             } else {
                 aNode->mConstraint.mTypeY = Y_CONSTRAINT_TOP_SPAWN;
             }
-            mPath->ApplyEditorConstraints();
+            mWave->ApplyEditorConstraints();
         }
     }
     
@@ -291,15 +292,13 @@ void GamePathEditor::KeyDown(int pKey) {
         if (pKey == __KEY__LEFT) {
             if (aShift == false && aCtrl == false && aAlt == false) {
                 aNode->ShiftX(-1.0f);
-                mPath->ApplyEditorConstraints();
-                mPath->Build();
+                mWave->ApplyEditorConstraints();
             } else if (aShift == true && aCtrl == false && aAlt == false) {
                 aNode->ShiftX(-10.0f);
-                mPath->ApplyEditorConstraints();
+                mWave->ApplyEditorConstraints();
             } else if (aShift == false && aCtrl == true && aAlt == false) {
-                
                 aNode->mConstraint.mTypeX = gEditor->PrevXConstraintf(aNode->mX);
-                mPath->ApplyEditorConstraints();
+                mWave->ApplyEditorConstraints();
             }
         }
         if (pKey == __KEY__RIGHT) {
@@ -307,39 +306,39 @@ void GamePathEditor::KeyDown(int pKey) {
                 aNode->ShiftX(1.0f);
             } else if (aShift == true && aCtrl == false && aAlt == false) {
                 aNode->ShiftX(10.0f);
-                mPath->ApplyEditorConstraints();
+                mWave->ApplyEditorConstraints();
             } else if (aShift == false && aCtrl == true && aAlt == false) {
                 aNode->mConstraint.mTypeX = gEditor->NextXConstraintf(aNode->mX);
-                mPath->ApplyEditorConstraints();
+                mWave->ApplyEditorConstraints();
                 
             }
         }
         if (pKey == __KEY__UP) {
             if (aShift == false && aCtrl == false && aAlt == false) {
                 aNode->ShiftY(-1.0f);
-                mPath->ApplyEditorConstraints();
+                mWave->ApplyEditorConstraints();
             } else if (aShift == true && aCtrl == false && aAlt == false) {
                 aNode->ShiftY(-10.0f);
-                mPath->ApplyEditorConstraints();
+                mWave->ApplyEditorConstraints();
                 
             } else if (aShift == false && aCtrl == true && aAlt == false) {
                 aNode->mConstraint.mTypeY = gEditor->PrevYConstraintf(aNode->mY);
-                mPath->ApplyEditorConstraints();
+                mWave->ApplyEditorConstraints();
                 
             }
         }
         if (pKey == __KEY__DOWN) {
             if (aShift == false && aCtrl == false && aAlt == false) {
                 aNode->ShiftY(1.0f);
-                mPath->ApplyEditorConstraints();
-                mPath->Build();
+                mWave->ApplyEditorConstraints();
+                
             } else if (aShift == true && aCtrl == false && aAlt == false) {
                 aNode->ShiftY(10.0f);
-                mPath->ApplyEditorConstraints();
+                mWave->ApplyEditorConstraints();
                 
             } else if (aShift == false && aCtrl == true && aAlt == false) {
                 aNode->mConstraint.mTypeY = gEditor->NextYConstraintf(aNode->mY);
-                mPath->ApplyEditorConstraints();
+                mWave->ApplyEditorConstraints();
             }
         }
     }
@@ -363,9 +362,11 @@ void GamePathEditor::Close() {
 
 void GamePathEditor::SetUp(LevelWaveBlueprint *pWave) {
     if (pWave == NULL) {
+        mWave = NULL;
         mPath = NULL;
         return;
     }
+    mWave = pWave;
     mPath = &(pWave->mPath);
     mSelectedTouch = NULL;
     
@@ -374,13 +375,11 @@ void GamePathEditor::SetUp(LevelWaveBlueprint *pWave) {
     } else {
         mPathMode = PATH_MODE_CREATE;
     }
-    
-    
 }
 
 void GamePathEditor::PathRefresh() {
-    if (mPath == NULL) { return; }
-    mPath->Build();
+    if (mWave == NULL) { return; }
+    mWave->Build();
 }
 
 void GamePathEditor::PathReset() {

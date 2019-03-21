@@ -22,12 +22,9 @@ FJSONNode::FJSONNode() {
     
     mNodeType = JSON_NODE_TYPE_DATA;
     mDataType = JSON_DATA_TYPE_FLAG;
-
 }
 
 FJSONNode::~FJSONNode() {
-    //printf("Deleting JNode[%s]\n", mKey);
-    
     if (mList != NULL) {
         for (int i=0;i<mListCount;i++) {
             delete mList[i];
@@ -109,6 +106,89 @@ void FJSONNode::AddArray(FJSONNode *pNode) {
     mList[mListCount++] = pNode;
 }
 
+FJSONNode *FJSONNode::GetArray(const char *pKey) {
+    if (mInfo != NULL) {
+        FJSONNode *aNode = (FJSONNode *)mInfo->Get(pKey);
+        if (aNode != NULL && aNode->mNodeType == JSON_NODE_TYPE_ARRAY) {
+            return aNode;
+        }
+    }
+    return NULL;
+}
+
+FJSONNode *FJSONNode::GetDictionary(const char *pKey) {
+    if (mInfo != NULL) {
+        FJSONNode *aNode = (FJSONNode *)mInfo->Get(pKey);
+        if (aNode != NULL && aNode->mNodeType == JSON_NODE_TYPE_DICTIONARY) {
+            return aNode;
+        }
+    }
+    return NULL;
+}
+
+FJSONNode *FJSONNode::GetData(const char *pKey) {
+    if (mInfo != NULL) {
+        FJSONNode *aNode = (FJSONNode *)mInfo->Get(pKey);
+        if (aNode != NULL && aNode->mNodeType == JSON_NODE_TYPE_DATA) {
+            return aNode;
+        }
+    }
+    return NULL;
+}
+
+int FJSONNode::GetInt(const char *pKey, int pDefaultValue) {
+    FJSONNode *aNode = GetData(pKey);
+    if (aNode != NULL) { return aNode->IntValue(pDefaultValue); }
+    return pDefaultValue;
+}
+
+bool FJSONNode::GetBool(const char *pKey, bool pDefaultValue) {
+    FJSONNode *aNode = GetData(pKey);
+    if (aNode != NULL) { return aNode->BoolValue(pDefaultValue); }
+    return pDefaultValue;
+}
+
+float FJSONNode::GetFloat(const char *pKey, float pDefaultValue) {
+    FJSONNode *aNode = GetData(pKey);
+    if (aNode != NULL) { return aNode->FloatValue(pDefaultValue); }
+    return pDefaultValue;
+}
+
+FString FJSONNode::GetString(const char *pKey, FString pDefaultValue) {
+    FJSONNode *aNode = GetData(pKey);
+    if (aNode != NULL) { return aNode->StringValue(pDefaultValue); }
+    return pDefaultValue;
+}
+
+int FJSONNode::IntValue(int pDefaultValue) {
+    if (mNodeType == JSON_NODE_TYPE_DATA && mValue != NULL) {
+        return FString(mValue).ToInt();
+    }
+    return pDefaultValue;
+}
+
+bool FJSONNode::BoolValue(bool pDefaultValue) {
+    if (mNodeType == JSON_NODE_TYPE_DATA && mValue != NULL) {
+        return FString(mValue).ToBool();
+    }
+    return pDefaultValue;
+}
+
+float FJSONNode::FloatValue(float pDefaultValue) {
+    
+    if (mNodeType == JSON_NODE_TYPE_DATA && mValue != NULL) {
+        return FString(mValue).ToFloat();
+    }
+    return pDefaultValue;
+}
+
+FString FJSONNode::StringValue(FString pDefaultValue) {
+    if (mNodeType == JSON_NODE_TYPE_DATA && mValue != NULL) {
+        return FString(mValue);
+    }
+    return pDefaultValue;
+}
+
 FJSON::FJSON() {
     mRoot = NULL;
     
@@ -154,12 +234,18 @@ void FJSON::Load(const char *pFile) {
     Parse((const char *)aFile.mData, aFile.mLength);
 }
 
+void FJSON::Save(const char *pFile) {
+    FString aExport = GetPrettyPrint();
+    if (aExport.mLength <= 1) { aExport = "{}"; }
+    FFile aFile;
+    aFile.Write(aExport.mData, aExport.mLength);
+    aFile.Save(pFile);
+}
+
 void FJSON::Parse(const char *pData, int pLength) {
     
     Clear();
-    if (pData == NULL || pLength <= 2) {
-        return;
-    }
+    if (pData == NULL || pLength <= 2) { return; }
     
     char *aData = new char[pLength + 1];
     for (int i=0;i<pLength;i++) {
@@ -272,8 +358,8 @@ char *FJSON::ParseHelperDictionary(char *pData, FList *pStack, bool *pSuccess) {
             //aNode->mKey = aKey;
             aNode->mNodeType = JSON_NODE_TYPE_DICTIONARY;
             aParent->AddDictionary(aKey, aNode);
+            delete aKey;
             pStack->Add(aNode);
-            
             aPtr = ParseHelperDictionary(aPtr, pStack, pSuccess);
             if (*pSuccess == false) {
                 return NULL;
@@ -302,7 +388,6 @@ char *FJSON::ParseHelperDictionary(char *pData, FList *pStack, bool *pSuccess) {
                 delete aKey;
                 return NULL;
             }
-            
             FJSONNode *aValueNode = new FJSONNode();
             aValueNode->mDataType = JSON_DATA_TYPE_STRING;
             aValueNode->mValue = GetQuotedString(aPtr, aEOQ);
@@ -317,7 +402,6 @@ char *FJSON::ParseHelperDictionary(char *pData, FList *pStack, bool *pSuccess) {
                 delete aKey;
                 return NULL;
             }
-            
             FJSONNode *aValueNode = new FJSONNode();
             aValueNode->mDataType = JSON_DATA_TYPE_NUMBER;
             aValueNode->mValue = GetNumber(aPtr, aEON);
@@ -332,7 +416,6 @@ char *FJSON::ParseHelperDictionary(char *pData, FList *pStack, bool *pSuccess) {
                 delete aKey;
                 return NULL;
             }
-            
             FJSONNode *aValueNode = new FJSONNode();
             aValueNode->mDataType = JSON_DATA_TYPE_FLAG;
             aValueNode->mValue = GetNumber(aPtr, aEOA);
@@ -347,9 +430,7 @@ char *FJSON::ParseHelperDictionary(char *pData, FList *pStack, bool *pSuccess) {
         }
         ++aElementIndex;
     }
-    
 ParseHelperDictionary_COMPLETE:
-    
     return aPtr;
 }
 
@@ -357,12 +438,10 @@ ParseHelperDictionary_COMPLETE:
 //with the parent node as last item on pStack
 char *FJSON::ParseHelperArray(char *pData, FList *pStack, bool *pSuccess) {
     FJSONNode *aParent = (FJSONNode *)pStack->Last();
-    
     if (aParent == NULL) {
         *pSuccess = false;
         return NULL;
     }
-    
     int aElementIndex = 0;
     char *aPtr = pData;
     while (*aPtr) {
@@ -383,9 +462,7 @@ char *FJSON::ParseHelperArray(char *pData, FList *pStack, bool *pSuccess) {
                 goto ParseHelperArray_COMPLETE;
             }
         }
-        
         while ((*aPtr != 0) && IsWhiteSpace(*aPtr)) { aPtr++; }
-        
         if (*aPtr == '{') {
             ++aPtr;
             FJSONNode *aNode = new FJSONNode();
@@ -397,7 +474,6 @@ char *FJSON::ParseHelperArray(char *pData, FList *pStack, bool *pSuccess) {
                 return NULL;
             }
             pStack->PopLast();
-            
         } else if (*aPtr == '[') {
             ++aPtr;
             FJSONNode *aNode = new FJSONNode();
@@ -451,22 +527,17 @@ char *FJSON::ParseHelperArray(char *pData, FList *pStack, bool *pSuccess) {
         }
         ++aElementIndex;
     }
-    
 ParseHelperArray_COMPLETE:
-    
     return aPtr;
 }
 
 
 void FJSON::Print() {
-    
     printf("__JSON_BEGIN:\n");
     FString aString = GetPrettyPrint();
     printf("\n%s\n", aString.c());
     printf("__JSON_END:\n");
 }
-
-//mRoot;
 
 FString FJSON::GetPrettyPrint() {
     if (mRoot == NULL) {

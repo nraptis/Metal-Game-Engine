@@ -132,7 +132,6 @@ public:
     
     float                                       mPeekZoneTop;
     float                                       mPeekZoneRight;
-    float                                       mPeekZoneBottom;
     float                                       mPeekZoneLeft;
     
     
@@ -140,6 +139,11 @@ public:
     float                                       mQuarterZoneRight;
     float                                       mQuarterZoneLeft;
     float                                       mQuarterZoneBottom;
+    
+    
+    float                                       mExitZoneTop;
+    float                                       mExitZoneRight;
+    float                                       mExitZoneLeft;
     
     
     

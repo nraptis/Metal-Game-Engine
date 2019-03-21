@@ -40,9 +40,12 @@ public:
     
     virtual void                                Notify(void *pSender, const char *pNotification) override;
     
-    void                                        Load();
+    //Everything we BUILD is SECTION...
+    LevelSectionBlueprint                       mSection;
     
     void                                        SetOverlay(FCanvas *pCanvas);
+    
+    void                                        SelectClosestObject(float pX, float pY);
     
     
     int                                         ClosestXConstraint(float pX);
@@ -59,10 +62,6 @@ public:
     int                                         NextYConstraint(int pConstraint);
     int                                         PrevYConstraint(int pConstraint);
     
-    
-    
-    
-    
     void                                        WaveAdd();
     void                                        WaveRemove();
     void                                        WaveSelectNext();
@@ -75,8 +74,6 @@ public:
     
     
     
-    LevelSectionBlueprint                       *mCurrentSection;
-    
     
     
     //Our current "overlay" which will be either "path editor" or "tool container" etc...
@@ -86,14 +83,12 @@ public:
     
     
     Game                                        *mGame;
-    GamePathEditor                              *mPathEditor;
     
+    GamePathEditor                              *mPathEditor;
     
     EditorMenuSections                          *mMenuSections;
     
     FCanvas                                     *mToolContainer;
-    
-    
     
     float                                       mSpawnZoneTop;
     float                                       mSpawnZoneRight;
@@ -102,7 +97,6 @@ public:
     
     float                                       mPeekZoneTop;
     float                                       mPeekZoneRight;
-    float                                       mPeekZoneBottom;
     float                                       mPeekZoneLeft;
     
     float                                       mQuarterZoneTop;
@@ -112,8 +106,25 @@ public:
     
     float                                       mPlayZoneBottom;
     
+    float                                       mExitZoneTop;
+    float                                       mExitZoneRight;
+    float                                       mExitZoneLeft;
+    
+    float                                       mGameAreaTop;
+    float                                       mGameAreaRight;
+    float                                       mGameAreaBottom;
+    float                                       mGameAreaLeft;
+    
     float                                       mCenterH;
     float                                       mCenterV;
+    
+    int                                         mExportIndex;
+    
+    void                                        SaveAt(int pIndex);
+    void                                        LoadAt(int pIndex);
+    
+    void                                        Save(const char *pFile);
+    void                                        Load(const char *pFile);
     
     
 };

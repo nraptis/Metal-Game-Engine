@@ -68,8 +68,11 @@ Game::Game() {
     
     mPeekZoneTop = 0.0f;
     mPeekZoneRight = 0.0f;
-    mPeekZoneBottom = 0.0f;
     mPeekZoneLeft = 0.0f;
+    
+    mExitZoneTop = 0.0f;
+    mExitZoneRight = 0.0f;
+    mExitZoneLeft = 0.0f;
     
     mQuarterZoneTop = 0.0f;
     mQuarterZoneRight = 0.0f;
@@ -227,18 +230,10 @@ void Game::LayoutTransform() {
     mHitZoneLeft = Convert2DXTo3D(-aHitZonePaddingH);
     
     
-    mGameAreaTop = Convert2DYTo3D(0.0f);
-    mGameAreaRight = Convert2DXTo3D(mWidth);
-    mGameAreaBottom = Convert2DYTo3D(mHeight);
-    mGameAreaLeft = Convert2DXTo3D(0.0f);
-    
-    float aGameAreaWidth = mGameAreaRight - mGameAreaLeft;
-    float aGameAreaHeight = mGameAreaBottom - mGameAreaTop;
-    float aGameAreaMinDimension = aGameAreaWidth;
-    if (aGameAreaHeight < aGameAreaMinDimension) { aGameAreaMinDimension = aGameAreaHeight; }
-    float aGameAreaMaxDimension = aGameAreaWidth;
-    if (aGameAreaHeight > aGameAreaMaxDimension) { aGameAreaMaxDimension = aGameAreaHeight; }
-    
+    mGameAreaTop = 0.0f;
+    mGameAreaRight = mWidth;
+    mGameAreaBottom = mHeight;
+    mGameAreaLeft = 0.0f;
     
     
     float aPlayAreaPadding = mWidth;
@@ -269,7 +264,6 @@ void Game::LayoutTransform() {
     float aPeekZonePaddingSides = 60.0f;
     mPeekZoneTop = aPeekZonePaddingTop;
     mPeekZoneRight = mWidth - aPeekZonePaddingSides;
-    mPeekZoneBottom = mHeight;
     mPeekZoneLeft = aPeekZonePaddingSides;
     
     
@@ -283,15 +277,20 @@ void Game::LayoutTransform() {
     
     
     
+    float aExitZonePaddingTop = aPeekZonePaddingTop + 100.0f;
+    float aExitZonePaddingSides = aPeekZonePaddingSides + 100.0f;
+    mExitZoneTop = -aExitZonePaddingTop;
+    mExitZoneRight = mWidth + aExitZonePaddingSides;
+    mExitZoneLeft = -aExitZonePaddingSides;
+    
     
     float aKillZonePaddingTop = gDeviceHeight * 0.75f;
     float aKillZonePaddingBottom = gDeviceHeight * 0.5f;
     float aKillZonePaddingSides = gDeviceWidth * 0.5f + 200.0f;
-    
-    mKillZoneTop = Convert2DYTo3D(-aKillZonePaddingTop);
-    mKillZoneRight = Convert2DXTo3D(mWidth + aKillZonePaddingSides);
-    mKillZoneBottom = Convert2DYTo3D(mHeight + aKillZonePaddingBottom);
-    mKillZoneLeft = Convert2DXTo3D(-aKillZonePaddingSides);
+    mKillZoneTop = aKillZonePaddingTop;
+    mKillZoneRight = mWidth + aKillZonePaddingSides;
+    mKillZoneBottom = mHeight + aKillZonePaddingBottom;
+    mKillZoneLeft = -aKillZonePaddingSides;
     
     
     
@@ -480,8 +479,10 @@ void Game::Draw() {
     Graphics::SetColor();
     
     
-    Graphics::PipelineStateSetShape2DNoBlending();
-    Graphics::OutlineRectInside(0.0f, 0.0f, mWidth, mHeight, 1.0f);
+    //Graphics::SetColor(1.0f, 1.0f, 0.25f, 0.25f);
+    //Graphics::OutlineRectInside(0.0f, 0.0f, mWidth, mHeight, 1.0f);
+    //Graphics::SetColor();
+    
     
     //gApp->mGameAreaMarker.Draw(0.0f, 0.0f);
     

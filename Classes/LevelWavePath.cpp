@@ -82,9 +82,12 @@ void LevelWavePath::Finalize() {
     mPath.Reset();
     mDidFailFinalize = false;
     
+    if (mSpeed < 1.0f) {
+        printf("Illegal Speed....\n");
+        mSpeed = 1.0f;
+    }
     
     if (mNodeList.mCount < 2) {
-        Log("ILLEGAL, TOO SMALL!!!\n");
         mDidFailFinalize = true;
         return;
     }
@@ -105,13 +108,6 @@ void LevelWavePath::Finalize() {
         if (aIndex > 0) {
             if ((aNode->mWaitTimer > 0) || (aIndex == (mNodeList.mCount - 1))) {
                 LevelWavePath::AddSegmentBacktrackingFrom(aIndex);
-                
-                
-                //mPath.Reset();
-                
-                //mTempX = aStartX;
-                //mTempY = aStartY;
-                
             }
         }
         

@@ -210,9 +210,9 @@ void EditorMenuPath::Update() {
     
     if (mCheckBoxSmooth) {
         bool aUnlink = true;
-        if (mEditor->mPath != NULL) {
+        if (mEditor->mWave != NULL) {
             aUnlink = false;
-            mCheckBoxSmooth->SetTarget(&(mEditor->mPath->mSmooth));
+            mCheckBoxSmooth->SetTarget(&(mEditor->mWave->mSmooth));
         }
         if (aUnlink) {
             mCheckBoxSmooth->SetTarget(NULL);
@@ -297,7 +297,7 @@ void EditorMenuPath::Notify(void *pSender, const char *pNotification) {
     if (FString(pNotification) == "checkbox") {
         UICheckBox *aCheckbox = (UICheckBox *)pSender;
         if (aCheckbox == mCheckBoxSmooth) {
-            mEditor->mPath->Build();
+            mEditor->mWave->Build();
         }
     }
     

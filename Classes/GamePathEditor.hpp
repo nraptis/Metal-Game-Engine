@@ -74,25 +74,15 @@ public:
     void                                        ConstraintXToType(int pType);
     void                                        ConstraintYToType(int pType);
     
-    
-    
-    
-    
     GameEditor                                  *mEditor;
     EditorMenuPathControl                       *mMenuControls;
     EditorMenuPath                              *mMenuPaths;
     
     void                                        Close();
     
-    
-    //Stuff for CD II
-    
     void                                        SetUp(LevelWaveBlueprint *pWave);
     LevelWavePathBlueprint                      *mPath;
-    
-    
-    
-    
+    LevelWaveBlueprint                          *mWave;
 };
 
 #endif /* GamePathEditor_hpp */

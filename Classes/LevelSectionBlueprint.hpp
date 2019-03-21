@@ -17,6 +17,7 @@ public:
     LevelSectionBlueprint();
     ~LevelSectionBlueprint();
     
+    void                                        Clear();
     void                                        Draw();
     
     
@@ -28,10 +29,11 @@ public:
     
     
     FList                                       mWaveList;
-    
     LevelWaveBlueprint                          *mCurrentWave;
     
     
+    FJSONNode                                   *Save();
+    void                                        Load(FJSONNode *pNode);
     
 };
 
