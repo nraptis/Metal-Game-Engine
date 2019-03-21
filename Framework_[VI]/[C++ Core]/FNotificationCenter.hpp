@@ -88,22 +88,25 @@ public:
     FNotificationCenter();
     ~FNotificationCenter();
 
-    void                            Register(FCanvas *pObserver, FCanvas *pSender, const char *pNotification);
-    void                            Unregister(FCanvas *pObserver, FCanvas *pSender, const char *pNotification);
-    void                            Unregister(FCanvas *pObserver);
-    void                            Post(FCanvas *pSender, const char *pNotification);
+    void                                        Register(FCanvas *pObserver, FCanvas *pSender, const char *pNotification);
+    void                                        Unregister(FCanvas *pObserver, FCanvas *pSender, const char *pNotification);
+    void                                        Unregister(FCanvas *pObserver);
+    void                                        Post(FCanvas *pSender, const char *pNotification);
 
+    void                                        PrintStats();
+    
+    
 
 protected:
 
     //"Forward" map...
-    FNotificationTable              mSendTable;
+    FNotificationTable                          mSendTable;
 
     //"Backward" map...
-    FNotificationReceiverMap        mRegisterTable;
+    FNotificationReceiverMap                    mRegisterTable;
 
-    FList                           mNodeList;
-    FList                           mPostList;
+    FList                                       mNodeList;
+    FList                                       mPostList;
 };
 
 #endif

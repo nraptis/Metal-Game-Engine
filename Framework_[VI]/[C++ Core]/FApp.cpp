@@ -491,108 +491,82 @@ void FApp::KeyUp(int pKey) {
 
 void FApp::BaseTouchDown(float pX, float pY, void *pData) {
     InterfaceLock();
-    //ThrottleLock();
     gTouch.BaseTouchDown(pX, pY, pData);
-    //ThrottleUnlock();
     InterfaceUnlock();
 }
 
 void FApp::BaseTouchMove(float pX, float pY, void *pData) {
     InterfaceLock();
-    //ThrottleLock();
     gTouch.BaseTouchMove(pX, pY, pData);
-    //ThrottleUnlock();
     InterfaceUnlock();
 }
 
 void FApp::BaseTouchUp(float pX, float pY, void *pData) {
     InterfaceLock();
-    //ThrottleLock();
     gTouch.BaseTouchUp(pX, pY, pData);
-    //ThrottleUnlock();
     InterfaceUnlock();
 }
 
 void FApp::BaseTouchCanceled(float pX, float pY, void *pData) {
     InterfaceLock();
-    //ThrottleLock();
     gTouch.BaseTouchCanceled(pX, pY, pData);
-    //ThrottleUnlock();
     InterfaceUnlock();
 }
 
 void FApp::BaseTouchDownDroid(float pX, float pY, int pIndex, int pCount) {
     InterfaceLock();
-    //ThrottleLock();
     gTouch.BaseTouchDownDroid(pX, pY, pIndex, pCount);
-    //ThrottleUnlock();
     InterfaceUnlock();
 }
 
 void FApp::BaseTouchMoveDroid(float pX, float pY, int pIndex, int pCount) {
     InterfaceLock();
-    //ThrottleLock();
     gTouch.BaseTouchMoveDroid(pX, pY, pIndex, pCount);
-    //ThrottleUnlock();
     InterfaceUnlock();
 }
 
 void FApp::BaseTouchUpDroid(float pX, float pY, int pIndex, int pCount) {
     InterfaceLock();
-    //ThrottleLock();
     gTouch.BaseTouchUpDroid(pX, pY, pIndex, pCount);
-    //ThrottleUnlock();
     InterfaceUnlock();
 }
 
 void FApp::BaseTouchCanceledDroid(float pX, float pY, int pIndex, int pCount) {
     InterfaceLock();
-    //ThrottleLock();
     gTouch.BaseTouchCanceledDroid(pX, pY, pIndex, pCount);
-    //ThrottleUnlock();
     InterfaceUnlock();
 }
 
 void FApp::BaseMouseDown(float pX, float pY, int pButton) {
     InterfaceLock();
-    //ThrottleLock();
     gTouch.BaseMouseDown(pX, pY, pButton);
-    //ThrottleUnlock();
     InterfaceUnlock();
     
 }
 
 void FApp::BaseMouseMove(float pX, float pY) {
     InterfaceLock();
-    //ThrottleLock();
     gTouch.BaseMouseMove(pX, pY);
-    //ThrottleUnlock();
     InterfaceUnlock();
 }
 
 void FApp::BaseMouseUp(float pX, float pY, int pButton) {
     InterfaceLock();
-    //ThrottleLock();
     gTouch.BaseMouseUp(pX, pY, pButton);
-    //ThrottleUnlock();
     InterfaceUnlock();
 }
 
 void FApp::BaseMouseWheel(int pDirection) {
     InterfaceLock();
-    //ThrottleLock();
     gTouch.BaseMouseWheel(pDirection);
-    //ThrottleUnlock();
     InterfaceUnlock();
 }
 
 void FApp::BaseKeyDown(int pKey) {
     if ((pKey >= 0) && (pKey < 256)) {
         InterfaceLock();
-        //ThrottleLock();
         gKeyPressed[pKey] = true;
         gTouch.EnqueueKeyDown(pKey);
-        //ThrottleUnlock();
         InterfaceUnlock();
     }
 }
@@ -600,10 +574,8 @@ void FApp::BaseKeyDown(int pKey) {
 void FApp::BaseKeyUp(int pKey) {
     if ((pKey >= 0) && (pKey < 256)) {
         InterfaceLock();
-        //ThrottleLock();
         gKeyPressed[pKey] = false;
         gTouch.EnqueueKeyUp(pKey);
-        //ThrottleUnlock();
         InterfaceUnlock();
     }
 }
@@ -612,8 +584,6 @@ void FApp::ProcessMouseDown(float pX, float pY, int pButton) {
     MouseDown(pX, pY, pButton);
     
     mSelectedCanvas = NULL;
-    
-    
     if (mWindowTools.MouseDown(pX, pY, pButton)) {
         mSelectedInputWindow = &mWindowTools;
         mSelectedCanvas = mWindowTools.mSelectedCanvas;
@@ -625,12 +595,6 @@ void FApp::ProcessMouseDown(float pX, float pY, int pButton) {
         mSelectedCanvas = mWindowMain.mSelectedCanvas;
     } else {
         mSelectedInputWindow = 0;
-    }
-    
-    if (mSelectedCanvas) {
-        printf("FAPP::Selected[%s]\n", mSelectedCanvas->mName.c());
-    } else {
-        
     }
 }
 
@@ -716,9 +680,7 @@ void FApp::BaseInactive() {
         Inactive();
         
         InterfaceLock();
-        //ThrottleLock();
         gTouch.Inactive();
-        //ThrottleUnlock();
         InterfaceUnlock();
         
         
@@ -749,9 +711,7 @@ void FApp::BaseActive() {
         #endif
         
         InterfaceLock();
-        //ThrottleLock();
         gTouch.Active();
-        //ThrottleUnlock();
         InterfaceUnlock();
         
         mWindowMain.Active();

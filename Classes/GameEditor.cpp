@@ -28,15 +28,14 @@ GameEditor::GameEditor(Game *pGame) {
     mCurrentSection = new LevelSectionBlueprint();
     
     
+    mPathEditor = NULL;
+    
     mToolContainer = new FCanvas();
     mToolContainer->mName = "Tool Container";
     AddChild(mToolContainer);
     mToolContainer->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
     
-    mPathEditor = new GamePathEditor(this);
-    mPathEditor->mName = "Path Editor";
-    AddChild(mPathEditor);
-    mPathEditor->Deactivate();
+    
     
     mMenuSections = new EditorMenuSections(this);
     mToolContainer->AddChild(mMenuSections);
@@ -65,7 +64,7 @@ GameEditor::~GameEditor() {
 void GameEditor::Layout() {
     
     mToolContainer->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
-    mPathEditor->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+    if (mPathEditor) mPathEditor->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
     
     FPoint aSpawnZone1 = FPoint(gGame->mSpawnZoneLeft, gGame->mSpawnZoneTop);
     aSpawnZone1 = FCanvas::Convert(aSpawnZone1, gGame, this);
@@ -471,6 +470,12 @@ void GameEditor::OpenPathEditor() {
     if (mCurrentSection == NULL) { printf("Must have mCurrentSection...\n"); return; }
     if (mCurrentSection->mCurrentWave == NULL) { printf("Must have wave...\n"); return; }
     
+    
+    mPathEditor = new GamePathEditor(this);
+    mPathEditor->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+    mPathEditor->mName = "Path Editor";
+    AddChild(mPathEditor);
+    
     mPathEditor->SetUp(mCurrentSection->mCurrentWave);
     
     SetOverlay(mPathEditor);
@@ -478,6 +483,14 @@ void GameEditor::OpenPathEditor() {
 
 void GameEditor::ClosePathEditor() {
     SetOverlay(mToolContainer);
+    
+    if (mPathEditor) {
+        mPathEditor->Kill();
+        mPathEditor = NULL;
+        
+        gNotify.PrintStats();
+    }
+    
 }
 
 

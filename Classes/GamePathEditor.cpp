@@ -197,8 +197,6 @@ void GamePathEditor::KeyDown(int pKey) {
     
     LevelWavePathBlueprintNode *aNode = mPath->GetNode();
     
-    printf("Shift[%d] Ctrl[%d] Alt[%d]\n", aShift, aCtrl, aAlt);
-    
     if (pKey == __KEY__P) {
         PathPrint();
     }
@@ -360,13 +358,6 @@ void GamePathEditor::Load() {
 }
 
 void GamePathEditor::Close() {
-    
-    
-    printf("Close Editor...\n");
-    
-    
-    printf("Hand-off the Path...\n");
-    
     mEditor->ClosePathEditor();
 }
 

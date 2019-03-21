@@ -192,7 +192,8 @@ EditorMenuPath::EditorMenuPath(GamePathEditor *pEditor) : ToolMenu() {
 
     
     
-    DeactivateCloseButton();
+    //DeactivateCloseButton();
+    
 }
 
 EditorMenuPath::~EditorMenuPath() {

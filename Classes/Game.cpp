@@ -257,7 +257,7 @@ void Game::LayoutTransform() {
     mPlayAreaBottom = mDartSpawnY - aPlayAreaPadding;
     mPlayAreaLeft = gSafeAreaInsetLeft + aPlayAreaPadding;
     
-    float aSpawnZonePadding = 120.0f;
+    float aSpawnZonePadding = 100.0f;
     mSpawnZoneTop = -aSpawnZonePadding;
     mSpawnZoneRight = mWidth + aSpawnZonePadding;
     mSpawnZoneBottom = mHeight;
@@ -265,11 +265,12 @@ void Game::LayoutTransform() {
     
     
     
-    float aPeekZonePadding = 90.0f;
-    mPeekZoneTop = aPeekZonePadding;
-    mPeekZoneRight = mWidth - aPeekZonePadding;
+    float aPeekZonePaddingTop = 88.0f;
+    float aPeekZonePaddingSides = 60.0f;
+    mPeekZoneTop = aPeekZonePaddingTop;
+    mPeekZoneRight = mWidth - aPeekZonePaddingSides;
     mPeekZoneBottom = mHeight;
-    mPeekZoneLeft = aPeekZonePadding;
+    mPeekZoneLeft = aPeekZonePaddingSides;
     
     
     
@@ -420,6 +421,52 @@ void Game::Update() {
     }
     
     mLevelController->Update();
+    
+    
+    
+#ifdef EDITOR_MODE
+    
+    int aRequiredTestObjectCount = mEditorPath.mNodeList.mCount;
+    
+    while (mEditorObjectList.mCount > aRequiredTestObjectCount) {
+        mEditorObjectQueue.Add(mEditorObjectList.PopLast());
+    }
+    
+    while (mEditorObjectList.mCount < aRequiredTestObjectCount && mEditorObjectQueue.mCount > 0) {
+        mEditorObjectList.Add(mEditorObjectQueue.PopLast());
+    }
+    
+    while (mEditorObjectList.mCount < aRequiredTestObjectCount) {
+        Balloon *aBalloon = new Balloon();
+        mEditorObjectList.Add(aBalloon);
+    }
+    
+    for (int i=0;i<mEditorPath.mNodeList.mCount;i++) {
+        
+        GameObject *aObject = (GameObject *)mEditorObjectList.Fetch(i);
+        LevelWavePathNode *aPathNode = (LevelWavePathNode *)mEditorPath.mNodeList.Fetch(i);
+        
+        if (aObject != NULL && aPathNode != NULL) {
+            aObject->mTransform.mX = aPathNode->mX;
+            aObject->mTransform.mY = aPathNode->mY;
+            aObject->Update();
+        }
+        
+        
+        
+    }
+    
+    
+#endif
+    
+    
+    
+    
+    //FList                                       mEditorObjectList;
+    //FList                                       mEditorObjectQueue;
+    
+    
+    
 }
 
 void Game::Draw() {

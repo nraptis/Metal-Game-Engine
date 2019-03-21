@@ -177,7 +177,7 @@ CVReturn displayCallback(CVDisplayLinkRef CV_NONNULL displayLink,
     NSString *aString = [theEvent charactersIgnoringModifiers];
     if ([aString length] > 0) {
         unichar aChar = [aString characterAtIndex: 0];
-        NSLog(@"MAC KEY [%d]\n", aChar);
+        //NSLog(@"MAC KEY [%d]\n", aChar);
         int aKey = [self convertKey: aChar];
         AppShellKeyDown(aKey);
         return;

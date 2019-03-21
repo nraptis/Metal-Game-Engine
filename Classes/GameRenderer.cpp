@@ -106,6 +106,21 @@ void GameRenderer::Draw3D() {
         mGame->mCurrentDart->Draw3D();
     }
     
+    
+    
+    
+#ifdef EDITOR_MODE
+    for (int i=0;i<mGame->mEditorPath.mNodeList.mCount;i++) {
+        GameObject *aObject = (GameObject *)mGame->mEditorObjectList.Fetch(i);
+        if (aObject != NULL) {
+            aObject->Draw3D();
+        }
+    }
+#endif
+    
+    
+    
+    
     Graphics::DepthDisable();
     Graphics::CullFacesSetBack();
     

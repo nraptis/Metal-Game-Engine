@@ -165,6 +165,9 @@ public:
     
 #ifdef EDITOR_MODE
     LevelWavePath                               mEditorPath;
+    FList                                       mEditorObjectList;
+    FList                                       mEditorObjectQueue;
+    
 #endif
     
 };

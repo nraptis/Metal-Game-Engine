@@ -324,7 +324,6 @@ void LevelWavePath::Draw() {
     }
     
     Graphics::SetColor(1.0f, 0.65f, 0.45f, 0.75f);
-    
     if (mPath.mCount > 0) {
         for (int i=0;i<mPath.mCount;i++) {
             float aPercent = ((float)i) / ((float)(mPath.mCount - 1));

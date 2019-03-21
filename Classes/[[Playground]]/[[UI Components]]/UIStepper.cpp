@@ -226,19 +226,9 @@ void UIStepper::SetTarget(int *pTarget) {
 }
 
 void UIStepper::Notify(void *pSender, const char *pNotification) {
-
-
-    printf("Notify: %s\n", pNotification);
-
-
-
     if (FString("text_box_change") == pNotification) {
-
         if (pSender == &mTextBox) {
-            
             SetValue(mTextBox.mText.ToInt());
-
-            printf("Text Change [%s]\n", mTextBox.mText.c());
         }
     }
     

@@ -407,19 +407,19 @@ void AppShellMouseWheel(int pDirection) {
 
 void AppShellKeyDown(int pKey) {
     if (pKey >= 0 && pKey < 256) {
-        Log("AppShellKeyDown([%d]=>%s)\n", pKey, gKeyName[pKey]);
+        //Log("AppShellKeyDown([%d]=>%s)\n", pKey, gKeyName[pKey]);
         if (gAppBase) gAppBase->BaseKeyDown(pKey);
     } else {
-        Log("AppShellIllegalKeyDown([%d]=>%s)\n", pKey, "???");
+        
     }
 }
 
 void AppShellKeyUp(int pKey) {
     if (pKey >= 0 && pKey < 256) {
-        Log("AppShellKeyUp([%d]=>%s)\n", pKey, gKeyName[pKey]);
+        //Log("AppShellKeyUp([%d]=>%s)\n", pKey, gKeyName[pKey]);
         if (gAppBase) gAppBase->BaseKeyUp(pKey);
     } else {
-        Log("AppShellIllegalKeyUp([%d]=>%s)\n", pKey, "???");
+        
     }
 }
 
