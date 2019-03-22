@@ -79,6 +79,7 @@ void LevelWavePath::Reset() {
 
 void LevelWavePath::Finalize() {
     
+    printf("Finalizing Smooth[%d] Speed[%f]\n", mSmooth, mSpeed);
     mPath.Reset();
     mDidFailFinalize = false;
     
@@ -170,6 +171,7 @@ void LevelWavePath::AddSegmentBacktrackingFrom(int pIndex) {
     float aX = 0.0f;
     float aY = 0.0f;
     
+    printf("Path Smoo[%d] cPointList.mCount = %d\n", mSmooth, cPointList.mCount);
     if (mSmooth == false || cPointList.mCount <= 2) {
         for (int i=0;i<cPointList.mCount;i++) {
             cDumpList.Add(cPointList.mX[i], cPointList.mY[i]);
@@ -210,6 +212,9 @@ void LevelWavePath::AddSegmentBacktrackingFrom(int pIndex) {
     float aAcceleration = 0.0f;
     
     float aSpeed = mSpeed;
+    if (aSpeed > 100.0f) { aSpeed = 100.0f; }
+    if (aSpeed < 1.0f) { aSpeed = 1.0f; }
+    
     
     if (cPolyPath.mLength < aDecelerationCutoffDistance) {//} || (pIndex >= mNodeList.mCount - 1)) {
         aDecelerationEnabled = false;

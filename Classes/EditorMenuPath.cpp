@@ -206,7 +206,7 @@ void EditorMenuPath::Notify(void *pSender, const char *pNotification) {
     if (FString(pNotification) == "checkbox") {
         UICheckBox *aCheckbox = (UICheckBox *)pSender;
         if (aCheckbox == mCheckBoxSmooth) {
-            mEditor->mWave->Build();
+            mEditor->PathRefresh();
         }
     }
     

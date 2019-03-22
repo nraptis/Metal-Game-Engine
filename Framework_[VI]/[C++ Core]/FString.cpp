@@ -230,6 +230,19 @@ int	FString::Length(const char *pString) {
 }
 
 void FString::Set(const char *pString) {
+    
+    /*
+    Free();
+    mLength = Length(pString);
+    mData = new char[mLength+1];
+    for (int i=0;i<mLength;i++) {
+        mData[i] = pString[i];
+    }
+    mData[mLength] = 0;
+    mSize = mLength;
+    */
+    
+    
 	if ((pString != 0) && (pString != mData)) {
         mLength = Length(pString);
         if (mLength > mSize) {
@@ -264,8 +277,7 @@ void FString::Append(char pChar) {
     mData[mLength] = 0;
 }
 
-void FString::Append(const char *pString)
-{
+void FString::Append(const char *pString) {
 	int aLength = Length(pString);
 	Append(pString, aLength);
 }
@@ -277,7 +289,7 @@ void FString::Append(FString &pString) {
 void FString::Append(const char *pString, int pCount) {
 	if ((pString != mData) && (pCount > 0)) {
         int aNewLength = mLength + pCount;
-        if (aNewLength > mSize) {
+        if (aNewLength >= mSize) {
             Size(aNewLength + aNewLength / 2 + 2);
         }
 
@@ -1237,40 +1249,31 @@ int FString::Find(char *theString, int thePosition)
 	return -1;
 }
 
-int FString::ToInt()
-{
-    if(mData)
-    {
+int FString::ToInt() {
+    if (mData != NULL) {
         return (int)atoi(mData);
     }
     return 0;
 }
 
 
-char FString::ToChar()
-{
-    if(mData)
-    {
+char FString::ToChar() {
+    if (mData != NULL) {
         return (char)atoi(mData);
     }
     return 0;
 }
 
-float FString::ToFloat()
-{
-    if(mData)
-    {
+float FString::ToFloat() {
+    if (mData != NULL) {
         return (float)atof(mData);
     }
     return 0;
 }
 
-bool FString::ToBool()
-{
+bool FString::ToBool() {
     if(CompareI("true") == 0)return true;
     if(CompareI("yes") == 0)return true;
-    if(CompareI("on") == 0)return true;
-    if(CompareI("enabled") == 0)return true;
     if(CompareI("1") == 0)return true;
     return false;
 }

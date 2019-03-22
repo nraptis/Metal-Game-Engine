@@ -406,6 +406,7 @@ char *FJSON::ParseHelperDictionary(char *pData, FList *pStack, bool *pSuccess) {
             aValueNode->mDataType = JSON_DATA_TYPE_NUMBER;
             aValueNode->mValue = GetNumber(aPtr, aEON);
             aParent->AddDictionary(aKey, aValueNode);
+            
             delete aKey;
             aPtr = aEON;
             ++aPtr;
@@ -549,7 +550,6 @@ FString FJSON::GetPrettyPrint() {
     return aResult;
 }
 
-
 void FJSON::OutputChunk(FJSONNode *pNode, FJSONNode *pParent, int pDepth, bool pTabbed, FString *pOutput) {
     if (pNode == NULL) { return; }
     if (pTabbed == false) {
@@ -582,7 +582,6 @@ void FJSON::OutputChunk(FJSONNode *pNode, FJSONNode *pParent, int pDepth, bool p
                         } else {
                             pOutput->Append("0");
                         }
-                        
                     }
                 } else {
                     OutputChunk(aNode, pNode, pDepth + 1, true, pOutput);

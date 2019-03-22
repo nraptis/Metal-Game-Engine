@@ -11,8 +11,8 @@
 
 LevelWaveBlueprint::LevelWaveBlueprint() {
     mPath.mWave = this;
-    
-    mSpeed = 3.4028234664e+34;
+    mSpeed = 8.0f;
+    mSmooth = false;
 }
 
 LevelWaveBlueprint::~LevelWaveBlueprint() {
@@ -83,8 +83,9 @@ void LevelWaveBlueprint::Build(LevelWavePath *pPath) {
     
     if (pPath == NULL) { return; }
     
-    if (mSpeed < 0.5f) { mSpeed = 0.5f; }
-    if (mSpeed > 50.0f) { mSpeed = 50.0f; }
+    //if (mSpeed < 0.5f) { mSpeed = 0.5f; }
+    //if (mSpeed > 50.0f) { mSpeed = 50.0f; }
+    
     
     pPath->Reset();
     pPath->mSmooth = mSmooth;
@@ -204,15 +205,8 @@ FJSONNode *LevelWaveBlueprint::Save() {
 void LevelWaveBlueprint::Load(FJSONNode *pNode) {
     Clear();
     if (pNode == NULL) { return; }
-    
-    //mSmooth = false;
-    //mSpeed = -1000.0f;
-    
     mSmooth = pNode->GetBool("smooth", mSmooth);
     mSpeed = pNode->GetFloat("speed", mSpeed);
-    
     FJSONNode *aPathNode = pNode->GetArray("path");
     mPath.Load(aPathNode);
-    
-    
 }

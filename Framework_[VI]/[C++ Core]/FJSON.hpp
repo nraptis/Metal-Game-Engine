@@ -74,7 +74,6 @@ public:
     FJSON();
     ~FJSON();
     
-    
     void                        Clear();
     
     void                        Save(const char *pFile);
@@ -134,7 +133,7 @@ private:
     
     inline char                 *GetQuotedString(char *pStart, char *pEnd) {
         int aLength = (int)(pEnd - pStart);
-        char *aResult = new char[aLength + 1];
+        char *aResult = new char[aLength + 2];
         char *aPaste = aResult;
         char *aCopy = pStart + 1;
         while (aCopy < pEnd) {
@@ -181,13 +180,14 @@ private:
     
     inline char                 *GetNumber(char *pStart, char *pEnd) {
         int aLength = (int)(pEnd - pStart);
-        char *aResult = new char[aLength + 1];
+        char *aResult = new char[aLength + 2];
         char *aPaste = aResult;
         char *aCopy = pStart;
         while (aCopy <= pEnd) {
             *aPaste++ = *aCopy++;
         }
         *aPaste = 0;
+
         return aResult;
     }
     
@@ -203,13 +203,15 @@ private:
     
     inline char                 *GetAlphabetic(char *pStart, char *pEnd) {
         int aLength = (int)(pEnd - pStart);
-        char *aResult = new char[aLength + 1];
+        char *aResult = new char[aLength + 2];
         char *aPaste = aResult;
         char *aCopy = pStart;
         while (aCopy <= pEnd) {
             *aPaste++ = *aCopy++;
         }
         *aPaste = 0;
+        //*aPaste = 0;
+        
         return aResult;
     }
     
