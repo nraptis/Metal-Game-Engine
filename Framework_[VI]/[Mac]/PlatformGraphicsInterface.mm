@@ -15,28 +15,20 @@
 #import <Metal/Metal.h>
 #import <QuartzCore/QuartzCore.h>
 
-
 PlatformGraphicsInterface::PlatformGraphicsInterface() {
     mMetalView = NULL;
     mLastTime = 0.0f;
 }
 
-PlatformGraphicsInterface::~PlatformGraphicsInterface()
-{
+PlatformGraphicsInterface::~PlatformGraphicsInterface() {
     //CCEAGLView *glview = (CCEAGLView*) _eaglview;
     //[glview release];
 }
 
 void PlatformGraphicsInterface::Initialize() {
-    
-    
-    //CVReturn CVDisplayLinkGetCurrentTime( CVDisplayLinkRef CV_NONNULL displayLink, CVTimeStamp
-    
     CVTimeStamp aTimeStamp;
-    CVReturn aResult = CVDisplayLinkGetCurrentTime( gMetalView.displayLink, &aTimeStamp);
+    CVDisplayLinkGetCurrentTime( gMetalView.displayLink, &aTimeStamp);
     mLastTime = aTimeStamp.videoTime;
-    NSLog(@"Graphics Initialization Timestamp [%d]\n", mLastTime);
-    //mLastTime = gMetalView.displayLink.timestamp;
 }
 
 float PlatformGraphicsInterface::GetScale() {
@@ -62,15 +54,11 @@ void PlatformGraphicsInterface::Kill() {
 }
 
 void PlatformGraphicsInterface::Prerender() {
-    
     [gMetalEngine prerender];
     [gMetalPipeline prerender];
-    
 }
 
 void PlatformGraphicsInterface::Postrender() {
-    
-    
     [gMetalPipeline postrender];
     [gMetalEngine postrender];
 }

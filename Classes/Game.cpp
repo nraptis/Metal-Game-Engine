@@ -108,28 +108,9 @@ Game::Game() {
     mDartResetAnimationTime = 200;
     
     
-    
-    mTestPath.AddMove(100.0f, 100.0f);
-    mTestPath.AddMove(230.0f, 80.0f);
-    mTestPath.AddMove(500.0f, 360.0f, 80);
-    //mTestPath.AddWait(80);
-    mTestPath.AddMove(600.0f, 700.0f);
-    
-    
-    
-    mTestPath1.AddMove(100.0f, 500.0f);
-    mTestPath1.AddMove(300.0f, 200.0f);
-    
-    mTestPath2.AddMove(300.0f, 60.0f);
-    mTestPath2.AddMove(200.0f, 120.0f, 0);
-    mTestPath2.AddMove(300.0f, 170.0f);
-    mTestPath2.AddMove(200.0f, 240.0f, 0);
-    
-    
-    //LevelWavePath                               mTestPath2;
-    //LevelWavePath                               mTestPath3;
-    
-    
+#ifdef EDITOR_MODE
+    mEditorPreview = true;
+#endif
     
     
 }

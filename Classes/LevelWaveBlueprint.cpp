@@ -12,6 +12,7 @@
 LevelWaveBlueprint::LevelWaveBlueprint() {
     mPath.mWave = this;
     
+    mSpeed = 3.4028234664e+34;
 }
 
 LevelWaveBlueprint::~LevelWaveBlueprint() {
@@ -82,8 +83,12 @@ void LevelWaveBlueprint::Build(LevelWavePath *pPath) {
     
     if (pPath == NULL) { return; }
     
+    if (mSpeed < 0.5f) { mSpeed = 0.5f; }
+    if (mSpeed > 50.0f) { mSpeed = 50.0f; }
+    
     pPath->Reset();
     pPath->mSmooth = mSmooth;
+    pPath->mSpeed = mSpeed;
     
     for (int i=0;i<mPath.mNodeList.mCount;i++) {
         LevelWavePathBlueprintNode *aNode = (LevelWavePathBlueprintNode *)mPath.mNodeList.mData[i];
@@ -93,23 +98,15 @@ void LevelWaveBlueprint::Build(LevelWavePath *pPath) {
             aPoint.mX = aNode->mConstraint.GameX(false);
             aNode->mBaseGameX = aPoint.mX;
         } else {
-            
-            
             aNode->mBaseGameX = gGame->mGameAreaLeft + (gGame->mGameAreaRight - gGame->mGameAreaLeft) * aPoint.mX;
-            
         }
         
         if (aNode->mConstraint.HasY()) {
             aPoint.mY = aNode->mConstraint.GameY(false);
             aNode->mBaseGameY = aPoint.mY;
         } else {
-            
             aNode->mBaseGameY = gGame->mGameAreaTop + (gGame->mGameAreaBottom - gGame->mGameAreaTop) * aPoint.mY;
-            
         }
-        
-        
-        
     }
     
     for (int aLoops = 0;aLoops<40;aLoops++) {
@@ -208,8 +205,8 @@ void LevelWaveBlueprint::Load(FJSONNode *pNode) {
     Clear();
     if (pNode == NULL) { return; }
     
-    mSmooth = false;
-    mSpeed = -1000.0f;
+    //mSmooth = false;
+    //mSpeed = -1000.0f;
     
     mSmooth = pNode->GetBool("smooth", mSmooth);
     mSpeed = pNode->GetFloat("speed", mSpeed);

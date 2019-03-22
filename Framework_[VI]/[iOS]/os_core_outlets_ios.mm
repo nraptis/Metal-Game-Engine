@@ -41,18 +41,10 @@ pthread_mutex_t gThreadMutex = PTHREAD_MUTEX_INITIALIZER;
 NSMutableSet *gLockStrongReferenceSet = [[NSMutableSet alloc] init];
 FList gThreadLockList;
 
-dispatch_semaphore_t gLockSemaphore;
-//[gLockStrongReferenceSet addObject: gLockSemaphore];
-
-
 void os_initialize_outlets() {
     Log("Initialize Outlets...\n");
     
     gThreadLockList.Size(128);
-    
-    gLockSemaphore = dispatch_semaphore_create(1);
-    [gLockStrongReferenceSet addObject: gLockSemaphore];
-    
 }
 
 /*
@@ -122,27 +114,11 @@ void os_interface_mutex_leave() {
 //volatile static bool gLockActionActive = false;
 
 int os_create_thread_lock() {
-    
-    //dispatch_semaphore_wait(gLockSemaphore, DISPATCH_TIME_FOREVER);
-    //while (gLockActionActive) {
-    //    usleep(200);
-    //}
-    //gLockActionActive = true;
-    //pthread_mutex_lock( &gThreadMutex );
     RecursiveLockWrapper *aContainer = [[RecursiveLockWrapper alloc] init];
     [gLockStrongReferenceSet addObject: aContainer];
-    //aContainer.lock = [[NSRecursiveLock alloc] init];
-    
-    aContainer.semaphore = dispatch_semaphore_create(1);
-    
-    
+    aContainer.lock = [[NSRecursiveLock alloc] init];
     int aResult = gThreadLockList.mCount;
     gThreadLockList.Add((__bridge void *)aContainer);
-    //gLockActionActive = false;
-    //pthread_mutex_unlock( &gThreadMutex );
-    
-    
-    //dispatch_semaphore_signal(gLockSemaphore);
     return aResult;
 }
 
@@ -154,68 +130,35 @@ bool os_thread_lock_exists(int pLockIndex) {
 }
 
 void os_delete_thread_lock(int pLockIndex) {
-    //while (gLockActionActive) {
-    //    usleep(200);
-    //}
-    //gLockActionActive = true;
-    //dispatch_semaphore_wait(gLockSemaphore, DISPATCH_TIME_FOREVER);
-    
     if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
         RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[pLockIndex]);
-        //[aContainer.lock unlock];
-        
-        dispatch_semaphore_signal(aContainer.semaphore);
-        
+        [aContainer.lock unlock];
         [gLockStrongReferenceSet removeObject: aContainer];
         gThreadLockList.RemoveAtIndex(pLockIndex);
     }
-
-    
-    //dispatch_semaphore_signal(gLockSemaphore);
 }
 
 void os_delete_all_thread_locks() {
-    //dispatch_semaphore_wait(gLockSemaphore, DISPATCH_TIME_FOREVER);
-    
-    
     for (int i=0;i<gThreadLockList.mCount;i++) {
         RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[i]);
-        dispatch_semaphore_signal(aContainer.semaphore);
+        [aContainer.lock unlock];
     }
     gThreadLockList.RemoveAll();
     [gLockStrongReferenceSet removeAllObjects];
-    
-    
-    //dispatch_semaphore_signal(gLockSemaphore);
 }
 
 void os_lock_thread(int pLockIndex) {
-    
-    //dispatch_semaphore_wait(gLockSemaphore, DISPATCH_TIME_FOREVER);
-    
-    
     if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
         RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[pLockIndex]);
-        
-        dispatch_semaphore_wait(aContainer.semaphore, DISPATCH_TIME_FOREVER);
-        
-        //[aContainer.lock lock];
+        [aContainer.lock lock];
     }
-    
-    //dispatch_semaphore_signal(gLockSemaphore);
 }
 
 void os_unlock_thread(int pLockIndex) {
-    
-    //dispatch_semaphore_wait(gLockSemaphore, DISPATCH_TIME_FOREVER);
-    
-    
     if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
         RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[pLockIndex]);
-        dispatch_semaphore_signal(aContainer.semaphore);
+        [aContainer.lock unlock];
     }
-    
-    //dispatch_semaphore_signal(gLockSemaphore);
 }
 
 

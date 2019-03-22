@@ -170,6 +170,15 @@ CVReturn displayCallback(CVDisplayLinkRef CV_NONNULL displayLink,
     if (keycode == 'y' || keycode == 'Y') return __KEY__Y;
     if (keycode == 'z' || keycode == 'Z') return __KEY__Z;
     
+    if (keycode == '-') return __KEY__MINUS;
+    if (keycode == '=') return __KEY__EQUALS;
+    if (keycode == '.') return __KEY__PERIOD;
+    if (keycode == ',') return __KEY__COMMA;
+    if (keycode == ':') return __KEY__COLON;
+    if (keycode == '/') return __KEY__SLASH;
+    if (keycode == '\\') return __KEY__BACKSLASH;
+    
+    
     return -1;
 }
 
@@ -197,8 +206,25 @@ CVReturn displayCallback(CVDisplayLinkRef CV_NONNULL displayLink,
 }
 
 - (void)flagsChanged:(NSEvent *)theEvent {
-    //NSUInteger aFlags = [[NSApp currentEvent] modifierFlags];
+    NSUInteger aFlags = [[NSApp currentEvent] modifierFlags];
     
+    if (aFlags & NSEventModifierFlagShift) {
+        gKeyDownShift = true;
+    } else {
+        gKeyDownShift = false;
+    }
+    
+    if (aFlags & NSEventModifierFlagCommand) {
+        gKeyDownCtrl = true;
+    } else {
+        gKeyDownCtrl = false;
+    }
+    
+    if (aFlags & NSEventModifierFlagOption) {
+        gKeyDownAlt = true;
+    } else {
+        gKeyDownAlt = false;
+    }
 }
 
 - (BOOL)acceptsFirstResponder {

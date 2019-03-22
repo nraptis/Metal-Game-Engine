@@ -477,5 +477,9 @@ extern const char           *gKeyName[256];
 extern bool 				gKeyPressed[256];
 
 
+extern bool gKeyDownCtrl;
+extern bool gKeyDownShift;
+extern bool gKeyDownAlt;
+
 
 #endif

@@ -364,7 +364,7 @@ bool FFileSequence::LoadSequence(const char *pFileBase, const char *pExtension, 
     FString aNumberString = FString(pStartIndex);
     if (aNumberString.mLength < pLeadingZeroCount) {
         FString aZeroString;
-		aZeroString.InsChars('0', (pLeadingZeroCount - aNumberString.mLength), 0);
+		aZeroString.Insert('0', (pLeadingZeroCount - aNumberString.mLength), 0);
         aNumberString = (aZeroString + aNumberString);
     }
     
@@ -397,7 +397,7 @@ bool FFileSequence::LoadSequence(const char *pFileBase, const char *pExtension, 
             aNumberString = FString(aIndex);
             if (aNumberString.mLength < pLeadingZeroCount) {
                 FString aZeroString;
-                aZeroString.InsChars('0', (pLeadingZeroCount - aNumberString.mLength), 0);
+                aZeroString.Insert('0', (pLeadingZeroCount - aNumberString.mLength), 0);
                 aNumberString = (aZeroString + aNumberString);
             }
             aCheck = (aFileBase + aNumberString + FString(".") + aExtension);

@@ -34,10 +34,6 @@ EditorMenuPathControl::EditorMenuPathControl(GamePathEditor *pEditor) : ToolMenu
     mButtonResetPath->SetText("Reset Path");
     mRowMain1->AddButton(mButtonResetPath);
     
-    
-    
-    
-    
     mPathControls = new ToolMenuPanel();
     mPathControls->SetTitle("Main Primary Enhance");
     AddSection(mPathControls);
@@ -59,10 +55,6 @@ EditorMenuPathControl::EditorMenuPathControl(GamePathEditor *pEditor) : ToolMenu
     mButtonLoadPath = new UIButton();
     mButtonLoadPath->SetText("Load Path");
     mRowControls2->AddButton(mButtonLoadPath);
-    
-    
-    
-    
     
     DeactivateCloseButton();
 }
@@ -95,6 +87,9 @@ void EditorMenuPathControl::Notify(void *pSender, const char *pNotification) {
     
     if (FString(pNotification) == "segment") {
         UISegment *aSegment = (UISegment *)pSender;
-        
     }
+}
+
+void EditorMenuPathControl::Update() {
+    
 }

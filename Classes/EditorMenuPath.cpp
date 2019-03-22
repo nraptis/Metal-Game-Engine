@@ -29,171 +29,88 @@ EditorMenuPath::EditorMenuPath(GamePathEditor *pEditor) : ToolMenu() {
     mSegmentMode->SetTarget(&mEditor->mPathMode);
     mEditorPanel->AddSection(mSegmentMode);
     
-    
-    
     mRowVisuals = new ToolMenuSectionRow();
     mEditorPanel->AddSection(mRowVisuals);
-    
     
     mCheckBoxSmooth = new UICheckBox();
     mCheckBoxSmooth->SetText("Smoothing");
     mRowVisuals->AddCheckBox(mCheckBoxSmooth);
     
-    
     mCheckBoxPreview = new UICheckBox();
     mCheckBoxPreview->SetText("Preview");
+    if (gGame != NULL) {
+#ifdef EDITOR_MODE
+        mCheckBoxPreview->SetTarget(&gGame->mEditorPreview);
+#endif
+    }
     mRowVisuals->AddCheckBox(mCheckBoxPreview);
-    
-
-
-
     
     mPointsPanel = new ToolMenuPanel();
     mPointsPanel->SetTitle("Points");
     AddSection(mPointsPanel);
-    
     
     mStepperWait = new UIStepper();
     mStepperWait->SetText("Wait:");
     mPointsPanel->AddSection(mStepperWait);
     gNotify.Register(this, mStepperWait, "stepper");
     
-    
     mStepperChamfer = new UIStepper();
     mStepperChamfer->SetText("Chamfer:");
     mPointsPanel->AddSection(mStepperChamfer);
     gNotify.Register(this, mStepperChamfer, "stepper");
     
-    
-    
-    
-    mRowPointWait = new ToolMenuSectionRow();
-    mPointsPanel->AddSection(mRowPointWait);
-    
-    mTextBoxWait = new UITextBox();
-    mTextBoxWait->SetText("1 2 3 4 5 6");
-    
-    mRowPointWait->AddTextBox(mTextBoxWait);
-    
-    
-    mButtonResetWait = new UIButton();
-    mButtonResetWait->SetText("RWW Reset");
-    mRowPointWait->AddButton(mButtonResetWait);
-    
-    
     mRowPointOptions = new ToolMenuSectionRow();
     mPointsPanel->AddSection(mRowPointOptions);
     
     mButtonDeletePoint = new UIButton();
-    mButtonDeletePoint->SetText("Delete Point");
+    mButtonDeletePoint->SetText("Del Point");
     mRowPointOptions->AddButton(mButtonDeletePoint);
     
+    mButtonBreakXConstraint = new UIButton();
+    mButtonBreakXConstraint->SetText("Break X");
+    mRowPointOptions->AddButton(mButtonBreakXConstraint);
+    
+    mButtonBreakYConstraint = new UIButton();
+    mButtonBreakYConstraint->SetText("Break Y");
+    mRowPointOptions->AddButton(mButtonBreakYConstraint);
     
     mConstraintPanel = new ToolMenuPanel();
     mConstraintPanel->SetTitle("Constraints");
     mPointsPanel->AddSection(mConstraintPanel);
     
-    mRowSnapPoints = new ToolMenuSectionRow();
-    mConstraintPanel->AddSection(mRowSnapPoints);
+    mRowSnapX = new ToolMenuSectionRow();
+    mConstraintPanel->AddSection(mRowSnapX);
     
     mCheckBoxSnapX = new UICheckBox();
-    mCheckBoxSnapX->SetText("Snap X To...");
+    mCheckBoxSnapX->SetText("Target X");
     mCheckBoxSnapX->SetTarget(&mEditor->mConstrainXToPoint);
-    mRowSnapPoints->AddCheckBox(mCheckBoxSnapX);
+    mRowSnapX->AddCheckBox(mCheckBoxSnapX);
+    
+    mButtonSnapPrevX = new UIButton();
+    mButtonSnapPrevX->SetText("Prev X");
+    mRowSnapX->AddButton(mButtonSnapPrevX);
+    
+    mButtonSnapNextX = new UIButton();
+    mButtonSnapNextX->SetText("Next X");
+    mRowSnapX->AddButton(mButtonSnapNextX);
+    
+    mRowSnapY = new ToolMenuSectionRow();
+    mConstraintPanel->AddSection(mRowSnapY);
     
     mCheckBoxSnapY = new UICheckBox();
-    mCheckBoxSnapY->SetText("Snap Y To...");
+    mCheckBoxSnapY->SetText("Target Y");
     mCheckBoxSnapY->SetTarget(&mEditor->mConstrainYToPoint);
-    mRowSnapPoints->AddCheckBox(mCheckBoxSnapY);
+    mRowSnapY->AddCheckBox(mCheckBoxSnapY);
     
-    mRowSnapX1 = new ToolMenuSectionRow();
-    mConstraintPanel->AddSection(mRowSnapX1);
+    mButtonSnapPrevY = new UIButton();
+    mButtonSnapPrevY->SetText("Prev Y");
+    mRowSnapY->AddButton(mButtonSnapPrevY);
     
-    mButtonBreakXConstraint = new UIButton();
-    mButtonBreakXConstraint->SetText("[X]");
-    mRowSnapX1->AddButton(mButtonBreakXConstraint);
+    mButtonSnapNextY = new UIButton();
+    mButtonSnapNextY->SetText("Next Y");
+    mRowSnapY->AddButton(mButtonSnapNextY);
     
-    mButtonSnapXSpawnLeft = new UIButton();
-    mButtonSnapXSpawnLeft->SetText("LLL");
-    mRowSnapX1->AddButton(mButtonSnapXSpawnLeft);
-    
-    mButtonSnapXPeekLeft = new UIButton();
-    mButtonSnapXPeekLeft->SetText("LL");
-    mRowSnapX1->AddButton(mButtonSnapXPeekLeft);
-    
-    mButtonSnapXQuarterLeft = new UIButton();
-    mButtonSnapXQuarterLeft->SetText("L");
-    mRowSnapX1->AddButton(mButtonSnapXQuarterLeft);
-    
-    mRowSnapX2 = new ToolMenuSectionRow();
-    mConstraintPanel->AddSection(mRowSnapX2);
-    
-    mButtonSnapXCenter = new UIButton();
-    mButtonSnapXCenter->SetText("[C]");
-    mRowSnapX2->AddButton(mButtonSnapXCenter);
-    
-    mButtonSnapXQuarterRight = new UIButton();
-    mButtonSnapXQuarterRight->SetText("R");
-    mRowSnapX2->AddButton(mButtonSnapXQuarterRight);
-    
-    mButtonSnapXPeekRight = new UIButton();
-    mButtonSnapXPeekRight->SetText("RR");
-    mRowSnapX2->AddButton(mButtonSnapXPeekRight);
-    
-    mButtonSnapXSpawnRight = new UIButton();
-    mButtonSnapXSpawnRight->SetText("RRR");
-    mRowSnapX2->AddButton(mButtonSnapXSpawnRight);
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    mRowSnapY1 = new ToolMenuSectionRow();
-    mConstraintPanel->AddSection(mRowSnapY1);
-    
-    mButtonBreakYConstraint = new UIButton();
-    mButtonBreakYConstraint->SetText("[X]");
-    mRowSnapY1->AddButton(mButtonBreakYConstraint);
-    
-    mButtonSnapYSpawnTop = new UIButton();
-    mButtonSnapYSpawnTop->SetText("UUU");
-    mRowSnapY1->AddButton(mButtonSnapYSpawnTop);
-    
-    mButtonSnapYPeekTop = new UIButton();
-    mButtonSnapYPeekTop->SetText("UU");
-    mRowSnapY1->AddButton(mButtonSnapYPeekTop);
-    
-    mButtonSnapYQuarterTop = new UIButton();
-    mButtonSnapYQuarterTop->SetText("U");
-    mRowSnapY1->AddButton(mButtonSnapYQuarterTop);
-    
-    mRowSnapY2 = new ToolMenuSectionRow();
-    mConstraintPanel->AddSection(mRowSnapY2);
-    
-    mButtonSnapYCenter = new UIButton();
-    mButtonSnapYCenter->SetText("[C]");
-    mRowSnapY2->AddButton(mButtonSnapYCenter);
-    
-    mButtonSnapYQuarterBottom = new UIButton();
-    mButtonSnapYQuarterBottom->SetText("D");
-    mRowSnapY2->AddButton(mButtonSnapYQuarterBottom);
-    
-    
-    mButtonSnapYBottom = new UIButton();
-    mButtonSnapYBottom->SetText("DDD");
-    mRowSnapY2->AddButton(mButtonSnapYBottom);
-
-    
-    
-    //DeactivateCloseButton();
-    
+    DeactivateCloseButton();
 }
 
 EditorMenuPath::~EditorMenuPath() {
@@ -260,21 +177,13 @@ void EditorMenuPath::Notify(void *pSender, const char *pNotification) {
         if (pSender == mButtonDeletePoint) { mEditor->PathDeletePoint(); }
         
         if (pSender == mButtonBreakXConstraint) { mEditor->ConstraintXToType(X_CONSTRAINT_NONE); }
-        if (pSender == mButtonSnapXSpawnLeft) { mEditor->ConstraintXToType(X_CONSTRAINT_LEFT_SPAWN); }
-        if (pSender == mButtonSnapXPeekLeft) { mEditor->ConstraintXToType(X_CONSTRAINT_LEFT_PEEK); }
-        if (pSender == mButtonSnapXQuarterLeft) { mEditor->ConstraintXToType(X_CONSTRAINT_LEFT_QUARTER); }
-        if (pSender == mButtonSnapXCenter) { mEditor->ConstraintXToType(X_CONSTRAINT_CENTER); }
-        if (pSender == mButtonSnapXQuarterRight) { mEditor->ConstraintXToType(X_CONSTRAINT_RIGHT_QUARTER); }
-        if (pSender == mButtonSnapXPeekRight) { mEditor->ConstraintXToType(X_CONSTRAINT_RIGHT_PEEK); }
-        if (pSender == mButtonSnapXSpawnRight) { mEditor->ConstraintXToType(X_CONSTRAINT_RIGHT_SPAWN); }
-        
         if (pSender == mButtonBreakYConstraint) { mEditor->ConstraintYToType(Y_CONSTRAINT_NONE); }
-        if (pSender == mButtonSnapYSpawnTop) { mEditor->ConstraintYToType(Y_CONSTRAINT_TOP_SPAWN); }
-        if (pSender == mButtonSnapYQuarterTop) { mEditor->ConstraintYToType(Y_CONSTRAINT_TOP_QUARTER); }
-        if (pSender == mButtonSnapYPeekTop) { mEditor->ConstraintYToType(Y_CONSTRAINT_TOP_PEEK); }
-        if (pSender == mButtonSnapYCenter) { mEditor->ConstraintYToType(Y_CONSTRAINT_CENTER); }
-        if (pSender == mButtonSnapYQuarterBottom) { mEditor->ConstraintYToType(Y_CONSTRAINT_BOTTOM_QUARTER); }
-        if (pSender == mButtonSnapYBottom) { mEditor->ConstraintYToType(Y_CONSTRAINT_BOTTOM); }
+        
+        if (pSender == mButtonSnapPrevX) { mEditor->ConstraintXToPrev(); }
+        if (pSender == mButtonSnapNextX) { mEditor->ConstraintXToNext(); }
+        
+        if (pSender == mButtonSnapPrevY) { mEditor->ConstraintYToPrev(); }
+        if (pSender == mButtonSnapNextY) { mEditor->ConstraintYToNext(); }
     }
     
     if (FString(pNotification) == "stepper") {

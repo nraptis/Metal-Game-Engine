@@ -1,36 +1,26 @@
-
-#include "FStringBuffer.h"
+#include "FString.h"
 #include "FPointList.h"
 #include "core_includes.h"
 #include "FLine.h"
 #include "FFile.hpp"
 
-FPointList::FPointList()
-{
-    mCount=0;
-    mSize=0;
-    
-    mX=0;
-    mY=0;
-    
-    
-    
+FPointList::FPointList() {
+    mCount = 0;
+    mSize = 0;
+    mX = NULL;
+    mY = NULL;
 }
 
-FPointList::~FPointList()
-{
+FPointList::~FPointList() {
 	Clear();
 }
 
-void FPointList::Clear()
-{
+void FPointList::Clear() {
     delete [] mX;
-    
-    mCount=0;
-    mSize=0;
-    
-    mX=0;
-    mY=0;
+    mCount = 0;
+    mSize = 0;
+    mX = NULL;
+    mY = NULL;
 }
 
 void FPointList::Add(float pX, float pY)

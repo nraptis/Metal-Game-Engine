@@ -74,6 +74,15 @@ public:
     void                                        ConstraintXToType(int pType);
     void                                        ConstraintYToType(int pType);
     
+    void                                        ConstraintXToPrev();
+    void                                        ConstraintXToNext();
+    
+    void                                        ConstraintYToPrev();
+    void                                        ConstraintYToNext();
+    
+    
+    
+    
     GameEditor                                  *mEditor;
     EditorMenuPathControl                       *mMenuControls;
     EditorMenuPath                              *mMenuPaths;

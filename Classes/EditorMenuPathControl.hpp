@@ -17,8 +17,9 @@ public:
     EditorMenuPathControl(GamePathEditor *pEditor);
     virtual ~EditorMenuPathControl();
     
-    virtual void                            Layout();
-    virtual void                            Notify(void *pSender, const char *pNotification);
+    virtual void                            Update() override;
+    virtual void                            Layout() override;
+    virtual void                            Notify(void *pSender, const char *pNotification) override;
     
     ToolMenuSectionRow                      *mRowMain1;
     UIButton                                *mButtonCloseEditor;

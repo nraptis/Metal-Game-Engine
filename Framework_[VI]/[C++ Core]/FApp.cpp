@@ -145,8 +145,6 @@ void FApp::BaseSetSafeAreaInsets(int pInsetUp, int pInsetRight, int pInsetDown, 
 }
 
 void AppFrameThread(void *pArgs) {
-    Log("AppFrameThread(%X)\n", pArgs);
-    
     gAppBase->MainRunLoop();
 }
 
@@ -312,8 +310,8 @@ void FApp::BaseDraw() {
         Graphics::BufferSetIndicesSprite();
         
         
-        mSysFont.Draw(FString("FPS = ") + FString(GetFPS()), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 6.0f, 0.5f);
-        mSysFont.Draw(FString("UPS = ") + FString(GetUPS()), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 6.0f + 18.0f, 0.5f);
+        mSysFont.Draw(FString("FPS = ") + FString(GetFPS()), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 2.0f, 0.5f);
+        mSysFont.Draw(FString("UPS = ") + FString(GetUPS()), gSafeAreaInsetLeft + 88.0f, gSafeAreaInsetTop + 2.0f, 0.5f);
     }
     
     if (mIsLoadingComplete && Graphics::RenderPass() == GFX_RENDER_PASS_2D_MAIN) {

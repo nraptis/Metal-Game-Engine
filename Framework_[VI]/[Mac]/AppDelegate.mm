@@ -13,7 +13,7 @@
 //int kDeviceHeight = 320;
 
 int kDeviceWidth = 1400;
-int kDeviceHeight = 800;
+int kDeviceHeight = 760;
 
 @interface AppDelegate ()
 
@@ -28,10 +28,11 @@ int kDeviceHeight = 800;
     float aMonitorHeight = [NSScreen mainScreen].frame.size.height;
     
     float aMaxWidth = (int)(aMonitorWidth * 0.95f);
-    float aMaxHeight = (int)(aMonitorHeight * 0.80f);
+    float aMaxHeight = (int)(aMonitorHeight * 0.85f);
     
-    if (kDeviceWidth > aMaxWidth) kDeviceWidth = aMaxWidth;
-    if (kDeviceHeight > aMaxHeight) kDeviceHeight = aMaxHeight;
+    //TODO: Sometimes we want to restrict this size, heh...
+    //if (kDeviceWidth > aMaxWidth) kDeviceWidth = aMaxWidth;
+    //if (kDeviceHeight > aMaxHeight) kDeviceHeight = aMaxHeight;
     
     NSLog(@"Monitor Size: %d x %d\n", (int)aMonitorWidth, (int)aMonitorHeight);
      
@@ -83,7 +84,7 @@ int kDeviceHeight = 800;
     CGSize screenSize = [[NSScreen mainScreen] frame].size;
     
     NSWindowStyleMask aWindowStyle = NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable | NSWindowStyleMaskResizable;
-    NSRect aWindowFrame = NSMakeRect(64.0, screenSize.height / 2.0 - kDeviceHeight / 2.0, kDeviceWidth, kDeviceHeight);
+    NSRect aWindowFrame = NSMakeRect(14.0, screenSize.height / 2.0 - kDeviceHeight / 2.0 - 14, kDeviceWidth, kDeviceHeight);
     
     //NSWindowZoomButton
     

@@ -19,8 +19,8 @@ public:
     virtual ~EditorMenuPath();
     
     virtual void                            Layout() override;
-    virtual void                            Update() override;
     virtual void                            Notify(void *pSender, const char *pNotification) override;
+    virtual void                            Update() override;
     
     ToolMenuPanel                           *mEditorPanel;
     UISegment                               *mSegmentMode;
@@ -34,12 +34,10 @@ public:
     UIStepper                               *mStepperWait;
     UIStepper                               *mStepperChamfer;
     
-    ToolMenuSectionRow                      *mRowPointWait;
-    UITextBox                               *mTextBoxWait;
-    UIButton                                *mButtonResetWait;
-    
     ToolMenuSectionRow                      *mRowPointOptions;
     UIButton                                *mButtonDeletePoint;
+    UIButton                                *mButtonBreakXConstraint;
+    UIButton                                *mButtonBreakYConstraint;
     
     ToolMenuPanel                           *mConstraintPanel;
     
@@ -49,39 +47,15 @@ public:
     
     
     
-    ToolMenuSectionRow                      *mRowSnapPoints;
+    ToolMenuSectionRow                      *mRowSnapX;
     UICheckBox                              *mCheckBoxSnapX;
+    UIButton                                *mButtonSnapPrevX;
+    UIButton                                *mButtonSnapNextX;
+    
+    ToolMenuSectionRow                      *mRowSnapY;
     UICheckBox                              *mCheckBoxSnapY;
-    
-    ToolMenuSectionRow                      *mRowSnapX1;
-    ToolMenuSectionRow                      *mRowSnapX2;
-    UIButton                                *mButtonBreakXConstraint;
-    UIButton                                *mButtonSnapXSpawnLeft;
-    UIButton                                *mButtonSnapXPeekLeft;
-    UIButton                                *mButtonSnapXQuarterLeft;
-    UIButton                                *mButtonSnapXCenter;
-    UIButton                                *mButtonSnapXQuarterRight;
-    UIButton                                *mButtonSnapXPeekRight;
-    UIButton                                *mButtonSnapXSpawnRight;
-    
-    
-    
-    
-    ToolMenuSectionRow                      *mRowSnapY1;
-    ToolMenuSectionRow                      *mRowSnapY2;
-    UIButton                                *mButtonBreakYConstraint;
-    UIButton                                *mButtonSnapYSpawnTop;
-    UIButton                                *mButtonSnapYPeekTop;
-    UIButton                                *mButtonSnapYQuarterTop;
-    UIButton                                *mButtonSnapYCenter;
-    UIButton                                *mButtonSnapYQuarterBottom;
-    UIButton                                *mButtonSnapYBottom;
-    
-    
-    
-    //UICheckBox                              *mCheckBoxSmooth;
-    //UICheckBox                              *mCheckBoxPreview;
-    
+    UIButton                                *mButtonSnapPrevY;
+    UIButton                                *mButtonSnapNextY;
     
     GamePathEditor                          *mEditor;
     

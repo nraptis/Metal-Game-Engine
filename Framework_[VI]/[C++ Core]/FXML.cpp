@@ -1,7 +1,7 @@
 
 #include "FXML.h"
 #include "FFile.hpp"
-#include "FStringBuffer.h"
+#include "FString.h"
 #include "core_includes.h"
 
 FXML::FXML() {

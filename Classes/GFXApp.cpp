@@ -26,6 +26,44 @@ class GameEditor;
 GFXApp *gApp = 0;
 GFXApp::GFXApp() {
     
+    /*
+    FString aString1;
+    FString aString2 = "bag";
+    FString aString3 = "a";
+    FString aString4 = "brains";
+    FString aString5 = "abcdefghijklmnopqrt";
+    
+    FString aTemp1 = aString1;
+    FString aTemp2 = aString2;
+    FString aTemp3 = aString3;
+    FString aTemp4 = aString4;
+    FString aTemp5 = aString5;
+    
+    for (int aCount=0;aCount<5;aCount++) {
+        
+        for (int aIndex=-2;aIndex<8;aIndex++) {
+            aTemp1 = aString1;
+            aTemp2 = aString2;
+            aTemp3 = aString3;
+            aTemp4 = aString4;
+            aTemp5 = aString5;
+            
+            aTemp1.Insert('*', aCount, aIndex);
+            aTemp2.Insert('*', aCount, aIndex);
+            aTemp3.Insert('*', aCount, aIndex);
+            aTemp4.Insert('*', aCount, aIndex);
+            aTemp5.Insert('*', aCount, aIndex);
+            
+            printf("[%d|%d] Temp1 = {%s}\n", aCount, aIndex, aTemp1.c());
+            printf("[%d|%d] Temp2 = {%s}\n", aCount, aIndex, aTemp2.c());
+            printf("[%d|%d] Temp3 = {%s}\n", aCount, aIndex, aTemp3.c());
+            printf("[%d|%d] Temp4 = {%s}\n", aCount, aIndex, aTemp4.c());
+            printf("[%d|%d] Temp5 = {%s}\n", aCount, aIndex, aTemp5.c());
+        }
+    }
+    exit(0);
+    */
+    
     gApp = this;
     
 #ifdef EDITOR_MODE

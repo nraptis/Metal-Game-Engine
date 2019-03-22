@@ -14,6 +14,7 @@
 #include "FloatingCamera.hpp"
 #include "Game.hpp"
 #include "EditorMenuSections.hpp"
+#include "EditorMenuSpawn.hpp"
 #include "GamePathEditor.hpp"
 #include "LevelWavePathBlueprint.hpp"
 #include "LevelWaveBlueprint.hpp"
@@ -74,6 +75,16 @@ public:
     
     
     
+    void                                        OpenSpawnMenu();
+    
+    
+    void                                        Clear();
+    void                                        LoadCleared();
+    void                                        Autosave();
+    
+    
+    
+    
     
     
     //Our current "overlay" which will be either "path editor" or "tool container" etc...
@@ -87,6 +98,8 @@ public:
     GamePathEditor                              *mPathEditor;
     
     EditorMenuSections                          *mMenuSections;
+    EditorMenuSpawn                             *mMenuSpawn;
+    
     
     FCanvas                                     *mToolContainer;
     

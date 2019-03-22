@@ -15,6 +15,7 @@ GameEditor *gEditor = NULL;
 GameEditor::GameEditor(Game *pGame) {
     
     
+    mMenuSpawn = NULL;
     
     gEditor = this;
     mGame = pGame;
@@ -40,16 +41,15 @@ GameEditor::GameEditor(Game *pGame) {
     
     mMenuSections = new EditorMenuSections(this);
     mToolContainer->AddChild(mMenuSections);
-    mMenuSections->SetFrame(gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 40.0f, 360.0f, 500.0f);
-    
+    mMenuSections->SetFrame(gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 20.0f, 400.0f, 640.0f);
     
     mExportIndex = 0;
     
     SetOverlay(mToolContainer);
     
     
-    WaveAdd();
     
+    //WaveAdd();
     //OpenPathEditor();
 }
 
@@ -192,8 +192,9 @@ void GameEditor::Draw() {
     
     
     Graphics::PipelineStateSetSpritePremultipliedBlending();
+    Graphics::SetColor();
     FString aExportString = FString("Export: ") + FString(mExportIndex);
-    gApp->mSysFontBold.Center(aExportString.c(), gDeviceWidth2, gSafeAreaInsetTop + 20.0f);
+    gApp->mSysFontBold.Center(aExportString.c(), gDeviceWidth2, gSafeAreaInsetTop + 20.0f, 0.5f);
 }
 
 void GameEditor::TouchDown(float pX, float pY, void *pData) {
@@ -217,9 +218,17 @@ void GameEditor::TouchFlush() {
 }
 
 void GameEditor::KeyDown(int pKey) {
-    bool aShift = os_is_shift_key_down();
-    bool aCtrl = os_is_control_key_down();
-    bool aAlt = os_is_alt_key_down();
+    
+    if (mPathEditor != NULL) {
+        if (mOverlay == mPathEditor) {
+            printf("Preventing Editor Key, Overlay Has Ownership\n");
+            return;
+        }
+    }
+    
+    bool aShift = gKeyDownShift;
+    bool aCtrl = gKeyDownCtrl;
+    bool aAlt = gKeyDownAlt;
     
     if (pKey == __KEY__0) { mExportIndex = 0; }
     if (pKey == __KEY__1) { mExportIndex = 1; }
@@ -425,12 +434,42 @@ void GameEditor::OpenPathEditor() {
     SetOverlay(mPathEditor);
 }
 
+void GameEditor::OpenSpawnMenu() {
+    
+    if (mMenuSpawn == NULL) {
+        mMenuSpawn = new EditorMenuSpawn(this);
+        mToolContainer->AddChild(mMenuSpawn);
+        mMenuSpawn->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), gSafeAreaInsetTop + 20.0f, 400.0f, 480.0f);
+    }
+}
+
 void GameEditor::ClosePathEditor() {
     SetOverlay(mToolContainer);
     if (mPathEditor) {
         mPathEditor->Kill();
         mPathEditor = NULL;
     }
+}
+
+void GameEditor::Clear() {
+    FString aRecoverPath = gDirDocuments + FString("clear_backup.json");
+    Save(aRecoverPath.c());
+    
+    ClosePathEditor();
+    mSection.Clear();
+    
+#ifdef EDITOR_MODE
+    gGame->mEditorPath.Reset();
+#endif
+}
+
+void GameEditor::LoadCleared() {
+    FString aRecoverPath = gDirDocuments + FString("clear_backup.json");
+    Load(aRecoverPath.c());
+}
+
+void GameEditor::Autosave() {
+    
 }
 
 void GameEditor::SelectClosestObject(float pX, float pY) {
@@ -495,8 +534,12 @@ void GameEditor::Load(const char *pFile) {
     
     printf("Load [%s]\n", pFile);
     FJSON aJSON;
+    printf("Load...\n");
     aJSON.Load(pFile);
+    printf("Print...\n");
     aJSON.Print();
+    
+    
     mSection.Load(aJSON.mRoot);
 }
 

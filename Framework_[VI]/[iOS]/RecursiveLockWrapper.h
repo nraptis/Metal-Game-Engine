@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface RecursiveLockWrapper : NSObject
-//@property (nonatomic, strong) NSRecursiveLock *lock;
-@property (nonatomic, strong) dispatch_semaphore_t semaphore;
+@property (nonatomic, strong) NSRecursiveLock *lock;
+//@property (nonatomic, strong) dispatch_semaphore_t semaphore;
+
 
 @end

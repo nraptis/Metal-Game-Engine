@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0D03C4E0223FE4E0000F3CD5 /* EditorMenuSections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D03C4DE223FE4E0000F3CD5 /* EditorMenuSections.cpp */; };
-		0D03C4E3223FE4EE000F3CD5 /* EditorMenuWaves.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D03C4E1223FE4EE000F3CD5 /* EditorMenuWaves.cpp */; };
 		0D03C4E6223FE505000F3CD5 /* EditorMenuFlow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D03C4E4223FE505000F3CD5 /* EditorMenuFlow.cpp */; };
 		0D03C4E9223FF9FC000F3CD5 /* GamePathEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D03C4E7223FF9FC000F3CD5 /* GamePathEditor.cpp */; };
 		0D03C4EC2240107A000F3CD5 /* EditorMenuPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D03C4EA2240107A000F3CD5 /* EditorMenuPath.cpp */; };
@@ -17,6 +16,8 @@
 		0D1DB0D8223C31B3005DA958 /* LevelWavePath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D1DB0D6223C31B3005DA958 /* LevelWavePath.cpp */; };
 		0D3F8BEF223D74CE007BB85B /* FBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3F8BED223D74CE007BB85B /* FBuffer.cpp */; };
 		0D3F8BF2223D74D9007BB85B /* FBufferCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3F8BF0223D74D9007BB85B /* FBufferCache.cpp */; };
+		0D5232D02244735200367B76 /* EditorMenuSpawn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D5232CE2244735200367B76 /* EditorMenuSpawn.cpp */; };
+		0D5232D3224473A300367B76 /* EditorMenuWavesPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D5232D1224473A300367B76 /* EditorMenuWavesPicker.cpp */; };
 		0D8DD0792240737D00E25C3A /* LevelWavePathBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8DD0772240737D00E25C3A /* LevelWavePathBlueprint.cpp */; };
 		0D8DD07C2240941100E25C3A /* LevelSectionBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8DD07A2240941100E25C3A /* LevelSectionBlueprint.cpp */; };
 		0D8DD07F2240949900E25C3A /* LevelWaveBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8DD07D2240949900E25C3A /* LevelWaveBlueprint.cpp */; };
@@ -172,8 +173,6 @@
 /* Begin PBXFileReference section */
 		0D03C4DE223FE4E0000F3CD5 /* EditorMenuSections.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuSections.cpp; sourceTree = "<group>"; };
 		0D03C4DF223FE4E0000F3CD5 /* EditorMenuSections.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuSections.hpp; sourceTree = "<group>"; };
-		0D03C4E1223FE4EE000F3CD5 /* EditorMenuWaves.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuWaves.cpp; sourceTree = "<group>"; };
-		0D03C4E2223FE4EE000F3CD5 /* EditorMenuWaves.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuWaves.hpp; sourceTree = "<group>"; };
 		0D03C4E4223FE505000F3CD5 /* EditorMenuFlow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuFlow.cpp; sourceTree = "<group>"; };
 		0D03C4E5223FE505000F3CD5 /* EditorMenuFlow.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuFlow.hpp; sourceTree = "<group>"; };
 		0D03C4E7223FF9FC000F3CD5 /* GamePathEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GamePathEditor.cpp; sourceTree = "<group>"; };
@@ -190,6 +189,10 @@
 		0D3F8BEE223D74CE007BB85B /* FBuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FBuffer.hpp; sourceTree = "<group>"; };
 		0D3F8BF0223D74D9007BB85B /* FBufferCache.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FBufferCache.cpp; sourceTree = "<group>"; };
 		0D3F8BF1223D74D9007BB85B /* FBufferCache.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FBufferCache.hpp; sourceTree = "<group>"; };
+		0D5232CE2244735200367B76 /* EditorMenuSpawn.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuSpawn.cpp; sourceTree = "<group>"; };
+		0D5232CF2244735200367B76 /* EditorMenuSpawn.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuSpawn.hpp; sourceTree = "<group>"; };
+		0D5232D1224473A300367B76 /* EditorMenuWavesPicker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuWavesPicker.cpp; sourceTree = "<group>"; };
+		0D5232D2224473A300367B76 /* EditorMenuWavesPicker.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuWavesPicker.hpp; sourceTree = "<group>"; };
 		0D8DD0772240737D00E25C3A /* LevelWavePathBlueprint.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWavePathBlueprint.cpp; sourceTree = "<group>"; };
 		0D8DD0782240737D00E25C3A /* LevelWavePathBlueprint.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelWavePathBlueprint.hpp; sourceTree = "<group>"; };
 		0D8DD07A2240941100E25C3A /* LevelSectionBlueprint.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelSectionBlueprint.cpp; sourceTree = "<group>"; };
@@ -738,14 +741,16 @@
 				0DBABE47223A9EB5009A17A7 /* Dart.hpp */,
 				0DBABDE9223A9EB4009A17A7 /* FloatingCamera.cpp */,
 				0DBABE45223A9EB5009A17A7 /* FloatingCamera.hpp */,
+				0D5232CE2244735200367B76 /* EditorMenuSpawn.cpp */,
+				0D5232CF2244735200367B76 /* EditorMenuSpawn.hpp */,
+				0D5232D1224473A300367B76 /* EditorMenuWavesPicker.cpp */,
+				0D5232D2224473A300367B76 /* EditorMenuWavesPicker.hpp */,
 				0D03C4EA2240107A000F3CD5 /* EditorMenuPath.cpp */,
 				0D03C4EB2240107A000F3CD5 /* EditorMenuPath.hpp */,
 				0D03C4ED2240108C000F3CD5 /* EditorMenuPathControl.cpp */,
 				0D03C4EE2240108C000F3CD5 /* EditorMenuPathControl.hpp */,
 				0D03C4DE223FE4E0000F3CD5 /* EditorMenuSections.cpp */,
 				0D03C4DF223FE4E0000F3CD5 /* EditorMenuSections.hpp */,
-				0D03C4E1223FE4EE000F3CD5 /* EditorMenuWaves.cpp */,
-				0D03C4E2223FE4EE000F3CD5 /* EditorMenuWaves.hpp */,
 				0D03C4E4223FE505000F3CD5 /* EditorMenuFlow.cpp */,
 				0D03C4E5223FE505000F3CD5 /* EditorMenuFlow.hpp */,
 				0DBABE49223A9EB5009A17A7 /* Game.cpp */,
@@ -1021,7 +1026,6 @@
 				0DB13C9A2234B20B00A6F230 /* FMath.cpp in Sources */,
 				0DB13CA22234B20B00A6F230 /* FJoystick.cpp in Sources */,
 				0DBABE74223A9EB5009A17A7 /* LevelSelectorScreen.cpp in Sources */,
-				0D03C4E3223FE4EE000F3CD5 /* EditorMenuWaves.cpp in Sources */,
 				0DEFD455223F2E660090BA17 /* GameEditor.cpp in Sources */,
 				0DBABE6D223A9EB5009A17A7 /* PGPath.cpp in Sources */,
 				0DBABE6F223A9EB5009A17A7 /* UIImagePickerCell.cpp in Sources */,
@@ -1086,6 +1090,7 @@
 				0DBABE67223A9EB5009A17A7 /* UIAlignmentPicker.cpp in Sources */,
 				0D3F8BEF223D74CE007BB85B /* FBuffer.cpp in Sources */,
 				0DB13C932234B20B00A6F230 /* FIntList.cpp in Sources */,
+				0D5232D3224473A300367B76 /* EditorMenuWavesPicker.cpp in Sources */,
 				0DB13CD02234B20B00A6F230 /* os_core_social.cpp in Sources */,
 				0DB13C9D2234B20B00A6F230 /* FMatrix.cpp in Sources */,
 				0DB13CD92234B20B00A6F230 /* os_core_app_shell_mac.mm in Sources */,
@@ -1122,6 +1127,7 @@
 				0DBABE7E223AC5F8009A17A7 /* LevelSection.cpp in Sources */,
 				0DBABE68223A9EB5009A17A7 /* UIAlignmentPickerButton.cpp in Sources */,
 				0DB13CD62234B20B00A6F230 /* MetalView.mm in Sources */,
+				0D5232D02244735200367B76 /* EditorMenuSpawn.cpp in Sources */,
 				0DB13CA92234B20B00A6F230 /* FGestureCanvas.cpp in Sources */,
 				0DBABE5F223A9EB5009A17A7 /* ScreenTransformMenu.cpp in Sources */,
 				0DBABE4A223A9EB5009A17A7 /* GameContainer.cpp in Sources */,

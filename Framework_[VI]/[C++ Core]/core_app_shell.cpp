@@ -59,6 +59,10 @@ bool gIsRetina = false;
 int gQuadBufferPosition = -1;
 int gQuadBufferTextureCoord = -1;
 
+bool gKeyDownCtrl = false;
+bool gKeyDownShift = false;
+bool gKeyDownAlt = false;
+
 
 
 void AppShellInitialize(int pEnvironment) {

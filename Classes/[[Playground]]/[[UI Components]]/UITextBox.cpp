@@ -157,8 +157,6 @@ void UITextBox::KeyDown(int pKey)  {
     if (pKey == __KEY__DELETE) {
         
         FString aString = mText;
-        
-        printf("DELETE [%d]\n", mCursor);
         if (mCursor <= 0) {
             return;
         } else if (mCursor >= mText.mLength) {
@@ -173,7 +171,6 @@ void UITextBox::KeyDown(int pKey)  {
             mCursor = 0;
         }
         SetText(aString.c());
-        printf("Del: Text: %s\n", mText.c());
         gNotify.Post(this, "text_box_change");
         return;
     }
@@ -195,12 +192,10 @@ void UITextBox::KeyDown(int pKey)  {
     
     char aChar = CharForKey(pKey);
     if (aChar != 0) {
-        
         FString aString = mText;
         aString.Insert(aChar, mCursor);
         SetText(aString.c());
         ++mCursor;
-        printf("Edit: Text: %s\n", mText.c());
         gNotify.Post(this, "text_box_change");
         return;
     }
@@ -224,6 +219,7 @@ char UITextBox::CharForKey(int pKey) {
     if (pKey == __KEY__8) { return '8'; }
     if (pKey == __KEY__9) { return '9'; }
     
+    if (pKey == __KEY__MINUS) { return '-'; }
     
     if (pKey == __KEY__SPACE) { return ' '; }
     

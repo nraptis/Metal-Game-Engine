@@ -2,7 +2,7 @@
 #include "FSprite.h"
 #include "FTexture.hpp"
 #include "FVertexBuffer.h"
-#include "FStringBuffer.h"
+#include "FString.h"
 #include "core_includes.h"
 
 //TODO: Turn off for release...

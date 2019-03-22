@@ -11,7 +11,6 @@
 #include "PGPathEditor.hpp"
 #include "PGMainCanvas.hpp"
 #include "FApp.hpp"
-#include "ScreenTransformMenu.hpp"
 #include "UIImagePicker.hpp"
 
 PathEditorMenu::PathEditorMenu(PGPathEditor *pEditor) : ToolMenu() {

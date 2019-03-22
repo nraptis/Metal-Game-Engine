@@ -34,22 +34,16 @@ UIStepper::UIStepper() {
     AddChild(mTextBox);
     AddChild(mButtonZero);
     
-    
     mLabelTitle.SetTransparentBackground();
-    
-    mLabelTitle.SetText("Asssss");
-    
+    mLabelTitle.SetText("Int:");
     
     gNotify.Register(this, &mButtonAdd1, "button_click");
     gNotify.Register(this, &mButtonAdd10, "button_click");
     gNotify.Register(this, &mButtonAdd50, "button_click");
-    
     gNotify.Register(this, &mButtonSub1, "button_click");
     gNotify.Register(this, &mButtonSub10, "button_click");
     gNotify.Register(this, &mButtonSub50, "button_click");
-    
     gNotify.Register(this, &mButtonZero, "button_click");
-    
     gNotify.Register(this, &mTextBox, "text_box_change");
     
     mButtonAdd1.SetText("A");
@@ -60,7 +54,7 @@ UIStepper::UIStepper() {
     mButtonSub10.SetText("D");
     mButtonSub50.SetText("D");
     
-    mButtonZero.SetText("0");
+    mButtonZero.SetText("R0");
     
     
     SetValue(0);
@@ -210,7 +204,12 @@ void UIStepper::SetValue(int pValue) {
     if (mTarget) {
         *mTarget = pValue;
     }
-    mTextBox.mText = FString(pValue);
+    
+    int aTextNum = mTextBox.mText.ToInt();
+    if (aTextNum != pValue) {
+        mTextBox.mText = FString(pValue);
+    }
+    
     if (aNotify) {
         gNotify.Post(this, "stepper");
     }
@@ -228,7 +227,10 @@ void UIStepper::SetTarget(int *pTarget) {
 void UIStepper::Notify(void *pSender, const char *pNotification) {
     if (FString("text_box_change") == pNotification) {
         if (pSender == &mTextBox) {
-            SetValue(mTextBox.mText.ToInt());
+            int aValue = mTextBox.mText.ToInt();
+            if (aValue != mValue) {
+                SetValue(aValue);
+            }
         }
     }
     

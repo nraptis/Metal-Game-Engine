@@ -1,64 +1,55 @@
 #include "FString.h"
 #include "core_includes.h"
 
-FString::FString()
-{
-    BaseInitialize();
+FString::FString() {
+    mData = 0; mCursor = 0; mLength = 0; mSize = 0;
 }
 
-FString::FString(const FString &pString)// : FString()
-{
-    BaseInitialize();
+FString::FString(const FString &pString) {
+    mData = 0; mCursor = 0; mLength = 0; mSize = 0;
 	Set((const char *)(pString.mData));
 	//Log("FString::FString1(%s)\n", pString.mData);
 }
 
-FString::FString(char *pString)// : FString()
-{
-    BaseInitialize();
+FString::FString(char *pString) {
+    mData = 0; mCursor = 0; mLength = 0; mSize = 0;
 	Set(pString);
 	//Log("FString::FString1(%s)\n", c());
 }
 
-FString::FString(const char *theString)// : FString()
-{
-    BaseInitialize();
+FString::FString(const char *theString) {
+    mData = 0; mCursor = 0; mLength = 0; mSize = 0;
 	Set(theString);
 	//Log("FString::FString1(%s)\n", c());
 }
 
-FString::FString(int theInt)// : FString()
-{
-    BaseInitialize();
+FString::FString(int theInt) {
+    mData = 0; mCursor = 0; mLength = 0; mSize = 0;
 	ParseInt(theInt);
 	//Log("FString::FStringInt(%d)(%s)\n", theInt, mData);
 }
 
-FString::FString(char theChar)// : FString()
-{
-    BaseInitialize();
+FString::FString(char theChar) {
+    mCursor = 0; mLength = 1; mSize = 1;
 	mData = new char[2];
 	mData[0] = theChar;
 	mData[1] = 0;
-	mLength = 1;
-	//Log("FString::FString1(%s)\n", c());
 }
 
-FString::FString(float theFloat)// : FString()
-{
-    BaseInitialize();
-	//ParseFloat(theFloat);
+FString::FString(float pFloat) {
+    mData = 0; mCursor = 0; mLength = 0; mSize = 0;
     
     FString aString;
     
-    float aAbs = theFloat;
-    if(aAbs < 0.0f)aAbs = -aAbs;
+    //float aAbs = pFloat;
+    //if(aAbs < 0.0f)aAbs = -aAbs;
     
-    if(aAbs > 100.0f)aString.ParseFloat(theFloat, 2);
-    else if(aAbs > 10.0f)aString.ParseFloat(theFloat, 3);
-    else if(aAbs > 2.0f)aString.ParseFloat(theFloat, 4);
-    else if(aAbs > 0.25f)aString.ParseFloat(theFloat, 6);
-    else aString.ParseFloat(theFloat, 8);
+    //if(aAbs > 100.0f)aString.ParseFloat(pFloat, 2);
+    //else if(aAbs > 10.0f)aString.ParseFloat(pFloat, 3);
+    //else if(aAbs > 2.0f)aString.ParseFloat(pFloat, 4);
+    //else if(aAbs > 0.25f)aString.ParseFloat(pFloat, 6);
+    //else
+    aString.ParseFloat(pFloat, 6);
     
     if(aString.Find('.') != -1)
     {
@@ -86,15 +77,13 @@ FString::FString(float theFloat)// : FString()
     *this = aString;
 }
 
-FString::FString(float theFloat, int pDecimals)// : FString()
-{
-    BaseInitialize();
-	ParseFloat(theFloat, pDecimals);
+FString::FString(float pFloat, int pDecimals) {
+    mData = 0; mCursor = 0; mLength = 0; mSize = 0;
+	ParseFloat(pFloat, pDecimals);
 }
 
-FString::FString(bool theBool)// : FString()
-{
-    BaseInitialize();
+FString::FString(bool theBool) {
+    mData = 0; mCursor = 0; mLength = 0; mSize = 0;
 	ParseBool(theBool);
 }
 
@@ -103,14 +92,6 @@ FString::FString(bool theBool)// : FString()
 FString::~FString()
 {
 	Free();
-}
-
-void FString::BaseInitialize()
-{
-    mData = 0;
-    mCursor = 0;
-    mLength = 0;
-    mSize = 0;
 }
 
 void FString::AddCommas()
@@ -222,26 +203,17 @@ void FString::Clear()
 	mCursor = 0;
 }
 
-void FString::Size(int pSize)
-{
-	if(pSize <= 0)
-	{
+void FString::Size(int pSize) {
+	if (pSize <= 0) {
 		Free();
-	}
-	else if(pSize != mSize)
-	{
+	} else if(pSize != mSize) {
 		mSize = pSize;
-
 		char *aNew = new char[mSize + 1];
-		if(mLength > mSize)
-		{
+		if (mLength > mSize) {
 			mLength = mSize;
 		}
-
 		for(int i=0; i<mLength; i++)aNew[i] = mData[i];
-
-		for(int i = mLength; i <= mSize; i++)aNew[i] = 0;
-
+		for(int i = mLength; i <= mSize; i++) aNew[i] = 0;
 		delete[] mData;
 		mData = aNew;
 	}
@@ -257,21 +229,24 @@ int	FString::Length(const char *pString) {
 	return aResult;
 }
 
-void FString::FillNull(int pIndex) {
-	if (mSize > 0) {
-		for (int i = pIndex; i <= mSize; i++) {
-			mData[i] = 0;
-		}
-	}
-}
-
 void FString::Set(const char *pString) {
 	if ((pString != 0) && (pString != mData)) {
-		int aLength = Length(pString);
-		if ((aLength > mSize) || (aLength <= 0)) Size(aLength + (aLength / 2) + 1);
-		for (int i = 0; i < aLength; i++) mData[i] = pString[i];
-		mLength = aLength;
-		FillNull();
+        mLength = Length(pString);
+        if (mLength > mSize) {
+            mSize = mLength;
+            char *aNew = new char[mLength+1];
+            mData = aNew;
+        }
+        if (mLength == 0) {
+            if (mData != NULL) {
+                mData[0] = 0;
+            }
+        } else {
+            for (int i=0;i<mLength;i++) {
+                mData[i] = pString[i];
+            }
+            mData[mLength] = 0;
+        }
     } else if (pString == NULL) {
         mLength = 0;
         if (mData != NULL) {
@@ -281,10 +256,12 @@ void FString::Set(const char *pString) {
 }
 
 void FString::Append(char pChar) {
-	if((mLength + 1) >= mSize)Size(mLength + mLength / 2 + 1);
+    if ((mLength + 1) >= mSize) {
+        Size(mLength + mLength / 2 + 2);
+    }
 	mData[mLength] = pChar;
 	mLength++;
-	FillNull();
+    mData[mLength] = 0;
 }
 
 void FString::Append(const char *pString)
@@ -293,46 +270,37 @@ void FString::Append(const char *pString)
 	Append(pString, aLength);
 }
 
-void FString::Append(FString &pString)
-{
+void FString::Append(FString &pString) {
 	Append(pString.mData, pString.mLength);
 }
 
-void FString::Append(const char *pString, int pCount)
-{
-	if((pString != mData) && (pCount > 0))
-	{
-		int aNewLength = mLength + pCount;
+void FString::Append(const char *pString, int pCount) {
+	if ((pString != mData) && (pCount > 0)) {
+        int aNewLength = mLength + pCount;
+        if (aNewLength > mSize) {
+            Size(aNewLength + aNewLength / 2 + 2);
+        }
 
-		if(aNewLength > mSize)Size(aNewLength + aNewLength / 2 + 1);
-
-		for(int i = 0; i < pCount; i++)
-		{
+		for (int i = 0; i < pCount; i++) {
 			mData[i + mLength] = pString[i];
 		}
 
 		mLength = aNewLength;
-
-		FillNull();
+        mData[mLength] = 0;
 	}
 }
 
 
-void FString::Set(FString &pString)
-{
+void FString::Set(FString &pString) {
 	Set(pString.c());
 }
 
-void FString::Truncate(int pSize)
-{
-	if(pSize <= 0)
-	{
+void FString::Truncate(int pSize) {
+	if (pSize <= 0) {
 		Clear();
-	}
-	else if(pSize < mLength)
-	{
+	} else if(pSize < mLength) {
 		mLength = pSize;
-		FillNull();
+        mData[mLength] = 0;
 	}
 }
 
@@ -347,6 +315,7 @@ char *FString::GetCharArray() {
     return aResult;
 }
 
+/*
 void FString::Ins(const char *pString, int pLength, int pSlot)
 {
 	if(pSlot < 0)
@@ -363,39 +332,50 @@ void FString::Ins(const char *pString, int pLength, int pSlot)
 		pSlot = mLength;
 	}
 
-	if((pLength > 0) && (pSlot >= 0))
-	{
+	if ((pLength > 0) && (pSlot >= 0)) {
         int aNewLength = pSlot + pLength;
         if(aNewLength > mSize)Size(aNewLength + aNewLength / 2 + 1);
-
-
-		for(int i = 0; i < pLength; i++)
-		{
+		for(int i = 0; i < pLength; i++) {
 			mData[i + pSlot] = pString[i];
 		}
 
-		if(aNewLength > mLength)
-		{
+		if (aNewLength > mLength) {
 			mLength = aNewLength;
-			FillNull();
+			mData[mLength] = 0;
 		}
 	}
 }
+*/
 
-void FString::InsChars(char pChar, int pCount, int pSlot)
-{
-	if(pCount > 0)
-	{
-		char *aChar = new char[pCount + 1];
-
-		for(int i = 0; i < pCount; i++)
-		{
-			aChar[i] = pChar;
-		}
-
-		Ins(aChar, pCount, pSlot);
-
-		delete[] aChar;
+void FString::Insert(char pChar, int pCount, int pSlot) {
+    
+    if (pSlot < 0) {
+        pCount += pSlot;
+    }
+    
+	if (pCount > 0) {
+        
+        if (pSlot < 0) { pSlot = 0; }
+        if (pSlot > mLength) { pSlot = mLength; }
+        
+        int aNewLength = mLength + pCount;
+        if (aNewLength > mSize) {
+            Size(aNewLength + aNewLength / 2 + 1);
+        }
+        
+        for (int i = mLength + (pCount - 1);i>pSlot;i--) {
+            mData[i] = mData[i-pCount];
+        }
+        
+        int aIndex = pSlot;
+        int aCount = pCount;
+        while (aCount > 0) {
+            mData[aIndex] = pChar;
+            aIndex++;
+            --aCount;
+        }
+        mLength = aNewLength;
+        mData[mLength] = 0;
 	}
 }
 
@@ -403,7 +383,6 @@ void FString::Insert(char pChar, int pSlot) {
     
     if (pSlot < 0) { pSlot = 0; }
     if (pSlot > mLength) { pSlot = mLength; }
-    
     
     int aNewLength = mLength + 1;
     if (aNewLength > mSize) {
@@ -414,7 +393,8 @@ void FString::Insert(char pChar, int pSlot) {
         mData[i] = mData[i-1];
     }
     mData[pSlot] = pChar;
-    mLength += 1;
+    mLength = aNewLength;
+    mData[mLength] = 0;
 }
 
 FString FString::GetLastNumber()
@@ -1669,25 +1649,28 @@ void FString::ParseInt(int pNumber, bool pCommas)
 
 
 
-void FString::ParseFloat(float theFloat, int pDecimalCount)
-{
+void FString::ParseFloat(float pFloat, int pDecimalCount) {
     Free();
     
-    bool aSign=false;
-	if(theFloat<0)
-    {
-        aSign=true;
-		theFloat = -theFloat;
+    bool aSign = false;
+	if (pFloat < 0.0f) {
+        aSign = true;
+		pFloat = -pFloat;
     }
-	int aWholeNumber = (int)theFloat;
-	double aFraction = theFloat - (float)aWholeNumber;
+    
+    // Our logic breaks for "scientific numbers"
+    // Which means you probably didn't initialize
+    // this float and it's filled with garbo-bits.
+    if (pFloat > 100000000.0f) { pFloat = 100000000.0f; }
+    
+	int aWholeNumber = (int)pFloat;
+	double aFraction = pFloat - (float)aWholeNumber;
     int aWholeDigits=0;
     
     int aMultiply=10;
     int aHold=pDecimalCount;
-    while(aHold>0)
-    {
-        aMultiply*=10;
+    while (aHold > 0) {
+        aMultiply *= 10;
         aHold--;
     }
     aFraction *= (float)aMultiply;
@@ -1696,62 +1679,41 @@ void FString::ParseFloat(float theFloat, int pDecimalCount)
     aFractionNumber/=10;
     
     //.567[8] = .568
-    if(aLastDigit>=5)aFractionNumber++;
+    if (aLastDigit>=5) aFractionNumber++;
     
     //.9999999[9] = 1
-    if(aFractionNumber >= (aMultiply / 10))
-    {
+    if (aFractionNumber >= (aMultiply / 10)) {
         aFractionNumber=0;
         aWholeNumber++;
     }
-    
     aHold=aWholeNumber;
-    while(aHold)
-    {
+    while (aHold) {
         aWholeDigits++;
         aHold /= 10;
     }
-    if(aWholeDigits==0)aWholeDigits=1;
-    
+    if (aWholeDigits == 0) { aWholeDigits = 1; }
     mLength = aWholeDigits + 1 + pDecimalCount;
-    
-    if(aSign)
-    {
-        mLength += 1;
-    }
-    
+    if (aSign) { mLength += 1; }
     mData = new char[mLength+1];
-    
-    if(aSign)
-    {
+    if (aSign) {
         mData[0] = '-';
-        for(int i=aWholeDigits-1;i>=0;i--)
-        {
+        for (int i=aWholeDigits-1;i>=0;i--) {
             mData[i+1]=((char)(aWholeNumber%10))+'0';
             aWholeNumber/=10;
         }
-        
         aWholeDigits++;
         mData[aWholeDigits]='.';
-        
-        for(int i=mLength-1;i>aWholeDigits;i--)
-        {
+        for (int i=mLength-1;i>aWholeDigits;i--) {
             mData[i]=((char)(aFractionNumber%10))+'0';
             aFractionNumber/=10;
         }
-    }
-    else
-    {
-        for(int i=aWholeDigits-1;i>=0;i--)
-        {
+    } else {
+        for (int i=aWholeDigits-1;i>=0;i--) {
             mData[i]=((char)(aWholeNumber%10))+'0';
             aWholeNumber/=10;
         }
-        
         mData[aWholeDigits] = '.';
-        
-        for(int i=mLength-1;i>aWholeDigits;i--)
-        {
+        for (int i=mLength-1;i>aWholeDigits;i--) {
             mData[i]=((char)(aFractionNumber%10))+'0';
             aFractionNumber/=10;
         }

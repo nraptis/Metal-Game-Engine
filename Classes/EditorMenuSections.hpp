@@ -17,8 +17,9 @@ public:
     EditorMenuSections(GameEditor *pEditor);
     virtual ~EditorMenuSections();
     
-    virtual void                            Layout();
-    virtual void                            Notify(void *pSender, const char *pNotification);
+    virtual void                            Layout() override;
+    virtual void                            Notify(void *pSender, const char *pNotification) override;
+    virtual void                            Update() override;
     
     
     ToolMenuSectionRow                      *mRowMain1;
@@ -26,6 +27,17 @@ public:
     UIButton                                *mButtonSaveSection;
     UIButton                                *mButtonLoadSection;
     ToolMenuSectionRow                      *mRowMain2;
+    UIButton                                *mButtonClear;
+    UIButton                                *mButtonLoadCleared;
+    UIButton                                *mButtonAutosave;
+    
+    
+    ToolMenuPanel                           *mMenusPanel;
+    ToolMenuSectionRow                      *mRowMenus1;
+    ToolMenuSectionRow                      *mRowMenus2;
+    UIButton                                *mButtonShowSpawn;
+    UIButton                                *mButtonShowWavePicker;
+    
     
     
     ToolMenuPanel                           *mWavePanel;

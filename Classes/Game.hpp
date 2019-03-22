@@ -168,6 +168,7 @@ public:
     
     
 #ifdef EDITOR_MODE
+    bool                                        mEditorPreview;
     LevelWavePath                               mEditorPath;
     FList                                       mEditorObjectList;
     FList                                       mEditorObjectQueue;

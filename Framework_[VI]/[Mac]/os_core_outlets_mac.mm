@@ -662,6 +662,7 @@ void os_exportToPhotoLibrary(unsigned int *pData, int pWidth, int pHeight)
     
 }
 
+/*
 bool os_is_shift_key_down() {
     NSUInteger aFlags = [[NSApp currentEvent] modifierFlags];
     if (aFlags & NSEventModifierFlagShift) {
@@ -686,3 +687,4 @@ bool os_is_alt_key_down() {
     }
     return false;
 }
+*/

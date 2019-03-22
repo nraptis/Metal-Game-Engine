@@ -13,6 +13,4 @@ extern "C"
     
 };
 
-int os_core_main (int argc, char **argv);
-
 #endif // JNIAPI_H

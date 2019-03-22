@@ -694,7 +694,7 @@ void FStringMap::Add(const char *pKey, void *pObject) {
     }
     
     FStringMapNode *aNew = (FStringMapNode *)mQueue.PopLast();
-    if (aNew == 0) {
+    if (aNew == NULL) {
         aNew = new FStringMapNode();
     }
     aNew->mKey = pKey;
