@@ -15,6 +15,7 @@
 #include "Game.hpp"
 #include "EditorMenuSections.hpp"
 #include "EditorMenuSpawn.hpp"
+#include "EditorMenuWavesPicker.hpp"
 #include "GamePathEditor.hpp"
 #include "LevelWavePathBlueprint.hpp"
 #include "LevelWaveBlueprint.hpp"
@@ -52,7 +53,6 @@ public:
     int                                         ClosestXConstraint(float pX);
     int                                         ClosestYConstraint(float pY);
     
-    
     int                                         NextXConstraintf(float pX);
     int                                         PrevXConstraintf(float pX);
     int                                         NextYConstraintf(float pY);
@@ -68,6 +68,12 @@ public:
     void                                        WaveSelectNext();
     void                                        WaveSelectPrev();
     void                                        WaveDeselect();
+    void                                        WaveMoveUp();
+    void                                        WaveMoveDown();
+    void                                        WaveSelect(int pIndex);
+    int                                         WaveCount(int pIndex);
+    int                                         WaveIndex();
+    
     
     
     void                                        OpenPathEditor();
@@ -76,13 +82,17 @@ public:
     
     
     void                                        OpenSpawnMenu();
+    void                                        OpenWavePickerMenu();
+    
     
     
     void                                        Clear();
     void                                        LoadCleared();
     void                                        Autosave();
+    void                                        Autoload();
     
     
+    //mAutosaveTimer
     
     
     
@@ -99,6 +109,7 @@ public:
     
     EditorMenuSections                          *mMenuSections;
     EditorMenuSpawn                             *mMenuSpawn;
+    EditorMenuWavesPicker                       *mMenuWavesPicker;
     
     
     FCanvas                                     *mToolContainer;
@@ -139,6 +150,11 @@ public:
     void                                        Save(const char *pFile);
     void                                        Load(const char *pFile);
     
+    void                                        SaveConfig();
+    void                                        LoadConfig();
+    
+    int                                         mAutosaveTimer;
+    int                                         mEnqueueInitialLoad;
     
 };
 

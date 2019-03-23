@@ -65,58 +65,58 @@ void PlatformGraphicsInterface::Postrender() {
     [gOpenGLView presentFramebuffer];
 }
 
-bool PlatformGraphicsInterface::IsVSyncReady() {
-    
-    //usleep(90000);
-    double aTime = CACurrentMediaTime() * 60.0f;
-    double aLinkTime = mLastTime * 60.0f;
-    double aDiff = (aTime - aLinkTime);
-    //Log("---Time[%f] LinkTime[%f]  (%f)\n", aTime, aLinkTime, aDiff);
-    
-    int aFudge = 0;
-    while (aDiff < 1.0f && aFudge < 2000) {
-        usleep(200);
-        aTime = CACurrentMediaTime() * 60.0f;
-        aDiff = (aTime - aLinkTime);
-        //Log(">Time[%f] LinkTime[%f]  (%f)\n", aTime, aLinkTime, aDiff);
-        aFudge++;
-    }
-    if (aFudge > 1) {
-        //Log("Sleeps[%d]\n", aFudge);
-    }
-    
-    
-    mLastTime = CACurrentMediaTime();
-    
-    return true;
-    
-    /*
-    //usleep(90000);
-    
-    double aTimeStamp = CACurrentMediaTime();
-    double aFrameTime = (aTimeStamp - mLastTime) * 1000.0f;
-    
-    
-    static int aOutOut = 0;
-    
-    aOutOut++;
-    if (aOutOut >= 60) {
-        aOutOut = 0;
-        Log("aFrameTime = %f\n", aFrameTime);
-    }
-    
-    if (aFrameTime > 16.7) {
-        //Log("VSync is redy\n");
-        mLastTime = gMetalView.displayLink.timestamp;
-        return true;
-    } else {
-        //Log("VSync is NOT redy\n");
-    }
-
-    
-    return false;
-    */
-}
+//bool PlatformGraphicsInterface::IsVSyncReady() {
+//    
+//    //usleep(90000);
+//    double aTime = CACurrentMediaTime() * 60.0f;
+//    double aLinkTime = mLastTime * 60.0f;
+//    double aDiff = (aTime - aLinkTime);
+//    //Log("---Time[%f] LinkTime[%f]  (%f)\n", aTime, aLinkTime, aDiff);
+//    
+//    int aFudge = 0;
+//    while (aDiff < 1.0f && aFudge < 2000) {
+//        usleep(200);
+//        aTime = CACurrentMediaTime() * 60.0f;
+//        aDiff = (aTime - aLinkTime);
+//        //Log(">Time[%f] LinkTime[%f]  (%f)\n", aTime, aLinkTime, aDiff);
+//        aFudge++;
+//    }
+//    if (aFudge > 1) {
+//        //Log("Sleeps[%d]\n", aFudge);
+//    }
+//    
+//    
+//    mLastTime = CACurrentMediaTime();
+//    
+//    return true;
+//    
+//    /*
+//    //usleep(90000);
+//    
+//    double aTimeStamp = CACurrentMediaTime();
+//    double aFrameTime = (aTimeStamp - mLastTime) * 1000.0f;
+//    
+//    
+//    static int aOutOut = 0;
+//    
+//    aOutOut++;
+//    if (aOutOut >= 60) {
+//        aOutOut = 0;
+//        Log("aFrameTime = %f\n", aFrameTime);
+//    }
+//    
+//    if (aFrameTime > 16.7) {
+//        //Log("VSync is redy\n");
+//        mLastTime = gMetalView.displayLink.timestamp;
+//        return true;
+//    } else {
+//        //Log("VSync is NOT redy\n");
+//    }
+//
+//    
+//    return false;
+//    */
+//}
 
 void PlatformGraphicsInterface::SetContext() {
     [gOpenGLView setContext];

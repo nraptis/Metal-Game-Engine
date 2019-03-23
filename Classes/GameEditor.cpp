@@ -15,7 +15,11 @@ GameEditor *gEditor = NULL;
 GameEditor::GameEditor(Game *pGame) {
     
     
+    mMenuWavesPicker = NULL;
     mMenuSpawn = NULL;
+    
+    mEnqueueInitialLoad = 3;
+    mAutosaveTimer = 0;
     
     gEditor = this;
     mGame = pGame;
@@ -51,6 +55,12 @@ GameEditor::GameEditor(Game *pGame) {
     
     //WaveAdd();
     //OpenPathEditor();
+    
+    LoadConfig();
+    //
+    OpenSpawnMenu();
+    OpenWavePickerMenu();
+    //
 }
 
 GameEditor::~GameEditor() {
@@ -135,6 +145,21 @@ void GameEditor::Layout() {
 }
 
 void GameEditor::Update() {
+    
+    
+    mAutosaveTimer += 1;
+    if (mAutosaveTimer >= 50) {
+        Autosave();
+        mAutosaveTimer = 0;
+    }
+    
+    
+    if (mEnqueueInitialLoad > 0) {
+        mEnqueueInitialLoad--;
+        if (mEnqueueInitialLoad <= 0) {
+            Autoload();
+        }
+    }
     
 }
 
@@ -230,16 +255,16 @@ void GameEditor::KeyDown(int pKey) {
     bool aCtrl = gKeyDownCtrl;
     bool aAlt = gKeyDownAlt;
     
-    if (pKey == __KEY__0) { mExportIndex = 0; }
-    if (pKey == __KEY__1) { mExportIndex = 1; }
-    if (pKey == __KEY__2) { mExportIndex = 2; }
-    if (pKey == __KEY__3) { mExportIndex = 3; }
-    if (pKey == __KEY__4) { mExportIndex = 4; }
-    if (pKey == __KEY__5) { mExportIndex = 5; }
-    if (pKey == __KEY__6) { mExportIndex = 6; }
-    if (pKey == __KEY__7) { mExportIndex = 7; }
-    if (pKey == __KEY__8) { mExportIndex = 8; }
-    if (pKey == __KEY__9) { mExportIndex = 9; }
+    if (pKey == __KEY__0) { mExportIndex = 0; SaveConfig(); }
+    if (pKey == __KEY__1) { mExportIndex = 1; SaveConfig(); }
+    if (pKey == __KEY__2) { mExportIndex = 2; SaveConfig(); }
+    if (pKey == __KEY__3) { mExportIndex = 3; SaveConfig(); }
+    if (pKey == __KEY__4) { mExportIndex = 4; SaveConfig(); }
+    if (pKey == __KEY__5) { mExportIndex = 5; SaveConfig(); }
+    if (pKey == __KEY__6) { mExportIndex = 6; SaveConfig(); }
+    if (pKey == __KEY__7) { mExportIndex = 7; SaveConfig(); }
+    if (pKey == __KEY__8) { mExportIndex = 8; SaveConfig(); }
+    if (pKey == __KEY__9) { mExportIndex = 9; SaveConfig(); }
     
     if (pKey == __KEY__S) {
         if (aShift == false && aCtrl == true && aAlt == false) { SaveAt(mExportIndex); }
@@ -248,8 +273,6 @@ void GameEditor::KeyDown(int pKey) {
     if (pKey == __KEY__L) {
         if (aShift == false && aCtrl == true && aAlt == false) { LoadAt(mExportIndex); }
     }
-    
-    
     
     if (pKey == __KEY__P) {
         if (aShift == false && aCtrl == false && aAlt == false) {
@@ -424,6 +447,32 @@ void GameEditor::WaveDeselect() {
     mSection.WaveDeselect();
 }
 
+void GameEditor::WaveMoveUp() {
+    mSection.WaveMoveUp();
+}
+
+void GameEditor::WaveMoveDown() {
+    mSection.WaveMoveDown();
+}
+
+void GameEditor::WaveSelect(int pIndex) {
+    mSection.WaveSelect(pIndex);
+}
+
+int GameEditor::WaveCount(int pIndex) {
+    return mSection.WaveCount(pIndex);
+}
+
+int GameEditor::WaveIndex() {
+    for (int i=0;i<mSection.mWaveList.mCount;i++) {
+        LevelWaveBlueprint *aWave = (LevelWaveBlueprint *)mSection.mWaveList[i];
+        if (aWave == mSection.mCurrentWave) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 void GameEditor::OpenPathEditor() {
     if (mSection.mCurrentWave == NULL) { printf("Must have wave...\n"); return; }
     mPathEditor = new GamePathEditor(this);
@@ -435,11 +484,18 @@ void GameEditor::OpenPathEditor() {
 }
 
 void GameEditor::OpenSpawnMenu() {
-    
     if (mMenuSpawn == NULL) {
         mMenuSpawn = new EditorMenuSpawn(this);
         mToolContainer->AddChild(mMenuSpawn);
-        mMenuSpawn->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), gSafeAreaInsetTop + 20.0f, 400.0f, 480.0f);
+        mMenuSpawn->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), gSafeAreaInsetTop + 20.0f, 400.0f, 320.0f);
+    }
+}
+
+void GameEditor::OpenWavePickerMenu() {
+    if (mMenuWavesPicker == NULL) {
+        mMenuWavesPicker = new EditorMenuWavesPicker(this);
+        mToolContainer->AddChild(mMenuWavesPicker);
+        mMenuWavesPicker->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), (gDeviceHeight - gSafeAreaInsetBottom) - 250.0f, 400.0f, 238.0f);
     }
 }
 
@@ -465,17 +521,22 @@ void GameEditor::Clear() {
 
 void GameEditor::LoadCleared() {
     for (int i=0;i<200;i++) {
-    FString aRecoverPath = gDirDocuments + FString("clear_backup.json");
-    Load(aRecoverPath.c());
+        FString aRecoverPath = gDirDocuments + FString("clear_backup.json");
+        Load(aRecoverPath.c());
     }
 }
 
 void GameEditor::Autosave() {
-    
+    FString aAutosavePath = gDirDocuments + FString("editor_autosave_") + FString(mExportIndex) + FString(".json");
+    Save(aAutosavePath.c());
+}
+
+void GameEditor::Autoload() {
+    FString aAutosavePath = gDirDocuments + FString("editor_autosave_") + FString(mExportIndex) + FString(".json");
+    Load(aAutosavePath.c());
 }
 
 void GameEditor::SelectClosestObject(float pX, float pY) {
-    
     LevelWaveBlueprint *aClosestWave = NULL;
     float aClosestWaveDist = 80.0f * 80.0f;
         for (int i=mSection.mWaveList.mCount - 1;i>=0;i--) {
@@ -500,30 +561,23 @@ void GameEditor::SelectClosestObject(float pX, float pY) {
     }
 }
 
-
 void GameEditor::SaveAt(int pIndex) {
     printf("Save at: %d\n", pIndex);
     
     FString aPath = gDirExport + FString("export_section_") + FString(pIndex) + FString(".json");
     Save(aPath.c());
-    
 }
 
 void GameEditor::LoadAt(int pIndex) {
     printf("Load at: %d\n", pIndex);
     FString aPath = gDirExport + FString("export_section_") + FString(pIndex) + FString(".json");
     Load(aPath.c());
-    
 }
 
 void GameEditor::Save(const char *pFile) {
-    printf("Save [%s]\n", pFile);
-    
-    
     FJSON aJSON;
     aJSON.mRoot = mSection.Save();
     aJSON.Save(pFile);
-    aJSON.Print();
 }
 
 void GameEditor::Load(const char *pFile) {
@@ -534,14 +588,28 @@ void GameEditor::Load(const char *pFile) {
     gGame->mEditorPath.Reset();
 #endif
     
-    printf("Load [%s]\n", pFile);
     FJSON aJSON;
-    printf("Load...\n");
     aJSON.Load(pFile);
-    printf("Print...\n");
-    aJSON.Print();
-    
-    
     mSection.Load(aJSON.mRoot);
 }
+
+
+void GameEditor::SaveConfig() {
+    FString aPath = gDirDocuments + FString("editor_config.json");
+    FJSON aJSON;
+    FJSONNode *aConfigNode = new FJSONNode();
+    aJSON.mRoot = aConfigNode;
+    aConfigNode->AddDictionaryInt("export_index", mExportIndex);
+    aJSON.Save(aPath.c());
+}
+
+void GameEditor::LoadConfig() {
+    FString aPath = gDirDocuments + FString("editor_config.json");
+    FJSON aJSON;
+    aJSON.Load(aPath.c());
+    FJSONNode *aConfigNode = aJSON.mRoot;
+    if (aConfigNode == NULL) return;
+    mExportIndex = aConfigNode->GetInt("export_index", mExportIndex);
+}
+
 

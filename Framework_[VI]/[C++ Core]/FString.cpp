@@ -223,10 +223,17 @@ int	FString::Length(const char *pString) {
 	int aResult = 0;
 	if (pString) {
 		const char *aPtr = pString;
-		while (*aPtr)aPtr++;
+        while (*aPtr) { aPtr++; }
 		aResult = (int)(aPtr - pString);
 	}
 	return aResult;
+}
+
+void FString::Reset() {
+    mLength = 0;
+    if (mData != 0) {
+        mData[0] = 0;
+    }
 }
 
 void FString::Set(const char *pString) {
@@ -289,8 +296,8 @@ void FString::Append(FString &pString) {
 void FString::Append(const char *pString, int pCount) {
 	if ((pString != mData) && (pCount > 0)) {
         int aNewLength = mLength + pCount;
-        if (aNewLength >= mSize) {
-            Size(aNewLength + aNewLength / 2 + 2);
+        if (aNewLength > mSize) {
+            Size(aNewLength + aNewLength / 2 + 1);
         }
 
 		for (int i = 0; i < pCount; i++) {
@@ -310,7 +317,7 @@ void FString::Set(FString &pString) {
 void FString::Truncate(int pSize) {
 	if (pSize <= 0) {
 		Clear();
-	} else if(pSize < mLength) {
+	} else if (pSize < mLength) {
 		mLength = pSize;
         mData[mLength] = 0;
 	}
@@ -1278,42 +1285,26 @@ bool FString::ToBool() {
     return false;
 }
 
-int FString::i(int pIndex)
-{
-    int aResult = 0;
-    if((pIndex >= 0) && (pIndex < mLength))
-    {
-        
-        aResult = ((int)((unsigned int)((unsigned char)(mData[pIndex]))));
-        
-    }
-    return aResult;
-}
-
-int FString::FindI(char *theString, int thePosition)
-{
+int FString::FindI(char *theString, int thePosition) {
 	if(!theString || thePosition >= mLength || thePosition < 0)return -1;
 	char *aChar = &mData[thePosition];
 	char *aFinish = &mData[mLength];
 	char aC1, aC2;
-	while(aChar<aFinish)
-	{
+	while (aChar < aFinish) {
 		aC1 = *aChar;
 		aC2 = *theString;
-		if(aC1 >= 'A' && aC1 <= 'Z')aC1+=32;
-		if(aC2 >= 'A' && aC2 <= 'Z')aC2+=32;
-		if(aC1 == aC2)
-		{
+		if (aC1 >= 'A' && aC1 <= 'Z')aC1+=32;
+		if (aC2 >= 'A' && aC2 <= 'Z')aC2+=32;
+		if (aC1 == aC2) {
 			char *aChar2 = aChar;
 			char *aString2 = theString;
-			while(aChar2 <= aFinish)
-			{
-				if(*aString2 == 0)return (int)(aChar - mData);
+			while (aChar2 <= aFinish) {
+                if (*aString2 == 0) { return (int)(aChar - mData); }
 				aC1 = *aString2;
 				aC2 = *aChar2;
-				if(aC1 >= 'A' && aC1 <= 'Z')aC1+=32;
-				if(aC2 >= 'A' && aC2 <= 'Z')aC2+=32;
-				if(aC1 != aC2)break;
+				if (aC1 >= 'A' && aC1 <= 'Z')aC1+=32;
+				if (aC2 >= 'A' && aC2 <= 'Z')aC2+=32;
+				if (aC1 != aC2)break;
 				aString2++;
 				aChar2++;
 			}

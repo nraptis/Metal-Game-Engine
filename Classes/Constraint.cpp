@@ -10,13 +10,10 @@
 #include "Game.hpp"
 
 Constraint::Constraint() {
-    
     mTypeX = X_CONSTRAINT_NONE;
     mTypeY = Y_CONSTRAINT_NONE;
-    
     mOffsetX = 0.0f;
     mOffsetY = 0.0f;
-    
     mTargetX = -1;
     mTargetY = -1;
 }
@@ -25,9 +22,7 @@ Constraint::~Constraint() {
     
 }
 
-
 bool Constraint::HasX() {
-    
     if (gGame) {
         if (mTypeX == X_CONSTRAINT_LEFT_EXIT) { return true; }
         if (mTypeX == X_CONSTRAINT_LEFT_SPAWN) { return true; }
@@ -38,15 +33,11 @@ bool Constraint::HasX() {
         if (mTypeX == X_CONSTRAINT_RIGHT_PEEK) { return true; }
         if (mTypeX == X_CONSTRAINT_RIGHT_SPAWN) { return true; }
         if (mTypeX == X_CONSTRAINT_RIGHT_EXIT) { return true; }
-        
-        
-        
     }
     return false;
 }
 
 bool Constraint::HasY() {
-    
     if (gGame) {
         if (mTypeY == Y_CONSTRAINT_TOP_EXIT) { return true; }
         if (mTypeY == Y_CONSTRAINT_TOP_SPAWN) { return true; }
@@ -56,7 +47,6 @@ bool Constraint::HasY() {
         if (mTypeY == Y_CONSTRAINT_BOTTOM_QUARTER) { return true; }
         if (mTypeY == Y_CONSTRAINT_BOTTOM) { return true; }
     }
-    
     return false;
 }
 
@@ -73,7 +63,6 @@ float Constraint::GameX(bool pOffset) {
             if (mTypeX == X_CONSTRAINT_RIGHT_SPAWN) { return gGame->mSpawnZoneRight + mOffsetX; }
             if (mTypeX == X_CONSTRAINT_RIGHT_EXIT) { return gGame->mExitZoneRight + mOffsetX; }
         } else {
-            
             if (mTypeX == X_CONSTRAINT_LEFT_EXIT) { return gGame->mExitZoneLeft; }
             if (mTypeX == X_CONSTRAINT_LEFT_SPAWN) { return gGame->mSpawnZoneLeft; }
             if (mTypeX == X_CONSTRAINT_LEFT_PEEK) { return gGame->mPeekZoneLeft; }

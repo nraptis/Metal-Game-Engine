@@ -12,7 +12,7 @@
 #include "FString.h"
 #include "FList.hpp"
 #include "FHashMap.hpp"
-#include "FStringBuffer.h"
+#include "FString.h"
 
 #define EnumJSONArray(_json_node, _subjson_node_name)for(FJSONNode **_enum_start=(FJSONNode**)_json_node->mList,**_enum_end=((_json_node->mListCount > 0)?((FJSONNode**)(&(_json_node->mList[_json_node->mListCount]))) : ((FJSONNode**)0)),*_subjson_node_name=((_json_node->mListCount > 0)?(*_enum_start):((FJSONNode*)0));_subjson_node_name!=((FJSONNode*)0);_subjson_node_name=(++_enum_start<_enum_end)?*_enum_start:NULL)
 

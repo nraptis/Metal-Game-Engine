@@ -39,6 +39,7 @@ public:
     UIRoundedRect                           mCheckBackground;
     UIRoundedRect                           mCheckOutline;
     
+    
     void                                    SetText(const char *pText) { mText = pText; }
     FString                                 mText;
 

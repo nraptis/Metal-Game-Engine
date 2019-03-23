@@ -26,7 +26,11 @@ public:
     void                                        WaveSelectNext();
     void                                        WaveSelectPrev();
     void                                        WaveDeselect();
-    
+    void                                        WaveMoveUp();
+    void                                        WaveMoveDown();
+    void                                        WaveSelect(int pIndex);
+    int                                         WaveCount(int pIndex);
+
     
     FList                                       mWaveList;
     LevelWaveBlueprint                          *mCurrentWave;

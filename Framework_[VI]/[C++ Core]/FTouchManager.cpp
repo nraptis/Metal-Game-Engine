@@ -150,13 +150,13 @@ FTouchManager::FTouchManager() {
     mAndroidFakePointer[2] = (void *)(0xAABBCCDD);
     mAndroidFakePointer[3] = (void *)(0xBADBADBA);
     mAndroidFakePointer[4] = (void *)(0xE5CA1ADE);
-    mAndroidFakePointer[5] = (void *)(0xB00BFACE);
+    mAndroidFakePointer[5] = (void *)(0xF00DFACE);
     mAndroidFakePointer[6] = (void *)(0xFEEDF00D);
     mAndroidFakePointer[7] = (void *)(0x00DDBA11);
 
     mMouseFakePointer[0] = (void *)(0xDEADBEE4);
-    mMouseFakePointer[1] = (void *)(0xBEEEDAAD);
-    mMouseFakePointer[2] = (void *)(0xFADE1337);
+    mMouseFakePointer[1] = (void *)(0xBEEBDAAD);
+    mMouseFakePointer[2] = (void *)(0xFADE1333);
     
     mCenterX = 0.0f;
     mCenterY = 0.0f;

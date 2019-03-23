@@ -45,12 +45,7 @@ bool PlatformGraphicsInterface::IsReady() {
 
 
 void PlatformGraphicsInterface::Kill() {
-    //[CCDirectorCaller destroy];
-    // destroy EAGLView
-    //CCEAGLView *eaglview = (CCEAGLView*) _eaglview;
-    //[eaglview removeFromSuperview];
-    //[eaglview release];
-    //release();
+    
 }
 
 void PlatformGraphicsInterface::Prerender() {
@@ -63,42 +58,9 @@ void PlatformGraphicsInterface::Postrender() {
     [gMetalEngine postrender];
 }
 
-bool PlatformGraphicsInterface::IsVSyncReady() {
-    
-    return true;
-    
-    /*
-    //usleep(90000);
-    
-    double aTimeStamp = CACurrentMediaTime();
-    double aFrameTime = (aTimeStamp - mLastTime) * 1000.0f;
-    
-    
-    static int aOutOut = 0;
-    
-    aOutOut++;
-    if (aOutOut >= 60) {
-        aOutOut = 0;
-        printf("aFrameTime = %f\n", aFrameTime);
-    }
-    
-    if (aFrameTime > 16.7) {
-        //printf("VSync is redy\n");
-        mLastTime = gMetalView.displayLink.timestamp;
-        return true;
-    } else {
-        //printf("VSync is NOT redy\n");
-    }
-
-    
-    return false;
-    */
-}
-
 void PlatformGraphicsInterface::SetContext() {
     
 }
-
 
 void PlatformGraphicsInterface::Commit() {
     [gMetalEngine commit];

@@ -1,0 +1,72 @@
+{
+	"section": true,
+	"wave_list": [
+		{
+			"blueprint": true,
+			"smooth": true,
+			"speed": 8.000000,
+			"path": [
+				{
+					"x_con": 150,
+					"y_con": 150
+				},
+				{
+					"x_con": 200,
+					"y_con": 200
+				},
+				{
+					"x_con": 300,
+					"y_con": 200
+				},
+				{
+					"x_con": 500,
+					"y_con": 150,
+					"chamfer": 150
+				},
+				{
+					"x_con": 700,
+					"y_con": 200
+				},
+				{
+					"x_con": 800,
+					"y_con": 200
+				},
+				{
+					"x_con": 850,
+					"y_con": 150
+				}
+			]
+		},
+		{
+			"blueprint": true,
+			"smooth": true,
+			"speed": 8.000000,
+			"path": [
+				{
+					"x_con": 300,
+					"y_con": 600,
+					"y_con_offset": -80.000000
+				},
+				{
+					"x_con": 400,
+					"x_con_offset": -110.000000,
+					"y_con": 400,
+					"y_con_offset": -130.000000,
+					"chamfer": 100
+				},
+				{
+					"x_con": 600,
+					"x_con_offset": 40.000000,
+					"y_con": 400,
+					"y_con_offset": -40.000000,
+					"chamfer": 100
+				},
+				{
+					"x_con": 700,
+					"y_con": 600,
+					"y_con_offset": -80.000000
+				}
+			]
+		}
+	]
+}

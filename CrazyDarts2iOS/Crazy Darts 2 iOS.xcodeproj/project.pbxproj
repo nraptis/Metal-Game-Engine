@@ -251,7 +251,6 @@
 		0DA7E33E223DC3BF005B3BFA /* FAchievement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7E237223DC3BF005B3BFA /* FAchievement.cpp */; };
 		0DA7E33F223DC3BF005B3BFA /* FVertexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7E238223DC3BF005B3BFA /* FVertexBuffer.cpp */; };
 		0DA7E340223DC3BF005B3BFA /* FMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7E239223DC3BF005B3BFA /* FMath.cpp */; };
-		0DA7E341223DC3BF005B3BFA /* FStringBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7E23A223DC3BF005B3BFA /* FStringBuffer.cpp */; };
 		0DA7E342223DC3BF005B3BFA /* FBufferCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7E23B223DC3BF005B3BFA /* FBufferCache.cpp */; };
 		0DA7E343223DC3BF005B3BFA /* FFloatBufferCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7E23D223DC3BF005B3BFA /* FFloatBufferCache.cpp */; };
 		0DA7E344223DC3BF005B3BFA /* FMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DA7E240223DC3BF005B3BFA /* FMatrix.cpp */; };
@@ -674,7 +673,6 @@
 		0DA7E22B223DC3BF005B3BFA /* FModelData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FModelData.h; sourceTree = "<group>"; };
 		0DA7E22C223DC3BF005B3BFA /* FQuad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FQuad.cpp; sourceTree = "<group>"; };
 		0DA7E22D223DC3BF005B3BFA /* FPrimitive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPrimitive.h; sourceTree = "<group>"; };
-		0DA7E22E223DC3BF005B3BFA /* FStringBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FStringBuffer.h; sourceTree = "<group>"; };
 		0DA7E22F223DC3BF005B3BFA /* FMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMatrix.h; sourceTree = "<group>"; };
 		0DA7E230223DC3BF005B3BFA /* FList.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FList.hpp; sourceTree = "<group>"; };
 		0DA7E231223DC3BF005B3BFA /* FImageBundler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FImageBundler.cpp; sourceTree = "<group>"; };
@@ -686,7 +684,6 @@
 		0DA7E237223DC3BF005B3BFA /* FAchievement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FAchievement.cpp; sourceTree = "<group>"; };
 		0DA7E238223DC3BF005B3BFA /* FVertexBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FVertexBuffer.cpp; sourceTree = "<group>"; };
 		0DA7E239223DC3BF005B3BFA /* FMath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FMath.cpp; sourceTree = "<group>"; };
-		0DA7E23A223DC3BF005B3BFA /* FStringBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FStringBuffer.cpp; sourceTree = "<group>"; };
 		0DA7E23B223DC3BF005B3BFA /* FBufferCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FBufferCache.cpp; sourceTree = "<group>"; };
 		0DA7E23C223DC3BF005B3BFA /* core_social.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = core_social.h; sourceTree = "<group>"; };
 		0DA7E23D223DC3BF005B3BFA /* FFloatBufferCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFloatBufferCache.cpp; sourceTree = "<group>"; };
@@ -1512,8 +1509,6 @@
 				0DA7E29C223DC3BF005B3BFA /* FSpriteSequence.h */,
 				0DA7E2A0223DC3BF005B3BFA /* FString.cpp */,
 				0DA7E267223DC3BF005B3BFA /* FString.h */,
-				0DA7E23A223DC3BF005B3BFA /* FStringBuffer.cpp */,
-				0DA7E22E223DC3BF005B3BFA /* FStringBuffer.h */,
 				0DA7E25D223DC3BF005B3BFA /* FTexture.cpp */,
 				0DA7E27B223DC3BF005B3BFA /* FTexture.hpp */,
 				0DA7E21F223DC3BF005B3BFA /* FTextureCache.cpp */,
@@ -2059,7 +2054,6 @@
 				0DDC90D7223DF58C0042D5BC /* ShaderProgram.cpp in Sources */,
 				0D52343322449FF500367B76 /* ToolMenuModalUnderlay.cpp in Sources */,
 				0DDC90DB223DF58C0042D5BC /* ShaderProgramSpriteNode.cpp in Sources */,
-				0DA7E341223DC3BF005B3BFA /* FStringBuffer.cpp in Sources */,
 				0DA7E395223DC3BF005B3BFA /* RecursiveLockWrapper.m in Sources */,
 				0DA7E364223DC3BF005B3BFA /* FParticle.cpp in Sources */,
 				0DA7E353223DC3BF005B3BFA /* FSpline.cpp in Sources */,

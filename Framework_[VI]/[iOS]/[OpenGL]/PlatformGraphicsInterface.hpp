@@ -41,7 +41,8 @@ public:
     
     virtual void Prerender() override;
     virtual void Postrender() override;
-    virtual bool IsVSyncReady() override;
+    //virtual bool IsVSyncReady() override;
+    
     virtual void Commit() override;
 
 protected:

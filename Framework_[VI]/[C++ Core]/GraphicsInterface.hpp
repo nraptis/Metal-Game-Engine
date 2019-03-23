@@ -47,7 +47,6 @@ public:
     virtual void SetContext() { }
     virtual void Prerender() { }
     virtual void Postrender() { }
-    virtual bool IsVSyncReady() { return false; }
     virtual void Commit() { }
     
     

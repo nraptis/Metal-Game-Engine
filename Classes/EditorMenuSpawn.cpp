@@ -17,7 +17,7 @@ EditorMenuSpawn::EditorMenuSpawn(GameEditor *pEditor) : ToolMenu() {
     
     mEditor = pEditor;
     
-    SetTitle("Miiioooo Mennuu");
+    SetTitle("Spawn");
     SetScrollMode(true);
 }
 
@@ -40,6 +40,7 @@ void EditorMenuSpawn::Notify(void *pSender, const char *pNotification) {
     }
     
     if (FString(pNotification) == "button_click") {
+        
         
     }
     

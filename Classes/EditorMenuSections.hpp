@@ -38,8 +38,6 @@ public:
     UIButton                                *mButtonShowSpawn;
     UIButton                                *mButtonShowWavePicker;
     
-    
-    
     ToolMenuPanel                           *mWavePanel;
     ToolMenuSectionRow                      *mRowWave1;
     UIButton                                *mButtonAddWave;
@@ -47,6 +45,10 @@ public:
     UIButton                                *mButtonSelectNextWave;
     UIButton                                *mButtonSelectPreviousWave;
     
+    ToolMenuSectionRow                      *mRowWave2;
+    UICheckBox                              *mCheckBoxPreview;
+    UIButton                                *mButtonMoveWaveUp;
+    UIButton                                *mButtonMoveWaveDown;
     
     ToolMenuPanel                           *mPathPanel;
     ToolMenuSectionRow                      *mRowPath1;

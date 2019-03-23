@@ -37,7 +37,7 @@ EditorMenuPath::EditorMenuPath(GamePathEditor *pEditor) : ToolMenu() {
     mRowVisuals->AddCheckBox(mCheckBoxSmooth);
     
     mCheckBoxPreview = new UICheckBox();
-    mCheckBoxPreview->SetText("Preview");
+    mCheckBoxPreview->SetText("References");
     if (gGame != NULL) {
 #ifdef EDITOR_MODE
         mCheckBoxPreview->SetTarget(&gGame->mEditorPreview);
@@ -114,7 +114,7 @@ EditorMenuPath::EditorMenuPath(GamePathEditor *pEditor) : ToolMenu() {
 }
 
 EditorMenuPath::~EditorMenuPath() {
-    
+    printf("Kill Editor");
 }
 
 void EditorMenuPath::Layout() {

@@ -73,6 +73,30 @@ void LevelSectionBlueprint::WaveDeselect() {
     mCurrentWave = NULL;
 }
 
+void LevelSectionBlueprint::WaveMoveUp() {
+    mWaveList.MoveObjectDown(mCurrentWave);
+}
+
+void LevelSectionBlueprint::WaveMoveDown() {
+    mWaveList.MoveObjectUp(mCurrentWave);
+}
+
+void LevelSectionBlueprint::WaveSelect(int pIndex) {
+    mCurrentWave = (LevelWaveBlueprint *)mWaveList.Fetch(pIndex);
+    if (mCurrentWave != NULL) {
+        mCurrentWave->Build();
+    }
+}
+
+int LevelSectionBlueprint::WaveCount(int pIndex) {
+    
+    LevelWaveBlueprint *aWave = (LevelWaveBlueprint *)mWaveList.Fetch(pIndex);
+    if (aWave != NULL) {
+        return aWave->mPath.mNodeList.mCount;
+    }
+    return 0;
+}
+
 FJSONNode *LevelSectionBlueprint::Save() {
     FJSONNode *aExport = new FJSONNode();
     aExport->AddDictionaryBool("section", true);
@@ -92,26 +116,15 @@ void LevelSectionBlueprint::Load(FJSONNode *pNode) {
     Clear();
     if (pNode == NULL) { return; }
     
-    
-    
     FJSONNode *aWaveArray = pNode->GetArray("wave_list");
     if (aWaveArray != NULL) {
-        
         EnumJSONArray(aWaveArray, aWaveNode) {
-            
             LevelWaveBlueprint *aWave = new LevelWaveBlueprint();
             aWave->Load(aWaveNode);
             mWaveList.Add(aWave);
-            
-            
-            
-            printf("Wave Node: %x\n", aWaveNode);
-            printf("...\n");
         }
-        
     }
     WaveSelectNext();
-    
 }
 
 

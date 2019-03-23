@@ -132,6 +132,9 @@ public:
 	FString					        GetSubString(int thePosition, int theLength);
 	FString					        GetSubString(int thePosition){return GetSubString(thePosition, mLength);}
 
+    
+    void                            Reset();
+    
 	void					        Set(const char *pString);
 	void					        Set(char *pString) { Set((const char *)pString); }
 	void					        Set(FString &pString);
@@ -311,62 +314,60 @@ public:
 	//static int				GetHashI(char *pString, int theCount, int theTableSize);
 
 
-	unsigned int					GetHash();
-	unsigned int					GetHashI();
+	unsigned int					    GetHash();
+	unsigned int					    GetHashI();
 
-	static unsigned int				GetHash(char *pString);
-	static unsigned int				GetHashI(char *pString);
+	static unsigned int				    GetHash(char *pString);
+	static unsigned int				    GetHashI(char *pString);
 
 	//
 	//Sets the case of all letters.
 	//
-	void							Uppercase();
-	void							Lowercase();
+	void							    Uppercase();
+	void							    Lowercase();
 
 
-	void							CapitolizeFirstLetter(bool pForceLower);
+	void							    CapitolizeFirstLetter(bool pForceLower);
 
 	//
 	//Get a copy of the FString with a certain case.
 	//
-	FString							ToUpper(){FString aResult = *this;aResult.Uppercase();return aResult;}
-	FString							ToLower(){FString aResult = *this;aResult.Lowercase();return aResult;}
+	FString							    ToUpper(){FString aResult = *this;aResult.Uppercase();return aResult;}
+	FString							    ToLower(){FString aResult = *this;aResult.Lowercase();return aResult;}
 
-	void							Encrypt(char *theKey);
-	void							Encrypt(const char *theKey){Encrypt((char*)theKey);}
-	virtual void					Encrypt(FString &theKey){Encrypt(theKey.mData);}
+	void							    Encrypt(char *theKey);
+	void							    Encrypt(const char *theKey){Encrypt((char*)theKey);}
+	virtual void					    Encrypt(FString &theKey){Encrypt(theKey.mData);}
 
-	void							Decrypt(char *theKey);
-	void							Decrypt(const char *theKey){Decrypt((char*)theKey);}
-	virtual void					Decrypt(FString &theKey){Decrypt(theKey.mData);}
+	void							    Decrypt(char *theKey);
+	void							    Decrypt(const char *theKey){Decrypt((char*)theKey);}
+	virtual void					    Decrypt(FString &theKey){Decrypt(theKey.mData);}
 
-	int                             Compare(FString &pString);
-	int                             CompareI(FString &pString);
+	int                                 Compare(FString &pString);
+	int                                 CompareI(FString &pString);
 
-    inline int                      Compare(char *pString){FString aString(pString);return Compare(aString);}
-	inline int                      CompareI(char *pString){FString aString(pString);return CompareI(aString);}
+    inline int                          Compare(char *pString){FString aString(pString);return Compare(aString);}
+	inline int                          CompareI(char *pString){FString aString(pString);return CompareI(aString);}
 
-	inline int                      Compare(const char *pString){FString aString(pString);return Compare(aString);}
-	inline int                      CompareI(const char *pString){FString aString(pString);return CompareI(aString);}
+	inline int                          Compare(const char *pString){FString aString(pString);return Compare(aString);}
+	inline int                          CompareI(const char *pString){FString aString(pString);return CompareI(aString);}
     
     
-	bool                            StartsWith(char *pString);
-	inline bool                     StartsWith(FString &pString){return StartsWith(pString.mData);}
+	bool                                StartsWith(char *pString);
+	inline bool                         StartsWith(FString &pString){return StartsWith(pString.mData);}
 	
-	bool                            StartsWithI(char *pString);
-	inline bool                     StartsWithI(FString &pString){return StartsWithI(pString.mData);}
+	bool                                StartsWithI(char *pString);
+	inline bool                         StartsWithI(FString &pString){return StartsWithI(pString.mData);}
     
     
-    bool                            EndsWith(char *pString);
-	inline bool                     EndsWith(FString &pString){return EndsWith(pString.mData);}
+    bool                                EndsWith(char *pString);
+	inline bool                         EndsWith(FString &pString){return EndsWith(pString.mData);}
 	
-	bool                            EndsWithI(char *pString);
-	inline bool                     EndsWithI(FString &pString){return EndsWithI(pString.mData);}
+	bool                                EndsWithI(char *pString);
+	inline bool                         EndsWithI(FString &pString){return EndsWithI(pString.mData);}
     
     
-    inline char                     *c(){if(mData==0){*this="";} return mData;}
-    
-    int                             i(int pIndex);
+    inline char                         *c(){if(mData==0){*this="";} return mData;}
     
     
 

@@ -18,13 +18,8 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     mEditor = pEditor;
     
     
-    SetTitle("Section Editor");
+    SetTitle("Section");
     SetScrollMode(true);
-    
-    
-    
-    
-    
     
     mRowMain1 = new ToolMenuSectionRow();
     AddSection(mRowMain1);
@@ -71,7 +66,7 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     mRowMenus1->AddButton(mButtonShowSpawn);
     
     mButtonShowWavePicker = new UIButton();
-    mButtonShowWavePicker->SetText("Spawn");
+    mButtonShowWavePicker->SetText("Wave Picker");
     mRowMenus1->AddButton(mButtonShowWavePicker);
     
     mRowMenus2 = new ToolMenuSectionRow();
@@ -87,11 +82,11 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     
     
     mButtonAddWave = new UIButton();
-    mButtonAddWave->SetText("+ Wave");
+    mButtonAddWave->SetText("Add Wave");
     mRowWave1->AddButton(mButtonAddWave);
     
     mButtonDeleteWave = new UIButton();
-    mButtonDeleteWave->SetText("Delete");
+    mButtonDeleteWave->SetText("Delete Wave");
     mRowWave1->AddButton(mButtonDeleteWave);
     
     mButtonSelectNextWave = new UIButton();
@@ -103,12 +98,26 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     mRowWave1->AddButton(mButtonSelectPreviousWave);
     
     
+    mRowWave2 = new ToolMenuSectionRow();
+    mWavePanel->AddSection(mRowWave2);
     
     
+    mCheckBoxPreview = new UICheckBox();
+    mCheckBoxPreview->SetText("References");
+    if (gGame != NULL) {
+#ifdef EDITOR_MODE
+        mCheckBoxPreview->SetTarget(&gGame->mEditorPreview);
+#endif
+    }
+    mRowWave2->AddCheckBox(mCheckBoxPreview);
     
+    mButtonMoveWaveUp = new UIButton();
+    mButtonMoveWaveUp->SetText("Send Up");
+    mRowWave2->AddButton(mButtonMoveWaveUp);
     
-    
-    
+    mButtonMoveWaveDown = new UIButton();
+    mButtonMoveWaveDown->SetText("Send Down");
+    mRowWave2->AddButton(mButtonMoveWaveDown);
     
     
     
@@ -262,14 +271,17 @@ void EditorMenuSections::Notify(void *pSender, const char *pNotification) {
         if (pSender == mButtonSelectNextWave) { mEditor->WaveSelectNext(); }
         if (pSender == mButtonSelectPreviousWave) { mEditor->WaveSelectPrev(); }
         
+        if (pSender == mButtonMoveWaveUp) { mEditor->WaveMoveUp(); }
+        if (pSender == mButtonMoveWaveDown) { mEditor->WaveMoveDown(); }
+        
         if (pSender == mButtonClear) { mEditor->Clear(); }
         if (pSender == mButtonLoadCleared) { mEditor->LoadCleared(); }
         if (pSender == mButtonAutosave) { mEditor->Autosave(); }
         
         if (pSender == mButtonShowSpawn) { mEditor->OpenSpawnMenu(); }
-        if (pSender == mButtonShowWavePicker) {  }
+        if (pSender == mButtonShowWavePicker) { mEditor->OpenWavePickerMenu(); }
         
-
+     
         
     }
     

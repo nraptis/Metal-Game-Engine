@@ -630,12 +630,14 @@ void GFXApp::Draw() {
                                   false); //Clear Depth
         
         /*
+        
         Draw2D();
         if (gRand.Get(14) == 10) {
             for (int i=0;i<60;i++) {
                 Draw2D();
             }
         }
+        
         */
         
         

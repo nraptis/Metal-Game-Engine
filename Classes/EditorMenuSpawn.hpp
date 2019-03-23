@@ -25,4 +25,4 @@ public:
     
 };
 
-#endif /* EditorMenuSpawn_hpp */
+#endif

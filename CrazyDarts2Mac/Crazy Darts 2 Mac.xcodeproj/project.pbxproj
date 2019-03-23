@@ -44,7 +44,6 @@
 		0DB13C982234B20B00A6F230 /* FAchievement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DB13BBC2234B20B00A6F230 /* FAchievement.cpp */; };
 		0DB13C992234B20B00A6F230 /* FVertexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DB13BBD2234B20B00A6F230 /* FVertexBuffer.cpp */; };
 		0DB13C9A2234B20B00A6F230 /* FMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DB13BBE2234B20B00A6F230 /* FMath.cpp */; };
-		0DB13C9B2234B20B00A6F230 /* FStringBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DB13BBF2234B20B00A6F230 /* FStringBuffer.cpp */; };
 		0DB13C9C2234B20B00A6F230 /* FFloatBufferCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DB13BC12234B20B00A6F230 /* FFloatBufferCache.cpp */; };
 		0DB13C9D2234B20B00A6F230 /* FMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DB13BC42234B20B00A6F230 /* FMatrix.cpp */; };
 		0DB13C9E2234B20B00A6F230 /* FPrimitive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DB13BC62234B20B00A6F230 /* FPrimitive.cpp */; };
@@ -235,7 +234,6 @@
 		0DB13BB12234B20B00A6F230 /* FModelData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FModelData.h; sourceTree = "<group>"; };
 		0DB13BB22234B20B00A6F230 /* FQuad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FQuad.cpp; sourceTree = "<group>"; };
 		0DB13BB32234B20B00A6F230 /* FPrimitive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPrimitive.h; sourceTree = "<group>"; };
-		0DB13BB42234B20B00A6F230 /* FStringBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FStringBuffer.h; sourceTree = "<group>"; };
 		0DB13BB52234B20B00A6F230 /* FMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMatrix.h; sourceTree = "<group>"; };
 		0DB13BB62234B20B00A6F230 /* FList.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FList.hpp; sourceTree = "<group>"; };
 		0DB13BB72234B20B00A6F230 /* FImageBundler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FImageBundler.cpp; sourceTree = "<group>"; };
@@ -246,7 +244,6 @@
 		0DB13BBC2234B20B00A6F230 /* FAchievement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FAchievement.cpp; sourceTree = "<group>"; };
 		0DB13BBD2234B20B00A6F230 /* FVertexBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FVertexBuffer.cpp; sourceTree = "<group>"; };
 		0DB13BBE2234B20B00A6F230 /* FMath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FMath.cpp; sourceTree = "<group>"; };
-		0DB13BBF2234B20B00A6F230 /* FStringBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FStringBuffer.cpp; sourceTree = "<group>"; };
 		0DB13BC02234B20B00A6F230 /* core_social.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = core_social.h; sourceTree = "<group>"; };
 		0DB13BC12234B20B00A6F230 /* FFloatBufferCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFloatBufferCache.cpp; sourceTree = "<group>"; };
 		0DB13BC22234B20B00A6F230 /* FApp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FApp.hpp; sourceTree = "<group>"; };
@@ -658,8 +655,6 @@
 				0DB13C1A2234B20B00A6F230 /* FSpriteSequence.h */,
 				0DB13C1E2234B20B00A6F230 /* FString.cpp */,
 				0DB13BE92234B20B00A6F230 /* FString.h */,
-				0DB13BBF2234B20B00A6F230 /* FStringBuffer.cpp */,
-				0DB13BB42234B20B00A6F230 /* FStringBuffer.h */,
 				0DB13BDF2234B20B00A6F230 /* FTexture.cpp */,
 				0DB13BFB2234B20B00A6F230 /* FTexture.hpp */,
 				0DB13BA52234B20B00A6F230 /* FTextureCache.cpp */,
@@ -1071,7 +1066,6 @@
 				0DB13CD42234B20B00A6F230 /* os_core_sound_mac.mm in Sources */,
 				0DB13CAE2234B20B00A6F230 /* FRandomizer.cpp in Sources */,
 				0D1DB0D8223C31B3005DA958 /* LevelWavePath.cpp in Sources */,
-				0DB13C9B2234B20B00A6F230 /* FStringBuffer.cpp in Sources */,
 				0DB13CC12234B20B00A6F230 /* FObject.cpp in Sources */,
 				0DB13CDB2234B20B00A6F230 /* os_core_outlets_mac.mm in Sources */,
 				0DBABE52223A9EB5009A17A7 /* Balloon.cpp in Sources */,

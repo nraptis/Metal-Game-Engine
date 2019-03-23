@@ -22,8 +22,6 @@ LevelWavePathNode::LevelWavePathNode() {
     mY = 0.0f;
     mType = PATH_NODE_INVALID;
     mWaitTimer = 0;
-    
-
 }
 
 LevelWavePathNode::~LevelWavePathNode() {
@@ -31,11 +29,9 @@ LevelWavePathNode::~LevelWavePathNode() {
 }
 
 LevelWavePath::LevelWavePath() {
-    
     mSpeed = 3.0f;
     mDidFinalize = false;
     mDidFailFinalize = false;
-    
     
     mSmooth = true;
     
@@ -79,12 +75,10 @@ void LevelWavePath::Reset() {
 
 void LevelWavePath::Finalize() {
     
-    printf("Finalizing Smooth[%d] Speed[%f]\n", mSmooth, mSpeed);
     mPath.Reset();
     mDidFailFinalize = false;
     
     if (mSpeed < 1.0f) {
-        printf("Illegal Speed....\n");
         mSpeed = 1.0f;
     }
     
@@ -171,7 +165,6 @@ void LevelWavePath::AddSegmentBacktrackingFrom(int pIndex) {
     float aX = 0.0f;
     float aY = 0.0f;
     
-    printf("Path Smoo[%d] cPointList.mCount = %d\n", mSmooth, cPointList.mCount);
     if (mSmooth == false || cPointList.mCount <= 2) {
         for (int i=0;i<cPointList.mCount;i++) {
             cDumpList.Add(cPointList.mX[i], cPointList.mY[i]);

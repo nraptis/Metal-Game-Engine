@@ -368,18 +368,12 @@ FJSONNode *LevelWavePathBlueprint::Save() {
 }
 
 void LevelWavePathBlueprint::Load(FJSONNode *pNode) {
-    printf("Path Load[%x] Of [%x]\n", this, pNode);
-    
     Clear();
-    
     if (pNode == NULL) { return; }
-    
     EnumJSONArray(pNode, aPathLoadNode) {
         LevelWavePathBlueprintNode *aPathNode = new LevelWavePathBlueprintNode();
         aPathNode->Load(aPathLoadNode);
         mNodeList.Add(aPathNode);
     }
-    
     mWave->ApplyEditorConstraints();
-    
 }
