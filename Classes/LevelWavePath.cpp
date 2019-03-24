@@ -34,6 +34,7 @@ LevelWavePath::LevelWavePath() {
     mDidFailFinalize = false;
     
     mSmooth = true;
+    mTempDist = 0.0f;
     
     mTestPer = 0.0f;
     mDemoIndex = 0;
@@ -71,11 +72,14 @@ void LevelWavePath::Reset() {
     }
     mNodeList.RemoveAll();
     mPath.RemoveAll();
+    mDist.RemoveAll();
 }
 
 void LevelWavePath::Finalize() {
     
-    mPath.Reset();
+    printf("Finalize...\n");
+    mPath.RemoveAll();
+    mDist.RemoveAll();
     mDidFailFinalize = false;
     
     if (mSpeed < 1.0f) {
@@ -93,6 +97,7 @@ void LevelWavePath::Finalize() {
     
     mTempX = aStartX;
     mTempY = aStartY;
+    mTempDist = 0.0f;
     
     int aIndex = 0;
     
@@ -109,6 +114,7 @@ void LevelWavePath::Finalize() {
         if (aNode->mWaitTimer > 0) {
             for (int i=0;i<aNode->mWaitTimer && i < 80000;i++) {
                 mPath.Add(mTempX, mTempY);
+                mDist.Add(mTempDist);
             }
         }
         ++aIndex;
@@ -175,11 +181,11 @@ void LevelWavePath::AddSegmentBacktrackingFrom(int pIndex) {
             aSpline.Add(cPointList.mX[i], cPointList.mY[i]);
         }
         
-    for (float aPos=0.0f;aPos<=aSpline.Max();aPos += 0.05f) {
-        aSpline.Get(aPos, aX, aY);
-        cDumpList.Add(aX, aY);
-    }
-    cDumpList.Add(aSpline.GetX(aSpline.Max()), aSpline.GetY(aSpline.Max()));
+        for (float aPos=0.0f;aPos<=aSpline.Max();aPos += 0.05f) {
+            aSpline.Get(aPos, aX, aY);
+            cDumpList.Add(aX, aY);
+        }
+        cDumpList.Add(aSpline.GetX(aSpline.Max()), aSpline.GetY(aSpline.Max()));
     }
     
     
@@ -221,8 +227,10 @@ void LevelWavePath::AddSegmentBacktrackingFrom(int pIndex) {
         aAccelerationEnabled = false;
     }
     
-    cSegmentList.Reset();
+    cSegmentList.RemoveAll();
     cSegmentList.Add(cDumpList.mX[0], cDumpList.mY[0]);
+    mDist.Add(mTempDist);
+    
     float aCurrentDist = 0.00f;
     while (aSpeed > 0.05f && aCurrentDist < cPolyPath.mLength) {
         
@@ -243,6 +251,7 @@ void LevelWavePath::AddSegmentBacktrackingFrom(int pIndex) {
         float aInterpY = 0.0f;
         cPolyPath.GetWithDist(aCurrentDist, aInterpX, aInterpY);
         cSegmentList.Add(aInterpX, aInterpY);
+        mDist.Add(mTempDist + aCurrentDist);
     }
     
     float aLastX = cDumpList.mX[cDumpList.mCount - 1];
@@ -258,13 +267,24 @@ void LevelWavePath::AddSegmentBacktrackingFrom(int pIndex) {
     
     if (aDistanceToEnd > 0.5f) {
         cSegmentList.Add(aLastX, aLastY);
+        mDist.Add(aCurrentDist + cPolyPath.mLength);
     } else {
         cSegmentList.mX[cSegmentList.mCount - 1] = aLastX;
         cSegmentList.mY[cSegmentList.mCount - 1] = aLastY;
+        mDist.mData[mDist.mCount - 1] = mTempDist + cPolyPath.mLength;
     }
     mTempX = aLastX;
     mTempY = aLastY;
+    
+    mTempDist += cPolyPath.mLength;
+    
+    
     mPath.Add(&cSegmentList);
+    
+    if (mDist.mCount != mPath.mCount) {
+        printf("HMM, BAD EGG CASE?!?!?!\n\n");
+    }
+    printf("Dist[%d] Path[%d]\n\n", mDist.mCount, mPath.mCount);
     
     
     cSegmentList.Reset();
@@ -305,7 +325,7 @@ void LevelWavePath::Draw() {
     
     for (int i=0;i<mNodeList.mCount;i++) {
         aNode = ((LevelWavePathNode *)mNodeList.mData[i]);
-
+        
         if (aNode->mWaitTimer > 0) {
             Graphics::SetColor(0.125f, 0.25f, 0.88f, 0.5f);
             Graphics::OutlineRect(aNode->mX - 25.0f, aNode->mY - 25.0f, 50.0f, 50.0f, 3.0f);
@@ -317,6 +337,10 @@ void LevelWavePath::Draw() {
         }
     }
     
+    Graphics::SetColor(0.65f, 0.25f, 0.25f, 0.65f);
+    mPath.DrawEdgesOpen();
+    
+    /*
     Graphics::SetColor(1.0f, 0.65f, 0.45f, 0.75f);
     if (mPath.mCount > 0) {
         for (int i=0;i<mPath.mCount;i++) {
@@ -334,4 +358,31 @@ void LevelWavePath::Draw() {
         Graphics::SetColor(0.66f, 1.0f, 0.44f, 1.0f);
         Graphics::DrawPoint(aX, aY, 20.0f);
     }
+    */
 }
+
+
+
+void LevelWavePath::SetSpeedClass(int pSpeedClass) {
+    if (pSpeedClass == WAVE_SPEED_EXTRA_SLOW) {
+        mSpeed = 1.5f;
+    } else if (pSpeedClass == WAVE_SPEED_SLOW) {
+        mSpeed = 2.25f;
+    } else if (pSpeedClass == WAVE_SPEED_MEDIUM_SLOW) {
+        mSpeed = 3.65f;
+    } else if (pSpeedClass == WAVE_SPEED_MEDIUM_FAST) {
+        mSpeed = 6.25f;
+    } else if (pSpeedClass == WAVE_SPEED_FAST) {
+        mSpeed = 9.0f;
+    } else if (pSpeedClass == WAVE_SPEED_EXTRA_FAST) {
+        mSpeed = 12.0f;
+    } else if (pSpeedClass == WAVE_SPEED_INSANE) {
+        mSpeed = 18.0f;
+    } else { //"Default /
+        mSpeed = 6.0f;
+    }
+}
+
+
+
+

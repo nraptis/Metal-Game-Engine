@@ -23,6 +23,27 @@ public:
     
     GameEditor                              *mEditor;
     
+    
+    ToolMenuPanel                           *mPanelGeneration;
+    
+    ToolMenuSectionRow                      *mRowGeneration;
+    UILabel                                 *mLabelSpeed;
+    UICheckBox                              *mCheckBoxSpeed;
+    
+    UISegment                               *mSegmentSpeed;
+    UIStepper                               *mStepperSpawnCount;
+    UISlider                                *mSliderSpacing;
+    
+    ToolMenuPanel                           *mPanelAttachments;
+    ToolMenuSectionRow                      *mRowFormations1;
+    UIButton                                *mButtonClearFormation;
+    UIButton                                *mButtonDefaultFormation;
+    UIButton                                *mButtonPickFormation;
+    
+    
+    ToolMenuPanel                           *mPanelMovement;
+    UISlider                                *mSliderRotation;
+    
 };
 
 #endif

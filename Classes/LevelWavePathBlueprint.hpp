@@ -68,6 +68,9 @@ public:
     int                                         mSelectedIndex;
     FList                                       mNodeList;
     
+    int                                         mSpeedClass;
+    bool                                        mSmooth;
+    
     void                                        SnapX(int pIndex);
     void                                        SnapY(int pIndex);
     

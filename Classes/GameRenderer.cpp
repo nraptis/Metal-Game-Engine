@@ -110,8 +110,8 @@ void GameRenderer::Draw3D() {
     
     
 #ifdef EDITOR_MODE
-    if (mGame->mEditorPreview) {
-        for (int i=0;i<mGame->mEditorPath.mNodeList.mCount;i++) {
+    if (mGame->mEditorShowReferenced) {
+        for (int i=0;i<mGame->mEditorWave.mPath.mNodeList.mCount;i++) {
             GameObject *aObject = (GameObject *)mGame->mEditorObjectList.Fetch(i);
             if (aObject != NULL) {
                 aObject->Draw3D();

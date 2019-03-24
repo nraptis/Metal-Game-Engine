@@ -45,10 +45,19 @@ public:
     //Everything we BUILD is SECTION...
     LevelSectionBlueprint                       mSection;
     
+    
+    
+    
+    void                                        RefreshWave();
+    void                                        RefreshWaveSpeed();
+    int                                         mSpeedClassIndex;
+    
+    void                                        RefreshSection();
+    
+    
+    
     void                                        SetOverlay(FCanvas *pCanvas);
-    
     void                                        SelectClosestObject(float pX, float pY);
-    
     
     int                                         ClosestXConstraint(float pX);
     int                                         ClosestYConstraint(float pY);
@@ -80,21 +89,14 @@ public:
     void                                        ClosePathEditor();
     
     
-    
     void                                        OpenSpawnMenu();
     void                                        OpenWavePickerMenu();
-    
     
     
     void                                        Clear();
     void                                        LoadCleared();
     void                                        Autosave();
     void                                        Autoload();
-    
-    
-    //mAutosaveTimer
-    
-    
     
     
     //Our current "overlay" which will be either "path editor" or "tool container" etc...

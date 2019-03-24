@@ -9,12 +9,18 @@
 #ifndef LevelWave_hpp
 #define LevelWave_hpp
 
+
 #include "GameObject.hpp"
+#include "LevelWavePath.hpp"
+#include "LevelWaveSpawn.hpp"
 
 class LevelWave {
 public:
     LevelWave();
     virtual ~LevelWave();
+    
+    void                                Reset();
+    void                                Restart();
     
     virtual void                        Spawn();
     virtual void                        Update();
@@ -27,8 +33,12 @@ public:
     bool                                mRight;
     int                                 mAliveTimer;
     
+    LevelWavePath                       mPath;
     
+    FList                               mSpawnList;
+    int                                 mSpawnIndex;
     
+    float                               mSpawnSeparationDistance;
     
 };
 

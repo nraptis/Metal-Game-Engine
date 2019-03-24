@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D012BA522471FF000126507 /* LevelWaveSpawn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D012BA322471FF000126507 /* LevelWaveSpawn.cpp */; };
 		0D03C4E0223FE4E0000F3CD5 /* EditorMenuSections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D03C4DE223FE4E0000F3CD5 /* EditorMenuSections.cpp */; };
 		0D03C4E6223FE505000F3CD5 /* EditorMenuFlow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D03C4E4223FE505000F3CD5 /* EditorMenuFlow.cpp */; };
 		0D03C4E9223FF9FC000F3CD5 /* GamePathEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D03C4E7223FF9FC000F3CD5 /* GamePathEditor.cpp */; };
@@ -170,6 +171,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D012BA322471FF000126507 /* LevelWaveSpawn.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWaveSpawn.cpp; sourceTree = "<group>"; };
+		0D012BA422471FF000126507 /* LevelWaveSpawn.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelWaveSpawn.hpp; sourceTree = "<group>"; };
 		0D03C4DE223FE4E0000F3CD5 /* EditorMenuSections.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuSections.cpp; sourceTree = "<group>"; };
 		0D03C4DF223FE4E0000F3CD5 /* EditorMenuSections.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuSections.hpp; sourceTree = "<group>"; };
 		0D03C4E4223FE505000F3CD5 /* EditorMenuFlow.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuFlow.cpp; sourceTree = "<group>"; };
@@ -768,6 +771,8 @@
 				0D1DB0D7223C31B3005DA958 /* LevelWavePath.hpp */,
 				0DBABE7F223AC61D009A17A7 /* LevelWave.cpp */,
 				0DBABE80223AC61D009A17A7 /* LevelWave.hpp */,
+				0D012BA322471FF000126507 /* LevelWaveSpawn.cpp */,
+				0D012BA422471FF000126507 /* LevelWaveSpawn.hpp */,
 				0D1DB0D3223C2EE6005DA958 /* LevelWaveFormation.cpp */,
 				0D1DB0D4223C2EE6005DA958 /* LevelWaveFormation.hpp */,
 				0DBABE3E223A9EB5009A17A7 /* LevelSelectorScreen.cpp */,
@@ -1130,6 +1135,7 @@
 				0DB13C952234B20B00A6F230 /* FImageBundler.cpp in Sources */,
 				0DB13C902234B20B00A6F230 /* FHashMap.cpp in Sources */,
 				0DBABE54223A9EB5009A17A7 /* PhongLightMenu.cpp in Sources */,
+				0D012BA522471FF000126507 /* LevelWaveSpawn.cpp in Sources */,
 				0DB13C912234B20B00A6F230 /* FTextureCache.cpp in Sources */,
 				0DB13CCE2234B20B00A6F230 /* RootViewController.mm in Sources */,
 				0DBABE73223A9EB5009A17A7 /* Transform3D.cpp in Sources */,

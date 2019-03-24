@@ -135,9 +135,9 @@ void LevelWavePathBlueprintNode::Load(FJSONNode *pNode) {
 }
 
 LevelWavePathBlueprint::LevelWavePathBlueprint() {
-    
     mWave = NULL;
-    
+    mSpeedClass = WAVE_SPEED_MEDIUM;
+    mSmooth = true;
 }
 
 

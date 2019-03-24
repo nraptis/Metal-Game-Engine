@@ -183,16 +183,31 @@ void GamePathEditor::KeyDown(int pKey) {
         PathPrint();
     }
     
+    
+    if (pKey == __KEY__DELETE) {
+        if (aShift == false && aCtrl == false && aAlt == false) { PathDeletePoint(); }
+    }
+    
     if (pKey == __KEY__A) {
-        if (aShift == false && aCtrl == false && aAlt == false) {
-            mPathMode = PATH_MODE_CREATE;
-        }
+        if (aShift == false && aCtrl == false && aAlt == false) { mPathMode = PATH_MODE_CREATE; }
+        
+    }
+    
+    if (pKey == __KEY__ESCAPE) {
+        if (aShift == false && aCtrl == false && aAlt == false) { Close(); }
     }
     
     if (pKey == __KEY__S) {
+        if (aShift == false && aCtrl == false && aAlt == false) { mPathMode = PATH_MODE_SELECT; }
+        
+    }
+    
+    if (pKey == __KEY__B) {
         if (aShift == false && aCtrl == false && aAlt == false) {
-            mPathMode = PATH_MODE_SELECT;
+            ConstraintXToType(X_CONSTRAINT_NONE);
+            ConstraintYToType(Y_CONSTRAINT_NONE);
         }
+        
     }
     
     if (pKey == __KEY__E) {
@@ -208,6 +223,9 @@ void GamePathEditor::KeyDown(int pKey) {
                 mWave->ApplyEditorConstraints();
             } else {
                 mConstrainXToPoint = !mConstrainXToPoint;
+                if (mConstrainXToPoint) {
+                    mConstrainYToPoint = false;
+                }
             }
         }
         
@@ -217,13 +235,13 @@ void GamePathEditor::KeyDown(int pKey) {
                 mWave->ApplyEditorConstraints();
             } else {
                 mConstrainYToPoint = !mConstrainYToPoint;
+                if (mConstrainYToPoint) {
+                    mConstrainXToPoint = false;
+                }
             }
         }
         
-        if (pKey == __KEY__ESCAPE) {
-            ConstraintXToType(X_CONSTRAINT_NONE);
-            ConstraintYToType(Y_CONSTRAINT_NONE);
-        }
+        
         
         
         if (pKey == __KEY__L) {
@@ -373,9 +391,10 @@ void GamePathEditor::PathPrint() {
 }
 
 void GamePathEditor::PathDeletePoint() {
-    if (mPath == NULL) { return; }
+    if (mWave == NULL || mPath == NULL) { return; }
     if (mPath->mSelectedIndex == -1) { return; }
     mPath->Remove(mPath->mSelectedIndex);
+    mWave->ApplyEditorConstraints();
 }
 
 void GamePathEditor::ConstrainXToPoint() {

@@ -14,6 +14,15 @@
 #include "FPointList.h"
 #include "FList.hpp"
 
+#define WAVE_SPEED_EXTRA_SLOW -300
+#define WAVE_SPEED_SLOW -200
+#define WAVE_SPEED_MEDIUM_SLOW -100
+#define WAVE_SPEED_MEDIUM 0
+#define WAVE_SPEED_MEDIUM_FAST 100
+#define WAVE_SPEED_FAST 200
+#define WAVE_SPEED_EXTRA_FAST 300
+#define WAVE_SPEED_INSANE 700
+
 //We move right through these points.
 #define PATH_NODE_NORMAL 0
 
@@ -36,37 +45,40 @@ public:
     LevelWavePath();
     ~LevelWavePath();
     
-    void                        Reset();
+    void                                Reset();
     
-    void                        AddMove(float pX, float pY, int pWait = 0);
+    void                                AddMove(float pX, float pY, int pWait = 0);
     
-    bool                        mDidFinalize;
-    bool                        mDidFailFinalize;
+    bool                                mDidFinalize;
+    bool                                mDidFailFinalize;
     
-    void                        AddSegmentBacktrackingFrom(int pIndex);
+    void                                AddSegmentBacktrackingFrom(int pIndex);
     
-    void                        Dump(bool pDecel);
+    void                                Dump(bool pDecel);
     
-    void                        Draw();
-    void                        Finalize();
+    void                                Draw();
+    void                                Finalize();
     
-    bool                        mSmooth;
+    bool                                mSmooth;
     
-    float                       mSpeed;
+    void                                SetSpeedClass(int pSpeedClass);
+    float                               mSpeed;
     
-    FList                       mNodeList;
+    FList                               mNodeList;
     
-    FPointList                  mPath;
+    FPointList                          mPath;
+    FFloatList                          mDist;
     
-    float                       mTestPer;
+    float                               mTestPer;
     
-    float                       mTempX;
-    float                       mTempY;
+    float                               mTempX;
+    float                               mTempY;
+    float                               mTempDist;
     
-    int                         mDemoIndex;
+    int                                 mDemoIndex;
     
 private:
-    void                        Add(int pType, float pX, float pY, int pWait);
+    void                                Add(int pType, float pX, float pY, int pWait);
     
 };
 

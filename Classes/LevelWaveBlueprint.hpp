@@ -11,7 +11,7 @@
 
 #include "LevelWavePathBlueprint.hpp"
 
-
+class LevelWave;
 class LevelWaveBlueprint {
 public:
     LevelWaveBlueprint();
@@ -22,13 +22,12 @@ public:
     void                                        Draw(bool pSelected);
     LevelWavePathBlueprint                      mPath;
     
-    bool                                        mSmooth;
-    float                                       mSpeed;
+    
     
     void                                        ApplyEditorConstraints();
     
     void                                        Build();
-    void                                        Build(LevelWavePath *pPath);
+    void                                        Build(LevelWave *pWave);
     
     FJSONNode                                   *Save();
     void                                        Load(FJSONNode *pNode);

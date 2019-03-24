@@ -120,8 +120,11 @@ void FFloatList::Set(int pSlot, float pFloat)
     }
 }
 
-void FFloatList::Reset()
-{
+void FFloatList::RemoveAll() {
+    mCount = 0;
+}
+
+void FFloatList::Reset() {
     mCount = 0;
 }
 

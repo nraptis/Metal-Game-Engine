@@ -107,11 +107,13 @@ Game::Game() {
     mDartResetAnimationTick = 0;
     mDartResetAnimationTime = 200;
     
-    
 #ifdef EDITOR_MODE
-    mEditorPreview = true;
+    mEditorShowReferenced = true;
+    mEditorWavePlayback = true;
+    mEditorWaveLoop = true;
+    mEditorSectionPlayback = true;
+    mEditorSectionLoop = true;
 #endif
-    
     
 }
 
@@ -239,15 +241,11 @@ void Game::LayoutTransform() {
     mSpawnZoneBottom = mHeight;
     mSpawnZoneLeft = -aSpawnZonePadding;
     
-    
-    
     float aPeekZonePaddingTop = 88.0f;
     float aPeekZonePaddingSides = 60.0f;
     mPeekZoneTop = aPeekZonePaddingTop;
     mPeekZoneRight = mWidth - aPeekZonePaddingSides;
     mPeekZoneLeft = aPeekZonePaddingSides;
-    
-    
     
     float aQuarterZoneHeight = mPlayAreaBottom;
     mQuarterZoneTop = aQuarterZoneHeight / 4.0f;
@@ -255,15 +253,11 @@ void Game::LayoutTransform() {
     mQuarterZoneLeft = mWidth / 4.0f;
     mQuarterZoneBottom = mPlayAreaBottom - aQuarterZoneHeight / 4.0f;
     
-    
-    
-    
     float aExitZonePaddingTop = aPeekZonePaddingTop + 100.0f;
     float aExitZonePaddingSides = aPeekZonePaddingSides + 100.0f;
     mExitZoneTop = -aExitZonePaddingTop;
     mExitZoneRight = mWidth + aExitZonePaddingSides;
     mExitZoneLeft = -aExitZonePaddingSides;
-    
     
     float aKillZonePaddingTop = gDeviceHeight * 0.75f;
     float aKillZonePaddingBottom = gDeviceHeight * 0.5f;
@@ -406,7 +400,7 @@ void Game::Update() {
     
 #ifdef EDITOR_MODE
     
-    int aRequiredTestObjectCount = mEditorPath.mNodeList.mCount;
+    int aRequiredTestObjectCount = mEditorWave.mPath.mNodeList.mCount;
     
     while (mEditorObjectList.mCount > aRequiredTestObjectCount) {
         mEditorObjectQueue.Add(mEditorObjectList.PopLast());
@@ -421,21 +415,35 @@ void Game::Update() {
         mEditorObjectList.Add(aBalloon);
     }
     
-    for (int i=0;i<mEditorPath.mNodeList.mCount;i++) {
+    for (int i=0;i<mEditorWave.mPath.mNodeList.mCount;i++) {
         
         GameObject *aObject = (GameObject *)mEditorObjectList.Fetch(i);
-        LevelWavePathNode *aPathNode = (LevelWavePathNode *)mEditorPath.mNodeList.Fetch(i);
+        LevelWavePathNode *aPathNode = (LevelWavePathNode *)mEditorWave.mPath.mNodeList.Fetch(i);
         
         if (aObject != NULL && aPathNode != NULL) {
             aObject->mTransform.mX = aPathNode->mX;
             aObject->mTransform.mY = aPathNode->mY;
             aObject->Update();
         }
-        
-        
-        
     }
     
+    if (mEditorWavePlayback) {
+        mEditorWave.Update();
+        if (mEditorWave.mIsComplete) {
+            if (mEditorWaveLoop) {
+                mEditorWave.Restart();
+            }
+        }
+    }
+    
+    if (mEditorSectionPlayback) {
+        mEditorSection.Update();
+        if (mEditorSection.mIsComplete) {
+            if (mEditorSectionLoop) {
+                
+            }
+        }
+    }
     
 #endif
     
@@ -560,8 +568,8 @@ void Game::Draw() {
 #ifdef EDITOR_MODE
     Graphics::PipelineStateSetShape2DNoBlending();
     Graphics::SetColor();
-    
-    mEditorPath.Draw();
+    mEditorWave.mPath.Draw();
+    mEditorWave.Draw();
     
     //Graphics::DrawLine(mEditorCursorX - 20.0f, mEditorCursorY - 20.0f, mEditorCursorX + 20.0f, mEditorCursorY + 20.0f);
     //Graphics::DrawLine(mEditorCursorX + 20.0f, mEditorCursorY - 20.0f, mEditorCursorX - 20.0f, mEditorCursorY + 20.0f);
@@ -926,3 +934,18 @@ void Game::Load() {
     mLevelController->Setup(mLevelData);
     
 }
+
+
+
+#ifdef EDITOR_MODE
+
+void Game::EditorRestartWave() {
+    
+}
+
+
+void Game::EditorRestartSection() {
+    
+}
+
+#endif

@@ -8,11 +8,10 @@
 
 #include "LevelWaveBlueprint.hpp"
 #include "GameEditor.hpp"
+#include "LevelWave.hpp"
 
 LevelWaveBlueprint::LevelWaveBlueprint() {
     mPath.mWave = this;
-    mSpeed = 8.0f;
-    mSmooth = false;
 }
 
 LevelWaveBlueprint::~LevelWaveBlueprint() {
@@ -74,22 +73,26 @@ void LevelWaveBlueprint::ApplyEditorConstraints() {
 void LevelWaveBlueprint::Build() {
     if (gGame) {
 #ifdef EDITOR_MODE
-        Build(&gGame->mEditorPath);
+        Build(&gGame->mEditorWave);
 #endif
     }
 }
 
-void LevelWaveBlueprint::Build(LevelWavePath *pPath) {
+void LevelWaveBlueprint::Build(LevelWave *pWave) {
     
-    if (pPath == NULL) { return; }
+    if (pWave == NULL) { return; }
+    
     
     //if (mSpeed < 0.5f) { mSpeed = 0.5f; }
     //if (mSpeed > 50.0f) { mSpeed = 50.0f; }
     
+    pWave->Reset();
     
-    pPath->Reset();
-    pPath->mSmooth = mSmooth;
-    pPath->mSpeed = mSpeed;
+    pWave->mPath.mSmooth = mPath.mSmooth;
+    pWave->mPath.SetSpeedClass(mPath.mSpeedClass);
+    //mSpeedClass = WAVE_SPEED_MEDIUM;
+    
+    
     
     for (int i=0;i<mPath.mNodeList.mCount;i++) {
         LevelWavePathBlueprintNode *aNode = (LevelWavePathBlueprintNode *)mPath.mNodeList.mData[i];
@@ -181,12 +184,12 @@ void LevelWaveBlueprint::Build(LevelWavePath *pPath) {
             }
             
             
-            pPath->AddMove(aNode->mGameX + aDiffBackX * aChamferSize,
+            pWave->mPath.AddMove(aNode->mGameX + aDiffBackX * aChamferSize,
                            aNode->mGameY + aDiffBackY * aChamferSize);
-            pPath->AddMove(aNode->mGameX + aDiffNextX * aChamferSize,
+            pWave->mPath.AddMove(aNode->mGameX + aDiffNextX * aChamferSize,
                            aNode->mGameY + aDiffNextY * aChamferSize);
         } else {
-            pPath->AddMove(aNode->mGameX, aNode->mGameY, aNode->mWaitTimer);
+            pWave->mPath.AddMove(aNode->mGameX, aNode->mGameY, aNode->mWaitTimer);
         }
     }
 }
@@ -196,8 +199,8 @@ void LevelWaveBlueprint::Build(LevelWavePath *pPath) {
 FJSONNode *LevelWaveBlueprint::Save() {
     FJSONNode *aExport = new FJSONNode();
     aExport->AddDictionaryBool("blueprint", true);
-    aExport->AddDictionaryBool("smooth", mSmooth);
-    aExport->AddDictionaryFloat("speed", mSpeed);
+    aExport->AddDictionaryBool("smooth", mPath.mSmooth);
+    aExport->AddDictionaryInt("speed_class", mPath.mSpeedClass);
     aExport->AddDictionary("path", mPath.Save());
     return aExport;
 }
@@ -205,8 +208,8 @@ FJSONNode *LevelWaveBlueprint::Save() {
 void LevelWaveBlueprint::Load(FJSONNode *pNode) {
     Clear();
     if (pNode == NULL) { return; }
-    mSmooth = pNode->GetBool("smooth", mSmooth);
-    mSpeed = pNode->GetFloat("speed", mSpeed);
+    mPath.mSmooth = pNode->GetBool("smooth", mPath.mSmooth);
+    mPath.mSpeedClass = pNode->GetInt("speed_class", mPath.mSpeedClass);
     FJSONNode *aPathNode = pNode->GetArray("path");
     mPath.Load(aPathNode);
 }

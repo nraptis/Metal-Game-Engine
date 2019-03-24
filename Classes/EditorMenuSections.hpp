@@ -29,7 +29,6 @@ public:
     ToolMenuSectionRow                      *mRowMain2;
     UIButton                                *mButtonClear;
     UIButton                                *mButtonLoadCleared;
-    UIButton                                *mButtonAutosave;
     
     
     ToolMenuPanel                           *mMenusPanel;

@@ -17,23 +17,15 @@ class EditorMenuWavesPickerCell : public UIButton {
 public:
     EditorMenuWavesPickerCell();
     virtual ~EditorMenuWavesPickerCell();
-    
     virtual void                            Layout() override;
     virtual void                            Update() override;
     virtual void                            Draw() override;
-    
     int                                     mIndex;
     bool                                    mSelected;
-    
     void                                    SetSelected(bool pSelected);
-    
     UIRoundedRect                           mCheckBackground;
     UIRoundedRect                           mCheckOutline;
-    
     int                                     mNodeCount;
-    
-    
-    
 };
 
 class EditorMenuWavesPicker : public ToolMenu {

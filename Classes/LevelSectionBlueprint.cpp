@@ -32,6 +32,9 @@ void LevelSectionBlueprint::Draw() {
 void LevelSectionBlueprint::WaveAdd() {
     mCurrentWave = new LevelWaveBlueprint();
     mWaveList.Add(mCurrentWave);
+    if (mCurrentWave != NULL) {
+        mCurrentWave->Build();
+    }
 }
 
 void LevelSectionBlueprint::WaveRemove() {

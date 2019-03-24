@@ -145,9 +145,6 @@ public:
     float                                       mExitZoneRight;
     float                                       mExitZoneLeft;
     
-    
-    
-    
     // Once darts, items, etc get into this area, they
     // are automatically killed. "Out of bounds"
     float                                       mKillZoneTop;
@@ -156,23 +153,25 @@ public:
     float                                       mKillZoneLeft;
     bool                                        IsGameObjectOutsideKillZone(GameObject *pObject);
     
-    LevelWavePath                               mTestPath;
-    LevelWavePath                               mTestPath1;
-    LevelWavePath                               mTestPath2;
-    LevelWavePath                               mTestPath3;
-    
     void                                        Load();
     
     float                                       mEditorCursorX;
     float                                       mEditorCursorY;
     
-    
 #ifdef EDITOR_MODE
-    bool                                        mEditorPreview;
-    LevelWavePath                               mEditorPath;
+    void                                        EditorRestartWave();
+    void                                        EditorRestartSection();
+    
+    bool                                        mEditorWavePlayback;
+    bool                                        mEditorWaveLoop;
+    bool                                        mEditorSectionPlayback;
+    bool                                        mEditorSectionLoop;
+    
+    bool                                        mEditorShowReferenced;
+    LevelSection                                mEditorSection;
+    LevelWave                                   mEditorWave;
     FList                                       mEditorObjectList;
     FList                                       mEditorObjectQueue;
-    
 #endif
     
 };

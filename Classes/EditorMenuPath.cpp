@@ -40,7 +40,7 @@ EditorMenuPath::EditorMenuPath(GamePathEditor *pEditor) : ToolMenu() {
     mCheckBoxPreview->SetText("References");
     if (gGame != NULL) {
 #ifdef EDITOR_MODE
-        mCheckBoxPreview->SetTarget(&gGame->mEditorPreview);
+        mCheckBoxPreview->SetTarget(&gGame->mEditorShowReferenced);
 #endif
     }
     mRowVisuals->AddCheckBox(mCheckBoxPreview);
@@ -129,7 +129,7 @@ void EditorMenuPath::Update() {
         bool aUnlink = true;
         if (mEditor->mWave != NULL) {
             aUnlink = false;
-            mCheckBoxSmooth->SetTarget(&(mEditor->mWave->mSmooth));
+            mCheckBoxSmooth->SetTarget(&(mEditor->mWave->mPath.mSmooth));
         }
         if (aUnlink) {
             mCheckBoxSmooth->SetTarget(NULL);

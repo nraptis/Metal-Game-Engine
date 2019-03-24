@@ -48,10 +48,6 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     mButtonLoadCleared->SetText("Undo Clear");
     mRowMain2->AddButton(mButtonLoadCleared);
     
-    mButtonAutosave = new UIButton();
-    mButtonAutosave->SetText("Autosave");
-    mRowMain2->AddButton(mButtonAutosave);
-    
     
     mMenusPanel = new ToolMenuPanel();
     mMenusPanel->SetTitle("Menus...");
@@ -104,11 +100,6 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     
     mCheckBoxPreview = new UICheckBox();
     mCheckBoxPreview->SetText("References");
-    if (gGame != NULL) {
-#ifdef EDITOR_MODE
-        mCheckBoxPreview->SetTarget(&gGame->mEditorPreview);
-#endif
-    }
     mRowWave2->AddCheckBox(mCheckBoxPreview);
     
     mButtonMoveWaveUp = new UIButton();
@@ -276,7 +267,6 @@ void EditorMenuSections::Notify(void *pSender, const char *pNotification) {
         
         if (pSender == mButtonClear) { mEditor->Clear(); }
         if (pSender == mButtonLoadCleared) { mEditor->LoadCleared(); }
-        if (pSender == mButtonAutosave) { mEditor->Autosave(); }
         
         if (pSender == mButtonShowSpawn) { mEditor->OpenSpawnMenu(); }
         if (pSender == mButtonShowWavePicker) { mEditor->OpenWavePickerMenu(); }
@@ -292,5 +282,14 @@ void EditorMenuSections::Notify(void *pSender, const char *pNotification) {
 }
 
 void EditorMenuSections::Update() {
+    
+    if (gGame != NULL) {
+#ifdef EDITOR_MODE
+        mCheckBoxPreview->SetTarget(&gGame->mEditorShowReferenced);
+#else
+        mCheckBoxPreview->SetTarget(NULL);
+#endif
+    }
+    
     
 }

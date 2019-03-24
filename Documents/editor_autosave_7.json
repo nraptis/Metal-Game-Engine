@@ -4,7 +4,7 @@
 		{
 			"blueprint": true,
 			"smooth": false,
-			"speed": 100000000.000000,
+			"speed_class": 0,
 			"path": [
 				{
 					"x_con": 150,
@@ -42,7 +42,7 @@
 		{
 			"blueprint": true,
 			"smooth": false,
-			"speed": 100000000.000000,
+			"speed_class": 0,
 			"path": [
 				{
 					"x_con": 200,
@@ -82,7 +82,7 @@
 		{
 			"blueprint": true,
 			"smooth": false,
-			"speed": 100000000.000000,
+			"speed_class": 0,
 			"path": [
 				{
 					"x": 125.054527,
