@@ -48,8 +48,7 @@ FResource *FResourceManager::AddResource(const char *pResourcePath, bool pPrint)
 
     aExtension = aExtension.ToLower();
     
-    if((aName.mLength > 0) && (aFullPath.mLength > 0) && (aExtension.mLength > 0))
-    {
+    if ((aName.mLength > 0) && (aFullPath.mLength > 0) && (aExtension.mLength > 0)) {
         aResult = new FResource();
         aResult->mName = aName;
         aResult->mExtension = aExtension;
@@ -70,9 +69,9 @@ FResource *FResourceManager::AddResource(const char *pResourcePath, bool pPrint)
             (aResult->mResourceType) |= RESOURCE_TYPE_MUSIC;
             (aResult->mResourceType) |= RESOURCE_TYPE_AUDIO;
         }
-        else if((aExtension == "xml") || (aExtension == "cml"))
+        else if((aExtension == "xml") || (aExtension == "cml") || (aExtension == "jsn") || (aExtension == "json"))
         {
-            (aResult->mResourceType) |= RESOURCE_TYPE_XML;
+            (aResult->mResourceType) |= RESOURCE_TYPE_XMLJSON;
         }
         else if((aExtension == "dat") || (aExtension == "sav"))
         {

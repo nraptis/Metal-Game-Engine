@@ -1,11 +1,13 @@
 uniform mat4 ProjectionMatrix;
 uniform mat4 ModelViewMatrix;
 attribute vec3 Positions;
-attribute vec3 TextureCoords;
-attribute vec3 Normals;
 
-varying vec2 TextureCoordsOut;
+attribute vec3 Normals;
 varying vec3 NormalsOut;
+
+attribute vec3 TextureCoords;
+varying vec2 TextureCoordsOut;
+
 varying vec3 EyeOut;
 
 
@@ -15,11 +17,11 @@ void main(void) {
     
     TextureCoordsOut = vec2(TextureCoords[0], TextureCoords[1]);
     
-    mat4 ModelViewReset = ModelViewMatrix;
-    //ModelViewReset[3][0] = 0.0;
-    //ModelViewReset[3][1] = 0.0;
-    //ModelViewReset[3][2] = 0.0;
-    //ModelViewReset[3][3] = 1.0;
+    mat4 ModelViewReset;// = ModelViewMatrix;
+    ModelViewReset[3][3] = 0.0;
+    ModelViewReset[2][3] = 0.0;
+    ModelViewReset[1][3] = 0.0;
+    ModelViewReset[0][3] = 1.0;
     
     
     

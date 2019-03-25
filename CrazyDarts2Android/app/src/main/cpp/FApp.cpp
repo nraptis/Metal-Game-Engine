@@ -21,7 +21,7 @@ FApp::FApp() {
     
     
     mFrameCaptureDrawCount = 0;
-    
+    mSelectedCanvas = NULL;
     
     mIsGraphicsSetUpEnqueued = false;
     mGraphicsSetUpEnqueuedTimer = 0;
@@ -58,11 +58,7 @@ FApp::FApp() {
     mIsLoading = false;
     mIsLoadingComplete = false;
     
-    
-    mUpdateMultiplier = 1;
-    
     mUpdatesPerSecond = 100.0f;
-    
     RecoverTime();
 }
 
@@ -84,12 +80,8 @@ void FApp::BaseInitialize() {
         mImageLoadMutableSuffixList += new FString("");
         mImageLoadSuffixList += new FString("");
         
-        
-        
-        //For now we just load in main thread...
-        //AppShellLoad();
-        
         while (gGraphicsInterface->IsReady() == false) {
+            printf("BaseInitialize:: Waiting for GFX...\n");
             os_sleep(10);
         }
         
@@ -153,8 +145,6 @@ void FApp::BaseSetSafeAreaInsets(int pInsetUp, int pInsetRight, int pInsetDown, 
 }
 
 void AppFrameThread(void *pArgs) {
-    Log("AppFrameThread(%X)\m", pArgs);
-    
     gAppBase->MainRunLoop();
 }
 
@@ -242,11 +232,9 @@ void FApp::BaseUpdate() {
     
     mDidUpdate = true;
     
-    //InterfaceLock();
-    
+    InterfaceLock();
     gTouch.Update();
-    
-    //InterfaceUnlock();
+    InterfaceUnlock();
     
     
     
@@ -320,11 +308,15 @@ void FApp::BaseDraw() {
         Graphics::SetColor();
         Graphics::PipelineStateSetSpritePremultipliedBlending();
         Graphics::BufferSetIndicesSprite();
-        mSysFont.Draw(FString("FPS = ") + FString(GetFPS()), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 6.0f);
-        mSysFont.Draw(FString("UPS = ") + FString(GetUPS()), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 6.0f + 42.0f);
+        
+        
+        mSysFont.Draw(FString("FPS = ") + FString(GetFPS()), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 2.0f, 0.5f);
+        mSysFont.Draw(FString("UPS = ") + FString(GetUPS()), gSafeAreaInsetLeft + 88.0f, gSafeAreaInsetTop + 2.0f, 0.5f);
     }
     
     if (mIsLoadingComplete && Graphics::RenderPass() == GFX_RENDER_PASS_2D_MAIN) {
+        
+        /*
         Graphics::PipelineStateSetShape2DAlphaBlending();
         Graphics::SetColor(0.55f, 0.55f, 0.55f, 0.5f);
         Graphics::DrawLine(gVirtualDevX + gSafeAreaInsetLeft, gVirtualDevY, gVirtualDevX + gSafeAreaInsetLeft, gVirtualDevY + gVirtualDevHeight, 2.0f);
@@ -338,6 +330,7 @@ void FApp::BaseDraw() {
         Graphics::DrawLine(gVirtualDevX + gVirtualDevWidth - gSafeAreaInsetRight, gVirtualDevY, gVirtualDevX + gVirtualDevWidth - gSafeAreaInsetRight, gVirtualDevY + gVirtualDevHeight);
         Graphics::DrawLine(gVirtualDevX, gVirtualDevY + gSafeAreaInsetTop, gVirtualDevX + gVirtualDevWidth, gVirtualDevY + gSafeAreaInsetTop, 1.0f);
         Graphics::DrawLine(gVirtualDevX, gVirtualDevY + gVirtualDevHeight - gSafeAreaInsetBottom, gVirtualDevX + gVirtualDevWidth, gVirtualDevY + gVirtualDevHeight - gSafeAreaInsetBottom, 1.0f);
+        */
     }
 }
 
@@ -587,12 +580,17 @@ void FApp::BaseKeyUp(int pKey) {
 
 void FApp::ProcessMouseDown(float pX, float pY, int pButton) {
     MouseDown(pX, pY, pButton);
+    
+    mSelectedCanvas = NULL;
     if (mWindowTools.MouseDown(pX, pY, pButton)) {
         mSelectedInputWindow = &mWindowTools;
+        mSelectedCanvas = mWindowTools.mSelectedCanvas;
     } else if (mWindowModal.MouseDown(pX, pY, pButton)) {
         mSelectedInputWindow = &mWindowModal;
+        mSelectedCanvas = mWindowModal.mSelectedCanvas;
     } else if (mWindowMain.MouseDown(pX, pY, pButton)) {
         mSelectedInputWindow = &mWindowMain;
+        mSelectedCanvas = mWindowMain.mSelectedCanvas;
     } else {
         mSelectedInputWindow = 0;
     }
@@ -691,11 +689,9 @@ void FApp::BaseInactive() {
         core_sound_stopAll();
         core_sound_inactive();
         
-        #if (CURRENT_ENV == ENV_ANDROID) || (CURRENT_ENV == ENV_IOS)
-
-        
-                Graphics::TearDown();
-        
+        #if (CURRENT_ENV == ENV_ANDROID)
+        //|| (CURRENT_ENV == ENV_IOS)
+        Graphics::TearDown();
         #endif
         
     }
@@ -706,11 +702,11 @@ void FApp::BaseActive() {
         mActive = true;
         Active();
         
-#if (CURRENT_ENV == ENV_ANDROID) || (CURRENT_ENV == ENV_IOS)
-        
+        #if (CURRENT_ENV == ENV_ANDROID)
+        //|| (CURRENT_ENV == ENV_IOS)
         mIsGraphicsSetUpEnqueued = true;
-        mGraphicsSetUpEnqueuedTimer = 8;
-#endif
+        mGraphicsSetUpEnqueuedTimer = 4;
+        #endif
         
         InterfaceLock();
         gTouch.Active();
@@ -773,7 +769,6 @@ void FApp::SystemLock() {
 void FApp::SystemUnlock() {
     os_unlock_thread(mSystemLock);
 }
-
 
 void FApp::InterfaceLock() {
     if (os_thread_lock_exists(mInterfaceLock) == false) {

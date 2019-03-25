@@ -21,7 +21,7 @@ void main(void) {
     
     mediump float LightIntensity = AmbientIntensity + DiffuseIntensity;// + SpecularIntensity;
     
-    //LightIntensity = 1.0;
+    LightIntensity = 1.0;
     
     lowp vec4 Color = vec4(ModulateColor[0] * Ambient[0] * LightIntensity,
                            ModulateColor[1] * Ambient[1] * LightIntensity,

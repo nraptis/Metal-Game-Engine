@@ -23,9 +23,9 @@ ShaderProgram::ShaderProgram(const char *pVertexPath, const char *pFragmentPath)
     mVertexShader = SHADER_INVALID_SHADER;
     mFragmentShader = SHADER_INVALID_SHADER;
     
-    mSlotProjectionUniform = -1;
-    mSlotModelViewUniform = -1;
-    mSlotModulateUniform = -1;
+    mSlotProjectionMatrixUniform = -1;
+    mSlotModelViewMatrixUniform = -1;
+    mSlotModulateColorUniform = -1;
     mSlotPositions = -1;
 }
 
@@ -74,9 +74,9 @@ void ShaderProgram::Compile() {
     
     glUseProgram(mProgram);
     
-    mSlotProjectionUniform = glGetUniformLocation(mProgram, "ProjectionMatrix");
-    mSlotModelViewUniform = glGetUniformLocation(mProgram, "ModelViewMatrix");
-    mSlotModulateUniform = glGetUniformLocation(mProgram, "ModulateColor");
+    mSlotProjectionMatrixUniform = glGetUniformLocation(mProgram, "ProjectionMatrix");
+    mSlotModelViewMatrixUniform = glGetUniformLocation(mProgram, "ModelViewMatrix");
+    mSlotModulateColorUniform = glGetUniformLocation(mProgram, "ModulateColor");
     mSlotPositions = glGetAttribLocation(mProgram, "Positions");
 }
 
@@ -180,7 +180,7 @@ void ShaderProgram::BindUniform(FUniforms *pUniform) {
     //Log("***\nERROR [Not Implemented]\n***\n***\n...\n");
     
     
-    glUniformMatrix4fv(mSlotProjectionUniform, 1, 0, pUniform->mProjection.m);
-    glUniformMatrix4fv(mSlotModelViewUniform, 1, 0, pUniform->mModelView.m);
-    glUniform4f(mSlotModulateUniform, pUniform->mColor.mRed, pUniform->mColor.mGreen, pUniform->mColor.mBlue, pUniform->mColor.mAlpha);
+    glUniformMatrix4fv(mSlotProjectionMatrixUniform, 1, 0, pUniform->mProjection.m);
+    glUniformMatrix4fv(mSlotModelViewMatrixUniform, 1, 0, pUniform->mModelView.m);
+    glUniform4f(mSlotModulateColorUniform, pUniform->mColor.mRed, pUniform->mColor.mGreen, pUniform->mColor.mBlue, pUniform->mColor.mAlpha);
 }

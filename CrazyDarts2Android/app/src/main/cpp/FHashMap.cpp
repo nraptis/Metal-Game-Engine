@@ -611,3 +611,294 @@ void FIntMap::PrintList() {
     }
     Log("\n\n");
 }
+
+
+
+
+
+
+
+
+FStringMapNode::FStringMapNode() {
+    mObject = 0;
+    mTableNext = 0;
+    mListPrev = 0;
+    mListNext = 0;
+    mTableIndex = -1;
+}
+
+FStringMapNode::~FStringMapNode() { }
+
+FStringMap::FStringMap() {
+    mTable = 0;
+    mTableCount = 0;
+    mTableSize = 0;
+    mListHead = 0;
+    mListTail = 0;
+}
+
+FStringMap::~FStringMap() {
+    FStringMapNode *aNode = 0;
+    FStringMapNode *aNext = 0;
+    for (int i=0;i<mTableSize;i++) {
+        aNode = mTable[i];
+        while (aNode) {
+            aNext = aNode->mTableNext;
+            delete aNode;
+            aNode = aNext;
+        }
+    }
+    delete [] mTable;
+    mTable = 0;
+    mTableCount = 0;
+    mTableSize = 0;
+    FreeList(FStringMapNode, mQueue);
+    mListHead = 0;
+    mListTail = 0;
+}
+
+void FStringMap::RemoveAll() {
+    FStringMapNode *aNode = mListHead;
+    while (aNode) {
+        mQueue.Add(aNode);
+        mTable[aNode->mTableIndex] = 0;
+        aNode = aNode->mListNext;
+    }
+    mListHead = 0;
+    mListTail = 0;
+    mTableCount = 0;
+}
+
+void FStringMap::Add(const char *pKey, void *pObject) {
+    FStringMapNode *aNode = 0;
+    FStringMapNode *aHold = 0;
+    unsigned int aHashBase = FStringMap::Hash(pKey);
+    unsigned int aHash = 0;
+    if (mTableSize > 0) {
+        aHash = (aHashBase % mTableSize);
+        aNode = mTable[aHash];
+        while(aNode) {
+            if(aNode->mKey == pKey) {
+                printf("Double Add[%s]\n", pKey);
+                return;
+            }
+            aNode = aNode->mTableNext;
+        }
+        if (mTableCount >= (mTableSize / 2)) {
+            int aNewSize = FHashMap::IncreaseTableSize(mTableCount);
+            SetTableSize(aNewSize);
+            aHash = (aHashBase % mTableSize);
+        }
+    } else {
+        SetTableSize(7);
+        aHash = (aHashBase % mTableSize);
+    }
+    
+    FStringMapNode *aNew = (FStringMapNode *)mQueue.PopLast();
+    if (aNew == NULL) {
+        aNew = new FStringMapNode();
+    }
+    aNew->mKey = pKey;
+    aNew->mObject = pObject;
+    aNew->mTableNext = 0;
+    aNew->mTableIndex = aHash;
+    if (mTable[aHash]) {
+        aNode = mTable[aHash];
+        while (aNode) {
+            aHold = aNode;
+            aNode = aNode->mTableNext;
+        }
+        aHold->mTableNext = aNew;
+    } else {
+        mTable[aHash] = aNew;
+    }
+    ListAdd(aNew);
+    mTableCount += 1;
+}
+
+void FStringMap::Remove(const char *pKey) {
+    if (mTableSize > 0) {
+        unsigned int aHash = (FStringMap::Hash(pKey) % mTableSize);
+        FStringMapNode *aPreviousNode = 0;
+        FStringMapNode *aNode = mTable[aHash];
+        while (aNode) {
+            if (aNode->mKey == pKey) {
+                if (aPreviousNode) {
+                    aPreviousNode->mTableNext = aNode->mTableNext;
+                } else {
+                    mTable[aHash] = aNode->mTableNext;
+                }
+                mQueue.Add(aNode);
+                ListRemove(aNode);
+                mTableCount -= 1;
+                return;
+            }
+            aPreviousNode = aNode;
+            aNode = aNode->mTableNext;
+        }
+    }
+}
+
+void FStringMap::ListAdd(FStringMapNode *pNode) {
+    pNode->mListNext = 0;
+    if (mListHead == 0) {
+        mListHead = pNode;
+        mListTail = pNode;
+        pNode->mListPrev = 0;
+    } else {
+        pNode->mListPrev = mListTail;
+        mListTail->mListNext = pNode;
+        mListTail = pNode;
+    }
+}
+
+void FStringMap::ListRemove(FStringMapNode *pNode) {
+    if (pNode == mListHead) {
+        if (mListHead->mListNext) {
+            mListHead = mListHead->mListNext;
+            mListHead->mListPrev = 0;
+        } else {
+            mListTail = 0;
+            mListHead = 0;
+        }
+    } else if(pNode == mListTail) {
+        mListTail = mListTail->mListPrev;
+        mListTail->mListNext = 0;
+    } else {
+        pNode->mListPrev->mListNext = pNode->mListNext;
+        pNode->mListNext->mListPrev = pNode->mListPrev;
+    }
+    pNode->mListPrev = 0;
+    pNode->mListNext = 0;
+}
+
+bool FStringMap::IsEmpty() {
+    return mTableCount <= 0;
+}
+
+bool FStringMap::Exists(const char *pKey) {
+    return Get(pKey) != 0;
+}
+
+void *FStringMap::Get(const char *pKey) {
+    if(mTableSize > 0) {
+        unsigned int aHash = (FStringMap::Hash(pKey) % mTableSize);
+        FStringMapNode *aNode = mTable[aHash];
+        while (aNode) {
+            if (aNode->mKey == pKey) {
+                return aNode->mObject;
+            }
+            aNode = aNode->mTableNext;
+        }
+    }
+    return 0;
+}
+
+unsigned int FStringMap::Hash(const char *pString) {
+    unsigned long aHash = 5381;
+    if (pString) {
+        unsigned char *aString = (unsigned char *)pString;
+        while (*aString) {
+            int aVal = *aString;
+            aHash = ((aHash << 5) + aHash) ^ aVal;
+            aString++;
+        }
+    }
+    return (unsigned int)aHash;
+}
+
+void FStringMap::AddObjectsToList(FList *pList) {
+    FStringMapNode *aNode = mListHead;
+    while (aNode) {
+        pList->Add(aNode->mObject);
+        aNode = aNode->mListNext;
+    }
+}
+
+void FStringMap::AddObjectsToListAndRemoveAll(FList *pList) {
+    FStringMapNode *aNode = mListHead;
+    while (aNode) {
+        pList->Add(aNode->mObject);
+        mQueue.Add(aNode);
+        mTable[aNode->mTableIndex] = 0;
+        aNode = aNode->mListNext;
+    }
+    mListHead = 0;
+    mListTail = 0;
+    mTableCount = 0;
+}
+
+void FStringMap::SetTableSize(int pSize) {
+    FStringMapNode *aCheck = 0;
+    FStringMapNode *aNext = 0;
+    FStringMapNode *aNode = 0;
+    int aNewSize = pSize;
+    FStringMapNode **aTableNew = new FStringMapNode*[aNewSize];
+    for(int i=0;i<aNewSize;i++) {
+        aTableNew[i] = 0;
+    }
+    unsigned int aHash = 0;
+    for (int i=0;i<mTableSize;i++) {
+        aNode = mTable[i];
+        while (aNode) {
+            aNext = aNode->mTableNext;
+            aNode->mTableNext = 0;
+            aHash = FStringMap::Hash((const char *)(aNode->mKey.c())) % aNewSize;
+            aNode->mTableIndex = aHash;
+            if(aTableNew[aHash] == 0) {
+                aTableNew[aHash] = aNode;
+            } else {
+                aCheck = aTableNew[aHash];
+                while (aCheck->mTableNext) {
+                    aCheck = aCheck->mTableNext;
+                }
+                aCheck->mTableNext = aNode;
+            }
+            aNode = aNext;
+        }
+    }
+    delete [] mTable;
+    mTable = aTableNew;
+    mTableSize = aNewSize;
+}
+
+void FStringMap::Print() {
+    Log("____\n____Hash Table____\n_Count = %d  Size = %d QueueCount = %d QueueSize = %d\n\n", mTableCount, mTableSize, mQueue.mCount, mQueue.mSize);
+    FStringMapNode *aNode = 0;
+    for (int i=0;i<mTableSize;i++) {
+        int aCount = 0;
+        aNode = mTable[i];
+        while (aNode) {
+            aCount++;
+            aNode = aNode->mTableNext;
+        }
+        Log("Row[%d] (%d)\t{", i, aCount);
+        aNode = mTable[i];
+        while(aNode) {
+            Log("{%lx}", (unsigned long)(aNode->mObject));
+            aNode = aNode->mTableNext;
+        }
+        Log("}\n");
+    }
+}
+
+void FStringMap::PrintList() {
+    Log("____\n____Hash List____\n_Count = %d  Size = %d QueueCount = %d QueueSize = %d\n\n", mTableCount, mTableSize, mQueue.mCount, mQueue.mSize);
+    int aIndex = 0;
+    if (mListHead == 0) {
+        Log("*** EMPTY ***\n");
+    } else {
+        FStringMapNode *aNode = mListHead;
+        while (aNode) {
+            Log("[%lx], ", (unsigned long)(aNode->mObject));
+            aNode = aNode->mListNext;
+            aIndex += 1;
+            if (aIndex >= 10) {
+                aIndex -= 10;
+                Log("\n");
+            }
+        }
+    }
+    Log("\n\n");
+}
+

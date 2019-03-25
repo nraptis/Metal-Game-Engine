@@ -228,6 +228,7 @@ void GFXApp::LoadComplete() {
     //
     //
     
+    /*
     if (mGameContainer == NULL) {
         mGameContainer = new GameContainer();
         mWindowMain.AddChild(mGameContainer);
@@ -238,6 +239,7 @@ void GFXApp::LoadComplete() {
 #endif
         
     }
+    */
     
     /*
     if (mScreenTool == NULL) {
@@ -249,12 +251,11 @@ void GFXApp::LoadComplete() {
     
     
     //
-    /*
     if (mLightScene == NULL) {
         mLightScene = new LightConfigurationScene();
         mWindowMain.AddChild(mLightScene);
     }
-    */
+    
     
     /*
     float aAngle = 0.0f;
@@ -613,6 +614,7 @@ void GFXApp::Draw() {
         
         if (mGameContainer) mGameContainer->Draw3D();
         //if (mLevelSelect) mLevelSelect->mPage1->Draw3D();
+        if (mLightScene) { mLightScene->Draw3D(); }
         
         
         /*

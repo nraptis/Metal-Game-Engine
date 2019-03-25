@@ -17,23 +17,25 @@ public:
     LevelSection();
     ~LevelSection();
     
-    void                            Spawn();
-    void                            Update();
-    void                            Draw();
+    void                                Reset();
+    void                                Restart();
     
-    void                            Dispose();
-    void                            DisposeObject(GameObject *pObject);
-    void                            DisposeWave(LevelWave *pLevelWave);
+    void                                Spawn();
+    void                                Update();
+    void                                Draw();
     
-    void                            AddWave(LevelWave *pLevelWave);
-    FList                           mWaveList;
-    LevelWave                       *mCurrentWave;
-    int                             mCurrentWaveIndex;
+    void                                Dispose();
+    void                                DisposeObject(GameObject *pObject);
+    void                                DisposeWave(LevelWave *pLevelWave);
     
-    int                             mDelay;
+    void                                AddWave(LevelWave *pLevelWave);
+    FList                               mWaveList;
+    LevelWave                           *mCurrentWave;
+    int                                 mCurrentWaveIndex;
     
-    bool                            mIsComplete;
+    int                                 mDelay;
     
+    bool                                mIsComplete;
     
 };
 

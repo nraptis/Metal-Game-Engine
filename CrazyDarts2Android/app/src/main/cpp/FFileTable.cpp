@@ -225,10 +225,9 @@ unsigned int FFileTable::Hash(const char *pString) {
     unsigned long aHash = 5381;
     if (pString) {
         unsigned char *aString = (unsigned char *)pString;
-        while(*aString)
-        {
+        while (*aString) {
             int aVal = *aString;
-            aHash = ((aHash << 5)+aHash)^aVal;
+            aHash = ((aHash << 5) + aHash) ^ aVal;
             aString++;
         }
     }

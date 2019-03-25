@@ -62,6 +62,43 @@ void OpenGLEngine::SetUp() {
 }
 
 void OpenGLEngine::TearDown() {
+    delete mShaderProgramShape2D;
+    mShaderProgramShape2D = NULL;
+    
+    delete mShaderProgramShape3D;
+    mShaderProgramShape3D = NULL;
+    
+    delete mShaderProgramSprite;
+    mShaderProgramSprite = NULL;
+    
+    delete mShaderProgramSpriteWhite;
+    mShaderProgramSpriteWhite = NULL;
+    
+    delete mShaderProgramShapeNode;
+    mShaderProgramShapeNode = NULL;
+    
+    delete mShaderProgramSpriteNode;
+    mShaderProgramSpriteNode = NULL;
+    
+    delete mShaderProgramSimpleModel;
+    mShaderProgramSimpleModel = NULL;
+    
+    delete mShaderProgramSimpleModelIndexed;
+    mShaderProgramSimpleModelIndexed = NULL;
+    
+    delete mShaderProgramModelIndexed;
+    mShaderProgramModelIndexed = NULL;
+    
+    delete mShaderProgramModelIndexedLightedAmbient;
+    mShaderProgramModelIndexedLightedAmbient = NULL;
+    
+    delete mShaderProgramModelIndexedLightedAmbientDiffuse;
+    mShaderProgramModelIndexedLightedAmbientDiffuse = NULL;
+    
+    delete mShaderProgramModelIndexedLightedPhong;
+    mShaderProgramModelIndexedLightedPhong = NULL;
+    
+    
     
     
     mIsReady = false;
@@ -107,9 +144,20 @@ void OpenGLEngine::BuildPrograms() {
     mShaderProgramModelIndexedLightedAmbientDiffuse->Compile();
     
     
-    mShaderProgramModelIndexedLightedPhong = new ShaderProgramModelIndexedLightedPhong("model_lighted_phong_vertex_shader.glsl", "model_lighted_phong_fragment_shader.glsl");
+    mShaderProgramModelIndexedLightedPhong = new ShaderProgramModelIndexedLightedPhong("model_lighted_directional_vertex_shader.glsl", "model_lighted_directional_fragment_shader.glsl");
     mShaderProgramModelIndexedLightedPhong->Compile();
     
+    
+    
+    
+    //model_lighted_directional_vertex_shader.glsl
+    //model_lighted_directional_fragment_shader.glsl
+    
+    
+    //mShaderProgramModelIndexedLightedSimpleSpotlight = new ShaderProgramModelIndexedLightedSimpleSpotlight("model_lighted_simple_spotlight_vertex_shader.glsl", "model_lighted_simple_spotlight_fragment_shader.glsl");
+    //mShaderProgramModelIndexedLightedSimpleSpotlight->Compile();
+    
+    printf("Oh no U diiiiddddnnnn'tttt\n\n");
     
     //
     //
@@ -218,5 +266,13 @@ void OpenGLEngine::UseProgramModelIndexedAmbientDiffuse() {
 
 void OpenGLEngine::UseProgramModelIndexedPhong() {
     UseProgram(mShaderProgramModelIndexedLightedPhong);
+}
+
+void OpenGLEngine::UseProgramModelIndexedSimpleSpotlight() {
+    
+    printf("Not Implemented:: UseProgramModelIndexedSimpleSpotlight\n");
+    exit(0);
+    //UseProgram(mShaderProgramModelIndexedLightedSimpleSpotlight);
+    
 }
 

@@ -18,6 +18,7 @@
 #define UNIFORM_TYPE_LIGHT_AMBIENT 1
 #define UNIFORM_TYPE_LIGHT_AMBIENT_DIFFUSE 2
 #define UNIFORM_TYPE_LIGHT_PHONG 3
+#define UNIFORM_TYPE_LIGHT_SIMPLE_SPOTLIGHT 4
 
 /////////////////////////////
 //
@@ -89,7 +90,30 @@ public:
     FUniformsLightPhong();
     virtual ~FUniformsLightPhong();
     
+    FMatrix                                 mNormal;
+    
     FLightPhong                             mLight;
+    
+    void                                    Print();
+    
+    virtual unsigned int                    GetType() override;
+    
+    virtual unsigned int                    GetVertexSize() override;
+    virtual unsigned int                    GetFragmentSize() override;
+    
+    virtual void                            WriteVertexToBuffer(void *pData, unsigned int pOffset) override;
+    virtual void                            WriteFragmentToBuffer(void *pData, unsigned int pOffset) override;
+};
+
+class FUniformsLightSimpleSpotlight : public FUniforms {
+public:
+    FUniformsLightSimpleSpotlight();
+    virtual ~FUniformsLightSimpleSpotlight();
+    
+    FMatrix                                 mNormal;
+    
+    //ModelViewHomeMatrix
+    FLightSimpleSpotlight                   mLight;
     
     void                                    Print();
     

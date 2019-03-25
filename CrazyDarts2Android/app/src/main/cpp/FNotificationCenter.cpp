@@ -12,9 +12,13 @@
 #include "FFileTable.hpp"
 
 
-FNotificationCenter::FNotificationCenter() { }
+FNotificationCenter::FNotificationCenter() {
+    
+}
 
-FNotificationCenter::~FNotificationCenter() { }
+FNotificationCenter::~FNotificationCenter() {
+    
+}
 
 void FNotificationCenter::Register(FCanvas *pObserver, FCanvas *pSender, const char *pNotification) {
     if (pObserver == 0 || pNotification == 0 || pSender == 0) { return; }
@@ -39,6 +43,7 @@ void FNotificationCenter::Unregister(FCanvas *pObserver, FCanvas *pSender, const
             if (aRegistrationNode->mNotificationNodeList.mCount > 0) {
                 aRegistrationNode->mNotificationNodeList.Remove(aNotificationNode);
                 if (aRegistrationNode->mNotificationNodeList.mCount <= 0) {
+                    //printf("Removing Notification Register[%s] [%s]\n", aNotificationNode->mSender->mName.c(), aNotificationNode->mNotification.c());
                     mRegisterTable.RemoveNode(aRegistrationNode);
                 }
             }
@@ -47,6 +52,7 @@ void FNotificationCenter::Unregister(FCanvas *pObserver, FCanvas *pSender, const
             if (aNotificationNode->mListenerList.mCount > 0) {
                 aNotificationNode->mListenerList.Remove(pObserver);
                 if (aNotificationNode->mListenerList.mCount <= 0) {
+                    //printf("Removing Notification Sender[%s] [%s]\n", aNotificationNode->mSender->mName.c(), aNotificationNode->mNotification.c());
                     mSendTable.RemoveNode(aNotificationNode);
                 }
             }
@@ -67,6 +73,11 @@ void FNotificationCenter::Post(FCanvas *pSender, const char *pNotification) {
             aCanvas->BaseNotify(pSender, pNotification);
         }
     }
+}
+
+void FNotificationCenter::PrintStats() {
+    printf("FNotificationCenter::Senders(%d)\n", mSendTable.mTableCount);
+    printf("FNotificationCenter::Register(%d)\n", mRegisterTable.mTableCount);
 }
 
 FNotificationReceiverMapNode::FNotificationReceiverMapNode() {

@@ -120,6 +120,11 @@ void Graphics::TearDown() {
     
     Log("Graphics::TearDown()\n");
     
+    if (gOpenGLEngine) {
+        gOpenGLEngine->TearDown();
+        
+    }
+    
     cDidTearDown = true;
     gTextureCache.UnloadAllTextures();
     gBufferCache.UnloadAllBuffers();
@@ -1125,12 +1130,14 @@ void Graphics::MatrixModelViewGet(FMatrix *pMatrix) {
 
 void Graphics::CullFacesSetFront() {
     glEnable(GL_CULL_FACE);
-    glCullFace(GL_FRONT);
+    //glCullFace(GL_FRONT);
+    glCullFace(GL_BACK);
 }
 
 void Graphics::CullFacesSetBack() {
     glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
+    //glCullFace(GL_BACK);
+    glCullFace(GL_FRONT);
 }
 
 void Graphics::CullFacesSetDisabled() {
@@ -1662,6 +1669,22 @@ void Graphics::PipelineStateSetModelIndexedLightedPhongAlphaBlending() {
     }
 }
 
+void Graphics::PipelineStateSetModelIndexedLightedSimpleSpotlightNoBlending() {
+    if (gOpenGLEngine) {
+        BlendDisable();
+        gOpenGLEngine->UseProgramModelIndexedSimpleSpotlight();
+    }
+}
+
+void Graphics::PipelineStateSetModelIndexedLightedSimpleSpotlightAlphaBlending() {
+    if (gOpenGLEngine) {
+        BlendEnable();
+        BlendSetAlpha();
+        gOpenGLEngine->UseProgramModelIndexedSimpleSpotlight();
+    }
+    
+}
+
 
 
 
@@ -1687,7 +1710,7 @@ void Graphics::RenderPassBegin(int pRenderPass, bool pClearColor, bool pClearDep
         Graphics::DepthClear();
     }
     if (pClearColor) {
-        Graphics::Clear(0.0f, 0.35f, 0.0f);
+        Graphics::Clear(0.025f, 0.025f, 0.065f);
     }
     
     //[gMetalEngine startRenderPass:pRenderPass clearingColor: pClearColor clearingDepth: pClearDepth];

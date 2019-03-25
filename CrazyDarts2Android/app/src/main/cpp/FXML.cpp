@@ -1,7 +1,7 @@
 
 #include "FXML.h"
 #include "FFile.hpp"
-#include "FStringBuffer.h"
+#include "FString.h"
 #include "core_includes.h"
 
 FXML::FXML() {
@@ -179,91 +179,51 @@ void FXML::Save(char *pFile)
     }
 }
 
-void FXML::Load(char *pFile)
-{
+void FXML::Load(char *pFile) {
 	FFile aFile;
     aFile.Load(pFile);
     
-    if(aFile.mLength <= 0)
-    {
-        
+    if (aFile.mLength <= 0) {
         bool aBlock = false;
-        while(aBlock == false)
-        {
+        while (aBlock == false) {
             aBlock = true;
             
-            aFile.Load(FString(pFile) + FString(".xml"));
+            FString aFileName = FString(pFile);
+            aFileName.RemoveExtension();
             
-            if(aFile.mLength > 0)break;
+            aFile.Load(aFileName + FString(".xml"));
+            if (aFile.mLength > 0) { break; }
             
-            aFile.Load(FString(pFile) + FString(".XML"));
+            aFile.Load(aFileName + FString(".XML"));
+            if (aFile.mLength > 0) { break; }
             
-            if(aFile.mLength > 0)break;
+            aFile.Load(aFileName + FString(".csv"));
+            if (aFile.mLength > 0) { break; }
             
-            aFile.Load(gDirBundle + FString(pFile));
+            aFile.Load(aFileName + FString(".CSV"));
+            if (aFile.mLength > 0) { break; }
             
-            if(aFile.mLength > 0)break;
+            aFileName.RemovePath();
+            aFile.Load(aFileName + FString(".xml"));
+            if (aFile.mLength > 0) { break; }
             
-            aFile.Load(gDirBundle + FString(pFile) + FString(".xml"));
+            aFile.Load(aFileName + FString(".XML"));
+            if (aFile.mLength > 0) { break; }
             
-            if(aFile.mLength > 0)break;
+            aFile.Load(aFileName + FString(".csv"));
+            if (aFile.mLength > 0) { break; }
             
-            aFile.Load(gDirBundle + FString(pFile) + FString(".XML"));
-            
-            if(aFile.mLength > 0)break;
-            
-            aFile.Load(gDirDocuments + FString(pFile));
-            
-            if(aFile.mLength > 0)break;
-            
-            aFile.Load(gDirDocuments + FString(pFile) + FString(".xml"));
-            
-            if(aFile.mLength > 0)break;
-            
-            aFile.Load(gDirDocuments + FString(pFile) + FString(".XML"));
+            aFile.Load(aFileName + FString(".CSV"));
+            if (aFile.mLength > 0) { break; }
         }
-        
-        /*
-        bool aBlock = false;
-        
-        
-        while(aBlock == false)
-        {
-            aBlock = true;
-        
-        FString aTrimmed = pFile;
-        aTrimmed.RemoveExtension();
-        
-        
-        FStringBuffer aPath;
-        int aWriteBase = 0;
-        int aWrite = 0;
-        
-        aWriteBase = aPath.WriteTerminate(aTrimmed, 0);
-        aWrite = aWriteBase;
-        
-            aWrite = aPath.Wr
-        
-        
-        aPath
-        
-        
-        aFile.Load(
-                   
-                   
-        }
-        */
     }
-    
-    
 	Parse((char*)aFile.mData, aFile.mLength);
 }
 
-void FXML::Parse(char *pData, int pLength)
-{
+void FXML::Parse(char *pData, int pLength) {
 	Clear();
-	
-	if(!pData||(pLength<0))return;
+    
+	if (!pData || (pLength<0)) return;
 	
 	int aError=0;
 	
@@ -339,7 +299,7 @@ FIND_ROOT_PARAMETERS:
 		aSeek++;
 		while(*aSeek&&XML_VARIABLE_BODY(*aSeek))aSeek++;
 		if(*aSeek==0)goto XML_PARSE_ERROR;
-		aLength=aSeek-aHold;
+		aLength=(int)(aSeek-aHold);
 		aName=new char[aLength+1];
 		memcpy(aName,aHold,aLength);
 		aName[aLength]=0;
@@ -356,7 +316,7 @@ FIND_ROOT_PARAMETERS:
 		while(*aSeek&&*aSeek!='\"')aSeek++;
 		//endquotes
 		if(*aSeek!='\"')goto XML_PARSE_ERROR;
-		aLength=aSeek-aHold;
+		aLength=(int)(aSeek-aHold);
 		aValue=new char[aLength+1];
 		aValue[aLength]=0;
 		memcpy(aValue,aHold,aLength);

@@ -65,6 +65,7 @@ public:
     FWindow                                     mWindowModal;
     FWindow                                     mWindowTools;
     FWindow                                     *mSelectedInputWindow;
+    FCanvas                                     *mSelectedCanvas;
     
     int                                         mTimeSinceLastInteraction;
     
@@ -170,7 +171,6 @@ public:
     
     
     float                                       mUpdatesPerSecond;
-    int                                         mUpdateMultiplier;
     
     void                                        RecoverTime();
     

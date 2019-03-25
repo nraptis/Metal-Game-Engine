@@ -65,16 +65,16 @@ void ToolMenuHeader::Layout() {
 }
 
 void ToolMenuHeader::Update() {
-
+    
 }
 
 void ToolMenuHeader::Draw() {
-    FCanvas::Draw();
+    Graphics::SetColor();
+    Graphics::PipelineStateSetShape2DNoBlending();
     mMenuBackground.Draw();
 }
 
 void ToolMenuHeader::Notify(void *pSender, const char *pNotification) {
-    printf("Header Notify: [%s][%s]\n", ((FCanvas *)pSender)->mName.c(), pNotification);
     if (FString(pNotification) == "button_click") {
         if (pSender == &mButtonClose) {
             if (mMenu) { mMenu->Kill(); }
@@ -83,18 +83,10 @@ void ToolMenuHeader::Notify(void *pSender, const char *pNotification) {
             if (mMenu) {
                 if (mMenu->mExpanded) {
                     mMenu->Collapse();
-
                 } else {
                     mMenu->Expand();
-
                 }
             }
-
-            //UIImagePicker *aImagePicker = new UIImagePicker();
-            //gTool->AddChild(aImagePicker);
-            //aImagePicker->FillWithAny();
-            //printf("Minimize Button...\n");
-
         }
     }
 }

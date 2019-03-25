@@ -30,21 +30,6 @@ PhongLightMenu::PhongLightMenu(PhongConfiguration *pConfiguration) : ToolMenu() 
     mSpecularPanel->AddSection(mSliderSpecularShininess);
     
     
-    mSliderSpecularEyeRotationPrimary = new UISlider();
-    mSliderSpecularEyeRotationPrimary->SetValue(&pConfiguration->mEyeRotationPrimary);
-    mSliderSpecularEyeRotationPrimary->SetRange(0.0f, 360.0f);
-    mSliderSpecularEyeRotationPrimary->SetText("Eye-R1:");
-    mSpecularPanel->AddSection(mSliderSpecularEyeRotationPrimary);
-    
-    mSliderSpecularEyeRotationSecondary = new UISlider();
-    mSliderSpecularEyeRotationSecondary->SetValue(&pConfiguration->mEyeRotationSecondary);
-    mSliderSpecularEyeRotationSecondary->SetRange(0.0f, 360.0f);
-    mSliderSpecularEyeRotationSecondary->SetText("Eye-R2:");
-    mSpecularPanel->AddSection(mSliderSpecularEyeRotationSecondary);
-    
-    
-    
-    
     mDirectionPanel = new ToolMenuPanel();
     mDirectionPanel->SetTitle("Directions");
     AddSection(mDirectionPanel);

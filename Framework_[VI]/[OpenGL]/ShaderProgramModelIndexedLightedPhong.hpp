@@ -9,6 +9,8 @@
 #ifndef ShaderProgramModelIndexedLightedPhong_hpp
 #define ShaderProgramModelIndexedLightedPhong_hpp
 
+#include "ShaderProgram.hpp"
+
 
 class ShaderProgramModelIndexedLightedPhong: public ShaderProgram {
 public:
@@ -21,6 +23,9 @@ public:
     virtual void                ArrayBufferTextureCoords(FBuffer *pBuffer, int pOffset) override;
     virtual void                ArrayBufferNormals(FBuffer *pBuffer, int pOffset) override;
     
+    int                         mSlotNormalMatrixUniform;
+    
+    
     int                         mSlotTextureCoords;
     int                         mSlotNormals;
     int                         mSlotTexture;
@@ -28,6 +33,8 @@ public:
     int                         mSlotAmbient;
     int                         mSlotDiffuse;
     int                         mSlotSpecular;
+    int                         mSlotMaterial;
+    
     
     int                         mDataOffset;
 };

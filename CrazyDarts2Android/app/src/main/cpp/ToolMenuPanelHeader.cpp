@@ -54,7 +54,9 @@ void ToolMenuPanelHeader::Update() {
 }
 
 void ToolMenuPanelHeader::Draw() {
-    FCanvas::Draw();
+    Graphics::PipelineStateSetShape2DAlphaBlending();
+    Graphics::SetColor();
+    
     mMenuBackground.Draw();
 }
 

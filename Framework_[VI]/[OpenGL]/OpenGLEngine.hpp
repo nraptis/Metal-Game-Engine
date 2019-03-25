@@ -22,6 +22,7 @@
 #include "ShaderProgramModelIndexedLightedAmbient.hpp"
 #include "ShaderProgramModelIndexedLightedAmbientDiffuse.hpp"
 #include "ShaderProgramModelIndexedLightedPhong.hpp"
+#include "ShaderProgramModelIndexedLightedSimpleSpotlight.hpp"
 
 class OpenGLEngine {
 public:
@@ -29,34 +30,36 @@ public:
     OpenGLEngine();
     ~OpenGLEngine();
     
-    void                                SetUp();
-    void                                TearDown();
+    void                                            SetUp();
+    void                                            TearDown();
     
-    void                                BuildPrograms();
+    void                                            BuildPrograms();
     
-    void                                Prerender();
-    void                                Postrender();
+    void                                            Prerender();
+    void                                            Postrender();
     
     
-    bool                                IsReady();
-    bool                                mIsReady;
+    bool                                            IsReady();
+    bool                                            mIsReady;
     
-    void                                UseProgram(ShaderProgram *pProgram);
+    void                                            UseProgram(ShaderProgram *pProgram);
     
-    void                                UseProgramShape2D();
-    void                                UseProgramShape3D();
+    void                                            UseProgramShape2D();
+    void                                            UseProgramShape3D();
     
-    void                                UseProgramSprite();
-    void                                UseProgramSpriteWhite();
-    void                                UseProgramShapeNode();
-    void                                UseProgramSimpleModel();
-    void                                UseProgramSimpleModelIndexed();
-    void                                UseProgramModelIndexed();
+    void                                            UseProgramSprite();
+    void                                            UseProgramSpriteWhite();
+    void                                            UseProgramShapeNode();
+    void                                            UseProgramSimpleModel();
+    void                                            UseProgramSimpleModelIndexed();
+    void                                            UseProgramModelIndexed();
     
     
     void                                            UseProgramModelIndexedAmbient();
     void                                            UseProgramModelIndexedAmbientDiffuse();
     void                                            UseProgramModelIndexedPhong();
+    void                                            UseProgramModelIndexedSimpleSpotlight();
+    
     
     
     
@@ -82,6 +85,8 @@ public:
     
     ShaderProgramModelIndexedLightedPhong           *mShaderProgramModelIndexedLightedPhong;
     
+    
+    ShaderProgramModelIndexedLightedSimpleSpotlight *mShaderProgramModelIndexedLightedSimpleSpotlight;
     
     
     //model_lighted_phong_vertex_shader.glsl

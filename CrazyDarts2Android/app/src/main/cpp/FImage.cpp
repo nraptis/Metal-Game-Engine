@@ -1,11 +1,9 @@
 #include "core_includes.h"
 #include "FImage.hpp"
 #include "FApp.hpp"
-#include "FStringBuffer.h"
 #include "FResource.h"
 
-FStringBuffer cImageLoadBuffer;
-FStringBuffer cImageLoadBufferAlphaMask;
+FString cImageLoadHelper;
 
 FImage::FImage() {
     mData = 0;
@@ -49,40 +47,80 @@ void FImage::Load(char *pFile) {
         FString *aPathMutableSuffix = 0;
         FString *aPathExtension = 0;
         
-        cImageLoadBuffer.Reset();
-        cImageLoadBufferAlphaMask.Reset();
+        
         
         for (int aDirectoryIndex = 0; (aDirectoryIndex < gAppBase->mImageLoadDirectoryList.mCount) && (aDidLoad == false); aDirectoryIndex++) {
             aPathDirectory = (FString *)(gAppBase->mImageLoadDirectoryList.Fetch(aDirectoryIndex));
-            aWriteIndex = cImageLoadBuffer.Write(aPathDirectory->c(), 0, aPathDirectory->mLength);
-            aWriteIndex = cImageLoadBuffer.Write(aFile.c(), aWriteIndex, aFile.mLength);
+            
+            cImageLoadHelper.Reset();
+            
+            cImageLoadHelper.Append(*aPathDirectory);
+            aWriteIndex = cImageLoadHelper.mLength;
+            
+            //aWriteIndex = cImageLoadBuffer.Write(aPathDirectory->c(), 0, aPathDirectory->mLength);
+            
+            //aWriteIndex = cImageLoadBuffer.Write(aFile.c(), aWriteIndex, aFile.mLength);
+            cImageLoadHelper.Append(aFile);
+            aWriteIndex = cImageLoadHelper.mLength;
+            
+            
+            
             aWriteIndexHold[0] = aWriteIndex;
+            
+            
             for (int aSuffixIndex = 0; (aSuffixIndex < gAppBase->mImageLoadSuffixList.mCount) && (aDidLoad == false); aSuffixIndex++) {
+                
+                cImageLoadHelper.Truncate(aWriteIndexHold[0]);
                 aPathSuffix = (FString *)(gAppBase->mImageLoadSuffixList.Fetch(aSuffixIndex));
-                aWriteIndex = cImageLoadBuffer.Write(aPathSuffix->c(), aWriteIndexHold[0], aPathSuffix->mLength);
+                cImageLoadHelper.Append(*aPathSuffix);
+                aWriteIndex = cImageLoadHelper.mLength;
+                
+                //aWriteIndex = cImageLoadBuffer.Write(aPathSuffix->c(), aWriteIndexHold[0], aPathSuffix->mLength);
+                
                 
                 aWriteIndexHold[1] = aWriteIndex;
+                
                 for (int aMutableSuffixIndex = 0; (aMutableSuffixIndex < gAppBase->mImageLoadMutableSuffixList.mCount) && (aDidLoad == false); aMutableSuffixIndex++) {
+                    
+                    cImageLoadHelper.Truncate(aWriteIndexHold[1]);
                     aPathMutableSuffix = (FString *)(gAppBase->mImageLoadMutableSuffixList.Fetch(aMutableSuffixIndex));
-                    aWriteIndex = cImageLoadBuffer.Write(aPathMutableSuffix->c(), aWriteIndexHold[1], aPathMutableSuffix->mLength);
+                    //aWriteIndex = cImageLoadBuffer.Write(aPathMutableSuffix->c(), aWriteIndexHold[1], aPathMutableSuffix->mLength);
+                    cImageLoadHelper.Append(*aPathMutableSuffix);
+                    aWriteIndex = cImageLoadHelper.mLength;
+                    
+                    
                     aWriteIndexHold[2] = aWriteIndex;
                     for (int aScaleSuffixIndex = 0;aScaleSuffixIndex < 2; aScaleSuffixIndex++) {
                         
                         if (gAppBase->mImageLoadScaleSuffix.mLength <= 0 && aScaleSuffixIndex > 0) continue;
                         
                         if (aScaleSuffixIndex == 0) {
-                            aWriteIndex = cImageLoadBuffer.Write(gAppBase->mImageLoadScaleSuffix.c(), aWriteIndexHold[2], gAppBase->mImageLoadScaleSuffix.mLength);
+                            
+                            cImageLoadHelper.Truncate(aWriteIndexHold[2]);
+                            //aWriteIndex = cImageLoadBuffer.Write(gAppBase->mImageLoadScaleSuffix.c(), aWriteIndexHold[2], gAppBase->mImageLoadScaleSuffix.mLength);
+                            cImageLoadHelper.Append(gAppBase->mImageLoadScaleSuffix);
+                            aWriteIndex = cImageLoadHelper.mLength;
+                            
+                            
                         } else {
                             aWriteIndex = aWriteIndexHold[2];
                         }
                         
-                        aWriteIndex = cImageLoadBuffer.Write((const char *)".", aWriteIndex, 1);
+                        cImageLoadHelper.Truncate(aWriteIndex);
+                        cImageLoadHelper.Append('.');
+                        aWriteIndex = cImageLoadHelper.mLength;
+                        //aWriteIndex = cImageLoadBuffer.Write((const char *)".", aWriteIndex, 1);
                         
                         for (int aExtensionIndex = 0; (aExtensionIndex < gAppBase->mImageLoadExtensionList.mCount) && (aDidLoad == false); aExtensionIndex++)
                         {
                             aPathExtension = (FString *)(gAppBase->mImageLoadExtensionList.Fetch(aExtensionIndex));
-                            cImageLoadBuffer.WriteTerminate(aPathExtension->c(), aWriteIndex, aPathExtension->mLength);
-                            LoadDirect(cImageLoadBuffer.c());
+                            
+                            cImageLoadHelper.Truncate(aWriteIndex);
+                            //cImageLoadBuffer.WriteTerminate(aPathExtension->c(), aWriteIndex, aPathExtension->mLength);
+                            cImageLoadHelper.Append(*aPathExtension);
+                            //aWriteIndex = cImageLoadHelper.mLength;
+                            
+                            LoadDirect(cImageLoadHelper.c());
                             if ((mWidth > 0) && (mHeight > 0) && (mData != 0)) {
                                 if (aScaleSuffixIndex == 0) {
                                     mScale = gImageFileScale;
@@ -90,7 +128,7 @@ void FImage::Load(char *pFile) {
                                 aDidLoad = true;
                             } else {
                                 if ((gRes.mTable.mTableCount > 0) && (aDirectoryIndex == 0)) {
-                                    const char *aResourcePath = gRes.GetResourcePathImage(cImageLoadBuffer.c());
+                                    const char *aResourcePath = gRes.GetResourcePathImage(cImageLoadHelper.c());
                                     while ((aResourcePath != 0) && (aDidLoad == false)) {
                                         LoadDirect(aResourcePath);
                                         if((mWidth > 0) && (mHeight > 0) && (mData != 0)) {

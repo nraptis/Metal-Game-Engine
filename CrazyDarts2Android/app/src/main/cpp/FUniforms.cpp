@@ -224,3 +224,105 @@ void FUniformsLightPhong::Print() {
     
     Log("*** END FUniformsLightPhong ***\n");
 }
+
+
+
+
+
+
+FUniformsLightSimpleSpotlight::FUniformsLightSimpleSpotlight() {
+    
+}
+
+FUniformsLightSimpleSpotlight::~FUniformsLightSimpleSpotlight() {
+    
+}
+
+unsigned int FUniformsLightSimpleSpotlight::GetType() {
+    return UNIFORM_TYPE_LIGHT_SIMPLE_SPOTLIGHT;
+    
+    //mLight
+}
+
+unsigned int FUniformsLightSimpleSpotlight::GetVertexSize() {
+    int aSize = FUniforms::GetVertexSize();
+    
+    //Size of normal matrix.
+    aSize += sizeof(float) * 16;
+    aSize += sizeof(float) * 16;
+    //return sizeof(float) * 32;
+    
+    return aSize;
+}
+
+unsigned int FUniformsLightSimpleSpotlight::GetFragmentSize() {
+    int aSize = FUniforms::GetFragmentSize();
+    aSize += sizeof(mLight);
+    return aSize;
+}
+
+void FUniformsLightSimpleSpotlight::WriteVertexToBuffer(void *pData, unsigned int pOffset) {
+    FUniforms::WriteVertexToBuffer(pData, pOffset);
+}
+
+void FUniformsLightSimpleSpotlight::WriteFragmentToBuffer(void *pData, unsigned int pOffset) {
+    char *aContents = (char *)pData;
+    char *aPtr = &aContents[pOffset];
+    static int aColorSize = sizeof(mColor);
+    static int aLightSize = sizeof(mLight);
+    
+    memcpy(aPtr, &mColor, aColorSize);
+    aPtr = &(aPtr[aColorSize]);
+    
+    memcpy(aPtr, &mLight, aLightSize);
+    //aPtr = &(aPtr[aLightSize]);
+    
+    //memcpy(aPtr, &mDiffuse, aDiffuseSize);
+    
+}
+
+
+void FUniformsLightSimpleSpotlight::Print() {
+    
+    
+    
+    Log("*** BEGIN FUniformsLightSimpleSpotlight ***\n");
+    
+    
+    Log("mLight.mAmbientIntensity = %f;\n", mLight.mAmbientIntensity);
+    Log("mLight.mDiffuseIntensity = %f;\n", mLight.mDiffuseIntensity);
+    Log("mLight.mSpecularIntensity = %f;\n", mLight.mSpecularIntensity);
+    
+    Log("mLight.mRed = %f;\n", mLight.mRed);
+    Log("mLight.mGreen = %f;\n", mLight.mGreen);
+    Log("mLight.mBlue = %f;\n", mLight.mBlue);
+    
+    
+    Log("mLight.mDirX = %f;\n", mLight.mDirX);
+    Log("mLight.mDirY = %f;\n", mLight.mDirY);
+    Log("mLight.mDirZ = %f;\n", mLight.mDirZ);
+    
+    Log("mLight.mShininess = %f;\n", mLight.mShininess);
+    
+    Log("******* For Uni **********\n");
+    
+    Log("mUniform.mLight.mAmbientIntensity = %f;\n", mLight.mAmbientIntensity);
+    Log("mUniform.mLight.mDiffuseIntensity = %f;\n", mLight.mDiffuseIntensity);
+    Log("mUniform.mLight.mSpecularIntensity = %f;\n", mLight.mSpecularIntensity);
+    
+    Log("mUniform.mLight.mRed = %f;\n", mLight.mRed);
+    Log("mUniform.mLight.mGreen = %f;\n", mLight.mGreen);
+    Log("mUniform.mLight.mBlue = %f;\n", mLight.mBlue);
+    
+    Log("mUniform.mLight.mDirX = %f;\n", mLight.mDirX);
+    Log("mUniform.mLight.mDirY = %f;\n", mLight.mDirY);
+    Log("mUniform.mLight.mDirZ = %f;\n", mLight.mDirZ);
+    
+    Log("mUniform.mLight.mShininess = %f;\n", mLight.mShininess);
+    
+    Log("*** END FUniformsLightSimpleSpotlight ***\n");
+}
+
+
+
+

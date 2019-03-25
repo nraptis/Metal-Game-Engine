@@ -141,12 +141,12 @@ void PGMainCanvas::PopModal(FCanvas *pCanvas) {
 
         if (aModal == mImagePicker) {
             mImagePicker = 0;
-            printf("NULLING IMAGE PICKR\n");
+            Log("NULLING IMAGE PICKR\n");
         }
 
         if (aModal == mPathEditor) {
             mPathEditor = 0;
-            printf("NULLING PATH EDITOR\n");
+            Log("NULLING PATH EDITOR\n");
         }
 
         mModalUnderlayList.RemoveAtIndex(aIndex);

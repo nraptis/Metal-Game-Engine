@@ -27,9 +27,9 @@ void ShaderProgramSprite::Compile() {
     mSlotTextureCoords = glGetAttribLocation(mProgram, "TextureCoords");
     
     Log("*******\n");
-    Log("Shader[%s] mSlotProjectionUniform = %d\n", mName.c(), mSlotProjectionUniform);
-    Log("Shader[%s] mSlotModelViewUniform = %d\n", mName.c(), mSlotModelViewUniform);
-    Log("Shader[%s] mSlotModulateUniform = %d\n", mName.c(), mSlotModulateUniform);
+    Log("Shader[%s] mSlotProjectionMatrixUniform = %d\n", mName.c(), mSlotProjectionMatrixUniform);
+    Log("Shader[%s] mSlotModelViewMatrixUniform = %d\n", mName.c(), mSlotModelViewMatrixUniform);
+    Log("Shader[%s] mSlotModulateColorUniform = %d\n", mName.c(), mSlotModulateColorUniform);
     
     Log("Shader[%s] mSlotTexture = %d\n", mName.c(), mSlotTexture);
     Log("Shader[%s] mSlotPositions = %d\n", mName.c(), mSlotPositions);

@@ -8,6 +8,7 @@ add_library(gl2jni SHARED
         SpawnWave.cpp
         Balloon.cpp
         CameraMenu.cpp
+		Constraint.cpp
         core_app_shell.cpp
         core_social.cpp
         core_web.cpp
@@ -16,6 +17,12 @@ add_library(gl2jni SHARED
         FAchievement.cpp
         FAnimation.cpp
         FApp.cpp
+		EditorMenuFlow.cpp
+		EditorMenuPath.cpp
+		EditorMenuPathControl.cpp
+		EditorMenuSections.cpp
+		EditorMenuSpawn.cpp
+		EditorMenuWavesPicker.cpp
 		FBufferCache.cpp
 		FBuffer.cpp
         FButton.cpp
@@ -35,6 +42,7 @@ add_library(gl2jni SHARED
         FIndexList.cpp
         FIntList.cpp
         FJoystick.cpp
+		FJSON.cpp
         FLight.cpp
         FLine.cpp
         FList.cpp
@@ -75,12 +83,24 @@ add_library(gl2jni SHARED
         FWindow.cpp
         FXML.cpp
         Game.cpp
+		GamePathEditor.cpp
+		GameEditor.cpp
 		GameContainer.cpp
         GameObject.cpp
         GameRenderer.cpp
         GFXApp.cpp
         GraphicsInterface.cpp
         LevelSelectorScreen.cpp
+		LevelSectionBlueprint.cpp
+		LevelWaveBlueprint.cpp
+		LevelWavePathBlueprint.cpp
+		LevelSection.cpp
+		LevelSelectorScreen.cpp
+		LevelWave.cpp
+		LevelWaveChunk.cpp
+		LevelWaveFormation.cpp
+		LevelWavePath.cpp
+		LevelWaveSpawn.cpp
         LightConfigurationScene.cpp
         OpenGLEngine.cpp
         os_core_app_shell_android.cpp
@@ -110,8 +130,10 @@ add_library(gl2jni SHARED
 		ShaderProgramModelIndexedLightedPhong.cpp
 		ShaderProgramModelIndexedLightedAmbientDiffuse.cpp
 		ShaderProgramModelIndexedLightedAmbient.cpp
+		ShaderProgramModelIndexedLightedSimpleSpotlight.cpp
 		ShaderProgramModelIndexed.cpp
 		ShaderProgram.cpp
+		SpotLightSimpleConfiguration.cpp
         ToolMenu.cpp
         ToolMenuHeader.cpp
         ToolMenuModalUnderlay.cpp
@@ -132,17 +154,12 @@ add_library(gl2jni SHARED
         UISegmentButton.cpp
         UISlider.cpp
         UIStepper.cpp
+		UITextBox.cpp
         Util_ScreenFrame.cpp
 		Transform3D.cpp
 		Transform2D.cpp
 		LevelData.cpp
 		GameLevelController.cpp
-		LevelSection.cpp
-		LevelSelectorScreen.cpp
-		LevelWave.cpp
-        LevelWaveChunk.cpp
-        LevelWaveFormation.cpp
-        LevelWavePath.cpp
         )
 
 # add lib dependencies

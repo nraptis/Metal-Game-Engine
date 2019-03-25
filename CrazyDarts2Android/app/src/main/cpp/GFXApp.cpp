@@ -18,10 +18,57 @@
 #include "GameContainer.hpp"
 #include "CameraMenu.hpp"
 
+#ifdef EDITOR_MODE
+class GameEditor;
+#include "GameEditor.hpp"
+#endif
+
 GFXApp *gApp = 0;
 GFXApp::GFXApp() {
+    
+    /*
+    FString aString1;
+    FString aString2 = "bag";
+    FString aString3 = "a";
+    FString aString4 = "brains";
+    FString aString5 = "abcdefghijklmnopqrt";
+    
+    FString aTemp1 = aString1;
+    FString aTemp2 = aString2;
+    FString aTemp3 = aString3;
+    FString aTemp4 = aString4;
+    FString aTemp5 = aString5;
+    
+    for (int aCount=0;aCount<5;aCount++) {
+        
+        for (int aIndex=-2;aIndex<8;aIndex++) {
+            aTemp1 = aString1;
+            aTemp2 = aString2;
+            aTemp3 = aString3;
+            aTemp4 = aString4;
+            aTemp5 = aString5;
+            
+            aTemp1.Insert('*', aCount, aIndex);
+            aTemp2.Insert('*', aCount, aIndex);
+            aTemp3.Insert('*', aCount, aIndex);
+            aTemp4.Insert('*', aCount, aIndex);
+            aTemp5.Insert('*', aCount, aIndex);
+            
+            printf("[%d|%d] Temp1 = {%s}\n", aCount, aIndex, aTemp1.c());
+            printf("[%d|%d] Temp2 = {%s}\n", aCount, aIndex, aTemp2.c());
+            printf("[%d|%d] Temp3 = {%s}\n", aCount, aIndex, aTemp3.c());
+            printf("[%d|%d] Temp4 = {%s}\n", aCount, aIndex, aTemp4.c());
+            printf("[%d|%d] Temp5 = {%s}\n", aCount, aIndex, aTemp5.c());
+        }
+    }
+    exit(0);
+    */
+    
     gApp = this;
     
+#ifdef EDITOR_MODE
+    mEditor = NULL;
+#endif
     mGameContainer = NULL;
     mLevelSelect = NULL;
     mLightScene = NULL;
@@ -46,8 +93,6 @@ GFXApp::GFXApp() {
     mAmbientRoll2 = 0.0f;
     
     
-    
-    
     /*
     mCamera.mFOV = 0.987429;
     mCamera.mTarget = FVec3(0.0f, 0.0f, 0.0f);
@@ -66,24 +111,20 @@ GFXApp::~GFXApp() {
 
 void GFXApp::Load() {
     
-    
     mRocket.mUseNormals = false;
     mRocket.LoadOBJ("rocket.obj");
     mRocketMap.Load("rocket_uvw");
     
-    
-    
     mSnail.LoadOBJ("snail.obj");
     mSnailMap.Load("snail_uvw");
-
-
-
-
-
-
-    mSound1.Load("treasure_collect.caf");
-    //mSound2.Load("match.caf");
-
+    
+    
+    
+    
+    
+    
+    mSound1.Load("land.caf");
+    mSound2.Load("match.caf");
     
     mGameAreaMarker.Load("game_area_marker");
     
@@ -164,13 +205,14 @@ void GFXApp::LoadComplete() {
     
     //core_sound_musicPlay("song2.mp3", true);
     
-    
+    /*
     if (mCameraMenu == NULL) {
         mCameraMenu = new CameraMenu(&mCamera);
         mWindowTools.AddChild(mCameraMenu);
         mCameraMenu->SetFrame(30.0f, gDeviceHeight - 90.0f, 260.0f, 240.0f);
         mCameraMenu->Collapse();
     }
+    */
     
     
     
@@ -186,10 +228,18 @@ void GFXApp::LoadComplete() {
     //
     //
     
+    /*
     if (mGameContainer == NULL) {
         mGameContainer = new GameContainer();
         mWindowMain.AddChild(mGameContainer);
+        
+#ifdef EDITOR_MODE
+        mEditor = new GameEditor(mGameContainer->mGame);
+        mWindowTools.AddChild(mEditor);
+#endif
+        
     }
+    */
     
     /*
     if (mScreenTool == NULL) {
@@ -201,12 +251,11 @@ void GFXApp::LoadComplete() {
     
     
     //
-    /*
     if (mLightScene == NULL) {
         mLightScene = new LightConfigurationScene();
         mWindowMain.AddChild(mLightScene);
     }
-    */
+    
     
     /*
     float aAngle = 0.0f;
@@ -228,7 +277,8 @@ void GFXApp::Update() {
             --mLoadGame;
             if (mLoadGame == 0 && mGameContainer != NULL) {
                 Log("Loading Game...\n");
-                mGameContainer->mGame->Load();
+                //mGameContainer->mGame->Load();
+                
             }
         }
     }
@@ -536,10 +586,6 @@ void GFXApp::Draw2D() {
     
     Graphics::SetColor();
     
-    
-    
-    
-    
     mMonolithMap.Draw(mTestX1, mTestY1, 0.125f, Sin(mTestSin1) * 40.0f, -1);
     mChaosEgg2X.Draw(mTestX2, mTestY2, 0.5f, mTestSin2, -1);
     
@@ -568,27 +614,33 @@ void GFXApp::Draw() {
         
         if (mGameContainer) mGameContainer->Draw3D();
         //if (mLevelSelect) mLevelSelect->mPage1->Draw3D();
+        if (mLightScene) { mLightScene->Draw3D(); }
         
         
+        /*
         Draw3D();
-        
         if (gRand.Get(14) == 10) {
-            for (int i=0;i<10;i++) {
-                //Draw3D();
+            for (int i=0;i<60;i++) {
+                Draw3D();
             }
         }
+        */
         
         
         Graphics::RenderPassBegin(GFX_RENDER_PASS_2D_MAIN,
                                   false, //Clear Color
                                   false); //Clear Depth
         
+        /*
+        
         Draw2D();
         if (gRand.Get(14) == 10) {
-            for (int i=0;i<10;i++) {
-                //Draw2D();
+            for (int i=0;i<60;i++) {
+                Draw2D();
             }
         }
+        
+        */
         
         
         Graphics::PipelineStateSetSpriteAlphaBlending();
@@ -599,6 +651,12 @@ void GFXApp::Draw() {
 void GFXApp::SetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
     if (mGameContainer) {
         mGameContainer->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
+        
+#ifdef EDITOR_MODE
+        mEditor->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+#endif
+        
+        
     }
     if (mLevelSelect) {
         mLevelSelect->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
@@ -619,8 +677,7 @@ void GFXApp::TouchDown(float pX, float pY, void *pData) {
         mTestX2 = pX;
         mTestY2 = pY;
     }
-
-    mSound1.Play();
+    
     
     //core_sound_musicCrossFade("song2.mp3", 200, true);
     //core_sound_musicFadeOut(40);
@@ -712,5 +769,8 @@ void GFXApp::KeyUp(int pKey) {
 void GFXApp::SetDeviceSize(int pWidth, int pHeight) {
     if (mGameContainer) {
         mGameContainer->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
+#ifdef EDITOR_MODE
+        mEditor->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+#endif
     }
 }

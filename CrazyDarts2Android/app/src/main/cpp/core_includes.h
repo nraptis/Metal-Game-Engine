@@ -133,6 +133,7 @@ static FList sSoundInstanceList;
 static FList sSpriteList;
 
 #define SQRT_EPSILON 0.005f
+#define FLOAT_EPSILON 0.0001f
 
 #define DEGREES_TO_RADIANS(value) ((value) * 0.01745329251994329576923690768488)
 #define RADIANS_TO_DEGREES(value) ((value) * 57.2957795130823208767981548141052)
@@ -476,6 +477,10 @@ enum FKeys
 extern const char           *gKeyName[256];
 extern bool 				gKeyPressed[256];
 
+
+extern bool gKeyDownCtrl;
+extern bool gKeyDownShift;
+extern bool gKeyDownAlt;
 
 
 #endif

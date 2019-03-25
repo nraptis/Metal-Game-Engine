@@ -94,7 +94,7 @@ void FSpriteSequence::Load(const char *pFilePrefix)
             if(aNumberString.mLength < aLeadingZeroes)
             {
                 FString aZeroString;
-				aZeroString.InsChars('0', (aLeadingZeroes - aNumberString.mLength), 0);
+				aZeroString.Insert('0', (aLeadingZeroes - aNumberString.mLength), 0);
                 aNumberString = FString(aZeroString + aNumberString);
             }
             
@@ -118,7 +118,7 @@ void FSpriteSequence::Load(const char *pFilePrefix)
                     if(aNumberString.mLength < aLeadingZeroes)
                     {
                         FString aZeroString;
-						aZeroString.InsChars('0', (aLeadingZeroes - aNumberString.mLength), 0);
+						aZeroString.Insert('0', (aLeadingZeroes - aNumberString.mLength), 0);
                         aNumberString = FString(aZeroString + aNumberString);
                     }
                     
@@ -178,7 +178,7 @@ void FSpriteSequence::Load(const char *pFilePrefix, int pStartIndex, int pEndInd
             aNumberString = FString(aStartIndex);
             if (aNumberString.mLength < aLeadingZeroes) {
                 FString aZeroString;
-				aZeroString.InsChars('0', (aLeadingZeroes - aNumberString.mLength), 0);
+				aZeroString.Insert('0', (aLeadingZeroes - aNumberString.mLength), 0);
                 aNumberString = FString(aZeroString + aNumberString);
             }
             aPath = FString(aFileBase + aNumberString);
@@ -193,7 +193,7 @@ void FSpriteSequence::Load(const char *pFilePrefix, int pStartIndex, int pEndInd
                     aNumberString = FString(aIndex);
                     if (aNumberString.mLength < aLeadingZeroes) {
                         FString aZeroString;
-						aZeroString.InsChars('0', (aLeadingZeroes - aNumberString.mLength), 0);
+						aZeroString.Insert('0', (aLeadingZeroes - aNumberString.mLength), 0);
                         aNumberString = FString(aZeroString + aNumberString);
                     }
                     aPath = FString(aFileBase + aNumberString);
@@ -286,7 +286,7 @@ bool FSpriteSequence::GetList(FList *pList, const char *pFilePrefix)
                 if(aNumberString.mLength < aLeadingZeroes)
                 {
                     FString aZeroString;
-					aZeroString.InsChars('0', (aLeadingZeroes - aNumberString.mLength), 0);
+					aZeroString.Insert('0', (aLeadingZeroes - aNumberString.mLength), 0);
                     aNumberString = FString(aZeroString + aNumberString);
                 }
                 
@@ -316,7 +316,7 @@ bool FSpriteSequence::GetList(FList *pList, const char *pFilePrefix)
                         if(aNumberString.mLength < aLeadingZeroes)
                         {
                             FString aZeroString;
-							aZeroString.InsChars('0', (aLeadingZeroes - aNumberString.mLength), 0);
+							aZeroString.Insert('0', (aLeadingZeroes - aNumberString.mLength), 0);
                             aNumberString = FString(aZeroString + aNumberString);
                         }
                         

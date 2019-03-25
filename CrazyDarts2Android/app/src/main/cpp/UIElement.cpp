@@ -14,6 +14,7 @@
 #include "UISegment.hpp"
 #include "UICheckBox.hpp"
 #include "UIAlignmentPicker.hpp"
+#include "UITextBox.hpp"
 
 UIElement::UIElement() {
     mElement = 0;
@@ -35,6 +36,13 @@ void UIElement::SetLabel(UILabel *pLabel) {
     mFixedWidth = true;
 }
 
+void UIElement::SetTextBox(UITextBox *pTextBox) {
+    mElement = pTextBox;
+    mType = UI_ELEMENT_TEXT_BOX;
+    mFixedWidth = false;
+    mMaxWidth = 200;
+}
+
 void UIElement::SetButton(UIButton *pButton) {
     mElement = pButton;
     mType = UI_ELEMENT_BUTTON;
@@ -52,3 +60,9 @@ void UIElement::SetAlignmentPicker(UIAlignmentPicker *pAlignmentPicker) {
     mElement = pAlignmentPicker;
     mType = UI_ELEMENT_ALIGNMENT_PICKER;
 }
+
+
+
+
+
+

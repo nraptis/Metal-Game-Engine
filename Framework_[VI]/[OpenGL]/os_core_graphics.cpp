@@ -1669,6 +1669,22 @@ void Graphics::PipelineStateSetModelIndexedLightedPhongAlphaBlending() {
     }
 }
 
+void Graphics::PipelineStateSetModelIndexedLightedSimpleSpotlightNoBlending() {
+    if (gOpenGLEngine) {
+        BlendDisable();
+        gOpenGLEngine->UseProgramModelIndexedSimpleSpotlight();
+    }
+}
+
+void Graphics::PipelineStateSetModelIndexedLightedSimpleSpotlightAlphaBlending() {
+    if (gOpenGLEngine) {
+        BlendEnable();
+        BlendSetAlpha();
+        gOpenGLEngine->UseProgramModelIndexedSimpleSpotlight();
+    }
+    
+}
+
 
 
 

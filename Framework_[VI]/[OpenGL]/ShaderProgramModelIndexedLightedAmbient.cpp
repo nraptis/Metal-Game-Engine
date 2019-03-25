@@ -33,9 +33,9 @@ void ShaderProgramModelIndexedLightedAmbient::Compile() {
     
     
     Log("*******\n");
-    Log("Shader[%s] mSlotProjectionUniform = %d\n", mName.c(), mSlotProjectionUniform);
-    Log("Shader[%s] mSlotModelViewUniform = %d\n", mName.c(), mSlotModelViewUniform);
-    Log("Shader[%s] mSlotModulateUniform = %d\n", mName.c(), mSlotModulateUniform);
+    Log("Shader[%s] mSlotProjectionMatrixUniform = %d\n", mName.c(), mSlotProjectionMatrixUniform);
+    Log("Shader[%s] mSlotModelViewMatrixUniform = %d\n", mName.c(), mSlotModelViewMatrixUniform);
+    Log("Shader[%s] mSlotModulateColorUniform = %d\n", mName.c(), mSlotModulateColorUniform);
     Log("Shader[%s] mSlotPositions = %d\n", mName.c(), mSlotPositions);
     Log("Shader[%s] mSlotTextureCoords = %d\n", mName.c(), mSlotTextureCoords);
     Log("Shader[%s] mSlotTexture = %d\n", mName.c(), mSlotTexture);
@@ -52,8 +52,8 @@ void ShaderProgramModelIndexedLightedAmbient::BindUniform(FUniforms *pUniform) {
         
         ShaderProgram::BindUniform(pUniform);
         
-        //glUniformMatrix4fv(mSlotProjectionUniform, 1, 0, pUniform->mProjection.m);
-        //glUniformMatrix4fv(mSlotModelViewUniform, 1, 0, pUniform->mModelView.m);
+        //glUniformMatrix4fv(mSlotProjectionMatrixUniform, 1, 0, pUniform->mProjection.m);
+        //glUniformMatrix4fv(mSlotModelViewMatrixUniform, 1, 0, pUniform->mModelView.m);
         glUniform4f(mSlotAmbient, aUniform->mLight.mRed, aUniform->mLight.mGreen, aUniform->mLight.mBlue,aUniform->mLight.mAmbientIntensity);
         
     } else {

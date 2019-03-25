@@ -9,6 +9,7 @@
 #include "FWindow.hpp"
 #include "os_core_graphics.h"
 #include "core_includes.h"
+#include "FApp.hpp"
 
 FWindow::FWindow() {
     mRoot.mWindow = this;
@@ -18,6 +19,7 @@ FWindow::FWindow() {
     mRoot.mConsumesTouches = false;
     mRoot.mDeleteWhenKilled = false;
     
+    mSelectedCanvas = NULL;
     
     mDeviceWidth = 800;
     mDeviceHeight = 600;
@@ -147,8 +149,10 @@ void FWindow::Draw() {
 
 bool FWindow::TouchDown(float pX, float pY, void *pData) {
     bool aConsumed = false;
+    mSelectedCanvas = NULL;
     FCanvas *aCollider = mRoot.BaseTouchDown(pX, pY, pX, pY, pData, false, aConsumed);
     if (aCollider) {
+        mSelectedCanvas = aCollider;
         return aConsumed;
     }
     return false;
@@ -296,6 +300,14 @@ void FWindow::RegisterKill(FCanvas *pCanvas) {
 }
 
 void FWindow::RegisterDealloc(FCanvas *pCanvas) {
+    if (pCanvas == mSelectedCanvas) {
+        mSelectedCanvas = NULL;
+    }
+    if (gAppBase != NULL) {
+        if (gAppBase->mSelectedCanvas == pCanvas) {
+            gAppBase->mSelectedCanvas = NULL;
+        }
+    }
     mRealizeBucket.Remove(pCanvas);
     mLayoutBucket.Remove(pCanvas);
     mTransformUpdateBucket.Remove(pCanvas);

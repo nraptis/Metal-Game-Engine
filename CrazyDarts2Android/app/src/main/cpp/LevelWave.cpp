@@ -15,9 +15,35 @@ LevelWave::LevelWave() {
     mAliveTimer = 0;
     mIsComplete = false;
     mRight = true;
+    
+    for (int i=0;i<5;i++) {
+        LevelWaveSpawn *aSpawn = new LevelWaveSpawn(this, &mPath);
+        mSpawnList.Add(aSpawn);
+    }
+    mSpawnIndex = 0;
+    
+    mSpawnSeparationDistance = 90.0f;
+    
 }
 
 LevelWave::~LevelWave() {
+    
+}
+
+void LevelWave::Reset() {
+    mPath.Reset();
+    
+    FreeList(LevelWaveSpawn, mSpawnList);
+    mSpawnIndex = 0;
+    
+    //Just re-start the spawners...
+    for (int i=0;i<5;i++) {
+        LevelWaveSpawn *aSpawn = new LevelWaveSpawn(this, &mPath);
+        mSpawnList.Add(aSpawn);
+    }
+}
+
+void LevelWave::Restart() {
     
 }
 
@@ -44,14 +70,76 @@ void LevelWave::Spawn() {
 }
 
 void LevelWave::Update() {
-    mAliveTimer += 1;
-    if (mAliveTimer >= 500) {
+    
+    if (mSpawnList.mCount <= 0) {
         mIsComplete = true;
+        return;
     }
+    
+    
+    for (int i=0;i<mSpawnIndex;i++) {
+        LevelWaveSpawn *aSpawn = (LevelWaveSpawn *)mSpawnList.Fetch(i);
+        if (aSpawn != NULL && aSpawn->mIsComplete == false) {
+            aSpawn->mPathIndex += 1;
+            if (aSpawn->mPathIndex >= mPath.mPath.mCount) {
+                aSpawn->mIsComplete = true;
+            }
+        }
+        if (aSpawn != NULL) {
+            aSpawn->Update();
+        }
+        
+        
+    }
+    
+    
+    if (mPath.mDidFinalize == true && mPath.mDidFailFinalize == false && mPath.mPath.mCount > 0) {
+        if (mSpawnIndex >= 0 && mSpawnIndex < mSpawnList.mCount) {
+            
+            
+            LevelWaveSpawn *aPrevSpawn = (LevelWaveSpawn *)mSpawnList.Fetch(mSpawnIndex - 1);
+            LevelWaveSpawn *aSpawn = (LevelWaveSpawn *)mSpawnList.Fetch(mSpawnIndex);
+            if (aSpawn !=  NULL) {
+                bool aShouldSpawn = false;
+                if (aPrevSpawn != NULL) {
+                    
+                    if (aPrevSpawn->mIsComplete) {
+                        aShouldSpawn = true;
+                    } else {
+                        
+                        if (aPrevSpawn->mDistanceTraveled > (mSpawnSeparationDistance + aSpawn->mOffsetSpawnDistance)) {
+                            aShouldSpawn = true;
+                        }
+                    }
+                } else {
+                    aShouldSpawn = true;
+                }
+                if (aShouldSpawn) {
+                    if (aSpawn) {
+                        aSpawn->Spawn();
+                        mSpawnIndex += 1;
+                    }
+                }
+            }
+        }
+        
+    }
+    
+    //FList                               mSpawnList;
+    //int                                 mSpawnIndex;
+    
+    
+    
+    
 }
 
 void LevelWave::Draw() {
-    
+    for (int i=0;i<mSpawnIndex;i++) {
+        LevelWaveSpawn *aSpawn = (LevelWaveSpawn *)mSpawnList.Fetch(i);
+        if (aSpawn != NULL) {
+            aSpawn->Draw();
+        }
+    }
 }
 
 void LevelWave::Dispose() {
@@ -61,3 +149,14 @@ void LevelWave::Dispose() {
 void LevelWave::DisposeObject(GameObject *pObject) {
     
 }
+
+
+
+
+
+
+
+
+
+
+

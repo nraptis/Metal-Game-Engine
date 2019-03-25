@@ -23,6 +23,14 @@ LevelSection::~LevelSection() {
     
 }
 
+void LevelSection::Reset() {
+    
+}
+
+void LevelSection::Restart() {
+    
+}
+
 void LevelSection::Spawn() {
     Log("LevelSection::Spawn()\n");
     

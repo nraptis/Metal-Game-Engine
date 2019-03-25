@@ -15,6 +15,14 @@
 #include "UIRoundedRect.hpp"
 #include "FloatingCamera.hpp"
 #include "FUniforms.hpp"
+#include "FJSON.hpp"
+
+#define EDITOR_MODE 1
+//#undef EDITOR_MODE
+
+#ifdef EDITOR_MODE
+class GameEditor;
+#endif
 
 class Util_ScreenFrame;
 class LightConfigurationScene;
@@ -48,6 +56,11 @@ public:
     virtual void                            TouchFlush() override;
     
     GameContainer                           *mGameContainer;
+    
+#ifdef EDITOR_MODE
+    GameEditor                              *mEditor;
+#endif
+    
     
     void                                    Draw3D();
     void                                    Draw2D();

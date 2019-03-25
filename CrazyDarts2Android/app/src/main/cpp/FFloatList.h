@@ -21,6 +21,7 @@ public:
     inline bool             IsEmpty() { return mCount == 0; }
     
     void                    Clear();
+    void                    RemoveAll();
     void                    Reset();
     
     float                   *mData;

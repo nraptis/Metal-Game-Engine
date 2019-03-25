@@ -25,9 +25,6 @@ public:
     float                               mDirectionRotationPrimary;
     float                               mDirectionRotationSecondary;
     
-    float                               mEyeRotationPrimary;
-    float                               mEyeRotationSecondary;
-    
 };
 
 #endif /* PhongConfiguration_hpp */

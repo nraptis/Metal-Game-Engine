@@ -379,6 +379,11 @@ public:
     //
     static void                             PipelineStateSetModelIndexedLightedPhongNoBlending();
     static void                             PipelineStateSetModelIndexedLightedPhongAlphaBlending();
+    //
+    static void                             PipelineStateSetModelIndexedLightedSimpleSpotlightNoBlending();
+    static void                             PipelineStateSetModelIndexedLightedSimpleSpotlightAlphaBlending();
+    
+    
     
     
     

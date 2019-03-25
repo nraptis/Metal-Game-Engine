@@ -14,6 +14,7 @@
 #include "UISlider.hpp"
 #include "UISegment.hpp"
 #include "UICheckBox.hpp"
+#include "UITextBox.hpp"
 #include "UIAlignmentPicker.hpp"
 
 ToolMenuSectionRow::ToolMenuSectionRow() {
@@ -64,6 +65,18 @@ void ToolMenuSectionRow::Layout() {
             aResizableCount += 1;
             aLabelCount += 1;
         }
+        if (aElement->mType == UI_ELEMENT_TEXT_BOX) {
+            UITextBox *aTextBox = (UITextBox *)(aElement->mElement);
+            float aIdealWidth = aTextBox->GetIdealSize();
+            if (aIdealWidth < 80.0f) { aIdealWidth = 80.0f; }
+            if (aIdealWidth > 120.0f) { aIdealWidth = 120.0f; }
+            
+            
+            aElement->mIdealWidth = aIdealWidth;
+            aElementGroupWidth += aIdealWidth + aSpacing;
+            aResizableCount += 1;
+            aLabelCount += 1;
+        }
 
         if (aElement->mType == UI_ELEMENT_ALIGNMENT_PICKER) {
             float aIdealWidth = ToolMenuSectionRow::GetHeight();
@@ -84,7 +97,8 @@ void ToolMenuSectionRow::Layout() {
 
                 EnumList(UIElement, aElement, mElementList) {
                     if (aElement->mType == UI_ELEMENT_BUTTON ||
-                        aElement->mType == UI_ELEMENT_LABEL) {
+                        aElement->mType == UI_ELEMENT_LABEL ||
+                        aElement->mType == UI_ELEMENT_TEXT_BOX) {
                         if (aElement->mIdealWidth > 60.0f && aOverFlow > 0.0f) {
                             aReloop = true;
                             aElement->mIdealWidth -= 1.0f;
@@ -105,7 +119,8 @@ void ToolMenuSectionRow::Layout() {
             EnumList(UIElement, aElement, mElementList) {
                 if (aElement->mType == UI_ELEMENT_BUTTON ||
                     aElement->mType == UI_ELEMENT_CHECKBOX ||
-                    aElement->mType == UI_ELEMENT_LABEL) {
+                    aElement->mType == UI_ELEMENT_LABEL ||
+                    aElement->mType == UI_ELEMENT_TEXT_BOX) {
                     aElement->mIdealWidth += aGrowPerElement;
                 }
             }
@@ -125,6 +140,11 @@ void ToolMenuSectionRow::Update() {
 }
 
 void ToolMenuSectionRow::Draw() {
+    
+    Graphics::PipelineStateSetShape2DAlphaBlending();
+    Graphics::SetColor();
+    
+    
     mSectionBackgroundOutline.Draw();
     mSectionBackground.Draw();
 }
@@ -140,6 +160,17 @@ void ToolMenuSectionRow::AddLabel(UILabel *pLabel) {
         UIElement *aElement = new UIElement();
         aElement->SetLabel(pLabel);
         AddElement(aElement);
+    }
+}
+
+void ToolMenuSectionRow::AddTextBox(UITextBox *pTextBox) {
+    
+    if (pTextBox) {
+        
+        UIElement *aElement = new UIElement();
+        aElement->SetTextBox(pTextBox);
+        AddElement(aElement);
+        gNotify.Register(this, pTextBox, "text_box_change");
     }
 }
 

@@ -130,6 +130,20 @@ public:
     float                                       mSpawnZoneBottom;
     float                                       mSpawnZoneLeft;
     
+    float                                       mPeekZoneTop;
+    float                                       mPeekZoneRight;
+    float                                       mPeekZoneLeft;
+    
+    
+    float                                       mQuarterZoneTop;
+    float                                       mQuarterZoneRight;
+    float                                       mQuarterZoneLeft;
+    float                                       mQuarterZoneBottom;
+    
+    
+    float                                       mExitZoneTop;
+    float                                       mExitZoneRight;
+    float                                       mExitZoneLeft;
     
     // Once darts, items, etc get into this area, they
     // are automatically killed. "Out of bounds"
@@ -139,10 +153,26 @@ public:
     float                                       mKillZoneLeft;
     bool                                        IsGameObjectOutsideKillZone(GameObject *pObject);
     
-    LevelWavePath                               mTestPath;
-    
     void                                        Load();
     
+    float                                       mEditorCursorX;
+    float                                       mEditorCursorY;
+    
+#ifdef EDITOR_MODE
+    void                                        EditorRestartWave();
+    void                                        EditorRestartSection();
+    
+    bool                                        mEditorWavePlayback;
+    bool                                        mEditorWaveLoop;
+    bool                                        mEditorSectionPlayback;
+    bool                                        mEditorSectionLoop;
+    
+    bool                                        mEditorShowReferenced;
+    LevelSection                                mEditorSection;
+    LevelWave                                   mEditorWave;
+    FList                                       mEditorObjectList;
+    FList                                       mEditorObjectQueue;
+#endif
     
 };
 

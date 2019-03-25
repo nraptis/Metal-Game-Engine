@@ -47,9 +47,9 @@ public:
     unsigned int                mVertexShader;
     unsigned int                mFragmentShader;
     
-    int                         mSlotProjectionUniform;
-    int                         mSlotModelViewUniform;
-    int                         mSlotModulateUniform;
+    int                         mSlotProjectionMatrixUniform;
+    int                         mSlotModelViewMatrixUniform;
+    int                         mSlotModulateColorUniform;
     
     int                         mSlotPositions;
     

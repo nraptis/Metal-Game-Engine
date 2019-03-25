@@ -1,11 +1,13 @@
 uniform mat4 ProjectionMatrix;
 uniform mat4 ModelViewMatrix;
 attribute vec3 Positions;
-attribute vec3 TextureCoords;
-attribute vec3 Normals;
 
-varying vec2 TextureCoordsOut;
+attribute vec3 Normals;
 varying vec3 NormalsOut;
+
+attribute vec3 TextureCoords;
+varying vec2 TextureCoordsOut;
+
 varying vec3 EyeOut;
 
 

@@ -28,7 +28,7 @@ public class JavaOutlets
 	private static MediaPlayer mMusicPlayer;
 	private static GL2JNIView mOpenGL;
 
-	private ArrayList<Semaphore> mLockList = new ArrayList<Semaphore>();
+	private ArrayList<ReentrantLock> mLockList = new ArrayList<ReentrantLock>(100);
 
 	public static void setContext(Context c)
 	{
@@ -109,11 +109,12 @@ public class JavaOutlets
 
 		int aResult = mLockList.size();
 
-		Semaphore aSemaphore = new Semaphore(1);
-		mLockList.add(aSemaphore);
+		//Semaphore aSemaphore = new Semaphore(1);
+		//mLockList.add(aSemaphore);
 
-		//ReentrantLock aLock = new ReentrantLock();
-		//mLockList.add(aLock);
+		ReentrantLock aLock = new ReentrantLock();
+		mLockList.add(aLock);
+
 		return aResult;
 	}
 
@@ -127,9 +128,18 @@ public class JavaOutlets
 	public void lockThread(int pLockIndex) {
 		if (pLockIndex >= 0 && pLockIndex < mLockList.size()) {
 			try {
-				mLockList.get(pLockIndex).acquire();
-			}catch (InterruptedException exc) {
-				System.out.println("** SEMAPHORE FAILURE **");
+				//mLockList.get(pLockIndex).acquire();
+				//mLockList.get(pLockIndex).lock();
+
+				//}//catch (InterruptedException exc) {
+				//	System.out.println("** SEMAPHORE FAILURE **");
+				//	System.out.println(exc);
+				//}
+			} catch (IllegalMonitorStateException exc) {
+				System.out.println("*****************");
+				System.out.println("*****************");
+				System.out.println("*****************");
+				System.out.println("BAD LOCK!!!!!!!");
 				System.out.println(exc);
 			}
 		}
@@ -137,23 +147,27 @@ public class JavaOutlets
 
 	public void unlockThread(int pLockIndex) {
 		if (pLockIndex >= 0 && pLockIndex < mLockList.size()) {
-			mLockList.get(pLockIndex).release();
+			//mLockList.get(pLockIndex).release();
 			//mLockList.get(pLockIndex).unlock();
+
 		}
 	}
 
 	public void deleteThreadLock(int pLockIndex) {
 		if (pLockIndex >= 0 && pLockIndex < mLockList.size()) {
-			//mLockList.get(pLockIndex).unlock();
-			mLockList.get(pLockIndex).release();
+			mLockList.get(pLockIndex).unlock();
+			//mLockList.get(pLockIndex).release();
+
 			mLockList.remove(pLockIndex);
+
 		}
 	}
 
 	public void deleteAllThreadLocks() {
 		for (int i=0;i<mLockList.size();i++) {
-			//mLockList.get(i).unlock();
-			mLockList.get(i).release();
+			mLockList.get(i).unlock();
+			//mLockList.get(i).release();
+
 		}
 		mLockList.clear();
 	}

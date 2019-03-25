@@ -14,25 +14,25 @@
 #include "FPointList.h"
 #include "FList.hpp"
 
-
-//We slow down to "stop" points
-#define PATH_NODE_STOP 0
-
-//Then we "wait" for some time
-#define PATH_NODE_WAIT 1
+#define WAVE_SPEED_EXTRA_SLOW -300
+#define WAVE_SPEED_SLOW -200
+#define WAVE_SPEED_MEDIUM_SLOW -100
+#define WAVE_SPEED_MEDIUM 0
+#define WAVE_SPEED_MEDIUM_FAST 100
+#define WAVE_SPEED_FAST 200
+#define WAVE_SPEED_EXTRA_FAST 300
+#define WAVE_SPEED_INSANE 700
 
 //We move right through these points.
-#define PATH_NODE_MOVE 2
+#define PATH_NODE_NORMAL 0
 
 //We haven't decided anything.
 #define PATH_NODE_INVALID -1
-
 
 class LevelWavePathNode {
 public:
     LevelWavePathNode();
     ~LevelWavePathNode();
-    
     float                       mX;
     float                       mY;
     int                         mType;
@@ -45,29 +45,40 @@ public:
     LevelWavePath();
     ~LevelWavePath();
     
-    void                        Add(int pType, float pX, float pY);
-    void                        AddMove(float pX, float pY);
-    void                        AddStop(float pX, float pY);
-    void                        AddWait(int pTime);
+    void                                Reset();
     
-    bool                        mDidFinalize;
+    void                                AddMove(float pX, float pY, int pWait = 0);
     
-    void                        AddSegmentBacktrackingFrom(int pIndex);
+    bool                                mDidFinalize;
+    bool                                mDidFailFinalize;
     
-    void                        Dump(bool pDecel);
+    void                                AddSegmentBacktrackingFrom(int pIndex);
     
-    void                        Draw();
-    void                        Finalize();
+    void                                Dump(bool pDecel);
     
-    float                       mSpeed;
+    void                                Draw();
+    void                                Finalize();
     
+    bool                                mSmooth;
     
-    FList                       mNodeList;
+    void                                SetSpeedClass(int pSpeedClass);
+    float                               mSpeed;
     
+    FList                               mNodeList;
     
-    FPointList                  mRendumList;
+    FPointList                          mPath;
+    FFloatList                          mDist;
     
+    float                               mTestPer;
     
+    float                               mTempX;
+    float                               mTempY;
+    float                               mTempDist;
+    
+    int                                 mDemoIndex;
+    
+private:
+    void                                Add(int pType, float pX, float pY, int pWait);
     
 };
 

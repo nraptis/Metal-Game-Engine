@@ -19,11 +19,9 @@ public:
     UISegment(int pSegmentCount);
     virtual ~UISegment();
     
-    virtual void                                Layout();
-
-    virtual void                                Update();
-    
-    virtual void                                Notify(void *pSender, const char *pNotification);
+    virtual void                                Layout() override;
+    virtual void                                Update() override;
+    virtual void                                Notify(void *pSender, const char *pNotification) override;
 
     void                                        SetSegmentCount(int pSegmentCount);
     void                                        SetSelectedIndex(int pIndex);

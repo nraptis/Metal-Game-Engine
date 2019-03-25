@@ -1,35 +1,26 @@
-
-#include "FStringBuffer.h"
+#include "FString.h"
 #include "FPointList.h"
 #include "core_includes.h"
 #include "FLine.h"
 #include "FFile.hpp"
 
-FPointList::FPointList()
-{
-    mCount=0;
-    mSize=0;
-    
-    mX=0;
-    mY=0;
-    
-    
+FPointList::FPointList() {
+    mCount = 0;
+    mSize = 0;
+    mX = NULL;
+    mY = NULL;
 }
 
-FPointList::~FPointList()
-{
+FPointList::~FPointList() {
 	Clear();
 }
 
-void FPointList::Clear()
-{
+void FPointList::Clear() {
     delete [] mX;
-    
-    mCount=0;
-    mSize=0;
-    
-    mX=0;
-    mY=0;
+    mCount = 0;
+    mSize = 0;
+    mX = NULL;
+    mY = NULL;
 }
 
 void FPointList::Add(float pX, float pY)
@@ -45,21 +36,14 @@ void FPointList::Add(float pX, float pY)
     mCount++;
 }
 
-void FPointList::Add(FPointList *pList)
-{
-    if(pList)
-    {
-        
-        if(pList->mCount > mSize)
-        {
+void FPointList::Add(FPointList *pList) {
+    if (pList) {
+        if (pList->mCount > mSize) {
             Size(pList->mCount);
         }
-        
-        for(int i=0;i<pList->mCount;i++)
-        {
+        for (int i=0;i<pList->mCount;i++) {
             Add(pList->mX[i], pList->mY[i]);
         }
-        
     }
 }
 
@@ -180,13 +164,7 @@ int FPointList::Remove(int pIndex)
      */
 }
 
-void FPointList::Reset()
-{
-    mCount = 0;
-}
-
-void FPointList::Size(int pSize)
-{
+void FPointList::Size(int pSize) {
     if(pSize != mSize)
     {
         if(pSize <= 0)
@@ -785,12 +763,9 @@ void FPointList::UntransformTranslate(float pX, float pY)
     TransformTranslate(-pX, -pY);
 }
 
-int FPointList::GetClosestIndex(float pX, float pY, float &pDist, int pIgnoreIndex1, int pIgnoreIndex2, int pIgnoreIndex3)
-{
+int FPointList::GetClosestIndex(float pX, float pY, float &pDist, int pIgnoreIndex1, int pIgnoreIndex2, int pIgnoreIndex3) {
     int aResult = -1;
-    
-    if(mCount > 0)
-    {
+    if (mCount > 0) {
         
         float aBestDist = 90.0f * 90.0f;
         
@@ -798,16 +773,12 @@ int FPointList::GetClosestIndex(float pX, float pY, float &pDist, int pIgnoreInd
         float aDiffY = 0.0f;
         float aDist = 0.0f;
         
-        for(int i=0;i<mCount;i++)
-        {
+        for (int i=0;i<mCount;i++) {
             aDiffX = mX[i] - pX;
             aDiffY = mY[i] - pY;
             aDist = aDiffX * aDiffX + aDiffY * aDiffY;
-            
-            if(aDist < aBestDist)
-            {
-                if((i != pIgnoreIndex1) && (i != pIgnoreIndex2) && (i != pIgnoreIndex3))
-                {
+            if (aDist < aBestDist) {
+                if ((i != pIgnoreIndex1) && (i != pIgnoreIndex2) && (i != pIgnoreIndex3)) {
                     aBestDist = aDist;
                     aResult = i;
                 
@@ -824,20 +795,17 @@ int FPointList::GetClosestIndex(float pX, float pY, float &pDist)
 {
     int aResult = -1;
     
-    if(mCount > 0)
-    {
+    if (mCount > 0) {
         aResult = 0;
         float aDiffX = mX[0] - pX;
         float aDiffY = mY[0] - pY;
         float aDist = aDiffX * aDiffX + aDiffY * aDiffY;
         pDist = aDist;
-        for(int i=1;i<mCount;i++)
-        {
+        for (int i=1;i<mCount;i++) {
             aDiffX = mX[i] - pX;
             aDiffY = mY[i] - pY;
             aDist = aDiffX * aDiffX + aDiffY * aDiffY;
-            if(aDist < pDist)
-            {
+            if (aDist < pDist) {
                 pDist = aDist;
                 aResult = i;
             }

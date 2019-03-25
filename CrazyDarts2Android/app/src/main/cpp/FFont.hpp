@@ -41,6 +41,11 @@ public:
     
     void                            SetKern(int pStartCharIndex, int pEndCharIndex, int pKernAmount);
     float                           mKern[256][256];
+    
+    
+    int                             GetCursor(float pTouchX, float pTouchY, const char *pText, float pX, float pY, float pScale);
+    float                           LocationOfCursor(int pCursor, const char *pText, float pX, float pY, float pScale);
+    
 
     void                            Draw(const char *pText, float pX, float pY);
     void                            Draw(FString pText, float pX, float pY){Draw((const char *)pText.c(), pX, pY);}
@@ -61,6 +66,7 @@ public:
     void                            Left(FString pText, float pX, float pY, float pScale) { Left((const char *)pText.c(), pX, pY, pScale); }
     void                            LeftCenter(const char *pText, float pX, float pY, float pScale);
     void                            LeftCenter(FString pText, float pX, float pY, float pScale) { LeftCenter((const char *)pText.c(), pX, pY, pScale); }
+    
 
     void                            Center(const char *pText, float pX, float pY);
     void                            Center(const char *pText, float pX, float pY, float pScale);
@@ -96,9 +102,6 @@ public:
 
     float                           PlotWidth(char *pText, float *pArray);
     float                           PlotWidthCentered(char *pText, float *pArray);
-    
-    float                           Spacing(char pChar, char pNext);
-    int                             LineCount(char *pString, float pWidth);
     
     void                            LoadRange(const char *pFilePrefix, char pStart, char pEnd);
     

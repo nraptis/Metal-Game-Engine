@@ -59,6 +59,10 @@ bool gIsRetina = false;
 int gQuadBufferPosition = -1;
 int gQuadBufferTextureCoord = -1;
 
+bool gKeyDownCtrl = false;
+bool gKeyDownShift = false;
+bool gKeyDownAlt = false;
+
 
 
 void AppShellInitialize(int pEnvironment) {
@@ -250,14 +254,34 @@ void AppShellSetDeviceSize(int pWidth, int pHeight) {
             float aAspectRatio = 768.0f / 1024.0f;
             
             
-            float aPadding = 5.0f;
-            float aVirtualHeight = round(gDeviceHeight - (aPadding * 2.0f));
-            float aVirtualWidth = round(gDeviceHeight * aAspectRatio);
-            float aVirtualX = round(gDeviceWidth - (5.0 + aVirtualWidth));
-            float aVirtualY = aPadding;
             
-            //TODO:
-            AppShellSetVirtualFrame(aVirtualX, aVirtualY, aVirtualWidth, aVirtualHeight);
+            if (true) {
+                
+                
+                float aVirtualHeight = round(gDeviceHeight * 0.75f);
+                float aVirtualWidth = round(aVirtualHeight * aAspectRatio);
+                float aVirtualX = round(gDeviceWidth / 2.0f - (aVirtualWidth / 2.0f));
+                float aVirtualY = gDeviceHeight - (5.0f + aVirtualHeight);
+                
+                
+                
+                //TODO:
+                AppShellSetVirtualFrame(aVirtualX, aVirtualY, aVirtualWidth, aVirtualHeight);
+                
+            } else {
+                float aPadding = 5.0f;
+                float aVirtualHeight = round(gDeviceHeight - (aPadding * 2.0f));
+                float aVirtualWidth = round(gDeviceHeight * aAspectRatio);
+                float aVirtualX = round(gDeviceWidth / 2.0f - (aVirtualWidth / 2.0f));
+                float aVirtualY = aPadding;
+                
+                
+                
+                //TODO:
+                AppShellSetVirtualFrame(aVirtualX, aVirtualY, aVirtualWidth, aVirtualHeight);
+            }
+            
+            
             
             //aApp->BaseSetVirtualFrame(aVirtualX, aVirtualY, aVirtualWidth, aVirtualHeight);
         }
@@ -387,16 +411,19 @@ void AppShellMouseWheel(int pDirection) {
 
 void AppShellKeyDown(int pKey) {
     if (pKey >= 0 && pKey < 256) {
-        Log("AppShellKeyDown([%d]=>%s)\n", pKey, gKeyName[pKey]);
+        //Log("AppShellKeyDown([%d]=>%s)\n", pKey, gKeyName[pKey]);
         if (gAppBase) gAppBase->BaseKeyDown(pKey);
     } else {
-        Log("AppShellIllegalKeyDown([%d]=>%s)\n", pKey, "???");
+        
     }
 }
 
 void AppShellKeyUp(int pKey) {
-    if (gAppBase) {
-        gAppBase->BaseKeyUp(pKey);
+    if (pKey >= 0 && pKey < 256) {
+        //Log("AppShellKeyUp([%d]=>%s)\n", pKey, gKeyName[pKey]);
+        if (gAppBase) gAppBase->BaseKeyUp(pKey);
+    } else {
+        
     }
 }
 

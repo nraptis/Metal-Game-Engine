@@ -16,6 +16,9 @@ Game::Game() {
     
     mName = "[Game]";
     
+    mEditorCursorX = 400.0f;
+    mEditorCursorY = 400.0f;
+    
     
     gGame = this;
     
@@ -63,6 +66,20 @@ Game::Game() {
     mSpawnZoneBottom = 0.0f;
     mSpawnZoneLeft = 0.0f;
     
+    mPeekZoneTop = 0.0f;
+    mPeekZoneRight = 0.0f;
+    mPeekZoneLeft = 0.0f;
+    
+    mExitZoneTop = 0.0f;
+    mExitZoneRight = 0.0f;
+    mExitZoneLeft = 0.0f;
+    
+    mQuarterZoneTop = 0.0f;
+    mQuarterZoneRight = 0.0f;
+    mQuarterZoneLeft = 0.0f;
+    mQuarterZoneBottom = 0.0f;
+    
+    
     mKillZoneTop = 0.0f;
     mKillZoneRight = 0.0f;
     mKillZoneBottom = 0.0f;
@@ -90,15 +107,13 @@ Game::Game() {
     mDartResetAnimationTick = 0;
     mDartResetAnimationTime = 200;
     
-    
-    
-    mTestPath.AddMove(100.0f, 100.0f);
-    mTestPath.AddMove(230.0f, 80.0f);
-    mTestPath.AddStop(500.0f, 360.0f);
-    mTestPath.AddWait(80);
-    mTestPath.AddMove(600.0f, 700.0f);
-    
-    
+#ifdef EDITOR_MODE
+    mEditorShowReferenced = true;
+    mEditorWavePlayback = true;
+    mEditorWaveLoop = true;
+    mEditorSectionPlayback = true;
+    mEditorSectionLoop = true;
+#endif
     
 }
 
@@ -198,18 +213,10 @@ void Game::LayoutTransform() {
     mHitZoneLeft = Convert2DXTo3D(-aHitZonePaddingH);
     
     
-    mGameAreaTop = Convert2DYTo3D(0.0f);
-    mGameAreaRight = Convert2DXTo3D(mWidth);
-    mGameAreaBottom = Convert2DYTo3D(mHeight);
-    mGameAreaLeft = Convert2DXTo3D(0.0f);
-    
-    float aGameAreaWidth = mGameAreaRight - mGameAreaLeft;
-    float aGameAreaHeight = mGameAreaBottom - mGameAreaTop;
-    float aGameAreaMinDimension = aGameAreaWidth;
-    if (aGameAreaHeight < aGameAreaMinDimension) { aGameAreaMinDimension = aGameAreaHeight; }
-    float aGameAreaMaxDimension = aGameAreaWidth;
-    if (aGameAreaHeight > aGameAreaMaxDimension) { aGameAreaMaxDimension = aGameAreaHeight; }
-    
+    mGameAreaTop = 0.0f;
+    mGameAreaRight = mWidth;
+    mGameAreaBottom = mHeight;
+    mGameAreaLeft = 0.0f;
     
     
     float aPlayAreaPadding = mWidth;
@@ -228,27 +235,37 @@ void Game::LayoutTransform() {
     mPlayAreaBottom = mDartSpawnY - aPlayAreaPadding;
     mPlayAreaLeft = gSafeAreaInsetLeft + aPlayAreaPadding;
     
-    mPlayAreaTop = Convert2DYTo3D(mPlayAreaTop);
-    mPlayAreaRight = Convert2DXTo3D(mPlayAreaRight);
-    mPlayAreaBottom = Convert2DYTo3D(mPlayAreaBottom);
-    mPlayAreaLeft = Convert2DXTo3D(mPlayAreaLeft);
+    float aSpawnZonePadding = 100.0f;
+    mSpawnZoneTop = -aSpawnZonePadding;
+    mSpawnZoneRight = mWidth + aSpawnZonePadding;
+    mSpawnZoneBottom = mHeight;
+    mSpawnZoneLeft = -aSpawnZonePadding;
     
+    float aPeekZonePaddingTop = 88.0f;
+    float aPeekZonePaddingSides = 60.0f;
+    mPeekZoneTop = aPeekZonePaddingTop;
+    mPeekZoneRight = mWidth - aPeekZonePaddingSides;
+    mPeekZoneLeft = aPeekZonePaddingSides;
     
-    float aSpawnZonePadding = 80.0f;
+    float aQuarterZoneHeight = mPlayAreaBottom;
+    mQuarterZoneTop = aQuarterZoneHeight / 4.0f;
+    mQuarterZoneRight = mWidth - mWidth / 4.0f;
+    mQuarterZoneLeft = mWidth / 4.0f;
+    mQuarterZoneBottom = mPlayAreaBottom - aQuarterZoneHeight / 4.0f;
     
-    mSpawnZoneTop = Convert2DYTo3D(-aSpawnZonePadding);
-    mSpawnZoneRight = Convert2DXTo3D(mWidth + aSpawnZonePadding);
-    mSpawnZoneBottom = mPlayAreaBottom;
-    mSpawnZoneLeft = Convert2DXTo3D(-aSpawnZonePadding);
+    float aExitZonePaddingTop = aPeekZonePaddingTop + 100.0f;
+    float aExitZonePaddingSides = aPeekZonePaddingSides + 100.0f;
+    mExitZoneTop = -aExitZonePaddingTop;
+    mExitZoneRight = mWidth + aExitZonePaddingSides;
+    mExitZoneLeft = -aExitZonePaddingSides;
     
     float aKillZonePaddingTop = gDeviceHeight * 0.75f;
     float aKillZonePaddingBottom = gDeviceHeight * 0.5f;
     float aKillZonePaddingSides = gDeviceWidth * 0.5f + 200.0f;
-    
-    mKillZoneTop = Convert2DYTo3D(-aKillZonePaddingTop);
-    mKillZoneRight = Convert2DXTo3D(mWidth + aKillZonePaddingSides);
-    mKillZoneBottom = Convert2DYTo3D(mHeight + aKillZonePaddingBottom);
-    mKillZoneLeft = Convert2DXTo3D(-aKillZonePaddingSides);
+    mKillZoneTop = aKillZonePaddingTop;
+    mKillZoneRight = mWidth + aKillZonePaddingSides;
+    mKillZoneBottom = mHeight + aKillZonePaddingBottom;
+    mKillZoneLeft = -aKillZonePaddingSides;
     
     
     
@@ -378,6 +395,66 @@ void Game::Update() {
     }
     
     mLevelController->Update();
+    
+    
+    
+#ifdef EDITOR_MODE
+    
+    int aRequiredTestObjectCount = mEditorWave.mPath.mNodeList.mCount;
+    
+    while (mEditorObjectList.mCount > aRequiredTestObjectCount) {
+        mEditorObjectQueue.Add(mEditorObjectList.PopLast());
+    }
+    
+    while (mEditorObjectList.mCount < aRequiredTestObjectCount && mEditorObjectQueue.mCount > 0) {
+        mEditorObjectList.Add(mEditorObjectQueue.PopLast());
+    }
+    
+    while (mEditorObjectList.mCount < aRequiredTestObjectCount) {
+        Balloon *aBalloon = new Balloon();
+        mEditorObjectList.Add(aBalloon);
+    }
+    
+    for (int i=0;i<mEditorWave.mPath.mNodeList.mCount;i++) {
+        
+        GameObject *aObject = (GameObject *)mEditorObjectList.Fetch(i);
+        LevelWavePathNode *aPathNode = (LevelWavePathNode *)mEditorWave.mPath.mNodeList.Fetch(i);
+        
+        if (aObject != NULL && aPathNode != NULL) {
+            aObject->mTransform.mX = aPathNode->mX;
+            aObject->mTransform.mY = aPathNode->mY;
+            aObject->Update();
+        }
+    }
+    
+    if (mEditorWavePlayback) {
+        mEditorWave.Update();
+        if (mEditorWave.mIsComplete) {
+            if (mEditorWaveLoop) {
+                mEditorWave.Restart();
+            }
+        }
+    }
+    
+    if (mEditorSectionPlayback) {
+        mEditorSection.Update();
+        if (mEditorSection.mIsComplete) {
+            if (mEditorSectionLoop) {
+                
+            }
+        }
+    }
+    
+#endif
+    
+    
+    
+    
+    //FList                                       mEditorObjectList;
+    //FList                                       mEditorObjectQueue;
+    
+    
+    
 }
 
 void Game::Draw() {
@@ -391,8 +468,10 @@ void Game::Draw() {
     Graphics::SetColor();
     
     
-    Graphics::PipelineStateSetShape2DNoBlending();
-    Graphics::OutlineRectInside(0.0f, 0.0f, mWidth, mHeight, 2.0f);
+    //Graphics::SetColor(1.0f, 1.0f, 0.25f, 0.25f);
+    //Graphics::OutlineRectInside(0.0f, 0.0f, mWidth, mHeight, 1.0f);
+    //Graphics::SetColor();
+    
     
     //gApp->mGameAreaMarker.Draw(0.0f, 0.0f);
     
@@ -441,6 +520,7 @@ void Game::Draw() {
     */
     
     
+    /*
     float aIndicatorCenterX = mDartSpawnX - mWidth * 0.1f;
     float aIndicatorCenterY = mDartSpawnY;
     
@@ -481,8 +561,20 @@ void Game::Draw() {
     } else {
         
     }
+    */
+    
 
-    mTestPath.Draw();
+    
+#ifdef EDITOR_MODE
+    Graphics::PipelineStateSetShape2DNoBlending();
+    Graphics::SetColor();
+    mEditorWave.mPath.Draw();
+    mEditorWave.Draw();
+    
+    //Graphics::DrawLine(mEditorCursorX - 20.0f, mEditorCursorY - 20.0f, mEditorCursorX + 20.0f, mEditorCursorY + 20.0f);
+    //Graphics::DrawLine(mEditorCursorX + 20.0f, mEditorCursorY - 20.0f, mEditorCursorX - 20.0f, mEditorCursorY + 20.0f);
+#endif
+    
 }
 
 void Game::Draw3D() {
@@ -493,18 +585,15 @@ void Game::Draw3D() {
     }
     
     Graphics::ClipDisable();
-    
-    Graphics::PipelineStateSetShape3DAlphaBlending();
     Graphics::DepthDisable();
 }
 
 void Game::TouchDown(float pX, float pY, void *pData) {
     
     if (gRand.GetBool()) {
-        //gApp->mSound1.Play();
+        gApp->mSound1.Play();
     } else {
-        //gApp->mSound2.Play();
-
+        gApp->mSound2.Play();
     }
     
     if (mDartTouch) {
@@ -845,3 +934,18 @@ void Game::Load() {
     mLevelController->Setup(mLevelData);
     
 }
+
+
+
+#ifdef EDITOR_MODE
+
+void Game::EditorRestartWave() {
+    
+}
+
+
+void Game::EditorRestartSection() {
+    
+}
+
+#endif

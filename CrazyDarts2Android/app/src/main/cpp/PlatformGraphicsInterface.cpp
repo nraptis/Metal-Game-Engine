@@ -58,31 +58,6 @@ void PlatformGraphicsInterface::Postrender() {
     }
 }
 
-bool PlatformGraphicsInterface::IsVSyncReady() {
-    
-    return true;
-    //usleep(90000);
-    /*
-    double aTime = CACurrentMediaTime() * 60.0f;
-    double aLinkTime = mLastTime * 60.0f;
-    double aDiff = (aTime - aLinkTime);
-    //printf("---Time[%f] LinkTime[%f]  (%f)\n", aTime, aLinkTime, aDiff);
-    
-    int aFudge = 0;
-    while (aDiff < 1.0f && aFudge < 2000) {
-        usleep(200);
-        aTime = CACurrentMediaTime() * 60.0f;
-        aDiff = (aTime - aLinkTime);
-        //printf(">Time[%f] LinkTime[%f]  (%f)\n", aTime, aLinkTime, aDiff);
-        aFudge++;
-    }
-    if (aFudge > 1) {
-        //printf("Sleeps[%d]\n", aFudge);
-    }
-    */
-    
-}
-
 void PlatformGraphicsInterface::SetContext() {
     //[gOpenGLView setContext];
     
