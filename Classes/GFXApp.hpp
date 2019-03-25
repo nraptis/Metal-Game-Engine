@@ -124,7 +124,7 @@ public:
     
     
     FUniformsLightAmbient                   mUniAmb;
-    FUniformsLightAmbientDiffuse            mUniDiff;
+    FUniformsLightDiffuse            mUniDiff;
     FUniformsLightPhong                     mUniPhong;
     
     

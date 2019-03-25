@@ -1,21 +1,21 @@
 //
-//  ShaderProgramModelIndexedLightedAmbientDiffuseDiffuse.hpp
+//  ShaderProgramModelIndexedLightedDiffuseDiffuse.hpp
 //  Crazy Darts 2 iOS
 //
 //  Created by Nicholas Raptis on 3/15/19.
 //  Copyright © 2019 Froggy Studios. All rights reserved.
 //
 
-#ifndef ShaderProgramModelIndexedLightedAmbientDiffuseDiffuse_hpp
-#define ShaderProgramModelIndexedLightedAmbientDiffuseDiffuse_hpp
+#ifndef ShaderProgramModelIndexedLightedDiffuseDiffuse_hpp
+#define ShaderProgramModelIndexedLightedDiffuseDiffuse_hpp
 
 
 #include "ShaderProgram.hpp"
 
 
-class ShaderProgramModelIndexedLightedAmbientDiffuse: public ShaderProgram {
+class ShaderProgramModelIndexedLightedDiffuse: public ShaderProgram {
 public:
-    ShaderProgramModelIndexedLightedAmbientDiffuse(const char *pVertexPath, const char *pFragmentPath);
+    ShaderProgramModelIndexedLightedDiffuse(const char *pVertexPath, const char *pFragmentPath);
     virtual void                Compile() override;
     virtual void                BindUniform(FUniforms *pUniform) override;
     
@@ -23,6 +23,8 @@ public:
     virtual void                ArrayBufferPositions(FBuffer *pBuffer,int pOffset) override;
     virtual void                ArrayBufferTextureCoords(FBuffer *pBuffer, int pOffset) override;
     virtual void                ArrayBufferNormals(FBuffer *pBuffer, int pOffset) override;
+    
+    int                         mSlotNormalMatrixUniform;
     
     int                         mSlotTextureCoords;
     int                         mSlotNormals;
@@ -34,4 +36,4 @@ public:
     int                         mDataOffset;
 };
 
-#endif /* ShaderProgramModelIndexedLightedAmbientDiffuseDiffuse_hpp */
+#endif /* ShaderProgramModelIndexedLightedDiffuseDiffuse_hpp */

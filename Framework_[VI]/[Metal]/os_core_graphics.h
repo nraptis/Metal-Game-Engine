@@ -240,44 +240,26 @@ public:
     static void                             BufferElementDelete(int pIndex);
     static void                             BufferElementWrite(FBuffer *pBuffer, void *pData, int pLength);
     static void                             BufferElementWrite(FBuffer *pBuffer, void *pData, int pOffset, int pLength);
-    //
-    //
-    //
-	static void                             DrawTriangle2D(float pX1, float pY1, float pX2, float pY2, float pX3, float pY3);
-    //
-    //
-    //
-    static void                             DrawCube();
-    //
-    //
-    //
-    static void                             DrawSphere12(float x, float y, float z, float pRadius=1.0f);
-    //
-    //
-    //
-    //FBuffer *pBuffer
+    
+    static void                             DrawTriangle2D(float pX1, float pY1, float pX2, float pY2, float pX3, float pY3);
+
     static void                             ArrayBufferData(FBuffer *pBuffer);
     static void                             ArrayBufferData(FBuffer *pBuffer, int pOffset);
-    //
+    
     static void                             ArrayBufferPositions(FBuffer *pBuffer);
     static void                             ArrayBufferPositions(FBuffer *pBuffer, int pOffset);
-    //
+    
     static void                             ArrayBufferTextureCoords(FBuffer *pBuffer);
     static void                             ArrayBufferTextureCoords(FBuffer *pBuffer, int pOffset);
-    //
+    
     static void                             ArrayBufferColors(FBuffer *pBuffer);
     static void                             ArrayBufferColors(FBuffer *pBuffer, int pOffset);
-    //
+    
     static void                             ArrayBufferNormals(FBuffer *pBuffer);
     static void                             ArrayBufferNormals(FBuffer *pBuffer, int pOffset);
-    //
+    
     static void                             ArrayBufferTangents(FBuffer *pBuffer);
     static void                             ArrayBufferTangents(FBuffer *pBuffer, int pOffset);
-    //
-    //
-    ///////////////////////////////////////
-    //
-    //
     
     static FBuffer                          *ArrayWriteData(void *pData, int pCount);
     
@@ -329,44 +311,44 @@ public:
     static void                             DrawSpriteTriangleSetup(float *pPositions, float *pTextureCoords);
     
     
-    
-    
     static void                             PipelineStateSetShape2DNoBlending();
     static void                             PipelineStateSetShape2DAlphaBlending();
     static void                             PipelineStateSetShape2DAdditiveBlending();
-    //
+    
     static void                             PipelineStateSetShape3DNoBlending();
     static void                             PipelineStateSetShape3DAlphaBlending();
     static void                             PipelineStateSetShape3DAdditiveBlending();
-    //
+    
     static void                             PipelineStateSetShapeNodeNoBlending();
     static void                             PipelineStateSetShapeNodeAlphaBlending();
     static void                             PipelineStateSetShapeNodeAdditiveBlending();
-    //
+    
     static void                             PipelineStateSetSpriteNoBlending();
     static void                             PipelineStateSetSpriteAlphaBlending();
     static void                             PipelineStateSetSpriteAdditiveBlending();
     static void                             PipelineStateSetSpritePremultipliedBlending();
     static void                             PipelineStateSetSpriteWhiteBlending();
-    //
+    
     static void                             PipelineStateSetSimpleModelNoBlending();
     static void                             PipelineStateSetSimpleModelAlphaBlending();
-    //
+    
     static void                             PipelineStateSetSimpleModelIndexedNoBlending();
     static void                             PipelineStateSetSimpleModelIndexedAlphaBlending();
-    //
+    
     static void                             PipelineStateSetModelIndexedNoBlending();
     static void                             PipelineStateSetModelIndexedAlphaBlending();
-    //
+    
     static void                             PipelineStateSetModelIndexedLightedAmbientNoBlending();
     static void                             PipelineStateSetModelIndexedLightedAmbientAlphaBlending();
-    //
-    static void                             PipelineStateSetModelIndexedLightedAmbientDiffuseNoBlending();
-    static void                             PipelineStateSetModelIndexedLightedAmbientDiffuseAlphaBlending();
-    //
+    
+    static void                             PipelineStateSetModelIndexedLightedDiffuseNoBlending();
+    static void                             PipelineStateSetModelIndexedLightedDiffuseAlphaBlending();
+    
     static void                             PipelineStateSetModelIndexedLightedPhongNoBlending();
     static void                             PipelineStateSetModelIndexedLightedPhongAlphaBlending();
     
+    static void                             PipelineStateSetModelIndexedLightedPhongOverlayNoBlending();
+    static void                             PipelineStateSetModelIndexedLightedPhongOverlayAlphaBlending();
     
     
     

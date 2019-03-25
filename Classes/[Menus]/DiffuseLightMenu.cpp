@@ -1,5 +1,16 @@
 //
-//  PhongPhongLightMenu.cpp
+//  DiffuseLightMenu.cpp
+//  Crazy Darts 2 iOS
+//
+//  Created by Nicholas Raptis on 3/25/19.
+//  Copyright © 2019 Froggy Studios. All rights reserved.
+//
+
+#include "DiffuseLightMenu.hpp"
+
+
+//
+//  PhongDiffuseLightMenu.cpp
 //  MacMetal
 //
 //  Created by Nicholas Raptis on 2/21/19.
@@ -7,28 +18,19 @@
 //
 
 #include "LightConfigurationScene.hpp"
-#include "PhongLightMenu.hpp"
-#include "PhongConfiguration.hpp"
+#include "DiffuseLightMenu.hpp"
+#include "DiffuseConfiguration.hpp"
 #include "PGMainCanvas.hpp"
 #include "FApp.hpp"
 
-PhongLightMenu::PhongLightMenu(PhongConfiguration *pConfiguration) : ToolMenu() {
-    mName = "PhongLightMenu";
+DiffuseLightMenu::DiffuseLightMenu(DiffuseConfiguration *pConfiguration) : ToolMenu() {
+    mName = "DiffuseLightMenu";
     
-    mPhong = pConfiguration;
+    mDiffuse = pConfiguration;
     
     SetScrollMode(true);
     
-    mSpecularPanel = new ToolMenuPanel();
-    mSpecularPanel->SetTitle("Specular");
-    AddSection(mSpecularPanel);
-    
-    mSliderSpecularShininess = new UISlider();
-    mSliderSpecularShininess->SetValue(&pConfiguration->mUniform.mLight.mShininess);
-    mSliderSpecularShininess->SetRange(0.0f, 40.0f);
-    mSliderSpecularShininess->SetText("Shininess:");
-    mSpecularPanel->AddSection(mSliderSpecularShininess);
-    
+
     
     mDirectionPanel = new ToolMenuPanel();
     mDirectionPanel->SetTitle("Directions");
@@ -49,12 +51,12 @@ PhongLightMenu::PhongLightMenu(PhongConfiguration *pConfiguration) : ToolMenu() 
     
     
     /*
-    
-    ToolMenuPanel                           *;
-    UISlider                                *;
-    UISlider                                *;
-    
-    */
+     
+     ToolMenuPanel                           *;
+     UISlider                                *;
+     UISlider                                *;
+     
+     */
     
     mColorPanel = new ToolMenuPanel();
     mColorPanel->SetTitle("Color");
@@ -79,7 +81,7 @@ PhongLightMenu::PhongLightMenu(PhongConfiguration *pConfiguration) : ToolMenu() 
     mColorPanel->AddSection(mSliderColorB);
     
     mColorPanel->Collapse();
-
+    
     
     
     
@@ -101,30 +103,23 @@ PhongLightMenu::PhongLightMenu(PhongConfiguration *pConfiguration) : ToolMenu() 
     mSliderIntensityDiffuse->SetText("Diffuse:");
     mIntensityPanel->AddSection(mSliderIntensityDiffuse);
     
-    mSliderIntensitySpecular = new UISlider();
-    mSliderIntensitySpecular->SetValue(&pConfiguration->mUniform.mLight.mSpecularIntensity);
-    mSliderIntensitySpecular->SetRange(0.0f, 5.0f);
-    mSliderIntensitySpecular->SetText("Specular:");
-    mIntensityPanel->AddSection(mSliderIntensitySpecular);
-    
-    mIntensityPanel->Collapse();
     
     DeactivateCloseButton();
     
     RefreshTestMode();
 }
 
-PhongLightMenu::~PhongLightMenu() {
+DiffuseLightMenu::~DiffuseLightMenu() {
     
 }
 
-void PhongLightMenu::Layout() {
+void DiffuseLightMenu::Layout() {
     ToolMenu::Layout();
     
 }
 
 
-void PhongLightMenu::Notify(void *pSender, const char *pNotification) {
+void DiffuseLightMenu::Notify(void *pSender, const char *pNotification) {
     if (FString(pNotification) == "button_click") {
         
     }
@@ -135,7 +130,7 @@ void PhongLightMenu::Notify(void *pSender, const char *pNotification) {
     }
 }
 
-void PhongLightMenu::RefreshTestMode() {
+void DiffuseLightMenu::RefreshTestMode() {
     
     /*
      if (gArena->mTestMode == TEST_MODE_NONE) {

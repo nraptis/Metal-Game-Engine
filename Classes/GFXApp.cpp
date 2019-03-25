@@ -253,7 +253,7 @@ void GFXApp::LoadComplete() {
     //
     if (mLightScene == NULL) {
         mLightScene = new LightConfigurationScene();
-        mWindowMain.AddChild(mLightScene);
+        mWindowTools.AddChild(mLightScene);
     }
     
     
@@ -346,7 +346,7 @@ void GFXApp::Draw3D() {
     mUniPhong.mLight.mDirZ = (Sin(mAmbientRoll2) + 1.0f) / 2.0f;
     
     //FUniformsLightAmbient                   mUniAmb;
-    //FUniformsLightAmbientDiffuse            mUniDiff;
+    //FUniformsLightDiffuse            mUniDiff;
     //FUniformsLightPhong                     mUniPhong;
     
     
@@ -484,7 +484,7 @@ void GFXApp::Draw3D() {
     
 
     if (mMonolith.mBuffer != NULL && mMonolith.mBuffer->mBindIndex != -1) {
-    Graphics::PipelineStateSetModelIndexedLightedAmbientDiffuseAlphaBlending();
+    Graphics::PipelineStateSetModelIndexedLightedDiffuseAlphaBlending();
     Graphics::ArrayBufferData(mMonolith.mBuffer, 0);
     Graphics::ArrayBufferPositions(NULL, 0);
     Graphics::ArrayBufferTextureCoords(NULL, sizeof(float) * 3);
@@ -664,6 +664,11 @@ void GFXApp::SetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
         mLevelSelect->mPage2->SetFrame(gVirtualDevWidth, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
         mLevelSelect->mPage3->SetFrame(gVirtualDevWidth + gVirtualDevWidth, 0.0f, gVirtualDevHeight, gVirtualDevHeight);
     }
+    
+    if (mLightScene) {
+        mLightScene->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+    }
+    
 }
 
 void GFXApp::TouchDown(float pX, float pY, void *pData) {
@@ -773,4 +778,9 @@ void GFXApp::SetDeviceSize(int pWidth, int pHeight) {
         mEditor->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
 #endif
     }
+    
+    if (mLightScene) {
+        mLightScene->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+    }
+    
 }

@@ -30,13 +30,14 @@ OpenGLEngine::OpenGLEngine() {
     mShaderProgramModelIndexed = NULL;
     
     mShaderProgramModelIndexedLightedAmbient = NULL;
-    mShaderProgramModelIndexedLightedAmbientDiffuse = NULL;
+    mShaderProgramModelIndexedLightedDiffuse = NULL;
     
     mShaderProgramModelIndexedLightedPhong = NULL;
-    
+    mShaderProgramModelIndexedLightedPhongOverlay = NULL;
+    mShaderProgramModelIndexedLightedSimpleSpotlight = NULL;
     
     //ShaderProgramModelIndexedLightedAmbient
-    //ShaderProgramModelIndexedLightedAmbientDiffuse
+    //ShaderProgramModelIndexedLightedDiffuse
     //ShaderProgramModelIndexedLightedPhong
     
     mIsReady = false;
@@ -92,14 +93,17 @@ void OpenGLEngine::TearDown() {
     delete mShaderProgramModelIndexedLightedAmbient;
     mShaderProgramModelIndexedLightedAmbient = NULL;
     
-    delete mShaderProgramModelIndexedLightedAmbientDiffuse;
-    mShaderProgramModelIndexedLightedAmbientDiffuse = NULL;
+    delete mShaderProgramModelIndexedLightedDiffuse;
+    mShaderProgramModelIndexedLightedDiffuse = NULL;
     
     delete mShaderProgramModelIndexedLightedPhong;
     mShaderProgramModelIndexedLightedPhong = NULL;
     
+    delete mShaderProgramModelIndexedLightedPhongOverlay;
+    mShaderProgramModelIndexedLightedPhongOverlay = NULL;
     
-    
+    delete mShaderProgramModelIndexedLightedSimpleSpotlight;
+    mShaderProgramModelIndexedLightedSimpleSpotlight = NULL;
     
     mIsReady = false;
 }
@@ -140,14 +144,19 @@ void OpenGLEngine::BuildPrograms() {
     mShaderProgramModelIndexedLightedAmbient = new ShaderProgramModelIndexedLightedAmbient("model_lighted_ambient_vertex_shader.glsl", "model_lighted_ambient_fragment_shader.glsl");
     mShaderProgramModelIndexedLightedAmbient->Compile();
     
-    mShaderProgramModelIndexedLightedAmbientDiffuse = new ShaderProgramModelIndexedLightedAmbientDiffuse("model_lighted_ambient_diffuse_vertex_shader.glsl", "model_lighted_ambient_diffuse_fragment_shader.glsl");
-    mShaderProgramModelIndexedLightedAmbientDiffuse->Compile();
+    mShaderProgramModelIndexedLightedDiffuse = new ShaderProgramModelIndexedLightedDiffuse("model_lighted_diffuse_vertex_shader.glsl", "model_lighted_diffuse_fragment_shader.glsl");
+    mShaderProgramModelIndexedLightedDiffuse->Compile();
     
     
-    mShaderProgramModelIndexedLightedPhong = new ShaderProgramModelIndexedLightedPhong("model_lighted_directional_vertex_shader.glsl", "model_lighted_directional_fragment_shader.glsl");
+    
+    
+    
+    mShaderProgramModelIndexedLightedPhong = new ShaderProgramModelIndexedLightedPhong("model_lighted_phong_vertex_shader.glsl", "model_lighted_phong_fragment_shader.glsl");
     mShaderProgramModelIndexedLightedPhong->Compile();
     
     
+    mShaderProgramModelIndexedLightedPhongOverlay = new ShaderProgramModelIndexedLightedPhong("model_lighted_phong_overlay_vertex_shader.glsl", "model_lighted_phong_overlay_fragment_shader.glsl");
+    mShaderProgramModelIndexedLightedPhongOverlay->Compile();
     
     
     //model_lighted_directional_vertex_shader.glsl
@@ -260,12 +269,16 @@ void OpenGLEngine::UseProgramModelIndexedAmbient() {
 }
 
 
-void OpenGLEngine::UseProgramModelIndexedAmbientDiffuse() {
-    UseProgram(mShaderProgramModelIndexedLightedAmbientDiffuse);
+void OpenGLEngine::UseProgramModelIndexedDiffuse() {
+    UseProgram(mShaderProgramModelIndexedLightedDiffuse);
 }
 
 void OpenGLEngine::UseProgramModelIndexedPhong() {
     UseProgram(mShaderProgramModelIndexedLightedPhong);
+}
+
+void OpenGLEngine::UseProgramModelIndexedPhongOverlay() {
+    UseProgram(mShaderProgramModelIndexedLightedPhongOverlay);
 }
 
 void OpenGLEngine::UseProgramModelIndexedSimpleSpotlight() {

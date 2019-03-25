@@ -1,32 +1,41 @@
+varying lowp vec3 NormalOut;
+varying lowp vec3 EyePosOut;
+
 uniform lowp vec4 ModulateColor;
-varying mediump vec2 TextureCoordsOut;
+varying lowp vec2 TextureCoordsOut;
 uniform sampler2D Texture;
+
+//r, g, b, [ambient intensity]
 uniform lowp vec4 Ambient;
+
+//dirX, dirY, dirZ, [diffuse intensity]
 uniform lowp vec4 Diffuse;
-uniform lowp vec4 Specular;
 
+//Shininess, Specular Intensity
+uniform lowp vec2 Specular;
 
-varying mediump vec3 NormalsOut;
-varying mediump vec3 EyeOut;
-
-void main(void) {
+void main (void) {
     
-    mediump vec3 DiffuseDirection = vec3(Diffuse[0], Diffuse[1], Diffuse[2]);
+    lowp vec3 Direction = vec3(-Diffuse[0], -Diffuse[1], -Diffuse[2]);
+    lowp vec3 N = normalize(vec3(NormalOut[0], NormalOut[1], NormalOut[2]));
+    lowp vec3 E = normalize(EyePosOut);
+    lowp vec3 R = normalize(-reflect(Direction, N));
     
-    mediump float DiffuseFactor = max(0.0, dot(NormalsOut, DiffuseDirection));
-    mediump float SpecularFactor = pow(max(0.0, dot(DiffuseDirection, EyeOut)), Specular[1]); //3
-    mediump float AmbientIntensity = Ambient[3];
-    mediump float DiffuseIntensity = DiffuseFactor; //Diffuse[3] * 
-    mediump float SpecularIntensity = Specular[0] * SpecularFactor;
+    //calculate Diffuse Term:
+    lowp float DiffuseIntensity = max(dot(N, Direction), 0.0) * Diffuse[3];
+    DiffuseIntensity = clamp(DiffuseIntensity, 0.0, 1.0);
     
-    mediump float LightIntensity = AmbientIntensity + DiffuseIntensity;// + SpecularIntensity;
+    // calculate Specular Term:
+    lowp float SpecularIntensity = pow(max(dot(R, E), 0.0), Specular[0]) * Specular[1];
+    SpecularIntensity = clamp(SpecularIntensity, 0.0, 10.0);
     
-    LightIntensity = 1.0;
+    
+    lowp float LightIntensity = Ambient[3] + DiffuseIntensity + SpecularIntensity + SpecularIntensity;
     
     lowp vec4 Color = vec4(ModulateColor[0] * Ambient[0] * LightIntensity,
                            ModulateColor[1] * Ambient[1] * LightIntensity,
                            ModulateColor[2] * Ambient[2] * LightIntensity,
-                           ModulateColor[3]);
+                           ModulateColor[3]) * texture2D(Texture, TextureCoordsOut);
     
-    gl_FragColor = Color * texture2D(Texture, TextureCoordsOut);
+    gl_FragColor = vec4(Color[0], Color[1], Color[2], Color[3]);
 }

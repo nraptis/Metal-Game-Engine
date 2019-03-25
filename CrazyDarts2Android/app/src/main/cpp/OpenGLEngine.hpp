@@ -20,7 +20,7 @@
 #include "ShaderProgramSimpleModelIndexed.hpp"
 #include "ShaderProgramModelIndexed.hpp"
 #include "ShaderProgramModelIndexedLightedAmbient.hpp"
-#include "ShaderProgramModelIndexedLightedAmbientDiffuse.hpp"
+#include "ShaderProgramModelIndexedLightedDiffuse.hpp"
 #include "ShaderProgramModelIndexedLightedPhong.hpp"
 #include "ShaderProgramModelIndexedLightedSimpleSpotlight.hpp"
 
@@ -56,8 +56,10 @@ public:
     
     
     void                                            UseProgramModelIndexedAmbient();
-    void                                            UseProgramModelIndexedAmbientDiffuse();
+    void                                            UseProgramModelIndexedDiffuse();
     void                                            UseProgramModelIndexedPhong();
+    void                                            UseProgramModelIndexedPhongOverlay();
+    
     void                                            UseProgramModelIndexedSimpleSpotlight();
     
     
@@ -81,9 +83,11 @@ public:
     
     ShaderProgramModelIndexedLightedAmbient         *mShaderProgramModelIndexedLightedAmbient;
     
-    ShaderProgramModelIndexedLightedAmbientDiffuse  *mShaderProgramModelIndexedLightedAmbientDiffuse;
+    ShaderProgramModelIndexedLightedDiffuse  *mShaderProgramModelIndexedLightedDiffuse;
     
     ShaderProgramModelIndexedLightedPhong           *mShaderProgramModelIndexedLightedPhong;
+    ShaderProgramModelIndexedLightedPhong           *mShaderProgramModelIndexedLightedPhongOverlay;
+    
     
     
     ShaderProgramModelIndexedLightedSimpleSpotlight *mShaderProgramModelIndexedLightedSimpleSpotlight;

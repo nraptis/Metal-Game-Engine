@@ -31,12 +31,15 @@ void main (void) {
     SpecularIntensity = clamp(SpecularIntensity, 0.0, 10.0);
     
     
-    lowp float LightIntensity = Ambient[3] + DiffuseIntensity + SpecularIntensity + SpecularIntensity;
+    lowp float LightIntensity = Ambient[3] + DiffuseIntensity;
     
     lowp vec4 Color = vec4(ModulateColor[0] * Ambient[0] * LightIntensity,
                            ModulateColor[1] * Ambient[1] * LightIntensity,
                            ModulateColor[2] * Ambient[2] * LightIntensity,
                            ModulateColor[3]) * texture2D(Texture, TextureCoordsOut);
     
-    gl_FragColor = vec4(Color[0], Color[1], Color[2], Color[3]);
+    gl_FragColor = vec4(Color[0] + SpecularIntensity, Color[1] + SpecularIntensity, Color[2] + SpecularIntensity, Color[3]);
+    
+    
+    
 }

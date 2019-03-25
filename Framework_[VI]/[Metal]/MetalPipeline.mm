@@ -16,46 +16,42 @@
     id <MTLRenderPipelineState> pipelineStateShape2DNoBlending[GFX_RENDER_PASS_COUNT];
     id <MTLRenderPipelineState> pipelineStateShape2DAlphaBlending[GFX_RENDER_PASS_COUNT];
     id <MTLRenderPipelineState> pipelineStateShape2DAdditiveBlending[GFX_RENDER_PASS_COUNT];
-    //
-    //
+    
     id <MTLRenderPipelineState> pipelineStateShape3DNoBlending[GFX_RENDER_PASS_COUNT];
     id <MTLRenderPipelineState> pipelineStateShape3DAlphaBlending[GFX_RENDER_PASS_COUNT];
     id <MTLRenderPipelineState> pipelineStateShape3DAdditiveBlending[GFX_RENDER_PASS_COUNT];
-    //
-    //
+    
     id <MTLRenderPipelineState> pipelineStateShapeNodeNoBlending[GFX_RENDER_PASS_COUNT];
     id <MTLRenderPipelineState> pipelineStateShapeNodeAlphaBlending[GFX_RENDER_PASS_COUNT];
     id <MTLRenderPipelineState> pipelineStateShapeNodeAdditiveBlending[GFX_RENDER_PASS_COUNT];
-    //
+    
     id <MTLRenderPipelineState> pipelineStateSpriteNoBlending[GFX_RENDER_PASS_COUNT];
     id <MTLRenderPipelineState> pipelineStateSpriteAlphaBlending[GFX_RENDER_PASS_COUNT];
     id <MTLRenderPipelineState> pipelineStateSpriteAdditiveBlending[GFX_RENDER_PASS_COUNT];
     id <MTLRenderPipelineState> pipelineStateSpritePremultipliedBlending[GFX_RENDER_PASS_COUNT];
     id <MTLRenderPipelineState> pipelineStateSpriteWhiteBlending[GFX_RENDER_PASS_COUNT];
-    //
-    //
+    
     id <MTLRenderPipelineState> pipelineStateSimpleModelNoBlending[GFX_RENDER_PASS_COUNT];
     id <MTLRenderPipelineState> pipelineStateSimpleModelAlphaBlending[GFX_RENDER_PASS_COUNT];
-    //
-    //
+    
     id <MTLRenderPipelineState> pipelineStateSimpleModelIndexedNoBlending[GFX_RENDER_PASS_COUNT];
     id <MTLRenderPipelineState> pipelineStateSimpleModelIndexedAlphaBlending[GFX_RENDER_PASS_COUNT];
-    //
-    //
+    
     id <MTLRenderPipelineState> pipelineStateModelIndexedNoBlending[GFX_RENDER_PASS_COUNT];
     id <MTLRenderPipelineState> pipelineStateModelIndexedAlphaBlending[GFX_RENDER_PASS_COUNT];
-    //
-    //
+    
     id <MTLRenderPipelineState> pipelineStateModelIndexedLightedAmbientNoBlending[GFX_RENDER_PASS_COUNT];
     id <MTLRenderPipelineState> pipelineStateModelIndexedLightedAmbientAlphaBlending[GFX_RENDER_PASS_COUNT];
-    //
-    //
-    id <MTLRenderPipelineState> pipelineStateModelIndexedLightedAmbientDiffuseNoBlending[GFX_RENDER_PASS_COUNT];
-    id <MTLRenderPipelineState> pipelineStateModelIndexedLightedAmbientDiffuseAlphaBlending[GFX_RENDER_PASS_COUNT];
-    //
-    //
+    
+    id <MTLRenderPipelineState> pipelineStateModelIndexedLightedDiffuseNoBlending[GFX_RENDER_PASS_COUNT];
+    id <MTLRenderPipelineState> pipelineStateModelIndexedLightedDiffuseAlphaBlending[GFX_RENDER_PASS_COUNT];
+    
     id <MTLRenderPipelineState> pipelineStateModelIndexedLightedPhongNoBlending[GFX_RENDER_PASS_COUNT];
     id <MTLRenderPipelineState> pipelineStateModelIndexedLightedPhongAlphaBlending[GFX_RENDER_PASS_COUNT];
+    
+    id <MTLRenderPipelineState> pipelineStateModelIndexedLightedPhongOverlayNoBlending[GFX_RENDER_PASS_COUNT];
+    id <MTLRenderPipelineState> pipelineStateModelIndexedLightedPhongOverlayAlphaBlending[GFX_RENDER_PASS_COUNT];
+    
     
 }
 
@@ -92,12 +88,15 @@
     _modelIndexedFragmentProgram = [aLibrary newFunctionWithName:@"indexed_model_fragment"];
     _modelIndexedAmbientVertexProgram = [aLibrary newFunctionWithName:@"indexed_model_lighted_ambient_vertex"];
     _modelIndexedAmbientFragmentProgram = [aLibrary newFunctionWithName:@"indexed_model_lighted_ambient_fragment"];
-    _modelIndexedAmbientDiffuseVertexProgram = [aLibrary newFunctionWithName:@"indexed_model_lighted_ambient_diffuse_vertex"];
-    _modelIndexedAmbientDiffuseFragmentProgram = [aLibrary newFunctionWithName:@"indexed_model_lighted_ambient_diffuse_fragment"];
-    
-    
+    _modelIndexedDiffuseVertexProgram = [aLibrary newFunctionWithName:@"indexed_model_lighted_diffuse_vertex"];
+    _modelIndexedDiffuseFragmentProgram = [aLibrary newFunctionWithName:@"indexed_model_lighted_diffuse_fragment"];
     _modelIndexedPhongVertexProgram = [aLibrary newFunctionWithName:@"indexed_model_lighted_phong_vertex"];
     _modelIndexedPhongFragmentProgram = [aLibrary newFunctionWithName:@"indexed_model_lighted_phong_fragment"];
+    
+    _modelIndexedPhongOverlayVertexProgram = [aLibrary newFunctionWithName:@"indexed_model_lighted_phong_overlay_vertex"];
+    _modelIndexedPhongOverlayFragmentProgram = [aLibrary newFunctionWithName:@"indexed_model_lighted_phong_overlay_fragment"];
+
+    
     
     
     [self buildPipelineStatesShape2D: GFX_RENDER_PASS_2D_MAIN];
@@ -116,10 +115,12 @@
     
     [self buildPipelineStatesModelIndexedLightedAmbient: GFX_RENDER_PASS_3D_MAIN];
     
-    [self buildPipelineStatesModelIndexedLightedAmbientDiffuse: GFX_RENDER_PASS_3D_MAIN];
+    [self buildPipelineStatesModelIndexedLightedDiffuse: GFX_RENDER_PASS_3D_MAIN];
     
     
     [self buildPipelineStatesModelIndexedLightedPhong: GFX_RENDER_PASS_3D_MAIN];
+    
+    [self buildPipelineStatesModelIndexedLightedPhongOverlay: GFX_RENDER_PASS_3D_MAIN];
     
     
     [self buildPipelineStatesShapeNode: GFX_RENDER_PASS_3D_MAIN];
@@ -229,20 +230,31 @@
     [gMetalEngine.renderCommandEncoder setRenderPipelineState: pipelineStateModelIndexedLightedAmbientAlphaBlending[_renderPass]];
 }
 
-- (void)pipelineStateSetModelIndexedLightedAmbientDiffuseNoBlending {
-    [gMetalEngine.renderCommandEncoder setRenderPipelineState: pipelineStateModelIndexedLightedAmbientDiffuseNoBlending[_renderPass]];
+- (void)pipelineStateSetModelIndexedLightedDiffuseNoBlending {
+    [gMetalEngine.renderCommandEncoder setRenderPipelineState: pipelineStateModelIndexedLightedDiffuseNoBlending[_renderPass]];
 }
 
-- (void)pipelineStateSetModelIndexedLightedAmbientDiffuseAlphaBlending {
-    [gMetalEngine.renderCommandEncoder setRenderPipelineState: pipelineStateModelIndexedLightedAmbientDiffuseAlphaBlending[_renderPass]];
+- (void)pipelineStateSetModelIndexedLightedDiffuseAlphaBlending {
+    [gMetalEngine.renderCommandEncoder setRenderPipelineState: pipelineStateModelIndexedLightedDiffuseAlphaBlending[_renderPass]];
 }
 
 - (void)pipelineStateSetModelIndexedLightedPhongNoBlending {
     [gMetalEngine.renderCommandEncoder setRenderPipelineState: pipelineStateModelIndexedLightedPhongNoBlending[_renderPass]];
 }
+
 - (void)pipelineStateSetModelIndexedLightedPhongAlphaBlending {
     [gMetalEngine.renderCommandEncoder setRenderPipelineState: pipelineStateModelIndexedLightedPhongAlphaBlending[_renderPass]];
 }
+
+- (void)pipelineStateSetModelIndexedLightedPhongOverlayNoBlending {
+    [gMetalEngine.renderCommandEncoder setRenderPipelineState: pipelineStateModelIndexedLightedPhongOverlayNoBlending[_renderPass]];
+}
+
+- (void)pipelineStateSetModelIndexedLightedPhongOverlayAlphaBlending {
+    [gMetalEngine.renderCommandEncoder setRenderPipelineState: pipelineStateModelIndexedLightedPhongOverlayAlphaBlending[_renderPass]];
+}
+
+
 
 - (void)buildPipelineStatesShape2D: (int)pRenderPass {
     int aSampleCount = 4;
@@ -802,7 +814,7 @@
     }
 }
 
-- (void)buildPipelineStatesModelIndexedLightedAmbientDiffuse: (int)pRenderPass {
+- (void)buildPipelineStatesModelIndexedLightedDiffuse: (int)pRenderPass {
     MTLVertexDescriptor *aVertexDescriptor = [[MTLVertexDescriptor alloc] init];
     //
     aVertexDescriptor.attributes[ModelPackedVertexAttributeData].format = MTLVertexFormatFloat3;
@@ -817,11 +829,11 @@
     //
     MTLRenderPipelineDescriptor *aPipelineDescriptor = [[MTLRenderPipelineDescriptor alloc] init];
     //
-    aPipelineDescriptor.label = @"Model Indexed + AmbientDiffuse Lighting State, No Blending";
+    aPipelineDescriptor.label = @"Model Indexed + Diffuse Lighting State, No Blending";
     aPipelineDescriptor.sampleCount = 1;
     
-    aPipelineDescriptor.vertexFunction = _modelIndexedAmbientDiffuseVertexProgram;
-    aPipelineDescriptor.fragmentFunction = _modelIndexedAmbientDiffuseFragmentProgram;
+    aPipelineDescriptor.vertexFunction = _modelIndexedDiffuseVertexProgram;
+    aPipelineDescriptor.fragmentFunction = _modelIndexedDiffuseFragmentProgram;
     aPipelineDescriptor.vertexDescriptor = aVertexDescriptor;
     
     aPipelineDescriptor.colorAttachments[0].pixelFormat = gMetalLayer.pixelFormat;
@@ -831,7 +843,7 @@
     
     NSError *pipelineError01 = NULL;
     
-    pipelineStateModelIndexedLightedAmbientDiffuseNoBlending[pRenderPass] = [gMetalEngine.device newRenderPipelineStateWithDescriptor: aPipelineDescriptor error: &pipelineError01];
+    pipelineStateModelIndexedLightedDiffuseNoBlending[pRenderPass] = [gMetalEngine.device newRenderPipelineStateWithDescriptor: aPipelineDescriptor error: &pipelineError01];
     if (pipelineError01 != NULL) {
         NSLog(@"Pipeline State Error 01: %@", pipelineError01.description);
         return;
@@ -839,7 +851,7 @@
     //
     //////////////
     //
-    aPipelineDescriptor.label = @"Model Indexed + AmbientDiffuse Lighting, Alpha Blending";
+    aPipelineDescriptor.label = @"Model Indexed + Diffuse Lighting, Alpha Blending";
     aPipelineDescriptor.colorAttachments[0].blendingEnabled = YES;
     aPipelineDescriptor.colorAttachments[0].rgbBlendOperation = MTLBlendOperationAdd;
     aPipelineDescriptor.colorAttachments[0].alphaBlendOperation = MTLBlendOperationAdd;
@@ -850,7 +862,7 @@
     
     //
     NSError *pipelineError02 = NULL;
-    pipelineStateModelIndexedLightedAmbientDiffuseAlphaBlending[pRenderPass] = [gMetalEngine.device newRenderPipelineStateWithDescriptor: aPipelineDescriptor error: &pipelineError02];
+    pipelineStateModelIndexedLightedDiffuseAlphaBlending[pRenderPass] = [gMetalEngine.device newRenderPipelineStateWithDescriptor: aPipelineDescriptor error: &pipelineError02];
     if (pipelineError02 != NULL) {
         NSLog(@"Pipeline State Error 02: %@", pipelineError02.description);
         return;
@@ -904,6 +916,58 @@
     //
     NSError *pipelineError02 = NULL;
     pipelineStateModelIndexedLightedPhongAlphaBlending[pRenderPass] = [gMetalEngine.device newRenderPipelineStateWithDescriptor: aPipelineDescriptor error: &pipelineError02];
+    if (pipelineError02 != NULL) {
+        NSLog(@"Pipeline State Error 02: %@", pipelineError02.description);
+        return;
+    }
+}
+
+
+- (void)buildPipelineStatesModelIndexedLightedPhongOverlay: (int)pRenderPass {
+    MTLVertexDescriptor *aVertexDescriptor = [[MTLVertexDescriptor alloc] init];
+    //
+    aVertexDescriptor.attributes[ModelPackedVertexAttributeData].format = MTLVertexFormatFloat3;
+    aVertexDescriptor.attributes[ModelPackedVertexAttributeData].offset = 0;
+    aVertexDescriptor.attributes[ModelPackedVertexAttributeData].bufferIndex = ModelPackedBufferIndexMeshData;
+    //
+    aVertexDescriptor.layouts[ModelPackedVertexAttributeData].stride = sizeof(float) * 3;
+    aVertexDescriptor.layouts[ModelPackedVertexAttributeData].stepRate = 1;
+    aVertexDescriptor.layouts[ModelPackedVertexAttributeData].stepFunction = MTLVertexStepFunctionPerVertex;
+    //
+    //////////////////////////////////////////////////////////////////////////////////
+    //
+    MTLRenderPipelineDescriptor *aPipelineDescriptor = [[MTLRenderPipelineDescriptor alloc] init];
+    //
+    aPipelineDescriptor.label = @"Model Indexed + Phong Lighting State, No Blending";
+    aPipelineDescriptor.sampleCount = 1;
+    aPipelineDescriptor.vertexFunction = _modelIndexedPhongOverlayVertexProgram;
+    aPipelineDescriptor.fragmentFunction = _modelIndexedPhongOverlayFragmentProgram;
+    aPipelineDescriptor.vertexDescriptor = aVertexDescriptor;
+    aPipelineDescriptor.colorAttachments[0].pixelFormat = gMetalLayer.pixelFormat;
+    aPipelineDescriptor.depthAttachmentPixelFormat = MTLPixelFormatDepth32Float_Stencil8;
+    aPipelineDescriptor.stencilAttachmentPixelFormat = MTLPixelFormatDepth32Float_Stencil8;
+    
+    NSError *pipelineError01 = NULL;
+    
+    pipelineStateModelIndexedLightedPhongOverlayNoBlending[pRenderPass] = [gMetalEngine.device newRenderPipelineStateWithDescriptor: aPipelineDescriptor error: &pipelineError01];
+    if (pipelineError01 != NULL) {
+        NSLog(@"Pipeline State Error 01: %@", pipelineError01.description);
+        return;
+    }
+    //
+    //////////////
+    //
+    aPipelineDescriptor.label = @"Model Indexed + Phong Lighting, Alpha Blending";
+    aPipelineDescriptor.colorAttachments[0].blendingEnabled = YES;
+    aPipelineDescriptor.colorAttachments[0].rgbBlendOperation = MTLBlendOperationAdd;
+    aPipelineDescriptor.colorAttachments[0].alphaBlendOperation = MTLBlendOperationAdd;
+    aPipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = MTLBlendFactorSourceAlpha;
+    aPipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = MTLBlendFactorSourceAlpha;
+    aPipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = MTLBlendFactorOneMinusSourceAlpha;
+    aPipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = MTLBlendFactorOneMinusSourceAlpha;
+    //
+    NSError *pipelineError02 = NULL;
+    pipelineStateModelIndexedLightedPhongOverlayAlphaBlending[pRenderPass] = [gMetalEngine.device newRenderPipelineStateWithDescriptor: aPipelineDescriptor error: &pipelineError02];
     if (pipelineError02 != NULL) {
         NSLog(@"Pipeline State Error 02: %@", pipelineError02.description);
         return;

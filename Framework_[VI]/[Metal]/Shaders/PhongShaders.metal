@@ -54,74 +54,57 @@ fragment float4 indexed_model_lighted_ambient_fragment(ModelColorInOut in [[stag
     return result;
 }
 
-vertex ModelColorInOut indexed_model_lighted_ambient_diffuse_vertex(constant PackedModelVertex *verts [[buffer(0)]], ushort vid [[vertex_id]] ,constant BasicVertexUniforms & uniforms [[ buffer(ModelPackedBufferIndexUniforms) ]]) {
-    //
+vertex ModelColorInOut indexed_model_lighted_diffuse_vertex(constant PackedModelVertex *verts [[buffer(0)]], ushort vid [[vertex_id]] ,constant DiffuseVertexUniforms & uniforms [[ buffer(ModelPackedBufferIndexUniforms) ]]) {
+    
     ModelColorInOut out;
-    //
+    
     float4 position = float4(verts[vid].position, 1.0);
     float4 normal = float4(verts[vid].normal, 1.0);
-    //
+    
     out.position = uniforms.projectionMatrix * uniforms.modelViewMatrix * position;
     out.textureCoord = verts[vid].textureCoord;
-    out.normal = normalize(float3(uniforms.modelViewMatrix * normal));
-    //
+    out.normal = float3(uniforms.normalMatrix * normal);
+    
     return out;
-    //
 }
 
-fragment float4 indexed_model_lighted_ambient_diffuse_fragment(ModelColorInOut in [[stage_in]],
-                                                       constant AmbientDiffuseFragmentUniforms & uniforms [[ buffer(ModelPackedBufferIndexUniforms) ]],
+fragment float4 indexed_model_lighted_diffuse_fragment(ModelColorInOut in [[stage_in]],
+                                                       constant DiffuseFragmentUniforms & uniforms [[ buffer(ModelPackedBufferIndexUniforms) ]],
                                                        texture2d<half> colorMap [[ texture(TextureIndexColor) ]],
                                                        sampler colorSampler [[ sampler(0) ]]) {
+    float3 N = normalize(in.normal);
+    float3 Direction = float3(-uniforms.lightDirX, -uniforms.lightDirY, -uniforms.lightDirZ);
     
-    float3 diffuseDir = float3(uniforms.lightDirX, uniforms.lightDirY, uniforms.lightDirZ);
-    float diffuseFactor = max(0.0f, dot(in.normal, diffuseDir));
-    //
+    float DiffuseIntensity = max(dot(N, Direction), 0.0f) * uniforms.lightDiffuseIntensity;
     
-    float ambient = uniforms.lightAmbientIntensity;
-    float diffuse = uniforms.lightDiffuseIntensity * diffuseFactor;
-    float light = ambient + diffuse;
+    float AmbientIntensity = uniforms.lightAmbientIntensity;
     
+    float LightIntensity = AmbientIntensity + DiffuseIntensity;
     
-    half4 colorSample = colorMap.sample(colorSampler, in.textureCoord.xy);
-    float4 result = float4(colorSample.r * uniforms.r * light * uniforms.lightR,
-                           colorSample.g * uniforms.g * light * uniforms.lightG,
-                           colorSample.b * uniforms.b * light * uniforms.lightB,
-                           colorSample.a * uniforms.a);
+    half4 ColorSample = colorMap.sample(colorSampler, in.textureCoord.xy);
+    
+    float4 result = float4(ColorSample.r * uniforms.r * uniforms.lightR * LightIntensity,
+                           ColorSample.g * uniforms.g * uniforms.lightG * LightIntensity,
+                           ColorSample.b * uniforms.b * uniforms.lightB * LightIntensity,
+                           ColorSample.a * uniforms.a);
+    
     return result;
 }
 
-vertex PhongModelColorInOut indexed_model_lighted_phong_vertex(constant PackedModelVertex *verts [[buffer(0)]], ushort vid [[vertex_id]] ,constant BasicVertexUniforms & uniforms [[ buffer(ModelPackedBufferIndexUniforms) ]]) {
+vertex PhongModelColorInOut indexed_model_lighted_phong_vertex(constant PackedModelVertex *verts [[buffer(0)]], ushort vid [[vertex_id]] ,constant DiffuseVertexUniforms & uniforms [[ buffer(ModelPackedBufferIndexUniforms) ]]) {
     //
     PhongModelColorInOut out;
     //
     float4 position = float4(verts[vid].position, 1.0);
     float4 normal = float4(verts[vid].normal, 1.0);
     //
+    
+    
     out.position = uniforms.projectionMatrix * uniforms.modelViewMatrix * position;
     out.textureCoord = verts[vid].textureCoord;
+    out.normal = float3(uniforms.normalMatrix * normal);
+    out.eye = float3(uniforms.normalMatrix * position);
     
-    //Forget about the translation...
-    matrix_float4x4 modelViewMatrix = uniforms.modelViewMatrix;
-    
-    //Reset the translation to the origin..
-    //Not we are THE SUN...
-    modelViewMatrix[3][0] = 0.0;
-    modelViewMatrix[3][1] = 0.0;
-    modelViewMatrix[3][2] = 0.0;
-    modelViewMatrix[3][3] = 1.0;
-    //
-    out.normal = normalize(float3(modelViewMatrix * normal));
-    //float3 eye = normalize(float3(uniforms.modelViewMatrix * position));
-    //float3 eye = float3(position[0], position[1], position[2]);
-    float3 eye = float3(position);
-    
-    //
-    //eye = float3(eye[0], eye[1], eye[2]);
-    eye = float3(modelViewMatrix * float4(eye, 1));
-    eye = normalize(float3(eye));
-    //
-    out.eye = eye;
     return out;
     //
 }
@@ -131,31 +114,83 @@ fragment float4 indexed_model_lighted_phong_fragment(PhongModelColorInOut in [[s
                                                      constant PhongFragmentUniforms & uniforms [[ buffer(ModelPackedBufferIndexUniforms) ]],
                                                      texture2d<half> colorMap [[ texture(TextureIndexColor) ]],
                                                      sampler colorSampler [[ sampler(0) ]]) {
+    float3 N = normalize(in.normal);
+    float3 Direction = float3(-uniforms.lightDirX, -uniforms.lightDirY, -uniforms.lightDirZ);
+    float3 E = normalize(in.eye);
+    float3 R = normalize(-reflect(Direction, N));
     
-    float3 eyeDir = in.eye; //float3(uniforms.lightEyeDirX, uniforms.lightEyeDirY, uniforms.lightEyeDirZ); //1
-    //float3 eyeDir = float3(uniforms.lightEyeDirX, uniforms.lightEyeDirY, uniforms.lightEyeDirZ); //1
+    float AmbientIntensity = uniforms.lightAmbientIntensity;
+    AmbientIntensity = clamp(AmbientIntensity, 0.0, 1.0);
     
+    float DiffuseIntensity = max(dot(N, Direction), 0.0) * uniforms.lightDiffuseIntensity;
+    DiffuseIntensity = clamp(DiffuseIntensity, 0.0, 1.0);
     
-    float3 lightDir = float3(uniforms.lightDirX, uniforms.lightDirY, uniforms.lightDirZ);
-    //float3 reflection = reflect(lightDir, in.normal); // 2
+    float SpecularIntensity = pow(max(dot(R, E), 0.0), uniforms.lightShininess) * uniforms.lightSpecularIntensity;
+    SpecularIntensity = clamp(SpecularIntensity, 0.0, 10.0);
     
-    float diffuseFactor = max(0.0, dot(in.normal, lightDir));
-    //float specularFactor = pow(max(0.0, dot(reflection, eyeDir)), uniforms.lightShininess); //3
-    float specularFactor = pow(max(0.0, dot(lightDir, eyeDir)), uniforms.lightShininess); //3
+    float LightIntensity = AmbientIntensity + DiffuseIntensity + SpecularIntensity;
     
-    //
+    half4 ColorSample = colorMap.sample(colorSampler, in.textureCoord.xy);
     
-    float ambient = uniforms.lightAmbientIntensity;
-    float diffuse = uniforms.lightDiffuseIntensity * diffuseFactor;
-    float specular = uniforms.lightSpecularIntensity * specularFactor;
-    float light = ambient + diffuse + specular;
-    half4 colorSample = colorMap.sample(colorSampler, in.textureCoord.xy);
-    float4 result = float4(colorSample.r * uniforms.r * light * uniforms.lightR,
-                           colorSample.g * uniforms.g * light * uniforms.lightG,
-                           colorSample.b * uniforms.b * light * uniforms.lightB,
-                           colorSample.a);
+    float4 result = float4(ColorSample.r * uniforms.r * uniforms.lightR * LightIntensity,
+                           ColorSample.g * uniforms.g * uniforms.lightG * LightIntensity,
+                           ColorSample.b * uniforms.b * uniforms.lightB * LightIntensity,
+                           ColorSample.a * uniforms.a);
+    
     return result;
 }
+
+
+
+vertex PhongModelColorInOut indexed_model_lighted_phong_overlay_vertex(constant PackedModelVertex *verts [[buffer(0)]], ushort vid [[vertex_id]] ,constant DiffuseVertexUniforms & uniforms [[ buffer(ModelPackedBufferIndexUniforms) ]]) {
+    //
+    PhongModelColorInOut out;
+    //
+    float4 position = float4(verts[vid].position, 1.0);
+    float4 normal = float4(verts[vid].normal, 1.0);
+    //
+    
+    
+    out.position = uniforms.projectionMatrix * uniforms.modelViewMatrix * position;
+    out.textureCoord = verts[vid].textureCoord;
+    out.normal = float3(uniforms.normalMatrix * normal);
+    out.eye = float3(uniforms.normalMatrix * position);
+    
+    return out;
+    //
+}
+
+
+fragment float4 indexed_model_lighted_phong_overlay_fragment(PhongModelColorInOut in [[stage_in]],
+                                                     constant PhongFragmentUniforms & uniforms [[ buffer(ModelPackedBufferIndexUniforms) ]],
+                                                     texture2d<half> colorMap [[ texture(TextureIndexColor) ]],
+                                                     sampler colorSampler [[ sampler(0) ]]) {
+    float3 N = normalize(in.normal);
+    float3 Direction = float3(-uniforms.lightDirX, -uniforms.lightDirY, -uniforms.lightDirZ);
+    float3 E = normalize(in.eye);
+    float3 R = normalize(-reflect(Direction, N));
+    
+    float AmbientIntensity = uniforms.lightAmbientIntensity;
+    AmbientIntensity = clamp(AmbientIntensity, 0.0, 1.0);
+    
+    float DiffuseIntensity = max(dot(N, Direction), 0.0) * uniforms.lightDiffuseIntensity;
+    DiffuseIntensity = clamp(DiffuseIntensity, 0.0, 1.0);
+    
+    float SpecularIntensity = pow(max(dot(R, E), 0.0), uniforms.lightShininess) * uniforms.lightSpecularIntensity;
+    SpecularIntensity = clamp(SpecularIntensity, 0.0, 10.0);
+    
+    float LightIntensity = AmbientIntensity + DiffuseIntensity;
+    
+    half4 ColorSample = colorMap.sample(colorSampler, in.textureCoord.xy);
+    
+    float4 result = float4(ColorSample.r * uniforms.r * uniforms.lightR * LightIntensity + SpecularIntensity,
+                           ColorSample.g * uniforms.g * uniforms.lightG * LightIntensity + SpecularIntensity,
+                           ColorSample.b * uniforms.b * uniforms.lightB * LightIntensity + SpecularIntensity,
+                           ColorSample.a * uniforms.a);
+    
+    return result;
+}
+
 
 /*
 float4 eye_light_direction = uniforms.sun_eye_direction;
@@ -211,8 +246,8 @@ half4 specular_contribution = (specular_factor *
 
 
 /*
-fragment float4 indexed_model_lighted_ambient_diffuse_fragment(ModelColorInOut in [[stage_in]],
-                                                               constant AmbientDiffuseFragmentUniforms & uniforms [[ buffer(ModelPackedBufferIndexUniforms) ]],
+fragment float4 indexed_model_lighted_diffuse_fragment(ModelColorInOut in [[stage_in]],
+                                                               constant DiffuseFragmentUniforms & uniforms [[ buffer(ModelPackedBufferIndexUniforms) ]],
                                                                texture2d<half> colorMap [[ texture(TextureIndexColor) ]],
                                                                sampler colorSampler [[ sampler(0) ]]) {
     

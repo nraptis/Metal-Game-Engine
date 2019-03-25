@@ -1647,47 +1647,10 @@ void Graphics::DrawCurrentTile() {
     PipelineStateSetSpriteNoBlending();
     MatrixProjectionResetOrtho();
     MatrixModelViewReset();
+    SetColor();
     UniformBind();
     DrawSpriteSetup(cTileRect.mPositions, cTileRect.mTextureCoords);
     DrawTriangleStrips(4);
-    
-    /*
-    cTileRect.SetRect(0.0f, 0.0f, gDeviceWidth2, gDeviceHeight2);
-    UniformBind();
-    DrawSpriteSetup(cTileRect.mVertex, cTileRect.mTextureCoord);
-    DrawTriangleStrips(4);
-    
-    
-    cTileRect.SetRect(gDeviceWidth2, 0.0f, gDeviceWidth2, gDeviceHeight2);
-    UniformBind();
-    DrawSpriteSetup(cTileRect.mVertex, cTileRect.mTextureCoord);
-    DrawTriangleStrips(4);
-    
-    cTileRect.SetRect(0.0f, gDeviceHeight2, gDeviceWidth2, gDeviceHeight2);
-    UniformBind();
-    DrawSpriteSetup(cTileRect.mVertex, cTileRect.mTextureCoord);
-    DrawTriangleStrips(4);
-    
-    cTileRect.SetRect(gDeviceWidth2, gDeviceHeight2, gDeviceWidth2, gDeviceHeight2);
-    UniformBind();
-    DrawSpriteSetup(cTileRect.mVertex, cTileRect.mTextureCoord);
-    DrawTriangleStrips(4);
-    */
-    
-}
-
-void Graphics::DrawCube() {
-    static float aXYZ[72]={-0.5,0.5,-0.5,-0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,-0.5,-0.5,-0.5,-0.5,0.5,-0.5,-0.5,0.5,-0.5,0.5,-0.5,-0.5,0.5,-0.5,0.5,-0.5,0.5,0.5,-0.5,0.5,-0.5,-0.5,-0.5,-0.5,-0.5,0.5,0.5,-0.5,0.5,0.5,0.5,0.5,-0.5,0.5,0.5,-0.5,-0.5,0.5,0.5,0.5,-0.5,0.5,0.5,-0.5,-0.5,0.5,0.5,-0.5,0.5,-0.5,0.5,0.5,-0.5,0.5,-0.5,-0.5,-0.5,-0.5,-0.5,-0.5,0.5};
-    static float aUVW[72]={1.00,1.00,0.00,1.00,0.00,0.00,0.00,0.00,0.00,0.00,1.00,0.00,0.00,1.00,0.00,1.00,1.00,0.00,1.00,0.00,0.00,0.00,0.00,0.00,0.00,1.00,0.00,1.00,1.00,0.00,1.00,0.00,0.00,0.00,0.00,0.00,0.00,1.00,0.00,1.00,1.00,0.00,1.00,0.00,0.00,0.00,0.00,0.00,0.00,1.00,0.00,1.00,1.00,0.00,1.00,0.00,0.00,0.00,0.00,0.00,0.00,1.00,0.00,1.00,1.00,0.00,1.00,0.00,0.00,0.00,0.00,0.00};
-    static float aNormal[72]={0.000000,1.000000,0.000000,0.000000,1.000000,0.000000,0.000000,1.000000,0.000000,0.000000,1.000000,0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,0.000000,-1.000000,0.000000,0.000000,-1.000000,0.000000,0.000000,-1.000000,0.000000,0.000000,-1.000000,1.000000,0.000000,0.000000,1.000000,0.000000,0.000000,1.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,-0.000000,1.000000,0.000000,-0.000000,1.000000,0.000000,-0.000000,1.000000,0.000000,-0.000000,1.000000,-1.000000,0.000000,0.000000,-1.000000,0.000000,0.000000,-1.000000,0.000000,0.000000,-1.000000,0.000000,0.000000};
-    
-    static GFX_MODEL_INDEX_TYPE aIndex[36]={0,1,2,2,3,0,4,5,6,6,7,4,8,9,10,10,11,8,12,13,14,14,15,12,16,17,18,18,19,16,20,21,22,22,23,20};
-    
-    //ArrayVertices(aXYZ);
-    //ArrayCoords(aUVW);
-    //ArrayNormals(aNormal);
-    //DrawTriangles(aIndex, 36);
-    
 }
 
 void Graphics::Ortho2D(float pLeft, float pRight, float pBottom, float pTop) {
@@ -1732,55 +1695,21 @@ void Graphics::PipelineStateSetShape3DAdditiveBlending() {
 }
 
 
-void Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending() {
-    Graphics::BufferSetIndicesModelIndexed();
-    [gMetalPipeline pipelineStateSetModelIndexedLightedPhongNoBlending];
+void Graphics::PipelineStateSetShapeNodeNoBlending() {
+    Graphics::BufferSetIndicesShapeNode();
+    [gMetalPipeline pipelineStateSetShapeNodeNoBlending];
 }
 
-void Graphics::PipelineStateSetModelIndexedLightedPhongAlphaBlending() {
-    Graphics::BufferSetIndicesModelIndexed();
-    [gMetalPipeline pipelineStateSetModelIndexedLightedPhongAlphaBlending];
+void Graphics::PipelineStateSetShapeNodeAlphaBlending() {
+    Graphics::BufferSetIndicesShapeNode();
+    [gMetalPipeline pipelineStateSetShapeNodeAlphaBlending];
 }
 
-void Graphics::PipelineStateSetModelIndexedLightedAmbientDiffuseNoBlending() {
-    Graphics::BufferSetIndicesModelIndexed();
-    [gMetalPipeline pipelineStateSetModelIndexedLightedAmbientDiffuseNoBlending];
+void Graphics::PipelineStateSetShapeNodeAdditiveBlending() {
+    Graphics::BufferSetIndicesShapeNode();
+    [gMetalPipeline pipelineStateSetShapeNodeAdditiveBlending];
 }
 
-void Graphics::PipelineStateSetModelIndexedLightedAmbientDiffuseAlphaBlending() {
-    Graphics::BufferSetIndicesModelIndexed();
-    [gMetalPipeline pipelineStateSetModelIndexedLightedAmbientDiffuseAlphaBlending];
-}
-
-void Graphics::PipelineStateSetModelIndexedLightedAmbientNoBlending() {
-    Graphics::BufferSetIndicesModelIndexed();
-    [gMetalPipeline pipelineStateSetModelIndexedLightedAmbientNoBlending];
-}
-
-void Graphics::PipelineStateSetModelIndexedLightedAmbientAlphaBlending() {
-    Graphics::BufferSetIndicesModelIndexed();
-    [gMetalPipeline pipelineStateSetModelIndexedLightedAmbientAlphaBlending];
-}
-
-void Graphics::PipelineStateSetModelIndexedNoBlending() {
-    Graphics::BufferSetIndicesModelIndexed();
-    [gMetalPipeline pipelineStateSetModelIndexedNoBlending];
-}
-
-void Graphics::PipelineStateSetModelIndexedAlphaBlending() {
-    Graphics::BufferSetIndicesModelIndexed();
-    [gMetalPipeline pipelineStateSetModelIndexedAlphaBlending];
-}
-
-void Graphics::PipelineStateSetSimpleModelIndexedNoBlending() {
-    Graphics::BufferSetIndicesSimpleModelIndexed();
-    [gMetalPipeline pipelineStateSetSimpleModelIndexedNoBlending];
-}
-
-void Graphics::PipelineStateSetSimpleModelIndexedAlphaBlending() {
-    Graphics::BufferSetIndicesSimpleModelIndexed();
-    [gMetalPipeline pipelineStateSetSimpleModelAlphaBlending];
-}
 
 void Graphics::PipelineStateSetSimpleModelNoBlending() {
     Graphics::BufferSetIndicesSimpleModel();
@@ -1821,21 +1750,65 @@ void Graphics::PipelineStateSetSpriteWhiteBlending() {
     //[gMetalEngine.renderCommandEncoder setRenderPipelineState: gMetalEngine.pipelineStateSpriteWhiteBlending];
 }
 
-
-
-void Graphics::PipelineStateSetShapeNodeNoBlending() {
-    Graphics::BufferSetIndicesShapeNode();
-    [gMetalPipeline pipelineStateSetShapeNodeNoBlending];
+void Graphics::PipelineStateSetModelIndexedNoBlending() {
+    Graphics::BufferSetIndicesModelIndexed();
+    [gMetalPipeline pipelineStateSetModelIndexedNoBlending];
 }
 
-void Graphics::PipelineStateSetShapeNodeAlphaBlending() {
-    Graphics::BufferSetIndicesShapeNode();
-    [gMetalPipeline pipelineStateSetShapeNodeAlphaBlending];
+void Graphics::PipelineStateSetModelIndexedAlphaBlending() {
+    Graphics::BufferSetIndicesModelIndexed();
+    [gMetalPipeline pipelineStateSetModelIndexedAlphaBlending];
 }
 
-void Graphics::PipelineStateSetShapeNodeAdditiveBlending() {
-    Graphics::BufferSetIndicesShapeNode();
-    [gMetalPipeline pipelineStateSetShapeNodeAdditiveBlending];
+void Graphics::PipelineStateSetSimpleModelIndexedNoBlending() {
+    Graphics::BufferSetIndicesSimpleModelIndexed();
+    [gMetalPipeline pipelineStateSetSimpleModelIndexedNoBlending];
+}
+
+void Graphics::PipelineStateSetSimpleModelIndexedAlphaBlending() {
+    Graphics::BufferSetIndicesSimpleModelIndexed();
+    [gMetalPipeline pipelineStateSetSimpleModelAlphaBlending];
+}
+
+void Graphics::PipelineStateSetModelIndexedLightedAmbientNoBlending() {
+    Graphics::BufferSetIndicesModelIndexed();
+    [gMetalPipeline pipelineStateSetModelIndexedLightedAmbientNoBlending];
+}
+
+void Graphics::PipelineStateSetModelIndexedLightedAmbientAlphaBlending() {
+    Graphics::BufferSetIndicesModelIndexed();
+    [gMetalPipeline pipelineStateSetModelIndexedLightedAmbientAlphaBlending];
+}
+
+
+void Graphics::PipelineStateSetModelIndexedLightedDiffuseNoBlending() {
+    Graphics::BufferSetIndicesModelIndexed();
+    [gMetalPipeline pipelineStateSetModelIndexedLightedDiffuseNoBlending];
+}
+
+void Graphics::PipelineStateSetModelIndexedLightedDiffuseAlphaBlending() {
+    Graphics::BufferSetIndicesModelIndexed();
+    [gMetalPipeline pipelineStateSetModelIndexedLightedDiffuseAlphaBlending];
+}
+
+void Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending() {
+    Graphics::BufferSetIndicesModelIndexed();
+    [gMetalPipeline pipelineStateSetModelIndexedLightedPhongNoBlending];
+}
+
+void Graphics::PipelineStateSetModelIndexedLightedPhongAlphaBlending() {
+    Graphics::BufferSetIndicesModelIndexed();
+    [gMetalPipeline pipelineStateSetModelIndexedLightedPhongAlphaBlending];
+}
+
+void Graphics::PipelineStateSetModelIndexedLightedPhongOverlayNoBlending() {
+    Graphics::BufferSetIndicesModelIndexed();
+    [gMetalPipeline pipelineStateSetModelIndexedLightedPhongOverlayNoBlending];
+}
+
+void Graphics::PipelineStateSetModelIndexedLightedPhongOverlayAlphaBlending() {
+    Graphics::BufferSetIndicesModelIndexed();
+    [gMetalPipeline pipelineStateSetModelIndexedLightedPhongOverlayAlphaBlending];
 }
 
 int Graphics::RenderPass() {
@@ -1846,26 +1819,3 @@ void Graphics::RenderPassBegin(int pRenderPass, bool pClearColor, bool pClearDep
     cCurrentRenderPass = pRenderPass;
     [gMetalEngine startRenderPass:pRenderPass clearingColor: pClearColor clearingDepth: pClearDepth];
 }
-
-
-static float cSphere12XYZ[267]={0.0,-0.0,1.0,-0.0,0.5,0.9,-0.2,0.4,0.9,0.0,-0.0,1.0,-0.4,0.2,0.9,0.0,-0.0,1.0,-0.5,-0.0,0.9,0.0,-0.0,1.0,-0.4,-0.2,0.9,0.0,-0.0,1.0,-0.2,-0.4,0.9,0.0,-0.0,1.0,-0.0,-0.5,0.9,0.0,-0.0,1.0,0.2,-0.4,0.9,0.0,-0.0,1.0,0.4,-0.2,0.9,0.0,-0.0,1.0,0.5,-0.0,0.9,0.0,-0.0,1.0,0.4,0.2,0.9,0.0,-0.0,1.0,0.2,0.4,0.9,0.0,-0.0,1.0,-0.0,0.5,0.9,-0.0,0.9,0.5,-0.4,0.8,0.5,-0.8,0.4,0.5,-0.9,-0.0,0.5,-0.8,-0.4,0.5,-0.4,-0.8,0.5,-0.0,-0.9,0.5,0.4,-0.8,0.5,0.8,-0.4,0.5,0.9,-0.0,0.5,0.8,0.4,0.5,0.4,0.7,0.5,-0.0,0.9,0.5,-0.0,1.0,-0.0,-0.5,0.9,-0.0,-0.9,0.5,-0.0,-1.0,-0.0,-0.0,-0.9,-0.5,-0.0,-0.5,-0.9,-0.0,-0.0,-1.0,-0.0,0.5,-0.9,-0.0,0.9,-0.5,-0.0,1.0,-0.0,-0.0,0.9,0.5,-0.0,0.5,0.9,-0.0,-0.0,1.0,-0.0,-0.0,0.9,-0.5,-0.4,0.8,-0.5,-0.8,0.4,-0.5,-0.9,-0.0,-0.5,-0.8,-0.4,-0.5,-0.4,-0.8,-0.5,-0.0,-0.9,-0.5,0.4,-0.8,-0.5,0.8,-0.4,-0.5,0.9,-0.0,-0.5,0.8,0.4,-0.5,0.4,0.7,-0.5,-0.0,0.9,-0.5,-0.0,0.5,-0.9,-0.2,0.4,-0.9,-0.4,0.2,-0.9,-0.5,-0.0,-0.9,-0.4,-0.2,-0.9,-0.2,-0.4,-0.9,-0.0,-0.5,-0.9,0.2,-0.4,-0.9,0.4,-0.2,-0.9,0.5,-0.0,-0.9,0.4,0.2,-0.9,0.2,0.4,-0.9,-0.0,0.5,-0.9,0.0,-0.0,-1.0,0.0,-0.0,-1.0,0.0,-0.0,-1.0,0.0,-0.0,-1.0,0.0,-0.0,-1.0,0.0,-0.0,-1.0,0.0,-0.0,-1.0,0.0,-0.0,-1.0,0.0,-0.0,-1.0,0.0,-0.0,-1.0,0.0,-0.0,-1.0,0.0,-0.0,-1.0};
-
-static float cSphere12UVW[267]={0.00,0.00,0.00,0.00,0.17,0.00,0.08,0.17,0.00,0.08,0.00,0.00,0.17,0.17,0.00,0.17,0.00,0.00,0.25,0.17,0.00,0.25,0.00,0.00,0.33,0.17,0.00,0.33,0.00,0.00,0.42,0.17,0.00,0.42,0.00,0.00,0.50,0.17,0.00,0.50,0.00,0.00,0.58,0.17,0.00,0.58,0.00,0.00,0.67,0.17,0.00,0.67,0.00,0.00,0.75,0.17,0.00,0.75,0.00,0.00,0.83,0.17,0.00,0.83,0.00,0.00,0.92,0.17,0.00,0.92,0.00,0.00,1.00,0.17,0.00,0.00,0.33,0.00,0.08,0.33,0.00,0.17,0.33,0.00,0.25,0.33,0.00,0.33,0.33,0.00,0.42,0.33,0.00,0.50,0.33,0.00,0.58,0.33,0.00,0.67,0.33,0.00,0.75,0.33,0.00,0.83,0.33,0.00,0.92,0.33,0.00,1.00,0.33,0.00,0.00,0.50,0.00,0.08,0.50,0.00,0.17,0.50,0.00,0.25,0.50,0.00,0.33,0.50,0.00,0.42,0.50,0.00,0.50,0.50,0.00,0.58,0.50,0.00,0.67,0.50,0.00,0.75,0.50,0.00,0.83,0.50,0.00,0.92,0.50,0.00,1.00,0.50,0.00,0.00,0.67,0.00,0.08,0.67,0.00,0.17,0.67,0.00,0.25,0.67,0.00,0.33,0.67,0.00,0.42,0.67,0.00,0.50,0.67,0.00,0.58,0.67,0.00,0.67,0.67,0.00,0.75,0.67,0.00,0.83,0.67,0.00,0.92,0.67,0.00,1.00,0.67,0.00,0.00,0.83,0.00,0.08,0.83,0.00,0.17,0.83,0.00,0.25,0.83,0.00,0.33,0.83,0.00,0.42,0.83,0.00,0.50,0.83,0.00,0.58,0.83,0.00,0.67,0.83,0.00,0.75,0.83,0.00,0.83,0.83,0.00,0.92,0.83,0.00,1.00,0.83,0.00,0.00,1.00,0.00,0.08,1.00,0.00,0.17,1.00,0.00,0.25,1.00,0.00,0.33,1.00,0.00,0.42,1.00,0.00,0.50,1.00,0.00,0.58,1.00,0.00,0.67,1.00,0.00,0.75,1.00,0.00,0.83,1.00,0.00,0.92,1.00,0.00};
-
-static float cSphere12Normal[267]={-0.000000,-0.000000,1.000000,0.000000,0.530900,0.847435,-0.265450,0.459773,0.847435,-0.000000,-0.000000,1.000000,-0.459773,0.265450,0.847435,-0.000000,-0.000000,1.000000,-0.530900,0.000000,0.847435,-0.000000,-0.000000,1.000000,-0.459773,-0.265450,0.847435,-0.000000,-0.000000,1.000000,-0.265450,-0.459773,0.847435,-0.000000,-0.000000,1.000000,-0.000000,-0.530900,0.847435,-0.000000,-0.000000,1.000000,0.265450,-0.459773,0.847435,-0.000000,-0.000000,1.000000,0.459773,-0.265450,0.847435,-0.000000,-0.000000,1.000000,0.530900,-0.000000,0.847435,-0.000000,-0.000000,1.000000,0.459773,0.265450,0.847435,-0.000000,-0.000000,1.000000,0.265450,0.459773,0.847435,-0.000000,-0.000000,1.000000,0.000000,0.530900,0.847435,0.000000,0.875983,0.482342,-0.437992,0.758624,0.482342,-0.758624,0.437992,0.482342,-0.875983,0.000000,0.482342,-0.758624,-0.437991,0.482342,-0.437992,-0.758623,0.482342,-0.000000,-0.875983,0.482342,0.437991,-0.758624,0.482342,0.758623,-0.437992,0.482342,0.875983,-0.000001,0.482342,0.758624,0.437991,0.482342,0.437992,0.758623,0.482342,0.000000,0.875983,0.482342,0.000000,1.000000,-0.000000,-0.500000,0.866025,-0.000000,-0.866025,0.500000,-0.000000,-1.000000,0.000000,-0.000000,-0.866026,-0.500000,-0.000000,-0.500000,-0.866025,-0.000000,-0.000000,-1.000000,-0.000000,0.499999,-0.866026,-0.000000,0.866025,-0.500001,-0.000000,1.000000,-0.000001,-0.000000,0.866026,0.499999,-0.000000,0.500001,0.866025,-0.000000,0.000000,1.000000,-0.000000,0.000000,0.875983,-0.482342,-0.437992,0.758624,-0.482342,-0.758624,0.437992,-0.482342,-0.875983,0.000000,-0.482342,-0.758624,-0.437991,-0.482342,-0.437992,-0.758624,-0.482342,-0.000000,-0.875983,-0.482342,0.437991,-0.758624,-0.482342,0.758623,-0.437992,-0.482342,0.875983,-0.000001,-0.482342,0.758624,0.437991,-0.482342,0.437992,0.758623,-0.482342,0.000000,0.875983,-0.482342,0.000000,0.530900,-0.847435,-0.265450,0.459773,-0.847435,-0.459773,0.265450,-0.847435,-0.530900,0.000000,-0.847435,-0.459773,-0.265450,-0.847435,-0.265450,-0.459773,-0.847435,-0.000000,-0.530900,-0.847435,0.265450,-0.459773,-0.847435,0.459773,-0.265450,-0.847435,0.530900,-0.000000,-0.847435,0.459773,0.265450,-0.847435,0.265450,0.459773,-0.847435,0.000000,0.530900,-0.847435,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000,-0.000000,0.000000,-1.000000};
-
-static GFX_MODEL_INDEX_TYPE cSphere12Index[360]={0,1,2,3,2,4,5,4,6,7,6,8,9,8,10,11,10,12,13,12,14,15,14,16,17,16,18,19,18,20,21,20,22,23,22,24,1,25,26,1,26,2,2,26,27,2,27,4,4,27,28,4,28,6,6,28,29,6,29,8,8,29,30,8,30,10,10,30,31,10,31,12,12,31,32,12,32,14,14,32,33,14,33,16,16,33,34,16,34,18,18,34,35,18,35,20,20,35,36,20,36,22,22,36,37,22,37,24,25,38,39,25,39,26,26,39,40,26,40,27,27,40,41,27,41,28,28,41,42,28,42,29,29,42,43,29,43,30,30,43,44,30,44,31,31,44,45,31,45,32,32,45,46,32,46,33,33,46,47,33,47,34,34,47,48,34,48,35,35,48,49,35,49,36,36,49,50,36,50,37,38,51,52,38,52,39,39,52,53,39,53,40,40,53,54,40,54,41,41,54,55,41,55,42,42,55,56,42,56,43,43,56,57,43,57,44,44,57,58,44,58,45,45,58,59,45,59,46,46,59,60,46,60,47,47,60,61,47,61,48,48,61,62,48,62,49,49,62,63,49,63,50,51,64,65,51,65,52,52,65,66,52,66,53,53,66,67,53,67,54,54,67,68,54,68,55,55,68,69,55,69,56,56,69,70,56,70,57,57,70,71,57,71,58,58,71,72,58,72,59,59,72,73,59,73,60,60,73,74,60,74,61,61,74,75,61,75,62,62,75,76,62,76,63,77,65,64,78,66,65,79,67,66,80,68,67,81,69,68,82,70,69,83,71,70,84,72,71,85,73,72,86,74,73,87,75,74,88,76,75};
-
-void Graphics::DrawSphere12(float x, float y, float z, float pRadius)
-{
-    //MatrixPush();
-    
-    //Translate(x, y, z);
-    
-    //Scale(pRadius);
-    
-    DrawModelIndexed(cSphere12XYZ, 267, cSphere12UVW, 267, cSphere12Normal, 267, cSphere12Index, 360, 0);
-    
-    //MatrixPop();
-}
-

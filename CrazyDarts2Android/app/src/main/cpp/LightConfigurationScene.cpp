@@ -54,6 +54,17 @@ LightConfigurationScene::LightConfigurationScene() {
     
     mPhongLightMenu = NULL;
     
+    /*
+    mDiffuseLightMenu = new DiffuseLightMenu(&mDiffuse);
+    if (gDeviceWidth > 600) {
+        mDiffuseLightMenu->SetFrame(20.0f, aPaddingTop, 500.0f, gDeviceHeight * 0.75f);
+    } else {
+        mDiffuseLightMenu->SetFrame(20.0f, aPaddingTop, gDeviceWidth * 0.8f, gDeviceHeight * 0.75f);
+    }
+    mDiffuseLightMenu->SetTitle("DIffuse Light");
+    AddChild(mDiffuseLightMenu);
+    */
+    
     
     mPhongLightMenu = new PhongLightMenu(&mPhong);
     if (gDeviceWidth > 600) {
@@ -108,7 +119,8 @@ void LightConfigurationScene::Draw3D() {
     
     
     mPhong.Compute();
-    //mSpotlight.Compute();
+    mSpotlight.Compute();
+    mDiffuse.Compute();
     
     
     
@@ -138,6 +150,14 @@ void LightConfigurationScene::Draw3D() {
     
     
     
+    static float mScrapScaleSin = 0.0f;
+    mScrapScaleSin += 1.0f;
+    if (mScrapScaleSin >= 360.0f) {
+        mScrapScaleSin -= 360.0f;
+    }
+    
+    float aScale = 0.65f + (Sin(mScrapScaleSin) + 1.0f) * 0.5f * 1.0f;
+    
     
     FMatrix aProjection = mCamera.GetProjection();
     Graphics::SetColor();
@@ -159,9 +179,15 @@ void LightConfigurationScene::Draw3D() {
     */
     
     aModelView.Translate(-3.0f, 0.0f);
+    aModelView.Scale(aScale);
+    
+    
     aNormal.SetNormalMatrix(aModelView);
     aModelViewHome.Set(aModelView);
     aModelViewHome.ResetTranslation();
+    
+    
+    
     
     
     Graphics::MatrixProjectionSet(aProjection);
@@ -169,11 +195,12 @@ void LightConfigurationScene::Draw3D() {
     mPhong.mUniform.mProjection.Set(aProjection);
     mPhong.mUniform.mModelView.Set(aModelView);
     mPhong.mUniform.mNormal.Set(aNormal);
-    
-    
-    //mSpotlight.mUniform.mProjection.Set(aProjection);
-    //mSpotlight.mUniform.mModelView.Set(aModelView);
-    //mSpotlight.mUniform.mNormal.Set(aNormal);
+    mDiffuse.mUniform.mProjection.Set(aProjection);
+    mDiffuse.mUniform.mModelView.Set(aModelView);
+    mDiffuse.mUniform.mNormal.Set(aNormal);
+    mSpotlight.mUniform.mProjection.Set(aProjection);
+    mSpotlight.mUniform.mModelView.Set(aModelView);
+    mSpotlight.mUniform.mNormal.Set(aNormal);
     
     
     
@@ -184,14 +211,14 @@ void LightConfigurationScene::Draw3D() {
         Graphics::PipelineStateSetModelIndexedAlphaBlending();
     } else {
         //Graphics::PipelineStateSetModelIndexedLightedSimpleSpotlightNoBlending();
-        Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending();
-        
+        Graphics::PipelineStateSetModelIndexedLightedPhongOverlayAlphaBlending();
+        //Graphics::PipelineStateSetModelIndexedLightedPhongAlphaBlending();
+        //Graphics::PipelineStateSetModelIndexedLightedDiffuseNoBlending();
     }
-    //
     
-    Graphics::SetColor();
     
     Graphics::UniformBind(&mPhong.mUniform);
+    //Graphics::UniformBind(&mDiffuse.mUniform);
     Graphics::DrawTrianglesIndexedWithPackedBuffers(aTrunk->mBuffer, 0, aTrunk->mIndex, aTrunk->mIndexCount, gApp->mPalmTrunkMap.mTexture);
     
     
@@ -199,6 +226,7 @@ void LightConfigurationScene::Draw3D() {
         Graphics::UniformBind();
     } else {
         Graphics::UniformBind(&mPhong.mUniform);
+        //Graphics::UniformBind(&mDiffuse.mUniform);
     }
     Graphics::DrawTrianglesIndexedWithPackedBuffers(aTree->mBuffer, 0, aTree->mIndex, aTree->mIndexCount, gApp->mPalmLeavesMap.mTexture);
 
@@ -206,18 +234,18 @@ void LightConfigurationScene::Draw3D() {
     static float mBalloonRot = 0.0f;
     mBalloonRot += 1.0f;
     if (mBalloonRot >= 360.0f) { mBalloonRot -= 360.0f; }
-    
-    
+
     float aExtraRot = 0.0f;
     
     int aBalloonIndex = 0;
-    for (float aX=-4.0f;aX<=4.0f;aX+=1.0f) {
-        for (float aY=-4.0f;aY<=4.0f;aY+=1.0f) {
-            
+    for (float aX=-2.0f;aX<=2.0f;aX+=1.0f) {
+        for (float aY=-2.0f;aY<=2.0f;aY+=1.0f) {
             aModelView.Reset();
             aModelView.Translate(aX * 5.0f, aY * 7.0f);
             aModelView.RotateX(90);
             aModelView.RotateZ(mBalloonRot + aExtraRot);
+            aModelView.Scale(aScale);
+            
             aNormal.SetNormalMatrix(aModelView);
             aModelViewHome.Set(aModelView);
             aModelViewHome.ResetTranslation();
@@ -229,17 +257,20 @@ void LightConfigurationScene::Draw3D() {
             mPhong.mUniform.mModelView.Set(aModelView);
             mPhong.mUniform.mNormal.Set(aNormal);
             
-            //mSpotlight.mUniform.mProjection.Set(aProjection);
-            //mSpotlight.mUniform.mModelView.Set(aModelView);
-            //mSpotlight.mUniform.mNormal.Set(aNormal);
+            
+            mDiffuse.mUniform.mProjection.Set(aProjection);
+            mDiffuse.mUniform.mModelView.Set(aModelView);
+            mDiffuse.mUniform.mNormal.Set(aNormal);
+            mSpotlight.mUniform.mProjection.Set(aProjection);
+            mSpotlight.mUniform.mModelView.Set(aModelView);
+            mSpotlight.mUniform.mNormal.Set(aNormal);
             
             
-            
-            //FModelDataPacked *aBalloon = &(gApp->mBalloon);
             if (mDisableLight) {
                 Graphics::UniformBind();
             } else {
                 Graphics::UniformBind(&mPhong.mUniform);
+                //Graphics::UniformBind(&mDiffuse.mUniform);
             }
             Graphics::DrawTrianglesIndexedWithPackedBuffers(aBalloon->mBuffer, 0, aBalloon->mIndex, aBalloon->mIndexCount, gApp->mBalloonMap[aBalloonIndex].mTexture);
             
@@ -265,7 +296,6 @@ void LightConfigurationScene::Draw3D() {
     aDirX = mPhong.mUniform.mLight.mDirX;
     aDirY = mPhong.mUniform.mLight.mDirY;
     aDirZ = mPhong.mUniform.mLight.mDirZ;
-    
     
     Graphics::SetColor(1.0f, 0.0f, 0.25f, 1.0f);
     Graphics::DrawBox(0.0f, 0.0f, 0.0f, aDirX * 8.0f, aDirY * 8.0f, aDirZ * 8.0f, 0.5f);

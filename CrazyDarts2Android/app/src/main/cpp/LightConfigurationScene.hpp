@@ -12,11 +12,13 @@
 #include "FCanvas.hpp"
 #include "PhongLightMenu.hpp"
 #include "SimpleSpotLightMenu.hpp"
+#include "DiffuseLightMenu.hpp"
 #include "CameraMenu.hpp"
 #include "FloatingCamera.hpp"
 #include "FModelDataPacked.hpp"
 #include "FUniforms.hpp"
 #include "PhongConfiguration.hpp"
+#include "DiffuseConfiguration.hpp"
 #include "SpotLightSimpleConfiguration.hpp"
 
 class LightConfigurationScene : public FCanvas {
@@ -40,7 +42,8 @@ public:
     virtual void                                Notify(void *pSender, const char *pNotification) override;
     
     PhongConfiguration                          mPhong;
-    //SpotLightSimpleConfiguration                mSpotlight;
+    SpotLightSimpleConfiguration                mSpotlight;
+    DiffuseConfiguration                        mDiffuse;
     
     FloatingCamera                              mCamera;
     
@@ -58,6 +61,7 @@ public:
     bool                                        mDisableLight;
     
     PhongLightMenu                              *mPhongLightMenu;
+    DiffuseLightMenu                            *mDiffuseLightMenu;
     SimpleSpotLightMenu                         *mSpotlightMenu;
     
     CameraMenu                                  *mCameraMenu;

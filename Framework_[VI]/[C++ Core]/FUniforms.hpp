@@ -16,7 +16,7 @@
 #define UNIFORM_TYPE_UNKNOWN -1
 #define UNIFORM_TYPE_BASIC 0
 #define UNIFORM_TYPE_LIGHT_AMBIENT 1
-#define UNIFORM_TYPE_LIGHT_AMBIENT_DIFFUSE 2
+#define UNIFORM_TYPE_LIGHT_DIFFUSE 2
 #define UNIFORM_TYPE_LIGHT_PHONG 3
 #define UNIFORM_TYPE_LIGHT_SIMPLE_SPOTLIGHT 4
 
@@ -67,10 +67,12 @@ public:
     virtual void                            WriteFragmentToBuffer(void *pData, unsigned int pOffset) override;
 };
 
-class FUniformsLightAmbientDiffuse : public FUniformsLightAmbient {
+class FUniformsLightDiffuse : public FUniforms {
 public:
-    FUniformsLightAmbientDiffuse();
-    virtual ~FUniformsLightAmbientDiffuse();
+    FUniformsLightDiffuse();
+    virtual ~FUniformsLightDiffuse();
+    
+    FMatrix                                 mNormal;
     
     FLightDiffuse                           mLight;
     

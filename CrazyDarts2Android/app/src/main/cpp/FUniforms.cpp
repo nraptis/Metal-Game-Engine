@@ -83,34 +83,35 @@ void FUniformsLightAmbient::WriteFragmentToBuffer(void *pData, unsigned int pOff
     memcpy(aPtr, &mLight, aLightSize);
 }
 
-FUniformsLightAmbientDiffuse::FUniformsLightAmbientDiffuse() {
+FUniformsLightDiffuse::FUniformsLightDiffuse() {
     
 }
 
-FUniformsLightAmbientDiffuse::~FUniformsLightAmbientDiffuse() {
+FUniformsLightDiffuse::~FUniformsLightDiffuse() {
     
 }
 
-unsigned int FUniformsLightAmbientDiffuse::GetType() {
-    return UNIFORM_TYPE_LIGHT_AMBIENT_DIFFUSE;
+unsigned int FUniformsLightDiffuse::GetType() {
+    return UNIFORM_TYPE_LIGHT_DIFFUSE;
 }
 
-unsigned int FUniformsLightAmbientDiffuse::GetVertexSize() {
-    int aSize = FUniformsLightAmbient::GetVertexSize();
+unsigned int FUniformsLightDiffuse::GetVertexSize() {
+    int aSize = FUniforms::GetVertexSize();
+    aSize += sizeof(float) * 16;
     return aSize;
 }
 
-unsigned int FUniformsLightAmbientDiffuse::GetFragmentSize() {
+unsigned int FUniformsLightDiffuse::GetFragmentSize() {
     int aSize = FUniforms::GetFragmentSize();
     aSize += sizeof(mLight);
     return aSize;
 }
 
-void FUniformsLightAmbientDiffuse::WriteVertexToBuffer(void *pData, unsigned int pOffset) {
-    FUniformsLightAmbient::WriteVertexToBuffer(pData, pOffset);
+void FUniformsLightDiffuse::WriteVertexToBuffer(void *pData, unsigned int pOffset) {
+    FUniforms::WriteVertexToBuffer(pData, pOffset);
 }
 
-void FUniformsLightAmbientDiffuse::WriteFragmentToBuffer(void *pData, unsigned int pOffset) {
+void FUniformsLightDiffuse::WriteFragmentToBuffer(void *pData, unsigned int pOffset) {
     char *aContents = (char *)pData;
     char *aPtr = &aContents[pOffset];
     static int aColorSize = sizeof(mColor);
@@ -122,10 +123,10 @@ void FUniformsLightAmbientDiffuse::WriteFragmentToBuffer(void *pData, unsigned i
 }
 
 
-void FUniformsLightAmbientDiffuse::Print() {
+void FUniformsLightDiffuse::Print() {
     
     /*
-    Log("*** BEGIN FUniformsLightAmbientDiffuse ***\n");
+    Log("*** BEGIN FUniformsLightDiffuse ***\n");
     
     Log("mDiffuse.mRed = %f;\n", mDiffuse.mRed);
     Log("mDiffuse.mGreen = %f;\n", mDiffuse.mGreen);
@@ -136,7 +137,7 @@ void FUniformsLightAmbientDiffuse::Print() {
     Log("mDiffuse.mDirY = %f;\n", mDiffuse.mDirY);
     Log("mDiffuse.mDirZ = %f;\n", mDiffuse.mDirZ);
     
-    Log("*** END FUniformsLightAmbientDiffuse ***\n");
+    Log("*** END FUniformsLightDiffuse ***\n");
     */
 }
 
@@ -154,6 +155,7 @@ unsigned int FUniformsLightPhong::GetType() {
 
 unsigned int FUniformsLightPhong::GetVertexSize() {
     int aSize = FUniforms::GetVertexSize();
+    aSize += sizeof(float) * 16;
     return aSize;
 }
 
@@ -249,8 +251,6 @@ unsigned int FUniformsLightSimpleSpotlight::GetVertexSize() {
     
     //Size of normal matrix.
     aSize += sizeof(float) * 16;
-    aSize += sizeof(float) * 16;
-    //return sizeof(float) * 32;
     
     return aSize;
 }

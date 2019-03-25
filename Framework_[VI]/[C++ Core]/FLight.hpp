@@ -49,39 +49,6 @@ public:
 class FLightPhong {
 public:
     
-    
-    inline FLightPhong(float pRed, float pGreen, float pBlue) {
-        mRed = pRed;
-        mGreen = pGreen;
-        mBlue = pBlue;
-        
-        mAmbientIntensity = 0.0f;
-        mDiffuseIntensity = 0.25f;
-        mSpecularIntensity = 0.75f;
-        
-        mDirX = 0.0f;
-        mDirY = 0.0f;
-        mDirZ = -1.0f;
-        
-        mShininess = 32.0f;
-    }
-    
-    inline FLightPhong(float pRed, float pGreen, float pBlue, float mAmbientIntensity, float mDiffuseIntensity, float mSpecularIntensity, float pDirX, float pDirY, float pDirZ, float pShininess) {
-        mRed = pRed;
-        mGreen = pGreen;
-        mBlue = pBlue;
-        
-        mAmbientIntensity = mAmbientIntensity;
-        mDiffuseIntensity = mDiffuseIntensity;
-        mSpecularIntensity = mSpecularIntensity;
-        
-        mDirX = 0.0f;
-        mDirY = 0.0f;
-        mDirZ = -1.0f;
-        
-        mShininess = 32.0f;
-    }
-    
     FLightPhong();
     
     float mRed;
@@ -101,48 +68,6 @@ public:
 
 class FLightSimpleSpotlight {
 public:
-    
-    inline FLightSimpleSpotlight(float pRed, float pGreen, float pBlue) {
-        mRed = pRed;
-        mGreen = pGreen;
-        mBlue = pBlue;
-        
-        mAmbientIntensity = 0.0f;
-        mDiffuseIntensity = 0.25f;
-        mSpecularIntensity = 0.75f;
-        
-        mSpotlightX = 10.0f;
-        mSpotlightY = -10.0f;
-        mSpotlightZ = 0.0f;
-        
-        mDirX = 0.0f;
-        mDirY = 0.0f;
-        mDirZ = -1.0f;
-        
-        mShininess = 32.0f;
-        mEmissions = 0.0f;
-    }
-    
-    inline FLightSimpleSpotlight(float pRed, float pGreen, float pBlue, float mAmbientIntensity, float mDiffuseIntensity, float mSpecularIntensity, float pDirX, float pDirY, float pDirZ, float pShininess, float pSpotlightX, float pSpotlightY, float pSpotlightZ) {
-        mRed = pRed;
-        mGreen = pGreen;
-        mBlue = pBlue;
-        
-        mAmbientIntensity = mAmbientIntensity;
-        mDiffuseIntensity = mDiffuseIntensity;
-        mSpecularIntensity = mSpecularIntensity;
-        
-        mDirX = 0.0f;
-        mDirY = 0.0f;
-        mDirZ = -1.0f;
-        
-        mSpotlightX = pSpotlightX;
-        mSpotlightY = pSpotlightY;
-        mSpotlightZ = pSpotlightZ;
-        
-        mShininess = 32.0f;
-        mEmissions = 0.0f;
-    }
     
     FLightSimpleSpotlight();
     

@@ -38,9 +38,11 @@
 ShaderProgramModelIndexedLightedPhong::ShaderProgramModelIndexedLightedPhong(const char *pVertexPath, const char *pFragmentPath) : ShaderProgram(pVertexPath, pFragmentPath) {
     mDataOffset = 0;
     
+    mSlotNormalMatrixUniform = -1;
     mSlotTexture = -1;
     mSlotTextureCoords = -1;
     mSlotNormals = -1;
+    mSlotSpecular = -1;
     
     mSlotAmbient = -1;
 }
@@ -59,11 +61,6 @@ void ShaderProgramModelIndexedLightedPhong::Compile() {
     mSlotAmbient = glGetUniformLocation(mProgram, "Ambient");
     mSlotDiffuse = glGetUniformLocation(mProgram, "Diffuse");
     mSlotSpecular = glGetUniformLocation(mProgram, "Specular");
-    
-    
-    mSlotMaterial = glGetUniformLocation(mProgram, "Material");
-    
-    
     
     mSlotTextureCoords = glGetAttribLocation(mProgram, "TextureCoords");
     mSlotNormals = glGetAttribLocation(mProgram, "Normals");
@@ -85,8 +82,6 @@ void ShaderProgramModelIndexedLightedPhong::Compile() {
     Log("Shader[%s] mSlotAmbient = %d\n", mName.c(), mSlotAmbient);
     Log("Shader[%s] mSlotDiffuse = %d\n", mName.c(), mSlotDiffuse);
     Log("Shader[%s] mSlotSpecular = %d\n", mName.c(), mSlotSpecular);
-    
-    Log("Shader[%s] mSlotMaterial = %d\n", mName.c(), mSlotMaterial);
     
     Log("*******\n");
 }

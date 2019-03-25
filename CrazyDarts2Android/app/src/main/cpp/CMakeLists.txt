@@ -12,6 +12,8 @@ add_library(gl2jni SHARED
         core_app_shell.cpp
         core_social.cpp
         core_web.cpp
+        DiffuseConfiguration.cpp
+        DiffuseLightMenu.cpp
         Dart.cpp
         DragableCanvas.cpp
         FAchievement.cpp
@@ -128,7 +130,7 @@ add_library(gl2jni SHARED
 		ShaderProgramShapeNode.cpp
 		ShaderProgramShape3D.cpp
 		ShaderProgramModelIndexedLightedPhong.cpp
-		ShaderProgramModelIndexedLightedAmbientDiffuse.cpp
+        ShaderProgramModelIndexedLightedDiffuse.cpp
 		ShaderProgramModelIndexedLightedAmbient.cpp
 		ShaderProgramModelIndexedLightedSimpleSpotlight.cpp
 		ShaderProgramModelIndexed.cpp

@@ -103,7 +103,7 @@ PhongLightMenu::PhongLightMenu(PhongConfiguration *pConfiguration) : ToolMenu() 
     
     mSliderIntensitySpecular = new UISlider();
     mSliderIntensitySpecular->SetValue(&pConfiguration->mUniform.mLight.mSpecularIntensity);
-    mSliderIntensitySpecular->SetRange(0.0f, 1.0f);
+    mSliderIntensitySpecular->SetRange(0.0f, 5.0f);
     mSliderIntensitySpecular->SetText("Specular:");
     mIntensityPanel->AddSection(mSliderIntensitySpecular);
     

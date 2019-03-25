@@ -25,7 +25,6 @@ public:
     
     int                         mSlotNormalMatrixUniform;
     
-    
     int                         mSlotTextureCoords;
     int                         mSlotNormals;
     int                         mSlotTexture;
@@ -33,7 +32,6 @@ public:
     int                         mSlotAmbient;
     int                         mSlotDiffuse;
     int                         mSlotSpecular;
-    int                         mSlotMaterial;
     
     
     int                         mDataOffset;

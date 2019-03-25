@@ -1637,18 +1637,18 @@ void Graphics::PipelineStateSetModelIndexedLightedAmbientAlphaBlending() {
     }
 }
 
-void Graphics::PipelineStateSetModelIndexedLightedAmbientDiffuseNoBlending() {
+void Graphics::PipelineStateSetModelIndexedLightedDiffuseNoBlending() {
     if (gOpenGLEngine) {
         BlendDisable();
-        gOpenGLEngine->UseProgramModelIndexedAmbientDiffuse();
+        gOpenGLEngine->UseProgramModelIndexedDiffuse();
     }
 }
 
-void Graphics::PipelineStateSetModelIndexedLightedAmbientDiffuseAlphaBlending() {
+void Graphics::PipelineStateSetModelIndexedLightedDiffuseAlphaBlending() {
     if (gOpenGLEngine) {
         BlendEnable();
         BlendSetAlpha();
-        gOpenGLEngine->UseProgramModelIndexedAmbientDiffuse();
+        gOpenGLEngine->UseProgramModelIndexedDiffuse();
     }
 }
 
@@ -1666,6 +1666,21 @@ void Graphics::PipelineStateSetModelIndexedLightedPhongAlphaBlending() {
         BlendEnable();
         BlendSetAlpha();
         gOpenGLEngine->UseProgramModelIndexedPhong();
+    }
+}
+
+void Graphics::PipelineStateSetModelIndexedLightedPhongOverlayNoBlending() {
+    if (gOpenGLEngine) {
+        BlendDisable();
+        gOpenGLEngine->UseProgramModelIndexedPhongOverlay();
+    }
+}
+
+void Graphics::PipelineStateSetModelIndexedLightedPhongOverlayAlphaBlending() {
+    if (gOpenGLEngine) {
+        BlendEnable();
+        BlendSetAlpha();
+        gOpenGLEngine->UseProgramModelIndexedPhongOverlay();
     }
 }
 

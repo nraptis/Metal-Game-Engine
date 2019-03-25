@@ -1,5 +1,5 @@
 //
-//  ShaderProgramModelIndexedLightedAmbientDiffuseDiffuse.cpp
+//  ShaderProgramModelIndexedLightedDiffuseDiffuse.cpp
 //  Crazy Darts 2 iOS
 //
 //  Created by Nicholas Raptis on 3/15/19.
@@ -8,10 +8,12 @@
 
 #include "core_includes.h"
 #include "os_core_graphics.h"
-#include "ShaderProgramModelIndexedLightedAmbientDiffuse.hpp"
+#include "ShaderProgramModelIndexedLightedDiffuse.hpp"
 
-ShaderProgramModelIndexedLightedAmbientDiffuse::ShaderProgramModelIndexedLightedAmbientDiffuse(const char *pVertexPath, const char *pFragmentPath) : ShaderProgram(pVertexPath, pFragmentPath) {
+ShaderProgramModelIndexedLightedDiffuse::ShaderProgramModelIndexedLightedDiffuse(const char *pVertexPath, const char *pFragmentPath) : ShaderProgram(pVertexPath, pFragmentPath) {
     mDataOffset = 0;
+    
+    mSlotNormalMatrixUniform = -1;
     
     mSlotTexture = -1;
     mSlotTextureCoords = -1;
@@ -20,13 +22,15 @@ ShaderProgramModelIndexedLightedAmbientDiffuse::ShaderProgramModelIndexedLighted
     mSlotAmbient = -1;
 }
 
-void ShaderProgramModelIndexedLightedAmbientDiffuse::Compile() {
+void ShaderProgramModelIndexedLightedDiffuse::Compile() {
     
     ShaderProgram::Compile();
     
     if (IsValid() == false) return;
     
-    //mSlotColors = glGetAttribLocation(mProgram, "Colors");
+    mSlotNormalMatrixUniform = glGetUniformLocation(mProgram, "NormalMatrix");
+    
+    
     mSlotTexture = glGetUniformLocation(mProgram, "Texture");
     mSlotAmbient = glGetUniformLocation(mProgram, "Ambient");
     mSlotDiffuse = glGetUniformLocation(mProgram, "Diffuse");
@@ -40,6 +44,7 @@ void ShaderProgramModelIndexedLightedAmbientDiffuse::Compile() {
     Log("*******\n");
     Log("Shader[%s] mSlotProjectionMatrixUniform = %d\n", mName.c(), mSlotProjectionMatrixUniform);
     Log("Shader[%s] mSlotModelViewMatrixUniform = %d\n", mName.c(), mSlotModelViewMatrixUniform);
+    Log("Shader[%s] mSlotNormalMatrixUniform = %d\n", mName.c(), mSlotNormalMatrixUniform);
     Log("Shader[%s] mSlotModulateColorUniform = %d\n", mName.c(), mSlotModulateColorUniform);
     Log("Shader[%s] mSlotPositions = %d\n", mName.c(), mSlotPositions);
     Log("Shader[%s] mSlotTextureCoords = %d\n", mName.c(), mSlotTextureCoords);
@@ -53,25 +58,24 @@ void ShaderProgramModelIndexedLightedAmbientDiffuse::Compile() {
     Log("*******\n");
 }
 
-void ShaderProgramModelIndexedLightedAmbientDiffuse::BindUniform(FUniforms *pUniform) {
-    if (pUniform && pUniform->GetType() == UNIFORM_TYPE_LIGHT_AMBIENT_DIFFUSE) {
+void ShaderProgramModelIndexedLightedDiffuse::BindUniform(FUniforms *pUniform) {
+    if (pUniform && pUniform->GetType() == UNIFORM_TYPE_LIGHT_DIFFUSE) {
         
-        FUniformsLightAmbientDiffuse *aUniform = (FUniformsLightAmbientDiffuse *)pUniform;
+        FUniformsLightDiffuse *aUniform = (FUniformsLightDiffuse *)pUniform;
         
         
         ShaderProgram::BindUniform(pUniform);
         
+        glUniformMatrix4fv(mSlotNormalMatrixUniform, 1, 0, aUniform->mNormal.m);
         glUniform4f(mSlotAmbient, aUniform->mLight.mRed, aUniform->mLight.mGreen, aUniform->mLight.mBlue,aUniform->mLight.mAmbientIntensity);
         glUniform4f(mSlotDiffuse, aUniform->mLight.mDirX, aUniform->mLight.mDirY, aUniform->mLight.mDirZ,aUniform->mLight.mDiffuseIntensity);
-        
-        
         
     } else {
         Log("Uniform wrong type? [%x]\n", pUniform);
     }
 }
 
-void ShaderProgramModelIndexedLightedAmbientDiffuse::ArrayBufferData(FBuffer *pBuffer, int pOffset) {
+void ShaderProgramModelIndexedLightedDiffuse::ArrayBufferData(FBuffer *pBuffer, int pOffset) {
     if (pBuffer != NULL && pBuffer->mBindIndex != -1) {
         glBindBuffer(GL_ARRAY_BUFFER, pBuffer->mBindIndex);
     }
@@ -83,7 +87,7 @@ void ShaderProgramModelIndexedLightedAmbientDiffuse::ArrayBufferData(FBuffer *pB
     mDataOffset = pOffset;
 }
 
-void ShaderProgramModelIndexedLightedAmbientDiffuse::ArrayBufferPositions(FBuffer *pBuffer, int pOffset) {
+void ShaderProgramModelIndexedLightedDiffuse::ArrayBufferPositions(FBuffer *pBuffer, int pOffset) {
     if (pBuffer != NULL && pBuffer->mBindIndex != -1) {
         glBindBuffer(GL_ARRAY_BUFFER, pBuffer->mBindIndex);
     }
@@ -94,7 +98,7 @@ void ShaderProgramModelIndexedLightedAmbientDiffuse::ArrayBufferPositions(FBuffe
     glVertexAttribPointer(mSlotPositions, 3, GL_FLOAT, GL_FALSE, (aStride << 2), aOffset);
 }
 
-void ShaderProgramModelIndexedLightedAmbientDiffuse::ArrayBufferTextureCoords(FBuffer *pBuffer, int pOffset) {
+void ShaderProgramModelIndexedLightedDiffuse::ArrayBufferTextureCoords(FBuffer *pBuffer, int pOffset) {
     if (pBuffer != NULL && pBuffer->mBindIndex != -1) {
         glBindBuffer(GL_ARRAY_BUFFER, pBuffer->mBindIndex);
     }
@@ -107,7 +111,7 @@ void ShaderProgramModelIndexedLightedAmbientDiffuse::ArrayBufferTextureCoords(FB
 
 
 
-void ShaderProgramModelIndexedLightedAmbientDiffuse::ArrayBufferNormals(FBuffer *pBuffer, int pOffset) {
+void ShaderProgramModelIndexedLightedDiffuse::ArrayBufferNormals(FBuffer *pBuffer, int pOffset) {
     if (pBuffer != NULL && pBuffer->mBindIndex != -1) {
         glBindBuffer(GL_ARRAY_BUFFER, pBuffer->mBindIndex);
     }

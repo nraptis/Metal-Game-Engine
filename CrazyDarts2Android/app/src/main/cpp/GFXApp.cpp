@@ -346,7 +346,7 @@ void GFXApp::Draw3D() {
     mUniPhong.mLight.mDirZ = (Sin(mAmbientRoll2) + 1.0f) / 2.0f;
     
     //FUniformsLightAmbient                   mUniAmb;
-    //FUniformsLightAmbientDiffuse            mUniDiff;
+    //FUniformsLightDiffuse            mUniDiff;
     //FUniformsLightPhong                     mUniPhong;
     
     
@@ -484,7 +484,7 @@ void GFXApp::Draw3D() {
     
 
     if (mMonolith.mBuffer != NULL && mMonolith.mBuffer->mBindIndex != -1) {
-    Graphics::PipelineStateSetModelIndexedLightedAmbientDiffuseAlphaBlending();
+    Graphics::PipelineStateSetModelIndexedLightedDiffuseAlphaBlending();
     Graphics::ArrayBufferData(mMonolith.mBuffer, 0);
     Graphics::ArrayBufferPositions(NULL, 0);
     Graphics::ArrayBufferTextureCoords(NULL, sizeof(float) * 3);

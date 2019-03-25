@@ -347,39 +347,42 @@ public:
     static void                             PipelineStateSetShape2DNoBlending();
     static void                             PipelineStateSetShape2DAlphaBlending();
     static void                             PipelineStateSetShape2DAdditiveBlending();
-    //
+    
     static void                             PipelineStateSetShape3DNoBlending();
     static void                             PipelineStateSetShape3DAlphaBlending();
     static void                             PipelineStateSetShape3DAdditiveBlending();
-    //
+    
     static void                             PipelineStateSetShapeNodeNoBlending();
     static void                             PipelineStateSetShapeNodeAlphaBlending();
     static void                             PipelineStateSetShapeNodeAdditiveBlending();
-    //
+    
     static void                             PipelineStateSetSpriteNoBlending();
     static void                             PipelineStateSetSpriteAlphaBlending();
     static void                             PipelineStateSetSpriteAdditiveBlending();
     static void                             PipelineStateSetSpritePremultipliedBlending();
     static void                             PipelineStateSetSpriteWhiteBlending();
-    //
+    
     static void                             PipelineStateSetSimpleModelNoBlending();
     static void                             PipelineStateSetSimpleModelAlphaBlending();
-    //
+    
     static void                             PipelineStateSetSimpleModelIndexedNoBlending();
     static void                             PipelineStateSetSimpleModelIndexedAlphaBlending();
-    //
+    
     static void                             PipelineStateSetModelIndexedNoBlending();
     static void                             PipelineStateSetModelIndexedAlphaBlending();
-    //
+    
     static void                             PipelineStateSetModelIndexedLightedAmbientNoBlending();
     static void                             PipelineStateSetModelIndexedLightedAmbientAlphaBlending();
-    //
-    static void                             PipelineStateSetModelIndexedLightedAmbientDiffuseNoBlending();
-    static void                             PipelineStateSetModelIndexedLightedAmbientDiffuseAlphaBlending();
-    //
+    
+    static void                             PipelineStateSetModelIndexedLightedDiffuseNoBlending();
+    static void                             PipelineStateSetModelIndexedLightedDiffuseAlphaBlending();
+    
     static void                             PipelineStateSetModelIndexedLightedPhongNoBlending();
     static void                             PipelineStateSetModelIndexedLightedPhongAlphaBlending();
-    //
+    
+    static void                             PipelineStateSetModelIndexedLightedPhongOverlayNoBlending();
+    static void                             PipelineStateSetModelIndexedLightedPhongOverlayAlphaBlending();
+    
     static void                             PipelineStateSetModelIndexedLightedSimpleSpotlightNoBlending();
     static void                             PipelineStateSetModelIndexedLightedSimpleSpotlightAlphaBlending();
     

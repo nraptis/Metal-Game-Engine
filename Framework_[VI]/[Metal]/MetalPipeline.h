@@ -35,10 +35,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) id <MTLFunction> modelIndexedFragmentProgram;
 @property (nonatomic, strong) id <MTLFunction> modelIndexedAmbientVertexProgram;
 @property (nonatomic, strong) id <MTLFunction> modelIndexedAmbientFragmentProgram;
-@property (nonatomic, strong) id <MTLFunction> modelIndexedAmbientDiffuseVertexProgram;
-@property (nonatomic, strong) id <MTLFunction> modelIndexedAmbientDiffuseFragmentProgram;
+@property (nonatomic, strong) id <MTLFunction> modelIndexedDiffuseVertexProgram;
+@property (nonatomic, strong) id <MTLFunction> modelIndexedDiffuseFragmentProgram;
 @property (nonatomic, strong) id <MTLFunction> modelIndexedPhongVertexProgram;
 @property (nonatomic, strong) id <MTLFunction> modelIndexedPhongFragmentProgram;
+@property (nonatomic, strong) id <MTLFunction> modelIndexedPhongOverlayVertexProgram;
+@property (nonatomic, strong) id <MTLFunction> modelIndexedPhongOverlayFragmentProgram;
+
 
 - (void)setup;
 
@@ -77,11 +80,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)pipelineStateSetModelIndexedLightedAmbientNoBlending;
 - (void)pipelineStateSetModelIndexedLightedAmbientAlphaBlending;
 
-- (void)pipelineStateSetModelIndexedLightedAmbientDiffuseNoBlending;
-- (void)pipelineStateSetModelIndexedLightedAmbientDiffuseAlphaBlending;
+- (void)pipelineStateSetModelIndexedLightedDiffuseNoBlending;
+- (void)pipelineStateSetModelIndexedLightedDiffuseAlphaBlending;
 
 - (void)pipelineStateSetModelIndexedLightedPhongNoBlending;
 - (void)pipelineStateSetModelIndexedLightedPhongAlphaBlending;
+
+- (void)pipelineStateSetModelIndexedLightedPhongOverlayNoBlending;
+- (void)pipelineStateSetModelIndexedLightedPhongOverlayAlphaBlending;
 
 @end
 

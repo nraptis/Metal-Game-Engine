@@ -32,7 +32,7 @@ GameRenderer::GameRenderer(Game *pGame, FloatingCamera *pCamera) {
     mDartSpin = 0.0f;
     
     //FUniformsLightPhong                 mUniformPhong;
-    //FUniformsLightAmbientDiffuse        mUniformDiffuse;
+    //FUniformsLightDiffuse        mUniformDiffuse;
     //FUniformsLightAmbient               mUniformAmbient;
     
 }

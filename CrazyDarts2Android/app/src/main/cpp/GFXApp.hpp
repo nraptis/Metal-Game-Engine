@@ -124,7 +124,7 @@ public:
     
     
     FUniformsLightAmbient                   mUniAmb;
-    FUniformsLightAmbientDiffuse            mUniDiff;
+    FUniformsLightDiffuse            mUniDiff;
     FUniformsLightPhong                     mUniPhong;
     
     
@@ -142,13 +142,10 @@ public:
     
     float                                   mTestSin1;
     float                                   mTestSin2;
-    
-    
+
     float                                   mAmbientRoll1;
     float                                   mAmbientRoll2;
-    
-    
-    
+
 };
 
 extern GFXApp *gApp;
