@@ -18,14 +18,13 @@
 #define SOUND_VOLUME_MILLIBEL_MAX (0)
 
 class FSoundInstanceAndroid;
-
+class OSSoundBuffer;
 class FSoundInstanceAndroid : public FSoundInstance {
 public:
     FSoundInstanceAndroid();
     virtual ~FSoundInstanceAndroid();
 
-    //FAudioBuffer                            *mBuffer;
-
+    OSSoundBuffer                               *mSoundBuffer;
 };
 
 
@@ -34,8 +33,8 @@ public:
     FSoundDataAndroid();
     virtual ~FSoundDataAndroid();
 
-    unsigned char                           *mData;
-    int                                     mDataLength;
+    unsigned char                               *mData;
+    int                                         mDataLength;
 };
 
 void sound_initialize();
@@ -85,10 +84,11 @@ void sound_inactive();
 FSoundData *sound_spawn_data();
 
 // engine interfaces
-static SLObjectItf engineObject = NULL;
-static SLEngineItf engineEngine = NULL;
-static SLObjectItf outputMixObject = NULL;
-static SLEnvironmentalReverbItf outputMixEnvironmentalReverb = NULL;
+extern SLObjectItf engineObject;
+extern SLEngineItf engineEngine;
+extern SLObjectItf outputMixObject;
+extern SLEnvironmentalReverbItf outputMixEnvironmentalReverb;
+
 
 #endif
 

@@ -113,6 +113,8 @@ add_library(gl2jni SHARED
         os_core_social.cpp
         os_core_sound_android.cpp
         os_core_web.cpp
+		OSMusicBuffer.cpp
+		OSMusicPlayer.cpp
 		OSSoundBuffer.cpp
 		OSSoundBufferPool.cpp
         PathEditorMenu.cpp

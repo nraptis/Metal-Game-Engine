@@ -9,6 +9,9 @@
 #ifndef FRAMEWORK_OS_MUSIC_H
 #define FRAMEWORK_OS_MUSIC_H
 
+#include <stdio.h>
+#include <sys/types.h>
+
 void music_initialize();
 
 void music_play(const char *pFilePath, bool pLoop);
@@ -27,6 +30,8 @@ void music_pause();
 void music_update();
 void music_active();
 void music_inactive();
+
+int MUSIC_GetFileDescriptor(const char *pFileName, off_t &pStartIndex, off_t &pLength);
 
 #endif
 

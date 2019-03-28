@@ -6,29 +6,54 @@
 //  Copyright (c) 2019
 //
 
-#ifndef FRAMEWORK_SOUND_BUFFER_ANDROID_H
-#define FRAMEWORK_SOUND_BUFFER_ANDROID_H
+#ifndef FRAMEWORK_MUSIC_BUFFER_ANDROID_H
+#define FRAMEWORK_MUSIC_BUFFER_ANDROID_H
 
 #include <SLES/OpenSLES.h>
 #include <SLES/OpenSLES_Android.h>
 
-
+class FSoundDataAndroid;
+class FSoundInstanceAndroid;
 class OSSoundBuffer {
+
 public:
     OSSoundBuffer();
     ~OSSoundBuffer();
 
+    bool                                IsAvailable();
+
+    void                                SetUp();
+    void                                TearDown();
+
+    void                                Play(FSoundInstanceAndroid *pSoundInstance, FSoundDataAndroid *pSoundData, float pVolume, float pPitch, bool pLoop);
+    void                                Loop();
+
+    void                                Complete();
 
 
-    SLObjectItf bqPlayerObject;
-    SLPlayItf bqPlayerPlay ;
+    void                                Stop();
+
+    SLObjectItf                         bqPlayerObject;
+    SLPlayItf                           bqPlayerPlay;
     SLAndroidSimpleBufferQueueItf       bqPlayerBufferQueue;
     SLEffectSendItf                     bqPlayerEffectSend;
     SLPlaybackRateItf                   bqPlayerPlaybackRate;
     SLVolumeItf                         bqPlayerVolume;
-    SLmilliHertz                        bqPlayerSampleRate;
     SLpermille                          bqPlaybackRateMin;
     SLpermille                          bqPlaybackRateMax;
+    SLmillibel                          bqVolumeMax;
+
+    FSoundInstanceAndroid               *mSoundInstance;
+    FSoundDataAndroid                   *mSoundData;
+
+    bool                                mDidFail;
+
+    bool                                mIsPlaying;
+
+    bool                                mIsLooping;
+    float                               mVolume;
+    float                               mPitch;
+
 };
 
 
