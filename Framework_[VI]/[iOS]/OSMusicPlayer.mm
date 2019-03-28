@@ -14,9 +14,7 @@
 @synthesize musicPlayer;
 @synthesize musicPlayerFading;
 
-- (id)init
-{
-    
+- (id)init {
     musicFadeOutTick = 0;
     musicFadeOutTickMax = 5;
     musicFadeOut = false;
@@ -64,21 +62,16 @@
         }
     }
     
-    if(musicFadeOut)
-    {
+    if (musicFadeOut) {
         musicFadeOutTick--;
-        
-        if(musicFadeOutTick <= 0)
-        {
+        if (musicFadeOutTick <= 0) {
             [musicPlayerFading stop];
             musicPlayerFading.delegate = nil;
             self.musicPlayerFading = nil;
             
             musicFadeOut = NO;
-        }
-        else
-        {
-            if(musicFadeOutTickMax <= 0)musicFadeOutTickMax = 1;
+        } else {
+            if (musicFadeOutTickMax <= 0) musicFadeOutTickMax = 1;
             
             float aPercent = ((float)musicFadeOutTick) / ((float)musicFadeOutTickMax);
             
@@ -91,23 +84,15 @@
     }
 }
 
-
-
-
-- (void)musicPlay:(NSString *)pFilePath withLoop:(BOOL)pLoop
-{
+- (void)musicPlay:(NSString *)pFilePath withLoop:(BOOL)pLoop {
     [self musicPlay:pFilePath withVolume:1.0f withLoop:pLoop];
 }
 
-- (void)musicPlay:(NSString *)pFilePath withVolume:(float)pVolume withLoop:(BOOL)pLoop
-{
-    
-    //NSLog(@"Music Play [%@]", pFilePath);
+- (void)musicPlay:(NSString *)pFilePath withVolume:(float)pVolume withLoop:(BOOL)pLoop {
     
     musicLoop = NO;
     
-    if(musicPlayer)
-    {
+    if (musicPlayer) {
         [musicPlayer stop];
         musicPlayer.delegate = nil;
         self.musicPlayer = nil;
@@ -117,21 +102,16 @@
     
     NSURL *aURL = [[NSURL alloc] initFileURLWithPath: pFilePath];
     
-    if(aURL)
-    {
+    if (aURL) {
         NSError *aError;
-        
         
         musicPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:aURL error:&aError];
         
-        if(aError)
-        {
+        if (aError) {
             NSLog(@"Music Error!");
             NSLog(@"[%@]", pFilePath);
             NSLog(@"(%@)", aError);
-        }
-        else
-        {
+        } else {
             //NSLog(@"Playing Music Vol [%f  x  %f]", musicVolume, pVolume);
             
             [musicPlayer prepareToPlay];
@@ -146,8 +126,7 @@
     
 }
 
-- (void)musicCrossFadeWithPath:(NSString *)pFilePath withDurationTicks:(int)pDurationTicks withLoop:(BOOL)pLoop
-{
+- (void)musicCrossFadeWithPath:(NSString *)pFilePath withDurationTicks:(int)pDurationTicks withLoop:(BOOL)pLoop {
     if(pDurationTicks < 1)pDurationTicks = 1;
     
     [self musicFadeOutWithDurationTicks:pDurationTicks];
@@ -159,34 +138,23 @@
         self.musicPlayer = nil;
     }
     
-    
     [self musicPlay:pFilePath withVolume:0.0f withLoop:pLoop];
-    
     
     musicFadeInTick = pDurationTicks;
     musicFadeInTickMax = pDurationTicks;
     musicFadeIn = YES;
-    
-    
-    //musicFadeLoop
-    
-    
 }
 
-- (void)musicFadeOutWithDurationTicks:(int)pDurationTicks
-{
-    if(pDurationTicks < 1)pDurationTicks = 1;
+- (void)musicFadeOutWithDurationTicks:(int)pDurationTicks {
+    if (pDurationTicks < 1) pDurationTicks = 1;
     
-    if(musicPlayerFading)
-    {
+    if (musicPlayerFading) {
         [musicPlayerFading stop];
         musicPlayerFading.delegate = nil;
         self.musicPlayerFading = nil;
     }
     
-    
-    if(musicPlayer)
-    {
+    if (musicPlayer) {
         self.musicPlayerFading = musicPlayer;
         self.musicPlayer = nil;
         
@@ -194,24 +162,19 @@
         musicFadeOutTick = pDurationTicks;
         musicFadeOutTickMax = pDurationTicks;
         musicFadeOut = true;
-    }
-    else
-    {
+    } else {
         musicFadeLoop = false;
         musicFadeOutTick = 0;
         musicFadeOutTickMax = 0;
         musicFadeOut = false;
     }
-    
 }
 
-- (float)musicGetVolume
-{
+- (float)musicGetVolume {
     return musicVolume;
 }
 
-- (void)musicSetVolume:(float)pVolume
-{
+- (void)musicSetVolume:(float)pVolume {
     if(pVolume < 0.0f)pVolume = 0.0f;
     if(pVolume > 1.0f)pVolume = 1.0f;
     
@@ -220,47 +183,41 @@
     [musicPlayer setVolume:(musicVolume)];
 }
 
-
-- (void)musicFadeInWith:(NSString *)pFilePath withDurationTicks:(int)pDurationTicks
-{
-    
+- (void)musicStop {
+    [musicPlayer stop];
 }
 
-- (void)musicStop
-{
-    
+- (void)musicPause {
+    [musicPlayer pause];
 }
 
-- (BOOL)musicIsPlaying
-{
+- (void)musicResume {
+    [musicPlayer play];
+}
+
+- (BOOL)musicIsPlaying {
     BOOL aResult = NO;
-    
+    if (musicPlayer) {
+        if ([musicPlayer isPlaying]) {
+            return YES;
+        }
+    }
     return aResult;
 }
 
-- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
-{
-    if(player == musicPlayer)
-    {
-        if(musicLoop)
-        {
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
+    if (player == musicPlayer) {
+        if (musicLoop) {
             [musicPlayer play];
-        }
-        else
-        {
+        } else {
             [musicPlayer stop];
             musicPlayer.delegate = nil;
             self.musicPlayer = nil;
         }
-    }
-    else if(player == musicPlayerFading)
-    {
-        if(musicFadeLoop)
-        {
+    } else if(player == musicPlayerFading) {
+        if (musicFadeLoop) {
             [musicPlayerFading play];
-        }
-        else
-        {
+        } else {
             [musicPlayerFading stop];
             musicPlayerFading.delegate = nil;
             self.musicPlayerFading = nil;
@@ -268,18 +225,15 @@
     }
 }
 
-- (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error
-{
+- (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error {
     
 }
 
-- (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player
-{
+- (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player {
     
 }
 
-- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player withFlags:(NSUInteger)flags
-{
+- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player withFlags:(NSUInteger)flags {
     
 }
 

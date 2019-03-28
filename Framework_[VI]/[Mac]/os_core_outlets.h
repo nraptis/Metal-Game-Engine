@@ -8,7 +8,7 @@ class FString;
 
 void os_initialize_outlets();
 
-void os_detach_thread(void (*theFunction)(void *theArg), void* theArg);
+void os_detach_thread(void (*pFunction)(void *pArg), void *pArg);
 
 bool os_fileExists(const char *pFilePath);
 

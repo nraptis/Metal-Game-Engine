@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.4.1)
 
 # now build app's shared lib
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall")
 
 add_library(gl2jni SHARED
 		__DROID.cpp
@@ -108,10 +108,13 @@ add_library(gl2jni SHARED
         os_core_app_shell_android.cpp
         os_core_graphics.cpp
         os_core_includes.cpp
+        os_core_music_android.cpp
         os_core_outlets_android.cpp
         os_core_social.cpp
         os_core_sound_android.cpp
         os_core_web.cpp
+		OSSoundBuffer.cpp
+		OSSoundBufferPool.cpp
         PathEditorMenu.cpp
         PGMainCanvas.cpp
         PGMainToolbar.cpp
@@ -135,6 +138,8 @@ add_library(gl2jni SHARED
 		ShaderProgramModelIndexedLightedSimpleSpotlight.cpp
 		ShaderProgramModelIndexed.cpp
 		ShaderProgram.cpp
+		SimpleSpotLightMenu.cpp
+        SoundConfigMenu.cpp
 		SpotLightSimpleConfiguration.cpp
         ToolMenu.cpp
         ToolMenuHeader.cpp

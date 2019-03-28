@@ -43,12 +43,15 @@
 
 - (void)musicCrossFadeWithPath:(NSString *)pFilePath withDurationTicks:(int)pDurationTicks withLoop:(BOOL)pLoop;
 - (void)musicFadeOutWithDurationTicks:(int)pDurationTicks;
-- (void)musicFadeInWith:(NSString *)pFilePath withDurationTicks:(int)pDurationTicks;
 
 - (float)musicGetVolume;
 - (void)musicSetVolume:(float)pVolume;
 
 - (void)musicStop;
+
+- (void)musicPause;
+- (void)musicResume;
+
 
 - (BOOL)musicIsPlaying;
 

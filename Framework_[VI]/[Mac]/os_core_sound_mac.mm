@@ -1,6 +1,6 @@
 //
 //  os_core_sound.cpp
-//  RaptisGame
+//  Graveyard
 //
 //  Created by Nick Raptis on 2/21/14.
 //  Copyright (c) 2014 Nick Raptis. All rights reserved.
@@ -19,51 +19,24 @@
 #include "OpenAL/alc.h"
 #import "FSound.h"
 
-OSMusicPlayer *gMusicPlayer;
-
-int musicFadeOutTick;
-int musicFadeOutTickMax;
-bool musicFadeOut;
-
-int musicFadeInTick;
-int musicFadeInTickMax;
-bool musicFadeIn;
-
-float musicVolume;
-
-bool musicLoop;
-bool musicFadeLoop;
-
-
-FSoundInstanceMac::FSoundInstanceMac()
-{
+FSoundInstanceMac::FSoundInstanceMac() {
     
 }
 
-FSoundInstanceMac::~FSoundInstanceMac()
-{
+FSoundInstanceMac::~FSoundInstanceMac() {
     
 }
 
-//unsigned int                    mIndexOpenAL;
-
-
-
-FSoundDataMac::FSoundDataMac()
-{
+FSoundDataMac::FSoundDataMac() {
     mInstanceID = 0;
     mData = 0;
     mSourceBuffer = new float[16];
-    
 }
 
-FSoundDataMac::~FSoundDataMac()
-{
+FSoundDataMac::~FSoundDataMac() {
     mData = 0;
     mInstanceID = 0;
-    
-    if(mSourceBuffer)
-    {
+    if (mSourceBuffer) {
         delete [] mSourceBuffer;
         mSourceBuffer = 0;
     }
@@ -72,12 +45,9 @@ FSoundDataMac::~FSoundDataMac()
 ALCcontext *gAudioContext = 0;
 ALCdevice *gAudioDevice = 0;
 
-void core_sound_initialize()
-{
+void sound_initialize() {
     gAudioDevice = alcOpenDevice(NULL);
-    
-    if(gAudioDevice)
-    {
+    if (gAudioDevice) {
         //AVAudioSession *session = [AVAudioSession sharedInstance];
         //[session setCategory:AVAudioSessionCategoryPlayback error:nil];
         //OSStatus propertySetError = 0;
@@ -96,17 +66,9 @@ void core_sound_initialize()
         alListenerfv(AL_VELOCITY,ListenerVel);
         alListenerfv(AL_ORIENTATION,ListenerOri);
     }
-    
-    gMusicPlayer = [[OSMusicPlayer alloc] init];
 }
 
-
-
-
-void *sound_load_ios(const char *theFilename, int *theDataSize, int *theDataFormat, int* theSampleRate)
-{
-    //return 0;
-    
+void *sound_load_ios(const char *theFilename, int *theDataSize, int *theDataFormat, int* theSampleRate) {
     NSString *aPath=[NSString stringWithUTF8String: theFilename];
     NSURL *aUrl=[NSURL fileURLWithPath:aPath];
     
@@ -119,8 +81,7 @@ void *sound_load_ios(const char *theFilename, int *theDataSize, int *theDataForm
     unsigned int*					aData = NULL;
     AudioStreamBasicDescription		aOutputFormat;
     
-    for(;;)
-    {
+    while (1) {
         aResult = ExtAudioFileOpenURL(aFileURL, &aExtRef);
         if(aResult)
         {
@@ -172,23 +133,18 @@ void *sound_load_ios(const char *theFilename, int *theDataSize, int *theDataForm
         
         aData = (unsigned int*)malloc(aDataSize);
         
-        if(aData)
-        {
-            AudioBufferList		aDataBuffer;
+        if (aData) {
+            AudioBufferList	aDataBuffer;
             aDataBuffer.mNumberBuffers = 1;
             aDataBuffer.mBuffers[0].mDataByteSize=aDataSize;
             aDataBuffer.mBuffers[0].mNumberChannels=aOutputFormat.mChannelsPerFrame;
             aDataBuffer.mBuffers[0].mData=aData;
-            
-            aResult=ExtAudioFileRead(aExtRef, (UInt32*)&aFileLengthInFrames, &aDataBuffer);
-            if(aResult==noErr)
-            {
+            aResult = ExtAudioFileRead(aExtRef, (UInt32*)&aFileLengthInFrames, &aDataBuffer);
+            if (aResult == noErr) {
                 *theDataSize = (int)aDataSize;
                 *theDataFormat = aOutputFormat.mChannelsPerFrame;//(aOutputFormat.mChannelsPerFrame>1) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16;
                 *theSampleRate = (int)aOutputFormat.mSampleRate;
-            }
-            else
-            {
+            } else {
                 free(aData);
                 aData=NULL;
                 //Log("AudioToBits: ExtAudioFileRead FAILED, Error = %ld\n",aResult); break;
@@ -197,27 +153,19 @@ void *sound_load_ios(const char *theFilename, int *theDataSize, int *theDataForm
         break;
     }
     
-    if(aExtRef)
-    {
+    if (aExtRef) {
         ExtAudioFileDispose(aExtRef);
     }
     
     return aData;
 }
 
-bool core_sound_load(FSound *pSound, const char *pFileName, int pInstanceCount)
-{
+bool sound_load(FSound *pSound, const char *pFileName, int pInstanceCount) {
     bool aResult = false;
-    
-    if((pSound != 0) && (pFileName != 0))
-    {
-        if(pSound->mSoundData != 0)
-        {
+    if ((pSound != 0) && (pFileName != 0)) {
+        if (pSound->mSoundData != 0) {
             FSoundDataMac *aSoundData = ((FSoundDataMac *)pSound->mSoundData);
-            
-            if(os_fileExists(pFileName))
-            {
-                
+            if (os_fileExists(pFileName)) {
                 int aLoadDataSize;
                 int aLoadDataFormat;
                 int aLoadSampleRate;
@@ -228,8 +176,7 @@ bool core_sound_load(FSound *pSound, const char *pFileName, int pInstanceCount)
                 
                 void *aData = sound_load_ios(pFileName,&aLoadDataSize,&aLoadDataFormat,&aLoadSampleRate);
                 
-                if(aData)
-                {
+                if (aData) {
                     aDataSize=aLoadDataSize;
                     aDataFormat=(aLoadDataFormat>1) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16;
                     aSampleRate=aLoadSampleRate;
@@ -239,43 +186,31 @@ bool core_sound_load(FSound *pSound, const char *pFileName, int pInstanceCount)
                     bool aFail = false;
                     
                     alGenBuffers(1, aSoundData->mData);
-                    
-                    if(alGetError()!=AL_NO_ERROR)
-                    {
+                    if (alGetError() != AL_NO_ERROR) {
                         Log("Could not load Sound (alGenBuffers Failed): %s\n", pFileName);
-                        
                         aFail = true;
                     }
                     
-                    if(aFail == false)
-                    {
+                    if (aFail == false) {
                         alBufferData(aSoundData->mData[0],aDataFormat,aData,aDataSize,aSampleRate);
-                        
-                        if(alGetError()!=AL_NO_ERROR)
-                        {
+                        if (alGetError() != AL_NO_ERROR) {
                             Log("Could not load Sound (alBufferData Failed): %s\n", pFileName);
-                            
                             aFail = true;
                         }
                     }
                     
                     
-                    if(aFail == false)
-                    {
+                    if (aFail == false) {
                         aSoundData->mInstanceID = new ALuint[pInstanceCount];
                         alGenSources(pInstanceCount, aSoundData->mInstanceID);
-                        
-                        if(alGetError() != AL_NO_ERROR)
-                        {
+                        if (alGetError() != AL_NO_ERROR) {
                             aFail = true;
                             Log("Could not load Sound (%x alGenSources Failed): %s\n", alGetError(), pFileName);
                         }
                     }
                     
-                    if(aFail == false)
-                    {
-                        for(int aCount=0;aCount<pInstanceCount;aCount++)
-                        {
+                    if (aFail == false) {
+                        for (int aCount=0;aCount<pInstanceCount;aCount++) {
                             alSourcei(aSoundData->mInstanceID[aCount],AL_BUFFER,aSoundData->mData[0]);
                             
                             FSoundInstanceMac *aInstance = new FSoundInstanceMac();// (aSoundData->mInstanceID[aCount]);
@@ -284,52 +219,32 @@ bool core_sound_load(FSound *pSound, const char *pFileName, int pInstanceCount)
                             pSound->mInstances+=aInstance;
                         }
                     }
-                    
-                    if(aData)
-                    {
-                        free(aData);
-                    }
-                    
-                    if(aFail == false)
-                    {
-                        aResult = true;
-                    }
-                    
+                    if (aData) { free(aData); }
+                    if (aFail == false) { aResult = true; }
                 }
             }
         }
     }
-    
     return aResult;
 }
 
-void core_sound_play(FSound *pSound)
-{
-    core_sound_play(pSound, 1.0f);
+void sound_play(FSound *pSound) {
+    sound_play(pSound, 1.0f);
 }
 
-void core_sound_play(FSound *pSound, float pVolume)
-{
-    if(pSound)
-    {
-        FSoundInstanceMac *aAvailable = 0;
-        
-        EnumList(FSoundInstanceMac, aInstance, pSound->mInstances)
-        {
-            if(aInstance->mDidLoad == true)
-            {
-                if(core_sound_instance_isPlaying(aInstance) == false)
-                {
+void sound_play(FSound *pSound, float pVolume) {
+    if (pSound) {
+        FSoundInstanceMac *aAvailable = NULL;
+        EnumList(FSoundInstanceMac, aInstance, pSound->mInstances) {
+            if (aInstance->mDidLoad == true) {
+                if (sound_instance_isPlaying(aInstance) == false) {
                     aAvailable = aInstance;
                     break;
                 }
             }
         }
-        
-        if(aAvailable)
-        {
-            if(aAvailable->mDidLoad)
-            {
+        if (aAvailable) {
+            if (aAvailable->mDidLoad) {
                 aAvailable->ResetPitch();
                 aAvailable->Play(pVolume);
             }
@@ -337,92 +252,102 @@ void core_sound_play(FSound *pSound, float pVolume)
     }
 }
 
-void core_sound_playPitched(FSound *pSound, float pPitch, float pVolume)
-{
-    if(pSound)
-    {
-        FSoundInstanceMac *aAvailable = 0;
-        
-        EnumList(FSoundInstanceMac, aInstance, pSound->mInstances)
-        {
-            if(aInstance->mDidLoad)
-            {
-                if(core_sound_instance_isPlaying(aInstance) == false)
-                {
+void sound_playPitched(FSound *pSound, float pPitch, float pVolume) {
+    if (pSound) {
+        FSoundInstanceMac *aAvailable = NULL;
+        EnumList(FSoundInstanceMac, aInstance, pSound->mInstances) {
+            if (aInstance->mDidLoad) {
+                if (sound_instance_isPlaying(aInstance) == false) {
                     aAvailable=aInstance;
                     break;
                 }
             }
         }
-        
-        if(aAvailable)
-        {
+        if (aAvailable) {
             aAvailable->SetPitch(pPitch);
             aAvailable->Play(pVolume);
         }
     }
 }
 
-void core_sound_stop(FSound *pSound)
-{
-    if(pSound)
-    {
-        EnumList(FSoundInstanceMac, aInstance, pSound->mInstances)
-        {
+void sound_loop(FSound *pSound, float pVolume) {
+    if (pSound) {
+        FSoundInstanceMac *aAvailable = NULL;
+        EnumList(FSoundInstanceMac, aInstance, pSound->mInstances) {
+            if (aInstance->mDidLoad == true) {
+                if (sound_instance_isPlaying(aInstance) == false) {
+                    aAvailable = aInstance;
+                    break;
+                }
+            }
+        }
+        
+        if (aAvailable) {
+            if (aAvailable->mDidLoad) {
+                aAvailable->ResetPitch();
+                aAvailable->Loop(pVolume);
+            }
+        }
+    }
+}
+
+void sound_loopPitched(FSound *pSound, float pPitch, float pVolume) {
+    if (pSound) {
+        FSoundInstanceMac *aAvailable = NULL;
+        EnumList(FSoundInstanceMac, aInstance, pSound->mInstances) {
+            if (aInstance->mDidLoad) {
+                if (sound_instance_isPlaying(aInstance) == false) {
+                    aAvailable=aInstance;
+                    break;
+                }
+            }
+        }
+        if (aAvailable) {
+            aAvailable->SetPitch(pPitch);
+            aAvailable->Loop(pVolume);
+        }
+    }
+}
+
+void sound_stop(FSound *pSound) {
+    if (pSound) {
+        EnumList(FSoundInstanceMac, aInstance, pSound->mInstances) {
             aInstance->Stop();
         }
     }
 }
 
-void core_sound_clear(FSound *pSound)
-{
-    if(pSound)
-    {
+void sound_clear(FSound *pSound) {
+    if (pSound) {
         FSoundDataMac *aSoundData = ((FSoundDataMac *)pSound->mSoundData);
-        
-        if(aSoundData)
-        {
+        if (aSoundData) {
             alDeleteBuffers(pSound->mInstances.mCount, aSoundData->mData);
-            
             delete [] aSoundData->mData;
             delete [] aSoundData->mInstanceID;
-            
             aSoundData->mData = 0;
             aSoundData->mInstanceID = 0;
         }
     }
 }
 
-bool core_sound_isPlaying(FSound *pSound)
-{
+bool sound_isPlaying(FSound *pSound) {
     bool aResult = false;
-    
-    if(pSound)
-    {
-        EnumList(FSoundInstanceMac, aInstance, pSound->mInstances)
-        {
-            if(core_sound_instance_isPlaying(aInstance))
-            {
+    if (pSound) {
+        EnumList(FSoundInstanceMac, aInstance, pSound->mInstances) {
+            if (sound_instance_isPlaying(aInstance)) {
                 aResult = true;
                 break;
             }
         }
     }
-    
     return aResult;
 }
 
-bool core_sound_didLoad(FSound *pSound)
-{
+bool sound_didLoad(FSound *pSound) {
     bool aResult = false;
-    
-    if(pSound)
-    {
-        
-        EnumList(FSoundInstanceMac, aInstance, pSound->mInstances)
-        {
-            if(aInstance->mDidLoad == true)
-            {
+    if (pSound) {
+        EnumList(FSoundInstanceMac, aInstance, pSound->mInstances) {
+            if (aInstance->mDidLoad == true) {
                 aResult = true;
             }
         }
@@ -431,68 +356,50 @@ bool core_sound_didLoad(FSound *pSound)
     return aResult;
 }
 
-void core_sound_setVolume(float pVolume)
-{
-    gVolumeSound = pVolume;
+void sound_setVolume(float pVolume) {
+    gSoundVolume = pVolume;
 }
 
-float core_sound_getVolume()
-{
-    return gVolumeSound;
+float sound_getVolume() {
+    return gSoundVolume;
 }
 
-
-
-
-
-
-
-
-
-void core_sound_instance_resetPitch(FSoundInstance *pInstance)
-{
+void sound_instance_resetPitch(FSoundInstance *pInstance) {
     FSoundInstanceMac *aInstance = (FSoundInstanceMac *)pInstance;
-    if(aInstance)alSourcef(aInstance->mIndexOpenAL,AL_PITCH,1.0f);
+    if(aInstance)alSourcef(aInstance->mIndexOpenAL, AL_PITCH, 1.0f);
 }
 
-void core_sound_instance_setPitch(FSoundInstance *pInstance, float pPitch)
-{
+void sound_instance_setPitch(FSoundInstance *pInstance, float pPitch) {
     FSoundInstanceMac *aInstance = (FSoundInstanceMac *)pInstance;
     if(aInstance)alSourcef(aInstance->mIndexOpenAL, AL_PITCH, pPitch);
 }
 
-void core_sound_instance_setVolume(FSoundInstance *pInstance, float pVolume)
-{
+void sound_instance_setVolume(FSoundInstance *pInstance, float pVolume) {
     FSoundInstanceMac *aInstance = (FSoundInstanceMac *)pInstance;
     if(aInstance)alSourcef(aInstance->mIndexOpenAL, AL_GAIN, pVolume);
 }
 
-void core_sound_instance_play(FSoundInstance *pInstance, float pVolume)
-{
+void sound_instance_play(FSoundInstance *pInstance, float pVolume) {
     FSoundInstanceMac *aInstance = (FSoundInstanceMac *)pInstance;
-    if(aInstance)
-    {
-        core_sound_instance_setVolume(pInstance, pVolume);
-        alSourcei(aInstance->mIndexOpenAL,AL_LOOPING,false);
+    if (aInstance) {
+        sound_instance_setVolume(pInstance, pVolume * gSoundVolume);
+        alSourcei(aInstance->mIndexOpenAL, AL_LOOPING,false);
         alSourcePlay(aInstance->mIndexOpenAL);
         pInstance->mIsLooping = false;
     }
 }
 
-void core_sound_instance_pause(FSoundInstance *pInstance)
-{
+void sound_instance_pause(FSoundInstance *pInstance) {
     FSoundInstanceMac *aInstance = (FSoundInstanceMac *)pInstance;
-    if(aInstance)
-    {
-        if(pInstance->mIsPaused == false)
-        {
+    if (aInstance) {
+        if (pInstance->mIsPaused == false) {
             pInstance->mIsPaused = true;
             alSourcePause(aInstance->mIndexOpenAL);
         }
     }
 }
 
-void core_sound_instance_unpause(FSoundInstance *pInstance)
+void sound_instance_unpause(FSoundInstance *pInstance)
 {
     FSoundInstanceMac *aInstance = (FSoundInstanceMac *)pInstance;
     if(aInstance)
@@ -505,161 +412,66 @@ void core_sound_instance_unpause(FSoundInstance *pInstance)
     }
 }
 
-
-void core_sound_instance_loop(FSoundInstance *pInstance, float pVolume)
-{
+void sound_instance_loop(FSoundInstance *pInstance, float pVolume) {
     FSoundInstanceMac *aInstance = (FSoundInstanceMac *)pInstance;
-    if(aInstance)
-    {
-        core_sound_instance_setVolume(pInstance, pVolume);
+    if (aInstance) {
+        sound_instance_setVolume(pInstance, pVolume * gSoundVolume);
         alSourcei(aInstance->mIndexOpenAL, AL_LOOPING, true);
         alSourcePlay(aInstance->mIndexOpenAL);
     }
-    
 }
 
-void core_sound_instance_stop(FSoundInstance *pInstance)
-{
+void sound_instance_stop(FSoundInstance *pInstance) {
     FSoundInstanceMac *aInstance = (FSoundInstanceMac *)pInstance;
-    if(aInstance)
-    {
+    if (aInstance) {
         alSourceStop(aInstance->mIndexOpenAL);
     }
 }
 
-bool core_sound_instance_isPlaying(FSoundInstance *pInstance)
-{
+bool sound_instance_isPlaying(FSoundInstance *pInstance) {
     ALint aResult = 0;
-    
     FSoundInstanceMac *aInstance = (FSoundInstanceMac *)pInstance;
-    if(aInstance)
-    {
+    if (aInstance) {
         alGetSourcei(aInstance->mIndexOpenAL, AL_SOURCE_STATE, &aResult);
     }
     
     return (aResult==AL_PLAYING);
 }
 
-void core_sound_instance_destroy(FSoundInstance *pInstance)
-{
+void sound_instance_destroy(FSoundInstance *pInstance) {
     
 }
 
-void core_sound_musicPlay(const char *pFilePath, bool pLoop)
-{
-    bool aDidFind = false;
-    
-    const char *aResourcePath = gRes.GetResourcePathMusic(pFilePath);
-    while((aResourcePath != 0) && (aDidFind == false))//(mWidth <= 0) && (mHeight <= 0))
-    {
-        if(os_fileExists(aResourcePath))aDidFind = true;
-        else aResourcePath = gRes.GetNextResourcePath();
-    }
-    
-    if(aDidFind == true)
-    {
-        [gMusicPlayer musicPlay:[NSString stringWithUTF8String:aResourcePath] withLoop:pLoop];
-    }
-    
+void sound_stopAll() {
+    sound_stopAllEffects();
+}
+
+void sound_stopAllEffects() {
     
 }
 
-void core_sound_musicCrossFade(const char *pFilePath, int pDurationTicks, bool pLoop)
-{
-    bool aDidFind = false;
-    
-    const char *aResourcePath = gRes.GetResourcePathMusic(pFilePath);
-    while((aResourcePath != 0) && (aDidFind == false))//(mWidth <= 0) && (mHeight <= 0))
-    {
-        if(os_fileExists(aResourcePath))aDidFind = true;
-        else aResourcePath = gRes.GetNextResourcePath();
-    }
-    
-    if(aDidFind == true)
-    {
-        [gMusicPlayer musicCrossFadeWithPath:[NSString stringWithUTF8String:aResourcePath] withDurationTicks:pDurationTicks withLoop:pLoop];
-    }
-}
-
-void core_sound_musicFadeOut(int pDurationTicks)
-{
-    [gMusicPlayer musicFadeOutWithDurationTicks:pDurationTicks];
-}
-
-void core_sound_musicStop()
-{
-    [gMusicPlayer musicStop];
-}
-
-bool core_sound_musicIsPlaying()
-{
-    bool aResult = false;
-    
-    aResult = [gMusicPlayer musicIsPlaying];
-    
-    return aResult;
-}
-
-void core_sound_musicSetVolume(float pVolume)
-{
-    gVolumeMusic = pVolume;
-}
-
-float core_sound_musicGetVolume()
-{
-    return gVolumeMusic;
-}
-
-
-
-void core_sound_musicResume()
-{
-    
-}
-
-void core_sound_musicPause()
-{
-    
-}
-
-
-void core_sound_stopAll()
-{
-    core_sound_stopAllEffects();
-    core_sound_musicPause();
-}
-
-void core_sound_stopAllEffects()
-{
-    
-}
-
-FSoundData *core_sound_spawn_data()
-{
+FSoundData *sound_spawn_data() {
     return new FSoundDataMac();
 }
 
-void core_sound_unloadEffects()
+void sound_unloadEffects() {
+    
+}
+
+void sound_reloadEffects() {
+    
+}
+
+void sound_update() {
+    
+}
+
+void sound_active()
 {
     
 }
 
-void core_sound_reloadEffects()
-{
-    
-}
-
-void core_sound_update()
-{
-    [gMusicPlayer updateFade];
-}
-
-void core_sound_active()
-{
-    
-}
-
-void core_sound_inactive()
+void sound_inactive()
 {
     
 }

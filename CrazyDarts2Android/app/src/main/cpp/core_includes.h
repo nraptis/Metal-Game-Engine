@@ -29,6 +29,7 @@
 #include "os_core_includes.h"
 #include "os_core_outlets.h"
 #include "os_core_sound.h"
+#include "os_core_music.h"
 
 #include "os_core_graphics.h"
 
@@ -97,8 +98,11 @@ extern float gSafeAreaInsetLeft;
 
 extern bool gAdBannerVisible;
 
-extern float gVolumeSound;
-extern float gVolumeMusic;
+extern bool gSoundEnabled;
+extern float gSoundVolume;
+
+extern bool gMusicEnabled;
+extern float gMusicVolume;
 
 extern float gOSVersion;
 

@@ -127,27 +127,37 @@ public class JavaOutlets
 
 	public void lockThread(int pLockIndex) {
 		if (pLockIndex >= 0 && pLockIndex < mLockList.size()) {
-			try {
-				//mLockList.get(pLockIndex).acquire();
-				//mLockList.get(pLockIndex).lock();
 
-				//}//catch (InterruptedException exc) {
-				//	System.out.println("** SEMAPHORE FAILURE **");
-				//	System.out.println(exc);
-				//}
-			} catch (IllegalMonitorStateException exc) {
-				System.out.println("*****************");
-				System.out.println("*****************");
-				System.out.println("*****************");
-				System.out.println("BAD LOCK!!!!!!!");
-				System.out.println(exc);
-			}
+
+			//mLockList.get(pLockIndex).acquire();
+
+
+			//}//catch (InterruptedException exc) {
+			//	System.out.println("** SEMAPHORE FAILURE **");
+			//	System.out.println(exc);
+			//}
+				try {
+					mLockList.get(pLockIndex).lock();
+				} catch (IllegalMonitorStateException exc) {
+					System.out.println("*****************");
+					System.out.println("BAD LOCK!!!!!!!");
+					System.out.println(exc);
+				}
 		}
 	}
 
 	public void unlockThread(int pLockIndex) {
 		if (pLockIndex >= 0 && pLockIndex < mLockList.size()) {
 			//mLockList.get(pLockIndex).release();
+
+			try {
+				mLockList.get(pLockIndex).unlock();
+			} catch (IllegalMonitorStateException exc) {
+				System.out.println("*****************");
+				System.out.println("BAD UN-LOCK!!!!!!!");
+				System.out.println(exc);
+			}
+
 			//mLockList.get(pLockIndex).unlock();
 
 		}
@@ -155,17 +165,31 @@ public class JavaOutlets
 
 	public void deleteThreadLock(int pLockIndex) {
 		if (pLockIndex >= 0 && pLockIndex < mLockList.size()) {
-			mLockList.get(pLockIndex).unlock();
+
+			try {
+				mLockList.get(pLockIndex).unlock();
+			} catch (IllegalMonitorStateException exc) {
+				System.out.println("*****************");
+				System.out.println("BAD UN-LOCK!!!!!!!");
+				System.out.println(exc);
+			}
+
+
 			//mLockList.get(pLockIndex).release();
 
 			mLockList.remove(pLockIndex);
-
 		}
 	}
 
 	public void deleteAllThreadLocks() {
 		for (int i=0;i<mLockList.size();i++) {
-			mLockList.get(i).unlock();
+			try {
+				mLockList.get(i).unlock();
+			} catch (IllegalMonitorStateException exc) {
+				System.out.println("*****************");
+				System.out.println("BAD UN-LOCK!!!!!!!");
+				System.out.println(exc);
+			}
 			//mLockList.get(i).release();
 
 		}
@@ -210,7 +234,6 @@ public class JavaOutlets
 				aReturn = aStream.available();
 				aStream.close();
 			} catch (Exception e) {
-				System.out.println("SECONF FILE ERROR = " + e);
 
 			}
 		}
@@ -252,28 +275,11 @@ public class JavaOutlets
 	public boolean writeFileData(String pPath, byte[] pData, int pLength) {
 		boolean aReturn = false;
 
-		System.out.println("OS - Writing File {" + pPath + "} - " + pLength);
-
-
 		String aString = pData.toString();
 
-		System.out.println("OS - Writing File Data = {" + aString + "} " + "ByteLen[" + pData.length + "..!}}");
-
-
-		try
-		{
-
-
-			//FileOutputStream outputStream = openFileOutput(new File(pPath), Context.MODE_PRIVATE);
-
-
-
+		try {
 			File aFile = new File(pPath);// mContext.getDir("saved", Context.MODE_PRIVATE);
-
-			if(aFile.exists() == false)
-			{
-				System.out.println("FILE DID NOT NOT NOT EXIST FEWL LAWL LOOOL");
-
+			if (aFile.exists() == false) {
 				aFile.createNewFile();
 				aFile.mkdir();
 
@@ -282,20 +288,12 @@ public class JavaOutlets
 			FileOutputStream fos = new FileOutputStream(aFile);
 			fos.write(pData);
 			fos.close();
-
-			System.out.println("WROTE FILE SUCCESSFULLY BRATAB~!~");
-
 			aReturn = true;
-
-
 		}
 		catch (Exception e)
 		{
-
 			System.out.println("Save File Exception!" + e);
-
 		}
-
 		return aReturn;
 	}
 
@@ -476,11 +474,6 @@ public class JavaOutlets
 
 	public AssetManager getAssetManager() {
 		AssetManager aAssetManager = mContext.getResources().getAssets();
-
-		System.out.println("Asset Manager");
-		System.out.println(aAssetManager.toString());
-
-
 		return aAssetManager;
 	}
 

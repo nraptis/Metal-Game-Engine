@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Framework_[VI]/[OpenGL]/os_core_graphics.cpp"
-            timestampString = "575224413.1434669"
+            timestampString = "575258968.140878"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "980"
-            endingLineNumber = "980"
+            startingLineNumber = "1018"
+            endingLineNumber = "1018"
             landmarkName = "Graphics::DrawModelIndexed(float *pPositions, int pPositionsCount, float *pTextureCoords, int pTextureCoordsCount, float *pNormals, int pNormalsCount, GFX_MODEL_INDEX_TYPE *pIndex, int pCount, FTexture *pTexture)"
             landmarkType = "7">
          </BreakpointContent>
@@ -65,22 +65,6 @@
             endingLineNumber = "1098"
             landmarkName = "FMatrixInvert(FMatrix pMatrix, bool *pInvertable)"
             landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Framework_[VI]/[OpenGL]/os_core_graphics.cpp"
-            timestampString = "575224413.1435699"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "673"
-            endingLineNumber = "673"
-            landmarkName = "Graphics::UniformBind(FUniforms *pUniforms)"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

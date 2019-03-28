@@ -15,6 +15,8 @@ LightConfigurationScene *gLightScene = NULL;
 LightConfigurationScene::LightConfigurationScene() {
     gLightScene = this;
     
+    mType = 2;
+    
     mClipDisabled = true;
     
     mCenterX = gAppWidth2;
@@ -54,7 +56,8 @@ LightConfigurationScene::LightConfigurationScene() {
     
     mPhongLightMenu = NULL;
     
-    /*
+    
+    if (mType == 0) {
     mDiffuseLightMenu = new DiffuseLightMenu(&mDiffuse);
     if (gDeviceWidth > 600) {
         mDiffuseLightMenu->SetFrame(20.0f, aPaddingTop, 500.0f, gDeviceHeight * 0.75f);
@@ -63,28 +66,41 @@ LightConfigurationScene::LightConfigurationScene() {
     }
     mDiffuseLightMenu->SetTitle("DIffuse Light");
     AddChild(mDiffuseLightMenu);
-    */
-    
-    
-    mPhongLightMenu = new PhongLightMenu(&mPhong);
-    if (gDeviceWidth > 600) {
-        mPhongLightMenu->SetFrame(20.0f, aPaddingTop, 500.0f, gDeviceHeight * 0.75f);
-    } else {
-        mPhongLightMenu->SetFrame(20.0f, aPaddingTop, gDeviceWidth * 0.8f, gDeviceHeight * 0.75f);
+    } else if (mType == 1) {
+        mPhongLightMenu = new PhongLightMenu(&mPhong);
+        if (gDeviceWidth > 600) {
+            mPhongLightMenu->SetFrame(20.0f, aPaddingTop, 500.0f, gDeviceHeight * 0.75f);
+        } else {
+            mPhongLightMenu->SetFrame(20.0f, aPaddingTop, gDeviceWidth * 0.8f, gDeviceHeight * 0.75f);
+        }
+        mPhongLightMenu->SetTitle("Phong Light");
+        AddChild(mPhongLightMenu);
+    } else if (mType == 2) {
+        mPhongLightMenu = new PhongLightMenu(&mPhong);
+        if (gDeviceWidth > 600) {
+            mPhongLightMenu->SetFrame(20.0f, aPaddingTop, 500.0f, gDeviceHeight * 0.75f);
+        } else {
+            mPhongLightMenu->SetFrame(20.0f, aPaddingTop, gDeviceWidth * 0.8f, gDeviceHeight * 0.75f);
+        }
+        mPhongLightMenu->SetTitle("Phong Light");
+        AddChild(mPhongLightMenu);
+    } else if (mType == 3) {
+        mSpotlightMenu = new SimpleSpotLightMenu(&mSpotlight);
+        if (gDeviceWidth > 600) {
+            mSpotlightMenu->SetFrame(20.0f, aPaddingTop, 500.0f, gDeviceHeight * 0.75f);
+        } else {
+            mSpotlightMenu->SetFrame(20.0f, aPaddingTop, gDeviceWidth * 0.8f, gDeviceHeight * 0.75f);
+        }
+        mSpotlightMenu->SetTitle("Spotlight");
+        AddChild(mSpotlightMenu);
     }
-    mPhongLightMenu->SetTitle("Phong Light");
-    AddChild(mPhongLightMenu);
-    
     
     /*
-    mSpotlightMenu = new SimpleSpotLightMenu(&mSpotlight);
-    if (gDeviceWidth > 600) {
-        mSpotlightMenu->SetFrame(20.0f, aPaddingTop, 500.0f, gDeviceHeight * 0.75f);
-    } else {
-        mSpotlightMenu->SetFrame(20.0f, aPaddingTop, gDeviceWidth * 0.8f, gDeviceHeight * 0.75f);
-    }
-    mSpotlightMenu->SetTitle("Spotlight");
-    AddChild(mSpotlightMenu);
+    
+    */
+    
+    /*
+    
     */
     
 }
@@ -117,10 +133,18 @@ void LightConfigurationScene::Draw3D() {
     
     Graphics::ClipDisable();
     
+    if (mType == 0) {
+        mDiffuse.Compute();
+    } else if (mType == 1) {
+        mPhong.Compute();
+    } else if (mType == 2) {
+        mPhong.Compute();
+    } else if (mType == 3) {
+        mSpotlight.Compute();
+    }
     
-    mPhong.Compute();
-    mSpotlight.Compute();
-    mDiffuse.Compute();
+   
+    
     
     
     
@@ -186,10 +210,6 @@ void LightConfigurationScene::Draw3D() {
     aModelViewHome.Set(aModelView);
     aModelViewHome.ResetTranslation();
     
-    
-    
-    
-    
     Graphics::MatrixProjectionSet(aProjection);
     Graphics::MatrixModelViewSet(aModelView);
     mPhong.mUniform.mProjection.Set(aProjection);
@@ -210,23 +230,43 @@ void LightConfigurationScene::Draw3D() {
     if (mDisableLight) {
         Graphics::PipelineStateSetModelIndexedAlphaBlending();
     } else {
-        //Graphics::PipelineStateSetModelIndexedLightedSimpleSpotlightNoBlending();
-        Graphics::PipelineStateSetModelIndexedLightedPhongOverlayAlphaBlending();
-        //Graphics::PipelineStateSetModelIndexedLightedPhongAlphaBlending();
-        //Graphics::PipelineStateSetModelIndexedLightedDiffuseNoBlending();
+        
+        if (mType == 0) {
+            Graphics::PipelineStateSetModelIndexedLightedDiffuseAlphaBlending();
+        } else if (mType == 1) {
+            Graphics::PipelineStateSetModelIndexedLightedPhongAlphaBlending();
+        } else if (mType == 2) {
+            Graphics::PipelineStateSetModelIndexedLightedPhongOverlayAlphaBlending();
+        } else if (mType == 3) {
+            //Graphics::PipelineStateSetModelIndexedLightedSimpleSpotlightNoBlending();
+            
+        }
     }
     
+    float aAlpha = 1.0f;
+    mPhong.mUniform.mColor.mAlpha = aAlpha;
+    mPhong.mUniform.mColor.mAlpha = aAlpha;
     
-    Graphics::UniformBind(&mPhong.mUniform);
-    //Graphics::UniformBind(&mDiffuse.mUniform);
+    
+    
+    if (mDisableLight) {
+        Graphics::UniformBind();
+    } else {
+        if (mType == 0) { Graphics::UniformBind(&mDiffuse.mUniform);
+        } else if (mType == 1) { Graphics::UniformBind(&mPhong.mUniform);
+        } else if (mType == 2) { Graphics::UniformBind(&mPhong.mUniform);
+        } else if (mType == 3) { }
+    }
     Graphics::DrawTrianglesIndexedWithPackedBuffers(aTrunk->mBuffer, 0, aTrunk->mIndex, aTrunk->mIndexCount, gApp->mPalmTrunkMap.mTexture);
     
     
     if (mDisableLight) {
         Graphics::UniformBind();
     } else {
-        Graphics::UniformBind(&mPhong.mUniform);
-        //Graphics::UniformBind(&mDiffuse.mUniform);
+        if (mType == 0) { Graphics::UniformBind(&mDiffuse.mUniform);
+        } else if (mType == 1) { Graphics::UniformBind(&mPhong.mUniform);
+        } else if (mType == 2) { Graphics::UniformBind(&mPhong.mUniform);
+        } else if (mType == 3) { }
     }
     Graphics::DrawTrianglesIndexedWithPackedBuffers(aTree->mBuffer, 0, aTree->mIndex, aTree->mIndexCount, gApp->mPalmLeavesMap.mTexture);
 
@@ -234,12 +274,14 @@ void LightConfigurationScene::Draw3D() {
     static float mBalloonRot = 0.0f;
     mBalloonRot += 1.0f;
     if (mBalloonRot >= 360.0f) { mBalloonRot -= 360.0f; }
-
+    
+    
     float aExtraRot = 0.0f;
     
     int aBalloonIndex = 0;
-    for (float aX=-2.0f;aX<=2.0f;aX+=1.0f) {
-        for (float aY=-2.0f;aY<=2.0f;aY+=1.0f) {
+    for (float aX=-4.0f;aX<=4.0f;aX+=1.0f) {
+        for (float aY=-4.0f;aY<=4.0f;aY+=1.0f) {
+            
             aModelView.Reset();
             aModelView.Translate(aX * 5.0f, aY * 7.0f);
             aModelView.RotateX(90);
@@ -269,8 +311,18 @@ void LightConfigurationScene::Draw3D() {
             if (mDisableLight) {
                 Graphics::UniformBind();
             } else {
-                Graphics::UniformBind(&mPhong.mUniform);
-                //Graphics::UniformBind(&mDiffuse.mUniform);
+                
+                if (mType == 0) {
+                    Graphics::UniformBind(&mDiffuse.mUniform);
+                } else if (mType == 1) {
+                    Graphics::UniformBind(&mPhong.mUniform);
+                } else if (mType == 2) {
+                    Graphics::UniformBind(&mPhong.mUniform);
+                } else if (mType == 3) {
+                    
+                }
+                
+                //
             }
             Graphics::DrawTrianglesIndexedWithPackedBuffers(aBalloon->mBuffer, 0, aBalloon->mIndex, aBalloon->mIndexCount, gApp->mBalloonMap[aBalloonIndex].mTexture);
             
@@ -315,8 +367,12 @@ void LightConfigurationScene::Draw() {
     //
     Graphics::SetColor(0.0f, 0.66f, 0.66f, 0.66f);
     Graphics::DrawLine(mWidth2, mHeight2, mCenterX, mCenterY, 2.0f);
+
+    Graphics::SetColor(0.5f, 0.25f, 0.125f, 0.65f);
+    Graphics::DrawLine(0.0f, 0.0, mWidth, mHeight);
+    Graphics::DrawLine(0.0f, mWidth, 0.0f, mHeight);
     */
-    //
+    
     
 }
 

@@ -23,13 +23,7 @@ void ShaderProgramShapeNode::Compile() {
     
     mSlotColors = glGetAttribLocation(mProgram, "Colors");
     
-    Log("*******\n");
     Log("Shader[%s] mSlotProjectionMatrixUniform = %d\n", mName.c(), mSlotProjectionMatrixUniform);
-    Log("Shader[%s] mSlotModelViewMatrixUniform = %d\n", mName.c(), mSlotModelViewMatrixUniform);
-    Log("Shader[%s] mSlotModulateColorUniform = %d\n", mName.c(), mSlotModulateColorUniform);
-    Log("Shader[%s] mSlotPositions = %d\n", mName.c(), mSlotPositions);
-    Log("Shader[%s] mSlotColors = %d\n", mName.c(), mSlotColors);
-    Log("*******\n");
 }
 
 void ShaderProgramShapeNode::BindUniform(FUniforms *pUniform) {

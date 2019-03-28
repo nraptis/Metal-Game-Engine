@@ -22,6 +22,7 @@
 #include <vector>
 #include <thread>
 #include <string>
+#include <chrono>
 #include <iostream>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -57,12 +58,12 @@ void os_initialize_outlets() {
     gThreadLockList.Size(128);
 }
 
-void os_detach_thread(void (*theFunction)(void *theArg), void* theArg) {
+void os_detach_thread(void (*pFunction)(void *pArg), void *pArg) {
     pthread_t aThread;
     pthread_attr_t aAttr;
     pthread_attr_init(&aAttr);
     pthread_attr_setdetachstate(&aAttr, PTHREAD_CREATE_DETACHED);
-    pthread_create(&aThread,&aAttr,(void*(*)(void*))theFunction,theArg);
+    pthread_create(&aThread, &aAttr, (void*(*)(void*))pFunction, pArg);
 }
 
 void os_execute_on_main_thread(void (*pFunc)()) {
@@ -109,15 +110,12 @@ bool os_draws_in_background() {
     return true;
 }
 
-
 NSMutableSet *gLockStrongReferenceSet = [[NSMutableSet alloc] init];
 
 int os_create_thread_lock() {
     RecursiveLockWrapper *aContainer = [[RecursiveLockWrapper alloc] init];
     [gLockStrongReferenceSet addObject: aContainer];
     aContainer.lock = [[NSRecursiveLock alloc] init];
-    //aContainer.semaphore = dispatch_semaphore_create(1);
-    
     int aResult = gThreadLockList.mCount;
     gThreadLockList.Add((__bridge void *)aContainer);
     return aResult;
@@ -134,7 +132,6 @@ void os_delete_thread_lock(int pLockIndex) {
     if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
         RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[pLockIndex]);
         [aContainer.lock unlock];
-        //dispatch_semaphore_signal(aContainer.semaphore);
         [gLockStrongReferenceSet removeObject: aContainer];
         gThreadLockList.RemoveAtIndex(pLockIndex);
     }
@@ -144,7 +141,6 @@ void os_delete_all_thread_locks() {
     for (int i=0;i<gThreadLockList.mCount;i++) {
         RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[i]);
         [aContainer.lock unlock];
-        //dispatch_semaphore_signal(aContainer.semaphore);
     }
     gThreadLockList.RemoveAll();
     [gLockStrongReferenceSet removeAllObjects];
@@ -154,7 +150,6 @@ void os_lock_thread(int pLockIndex) {
     if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
         RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[pLockIndex]);
         [aContainer.lock lock];
-        //dispatch_semaphore_signal(aContainer.semaphore);
     }
 }
 
@@ -162,7 +157,6 @@ void os_unlock_thread(int pLockIndex) {
     if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
         RecursiveLockWrapper *aContainer = ((__bridge RecursiveLockWrapper *)gThreadLockList.mData[pLockIndex]);
         [aContainer.lock unlock];
-        //dispatch_semaphore_signal(aContainer.semaphore);
     }
 }
 
@@ -180,23 +174,9 @@ bool os_is_portrait() {
 #endif
 }
 
-void os_log(const char *pMessage)
-{
-    printf("%s", pMessage);
-    //NSLog(@"%s", pMessage);
-}
-
 unsigned int os_system_time() {
-    const int64_t aMillion = 1000 * 1000;
-    static mach_timebase_info_data_t aInfo;
-    if (aInfo.denom == 0) {
-        mach_timebase_info(&aInfo);
-    }
-        return (int)((mach_absolute_time()*aInfo.numer)/(aMillion*aInfo.denom));
-    //}
-    
-    //unsigned long aResult = (unsigned long)(CFAbsoluteTimeGetCurrent() * 10000.0f);
-    //return aResult;
+    unsigned long aMili = chrono::system_clock::now().time_since_epoch() / chrono::milliseconds(1);
+    return (unsigned int)aMili;
 }
 
 unsigned char *os_read_file(const char *pFileName, unsigned int &pLength)

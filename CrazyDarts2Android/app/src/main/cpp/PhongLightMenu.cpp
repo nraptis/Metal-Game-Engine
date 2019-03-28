@@ -25,7 +25,7 @@ PhongLightMenu::PhongLightMenu(PhongConfiguration *pConfiguration) : ToolMenu() 
     
     mSliderSpecularShininess = new UISlider();
     mSliderSpecularShininess->SetValue(&pConfiguration->mUniform.mLight.mShininess);
-    mSliderSpecularShininess->SetRange(0.0f, 40.0f);
+    mSliderSpecularShininess->SetRange(0.0f, 128.0f);
     mSliderSpecularShininess->SetText("Shininess:");
     mSpecularPanel->AddSection(mSliderSpecularShininess);
     

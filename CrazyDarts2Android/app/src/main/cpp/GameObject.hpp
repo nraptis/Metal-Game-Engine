@@ -36,6 +36,7 @@ public:
     //which will automatically set the uniform's model
     //view matrix to the game object's MVM...
     FMatrix                                 mModelView;
+    FMatrix                                 mNormal;
     
     //Rule for how "Game Objects" control a uniform...
     //1.) They MAY NOT modify the projection matrix.

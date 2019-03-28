@@ -437,9 +437,8 @@ void FList::Shuffle()
 	}
 }
 
-void FList::RotateFrontToBack()
-{
-    if(mCount > 1)
+void FList::RotateFrontToBack() {
+    if (mCount > 1)
     {
         void *aHold = mData[0];
         

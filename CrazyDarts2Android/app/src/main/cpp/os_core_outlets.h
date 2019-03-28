@@ -20,12 +20,10 @@
 #ifndef APP_OUTLETS_H
 #define APP_OUTLETS_H
 
-//#include "FString.h"
-//#include "FList.hpp"
-
 #include <SLES/OpenSLES.h>
 #include <SLES/OpenSLES_Android.h>
 #include <jni.h>
+
 class FList;
 class FString;
 
@@ -68,9 +66,6 @@ void os_exportJPEGImage(unsigned int *pData, const char *pFilePath, int pWidth, 
 void os_exportToPhotoLibrary(unsigned int *pData, int pWidth, int pHeight);
 
 
-void os_load_image_to_buffer(char *pFile, unsigned int *pData);
-unsigned int *os_load_image(char *pFile, int &pWidth, int &pHeight);
-
 bool os_createDirectory(const char *pDirectory);
 //FString os_getTestDirectory();
 void os_getTestDirectory(FString *pString);
@@ -86,7 +81,6 @@ JNIEnv *os_getJNIEnv(bool *pRequiresDetach);
 jclass os_getClassID(JNIEnv *pEnv);
 jmethodID os_getMethodInfo(const char *methodName, const char *paramCode);
 
-static jstring getExternalFilesDir( JNIEnv *env );
 
 void os_test_jre();
 void os_test_click(float pX, float pY);

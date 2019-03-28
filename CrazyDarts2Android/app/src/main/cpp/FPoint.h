@@ -1,6 +1,6 @@
 //
 //  FPoint.h
-//  RaptisGame
+//  Graveyard
 //
 //  Created by Nick Raptis on 3/20/14.
 //  Copyright (c) 2014 Nick Raptis. All rights reserved.

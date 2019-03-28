@@ -29,6 +29,9 @@ class LightConfigurationScene;
 class LevelSelectorScreen;
 class LightMenu;
 class CameraMenu;
+class SoundConfigMenu;
+
+
 
 class GameContainer;
 
@@ -68,6 +71,11 @@ public:
     FloatingCamera                          mCamera;
     
     CameraMenu                              *mCameraMenu;
+    
+    
+    SoundConfigMenu                         *mSoundMenu;
+    
+    
     
     FModelData                              mSnail;
     FSprite                                 mSnailMap;
@@ -115,6 +123,10 @@ public:
     FSound                                  mSound1;
     FSound                                  mSound2;
     
+    FSound                                  mSoundOne[6];
+    FSound                                  mSoundMulti[6];
+    
+    
     LevelSelectorScreen                     *mLevelSelect;
     LightConfigurationScene                 *mLightScene;
     Util_ScreenFrame                        *mScreenTool;
@@ -124,7 +136,7 @@ public:
     
     
     FUniformsLightAmbient                   mUniAmb;
-    FUniformsLightDiffuse            mUniDiff;
+    FUniformsLightDiffuse                   mUniDiff;
     FUniformsLightPhong                     mUniPhong;
     
     
@@ -142,10 +154,13 @@ public:
     
     float                                   mTestSin1;
     float                                   mTestSin2;
-
+    
+    
     float                                   mAmbientRoll1;
     float                                   mAmbientRoll2;
-
+    
+    
+    
 };
 
 extern GFXApp *gApp;

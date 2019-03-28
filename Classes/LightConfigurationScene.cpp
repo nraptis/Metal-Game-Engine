@@ -232,7 +232,7 @@ void LightConfigurationScene::Draw3D() {
     } else {
         
         if (mType == 0) {
-            Graphics::PipelineStateSetModelIndexedLightedDiffuseNoBlending();
+            Graphics::PipelineStateSetModelIndexedLightedDiffuseAlphaBlending();
         } else if (mType == 1) {
             Graphics::PipelineStateSetModelIndexedLightedPhongAlphaBlending();
         } else if (mType == 2) {
@@ -243,27 +243,30 @@ void LightConfigurationScene::Draw3D() {
         }
     }
     
+    float aAlpha = 1.0f;
+    mPhong.mUniform.mColor.mAlpha = aAlpha;
+    mPhong.mUniform.mColor.mAlpha = aAlpha;
     
-    Graphics::UniformBind(&mPhong.mUniform);
-    //Graphics::UniformBind(&mDiffuse.mUniform);
+    
+    
+    if (mDisableLight) {
+        Graphics::UniformBind();
+    } else {
+        if (mType == 0) { Graphics::UniformBind(&mDiffuse.mUniform);
+        } else if (mType == 1) { Graphics::UniformBind(&mPhong.mUniform);
+        } else if (mType == 2) { Graphics::UniformBind(&mPhong.mUniform);
+        } else if (mType == 3) { }
+    }
     Graphics::DrawTrianglesIndexedWithPackedBuffers(aTrunk->mBuffer, 0, aTrunk->mIndex, aTrunk->mIndexCount, gApp->mPalmTrunkMap.mTexture);
     
     
     if (mDisableLight) {
         Graphics::UniformBind();
     } else {
-        
-        if (mType == 0) {
-            Graphics::UniformBind(&mDiffuse.mUniform);
-        } else if (mType == 1) {
-            Graphics::UniformBind(&mPhong.mUniform);
-        } else if (mType == 2) {
-            Graphics::UniformBind(&mPhong.mUniform);
-        } else if (mType == 3) {
-            
-        }
-        
-        //
+        if (mType == 0) { Graphics::UniformBind(&mDiffuse.mUniform);
+        } else if (mType == 1) { Graphics::UniformBind(&mPhong.mUniform);
+        } else if (mType == 2) { Graphics::UniformBind(&mPhong.mUniform);
+        } else if (mType == 3) { }
     }
     Graphics::DrawTrianglesIndexedWithPackedBuffers(aTree->mBuffer, 0, aTree->mIndex, aTree->mIndexCount, gApp->mPalmLeavesMap.mTexture);
 
@@ -356,7 +359,7 @@ void LightConfigurationScene::Draw() {
     
     Graphics::PipelineStateSetShape2DAlphaBlending();
     
-    
+    /*
     Graphics::SetColor(0.66f, 0.90f, 0.95f, 1.0f);
     Graphics::DrawPoint(mCenterX, mCenterY, 12.0f);
     Graphics::SetColor(0.25f, 0.75f, 0.25f, 1.0f);
@@ -368,7 +371,7 @@ void LightConfigurationScene::Draw() {
     Graphics::SetColor(0.5f, 0.25f, 0.125f, 0.65f);
     Graphics::DrawLine(0.0f, 0.0, mWidth, mHeight);
     Graphics::DrawLine(0.0f, mWidth, 0.0f, mHeight);
-    
+    */
     
     
 }

@@ -40,22 +40,7 @@ void ShaderProgramModelIndexedLightedDiffuse::Compile() {
     mSlotNormals = glGetAttribLocation(mProgram, "Normals");
     
     
-    
-    Log("*******\n");
     Log("Shader[%s] mSlotProjectionMatrixUniform = %d\n", mName.c(), mSlotProjectionMatrixUniform);
-    Log("Shader[%s] mSlotModelViewMatrixUniform = %d\n", mName.c(), mSlotModelViewMatrixUniform);
-    Log("Shader[%s] mSlotNormalMatrixUniform = %d\n", mName.c(), mSlotNormalMatrixUniform);
-    Log("Shader[%s] mSlotModulateColorUniform = %d\n", mName.c(), mSlotModulateColorUniform);
-    Log("Shader[%s] mSlotPositions = %d\n", mName.c(), mSlotPositions);
-    Log("Shader[%s] mSlotTextureCoords = %d\n", mName.c(), mSlotTextureCoords);
-    Log("Shader[%s] mSlotNormals = %d\n", mName.c(), mSlotNormals);
-    
-    Log("Shader[%s] mSlotTexture = %d\n", mName.c(), mSlotTexture);
-    Log("Shader[%s] mSlotAmbient = %d\n", mName.c(), mSlotAmbient);
-    Log("Shader[%s] mSlotDiffuse = %d\n", mName.c(), mSlotDiffuse);
-    
-    
-    Log("*******\n");
 }
 
 void ShaderProgramModelIndexedLightedDiffuse::BindUniform(FUniforms *pUniform) {

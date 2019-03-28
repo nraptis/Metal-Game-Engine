@@ -108,7 +108,14 @@ unsigned int FUniformsLightDiffuse::GetFragmentSize() {
 }
 
 void FUniformsLightDiffuse::WriteVertexToBuffer(void *pData, unsigned int pOffset) {
-    FUniforms::WriteVertexToBuffer(pData, pOffset);
+    char *aContents = (char *)pData;
+    char *aPtr = &aContents[pOffset];
+    static int aMatrixSize = sizeof(float) * 16;
+    memcpy(aPtr, mProjection.m, aMatrixSize);
+    aPtr = &(aPtr[aMatrixSize]);
+    memcpy(aPtr, mModelView.m, aMatrixSize);
+    aPtr = &(aPtr[aMatrixSize]);
+    memcpy(aPtr, mNormal.m, aMatrixSize);
 }
 
 void FUniformsLightDiffuse::WriteFragmentToBuffer(void *pData, unsigned int pOffset) {
@@ -116,10 +123,10 @@ void FUniformsLightDiffuse::WriteFragmentToBuffer(void *pData, unsigned int pOff
     char *aPtr = &aContents[pOffset];
     static int aColorSize = sizeof(mColor);
     static int aLightSize = sizeof(mLight);
-    
     memcpy(aPtr, &mColor, aColorSize);
     aPtr = &(aPtr[aColorSize]);
     memcpy(aPtr, &mLight, aLightSize);
+    
 }
 
 
@@ -166,7 +173,14 @@ unsigned int FUniformsLightPhong::GetFragmentSize() {
 }
 
 void FUniformsLightPhong::WriteVertexToBuffer(void *pData, unsigned int pOffset) {
-    FUniforms::WriteVertexToBuffer(pData, pOffset);
+    char *aContents = (char *)pData;
+    char *aPtr = &aContents[pOffset];
+    static int aMatrixSize = sizeof(float) * 16;
+    memcpy(aPtr, mProjection.m, aMatrixSize);
+    aPtr = &(aPtr[aMatrixSize]);
+    memcpy(aPtr, mModelView.m, aMatrixSize);
+    aPtr = &(aPtr[aMatrixSize]);
+    memcpy(aPtr, mNormal.m, aMatrixSize);
 }
 
 void FUniformsLightPhong::WriteFragmentToBuffer(void *pData, unsigned int pOffset) {
@@ -179,10 +193,6 @@ void FUniformsLightPhong::WriteFragmentToBuffer(void *pData, unsigned int pOffse
     aPtr = &(aPtr[aColorSize]);
     
     memcpy(aPtr, &mLight, aLightSize);
-    //aPtr = &(aPtr[aLightSize]);
-    
-    //memcpy(aPtr, &mDiffuse, aDiffuseSize);
-    
 }
 
 

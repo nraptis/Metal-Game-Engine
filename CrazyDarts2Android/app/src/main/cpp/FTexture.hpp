@@ -1,6 +1,6 @@
 //
 //  FTexture.h
-//  RaptisGame
+//  Graveyard
 //
 //  Created by Nick Raptis on 2/21/14.
 //  Copyright (c) 2014 Nick Raptis. All rights reserved.
@@ -103,4 +103,4 @@ public:
     void                                    SetUVTriangle(float pU1, float pV1, float pU2, float pV2, float pU3, float pV3);
 };
 
-#endif /* defined(__RaptisGame__FTexture__) */
+#endif /* defined(__Graveyard__FTexture__) */

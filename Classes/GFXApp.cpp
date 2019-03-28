@@ -18,6 +18,14 @@
 #include "GameContainer.hpp"
 #include "CameraMenu.hpp"
 
+#include "SoundConfigMenu.hpp"
+
+
+
+
+
+
+
 #ifdef EDITOR_MODE
 class GameEditor;
 #include "GameEditor.hpp"
@@ -74,6 +82,10 @@ GFXApp::GFXApp() {
     mLightScene = NULL;
     mScreenTool = NULL;
     mCameraMenu = NULL;
+    mSoundMenu = NULL;
+    
+    
+
     
     
     mTestTouch1 = NULL;
@@ -191,6 +203,30 @@ void GFXApp::Load() {
     mChaosEgg4X.Load("gi_chaos_egg_mockup_4");
     mRay[3].Load("effect_ray_wide_4_0");
     
+    
+    
+    
+    
+    mSoundOne[0].Load("burn_stinger.caf", 1);
+    mSoundOne[1].Load("drilling.caf", 1);
+    mSoundOne[2].Load("magic_woosh.caf", 1);
+    mSoundOne[3].Load("powerup_shuffle.caf", 1);
+    mSoundOne[4].Load("rock_thud_1.caf", 1);
+    mSoundOne[5].Load("relic_discover.caf", 1);
+    
+    
+    mSoundMulti[0].Load("charge_up_laser_flanger.caf", 5);
+    mSoundMulti[1].Load("charge_up_laser_cancel.caf", 5);
+    mSoundMulti[2].Load("rock_break_1.caf", 5);
+    mSoundMulti[3].Load("burn_stinger.caf", 5);
+    mSoundMulti[4].Load("timer_tick.caf", 5);
+    mSoundMulti[5].Load("timer_tock.caf", 5);
+    
+    
+    //demo_song_1.mp3
+    //demo_song_2.mp3
+    
+    
 }
 
 void GFXApp::LoadComplete() {
@@ -203,7 +239,7 @@ void GFXApp::LoadComplete() {
     mTestRR.SetColorBottom(0.0f, 1.0f, 0.5f, 1.0f);
     
     
-    //core_sound_musicPlay("song2.mp3", true);
+    //music_play("song2.mp3", true);
     
     /*
     if (mCameraMenu == NULL) {
@@ -228,7 +264,9 @@ void GFXApp::LoadComplete() {
     //
     //
     
-    /*
+    
+    
+    
     if (mGameContainer == NULL) {
         mGameContainer = new GameContainer();
         mWindowMain.AddChild(mGameContainer);
@@ -239,7 +277,13 @@ void GFXApp::LoadComplete() {
 #endif
         
     }
-    */
+    
+    
+    if (mSoundMenu == NULL) {
+        mSoundMenu = new SoundConfigMenu();
+        mSoundMenu->SetFrame(gSafeAreaInsetLeft + 20.0f, gSafeAreaInsetTop + 20.0f, 450.0f, gDeviceHeight * 0.8f);
+        mWindowTools.AddChild(mSoundMenu);
+    }
     
     /*
     if (mScreenTool == NULL) {
@@ -251,10 +295,12 @@ void GFXApp::LoadComplete() {
     
     
     //
+    /*
     if (mLightScene == NULL) {
         mLightScene = new LightConfigurationScene();
         mWindowTools.AddChild(mLightScene);
     }
+    */
     
     
     /*
@@ -684,8 +730,8 @@ void GFXApp::TouchDown(float pX, float pY, void *pData) {
     }
     
     
-    //core_sound_musicCrossFade("song2.mp3", 200, true);
-    //core_sound_musicFadeOut(40);
+    //music_crossfade("song2.mp3", 200, true);
+    //music_fadeout(40);
     
     TouchMove(pX, pY, pData);
     //

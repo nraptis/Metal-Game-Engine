@@ -2,6 +2,8 @@
 #include "core_app_shell.h"
 #include "os_core_graphics.h"
 #include "os_core_social.h"
+#include "os_core_sound.h"
+#include "os_core_music.h"
 
 #include "FApp.hpp"
 #include "PlatformGraphicsInterface.hpp"
@@ -32,8 +34,13 @@ float gOSVersion = 1.0f;
 
 float gAdjustmentScale = 1.0f;
 
-float gVolumeSound = 1.0f;
-float gVolumeMusic = 1.0f;
+float gSoundVolume = 1.0f;
+float gMusicVolume = 1.0f;
+
+bool gSoundEnabled = true;
+bool gMusicEnabled = true;
+
+
 
 bool gAdBannerVisible = false;
 
@@ -79,7 +86,9 @@ void AppShellInitialize(int pEnvironment) {
     gGraphicsInterface = new PlatformGraphicsInterface();
     
     os_initialize_outlets();
-    core_sound_initialize();
+    sound_initialize();
+    music_initialize();
+    
     social_Init();
 
     //if(gAppBase)(gAppBase)->BaseInitialize();

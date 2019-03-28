@@ -15,12 +15,12 @@ GameRenderer::GameRenderer(Game *pGame, FloatingCamera *pCamera) {
     //
     mDart = &gApp->mDart;
     
-    mLightDirRotationPrimaryBase = 34.064598;
-    mLightDirRotationSecondaryBase = 49.372952;
+    mLightDirRotationPrimaryBase = 50.0f;
+    mLightDirRotationSecondaryBase = 218.0f;
     
-    mLightAmbientBase = 0.35f;
-    mLightDiffuseBase = 0.65f;
-    mLightSpecularBase = 0.75f;
+    mLightAmbientBase = 0.30f;
+    mLightDiffuseBase = 0.70f;
+    mLightSpecularBase = 1.60f;
     
     mLightRedBase = 1.000000;
     mLightGreenBase = 1.000000;
@@ -34,6 +34,34 @@ GameRenderer::GameRenderer(Game *pGame, FloatingCamera *pCamera) {
     //FUniformsLightPhong                 mUniformPhong;
     //FUniformsLightDiffuse        mUniformDiffuse;
     //FUniformsLightAmbient               mUniformAmbient;
+    
+    
+    /*
+    mDirectionRotationPrimary = 51.593315;
+    mDirectionRotationSecondary = 218.292572;
+    *** BEGIN FUniformsLightPhong ***
+    mLight.mAmbientIntensity = 0.308003;
+    mLight.mDiffuseIntensity = 0.679439;
+    mLight.mSpecularIntensity = 1.558217;
+    mLight.mRed = 1.000000;
+    mLight.mGreen = 1.000000;
+    mLight.mBlue = 1.000000;
+    mLight.mDirX = -0.615030;
+    mLight.mDirY = 0.619677;
+    mLight.mDirZ = -0.487584;
+    mLight.mShininess = 69.073463;
+    ******* For Uni **********
+    mUniform.mLight.mAmbientIntensity = 0.308003;
+    mUniform.mLight.mDiffuseIntensity = 0.679439;
+    mUniform.mLight.mSpecularIntensity = 1.558217;
+    mUniform.mLight.mRed = 1.000000;
+    mUniform.mLight.mGreen = 1.000000;
+    mUniform.mLight.mBlue = 1.000000;
+    mUniform.mLight.mDirX = -0.615030;
+    mUniform.mLight.mDirY = 0.619677;
+    mUniform.mLight.mDirZ = -0.487584;
+    mUniform.mLight.mShininess = 69.073463;
+    */
     
 }
 
@@ -171,12 +199,15 @@ void GameRenderer::DumpLightsToUniforms() {
     mUniformPhongBalloon.mLight.mDirX = mLightDirX;
     mUniformPhongBalloon.mLight.mDirY = mLightDirY;
     mUniformPhongBalloon.mLight.mDirZ = mLightDirZ;
-    mUniformPhongBalloon.mLight.mAmbientIntensity = 0.5f;
+    mUniformPhongBalloon.mLight.mAmbientIntensity = aLightAmbient;
     mUniformPhongBalloon.mLight.mDiffuseIntensity = aLightDiffuse;
-    mUniformPhongBalloon.mLight.mSpecularIntensity = 50.0f;
-    mUniformPhongBalloon.mLight.mShininess = 90.0f;
-    mUniformPhongBalloon.mColor = FColor(1.0f, 1.0f, 1.0f, 0.05);
+    mUniformPhongBalloon.mLight.mSpecularIntensity = aLightSpecular;
+    mUniformPhongBalloon.mLight.mShininess = 70.0f;
+    mUniformPhongBalloon.mColor = FColor(1.0f, 1.0f, 1.0f, 1.0f);
     mUniformPhongBalloon.mProjection.Set(aProjection);
+    
+    
+    
     
     mUniformDiffuse.mLight.mRed = aLightRed;
     mUniformDiffuse.mLight.mGreen = aLightGreen;

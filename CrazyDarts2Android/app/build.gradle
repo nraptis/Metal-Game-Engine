@@ -16,11 +16,6 @@ android {
                 cppFlags ""
             }
         }
-        ndk {
-            moduleName "HelloJNI"
-            ldLibs "OpenSLES", "log"
-            stl "stlport_shared"
-        }
     }
     buildTypes {
         release {

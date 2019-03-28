@@ -48,6 +48,8 @@ void Balloon::Draw() {
 
 void Balloon::Draw3D() {
     
+    
+    //aNormal.SetNormalMatrix(aModelView);
     //((FUniformsLightPhong *)mUniform)->mLight.mShininess = 58.0f;
     //((FUniformsLightPhong *)mUniform)->mLight.mSpecularIntensity = 1.0f;
     

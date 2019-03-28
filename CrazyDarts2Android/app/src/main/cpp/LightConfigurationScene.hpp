@@ -66,6 +66,8 @@ public:
     
     CameraMenu                                  *mCameraMenu;
     
+    int                                         mType;
+    
 };
 
 extern LightConfigurationScene *gLightScene;

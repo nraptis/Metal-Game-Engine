@@ -65,7 +65,7 @@ void Log(const char *pText, ...) {
             aEnv->DeleteLocalRef(aName);
         }
         if (aDetach) {
-            gJVM->DetachCurrentThread();
+            //gJVM->DetachCurrentThread();
         }
     }
 }
@@ -182,7 +182,9 @@ void os_commitRender() {
                 }
             }
         }
-        if (aDetach) { gJVM->DetachCurrentThread(); }
+        if (aDetach) {
+            //gJVM->DetachCurrentThread();
+        }
     }
 }
 //
@@ -203,7 +205,9 @@ int os_create_thread_lock() {
                 }
             }
         }
-        if (aDetach) { gJVM->DetachCurrentThread(); }
+        if (aDetach) {
+            //gJVM->DetachCurrentThread();
+        }
     }
     return aResult;
 }
@@ -226,7 +230,9 @@ bool os_thread_lock_exists(int pLockIndex) {
                     }
                 }
             }
-            if (aDetach) { gJVM->DetachCurrentThread(); }
+            if (aDetach) {
+                //gJVM->DetachCurrentThread();
+            }
         }
         return true;
     }
@@ -248,7 +254,9 @@ void os_delete_thread_lock(int pLockIndex) {
                     }
                 }
             }
-            if (aDetach) { gJVM->DetachCurrentThread(); }
+            if (aDetach) {
+                //gJVM->DetachCurrentThread();
+            }
         }
     }
 }
@@ -267,7 +275,9 @@ void os_delete_all_thread_locks() {
                     }
                 }
             }
-            if (aDetach) { gJVM->DetachCurrentThread(); }
+            if (aDetach) {
+                //gJVM->DetachCurrentThread();
+            }
         }
 }
 
@@ -286,7 +296,10 @@ void os_lock_thread(int pLockIndex) {
                     }
                 }
             }
-            if (aDetach) { gJVM->DetachCurrentThread(); }
+            if (aDetach) {
+                Log("os_lock_thread::DETATCH\n");
+                //gJVM->DetachCurrentThread();
+            }
         }
     }
 }
@@ -306,7 +319,10 @@ void os_unlock_thread(int pLockIndex) {
                     }
                 }
             }
-            if (aDetach) { gJVM->DetachCurrentThread(); }
+            if (aDetach) {
+                Log("os_unlock_thread::DETATCH\n");
+                //gJVM->DetachCurrentThread();
+            }
         }
     }
 }
@@ -393,7 +409,7 @@ unsigned char *os_read_file(const char *pFileName, unsigned int &pLength) {
             }
         }
         if (aDetach) {
-            gJVM->DetachCurrentThread();
+            //gJVM->DetachCurrentThread();
         }
     }
     return aData;
@@ -431,7 +447,7 @@ bool os_write_file(const char *pFileName, unsigned char *pData, unsigned int pLe
             }
         }
         if (aDetach) {
-            gJVM->DetachCurrentThread();
+            //gJVM->DetachCurrentThread();
         }
     }
     return aReturn;
@@ -548,7 +564,7 @@ void os_load_image_to_buffer(char *pFile, unsigned int *pData)
             }
         }
         if (aDetach) {
-            gJVM->DetachCurrentThread();
+            //gJVM->DetachCurrentThread();
         }
     }
 }
@@ -654,7 +670,7 @@ unsigned int *os_load_image(char *pFile,int &pWidth, int &pHeight) {
         }
     }
     if (aDetach) {
-        gJVM->DetachCurrentThread();
+        //gJVM->DetachCurrentThread();
     }
     return aData;
 }

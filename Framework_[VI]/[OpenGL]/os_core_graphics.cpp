@@ -92,6 +92,41 @@ void Graphics::Flush() {
 
 void Graphics::Initialize() {
     
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+    
+    BlendEnable();
+    BlendSetAlpha();
+    
+    //Graphics::TextureSetClamp();
+#if (CURRENT_ENV == ENV_WIN32)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T, GL_CLAMP);
+#else
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    
+#endif
+    
+    Graphics::TextureSetFilterLinear();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    
+    //Graphics::TextureSetModulate();
+    //glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+    
+    //Graphics::TextureEnable();
+    glEnable(GL_TEXTURE_2D);
+    
+    //Graphics::EnableTextureCoordinateArray();
+    //glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    
+    //Graphics::EnableVertexArray();
+    
+    
+    
 }
 
 void Graphics::SetUp() {
@@ -519,6 +554,8 @@ void Graphics::DrawBox(float x1, float y1, float z1, float x2, float y2, float z
 
 void Graphics::DepthEnable() {
     glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+    glDepthMask(GL_TRUE);
 }
 
 void Graphics::DepthDisable() {
@@ -692,6 +729,9 @@ void Graphics::TextureDelete(int pIndex) {
 }
 
 void Graphics::TextureSetData(int pIndex, unsigned int *pData, int pWidth, int pHeight) {
+    
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+    
     TextureBind(pIndex);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pWidth, pHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, pData);
@@ -715,11 +755,6 @@ int Graphics::BufferArrayGenerate(int pLength) {
     if (pLength > 0) {
         glGenBuffers(1, &aBindIndex);
         if (aBindIndex != 0) {
-            
-            if (pLength > 128) {
-                Log("Create Buffer [%d] Sized[%d]\n", aBindIndex, pLength);
-            }
-            
             glBindBuffer(GL_ARRAY_BUFFER, aBindIndex);
             glBufferData(GL_ARRAY_BUFFER, pLength, 0, GL_DYNAMIC_DRAW);
         } else {

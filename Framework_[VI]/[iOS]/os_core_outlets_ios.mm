@@ -47,24 +47,12 @@ void os_initialize_outlets() {
     gThreadLockList.Size(128);
 }
 
-/*
-void os_execute_on_main_thread(void (*pFunc)()) {
-    if ([NSThread isMainThread]) {
-        pFunc();
-    } else {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            pFunc();
-        });
-    }
-}
-*/
-
-void os_detach_thread(void (*theFunction)(void *theArg), void* theArg) {
+void os_detach_thread(void (*pFunction)(void *pArg), void *pArg) {
     pthread_t aThread;
     pthread_attr_t aAttr;
     pthread_attr_init(&aAttr);
     pthread_attr_setdetachstate(&aAttr, PTHREAD_CREATE_DETACHED);
-    pthread_create(&aThread,&aAttr, (void*(*)(void*))theFunction, theArg);
+    pthread_create(&aThread, &aAttr, (void*(*)(void*))pFunction, pArg);
 }
 
 void os_sleep(int pTime) {
@@ -187,24 +175,8 @@ void os_log(const char *pMessage)
 }
 
 unsigned int os_system_time() {
-    
-    unsigned long aMili =
-    chrono::system_clock::now().time_since_epoch() /
-    chrono::milliseconds(1);
+    unsigned long aMili = chrono::system_clock::now().time_since_epoch() / chrono::milliseconds(1);
     return (unsigned int)aMili;
-    
-    //timeval aTime;
-    //gettimeofday(&aTime, NULL);
-    //return aTime.tv_usec * 1000 + aTime.tv_usec / 1000;
-    
-    /*
-    const int64_t aMillion = 1000000;
-    static mach_timebase_info_data_t aInfo;
-    if (aInfo.denom == 0) {
-        mach_timebase_info(&aInfo);
-    }
-    return (int)((mach_absolute_time()*aInfo.numer)/(aMillion*aInfo.denom));
-    */
 }
 
 unsigned char *os_read_file(const char *pFileName, unsigned int &pLength) {

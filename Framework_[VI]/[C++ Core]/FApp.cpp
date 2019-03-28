@@ -244,7 +244,8 @@ void FApp::BaseUpdate() {
     mWindowModal.Update();
     mWindowTools.Update();
     
-    core_sound_update();
+    sound_update();
+    music_update();
 
     
 }
@@ -686,8 +687,9 @@ void FApp::BaseInactive() {
         mWindowModal.Inactive();
         mWindowTools.Inactive();
         
-        core_sound_stopAll();
-        core_sound_inactive();
+        sound_stopAll();
+        sound_inactive();
+        music_inactive();
         
         #if (CURRENT_ENV == ENV_ANDROID)
         //|| (CURRENT_ENV == ENV_IOS)
@@ -716,8 +718,8 @@ void FApp::BaseActive() {
         mWindowModal.Active();
         mWindowTools.Active();
         
-        core_sound_active();
-        core_sound_musicResume();
+        sound_active();
+        music_active();
     }
 }
 

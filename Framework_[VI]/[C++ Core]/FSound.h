@@ -14,8 +14,7 @@
 
 class FSound;
 
-class FSoundInstance
-{
+class FSoundInstance {
 public:
     
     FSoundInstance();
@@ -59,30 +58,33 @@ public:
 };
 
 //OS Specific
-class FSoundData
-{
+class FSoundData {
 public:
     FSoundData();
     virtual ~FSoundData();
     
     bool                            mDidLoad;
     FSound                          *mSound;
-    
 };
 
-class FSound
-{
+class FSound {
 public:
 	FSound();
 	virtual ~FSound();
     
 	void                            Load(const char *pFileName, int pDuplicates = 1);
     
-	void                            Play(float pVolume = 1.0f);
-	void                            PlayPitched(float pPitch, float pVolume = 1.0f);
+    bool                            IsPlaying();
+    
+    void                            Play(float pVolume = 1.0f);
+    void                            PlayPitched(float pPitch, float pVolume = 1.0f);
+    
+    void                            Loop(float pVolume = 1.0f);
+    void                            LoopPitched(float pPitch, float pVolume = 1.0f);
+    
 	void                            Stop();
 	void                            Clear();
-	bool                            IsPlaying();
+	
     
     bool                            DidLoad();
     bool                            mDidLoad;

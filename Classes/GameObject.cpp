@@ -66,8 +66,31 @@ void GameObject::Draw3D() {
             //Now we scale down...
             mModelView.Scale(mTransform3D.mScaleX * mTransform3D.mScale, mTransform3D.mScaleY * mTransform3D.mScale, mTransform3D.mScaleZ * mTransform3D.mScale);
             
+            mNormal.SetNormalMatrix(mModelView);
+            
+            
             //Assign the model view to the uniform...
             mUniform->mModelView.Set(mModelView);
+            
+            if (mUniform->GetType() == UNIFORM_TYPE_LIGHT_DIFFUSE) {
+                FUniformsLightDiffuse *aUniform = (FUniformsLightDiffuse *)(mUniform);
+                aUniform->mNormal.Set(mNormal);
+            }
+            
+            if (mUniform->GetType() == UNIFORM_TYPE_LIGHT_PHONG) {
+                FUniformsLightPhong *aUniform = (FUniformsLightPhong *)(mUniform);
+                aUniform->mNormal.Set(mNormal);
+            }
+            
+            if (mUniform->GetType() == UNIFORM_TYPE_LIGHT_SIMPLE_SPOTLIGHT) {
+                FUniformsLightSimpleSpotlight *aUniform = (FUniformsLightSimpleSpotlight *)(mUniform);
+                aUniform->mNormal.Set(mNormal);
+            }
+            
+            
+            //aNormal.SetNormalMatrix(aModelView);
+            
+            
             mUniform->mColor.mRed = mColor.mRed;
             mUniform->mColor.mGreen = mColor.mGreen;
             mUniform->mColor.mBlue = mColor.mBlue;
