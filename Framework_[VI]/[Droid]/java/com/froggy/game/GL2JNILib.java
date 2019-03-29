@@ -24,10 +24,36 @@ public class GL2JNILib {
          System.loadLibrary("gl2jni");
      }
 
-    /**
-     * @param width the current view width
-     * @param height the current view height
-     */
-     public static native void init(int width, int height);
-     public static native void step();
+    public static native void NativeAppShellPreinitialize();
+    public static native void NativeAppShellInitialize(int pWidth, int pHeight);
+
+    public static native void NativeAppShellDetachRunLoop();
+    public static native void NativeAppShellGraphicsReady();
+
+    public static native void NativeAppShellFrame();
+    public static native void NativeAppShellSetSize(int pWidth, int pHeight);
+    public static native void NativeAppShellSetDirectoryBundle(String pPath);
+    public static native void NativeAppShellSetDirectoryDocuments(String pPath);
+
+    public static native void NativeAppShellTouchBegin(float pX, float pY, int pData, int pCount);
+    public static native void NativeAppShellTouchMove(float pX, float pY, int pData, int pCount);
+    public static native void NativeAppShellTouchRelease(float pX, float pY, int pData, int pCount);
+    public static native void NativeAppShellTouchCancel(float pX, float pY, int pData, int pCount);
+    public static native void NativeAppShellTouchFlush();
+    public static native void NativeAppShellExit();
+    public static native void NativeAppShellPause();
+    public static native void NativeAppShellResume();
+
+    public static native void NativeAppShellMemoryWarning(boolean pSevre);
+
+    public static native void NativeAppShellPurchaseSuccessful(char [] pName);
+    public static native void NativeAppShellPurchaseFailed(char [] pName);
+    public static native void NativeAppShellPurchaseCanceled(char [] pName);
+
+    public static native void NativeAppShellAdBannerSetHeight(char [] pName);
+    public static native void NativeAppShellAdBannerLoadFailed();
+    public static native void NativeAppShellAdBannerLoadSuccessful();
+
+    public static native void NativeAppShellKeyPress(int pKey);
+
 }

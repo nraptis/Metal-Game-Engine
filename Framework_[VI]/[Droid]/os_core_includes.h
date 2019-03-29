@@ -3,10 +3,6 @@
 
 #include "os_core_outlets.h"
 
-//#include "OpenSLES.h"
-
-
-
 #include <android/log.h>
 #include <android/sensor.h>
 #include <android/native_window.h>

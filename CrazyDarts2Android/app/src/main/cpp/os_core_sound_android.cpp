@@ -48,38 +48,63 @@ SLObjectItf outputMixObject = NULL;
 SLEnvironmentalReverbItf outputMixEnvironmentalReverb = NULL;
 
 // aux effect on the output mix, used by the buffer queue player
-static const SLEnvironmentalReverbSettings reverbSettings = SL_I3DL2_ENVIRONMENT_PRESET_STONECORRIDOR;
-//static const SLEnvironmentalReverbSettings reverbSettings = SL_I3DL2_ENVIRONMENT_PRESET_DEFAULT;
+//static const SLEnvironmentalReverbSettings reverbSettings = SL_I3DL2_ENVIRONMENT_PRESET_STONECORRIDOR;
+static const SLEnvironmentalReverbSettings reverbSettings = SL_I3DL2_ENVIRONMENT_PRESET_DEFAULT;
 
 void sound_initialize() {
     SLresult aResult;
     
     // create engine
     aResult = slCreateEngine(&engineObject, 0, NULL, 0, NULL, NULL);
-    assert(SL_RESULT_SUCCESS == aResult);
-    (void)aResult;
+    if (SL_RESULT_SUCCESS != aResult) {
+        if (engineObject != NULL) {
+            (*engineObject)->Destroy(engineObject);
+            engineObject = NULL;
+        }
+        return;
+    }
     
     // realize the engine
     aResult = (*engineObject)->Realize(engineObject, SL_BOOLEAN_FALSE);
-    assert(SL_RESULT_SUCCESS == aResult);
-    (void)aResult;
+    if (SL_RESULT_SUCCESS != aResult) {
+        if (engineObject != NULL) {
+            (*engineObject)->Destroy(engineObject);
+            engineObject = NULL;
+        }
+        return;
+    }
     
     // get the engine interface, which is needed in order to create other objects
     aResult = (*engineObject)->GetInterface(engineObject, SL_IID_ENGINE, &engineEngine);
-    assert(SL_RESULT_SUCCESS == aResult);
-    (void)aResult;
+    if (SL_RESULT_SUCCESS != aResult) {
+        if (engineObject != NULL) {
+            (*engineObject)->Destroy(engineObject);
+            engineObject = NULL;
+        }
+        return;
+    }
     
     // create output mix, with environmental reverb specified as a non-required interface
     const SLInterfaceID ids[1] = {SL_IID_ENVIRONMENTALREVERB};
     const SLboolean req[1] = {SL_BOOLEAN_FALSE};
     aResult = (*engineEngine)->CreateOutputMix(engineEngine, &outputMixObject, 1, ids, req);
-    assert(SL_RESULT_SUCCESS == aResult);
-    (void)aResult;
+    if (SL_RESULT_SUCCESS != aResult) {
+        if (engineObject != NULL) {
+            (*engineObject)->Destroy(engineObject);
+            engineObject = NULL;
+        }
+        return;
+    }
     
     // realize the output mix
     aResult = (*outputMixObject)->Realize(outputMixObject, SL_BOOLEAN_FALSE);
-    assert(SL_RESULT_SUCCESS == aResult);
-    (void)aResult;
+    if (SL_RESULT_SUCCESS != aResult) {
+        if (engineObject != NULL) {
+            (*engineObject)->Destroy(engineObject);
+            engineObject = NULL;
+        }
+        return;
+    }
     
     // get the environmental reverb interface
     // this could fail if the environmental reverb effect is not available,
@@ -88,8 +113,7 @@ void sound_initialize() {
     aResult = (*outputMixObject)->GetInterface(outputMixObject, SL_IID_ENVIRONMENTALREVERB,
                                               &outputMixEnvironmentalReverb);
     if (SL_RESULT_SUCCESS == aResult) {
-        aResult = (*outputMixEnvironmentalReverb)->SetEnvironmentalReverbProperties(
-                                                                                   outputMixEnvironmentalReverb, &reverbSettings);
+        aResult = (*outputMixEnvironmentalReverb)->SetEnvironmentalReverbProperties(outputMixEnvironmentalReverb, &reverbSettings);
         (void)aResult;
     }
     // ignore unsuccessful aResult codes for environmental reverb, as it is optional for this example
@@ -100,14 +124,11 @@ bool sound_load(FSound *pSound, const char *pFileName, int pInstanceCount) {
     if (pInstanceCount <= 0) pInstanceCount = 1;
     if (pInstanceCount > 10) pInstanceCount = 10;
     int aLoadedInstanceCount = 0;
-
     if (pSound != 0) {
         FSoundDataAndroid *aSoundData = (FSoundDataAndroid *)pSound->mSoundData;
         if (aSoundData) {
-
             FFile aFile;
             aFile.Load(pFileName);
-
             if (aFile.mLength > 0) {
                 aSoundData->mData = new unsigned char[aFile.mLength];
                 memcpy(aSoundData->mData, aFile.mData, aFile.mLength);
@@ -147,7 +168,6 @@ void sound_playPitched(FSound *pSound, float pPitch, float pVolume) {
             if (aInstanceCheck) {
                 FSoundInstanceAndroid *aInstancePlay = 0;
                 if (sound_instance_isPlaying((FSoundInstanceAndroid *)aInstanceCheck) == false) {
-
                     aInstancePlay = aInstanceCheck;
                     pSound->mInstances.RotateFrontToBack();
                 } else {
@@ -333,7 +353,31 @@ void sound_inactive()  {
     music_pause();
 }
 
+SLmillibel GetMinMillibels() {
+    return -4000;
+}
 
+SLmillibel GetMillibels(float pVolume) {
+    SLmillibel aResult = 0;
+    if (pVolume <= 0.0f) {
+        aResult = GetMinMillibels();
+    } else if (pVolume >= 1.0) {
+        aResult = 0;
+    } else {
+        float aInterp = 0.0f;
+        aInterp = (float)log2(pVolume + 0.05f);
+        float aValueMin = -4.322f;
+        float aValueMax = 0.1374;
+        aInterp = (aInterp - aValueMin) / (aValueMax - aValueMin);
+        float aMin = GetMinMillibels();
+        float aMax = 0.0f;
+        int aResultInt = (int)(aMin + (aMax - aMin) * aInterp);
+        aResult = aResultInt;
+    }
+    if (aResult < GetMinMillibels()) { aResult = GetMinMillibels(); }
+    if (aResult > 0) { aResult = 0; }
+    return aResult;
+}
 
 
 

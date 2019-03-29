@@ -15,6 +15,7 @@
 #include <sys/time.h>
 #include <sys/stat.h>
 #include <time.h>
+#include <chrono>
 
 #include <fcntl.h>
 #include <algorithm>
@@ -28,6 +29,10 @@
 #include <pthread.h>
 #include <sys/utsname.h>
 
+#define  LOG_TAG    "libgl2jni"
+#define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
+#define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
+
 
 using namespace std;
 
@@ -35,62 +40,74 @@ using namespace std;
 
 jobject _objJNIHelper = 0;
 jclass _clsJNIHelper = 0;
+static bool gJNIDetached = false;
+jclass gOutletClass = NULL;
+
+
 
 char mPrintBuffer[2048];
 
 void Log(const char *pText, ...) {
-
     if ((pText != 0) && (_objJNIHelper != 0)) {
-
-        JNIEnv *env = os_getJNIEnv();
-        if (env) {
-
+        bool aDetach = false;
+        JNIEnv *aEnv = os_getJNIEnv(&aDetach);
+        if (aEnv != NULL) {
             va_list argptr;
             va_start(argptr, pText);
             vsprintf(mPrintBuffer, pText, argptr);
             va_end(argptr);
-            
-            jstring name = env->NewStringUTF(mPrintBuffer);
-            jmethodID mid = env->GetMethodID(_clsJNIHelper, "JavaLog", "(Ljava/lang/String;)V");
-            
-            if (mid) {
-                env->CallVoidMethod(_objJNIHelper, mid, name);
+
+            jstring aName = aEnv->NewStringUTF(mPrintBuffer);
+            jmethodID aMethodID = aEnv->GetMethodID(_clsJNIHelper, "JavaLog", "(Ljava/lang/String;)V");
+            if (aMethodID) {
+                aEnv->CallVoidMethod(_objJNIHelper, aMethodID, aName);
             }
-            env->DeleteLocalRef(name);
+            aEnv->DeleteLocalRef(aName);
+        }
+        if (aDetach) {
+            //gJVM->DetachCurrentThread();
         }
     }
 }
 
 void os_initialize_outlets() {
     if (gJVM) {
-        JNIEnv *env = os_getJNIEnv();
-        if (env) {
+        bool aDetach = false;
+        JNIEnv *aEnv = os_getJNIEnv(&aDetach);
+        if (aEnv) {
             if (_clsJNIHelper == 0) {
-                jclass cls = os_getClassID(env);
-                _clsJNIHelper = (jclass) env->NewGlobalRef(cls);
-                jmethodID constructor = env->GetMethodID(_clsJNIHelper, "<init>", "()V");
-                _objJNIHelper = env->NewObject(_clsJNIHelper, constructor);
-                _objJNIHelper = env->NewGlobalRef(_objJNIHelper);
+                jclass cls = os_getClassID(aEnv);
+                _clsJNIHelper = (jclass) aEnv->NewGlobalRef(cls);
+                jmethodID constructor = aEnv->GetMethodID(_clsJNIHelper, "<init>", "()V");
+                _objJNIHelper = aEnv->NewObject(_clsJNIHelper, constructor);
+                _objJNIHelper = aEnv->NewGlobalRef(_objJNIHelper);
             }
         }
     }
 }
 
-JNIEnv *os_getJNIEnv() {
+
+JNIEnv *os_getJNIEnv(bool *pRequiresDetach) {
     JNIEnv *aENV = 0;
+    *pRequiresDetach = false;
     if (gJVM != 0) {
-        jint ret = gJVM->GetEnv((void**)&aENV, JNI_VERSION_1_4);
+        jint ret = gJVM->GetEnv((void**)&aENV, JNI_VERSION_1_6);
         switch (ret) {
             case JNI_OK :
                 return aENV;
-                
+                gJNIDetached = false;
+
             case JNI_EDETACHED :
+                //LOGI("STATS: JNI_JNI_EDETACHED...\n");
+
                 // Thread not attached
                 
                 // TODO : If calling AttachCurrentThread() on a native thread
                 // must call DetachCurrentThread() in future.
                 // see: http://developer.android.com/guide/practices/design/jni.html
-                
+
+                *pRequiresDetach = true;
+
                 if (gJVM->AttachCurrentThread(&aENV, NULL) < 0) {
                     Log("Failed to get the environment using AttachCurrentThread()\n");
                     return 0;
@@ -99,9 +116,9 @@ JNIEnv *os_getJNIEnv() {
                 }
             case JNI_EVERSION :
                 // Cannot recover from this error
-                Log("JNI interface version 1.4 not supported\n");
+                LOGI("JNI interface version 1.4 not supported\n");
             default :
-                Log("Failed to get the environment using GetEnv()\n");
+                LOGI("Failed to get the environment using GetEnv()\n");
                 return 0;
         }
     }
@@ -109,24 +126,34 @@ JNIEnv *os_getJNIEnv() {
 }
 
 jclass os_getClassID(JNIEnv *pEnv) {
+
+    if (gOutletClass != NULL) {
+        return gOutletClass;
+    }
+
     jclass aClass = pEnv->FindClass(JAVA_OUTLET_CLASS);
+
     if (!aClass) {
         Log("Failed to find class of %s", JAVA_OUTLET_CLASS);
     }
+
+    if (pEnv->ExceptionCheck()) {
+        LOGI("NO CLASS FOUND...?\n");
+        return NULL;
+    }
+
+    gOutletClass  = (jclass)(pEnv->NewGlobalRef(aClass));
+
     return aClass;
 }
 
-
-void os_execute_on_main_thread(void (*pFunc)()) {
-    
-}
-
-void os_detach_thread(void (*theFunction)(void *theArg), void* theArg) {
+void os_detach_thread(void (*pFunction)(void *pArg), void* pArg) {
+    printf("Detaching Threat [%X]\n", pArg);
     pthread_t aThread;
     pthread_attr_t aAttr;
     pthread_attr_init(&aAttr);
     pthread_attr_setdetachstate(&aAttr, PTHREAD_CREATE_DETACHED);
-    pthread_create(&aThread,&aAttr, (void*(*)(void*))theFunction, theArg);
+    pthread_create(&aThread,&aAttr, (void*(*)(void*))pFunction, pArg);
 }
 
 void os_sleep(int pTime) {
@@ -141,100 +168,181 @@ bool os_draws_in_background() {
     return true;
 }
 
-
-pthread_mutex_t gInterfaceMutex = PTHREAD_MUTEX_INITIALIZER;
-
-void os_interface_mutex_enter() {
-    pthread_mutex_lock( &gInterfaceMutex );
+void os_commitRender() {
+    jmethodID aMethodID = 0;
+    if (gJVM != 0) {
+        bool aDetach = false;
+        JNIEnv *aEnv = os_getJNIEnv(&aDetach);
+        if (aEnv != 0) {
+            jclass aClass = os_getClassID(aEnv);
+            if (aClass != 0) {
+                aMethodID = aEnv->GetMethodID(aClass, "commitRender", "()V");
+                if (aMethodID) {
+                    aEnv->CallVoidMethod(_objJNIHelper, aMethodID);
+                }
+            }
+        }
+        if (aDetach) {
+            //gJVM->DetachCurrentThread();
+        }
+    }
 }
-
-void os_interface_mutex_leave() {
-    pthread_mutex_unlock( &gInterfaceMutex );
-}
-
-
-FList gThreadLockList;
-pthread_mutex_t gThreadMutex = PTHREAD_MUTEX_INITIALIZER;
-pthread_mutex_t gGraphicsThreadMutex = PTHREAD_MUTEX_INITIALIZER;
+//
+////
 
 int os_create_thread_lock() {
-    pthread_mutex_lock( &gThreadMutex );
-    
-    pthread_mutex_unlock( &gThreadMutex );
-    
-    return -1;
+    int aResult = -1;
+    jmethodID aMethodID = 0;
+    if (gJVM != 0) {
+        bool aDetach = false;
+        JNIEnv *aEnv = os_getJNIEnv(&aDetach);
+        if (aEnv != 0) {
+            jclass aClass = os_getClassID(aEnv);
+            if (aClass != 0) {
+                aMethodID = aEnv->GetMethodID(aClass, "createThreadLock", "()I");
+                if (aMethodID) {
+                    aResult = aEnv->CallIntMethod(_objJNIHelper, aMethodID);
+                }
+            }
+        }
+        if (aDetach) {
+            //gJVM->DetachCurrentThread();
+        }
+    }
+    return aResult;
 }
 
 bool os_thread_lock_exists(int pLockIndex) {
-    if (pLockIndex >= 0 && pLockIndex < gThreadLockList.mCount) {
+    bool aResult = false;
+    if (pLockIndex >= 0) {
+
+        jmethodID aMethodID = 0;
+        if (gJVM != 0) {
+            bool aDetach = false;
+            JNIEnv *aEnv = os_getJNIEnv(&aDetach);
+            if (aEnv != 0) {
+                jclass aClass = os_getClassID(aEnv);
+                if (aClass != 0) {
+                    aMethodID = aEnv->GetMethodID(aClass, "doesThreadLockExist", "(I)Z");
+                    if (aMethodID) {
+                        aResult = aEnv->CallBooleanMethod(_objJNIHelper, aMethodID, pLockIndex);
+                        //Log("Does Lock [%d] Exist? [%d]!!!\n\n", pLockIndex, aResult);
+                    }
+                }
+            }
+            if (aDetach) {
+                //gJVM->DetachCurrentThread();
+            }
+        }
         return true;
     }
     return false;
 }
 
 void os_delete_thread_lock(int pLockIndex) {
-    pthread_mutex_lock( &gThreadMutex );
-
-    
-    pthread_mutex_unlock( &gThreadMutex );
+    if (pLockIndex >= 0) {
+        jmethodID aMethodID = 0;
+        if (gJVM != 0) {
+            bool aDetach = false;
+            JNIEnv *aEnv = os_getJNIEnv(&aDetach);
+            if (aEnv != 0) {
+                jclass aClass = os_getClassID(aEnv);
+                if (aClass != 0) {
+                    aMethodID = aEnv->GetMethodID(aClass, "deleteThreadLock", "(I)V");
+                    if (aMethodID) {
+                        aEnv->CallVoidMethod(_objJNIHelper, aMethodID, pLockIndex);
+                    }
+                }
+            }
+            if (aDetach) {
+                //gJVM->DetachCurrentThread();
+            }
+        }
+    }
 }
 
 void os_delete_all_thread_locks() {
-    pthread_mutex_lock( &gThreadMutex );
-
-    
-    pthread_mutex_unlock( &gThreadMutex );
+        jmethodID aMethodID = 0;
+        if (gJVM != 0) {
+            bool aDetach = false;
+            JNIEnv *aEnv = os_getJNIEnv(&aDetach);
+            if (aEnv != 0) {
+                jclass aClass = os_getClassID(aEnv);
+                if (aClass != 0) {
+                    aMethodID = aEnv->GetMethodID(aClass, "deleteAllThreadLocks", "()V");
+                    if (aMethodID) {
+                        aEnv->CallVoidMethod(_objJNIHelper, aMethodID);
+                    }
+                }
+            }
+            if (aDetach) {
+                //gJVM->DetachCurrentThread();
+            }
+        }
 }
 
 void os_lock_thread(int pLockIndex) {
-    pthread_mutex_lock( &gThreadMutex );
-
-    
-    pthread_mutex_unlock( &gThreadMutex );
+    if (pLockIndex >= 0) {
+        jmethodID aMethodID = 0;
+        if (gJVM != 0) {
+            bool aDetach = false;
+            JNIEnv *aEnv = os_getJNIEnv(&aDetach);
+            if (aEnv != 0) {
+                jclass aClass = os_getClassID(aEnv);
+                if (aClass != 0) {
+                    aMethodID = aEnv->GetMethodID(aClass, "lockThread", "(I)V");
+                    if (aMethodID) {
+                        aEnv->CallVoidMethod(_objJNIHelper, aMethodID, pLockIndex);
+                    }
+                }
+            }
+            if (aDetach) {
+                Log("os_lock_thread::DETATCH\n");
+                //gJVM->DetachCurrentThread();
+            }
+        }
+    }
 }
 
 void os_unlock_thread(int pLockIndex) {
-    pthread_mutex_lock( &gThreadMutex );
-
-    
-    pthread_mutex_unlock( &gThreadMutex );
-}
-
-void os_lock_graphics_thread(int pLockIndex) {
-    pthread_mutex_lock( &gGraphicsThreadMutex );
-
-    
-    pthread_mutex_unlock( &gGraphicsThreadMutex );
-}
-
-void os_unlock_graphics_thread(int pLockIndex) {
-    pthread_mutex_lock( &gGraphicsThreadMutex );
-
-    
-    pthread_mutex_unlock( &gGraphicsThreadMutex );
+    if (pLockIndex >= 0) {
+        jmethodID aMethodID = 0;
+        if (gJVM != 0) {
+            bool aDetach = false;
+            JNIEnv *aEnv = os_getJNIEnv(&aDetach);
+            if (aEnv != 0) {
+                jclass aClass = os_getClassID(aEnv);
+                if (aClass != 0) {
+                    aMethodID = aEnv->GetMethodID(aClass, "unlockThread", "(I)V");
+                    if (aMethodID) {
+                        aEnv->CallVoidMethod(_objJNIHelper, aMethodID, pLockIndex);
+                    }
+                }
+            }
+            if (aDetach) {
+                Log("os_unlock_thread::DETATCH\n");
+                //gJVM->DetachCurrentThread();
+            }
+        }
+    }
 }
 
 
 bool os_fileExists(const char *pFilePath) {
     bool aReturn = false;
-
     jmethodID aMethodID = 0;
-
-    if((gJVM != 0) && (pFilePath != 0))
-    {
-        JNIEnv *aENV = os_getJNIEnv();
-
-        jclass aClass = os_getClassID(aENV);
-
-        if((aENV != 0) && (aClass != 0))
-        {
-            aMethodID = aENV->GetMethodID(aClass, "fileExists", "(Ljava/lang/String;)Z");
-
-            if(aMethodID)
-            {
-                jstring aPath = aENV->NewStringUTF(pFilePath);
-                aReturn = aENV->CallBooleanMethod(_objJNIHelper, aMethodID, aPath);
-                aENV->DeleteLocalRef(aPath);
+    if ((gJVM != 0) && (pFilePath != 0)) {
+        bool aDetach = false;
+        JNIEnv *aEnv = os_getJNIEnv(&aDetach);
+        if (aEnv != 0) {
+            jclass aClass = os_getClassID(aEnv);
+            if (aClass != 0) {
+                aMethodID = aEnv->GetMethodID(aClass, "fileExists", "(Ljava/lang/String;)Z");
+                if (aMethodID) {
+                    jstring aPath = aEnv->NewStringUTF(pFilePath);
+                    aReturn = aEnv->CallBooleanMethod(_objJNIHelper, aMethodID, aPath);
+                    aEnv->DeleteLocalRef(aPath);
+                }
             }
         }
     }
@@ -255,92 +363,70 @@ bool os_is_portrait() {
     
 }
 
-#define NANOS_IN_SECOND 1000000000
+//#define NANOS_IN_SECOND 1000000000
 unsigned int os_system_time() {
-        struct timespec res;
-        clock_gettime(CLOCK_MONOTONIC, &res);
-        return (res.tv_sec * NANOS_IN_SECOND) + res.tv_nsec;
+    unsigned long aMili =
+            chrono::system_clock::now().time_since_epoch() /
+            chrono::milliseconds(1);
+    return (unsigned int)aMili;
+
+    //    struct timespec res;
+    //    clock_gettime(CLOCK_MONOTONIC, &res);
+    //    return (res.tv_sec * NANOS_IN_SECOND) + res.tv_nsec;
 
 }
 
 unsigned char *os_read_file(const char *pFileName, unsigned int &pLength) {
-
     pLength = 0;
     unsigned char *aData = 0;
-
     jmethodID aMethodID = 0;
-
     if((gJVM != 0) && (pFileName != 0)) {
-        JNIEnv *aEnv = os_getJNIEnv();
-
+        bool aDetach = false;
+        JNIEnv *aEnv = os_getJNIEnv(&aDetach);
         jclass aClass = os_getClassID(aEnv);
-
         if ((aEnv != 0) && (aClass != 0)) {
             aMethodID = aEnv->GetMethodID(aClass, "readFileLength", "(Ljava/lang/String;)I");
-
             if(aMethodID) {
                 jstring aFileName = aEnv->NewStringUTF(pFileName);
-
                 pLength = aEnv->CallIntMethod(_objJNIHelper, aMethodID, aFileName);
-
-                if(pLength > 0) {
+                if (pLength > 0) {
                     aMethodID = aEnv->GetMethodID(aClass, "readFileData", "(Ljava/lang/String;[B)V");
-
-                    if(aMethodID)
-                    {
+                    if (aMethodID) {
                         jbyteArray aArray = aEnv->NewByteArray(pLength + 1);
-
                         aEnv->CallVoidMethod(_objJNIHelper, aMethodID, aFileName, aArray);
-
                         jbyte *aByte = aEnv->GetByteArrayElements(aArray, 0);
-
                         aData = new unsigned char [pLength];
-
                         memcpy(aData, aByte, pLength);
-
                         aEnv->ReleaseByteArrayElements(aArray, aByte, 0);
                         aEnv->DeleteLocalRef(aArray);
-
-                        Log("** LOADED [%s] [%d]\n", pFileName, pLength);
-                    }
-                    else
-                    {
+                    } else {
                         pLength = 0;
                     }
-                }
-                else
-                {
+                } else {
                     pLength = 0;
                 }
-
                 aEnv->DeleteLocalRef(aFileName);
             }
         }
+        if (aDetach) {
+            //gJVM->DetachCurrentThread();
+        }
     }
-
     return aData;
-
-
-    
 }
 
-bool os_write_file(const char *pFileName, unsigned char *pData, unsigned int pLength)
-{
+bool os_write_file(const char *pFileName, unsigned char *pData, unsigned int pLength) {
     bool aReturn = false;
-
     jmethodID aMethodID = 0;
 
-    if((gJVM != 0) && (pFileName != 0) && (pLength > 0))
-    {
-        JNIEnv *aEnv = os_getJNIEnv();
+    if ((gJVM != 0) && (pFileName != 0) && (pLength > 0)) {
+        bool aDetach = false;
+        JNIEnv *aEnv = os_getJNIEnv(&aDetach);
         jclass aClass = os_getClassID(aEnv);
 
-        if((aEnv != 0) && (aClass != 0))
-        {
+        if ((aEnv != 0) && (aClass != 0)) {
             aMethodID = aEnv->GetMethodID(aClass, "writeFileData", "(Ljava/lang/String;[BI)Z");
-
-            if(aMethodID)
-            {
+            if (aMethodID) {
                 jbyteArray aArray = aEnv->NewByteArray(pLength + 1);
                 jbyte *aByte = aEnv->GetByteArrayElements(aArray, 0);
 
@@ -350,19 +436,18 @@ bool os_write_file(const char *pFileName, unsigned char *pData, unsigned int pLe
                 aReturn = aEnv->CallBooleanMethod(_objJNIHelper, aMethodID, aPath, aArray, pLength);
                 aEnv->DeleteLocalRef(aPath);
 
-                if((aReturn == false) && (gDirDocuments.mLength > 0))
-                {
+                if ((aReturn == false) && (gDirDocuments.mLength > 0)) {
                     FString aDocPath = gDirDocuments + pFileName;
-
                     aPath = aEnv->NewStringUTF(aDocPath.c());
                     aReturn = aEnv->CallBooleanMethod(_objJNIHelper, aMethodID, aPath, aArray, pLength);
                     aEnv->DeleteLocalRef(aPath);
-
                 }
-
                 aEnv->ReleaseByteArrayElements(aArray, aByte, 0);
                 aEnv->DeleteLocalRef(aArray);
             }
+        }
+        if (aDetach) {
+            //gJVM->DetachCurrentThread();
         }
     }
     return aReturn;
@@ -390,10 +475,10 @@ FString os_getDocumentsDirectory() {
 void os_load_image_to_buffer(char *pFile, unsigned int *pData)
 {
     jmethodID aMethodID;
-    JNIEnv *aEnv = os_getJNIEnv();
+    bool aDetach = false;
+    JNIEnv *aEnv = os_getJNIEnv(&aDetach);
 
-    if(aEnv)
-    {
+    if (aEnv) {
         jstring aJavaFileName = aEnv->NewStringUTF(pFile);
         aMethodID = aEnv->GetMethodID(_clsJNIHelper, "loadBitmap", "(Ljava/lang/String;)Landroid/graphics/Bitmap;");
 
@@ -478,21 +563,9 @@ void os_load_image_to_buffer(char *pFile, unsigned int *pData)
                 aEnv->CallVoidMethod(_objJNIHelper, aMethodID, aBitmap);
             }
         }
-    }
-}
-
-void os_set_graphics_context() {
-    jmethodID aMethodID;
-    JNIEnv *aEnv = os_getJNIEnv();
-
-    if(aEnv)
-    {
-        aMethodID = aEnv->GetMethodID(_clsJNIHelper, "setOpenGLContext", "()V");
-
-        //aMethodID = aEnv->GetMethodID(_clsJNIHelper, "closeBitmap", "(Landroid/graphics/Bitmap;)V");
-        aEnv->CallVoidMethod(_objJNIHelper, aMethodID);
-
-
+        if (aDetach) {
+            //gJVM->DetachCurrentThread();
+        }
     }
 }
 
@@ -500,12 +573,12 @@ unsigned int *os_load_image(char *pFile,int &pWidth, int &pHeight) {
     pWidth = 0;
     pHeight = 0;
 
-    Log("Load Bitmap... [%s]\n", pFile);
 
     unsigned int *aData = 0;
 
     jmethodID aMethodID;
-    JNIEnv *aEnv = os_getJNIEnv();
+    bool aDetach = false;
+    JNIEnv *aEnv = os_getJNIEnv(&aDetach);
 
     if(aEnv)
     {
@@ -515,10 +588,7 @@ unsigned int *os_load_image(char *pFile,int &pWidth, int &pHeight) {
         jobject aBitmap = aEnv->CallObjectMethod(_objJNIHelper, aMethodID, aJavaFileName);
         aEnv->DeleteLocalRef(aJavaFileName);
 
-        Log("Load Bitmap 2... [%s]\n", pFile);
-
-        if(aBitmap)
-        {
+        if (aBitmap) {
 
             aMethodID = aEnv->GetMethodID(_clsJNIHelper, "getBitmapWidth", "(Landroid/graphics/Bitmap;)I");
             pWidth = aEnv->CallIntMethod(_objJNIHelper, aMethodID, aBitmap);
@@ -526,10 +596,7 @@ unsigned int *os_load_image(char *pFile,int &pWidth, int &pHeight) {
             aMethodID = aEnv->GetMethodID(_clsJNIHelper, "getBitmapHeight", "(Landroid/graphics/Bitmap;)I");
             pHeight = aEnv->CallIntMethod(_objJNIHelper, aMethodID, aBitmap);
 
-            Log("Load Bitmap 3... [%d x %d]\n", pWidth, pHeight);
-
-            if((pWidth > 0) && (pHeight > 0))
-            {
+            if ((pWidth > 0) && (pHeight > 0)) {
                 int aArea = pWidth * pHeight;
 
                 jintArray aArray = aEnv->NewIntArray(aArea);
@@ -601,6 +668,9 @@ unsigned int *os_load_image(char *pFile,int &pWidth, int &pHeight) {
                 pHeight = 0;
             }
         }
+    }
+    if (aDetach) {
+        //gJVM->DetachCurrentThread();
     }
     return aData;
 }

@@ -117,11 +117,9 @@
     
     [self buildPipelineStatesModelIndexedLightedDiffuse: GFX_RENDER_PASS_3D_MAIN];
     
-    
     [self buildPipelineStatesModelIndexedLightedPhong: GFX_RENDER_PASS_3D_MAIN];
     
     [self buildPipelineStatesModelIndexedLightedPhongOverlay: GFX_RENDER_PASS_3D_MAIN];
-    
     
     [self buildPipelineStatesShapeNode: GFX_RENDER_PASS_3D_MAIN];
     [self buildPipelineStatesShapeNode: GFX_RENDER_PASS_2D_MAIN];

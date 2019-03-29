@@ -27,6 +27,7 @@ OSSoundBuffer::OSSoundBuffer() {
     bqPlayerVolume = nullptr;
     bqPlaybackRateMin = 1000;
     bqPlaybackRateMax = 1000;
+    bqVolumeMax = 2000;
     mSoundInstance = NULL;
     mSoundData = NULL;
     mVolume = 1.0f;
@@ -98,19 +99,12 @@ void OSSoundBuffer::SetUp() {
     const SLboolean aReqExtended[4] = {SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE, SL_BOOLEAN_FALSE};
 
     aResult = (*engineEngine)->CreateAudioPlayer(engineEngine, &bqPlayerObject, &audioSrc, &audioSnk, 4, aIDExtended, aReqExtended);
-    if (aResult != SL_RESULT_SUCCESS) {
-        Log("CoreSound::Failed To CreateAudioPlayer engineEngine\n");
-        mDidFail = true;
-        TearDown();
-        return;
-    }
+    assert(SL_RESULT_SUCCESS == aResult);
+    (void)aResult;
 
     aResult = (*bqPlayerObject)->Realize(bqPlayerObject, SL_BOOLEAN_FALSE);
-    if (aResult != SL_RESULT_SUCCESS) {
-        Log("CoreSound::Failed To Realize bqPlayerObject\n");
-        mDidFail = true;
-        return;
-    }
+    assert(SL_RESULT_SUCCESS == aResult);
+    (void)aResult;
 
     aResult = (*bqPlayerObject)->GetInterface(bqPlayerObject, SL_IID_PLAY, &bqPlayerPlay);
     if (aResult != SL_RESULT_SUCCESS) {
@@ -137,14 +131,10 @@ void OSSoundBuffer::SetUp() {
         aResult = (*bqPlayerPlaybackRate)->GetRateRange(bqPlayerPlaybackRate, 0, &bqPlaybackRateMin, &bqPlaybackRateMax, &aStepSize, &aCapa);
         if (aResult != SL_RESULT_SUCCESS) {
             Log("CoreSound::Failed To GetRateRange (%d - %d)\n",
-                (int)bqPlaybackRateMin,
-                (int)bqPlaybackRateMax);
+                    (int)bqPlaybackRateMin,
+                    (int)bqPlaybackRateMax);
             bqPlaybackRateMin = 1000;
             bqPlaybackRateMax = 1000;
-        } else {
-            Log("CoreSound::Succeeded To GetRateRange (%d - %d)\n",
-                (int)bqPlaybackRateMin,
-                (int)bqPlaybackRateMax);
         }
     }
 
@@ -242,7 +232,7 @@ void OSSoundBuffer::Play(FSoundInstanceAndroid *pSoundInstance,
     }
 
     if (bqPlayerPlaybackRate != NULL) {
-        SLpermille aRate = SLpermille(1000.0f * pPitch);
+        SLpermille aRate= SLpermille(1000.0f * pPitch);
 
         if (aRate < bqPlaybackRateMin) { aRate = bqPlaybackRateMin; }
         if (aRate > bqPlaybackRateMax) { aRate = bqPlaybackRateMax; }

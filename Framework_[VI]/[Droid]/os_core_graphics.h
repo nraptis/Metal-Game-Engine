@@ -1,6 +1,19 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
+#include "os_core_app_shell.h"
+
+#if (CURRENT_ENV == ENV_IOS)
+#import <OpenGLES/ES2/gl.h>
+#import <OpenGLES/ES2/glext.h>
+#endif
+
+#if (CURRENT_ENV == ENV_ANDROID)
+#include <GLES2/gl2.h>
+#include <GLES2/gl2ext.h>
+#include <EGL/egl.h>
+#include <GLES/gl.h>
+#endif
 
 #include "OpenGLEngine.hpp"
 #include "FColor.hpp"
@@ -13,6 +26,7 @@
 #include "FIndexList.h"
 #include "FUniforms.hpp"
 #include "ShaderProgram.hpp"
+#include "FBuffer.hpp"
 
 #define GFX_RENDER_PASS_COUNT 2
 
@@ -55,14 +69,17 @@ public:
     static void                             SetDeviceScale(float pScale);
     static void                             SetDeviceSize(float pWidth, float pHeight);
     
-    
-    static bool                             ThreadIsLocked();
-    static void                             ThreadLock();
-    static void                             ThreadUnlock();
-    
     static void                             Flush();
     
     static void                             Initialize();
+    
+    // When we get a new content, we SET UP.
+    static void                             SetUp();
+    
+    //Before we lose out content, we TEAR DOWN.
+    static void                             TearDown();
+    
+    
     
     static void                             PreRender();
     static void                             PostRender();
@@ -183,7 +200,10 @@ public:
     static void                             MatrixModelViewReset();
     
     static FMatrix                          MatrixProjectionGet();
+    static void                             MatrixProjectionGet(FMatrix *pMatrix);
+    
     static FMatrix                          MatrixModelViewGet();
+    static void                             MatrixModelViewGet(FMatrix *pMatrix);
     
     static void                             CullFacesSetFront();
     static void                             CullFacesSetBack();
@@ -222,27 +242,19 @@ public:
     static void                             TextureDelete(int pIndex);
     static void                             TextureBind(int pIndex);
     static void                             TextureBind(FTexture *pTexture);
-    static bool								TextureValid(FTexture *pTexture);
     
     
     //Buffers...
     static int                              BufferArrayGenerate(int pLength);
-    static int                              BufferArrayGenerate(void *pData, int pLength); /* Length in BYTES */
-    static void                             BufferArrayWrite(int pIndex, void *pData, int pLength); /* Length in BYTES */
-    static void                             BufferArrayWrite(int pIndex, void *pData, int pOffset, int pLength); /* Length in BYTES */
-    
     static void                             BufferArrayDelete(int pIndex);
-    
+    static void                             BufferArrayWrite(FBuffer *pBuffer, void *pData, int pLength);
+    static void                             BufferArrayWrite(FBuffer *pBuffer, void *pData, int pOffset, int pLength);
     
     
     static int                              BufferElementGenerate(int pLength);
-    static int                              BufferElementGenerate(void *pData, int pLength); /* Length in BYTES */
-    static void                             BufferElementWrite(int pIndex, void *pData, int pLength); /* Length in BYTES */
-    static void                             BufferElementWrite(int pIndex, void *pData, int pOffset, int pLength); /* Length in BYTES */
-    
     static void                             BufferElementDelete(int pIndex);
-    
-    
+    static void                             BufferElementWrite(FBuffer *pBuffer, void *pData, int pLength);
+    static void                             BufferElementWrite(FBuffer *pBuffer, void *pData, int pOffset, int pLength);
     
     //
     //
@@ -253,27 +265,31 @@ public:
     //
     //
     //
-    static void                             ArrayBufferData(int pIndex);
-    static void                             ArrayBufferData(int pIndex, int pOffset);
+    static void                             ArrayBufferData(FBuffer *pBuffer);
+    static void                             ArrayBufferData(FBuffer *pBuffer, int pOffset);
     //
-    static void                             ArrayBufferPositions(int pIndex);
-    static void                             ArrayBufferPositions(int pIndex, int pOffset);
+    static void                             ArrayBufferPositions(FBuffer *pBuffer);
+    static void                             ArrayBufferPositions(FBuffer *pBuffer, int pOffset);
     //
-    static void                             ArrayBufferTextureCoords(int pIndex);
-    static void                             ArrayBufferTextureCoords(int pIndex, int pOffset);
+    static void                             ArrayBufferTextureCoords(FBuffer *pBuffer);
+    static void                             ArrayBufferTextureCoords(FBuffer *pBuffer, int pOffset);
     //
-    static void                             ArrayBufferNormals(int pIndex);
-    static void                             ArrayBufferNormals(int pIndex, int pOffset);
+    
+    static void                             ArrayBufferColors(FBuffer *pBuffer);
+    static void                             ArrayBufferColors(FBuffer *pBuffer, int pOffset);
     //
-    static void                             ArrayBufferTangents(int pIndex);
-    static void                             ArrayBufferTangents(int pIndex, int pOffset);
+    static void                             ArrayBufferNormals(FBuffer *pBuffer);
+    static void                             ArrayBufferNormals(FBuffer *pBuffer, int pOffset);
+    //
+    static void                             ArrayBufferTangents(FBuffer *pBuffer);
+    static void                             ArrayBufferTangents(FBuffer *pBuffer, int pOffset);
     //
     //
     ///////////////////////////////////////
     //
     //
     
-    static void                             ArrayWriteData(void *pData, int pCount);
+    static FBuffer                          *ArrayWriteData(void *pData, int pCount);
     
     
     //
@@ -286,9 +302,12 @@ public:
     
     static void                             DrawTrianglesIndexed(GFX_MODEL_INDEX_TYPE *pIndices, int pCount);
     
-    static void                             DrawTrianglesIndexedFromPackedBuffers(int pVertexBuffer, int pVertexBufferOffset,
-                                                                                  int pIndexBuffer , int pIndexBufferOffset,
-                                                                                  int pCount, FTexture *pTexture);
+    
+    static void                             DrawTrianglesIndexedWithPackedBuffers(FBuffer *pVertexBuffer,
+                                                                                  int pVertexBufferOffset,
+                                                                                  GFX_MODEL_INDEX_TYPE *pIndices,
+                                                                                  int pCount,
+                                                                                  FTexture *pTexture);
     
     
     
@@ -313,14 +332,14 @@ public:
     static void                             DrawSprite(float pX, float pY, float pScaleX, float pScaleY, float pScaleZ, float pRotation, float *pPositions, float *pTextureCoords, FTexture *pTexture);
     static void                             DrawSprite(float *pPositions, float *pTextureCoords, FTexture *pTexture);
     
-    static void                             DrawSpriteSetup(float *pPositions, float *pTextureCoords);
+    static bool                             DrawSpriteSetup(float *pPositions, float *pTextureCoords);
     
     
     
     
     static void                             DrawSpriteTriangle(float pX, float pY, float pScaleX, float pScaleY, float pScaleZ, float pRotation, float *pPositions, float *pTextureCoords, FTexture *pTexture);
     static void                             DrawSpriteTriangle(float *pPositions, float *pTextureCoords, FTexture *pTexture);
-    static void                             DrawSpriteTriangleSetup(float *pPositions, float *pTextureCoords);
+    static bool                             DrawSpriteTriangleSetup(float *pPositions, float *pTextureCoords);
     
     
     
@@ -328,38 +347,46 @@ public:
     static void                             PipelineStateSetShape2DNoBlending();
     static void                             PipelineStateSetShape2DAlphaBlending();
     static void                             PipelineStateSetShape2DAdditiveBlending();
-    //
+    
     static void                             PipelineStateSetShape3DNoBlending();
     static void                             PipelineStateSetShape3DAlphaBlending();
     static void                             PipelineStateSetShape3DAdditiveBlending();
-    //
+    
     static void                             PipelineStateSetShapeNodeNoBlending();
     static void                             PipelineStateSetShapeNodeAlphaBlending();
     static void                             PipelineStateSetShapeNodeAdditiveBlending();
-    //
+    
     static void                             PipelineStateSetSpriteNoBlending();
     static void                             PipelineStateSetSpriteAlphaBlending();
     static void                             PipelineStateSetSpriteAdditiveBlending();
     static void                             PipelineStateSetSpritePremultipliedBlending();
     static void                             PipelineStateSetSpriteWhiteBlending();
-    //
+    
     static void                             PipelineStateSetSimpleModelNoBlending();
     static void                             PipelineStateSetSimpleModelAlphaBlending();
-    //
+    
     static void                             PipelineStateSetSimpleModelIndexedNoBlending();
     static void                             PipelineStateSetSimpleModelIndexedAlphaBlending();
-    //
+    
     static void                             PipelineStateSetModelIndexedNoBlending();
     static void                             PipelineStateSetModelIndexedAlphaBlending();
-    //
+    
     static void                             PipelineStateSetModelIndexedLightedAmbientNoBlending();
     static void                             PipelineStateSetModelIndexedLightedAmbientAlphaBlending();
-    //
-    static void                             PipelineStateSetModelIndexedLightedAmbientDiffuseNoBlending();
-    static void                             PipelineStateSetModelIndexedLightedAmbientDiffuseAlphaBlending();
-    //
+    
+    static void                             PipelineStateSetModelIndexedLightedDiffuseNoBlending();
+    static void                             PipelineStateSetModelIndexedLightedDiffuseAlphaBlending();
+    
     static void                             PipelineStateSetModelIndexedLightedPhongNoBlending();
     static void                             PipelineStateSetModelIndexedLightedPhongAlphaBlending();
+    
+    static void                             PipelineStateSetModelIndexedLightedPhongOverlayNoBlending();
+    static void                             PipelineStateSetModelIndexedLightedPhongOverlayAlphaBlending();
+    
+    static void                             PipelineStateSetModelIndexedLightedSimpleSpotlightNoBlending();
+    static void                             PipelineStateSetModelIndexedLightedSimpleSpotlightAlphaBlending();
+    
+    
     
     
     

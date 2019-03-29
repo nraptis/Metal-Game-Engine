@@ -56,11 +56,6 @@ float sound_getVolume();
 
 
 void sound_instance_play(FSoundInstance *pInstance, float pVolume);
-
-
-//sound_loop
-
-
 void sound_instance_resetPitch(FSoundInstance *pInstance);
 void sound_instance_setPitch(FSoundInstance *pInstance, float pPitch);
 void sound_instance_setVolume(FSoundInstance *pInstance, float pVolume);
@@ -82,6 +77,9 @@ void sound_active();
 void sound_inactive();
 
 FSoundData *sound_spawn_data();
+
+SLmillibel GetMinMillibels();
+SLmillibel GetMillibels(float pVolume);
 
 // engine interfaces
 extern SLObjectItf engineObject;
