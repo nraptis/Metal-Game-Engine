@@ -57,6 +57,8 @@ void OSSoundBuffer::SetUp() {
     mSoundData = NULL;
     mVolume = 1.0f;
 
+    Log("CREATE AUDI BUFFER SampleRate[%d]  BufferSize[%d]\n", gAudioSampleRate, gAudioBufferSize);
+
     if (engineEngine == NULL) {
         Log("OSSoundBuffer::SetUp() - MISSING ENGINE!!!\n\n");
         mDidFail = true;
@@ -75,19 +77,23 @@ void OSSoundBuffer::SetUp() {
     //                               SL_SPEAKER_FRONT_RIGHT,         //channelMask
     //                               SL_BYTEORDER_LITTLEENDIAN};     //endianness
 
+//#define SL_PCMSAMPLEFORMAT_FIXED_8	((SLuint16) 0x0008)
+//#define SL_PCMSAMPLEFORMAT_FIXED_16	((SLuint16) 0x0010)
+//#define SL_PCMSAMPLEFORMAT_FIXED_20 	((SLuint16) 0x0014)
+//#define SL_PCMSAMPLEFORMAT_FIXED_24	((SLuint16) 0x0018)
+//#define SL_PCMSAMPLEFORMAT_FIXED_28 	((SLuint16) 0x001C)
+//#define SL_PCMSAMPLEFORMAT_FIXED_32	((SLuint16) 0x0020)
+
     SLDataFormat_PCM format_pcm = {SL_DATAFORMAT_PCM,              //formatType
                                    2,                              //numChannels
                                    SL_SAMPLINGRATE_48,             //samplesPerSec
-                                   SL_PCMSAMPLEFORMAT_FIXED_16,    //bitsPerSample
-                                   SL_PCMSAMPLEFORMAT_FIXED_16,    //containerSize
+                                   SL_PCMSAMPLEFORMAT_FIXED_8,    //bitsPerSample
+                                   SL_PCMSAMPLEFORMAT_FIXED_8,    //containerSize
                                    SL_SPEAKER_FRONT_LEFT |
                                    SL_SPEAKER_FRONT_RIGHT,         //channelMask
                                    SL_BYTEORDER_LITTLEENDIAN};     //endianness
 
-
-
-
-                                   //
+    //SL_PCMSAMPLEFORMAT_FIXED_16
 
     SLDataSource audioSrc = {&loc_bufq, &format_pcm};
 
@@ -216,13 +222,8 @@ void OSSoundBuffer::Play(FSoundInstanceAndroid *pSoundInstance,
     mSoundInstance = pSoundInstance;
     mSoundData = pSoundData;
 
-    //if (pVolume <= 0.0f) {
-    //    mIsPlaying = false;
-    //    mIsLooping = false;
-    //    return;
-    //}
-
     SLresult aResult;
+
     if (bqPlayerVolume!= NULL) {
         SLmillibel aMillibel = GetMillibels(pVolume);
         SLboolean aMute = 0;
@@ -244,16 +245,29 @@ void OSSoundBuffer::Play(FSoundInstanceAndroid *pSoundInstance,
     if (bqPlayerPlaybackRate != NULL) {
         SLpermille aRate = SLpermille(1000.0f * pPitch);
 
+        Log("Rate [PRE] = %d\n", (int)aRate);
+
         if (aRate < bqPlaybackRateMin) { aRate = bqPlaybackRateMin; }
         if (aRate > bqPlaybackRateMax) { aRate = bqPlaybackRateMax; }
+
+        //Tell me why, using the real max rate of 2K
+        //makes a wicked hiss noise on old device?
+        if (bqPlaybackRateMax <= 2000) {
+            if (aRate > 1990) { aRate = 1990; }
+        }
+
+        Log("Rate [FIN] = %d\n", (int)aRate);
 
         aResult = (*(bqPlayerPlaybackRate))->SetRate((bqPlayerPlaybackRate), aRate);
 
         int aPitchInt = aRate;
         if (aResult != SL_RESULT_SUCCESS) {
             Log("SBB - SetRate FAILED = [%d] (%f)  [%d to %d]\n", aPitchInt, pPitch, bqPlaybackRateMin, bqPlaybackRateMax);
+        } else {
+            Log("SBB - SetRate SUCCEEDED = [%d] (%f)  [%d to %d]\n", aPitchInt, pPitch, bqPlaybackRateMin, bqPlaybackRateMax);
         }
     }
+
 
     aResult = (*bqPlayerBufferQueue)->Clear(bqPlayerBufferQueue);
     if (SL_RESULT_SUCCESS != aResult) {

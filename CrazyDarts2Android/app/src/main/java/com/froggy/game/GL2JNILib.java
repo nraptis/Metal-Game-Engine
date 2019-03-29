@@ -25,6 +25,8 @@ public class GL2JNILib {
      }
 
     public static native void NativeAppShellPreinitialize();
+    public static native void NativeAppShellSetAudioBufferAttributes(int pSampleRate, int pBufferSize);
+
     public static native void NativeAppShellInitialize(int pWidth, int pHeight);
 
     public static native void NativeAppShellDetachRunLoop();

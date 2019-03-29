@@ -17,6 +17,8 @@
 package com.froggy.game;
 
 import android.app.Activity;
+import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.content.Context;
 import android.util.Log;
@@ -44,6 +46,24 @@ public class GL2JNIActivity extends Activity {
         aDocumentsDirectory += "/";
 
         GL2JNILib.NativeAppShellSetDirectoryDocuments(aDocumentsDirectory);
+
+
+        int sampleRate = 0;
+        int bufSize = 0;
+        /*
+         * retrieve fast audio path sample rate and buf size; if we have it, we pass to native
+         * side to create a player with fast audio enabled [ fast audio == low latency audio ];
+         * IF we do not have a fast audio path, we pass 0 for sampleRate, which will force native
+         * side to pick up the 8Khz sample rate.
+         */
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            AudioManager myAudioMgr = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+            String nativeParam = myAudioMgr.getProperty(AudioManager.PROPERTY_OUTPUT_SAMPLE_RATE);
+            sampleRate = Integer.parseInt(nativeParam);
+            nativeParam = myAudioMgr.getProperty(AudioManager.PROPERTY_OUTPUT_FRAMES_PER_BUFFER);
+            bufSize = Integer.parseInt(nativeParam);
+        }
+        System.out.println("Device Sample Rate = " + sampleRate + ", Buff = " + bufSize);
 
 
         mView = new GL2JNIView(getApplication());

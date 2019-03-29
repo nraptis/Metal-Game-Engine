@@ -137,6 +137,7 @@ const GLfloat gTriangleVertices[] = { 0.0f, 0.5f, -0.5f, -0.5f,
 
 extern "C" {
     JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_NativeAppShellPreinitialize(JNIEnv * env, jobject obj);
+    JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_NativeAppShellSetAudioBufferAttributes(JNIEnv* env, jobject obj, int pSampleRate, int pBufferSize);
     JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_NativeAppShellInitialize(JNIEnv * env, jobject obj,  jint width, jint height);
     JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_NativeAppShellGraphicsReady(JNIEnv * env, jobject obj);
     JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_NativeAppShellDetachRunLoop(JNIEnv * env, jobject obj);
@@ -169,18 +170,16 @@ extern "C" {
 //JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_init(JNIEnv * env, jobject obj,
 
 JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_NativeAppShellPreinitialize(JNIEnv* env, jobject obj) {
-
-    LOGI("********~~~~~~~~\n~~~~~~~~~~~~~\nNativeAppShellPreinitialize = [%d x %d]\n\n~~~~~~~\n",
-         100, 100);
-
+    LOGI("********~~~~~~~~\n~~~~~~~~~~~~~\nNativeAppShellPreinitialize\n\n~~~~~~~\n");
     gJNIEnv = env;
     gJNIEnv->GetJavaVM(&gJVM);
-
     gApp = new GFXApp();
-
-
     gOpenGLEngine = new OpenGLEngine();
+}
 
+JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_NativeAppShellSetAudioBufferAttributes(JNIEnv* env, jobject obj, int pSampleRate, int pBufferSize) {
+    LOGI("Setting Audio Attribs [%d] --> [%d]\n", pSampleRate, pBufferSize);
+    sound_setAudioAttributes(pSampleRate, pBufferSize);
 }
 
 JNIEXPORT void JNICALL Java_com_froggy_game_GL2JNILib_NativeAppShellInitialize(JNIEnv* env, jobject obj,  jint width, jint height) {

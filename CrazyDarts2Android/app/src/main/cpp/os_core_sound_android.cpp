@@ -42,6 +42,9 @@ FSoundDataAndroid::~FSoundDataAndroid() {
     
 }
 
+int gAudioSampleRate = 0;
+int gAudioBufferSize = 0;
+
 SLObjectItf engineObject = NULL;
 SLEngineItf engineEngine = NULL;
 SLObjectItf outputMixObject = NULL;
@@ -129,11 +132,16 @@ bool sound_load(FSound *pSound, const char *pFileName, int pInstanceCount) {
         if (aSoundData) {
             FFile aFile;
             aFile.Load(pFileName);
-            if (aFile.mLength > 0) {
-                aSoundData->mData = new unsigned char[aFile.mLength];
-                memcpy(aSoundData->mData, aFile.mData, aFile.mLength);
 
-                aSoundData->mDataLength = aFile.mLength;
+            //There are 44 byte and 46 byte wav files. We always include a "ramp up"
+            //on our sound effects, but the eventual plan is to decompress sound files.
+            int aHeaderSize = 46 * 2;
+            if (aFile.mLength > (aHeaderSize + 2)) {
+                aSoundData->mData = new unsigned char[aFile.mLength - aHeaderSize];
+                //memset(aSoundData->mData, 0, aFile.mLength * 2);
+                memcpy(aSoundData->mData, &(aFile.mData[aHeaderSize]), aFile.mLength - aHeaderSize);
+
+                aSoundData->mDataLength = aFile.mLength - aHeaderSize;
                 pSound->mDidLoad = true;
 
                 //Log("SOUND [%s] LENGTH = [%d] INST[%d]\n", pFileName, aSoundData->mDataLength, pInstanceCount);
@@ -351,6 +359,12 @@ void sound_active()  {
 
 void sound_inactive()  {
     music_pause();
+}
+
+void sound_setAudioAttributes(int pSampleRate, int pBufferSize) {
+    gAudioSampleRate = pSampleRate;
+    gAudioBufferSize = pBufferSize;
+
 }
 
 SLmillibel GetMinMillibels() {
