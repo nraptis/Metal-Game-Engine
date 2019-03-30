@@ -8,34 +8,22 @@
 			"path": [
 				{
 					"x_con": 150,
-					"x_con_offset": -50.000000,
-					"y_con": 150,
+					"x_con_offset": -30.000000,
+					"y_con": 500,
 					"y_con_offset": -30.000000
 				},
 				{
-					"x": 34.999008,
-					"y": -22.748940,
-					"chamfer": 80
+					"x": 49.999992,
+					"y_con": 100,
+					"y_con_offset": -120.000000,
+					"y_con_target": 0,
+					"wait": 150
 				},
 				{
-					"x_con": 100,
-					"x_con_offset": -50.000000,
-					"x_con_target": 3,
-					"y": -26.124945,
-					"wait": 30
-				},
-				{
-					"x": 123.914650,
-					"y": 10.440672
-				},
-				{
-					"x": 105.220078,
-					"y": -7.451499,
-					"chamfer": 60
-				},
-				{
-					"x_con": 600,
-					"y_con": 200
+					"x_con": 850,
+					"x_con_offset": 30.000000,
+					"y_con": 500,
+					"y_con_offset": -30.000000
 				}
 			]
 		},
@@ -45,37 +33,96 @@
 			"speed_class": 0,
 			"path": [
 				{
-					"x_con": 200,
+					"x_con": 150,
+					"y_con": 100,
+					"y_con_target": 1
+				},
+				{
+					"x_con": 500,
+					"y": 53.560047
+				},
+				{
+					"x_con": 850,
+					"y_con": 100,
+					"y_con_target": 1
+				}
+			]
+		},
+		{
+			"blueprint": true,
+			"smooth": true,
+			"speed_class": 0,
+			"path": [
+				{
+					"x_con": 300,
+					"y_con": 800
+				},
+				{
+					"x_con": 150,
+					"x_con_offset": 40.000000,
 					"y_con": 500
 				},
 				{
-					"x": -6.711368,
-					"y": -3.772285,
+					"x": -2.782773,
+					"y": 3.017830
+				},
+				{
+					"x": 102.782784,
+					"y": 3.017830
+				},
+				{
+					"x_con": 850,
+					"x_con_offset": -40.000000,
+					"y_con": 500
+				},
+				{
+					"x_con": 700,
+					"y_con": 800
+				}
+			]
+		},
+		{
+			"blueprint": true,
+			"smooth": true,
+			"speed_class": 0,
+			"path": [
+				{
+					"x_con": 150,
+					"x_con_offset": -30.000000,
+					"y_con": 400
+				},
+				{
+					"x_con": 200,
+					"x_con_offset": -20.000000,
+					"y_con": 200,
+					"y_con_offset": -30.000000,
 					"chamfer": 150
 				},
 				{
 					"x_con": 500,
+					"x_con_offset": 30.000000,
 					"y_con": 200,
-					"chamfer": 30
+					"y_con_offset": -60.000000,
+					"chamfer": 60
+				},
+				{
+					"x_con": 700,
+					"x_con_offset": 70.000000,
+					"y_con": 300,
+					"y_con_offset": -50.000000,
+					"chamfer": 110
+				},
+				{
+					"x_con": 700,
+					"x_con_offset": 30.000000,
+					"y_con": 500,
+					"y_con_offset": 60.000000,
+					"chamfer": 100
 				},
 				{
 					"x_con": 500,
-					"x_con_offset": 30.000000,
-					"y_con": 300,
-					"y_con_offset": 40.000000
-				},
-				{
-					"x_con": 300,
-					"y_con": 300,
-					"wait": 150
-				},
-				{
-					"x_con": 100,
-					"x_con_offset": -50.000000,
-					"x_con_target": 3,
-					"y_con": 100,
-					"y_con_offset": -60.000000,
-					"y_con_target": 0
+					"y_con": 500,
+					"y_con_offset": 110.000000
 				}
 			]
 		},
@@ -85,63 +132,231 @@
 			"speed_class": 0,
 			"path": [
 				{
-					"x": 125.054527,
+					"x": -28.851479,
+					"y": -9.510008
+				},
+				{
+					"x": 13.000872,
+					"y": -13.010902
+				},
+				{
+					"x": 50.960098,
+					"y": -4.561001
+				},
+				{
+					"x": 94.313362,
+					"y": -3.359517
+				},
+				{
+					"x": 123.439850,
+					"y": -9.591782
+				}
+			]
+		},
+		{
+			"blueprint": true,
+			"smooth": true,
+			"speed_class": 0,
+			"path": [
+				{
+					"x_con": 200,
+					"y_con": 800,
+					"y_con_offset": 60.000000
+				},
+				{
+					"x_con": 500,
+					"y_con": 800,
+					"y_con_offset": 60.000000
+				},
+				{
+					"x_con": 300,
+					"x_con_offset": -40.000000,
+					"y_con": 600,
+					"y_con_offset": 60.000000
+				},
+				{
+					"x_con": 300,
+					"x_con_offset": -40.000000,
 					"y_con": 500,
-					"y_con_offset": -60.000000,
-					"wait": 30
+					"y_con_offset": -60.000000
+				},
+				{
+					"x": 50.604027,
+					"y": 25.437292
 				},
 				{
 					"x_con": 700,
+					"y_con": 500,
+					"y_con_offset": -60.000000
+				},
+				{
+					"x_con": 100,
+					"x_con_target": 5,
+					"y_con": 100,
+					"y_con_offset": 100.000000,
+					"y_con_target": 2
+				}
+			]
+		},
+		{
+			"blueprint": true,
+			"smooth": true,
+			"speed_class": 0,
+			"path": [
+				{
+					"x_con": 150,
+					"y_con": 500,
+					"y_con_offset": -60.000000
+				},
+				{
+					"x_con": 500,
+					"x_con_offset": 60.000000,
+					"y_con": 500,
+					"y_con_offset": -60.000000,
+					"wait": 150
+				},
+				{
+					"x_con": 500,
+					"x_con_offset": 60.000000,
+					"y_con": 150
+				}
+			]
+		},
+		{
+			"blueprint": true,
+			"smooth": false,
+			"speed_class": 0,
+			"path": [
+				{
+					"x": 44.418892,
+					"y": 28.510267
+				},
+				{
+					"x": 55.678391,
+					"y": 23.190857
+				},
+				{
+					"x": 67.578094,
+					"y": 22.693617
+				},
+				{
+					"x": 79.299706,
+					"y": 24.634514
+				},
+				{
+					"x": 89.510002,
+					"y": 28.264618
+				},
+				{
+					"x": 98.518814,
+					"y": 35.856003
+				},
+				{
+					"x": 100.712410,
+					"y": 45.333664
+				},
+				{
+					"x": 98.164886,
+					"y": 55.085892
+				},
+				{
+					"x": 89.922958,
+					"y": 62.256180
+				},
+				{
+					"x": 79.132553,
+					"y": 67.437103
+				}
+			]
+		},
+		{
+			"blueprint": true,
+			"smooth": false,
+			"speed_class": 0,
+			"path": [
+				{
+					"x_con": 800,
+					"y_con": 800,
+					"y_con_offset": 100.000000
+				},
+				{
+					"x_con": 100,
+					"x_con_offset": -90.000000,
+					"x_con_target": 2,
+					"y_con": 100,
+					"y_con_offset": 100.000000,
+					"y_con_target": 0
+				},
+				{
+					"x_con": 100,
+					"x_con_offset": -90.000000,
+					"x_con_target": 3,
 					"y_con": 500
 				},
 				{
-					"x_con": 700,
-					"y_con": 600
+					"x_con": 500,
+					"x_con_offset": -90.000000,
+					"y_con": 200,
+					"y_con_offset": -90.000000
 				},
 				{
 					"x_con": 800,
-					"y_con": 600
+					"y_con": 200,
+					"y_con_offset": -90.000000
+				}
+			]
+		},
+		{
+			"blueprint": true,
+			"smooth": true,
+			"speed_class": 0,
+			"path": [
+				{
+					"x_con": 300,
+					"y_con": 300
 				},
 				{
-					"x": 118.753288,
-					"y": 77.521347
+					"x_con": 700,
+					"y_con": 300,
+					"chamfer": 200
 				},
 				{
 					"x_con": 700,
 					"y_con": 800,
-					"y_con_offset": 50.000000
+					"chamfer": 50
 				},
 				{
-					"x_con": 500,
-					"y_con": 800
+					"x_con": 300,
+					"y_con": 800,
+					"chamfer": 140
 				},
 				{
-					"x_con": 500,
-					"x_con_offset": -50.000000,
-					"y_con": 600,
-					"y_con_offset": -40.000000
-				},
-				{
-					"x_con": 600,
-					"y_con": 600
-				},
-				{
-					"x_con": 600,
-					"y_con": 500,
-					"wait": 4
-				},
-				{
-					"x_con": 600,
+					"x_con": 300,
 					"y_con": 400,
-					"wait": 50
+					"chamfer": 200
 				},
 				{
-					"x_con": 700,
+					"x_con": 600,
 					"y_con": 400
 				},
 				{
-					"x_con": 800,
-					"y_con": 400
+					"x_con": 600,
+					"y_con": 600,
+					"chamfer": 60
+				},
+				{
+					"x_con": 400,
+					"y_con": 600,
+					"chamfer": 40
+				},
+				{
+					"x_con": 400,
+					"y_con": 500,
+					"chamfer": 80
+				},
+				{
+					"x_con": 500,
+					"y_con": 500
 				}
 			]
 		}

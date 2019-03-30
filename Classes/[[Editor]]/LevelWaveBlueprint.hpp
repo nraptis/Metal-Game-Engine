@@ -10,6 +10,9 @@
 #define LevelWaveBlueprint_hpp
 
 #include "LevelWavePathBlueprint.hpp"
+#include "LevelWaveSpawnBlueprint.hpp"
+
+#define MAX_SPAWN_COUNT 64
 
 class LevelWave;
 class LevelWaveBlueprint {
@@ -19,10 +22,14 @@ public:
     
     void                                        Clear();
     
+    void                                        Update();
     void                                        Draw(bool pSelected);
     LevelWavePathBlueprint                      mPath;
     
+    LevelWaveSpawnBlueprint                     mSpawn[MAX_SPAWN_COUNT + 4];
+    int                                         mSpawnCount;
     
+    int                                         mSpawnSpacing;
     
     void                                        ApplyEditorConstraints();
     
@@ -32,6 +39,7 @@ public:
     FJSONNode                                   *Save();
     void                                        Load(FJSONNode *pNode);
     
+    int                                         mKillTimer;
 };
 
 #endif

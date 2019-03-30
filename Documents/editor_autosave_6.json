@@ -1,4 +1,302 @@
 {
 	"section": true,
-	"wave_list": []
+	"wave_list": [
+		{
+			"blueprint": true,
+			"smooth": true,
+			"speed_class": -300,
+			"path": [
+				{
+					"x_con": 150,
+					"x_con_offset": 1.000000,
+					"y_con": 150,
+					"y_con_offset": 1.000000
+				},
+				{
+					"x": -26.850172,
+					"y": 19.337500
+				},
+				{
+					"x_con": 150,
+					"y_con": 500
+				},
+				{
+					"x_con": 150,
+					"y_con": 600
+				},
+				{
+					"x_con": 150,
+					"y_con": 800
+				}
+			]
+		},
+		{
+			"blueprint": true,
+			"smooth": true,
+			"speed_class": -200,
+			"path": [
+				{
+					"x_con": 200,
+					"y_con": 150
+				},
+				{
+					"x_con": 200,
+					"y_con": 200
+				},
+				{
+					"x_con": 200,
+					"y_con": 300
+				},
+				{
+					"x_con": 200,
+					"y_con": 400
+				},
+				{
+					"x_con": 200,
+					"y_con": 500
+				},
+				{
+					"x_con": 200,
+					"y_con": 600
+				},
+				{
+					"x_con": 200,
+					"y_con": 800
+				}
+			]
+		},
+		{
+			"blueprint": true,
+			"smooth": true,
+			"speed_class": -100,
+			"path": [
+				{
+					"x_con": 300,
+					"y_con": 150
+				},
+				{
+					"x_con": 300,
+					"y_con": 300
+				},
+				{
+					"x": 12.936200,
+					"y": 24.660294
+				},
+				{
+					"x_con": 300,
+					"y_con": 500
+				},
+				{
+					"x_con": 300,
+					"y_con": 600
+				},
+				{
+					"x_con": 300,
+					"y_con": 800
+				}
+			]
+		},
+		{
+			"blueprint": true,
+			"smooth": true,
+			"speed_class": 0,
+			"path": [
+				{
+					"x_con": 400,
+					"y_con": 150
+				},
+				{
+					"x_con": 400,
+					"y_con": 200
+				},
+				{
+					"x_con": 400,
+					"y_con": 300
+				},
+				{
+					"x_con": 400,
+					"y_con": 400
+				},
+				{
+					"x_con": 400,
+					"y_con": 500
+				},
+				{
+					"x_con": 400,
+					"y_con": 600
+				},
+				{
+					"x_con": 400,
+					"y_con": 800
+				}
+			]
+		},
+		{
+			"blueprint": true,
+			"smooth": true,
+			"speed_class": 100,
+			"path": [
+				{
+					"x_con": 500,
+					"y_con": 150
+				},
+				{
+					"x_con": 500,
+					"y_con": 200
+				},
+				{
+					"x_con": 500,
+					"y_con": 300
+				},
+				{
+					"x_con": 500,
+					"y_con": 400
+				},
+				{
+					"x_con": 500,
+					"y_con": 500
+				},
+				{
+					"x_con": 500,
+					"y_con": 600
+				},
+				{
+					"x_con": 500,
+					"y_con": 800
+				}
+			]
+		},
+		{
+			"blueprint": true,
+			"smooth": true,
+			"speed_class": 200,
+			"path": [
+				{
+					"x_con": 600,
+					"y_con": 150
+				},
+				{
+					"x_con": 600,
+					"y_con": 200
+				},
+				{
+					"x_con": 600,
+					"y_con": 300
+				},
+				{
+					"x_con": 600,
+					"y_con": 400
+				},
+				{
+					"x_con": 600,
+					"y_con": 500
+				},
+				{
+					"x_con": 600,
+					"y_con": 600
+				},
+				{
+					"x_con": 600,
+					"y_con": 800
+				}
+			]
+		},
+		{
+			"blueprint": true,
+			"smooth": true,
+			"speed_class": 300,
+			"path": [
+				{
+					"x_con": 700,
+					"y_con": 150
+				},
+				{
+					"x_con": 700,
+					"y_con": 300
+				},
+				{
+					"x_con": 700,
+					"y_con": 400
+				},
+				{
+					"x_con": 700,
+					"y_con": 500
+				},
+				{
+					"x_con": 700,
+					"y_con": 600
+				},
+				{
+					"x_con": 700,
+					"y_con": 800
+				}
+			]
+		},
+		{
+			"blueprint": true,
+			"smooth": true,
+			"speed_class": -300,
+			"path": [
+				{
+					"x_con": 800,
+					"y_con": 150
+				},
+				{
+					"x_con": 800,
+					"y_con": 200
+				},
+				{
+					"x_con": 800,
+					"y_con": 400
+				},
+				{
+					"x_con": 800,
+					"y_con": 500
+				},
+				{
+					"x_con": 800,
+					"y_con": 600
+				},
+				{
+					"x_con": 800,
+					"y_con": 800
+				}
+			]
+		},
+		{
+			"blueprint": true,
+			"smooth": true,
+			"speed_class": -200,
+			"path": [
+				{
+					"x_con": 850,
+					"y_con": 150
+				},
+				{
+					"x_con": 850,
+					"y_con": 200
+				},
+				{
+					"x_con": 850,
+					"y_con": 300
+				},
+				{
+					"x_con": 850,
+					"y_con": 400
+				},
+				{
+					"x_con": 850,
+					"y_con": 500
+				},
+				{
+					"x_con": 850,
+					"y_con": 600
+				},
+				{
+					"x_con": 850,
+					"y_con": 800
+				}
+			]
+		}
+	]
 }

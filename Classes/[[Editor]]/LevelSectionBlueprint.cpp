@@ -15,11 +15,42 @@ LevelSectionBlueprint::LevelSectionBlueprint() {
 
 LevelSectionBlueprint::~LevelSectionBlueprint() {
     
+    FreeList(LevelWaveBlueprint, mWaveList);
+    FreeList(LevelWaveBlueprint, mKillList);
+    FreeList(LevelWaveBlueprint, mDeleteList);
+    
 }
 
 void LevelSectionBlueprint::Clear() {
-    FreeList(LevelWaveBlueprint, mWaveList);
+    
+    
+    for (int i=0;i<mWaveList.mCount;i++) {
+        LevelWaveBlueprint *aWave = (LevelWaveBlueprint *)mWaveList[i];
+        mKillList.Add(aWave);
+    }
+    mWaveList.RemoveAll();
+    
     mCurrentWave = NULL;
+}
+
+void LevelSectionBlueprint::Update() {
+    
+    
+    EnumList(LevelWaveBlueprint, aWave, mWaveList) {
+        aWave->Update();
+    }
+    
+    EnumList(LevelWaveBlueprint, aWave, mKillList) {
+        if (mCurrentWave == aWave) { mCurrentWave = NULL; }
+        aWave->mKillTimer--;
+        if (aWave->mKillTimer <= 0) { mDeleteList.Add(aWave); }
+    }
+    EnumList(LevelWaveBlueprint, aWave, mDeleteList) {
+        mKillList.Remove(aWave);
+        delete aWave;
+    }
+    mDeleteList.RemoveAll();
+    
 }
 
 void LevelSectionBlueprint::Draw() {
@@ -40,7 +71,7 @@ void LevelSectionBlueprint::WaveAdd() {
 void LevelSectionBlueprint::WaveRemove() {
     if (mCurrentWave) {
         mWaveList.Remove(mCurrentWave);
-        delete mCurrentWave;
+        mKillList.Add(mCurrentWave);
         mCurrentWave = NULL;
         WaveSelectPrev();
     }

@@ -12,6 +12,7 @@
 #include "FPolyPath.h"
 #include "core_includes.h"
 #include "GameEditor.hpp"
+#include "FLine.h"
 
 static FPointList cPointList;
 static FPointList cDumpList;
@@ -30,6 +31,8 @@ LevelWavePathBlueprintNode::LevelWavePathBlueprintNode() {
     mType = -1;
     mWaitTimer = 0;
     mChamferSize = 0;
+    
+    mKillTimer = 36;
 }
 
 LevelWavePathBlueprintNode::~LevelWavePathBlueprintNode() {
@@ -144,10 +147,32 @@ LevelWavePathBlueprint::LevelWavePathBlueprint() {
 
 LevelWavePathBlueprint::~LevelWavePathBlueprint() {
     
+    FreeList(LevelWavePathBlueprintNode, mNodeList);
+    FreeList(LevelWavePathBlueprintNode, mKillList);
+    FreeList(LevelWavePathBlueprintNode, mDeleteList);
+    
+    
+}
+
+void LevelWavePathBlueprint::Update() {
+    EnumList(LevelWavePathBlueprintNode, aNode, mKillList) {
+        aNode->mKillTimer--;
+        if (aNode->mKillTimer <= 0) { mDeleteList.Add(aNode); }
+    }
+    EnumList(LevelWavePathBlueprintNode, aNode, mDeleteList) {
+        mKillList.Remove(aNode);
+        delete aNode;
+    }
+    mDeleteList.RemoveAll();
 }
 
 void LevelWavePathBlueprint::Clear() {
-    FreeList(LevelWavePathBlueprintNode, mNodeList);
+    
+    EnumList(LevelWavePathBlueprintNode, aNode, mNodeList) {
+        mKillList.Add(aNode);
+    }
+    mNodeList.RemoveAll();
+    
     mSelectedIndex = -1;
     mWave->ApplyEditorConstraints();
 }
@@ -253,7 +278,8 @@ void LevelWavePathBlueprint::Remove(int pIndex) {
             mSelectedIndex--;
         }
         
-        delete aDeleteNode;
+        mKillList.Add(aDeleteNode);
+        
         mNodeList.RemoveAtIndex(pIndex);
     }
     mWave->ApplyEditorConstraints();
@@ -294,6 +320,25 @@ int LevelWavePathBlueprint::GetClosestIndex(float pX, float pY, float &pDist) {
     }
     
     return aResult;
+}
+
+void LevelWavePathBlueprint::GetClosestPointOnLine(float pX, float pY, float &pDist) {
+    for (int i=1;i<mNodeList.mCount;i++) {
+        LevelWavePathBlueprintNode *aNode1 = (LevelWavePathBlueprintNode *)mNodeList.mData[i-1];
+        LevelWavePathBlueprintNode *aNode2 = (LevelWavePathBlueprintNode *)mNodeList.mData[i];
+        
+        float aClosestX = 0.0f;
+        float aClosestY = 0.0f;
+        
+        FLine::SegmentClosestPoint(aNode1->mX, aNode1->mY, aNode2->mX, aNode2->mY, pX, pY, aClosestX, aClosestY);
+        
+        float aDiffX = aClosestX - pX;
+        float aDiffY = aClosestY - pY;
+        float aDist = aDiffX * aDiffX + aDiffY * aDiffY;
+        if (aDist < pDist) {
+            pDist = aDist;
+        }
+    }
 }
 
 void LevelWavePathBlueprint::SnapX(int pIndex) {

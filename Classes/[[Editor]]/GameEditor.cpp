@@ -119,7 +119,7 @@ void GameEditor::Layout() {
     aPlayZone1 = FCanvas::Convert(aPlayZone1, gGame, this);
     mPlayZoneBottom = aPlayZone1.mY;
     
-
+    
     FPoint aGameArea1 = FPoint(gGame->mGameAreaLeft, gGame->mGameAreaTop);
     aGameArea1 = FCanvas::Convert(aGameArea1, gGame, this);
     FPoint aGameArea2 = FPoint(gGame->mGameAreaRight, gGame->mGameAreaBottom);
@@ -146,6 +146,21 @@ void GameEditor::Layout() {
 }
 
 void GameEditor::Update() {
+    
+    
+    if (gRand.Get(5) == 2) {
+        Clear();
+    }
+    
+    if (gRand.Get(5) == 3) {
+        LoadAt(mExportIndex);
+    }
+    
+    
+    
+    
+    
+    mSection.Update();
     
     if (mSection.mCurrentWave) {
         if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_EXTRA_SLOW )  { mSpeedClassIndex = 0; }
@@ -182,7 +197,7 @@ void GameEditor::Draw() {
     //Graphics::DrawRect(0.0f, 0.0f, mWidth, mHeight);
     
     
-
+    
     Graphics::PipelineStateSetShape2DAlphaBlending();
     
     
@@ -235,7 +250,7 @@ void GameEditor::Draw() {
 }
 
 void GameEditor::TouchDown(float pX, float pY, void *pData) {
-
+    
     SelectClosestObject(pX, pY);
     
     
@@ -246,7 +261,7 @@ void GameEditor::TouchMove(float pX, float pY, void *pData) {
 }
 
 void GameEditor::TouchUp(float pX, float pY, void *pData) {
-
+    
     
 }
 
@@ -346,7 +361,7 @@ void GameEditor::Notify(void *pSender, const char *pNotification) {
         
     }
     if (FString("button_click") == pNotification) {
-
+        
         
     }
 }
@@ -484,7 +499,6 @@ void GameEditor::RefreshWave() {
 
 void GameEditor::RefreshWaveSpeed() {
     if (mSection.mCurrentWave != NULL) {
-        printf("mSpeedClassIndex = %d\n", mSpeedClassIndex);
         if (mSpeedClassIndex == 0) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_EXTRA_SLOW; }
         if (mSpeedClassIndex == 1) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_SLOW; }
         if (mSpeedClassIndex == 2) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_MEDIUM_SLOW; }
@@ -578,7 +592,7 @@ void GameEditor::OpenWavePickerMenu() {
     if (mMenuWavesPicker == NULL) {
         mMenuWavesPicker = new EditorMenuWavesPicker(this);
         mToolContainer->AddChild(mMenuWavesPicker);
-        mMenuWavesPicker->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), (gDeviceHeight - gSafeAreaInsetBottom) - 250.0f, 400.0f, 238.0f);
+        mMenuWavesPicker->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), (gDeviceHeight - gSafeAreaInsetBottom) - 154.0f - 14.0f, 400.0f, 154.0f);
     }
 }
 
@@ -598,8 +612,9 @@ void GameEditor::Clear() {
     mSection.Clear();
     
 #ifdef EDITOR_MODE
-    gGame->mEditorWave.mPath.Reset();
+    gGame->mEditorWave.Reset();
 #endif
+    
 }
 
 void GameEditor::LoadCleared() {
@@ -622,17 +637,29 @@ void GameEditor::Autoload() {
 void GameEditor::SelectClosestObject(float pX, float pY) {
     LevelWaveBlueprint *aClosestWave = NULL;
     float aClosestWaveDist = 80.0f * 80.0f;
-        for (int i=mSection.mWaveList.mCount - 1;i>=0;i--) {
-            LevelWaveBlueprint *aWave = (LevelWaveBlueprint *)mSection.mWaveList[i];
-            float aDist = 80.0f * 80.0f;
-            int aIndex = aWave->mPath.GetClosestIndex(pX, pY, aDist);
-            if (aIndex != -1) {
-                if (aDist < aClosestWaveDist) {
-                    aClosestWaveDist = aDist;
-                    aClosestWave = aWave;
-                }
+    for (int i=mSection.mWaveList.mCount - 1;i>=0;i--) {
+        LevelWaveBlueprint *aWave = (LevelWaveBlueprint *)mSection.mWaveList[i];
+        float aDist = 80.0f * 80.0f;
+        int aIndex = aWave->mPath.GetClosestIndex(pX, pY, aDist);
+        if (aIndex != -1) {
+            if (aDist < aClosestWaveDist) {
+                aClosestWaveDist = aDist;
+                aClosestWave = aWave;
             }
         }
+    }
+    
+    for (int i=mSection.mWaveList.mCount - 1;i>=0;i--) {
+        LevelWaveBlueprint *aWave = (LevelWaveBlueprint *)mSection.mWaveList[i];
+        float aDist = 80.0f * 80.0f;
+        aWave->mPath.GetClosestPointOnLine(pX, pY, aDist);
+        if (aDist < aClosestWaveDist) {
+            aClosestWaveDist = aDist;
+            aClosestWave = aWave;
+        }
+    }
+    
+    
     if (aClosestWave) {
         mSection.mCurrentWave = aClosestWave;
         aClosestWave->ApplyEditorConstraints();
@@ -645,14 +672,11 @@ void GameEditor::SelectClosestObject(float pX, float pY) {
 }
 
 void GameEditor::SaveAt(int pIndex) {
-    printf("Save at: %d\n", pIndex);
-    
     FString aPath = gDirExport + FString("export_section_") + FString(pIndex) + FString(".json");
     Save(aPath.c());
 }
 
 void GameEditor::LoadAt(int pIndex) {
-    printf("Load at: %d\n", pIndex);
     FString aPath = gDirExport + FString("export_section_") + FString(pIndex) + FString(".json");
     Load(aPath.c());
 }

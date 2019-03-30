@@ -125,6 +125,7 @@ void FModelDataSequence::Load(const char *pFileBase, int pStartIndex, int pEndIn
     }
     
     delete aBaseModel;
+    delete aOptimizer;
 }
 
 void FModelDataSequence::Free()

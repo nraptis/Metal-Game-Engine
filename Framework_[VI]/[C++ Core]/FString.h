@@ -42,7 +42,7 @@ public:
 	void							Free();
 	void							Clear();
 
-	inline void						Truncate(int pSize);
+	void						    Truncate(int pSize);
 
 
 	

@@ -44,6 +44,7 @@ public:
     
     float                               mOffsetSpawnDistance;
     
+    int                                 mKillTimer;
 };
 
 

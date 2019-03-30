@@ -253,20 +253,24 @@ void FString::Set(const char *pString) {
 	if ((pString != 0) && (pString != mData)) {
         mLength = Length(pString);
         if (mLength > mSize) {
-            mSize = mLength;
+            
+            if (mSize == 0) {
+                mSize = mLength;
+            } else {
+                 mSize = mLength + mLength / 2 + 1;
+            }
             char *aNew = new char[mLength+1];
+            delete [] mData;
             mData = aNew;
         }
-        if (mLength == 0) {
-            if (mData != NULL) {
-                mData[0] = 0;
-            }
-        } else {
-            for (int i=0;i<mLength;i++) {
-                mData[i] = pString[i];
-            }
+        
+        for (int i=0;i<mLength;i++) {
+            mData[i] = pString[i];
+        }
+        if (mData != NULL) {
             mData[mLength] = 0;
         }
+        
     } else if (pString == NULL) {
         mLength = 0;
         if (mData != NULL) {

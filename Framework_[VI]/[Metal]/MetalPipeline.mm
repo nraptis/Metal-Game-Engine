@@ -101,8 +101,6 @@
     
     [self buildPipelineStatesShape2D: GFX_RENDER_PASS_2D_MAIN];
     
-    
-    //[self buildPipelineStatesShape3D: GFX_RENDER_PASS_2D_MAIN];
     [self buildPipelineStatesShape3D: GFX_RENDER_PASS_3D_MAIN];
     
     [self buildPipelineStatesSprite: GFX_RENDER_PASS_2D_MAIN];

@@ -41,6 +41,8 @@ public:
     FJSONNode                                   *Save();
     void                                        Load(FJSONNode *pNode);
     
+    int                                         mKillTimer;
+    
 };
 
 class LevelWavePathBlueprint {
@@ -51,10 +53,14 @@ public:
     
     LevelWaveBlueprint                          *mWave;
     
+    void                                        Update();
     void                                        Clear();
     void                                        Draw(bool pSelected);
     
     int                                         GetClosestIndex(float pX, float pY, float &pDist);
+    void                                        GetClosestPointOnLine(float pX, float pY, float &pDist);
+    
+    
     void                                        Set(int pIndex, float pX, float pY);
     float                                       GetX(int pIndex);
     float                                       GetY(int pIndex);
@@ -83,6 +89,9 @@ public:
     FJSONNode                                   *Save();
     void                                        Load(FJSONNode *pNode);
     
+    
+    FList                                       mKillList;
+    FList                                       mDeleteList;
 };
 
 #endif

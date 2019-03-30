@@ -13,6 +13,9 @@ UIStepper::UIStepper() {
     mValue = 0;
     mTarget = NULL;
     
+    mMax = 9999;
+    mMin = -9999;
+    
     mLabelTitle.mScale = 0.75f;
     mLabelTitle.mAlignment = 1;
     
@@ -199,6 +202,10 @@ void UIStepper::Draw() {
 }
 
 void UIStepper::SetValue(int pValue) {
+    
+    if (pValue > mMax) pValue = mMax;
+    if (pValue < mMin) pValue = mMin;
+    
     bool aNotify = (mValue != pValue);
     mValue = pValue;
     if (mTarget) {
@@ -220,7 +227,6 @@ void UIStepper::SetTarget(int *pTarget) {
     if (mTarget) {
         int aValue = (*pTarget);
         SetValue(aValue);
-        
     }
 }
 
@@ -228,7 +234,7 @@ void UIStepper::Notify(void *pSender, const char *pNotification) {
     if (FString("text_box_change") == pNotification) {
         if (pSender == &mTextBox) {
             int aValue = mTextBox.mText.ToInt();
-            if (aValue != mValue) {
+            if (aValue != mValue && aValue >= mMin && aValue <= mMax) {
                 SetValue(aValue);
             }
         }

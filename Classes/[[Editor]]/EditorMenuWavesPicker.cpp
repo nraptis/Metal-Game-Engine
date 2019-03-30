@@ -87,8 +87,9 @@ EditorMenuWavesPicker::EditorMenuWavesPicker(GameEditor *pEditor) : ToolMenu() {
     mResizeDragAllowedV = false;
     
     mPickerSection = new ToolMenuSection();
-    //mPickerSection->SetTransparentBackground();
-    mPickerSection->SetHeight(176.0f);
+    
+    mPickerSection->StyleSetPicker();
+    mPickerSection->SetHeight(92.0f);
     AddSection(mPickerSection);
     
 }
@@ -116,11 +117,33 @@ void EditorMenuWavesPicker::Layout() {
         aCountH = 3;
     }
     
-    aCellWidth = (aCellLayoutWidth -  2.0f * ((float)(aCountH + 1))) / ((float)aCountH);
     
-    int aGridX = 0;
     float aX = aCellSpacingH + 4.0f;
     float aY = aCellSpacingV + 2.0f;
+    
+    aCellWidth = (aCellLayoutWidth -  2.0f * ((float)(aCountH + 1))) / ((float)aCountH);
+    
+    if (mCells.mCount <= aCountH) {
+        
+        if (mCells.mCount > 0) {
+            
+            float aButtonGroupWidth = aCellSpacingH;
+            for (int i=0;i<mCells.mCount;i++) {
+                aButtonGroupWidth += aCellWidth + aCellSpacingH;
+            }
+         
+            aX += (aCellLayoutWidth / 2.0f) - (aButtonGroupWidth / 2.0f);
+            
+            
+        }
+    } else {
+        
+    }
+    
+    
+    
+    int aGridX = 0;
+    
     for (int i=0;i<mCells.mCount;i++) {
         
         EditorMenuWavesPickerCell *aCell = (EditorMenuWavesPickerCell *)mCells.mData[i];

@@ -214,14 +214,12 @@ bool os_write_file(const char *pFileName, unsigned char *pData, unsigned int pLe
         NSError *aError = nil;
         //
         
-        [aData writeToFile:[NSString stringWithUTF8String:(aPath.c())] options:NSDataWritingAtomic error:&aError];
+        NSString *aStringRef = [NSString stringWithUTF8String:(aPath.c())];
+        [aData writeToFile: aStringRef options: NSDataWritingAtomic error: &aError];
         
-        if(aError)
-        {
+        if (aError) {
             NSLog(@"Write returned error: %@", [aError localizedDescription]);
-        }
-        else
-        {
+        } else {
             //gRes.AddResource(pFileName, true);
             gRes.AddResource(pFileName);
             

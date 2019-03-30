@@ -23,6 +23,9 @@ public:
     virtual void                            Layout();
 
     void                                    SetTransparentBackground();
+    
+    void                                    StyleSetPicker();
+    
 
     virtual void                            Notify(void *pSender, const char *pNotification);
 

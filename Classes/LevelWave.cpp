@@ -16,31 +16,32 @@ LevelWave::LevelWave() {
     mIsComplete = false;
     mRight = true;
     
-    for (int i=0;i<5;i++) {
-        LevelWaveSpawn *aSpawn = new LevelWaveSpawn(this, &mPath);
-        mSpawnList.Add(aSpawn);
-    }
+    //for (int i=0;i<5;i++) {
+    //    LevelWaveSpawn *aSpawn = new LevelWaveSpawn(this, &mPath);
+    //    mSpawnList.Add(aSpawn);
+    //}
     mSpawnIndex = 0;
+    
     
     mSpawnSeparationDistance = 90.0f;
     
+    mKillTimer = 8;
 }
 
 LevelWave::~LevelWave() {
-    
+    FreeList(LevelWaveSpawn, mSpawnList);
+    FreeList(LevelWaveSpawn, mSpawnKillList);
+    FreeList(LevelWaveSpawn, mSpawnDeleteList);
 }
 
 void LevelWave::Reset() {
     mPath.Reset();
-    
-    FreeList(LevelWaveSpawn, mSpawnList);
-    mSpawnIndex = 0;
-    
-    //Just re-start the spawners...
-    for (int i=0;i<5;i++) {
-        LevelWaveSpawn *aSpawn = new LevelWaveSpawn(this, &mPath);
-        mSpawnList.Add(aSpawn);
+    EnumList(LevelWaveSpawn, aSpawn, mSpawnList) {
+        aSpawn->Reset();
+        mSpawnKillList.Add(aSpawn);
     }
+    mSpawnList.RemoveAll();
+    mSpawnIndex = 0;
 }
 
 void LevelWave::Restart() {
@@ -70,6 +71,22 @@ void LevelWave::Spawn() {
 }
 
 void LevelWave::Update() {
+    //////
+    //
+    EnumList(LevelWaveSpawn, aSpawn, mSpawnKillList) {
+        aSpawn->mKillTimer--;
+        if (aSpawn->mKillTimer <= 0) { mSpawnDeleteList.Add(aSpawn); }
+    }
+    EnumList(LevelWaveSpawn, aSpawn, mSpawnDeleteList) {
+        mSpawnKillList.Remove(aSpawn);
+        delete aSpawn;
+    }
+    mSpawnDeleteList.RemoveAll();
+    //
+    //////
+    
+    
+    mPath.Update();
     
     if (mSpawnList.mCount <= 0) {
         mIsComplete = true;
@@ -125,9 +142,7 @@ void LevelWave::Update() {
         
     }
     
-    //FList                               mSpawnList;
-    //int                                 mSpawnIndex;
-    
+
     
     
     

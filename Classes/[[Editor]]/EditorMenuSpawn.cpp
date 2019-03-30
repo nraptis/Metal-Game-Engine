@@ -17,9 +17,8 @@ EditorMenuSpawn::EditorMenuSpawn(GameEditor *pEditor) : ToolMenu() {
     
     mEditor = pEditor;
     
-    SetTitle("Spawn");
+    SetTitle("Spawn Controller");
     SetScrollMode(true);
-    
     
     mPanelGeneration = new ToolMenuPanel();
     mPanelGeneration->SetTitle("Generation");
@@ -53,15 +52,17 @@ EditorMenuSpawn::EditorMenuSpawn(GameEditor *pEditor) : ToolMenu() {
     
     mStepperSpawnCount = new UIStepper();
     mStepperSpawnCount->SetText("Count");
+    mStepperSpawnCount->mMin = 1;
+    mStepperSpawnCount->mMax = (MAX_SPAWN_COUNT);
+    gNotify.Register(this, mStepperSpawnCount, "stepper");
     mPanelGeneration->AddSection(mStepperSpawnCount);
     
-    
-    mSliderSpacing = new UISlider();
-    mSliderSpacing->SetText("Spacing");
-    //mSliderViewDistance->SetValue(&mCamera->mDistance);
-    mSliderSpacing->SetRange(10.0f, 100.0f);
-    mPanelGeneration->AddSection(mSliderSpacing);
-    
+    mStepperSpacing = new UIStepper();
+    mStepperSpacing->SetText("Spacing");
+    mStepperSpacing->mMin = -1000;
+    mStepperSpacing->mMax = 1000;
+    gNotify.Register(this, mStepperSpacing, "stepper");
+    mPanelGeneration->AddSection(mStepperSpacing);
     
     
     mPanelAttachments = new ToolMenuPanel();
@@ -119,25 +120,59 @@ void EditorMenuSpawn::Notify(void *pSender, const char *pNotification) {
     
     if (FString(pNotification) == "button_click") {
         
-        
     }
     
     if (FString(pNotification) == "segment") {
         UISegment *aSegment = (UISegment *)pSender;
-        
         if (pSender == mSegmentSpeed) {
             if (gEditor) {
                 gEditor->RefreshWaveSpeed();
             }
         }
-        
     }
     
     if (FString(pNotification) == "stepper") {
         UIStepper *aStepper = (UIStepper *)pSender;
+        if (aStepper == mStepperSpawnCount) {
+            if (gEditor) { gEditor->RefreshWave(); }
+        }
+        
+        if (aStepper == mStepperSpacing) {
+            if (gEditor) { gEditor->RefreshWave(); }
+        }
+        
+        
     }
 }
 
 void EditorMenuSpawn::Update() {
+    
+    LevelWaveBlueprint *aWave = NULL;
+    if (gEditor) {
+        aWave = gEditor->mSection.mCurrentWave;
+    }
+    
+
+    if (mStepperSpawnCount != NULL) {
+        bool aUnlink = true;
+        if (aWave != NULL) {
+            aUnlink = false;
+            mStepperSpawnCount->SetTarget(&(aWave->mSpawnCount));
+        }
+        if (aUnlink) {
+            mStepperSpawnCount->SetTarget(NULL);
+        }
+    }
+    
+    if (mStepperSpacing != NULL) {
+        bool aUnlink = true;
+        if (aWave != NULL) {
+            aUnlink = false;
+            mStepperSpacing->SetTarget(&(aWave->mSpawnSpacing));
+        }
+        if (aUnlink) {
+            mStepperSpacing->SetTarget(NULL);
+        }
+    }
     
 }

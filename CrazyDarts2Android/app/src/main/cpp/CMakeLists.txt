@@ -19,11 +19,14 @@ add_library(gl2jni SHARED
         FAchievement.cpp
         FAnimation.cpp
         FApp.cpp
+        EditorMenuAttachment.cpp
+        EditorMenuAttachmentPicker.cpp
 		EditorMenuFlow.cpp
 		EditorMenuPath.cpp
 		EditorMenuPathControl.cpp
 		EditorMenuSections.cpp
 		EditorMenuSpawn.cpp
+		EditorMenuSpawnPicker.cpp
 		EditorMenuWavesPicker.cpp
 		FBufferCache.cpp
 		FBuffer.cpp
@@ -103,6 +106,7 @@ add_library(gl2jni SHARED
 		LevelWaveFormation.cpp
 		LevelWavePath.cpp
 		LevelWaveSpawn.cpp
+		LevelWaveSpawnBlueprint.cpp
         LightConfigurationScene.cpp
         OpenGLEngine.cpp
         os_core_app_shell_android.cpp

@@ -37,6 +37,8 @@ public:
     float                       mY;
     int                         mType;
     int                         mWaitTimer;
+    
+    int                         mKillTimer;
 };
 
 class LevelWavePath {
@@ -54,8 +56,7 @@ public:
     
     void                                AddSegmentBacktrackingFrom(int pIndex);
     
-    void                                Dump(bool pDecel);
-    
+    void                                Update();
     void                                Draw();
     void                                Finalize();
     
@@ -80,6 +81,8 @@ public:
 private:
     void                                Add(int pType, float pX, float pY, int pWait);
     
+    FList                               mKillList;
+    FList                               mDeleteList;
 };
 
 #endif /* LevelWavePath_hpp */

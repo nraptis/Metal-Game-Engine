@@ -40,6 +40,10 @@ public:
     
     float                               mSpawnSeparationDistance;
     
+    int                                 mKillTimer;
+    
+    FList                               mSpawnKillList;
+    FList                               mSpawnDeleteList;
 };
 
 

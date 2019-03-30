@@ -278,12 +278,14 @@ void GFXApp::LoadComplete() {
         
     }
     
-    
+    /*
     if (mSoundMenu == NULL) {
         mSoundMenu = new SoundConfigMenu();
         mSoundMenu->SetFrame(gSafeAreaInsetLeft + 20.0f, gSafeAreaInsetTop + 20.0f, 450.0f, gDeviceHeight * 0.8f);
         mWindowTools.AddChild(mSoundMenu);
     }
+    */
+    
     
     /*
     if (mScreenTool == NULL) {

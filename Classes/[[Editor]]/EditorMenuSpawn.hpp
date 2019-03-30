@@ -32,7 +32,8 @@ public:
     
     UISegment                               *mSegmentSpeed;
     UIStepper                               *mStepperSpawnCount;
-    UISlider                                *mSliderSpacing;
+    UIStepper                               *mStepperSpacing;
+    
     
     ToolMenuPanel                           *mPanelAttachments;
     ToolMenuSectionRow                      *mRowFormations1;

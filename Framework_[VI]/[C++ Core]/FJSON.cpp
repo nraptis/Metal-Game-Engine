@@ -25,6 +25,12 @@ FJSONNode::FJSONNode() {
 }
 
 FJSONNode::~FJSONNode() {
+    
+    if (mValue != NULL) {
+        delete [] mValue;
+        mValue = NULL;
+    }
+    
     if (mList != NULL) {
         for (int i=0;i<mListCount;i++) {
             delete mList[i];

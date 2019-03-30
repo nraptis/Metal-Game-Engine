@@ -18,8 +18,9 @@ public:
     ~LevelSectionBlueprint();
     
     void                                        Clear();
-    void                                        Draw();
     
+    void                                        Update();
+    void                                        Draw();
     
     void                                        WaveAdd();
     void                                        WaveRemove();
@@ -38,6 +39,10 @@ public:
     
     FJSONNode                                   *Save();
     void                                        Load(FJSONNode *pNode);
+    
+    
+    FList                                       mKillList;
+    FList                                       mDeleteList;
     
 };
 

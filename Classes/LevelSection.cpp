@@ -17,17 +17,28 @@ LevelSection::LevelSection() {
     mIsComplete = false;
     
     mDelay = 100;
+    
+    mKillTimer = 8;
 }
 
 LevelSection::~LevelSection() {
-    
+    FreeList(LevelWave, mWaveList);
+    FreeList(LevelWave, mKillList);
+    FreeList(LevelWave, mDeleteList);
 }
 
 void LevelSection::Reset() {
-    
+    EnumList(LevelWave, aWave, mWaveList) {
+        mKillList.Add(aWave);
+    }
+    mWaveList.RemoveAll();
+    mCurrentWaveIndex = 0;
 }
 
 void LevelSection::Restart() {
+    
+    mCurrentWave = NULL;
+    mCurrentWaveIndex = 0;
     
 }
 
@@ -63,6 +74,21 @@ void LevelSection::Update() {
         }
     }
     
+    
+    
+    
+    
+    
+    EnumList(LevelWave, aWave, mKillList) {
+        if (mCurrentWave == aWave) { mCurrentWave = NULL; }
+        aWave->mKillTimer--;
+        if (aWave->mKillTimer <= 0) { mDeleteList.Add(aWave); }
+    }
+    EnumList(LevelWave, aWave, mDeleteList) {
+        mKillList.Remove(aWave);
+        delete aWave;
+    }
+    mDeleteList.RemoveAll();
     
 }
 

@@ -22,8 +22,7 @@ SoundConfigMenu::SoundConfigMenu() : ToolMenu() {
     mPitch = 1.0f;
     
     
-    
-    
+    SetTitle("Sound Testboard");
     SetScrollMode(true);
     //
     //

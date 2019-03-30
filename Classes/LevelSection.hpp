@@ -37,6 +37,11 @@ public:
     
     bool                                mIsComplete;
     
+    int                                 mKillTimer;
+    
+    FList                               mKillList;
+    FList                               mDeleteList;
+    
 };
 
 #endif /* LevelSection_hpp */

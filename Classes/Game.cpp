@@ -108,7 +108,7 @@ Game::Game() {
     mDartResetAnimationTime = 200;
     
 #ifdef EDITOR_MODE
-    mEditorShowReferenced = true;
+    mEditorShowReferenced = false;
     mEditorWavePlayback = true;
     mEditorWaveLoop = true;
     mEditorSectionPlayback = true;
