@@ -36,26 +36,23 @@ public:
     ToolMenuSectionRow                      *mRowMenus2;
     UIButton                                *mButtonShowSpawn;
     UIButton                                *mButtonShowWavePicker;
+    UIButton                                *mButtonShowSpawnPicker;
+    UIButton                                *mButtonShowAttachments;
+    
     
     ToolMenuPanel                           *mWavePanel;
     ToolMenuSectionRow                      *mRowWave1;
     UIButton                                *mButtonAddWave;
     UIButton                                *mButtonDeleteWave;
-    UIButton                                *mButtonSelectNextWave;
-    UIButton                                *mButtonSelectPreviousWave;
+    UIButton                                *mButtonEditPaths;
     
     ToolMenuSectionRow                      *mRowWave2;
     UICheckBox                              *mCheckBoxPreview;
     UIButton                                *mButtonMoveWaveUp;
     UIButton                                *mButtonMoveWaveDown;
     
-    ToolMenuPanel                           *mPathPanel;
-    ToolMenuSectionRow                      *mRowPath1;
-    UIButton                                *mButtonEditPaths;
-    UIButton                                *mButtonSelectNextPath;
-    UIButton                                *mButtonSelectPreviousPath;
-    ToolMenuSectionRow                      *mRowPath2;
     
+
     GameEditor                              *mEditor;
     
 };

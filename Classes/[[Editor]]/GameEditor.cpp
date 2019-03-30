@@ -14,8 +14,14 @@ GameEditor *gEditor = NULL;
 
 GameEditor::GameEditor(Game *pGame) {
     
-    mSpeedClassIndex = -1;
     
+    mSpeedClassIndex = WAVE_SPEED_MEDIUM;
+    mSpawnRotationSpeedClassIndex = WAVE_SPEED_MEDIUM;
+    
+   
+    
+    mMenuAttachment = NULL;
+    mMenuSpawnPicker = NULL;
     mMenuWavesPicker = NULL;
     mMenuSpawn = NULL;
     
@@ -61,6 +67,9 @@ GameEditor::GameEditor(Game *pGame) {
     //
     OpenSpawnMenu();
     OpenWavePickerMenu();
+    OpenSpawnPickerMenu();
+    OpenAttachmentMenu();
+    
     //
 }
 
@@ -147,13 +156,12 @@ void GameEditor::Layout() {
 
 void GameEditor::Update() {
     
-    
     if (gRand.Get(5) == 2) {
-        Clear();
+        //Clear();
     }
     
     if (gRand.Get(5) == 3) {
-        LoadAt(mExportIndex);
+        //LoadAt(mExportIndex);
     }
     
     
@@ -483,18 +491,14 @@ void GameEditor::SetOverlay(FCanvas *pCanvas) {
     if (pCanvas) {
         mOverlay = pCanvas;
         mOverlay->Activate();
-    }
-    
+    }    
 }
 
 void GameEditor::RefreshWave() {
-    
     RefreshWaveSpeed();
-    
     if (mSection.mCurrentWave != NULL) {
         mSection.mCurrentWave->Build();
     }
-    
 }
 
 void GameEditor::RefreshWaveSpeed() {
@@ -508,9 +512,20 @@ void GameEditor::RefreshWaveSpeed() {
         if (mSpeedClassIndex == 6) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_EXTRA_FAST; }
         if (mSpeedClassIndex == 7) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_INSANE; }
     }
-    
-    //mSpeedClassIndex
 }
+
+void GameEditor::RefreshSpawn() {
+    
+}
+
+void GameEditor::RefreshSpawnRotationSpeed() {
+ 
+    
+    //mSpawnRotationSpeedClassIndex
+    
+    
+}
+
 
 void GameEditor::RefreshSection() {
     
@@ -570,6 +585,33 @@ int GameEditor::WaveIndex() {
     return -1;
 }
 
+void GameEditor::SpawnSelect(int pIndex) {
+    if (mSection.mCurrentWave != NULL) {
+        mSection.mCurrentWave->mSelectedSpawnIndex = pIndex;
+    }
+}
+
+int GameEditor::SpawnIndex() {
+    if (mSection.mCurrentWave != NULL) {
+        return mSection.mCurrentWave->mSelectedSpawnIndex;
+    }
+    return 0;
+}
+
+LevelWaveSpawnBlueprint *GameEditor::SpawnGet() {
+    
+    LevelWaveSpawnBlueprint *aResult = NULL;
+    
+    int aIndex = SpawnIndex();
+    if (mSection.mCurrentWave != NULL) {
+        if (aIndex >= 0 && aIndex < mSection.mCurrentWave->mSpawnCount) {
+            aResult = &(mSection.mCurrentWave->mSpawn[aIndex]);
+        }
+    }
+    return aResult;
+}
+
+
 void GameEditor::OpenPathEditor() {
     if (mSection.mCurrentWave == NULL) { printf("Must have wave...\n"); return; }
     mPathEditor = new GamePathEditor(this);
@@ -584,7 +626,7 @@ void GameEditor::OpenSpawnMenu() {
     if (mMenuSpawn == NULL) {
         mMenuSpawn = new EditorMenuSpawn(this);
         mToolContainer->AddChild(mMenuSpawn);
-        mMenuSpawn->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), gSafeAreaInsetTop + 20.0f, 400.0f, 460.0f);
+        mMenuSpawn->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), gSafeAreaInsetTop + 20.0f, 400.0f, 198.0f);
     }
 }
 
@@ -592,9 +634,30 @@ void GameEditor::OpenWavePickerMenu() {
     if (mMenuWavesPicker == NULL) {
         mMenuWavesPicker = new EditorMenuWavesPicker(this);
         mToolContainer->AddChild(mMenuWavesPicker);
-        mMenuWavesPicker->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), (gDeviceHeight - gSafeAreaInsetBottom) - 154.0f - 14.0f, 400.0f, 154.0f);
+        mMenuWavesPicker->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f),
+                                   (gDeviceHeight - gSafeAreaInsetBottom - 8.0f) - (154.0f + 154.0f + 8.0f), 400.0f, 154.0f);
     }
 }
+
+
+void GameEditor::OpenSpawnPickerMenu() {
+    if (mMenuSpawnPicker == NULL) {
+        mMenuSpawnPicker = new EditorMenuSpawnPicker(this);
+        mToolContainer->AddChild(mMenuSpawnPicker);
+        mMenuSpawnPicker->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f),
+                                   (gDeviceHeight - gSafeAreaInsetBottom - 8.0f) - 154.0f, 400.0f, 154.0f);
+        
+    }
+}
+
+void GameEditor::OpenAttachmentMenu() {
+    if (mMenuAttachment == NULL) {
+        mMenuAttachment = new EditorMenuAttachment(this);
+        mToolContainer->AddChild(mMenuAttachment);
+        mMenuAttachment->SetFrame(gDeviceWidth2 - 200.0f, (gDeviceHeight - gSafeAreaInsetBottom) - 400.0f - 14.0f, 400.0f, 400.0f);
+    }
+}
+
 
 void GameEditor::ClosePathEditor() {
     SetOverlay(mToolContainer);

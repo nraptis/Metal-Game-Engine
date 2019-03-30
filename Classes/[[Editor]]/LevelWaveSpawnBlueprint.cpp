@@ -22,23 +22,16 @@ LevelWaveSpawnBlueprint::~LevelWaveSpawnBlueprint() {
 
 void LevelWaveSpawnBlueprint::Reset() {
     
-    
 }
-
 
 FJSONNode *LevelWaveSpawnBlueprint::Save() {
     FJSONNode *aExport = new FJSONNode();
     aExport->AddDictionaryInt("spacing_offset", mSpawnSpacingOffset);
-    
-    
     return aExport;
 }
 
 void LevelWaveSpawnBlueprint::Load(FJSONNode *pNode) {
     Reset();
     if (pNode == NULL) { return; }
-    
-    mSpawnSpacingOffset = pNode->GetInt("speed_class", mSpawnSpacingOffset);
-    
-    
+    mSpawnSpacingOffset = pNode->GetInt("spacing_offset", mSpawnSpacingOffset);
 }

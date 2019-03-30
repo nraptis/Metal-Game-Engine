@@ -24,7 +24,6 @@ LevelSection::LevelSection() {
 LevelSection::~LevelSection() {
     FreeList(LevelWave, mWaveList);
     FreeList(LevelWave, mKillList);
-    FreeList(LevelWave, mDeleteList);
 }
 
 void LevelSection::Reset() {

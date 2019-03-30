@@ -14,11 +14,8 @@ LevelSectionBlueprint::LevelSectionBlueprint() {
 }
 
 LevelSectionBlueprint::~LevelSectionBlueprint() {
-    
     FreeList(LevelWaveBlueprint, mWaveList);
     FreeList(LevelWaveBlueprint, mKillList);
-    FreeList(LevelWaveBlueprint, mDeleteList);
-    
 }
 
 void LevelSectionBlueprint::Clear() {

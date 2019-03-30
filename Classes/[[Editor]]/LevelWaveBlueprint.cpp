@@ -16,6 +16,9 @@ LevelWaveBlueprint::LevelWaveBlueprint() {
     for (int i=0;i<MAX_SPAWN_COUNT;i++) {
         mSpawn[i].Reset();
     }
+    
+    mSelectedSpawnIndex = 0;
+    
     mSpawnCount = 1;
     mSpawnSpacing = 88;
     
@@ -37,6 +40,12 @@ void LevelWaveBlueprint::Clear() {
 //mPath
 void LevelWaveBlueprint::Update() {
     mPath.Update();
+    
+    if (mSpawnCount < 1) mSpawnCount = 1;
+    if (mSpawnCount > MAX_SPAWN_COUNT) mSpawnCount = MAX_SPAWN_COUNT;
+    
+    if (mSelectedSpawnIndex < 0) { mSelectedSpawnIndex = 0; }
+    if (mSelectedSpawnIndex >= mSpawnCount) { mSelectedSpawnIndex = mSpawnCount - 1; }
 }
 
 void LevelWaveBlueprint::Draw(bool pSelected) {
@@ -63,7 +72,6 @@ void LevelWaveBlueprint::ApplyEditorConstraints() {
                 }
             }
             
-            
             if (aNode->mConstraint.mTypeX == X_CONSTRAINT_LEFT_EXIT) { aNode->mX = gEditor->mExitZoneLeft; }
             if (aNode->mConstraint.mTypeX == X_CONSTRAINT_LEFT_SPAWN) { aNode->mX = gEditor->mSpawnZoneLeft; }
             if (aNode->mConstraint.mTypeX == X_CONSTRAINT_LEFT_PEEK) { aNode->mX = gEditor->mPeekZoneLeft; }
@@ -81,7 +89,6 @@ void LevelWaveBlueprint::ApplyEditorConstraints() {
             if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_CENTER) { aNode->mY = gEditor->mCenterV; }
             if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_BOTTOM_QUARTER) { aNode->mY = gEditor->mQuarterZoneBottom; }
             if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_BOTTOM) { aNode->mY = gEditor->mPlayZoneBottom; }
-            
         }
     }
     Build();
@@ -98,10 +105,6 @@ void LevelWaveBlueprint::Build() {
 void LevelWaveBlueprint::Build(LevelWave *pWave) {
     
     if (pWave == NULL) { return; }
-    
-    
-    //if (mSpeed < 0.5f) { mSpeed = 0.5f; }
-    //if (mSpeed > 50.0f) { mSpeed = 50.0f; }
     
     pWave->Reset();
     
@@ -214,6 +217,9 @@ void LevelWaveBlueprint::Build(LevelWave *pWave) {
     pWave->mSpawnSeparationDistance = (float)mSpawnSpacing;
     for (int i=0;i<mSpawnCount;i++) {
         LevelWaveSpawn *aSpawn = new LevelWaveSpawn(pWave, &pWave->mPath);
+        
+        aSpawn->mOffsetSpawnDistance = mSpawn[i].mSpawnSpacingOffset;
+        
         pWave->mSpawnList.Add(aSpawn);
     }
 }

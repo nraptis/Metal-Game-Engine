@@ -1,47 +1,4 @@
 {
 	"section": true,
-	"wave_list": [
-		{
-			"blueprint": true,
-			"smooth": true,
-			"speed_class": 0,
-			"path": [
-				{
-					"x_con": 200,
-					"y_con": 200
-				},
-				{
-					"x_con": 600,
-					"y_con": 500
-				},
-				{
-					"x_con": 600,
-					"y_con": 800
-				},
-				{
-					"x_con": 150,
-					"y_con": 800
-				}
-			]
-		},
-		{
-			"blueprint": true,
-			"smooth": true,
-			"speed_class": 0,
-			"path": [
-				{
-					"x_con": 150,
-					"y_con": 400
-				},
-				{
-					"x_con": 600,
-					"y_con": 400
-				},
-				{
-					"x_con": 800,
-					"y_con": 200
-				}
-			]
-		}
-	]
+	"wave_list": []
 }

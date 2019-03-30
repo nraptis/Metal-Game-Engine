@@ -86,11 +86,8 @@ int kDeviceHeight = 760;
     NSWindowStyleMask aWindowStyle = NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable | NSWindowStyleMaskResizable;
     NSRect aWindowFrame = NSMakeRect(14.0, screenSize.height / 2.0 - kDeviceHeight / 2.0 - 14, kDeviceWidth, kDeviceHeight);
     
-    //NSWindowZoomButton
-    
     _window = [[NSWindow alloc] initWithContentRect: aWindowFrame styleMask: aWindowStyle backing: NSBackingStoreBuffered defer: NO];
-    
-    [_window setTitle:@"Space Lords of Doom"];
+    [_window setTitle:@"Space Whores 6"];
     [_window setOpaque: YES];
     [_window setHasShadow: YES];
     _window.contentViewController = self.rootViewController;

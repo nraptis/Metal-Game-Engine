@@ -538,9 +538,9 @@
 		0D436278224BD01800B9C58A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				0D4362EA224BD01800B9C58A /* [[Editor]] */,
 				0D43629B224BD01800B9C58A /* [[Playground]] */,
 				0D43628D224BD01800B9C58A /* [Menus] */,
+				0D4362EA224BD01800B9C58A /* [[Editor]] */,
 				0D436285224BD01800B9C58A /* Balloon.cpp */,
 				0D4362DB224BD01800B9C58A /* Balloon.hpp */,
 				0D436284224BD01800B9C58A /* Constraint.cpp */,

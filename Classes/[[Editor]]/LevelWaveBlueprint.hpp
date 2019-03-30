@@ -24,10 +24,12 @@ public:
     
     void                                        Update();
     void                                        Draw(bool pSelected);
-    LevelWavePathBlueprint                      mPath;
     
+    LevelWavePathBlueprint                      mPath;
     LevelWaveSpawnBlueprint                     mSpawn[MAX_SPAWN_COUNT + 4];
+    
     int                                         mSpawnCount;
+    int                                         mSelectedSpawnIndex;
     
     int                                         mSpawnSpacing;
     

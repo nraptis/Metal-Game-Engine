@@ -143,15 +143,9 @@ LevelWavePathBlueprint::LevelWavePathBlueprint() {
     mSmooth = true;
 }
 
-
-
 LevelWavePathBlueprint::~LevelWavePathBlueprint() {
-    
     FreeList(LevelWavePathBlueprintNode, mNodeList);
     FreeList(LevelWavePathBlueprintNode, mKillList);
-    FreeList(LevelWavePathBlueprintNode, mDeleteList);
-    
-    
 }
 
 void LevelWavePathBlueprint::Update() {

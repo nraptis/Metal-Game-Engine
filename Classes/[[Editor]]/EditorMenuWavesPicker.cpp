@@ -14,7 +14,6 @@
 
 
 EditorMenuWavesPickerCell::EditorMenuWavesPickerCell() {
-    
     mSelected = false;
     
     mCheckBackground.mCornerRadius = 3.0f;
@@ -40,48 +39,36 @@ void EditorMenuWavesPickerCell::Layout() {
     mCheckBackground.SetRect(mWidth2 - mWidth2 / 2.0f, mHeight2 - mHeight2 / 2.0f, mWidth2, mHeight2);
     mCheckOutline.mRefresh = true;
     mCheckBackground.mRefresh = true;
-    
-    
 }
 
 void EditorMenuWavesPickerCell::Update() {
     UIButton::Update();
-    
 }
 
 void EditorMenuWavesPickerCell::Draw() {
     UIButton::Draw();
-    
     if (mSelected) {
         Graphics::PipelineStateSetShapeNodeAlphaBlending();
         mCheckOutline.Draw();
         mCheckBackground.Draw();
-    } else {
-        
     }
-    
     Graphics::PipelineStateSetSpritePremultipliedBlending();
     FString aText = FString(mNodeCount);
     gAppBase->mSysFont.Center(aText.c(), mWidth2, mHeight2, 0.5f);
-    
 }
 
 void EditorMenuWavesPickerCell::SetSelected(bool pSelected) {
     if (pSelected != mSelected) {
         mSelected = pSelected;
-        
-        
-        
     }
 }
-
 
 EditorMenuWavesPicker::EditorMenuWavesPicker(GameEditor *pEditor) : ToolMenu() {
     mName = "EditorMenuWavesPicker";
     
     mEditor = pEditor;
     
-    SetTitle("Wave Chooser");
+    SetTitle("Wave Selector");
     SetScrollMode(false);
     mResizeDragAllowedH = true;
     mResizeDragAllowedV = false;
@@ -91,7 +78,6 @@ EditorMenuWavesPicker::EditorMenuWavesPicker(GameEditor *pEditor) : ToolMenu() {
     mPickerSection->StyleSetPicker();
     mPickerSection->SetHeight(92.0f);
     AddSection(mPickerSection);
-    
 }
 
 EditorMenuWavesPicker::~EditorMenuWavesPicker() {
@@ -124,31 +110,26 @@ void EditorMenuWavesPicker::Layout() {
     aCellWidth = (aCellLayoutWidth -  2.0f * ((float)(aCountH + 1))) / ((float)aCountH);
     
     if (mCells.mCount <= aCountH) {
-        
         if (mCells.mCount > 0) {
-            
             float aButtonGroupWidth = aCellSpacingH;
             for (int i=0;i<mCells.mCount;i++) {
                 aButtonGroupWidth += aCellWidth + aCellSpacingH;
             }
-         
             aX += (aCellLayoutWidth / 2.0f) - (aButtonGroupWidth / 2.0f);
-            
-            
         }
-    } else {
-        
     }
     
-    
-    
     int aGridX = 0;
-    
     for (int i=0;i<mCells.mCount;i++) {
-        
         EditorMenuWavesPickerCell *aCell = (EditorMenuWavesPickerCell *)mCells.mData[i];
-        aCell->SetFrame(aX, aY, aCellWidth, aCellHeight);
         
+        if (aY + aCellHeight > (mPickerSection->mHeight + 6.0f)) {
+            aCell->Deactivate();
+        } else {
+            aCell->Activate();
+        }
+        
+        aCell->SetFrame(aX, aY, aCellWidth, aCellHeight);
         aX += (aCellWidth + aCellSpacingH);
         aGridX += 1;
         if (aGridX >= aCountH) {
@@ -158,7 +139,6 @@ void EditorMenuWavesPicker::Layout() {
         }
     }
 }
-
 
 void EditorMenuWavesPicker::Notify(void *pSender, const char *pNotification) {
     
@@ -171,7 +151,6 @@ void EditorMenuWavesPicker::Notify(void *pSender, const char *pNotification) {
     }
     
     if (FString(pNotification) == "button_click") {
-        
         for (int i=0;i<mCells.mCount;i++) {
             EditorMenuWavesPickerCell *aCell = (EditorMenuWavesPickerCell *)mCells.mData[i];
             if (pSender == aCell) {
@@ -180,15 +159,6 @@ void EditorMenuWavesPicker::Notify(void *pSender, const char *pNotification) {
         }
         
     }
-    
-    if (FString(pNotification) == "segment") {
-        UISegment *aSegment = (UISegment *)pSender;
-        
-    }
-    
-    if (FString(pNotification) == "stepper") {
-        UIStepper *aStepper = (UIStepper *)pSender;
-    }
 }
 
 void EditorMenuWavesPicker::Update() {
@@ -196,9 +166,7 @@ void EditorMenuWavesPicker::Update() {
     if (gEditor == NULL) { return; }
     
     int aWaveCount = gEditor->mSection.mWaveList.mCount;
-    
     bool aNeedsLayout = false;
-    
     while (mCells.mCount > aWaveCount) {
         EditorMenuWavesPickerCell *aCell = (EditorMenuWavesPickerCell *)mCells.PopLast();
         aCell->Deactivate();

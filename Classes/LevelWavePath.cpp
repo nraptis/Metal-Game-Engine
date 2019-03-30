@@ -44,7 +44,6 @@ LevelWavePath::LevelWavePath() {
 LevelWavePath::~LevelWavePath() {
     FreeList(LevelWavePathNode, mNodeList);
     FreeList(LevelWavePathNode, mKillList);
-    FreeList(LevelWavePathNode, mDeleteList);
 }
 
 

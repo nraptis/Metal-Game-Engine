@@ -53,11 +53,30 @@ void ToolMenuSection::Draw() {
     mSectionBackground.Draw();
 }
 
+void ToolMenuSection::TouchDown(float pX, float pY, void *pData) {
+    if (mMenu != NULL) {
+        if (mMenu->mParent != NULL) {
+            mMenu->mParent->BringChildToFront(mMenu);
+        }
+    }
+}
+
+void ToolMenuSection::TouchMove(float pX, float pY, void *pData) {
+    
+}
+
+void ToolMenuSection::TouchUp(float pX, float pY, void *pData) {
+    
+}
+
+void ToolMenuSection::TouchFlush() {
+    
+}
+
 void ToolMenuSection::Notify(void *pSender, const char *pNotification) {
     if (mMenu) {
         mMenu->Notify(pSender, pNotification);
     }
-
 }
 
 void ToolMenuSection::SetTransparentBackground() {

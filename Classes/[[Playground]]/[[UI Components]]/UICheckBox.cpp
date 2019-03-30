@@ -98,6 +98,7 @@ void UICheckBox::Draw() {
         else { Graphics::SetColor(1.0f, 1.0f, 1.0f); }
         gAppBase->mSysFont.Center(mText, mTextCenterX, mHeight2, mFontScale);
     }
+    Graphics::SetColor();
 }
 
 void UICheckBox::TouchUp(float pX, float pY, void *pData) {

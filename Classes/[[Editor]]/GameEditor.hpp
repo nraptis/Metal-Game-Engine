@@ -16,10 +16,14 @@
 #include "EditorMenuSections.hpp"
 #include "EditorMenuSpawn.hpp"
 #include "EditorMenuWavesPicker.hpp"
+#include "EditorMenuSpawnPicker.hpp"
+#include "EditorMenuAttachment.hpp"
+
 #include "GamePathEditor.hpp"
 #include "LevelWavePathBlueprint.hpp"
 #include "LevelWaveBlueprint.hpp"
 #include "LevelSectionBlueprint.hpp"
+
 
 class GameEditor : public FCanvas {
 public:
@@ -51,6 +55,12 @@ public:
     void                                        RefreshWave();
     void                                        RefreshWaveSpeed();
     int                                         mSpeedClassIndex;
+    
+    
+    void                                        RefreshSpawn();
+    void                                        RefreshSpawnRotationSpeed();
+    int                                         mSpawnRotationSpeedClassIndex;
+    
     
     void                                        RefreshSection();
     
@@ -84,6 +94,10 @@ public:
     int                                         WaveIndex();
     
     
+    void                                        SpawnSelect(int pIndex);
+    int                                         SpawnIndex();
+    LevelWaveSpawnBlueprint                     *SpawnGet();
+    
     
     void                                        OpenPathEditor();
     void                                        ClosePathEditor();
@@ -91,6 +105,9 @@ public:
     
     void                                        OpenSpawnMenu();
     void                                        OpenWavePickerMenu();
+    void                                        OpenSpawnPickerMenu();
+    void                                        OpenAttachmentMenu();
+    
     
     
     void                                        Clear();
@@ -112,6 +129,8 @@ public:
     EditorMenuSections                          *mMenuSections;
     EditorMenuSpawn                             *mMenuSpawn;
     EditorMenuWavesPicker                       *mMenuWavesPicker;
+    EditorMenuSpawnPicker                       *mMenuSpawnPicker;
+    EditorMenuAttachment                        *mMenuAttachment;
     
     
     FCanvas                                     *mToolContainer;

@@ -17,28 +17,8 @@ EditorMenuSpawn::EditorMenuSpawn(GameEditor *pEditor) : ToolMenu() {
     
     mEditor = pEditor;
     
-    SetTitle("Spawn Controller");
+    SetTitle("Spawn (Meta)");
     SetScrollMode(true);
-    
-    mPanelGeneration = new ToolMenuPanel();
-    mPanelGeneration->SetTitle("Generation");
-    AddSection(mPanelGeneration);
-    
-    mRowGeneration = new ToolMenuSectionRow();
-    mPanelGeneration->AddSection(mRowGeneration);
-    
-    mLabelSpeed = new UILabel();
-    mLabelSpeed->SetText("Wave Speed");
-    mRowGeneration->AddLabel(mLabelSpeed);
-    
-    mButtonClearFormation = new UIButton();
-    mButtonClearFormation->SetText("No Form");
-    mRowGeneration->AddButton(mButtonClearFormation);
-    
-    mCheckBoxSpeed = new UICheckBox();
-    mCheckBoxSpeed->SetText("Speed Enable");
-    mRowGeneration->AddCheckBox(mCheckBoxSpeed);
-    
     
     mSegmentSpeed = new UISegment();
     mSegmentSpeed->SetSegmentCount(7);
@@ -46,7 +26,7 @@ EditorMenuSpawn::EditorMenuSpawn(GameEditor *pEditor) : ToolMenu() {
     if (gGame) {
         mSegmentSpeed->SetTarget(&gEditor->mSpeedClassIndex);
     }
-    mPanelGeneration->AddSection(mSegmentSpeed);
+    AddSection(mSegmentSpeed);
     gNotify.Register(this, mSegmentSpeed, "segment");
     
     
@@ -55,49 +35,14 @@ EditorMenuSpawn::EditorMenuSpawn(GameEditor *pEditor) : ToolMenu() {
     mStepperSpawnCount->mMin = 1;
     mStepperSpawnCount->mMax = (MAX_SPAWN_COUNT);
     gNotify.Register(this, mStepperSpawnCount, "stepper");
-    mPanelGeneration->AddSection(mStepperSpawnCount);
+    AddSection(mStepperSpawnCount);
     
     mStepperSpacing = new UIStepper();
     mStepperSpacing->SetText("Spacing");
     mStepperSpacing->mMin = -1000;
     mStepperSpacing->mMax = 1000;
     gNotify.Register(this, mStepperSpacing, "stepper");
-    mPanelGeneration->AddSection(mStepperSpacing);
-    
-    
-    mPanelAttachments = new ToolMenuPanel();
-    mPanelAttachments->SetTitle("Attachments");
-    AddSection(mPanelAttachments);
-    
-    mRowFormations1 = new ToolMenuSectionRow();
-    mPanelAttachments->AddSection(mRowFormations1);
-    
-    mButtonClearFormation = new UIButton();
-    mButtonClearFormation->SetText("No Form");
-    mRowFormations1->AddButton(mButtonClearFormation);
-    
-    mButtonDefaultFormation = new UIButton();
-    mButtonDefaultFormation->SetText("Defualt");
-    mRowFormations1->AddButton(mButtonDefaultFormation);
-    
-    mButtonPickFormation = new UIButton();
-    mButtonPickFormation->SetText("Pick Form");
-    mRowFormations1->AddButton(mButtonPickFormation);
-    
-
-    
-    
-    mPanelMovement = new ToolMenuPanel();
-    mPanelMovement->SetTitle("Movement");
-    AddSection(mPanelMovement);
-    
-    
-    mSliderRotation = new UISlider();
-    mSliderRotation->SetText("Rotate:");
-    //mSliderViewDistance->SetValue(&mCamera->mDistance);
-    mSliderRotation->SetRange(-20.0f, 20.0f);
-    mPanelMovement->AddSection(mSliderRotation);
-    
+    AddSection(mStepperSpacing);
 }
 
 EditorMenuSpawn::~EditorMenuSpawn() {
@@ -113,35 +58,14 @@ void EditorMenuSpawn::Layout() {
 
 
 void EditorMenuSpawn::Notify(void *pSender, const char *pNotification) {
-    
-    if (FString("slider_update") == pNotification) {
-        
+    if (pSender == mSegmentSpeed) {
+        if (gEditor) { gEditor->RefreshWave(); }
     }
-    
-    if (FString(pNotification) == "button_click") {
-        
+    if (pSender == mStepperSpawnCount) {
+        if (gEditor) { gEditor->RefreshWave(); }
     }
-    
-    if (FString(pNotification) == "segment") {
-        UISegment *aSegment = (UISegment *)pSender;
-        if (pSender == mSegmentSpeed) {
-            if (gEditor) {
-                gEditor->RefreshWaveSpeed();
-            }
-        }
-    }
-    
-    if (FString(pNotification) == "stepper") {
-        UIStepper *aStepper = (UIStepper *)pSender;
-        if (aStepper == mStepperSpawnCount) {
-            if (gEditor) { gEditor->RefreshWave(); }
-        }
-        
-        if (aStepper == mStepperSpacing) {
-            if (gEditor) { gEditor->RefreshWave(); }
-        }
-        
-        
+    if (pSender == mStepperSpacing) {
+        if (gEditor) { gEditor->RefreshWave(); }
     }
 }
 
@@ -152,7 +76,7 @@ void EditorMenuSpawn::Update() {
         aWave = gEditor->mSection.mCurrentWave;
     }
     
-
+    
     if (mStepperSpawnCount != NULL) {
         bool aUnlink = true;
         if (aWave != NULL) {
