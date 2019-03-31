@@ -4,969 +4,130 @@
 		{
 			"blueprint": true,
 			"smooth": true,
-			"speed_class": -300,
-			"spawn_spacing": 100,
-			"path": [
-				{
-					"x_con": 150,
-					"x_con_offset": 1.000000,
-					"y_con": 150,
-					"y_con_offset": 1.000000
-				},
-				{
-					"x": -26.850155,
-					"y": 19.337500
-				},
-				{
-					"x_con": 150,
-					"y_con": 500
-				},
-				{
-					"x_con": 150,
-					"y_con": 600
-				},
-				{
-					"x_con": 150,
-					"y_con": 800
-				}
-			],
-			"spawn": [
-				{
-					"spacing_offset": -2
-				},
-				{
-					"spacing_offset": 2
-				},
-				{
-					"spacing_offset": -5
-				},
-				{
-					"spacing_offset": -1
-				},
-				{
-					"spacing_offset": 2
-				},
-				{
-					"spacing_offset": -1
-				}
-			]
-		},
-		{
-			"blueprint": true,
-			"smooth": true,
-			"speed_class": -200,
-			"spawn_spacing": 88,
-			"path": [
-				{
-					"x_con": 200,
-					"y_con": 150
-				},
-				{
-					"x_con": 200,
-					"y_con": 200
-				},
-				{
-					"x_con": 200,
-					"y_con": 300
-				},
-				{
-					"x_con": 200,
-					"y_con": 400
-				},
-				{
-					"x_con": 200,
-					"y_con": 500
-				},
-				{
-					"x_con": 200,
-					"y_con": 600
-				},
-				{
-					"x_con": 200,
-					"y_con": 800
-				}
-			],
-			"spawn": [
-				{
-					"spacing_offset": 3
-				},
-				{
-					"spacing_offset": 4
-				},
-				{
-					"spacing_offset": -5
-				},
-				{
-					"spacing_offset": -4
-				},
-				{
-					"spacing_offset": -3
-				}
-			]
-		},
-		{
-			"blueprint": true,
-			"smooth": true,
 			"speed_class": -100,
-			"spawn_spacing": 88,
+			"spawn_spacing": 72,
+			"creation_type": 1,
+			"creation_delay": 0,
 			"path": [
 				{
-					"x_con": 300,
-					"y_con": 150
-				},
-				{
-					"x_con": 300,
-					"y_con": 300
-				},
-				{
-					"x": 12.936218,
-					"y": 24.660294
-				},
-				{
-					"x_con": 300,
-					"y_con": 500
-				},
-				{
-					"x_con": 300,
-					"y_con": 600
-				},
-				{
-					"x_con": 300,
-					"y_con": 800
-				}
-			],
-			"spawn": [
-				{
-					"spacing_offset": -5
-				},
-				{
-					"spacing_offset": 1
-				},
-				{
-					"spacing_offset": -1
-				},
-				{
-					"spacing_offset": 2
-				},
-				{
-					"spacing_offset": -1
-				},
-				{
-					"spacing_offset": -1
-				},
-				{
-					"spacing_offset": -3
-				},
-				{
-					"spacing_offset": -3
-				},
-				{
-					"spacing_offset": -3
-				},
-				{
-					"spacing_offset": -1
-				},
-				{
-					"spacing_offset": -4
-				},
-				{
-					"spacing_offset": 1
-				}
-			]
-		},
-		{
-			"blueprint": true,
-			"smooth": true,
-			"speed_class": 0,
-			"spawn_spacing": 102,
-			"path": [
-				{
-					"x_con": 400,
-					"y_con": 150
-				},
-				{
-					"x_con": 400,
-					"y_con": 200
-				},
-				{
-					"x_con": 400,
-					"y_con": 300
-				},
-				{
-					"x_con": 400,
-					"y_con": 400
-				},
-				{
-					"x_con": 400,
-					"y_con": 500
-				},
-				{
-					"x_con": 400,
-					"y_con": 600
-				},
-				{
-					"x_con": 400,
-					"y_con": 800
-				}
-			],
-			"spawn": [
-				{
-					"spacing_offset": 2
-				},
-				{
-					"spacing_offset": -1
-				},
-				{
-					"spacing_offset": -2
-				},
-				{
-					"spacing_offset": 0
-				},
-				{
-					"spacing_offset": -5
-				},
-				{
-					"spacing_offset": 4
-				},
-				{
-					"spacing_offset": 4
-				},
-				{
-					"spacing_offset": -3
-				},
-				{
-					"spacing_offset": 3
-				},
-				{
-					"spacing_offset": 3
-				},
-				{
-					"spacing_offset": 4
-				},
-				{
-					"spacing_offset": 3
-				},
-				{
-					"spacing_offset": 4
-				},
-				{
-					"spacing_offset": -4
-				},
-				{
-					"spacing_offset": 3
-				},
-				{
-					"spacing_offset": 3
-				},
-				{
-					"spacing_offset": -1
-				},
-				{
-					"spacing_offset": 2
-				},
-				{
-					"spacing_offset": -2
-				},
-				{
-					"spacing_offset": 3
-				},
-				{
-					"spacing_offset": 3
-				},
-				{
-					"spacing_offset": -1
-				},
-				{
-					"spacing_offset": 4
-				},
-				{
-					"spacing_offset": -1
-				},
-				{
-					"spacing_offset": -5
-				},
-				{
-					"spacing_offset": -2
-				},
-				{
-					"spacing_offset": -3
-				},
-				{
-					"spacing_offset": 1
-				},
-				{
-					"spacing_offset": -1
-				},
-				{
-					"spacing_offset": -3
-				},
-				{
-					"spacing_offset": -3
-				},
-				{
-					"spacing_offset": 4
-				}
-			]
-		},
-		{
-			"blueprint": true,
-			"smooth": true,
-			"speed_class": 100,
-			"spawn_spacing": 88,
-			"path": [
-				{
-					"x_con": 500,
-					"y_con": 150
-				},
-				{
-					"x_con": 500,
-					"y_con": 200
-				},
-				{
-					"x_con": 500,
-					"y_con": 300
-				},
-				{
-					"x_con": 500,
+					"x_con": 200,
 					"y_con": 400
 				},
 				{
 					"x_con": 500,
-					"y_con": 500
+					"x_con_offset": -100.000000,
+					"y_con": 100,
+					"y_con_offset": 130.000000,
+					"y_con_target": 0
 				},
 				{
-					"x_con": 500,
-					"y_con": 600
+					"x_con": 100,
+					"x_con_offset": -30.000000,
+					"x_con_target": 3,
+					"y_con": 100,
+					"y_con_offset": 60.000000,
+					"y_con_target": 1
 				},
 				{
-					"x_con": 500,
-					"y_con": 800
-				}
-			],
-			"spawn": [
-				{
-					"spacing_offset": -5
-				}
-			]
-		},
-		{
-			"blueprint": true,
-			"smooth": true,
-			"speed_class": 200,
-			"spawn_spacing": 88,
-			"path": [
-				{
-					"x_con": 600,
-					"y_con": 150
-				},
-				{
-					"x_con": 600,
-					"y_con": 200
-				},
-				{
-					"x_con": 600,
+					"x_con": 700,
+					"x_con_offset": -50.000000,
 					"y_con": 300
 				},
 				{
-					"x_con": 600,
-					"y_con": 400
+					"x_con": 100,
+					"x_con_offset": 50.000000,
+					"x_con_target": 1,
+					"y_con": 300,
+					"y_con_offset": 40.000000
 				},
 				{
-					"x_con": 600,
-					"y_con": 500
-				},
-				{
-					"x_con": 600,
-					"y_con": 600
-				},
-				{
-					"x_con": 600,
-					"y_con": 800
+					"x_con": 500,
+					"y_con": 150
 				}
 			],
 			"spawn": [
 				{
 					"spacing_offset": -2
-				}
-			]
-		},
-		{
-			"blueprint": true,
-			"smooth": true,
-			"speed_class": 300,
-			"spawn_spacing": 88,
-			"path": [
-				{
-					"x_con": 700,
-					"y_con": 150
-				},
-				{
-					"x_con": 700,
-					"y_con": 300
-				},
-				{
-					"x_con": 700,
-					"y_con": 400
-				},
-				{
-					"x_con": 700,
-					"y_con": 500
-				},
-				{
-					"x_con": 700,
-					"y_con": 600
-				},
-				{
-					"x_con": 700,
-					"y_con": 800
-				}
-			],
-			"spawn": [
-				{
-					"spacing_offset": 1
-				}
-			]
-		},
-		{
-			"blueprint": true,
-			"smooth": true,
-			"speed_class": -300,
-			"spawn_spacing": 88,
-			"path": [
-				{
-					"x_con": 800,
-					"y_con": 150
-				},
-				{
-					"x_con": 800,
-					"y_con": 200
-				},
-				{
-					"x_con": 800,
-					"y_con": 400
-				},
-				{
-					"x_con": 800,
-					"y_con": 500
-				},
-				{
-					"x_con": 800,
-					"y_con": 600
-				},
-				{
-					"x_con": 800,
-					"y_con": 800
-				}
-			],
-			"spawn": [
-				{
-					"spacing_offset": 3
-				}
-			]
-		},
-		{
-			"blueprint": true,
-			"smooth": true,
-			"speed_class": -200,
-			"spawn_spacing": 88,
-			"path": [
-				{
-					"x_con": 850,
-					"y_con": 150
-				},
-				{
-					"x_con": 850,
-					"y_con": 200
-				},
-				{
-					"x_con": 850,
-					"y_con": 300
-				},
-				{
-					"x_con": 850,
-					"y_con": 400
-				},
-				{
-					"x_con": 850,
-					"y_con": 500
-				},
-				{
-					"x_con": 850,
-					"y_con": 600
-				},
-				{
-					"x_con": 850,
-					"y_con": 800
-				}
-			],
-			"spawn": [
-				{
-					"spacing_offset": 1
-				}
-			]
-		},
-		{
-			"blueprint": true,
-			"smooth": true,
-			"speed_class": 0,
-			"spawn_spacing": 88,
-			"path": [
-				{
-					"x_con": 300,
-					"y_con": 300
-				},
-				{
-					"x_con": 500,
-					"y_con": 300
-				},
-				{
-					"x_con": 500,
-					"y_con": 400
-				},
-				{
-					"x_con": 300,
-					"y_con": 400
-				},
-				{
-					"x_con": 300,
-					"y_con": 300
-				},
-				{
-					"x_con": 500,
-					"y_con": 300
-				},
-				{
-					"x_con": 500,
-					"y_con": 400
-				},
-				{
-					"x_con": 300,
-					"y_con": 400
-				}
-			],
-			"spawn": [
-				{
-					"spacing_offset": -3
-				}
-			]
-		},
-		{
-			"blueprint": true,
-			"smooth": true,
-			"speed_class": 100,
-			"spawn_spacing": 88,
-			"path": [
-				{
-					"x_con": 850,
-					"y_con": 150
-				},
-				{
-					"x_con": 800,
-					"y_con": 150
-				},
-				{
-					"x_con": 800,
-					"y_con": 200
-				},
-				{
-					"x_con": 850,
-					"y_con": 200
-				},
-				{
-					"x_con": 850,
-					"y_con": 150
-				},
-				{
-					"x_con": 800,
-					"y_con": 150
-				},
-				{
-					"x_con": 800,
-					"y_con": 200
-				},
-				{
-					"x_con": 850,
-					"y_con": 200
-				},
-				{
-					"x_con": 850,
-					"y_con": 150
-				},
-				{
-					"x_con": 800,
-					"y_con": 150
-				},
-				{
-					"x_con": 150,
-					"y_con": 150
-				},
-				{
-					"x_con": 150,
-					"y_con": 200
-				},
-				{
-					"x_con": 200,
-					"y_con": 200
-				},
-				{
-					"x_con": 200,
-					"y_con": 150
-				},
-				{
-					"x_con": 150,
-					"y_con": 150
-				},
-				{
-					"x_con": 150,
-					"y_con": 200
-				},
-				{
-					"x_con": 200,
-					"y_con": 200
-				},
-				{
-					"x_con": 200,
-					"y_con": 150
-				},
-				{
-					"x_con": 150,
-					"y_con": 150
-				},
-				{
-					"x_con": 150,
-					"y_con": 800
-				},
-				{
-					"x_con": 200,
-					"y_con": 800
-				},
-				{
-					"x_con": 200,
-					"y_con": 600
-				},
-				{
-					"x_con": 150,
-					"y_con": 600
-				},
-				{
-					"x_con": 150,
-					"y_con": 800
-				},
-				{
-					"x_con": 200,
-					"y_con": 800
-				},
-				{
-					"x_con": 200,
-					"y_con": 600
-				},
-				{
-					"x_con": 150,
-					"y_con": 600
-				},
-				{
-					"x_con": 150,
-					"y_con": 800
-				},
-				{
-					"x_con": 200,
-					"y_con": 800
-				},
-				{
-					"x_con": 850,
-					"y_con": 800
-				},
-				{
-					"x_con": 850,
-					"y_con": 600
-				},
-				{
-					"x_con": 800,
-					"y_con": 600
-				},
-				{
-					"x_con": 800,
-					"y_con": 800
-				},
-				{
-					"x_con": 850,
-					"y_con": 800
-				},
-				{
-					"x_con": 850,
-					"y_con": 600
-				},
-				{
-					"x_con": 800,
-					"y_con": 600
-				},
-				{
-					"x_con": 800,
-					"y_con": 800
-				},
-				{
-					"x_con": 850,
-					"y_con": 800
-				},
-				{
-					"x_con": 850,
-					"y_con": 150
-				},
-				{
-					"x_con": 800,
-					"y_con": 150
-				},
-				{
-					"x_con": 800,
-					"y_con": 200
-				},
-				{
-					"x_con": 850,
-					"y_con": 200
-				},
-				{
-					"x_con": 850,
-					"y_con": 150
-				},
-				{
-					"x_con": 800,
-					"y_con": 150
-				},
-				{
-					"x_con": 800,
-					"y_con": 200
-				},
-				{
-					"x_con": 850,
-					"y_con": 200
-				}
-			],
-			"spawn": [
-				{
-					"spacing_offset": 1
-				},
-				{
-					"spacing_offset": 3
-				},
-				{
-					"spacing_offset": -1
-				},
-				{
-					"spacing_offset": -3
-				},
-				{
-					"spacing_offset": 0
-				},
-				{
-					"spacing_offset": 3
-				},
-				{
-					"spacing_offset": -1
-				},
-				{
-					"spacing_offset": -1
-				},
-				{
-					"spacing_offset": -1
-				},
-				{
-					"spacing_offset": 2
-				},
-				{
-					"spacing_offset": 4
-				},
-				{
-					"spacing_offset": -1
-				},
-				{
-					"spacing_offset": 3
-				},
-				{
-					"spacing_offset": 3
-				},
-				{
-					"spacing_offset": 2
-				},
-				{
-					"spacing_offset": -3
-				},
-				{
-					"spacing_offset": -1
 				},
 				{
-					"spacing_offset": -4
+					"spacing_offset": -40
 				},
 				{
-					"spacing_offset": 1
+					"spacing_offset": -40
 				},
 				{
-					"spacing_offset": 4
+					"spacing_offset": 80
 				},
 				{
-					"spacing_offset": -1
+					"spacing_offset": 210
 				}
 			]
 		},
 		{
 			"blueprint": true,
 			"smooth": false,
-			"speed_class": 0,
-			"spawn_spacing": 88,
+			"speed_class": -100,
+			"spawn_spacing": 90,
+			"creation_type": 1,
+			"creation_delay": 130,
 			"path": [
 				{
 					"x_con": 200,
-					"y_con": 400
-				},
-				{
-					"x_con": 300,
-					"y_con": 300
-				},
-				{
-					"x_con": 400,
-					"y_con": 400
+					"y_con": 500
 				},
 				{
 					"x_con": 500,
-					"y_con": 300
-				},
-				{
-					"x_con": 600,
-					"y_con": 400
-				},
-				{
-					"x_con": 700,
-					"y_con": 300
-				},
-				{
-					"x_con": 800,
-					"y_con": 400
-				}
-			],
-			"spawn": [
-				{
-					"spacing_offset": 2
-				},
-				{
-					"spacing_offset": -4
-				},
-				{
-					"spacing_offset": 1
-				}
-			]
-		},
-		{
-			"blueprint": true,
-			"smooth": true,
-			"speed_class": 0,
-			"spawn_spacing": 88,
-			"path": [
-				{
-					"x_con": 400,
-					"y_con": 800
-				},
-				{
-					"x_con": 400,
-					"y_con": 600
+					"y_con": 500,
+					"wait": 110
 				},
 				{
 					"x_con": 500,
-					"y_con": 600
-				},
-				{
-					"x_con": 500,
-					"y_con": 800
-				},
-				{
-					"x_con": 400,
-					"y_con": 800
-				},
-				{
-					"x_con": 400,
-					"y_con": 600
-				},
-				{
-					"x_con": 500,
-					"y_con": 600
-				},
-				{
-					"x_con": 500,
-					"y_con": 800
-				}
-			],
-			"spawn": [
-				{
-					"spacing_offset": -3
-				}
-			]
-		},
-		{
-			"blueprint": true,
-			"smooth": true,
-			"speed_class": 0,
-			"spawn_spacing": 88,
-			"path": [
-				{
-					"x_con": 300,
-					"y_con": 300
-				},
-				{
-					"x_con": 400,
-					"y_con": 300
-				},
-				{
-					"x_con": 400,
-					"y_con": 200
-				},
-				{
-					"x_con": 500,
-					"y_con": 200
-				},
-				{
-					"x_con": 500,
-					"y_con": 300
-				},
-				{
-					"x_con": 600,
-					"y_con": 300
-				},
-				{
-					"x_con": 600,
-					"y_con": 200
-				},
-				{
-					"x_con": 700,
-					"y_con": 200
-				},
-				{
-					"x_con": 700,
-					"y_con": 300
+					"y_con": 600,
+					"y_con_offset": -40.000000
 				},
 				{
 					"x_con": 850,
-					"y_con": 300
+					"y_con": 600,
+					"y_con_offset": -40.000000
+				}
+			],
+			"spawn": [
+				{
+					"spacing_offset": -4
 				},
 				{
-					"x_con": 700,
-					"y_con": 500
+					"spacing_offset": 100
+				},
+				{
+					"spacing_offset": 100
+				}
+			]
+		},
+		{
+			"blueprint": true,
+			"smooth": true,
+			"speed_class": 0,
+			"spawn_spacing": 142,
+			"creation_type": 1,
+			"creation_delay": 42,
+			"path": [
+				{
+					"x_con": 150,
+					"y_con": 800
 				},
 				{
 					"x_con": 500,
 					"y_con": 400
 				},
 				{
-					"x_con": 400,
-					"y_con": 500
-				},
-				{
-					"x_con": 200,
-					"y_con": 300
-				},
-				{
-					"x_con": 400,
-					"y_con": 150
+					"x_con": 150,
+					"y_con": 400
 				}
 			],
 			"spawn": [
+				{
+					"spacing_offset": -5
+				},
 				{
 					"spacing_offset": 0
 				}
@@ -976,557 +137,56 @@
 			"blueprint": true,
 			"smooth": true,
 			"speed_class": 0,
-			"spawn_spacing": 88,
+			"spawn_spacing": 142,
+			"creation_type": 0,
+			"creation_delay": 0,
 			"path": [
 				{
-					"x_con": 200,
+					"x_con": 850,
 					"y_con": 800
 				},
 				{
 					"x_con": 500,
 					"y_con": 400
-				},
-				{
-					"x_con": 400,
-					"y_con": 800
-				},
-				{
-					"x_con": 500,
-					"y_con": 400
-				},
-				{
-					"x_con": 500,
-					"y_con": 400
-				},
-				{
-					"x_con": 500,
-					"y_con": 400
-				},
-				{
-					"x_con": 500,
-					"y_con": 400
-				},
-				{
-					"x_con": 500,
-					"y_con": 400
-				},
-				{
-					"x_con": 200,
-					"y_con": 800
-				},
-				{
-					"x_con": 200,
-					"y_con": 800
-				},
-				{
-					"x_con": 200,
-					"y_con": 800
-				},
-				{
-					"x_con": 400,
-					"y_con": 800
-				},
-				{
-					"x_con": 200,
-					"y_con": 800
-				},
-				{
-					"x_con": 400,
-					"y_con": 800
-				},
-				{
-					"x_con": 500,
-					"y_con": 400
-				},
-				{
-					"x_con": 200,
-					"y_con": 800
-				},
-				{
-					"x_con": 400,
-					"y_con": 800
-				},
-				{
-					"x_con": 400,
-					"y_con": 800
-				},
-				{
-					"x_con": 200,
-					"y_con": 800
-				},
-				{
-					"x_con": 200,
-					"y_con": 800
-				},
-				{
-					"x_con": 200,
-					"y_con": 800
-				},
-				{
-					"x_con": 200,
-					"y_con": 800
-				},
-				{
-					"x_con": 500,
-					"y_con": 400
-				},
-				{
-					"x_con": 600,
-					"y_con": 400
-				},
-				{
-					"x_con": 600,
-					"y_con": 500
-				},
-				{
-					"x_con": 500,
-					"y_con": 400
-				},
-				{
-					"x_con": 600,
-					"y_con": 400
-				},
-				{
-					"x_con": 600,
-					"y_con": 500
-				},
-				{
-					"x_con": 500,
-					"y_con": 400
-				},
-				{
-					"x_con": 700,
-					"y_con": 400
-				},
-				{
-					"x_con": 600,
-					"y_con": 500
-				},
-				{
-					"x_con": 500,
-					"y_con": 400
-				},
-				{
-					"x_con": 700,
-					"y_con": 400
-				}
-			],
-			"spawn": [
-				{
-					"spacing_offset": -4
-				},
-				{
-					"spacing_offset": -4
-				},
-				{
-					"spacing_offset": -3
-				},
-				{
-					"spacing_offset": 2
-				},
-				{
-					"spacing_offset": -5
-				},
-				{
-					"spacing_offset": -2
-				},
-				{
-					"spacing_offset": -2
-				},
-				{
-					"spacing_offset": -2
-				},
-				{
-					"spacing_offset": 2
-				},
-				{
-					"spacing_offset": -2
-				},
-				{
-					"spacing_offset": 0
-				},
-				{
-					"spacing_offset": -1
-				},
-				{
-					"spacing_offset": 2
-				},
-				{
-					"spacing_offset": -1
-				},
-				{
-					"spacing_offset": 1
-				},
-				{
-					"spacing_offset": -2
-				},
-				{
-					"spacing_offset": -5
-				},
-				{
-					"spacing_offset": 1
-				},
-				{
-					"spacing_offset": 0
-				},
-				{
-					"spacing_offset": 1
-				},
-				{
-					"spacing_offset": -2
-				}
-			]
-		},
-		{
-			"blueprint": true,
-			"smooth": true,
-			"speed_class": 0,
-			"spawn_spacing": 88,
-			"path": [
-				{
-					"x_con": 200,
-					"y_con": 500
-				},
-				{
-					"x_con": 200,
-					"y_con": 400
-				},
-				{
-					"x_con": 300,
-					"y_con": 300
-				},
-				{
-					"x_con": 300,
-					"y_con": 400
-				},
-				{
-					"x_con": 200,
-					"y_con": 300
-				},
-				{
-					"x_con": 400,
-					"y_con": 200
-				},
-				{
-					"x_con": 400,
-					"y_con": 300
-				},
-				{
-					"x_con": 200,
-					"y_con": 300
-				},
-				{
-					"x_con": 300,
-					"y_con": 200
-				},
-				{
-					"x_con": 500,
-					"y_con": 150
-				},
-				{
-					"x_con": 600,
-					"y_con": 300
-				},
-				{
-					"x_con": 500,
-					"y_con": 300
-				},
-				{
-					"x_con": 500,
-					"y_con": 200
-				},
-				{
-					"x_con": 600,
-					"y_con": 200
-				},
-				{
-					"x_con": 700,
-					"y_con": 200
-				},
-				{
-					"x_con": 800,
-					"y_con": 300
-				},
-				{
-					"x_con": 700,
-					"y_con": 400
-				},
-				{
-					"x_con": 600,
-					"y_con": 300
-				},
-				{
-					"x_con": 700,
-					"y_con": 150
-				},
-				{
-					"x_con": 800,
-					"y_con": 200
-				},
-				{
-					"x_con": 800,
-					"y_con": 400
-				},
-				{
-					"x_con": 600,
-					"y_con": 400
-				},
-				{
-					"x_con": 700,
-					"y_con": 300
-				},
-				{
-					"x_con": 800,
-					"y_con": 300
-				},
-				{
-					"x_con": 800,
-					"y_con": 300
-				},
-				{
-					"x_con": 800,
-					"y_con": 300
-				},
-				{
-					"x_con": 800,
-					"y_con": 300
 				},
 				{
 					"x_con": 850,
-					"y_con": 500
-				},
-				{
-					"x_con": 800,
-					"y_con": 500
-				},
-				{
-					"x_con": 700,
 					"y_con": 400
-				},
-				{
-					"x_con": 800,
-					"y_con": 400
-				},
-				{
-					"x_con": 800,
-					"y_con": 500
-				},
-				{
-					"x_con": 600,
-					"y_con": 600
-				},
-				{
-					"x_con": 500,
-					"y_con": 400
-				},
-				{
-					"x_con": 700,
-					"y_con": 500
-				},
-				{
-					"x_con": 700,
-					"y_con": 600
-				},
-				{
-					"x_con": 500,
-					"y_con": 800
-				},
-				{
-					"x_con": 400,
-					"y_con": 500
-				},
-				{
-					"x_con": 500,
-					"y_con": 600
-				},
-				{
-					"x_con": 400,
-					"y_con": 600
-				},
-				{
-					"x_con": 150,
-					"y_con": 800
-				},
-				{
-					"x_con": 150,
-					"y_con": 500
-				},
-				{
-					"x_con": 300,
-					"y_con": 500
-				},
-				{
-					"x_con": 300,
-					"y_con": 600
-				},
-				{
-					"x_con": 150,
-					"y_con": 600
-				},
-				{
-					"x_con": 150,
-					"y_con": 500
-				},
-				{
-					"x_con": 300,
-					"y_con": 300
-				},
-				{
-					"x_con": 400,
-					"y_con": 500
-				},
-				{
-					"x_con": 200,
-					"y_con": 400
-				},
-				{
-					"x_con": 200,
-					"y_con": 300
-				},
-				{
-					"x_con": 300,
-					"y_con": 300
-				},
-				{
-					"x_con": 300,
-					"y_con": 300
-				},
-				{
-					"x_con": 300,
-					"y_con": 300
-				},
-				{
-					"x_con": 300,
-					"y_con": 300
-				},
-				{
-					"x_con": 300,
-					"y_con": 300
-				},
-				{
-					"x_con": 300,
-					"y_con": 300
-				},
-				{
-					"x_con": 300,
-					"y_con": 300
-				},
-				{
-					"x_con": 300,
-					"y_con": 300
-				},
-				{
-					"x_con": 300,
-					"y_con": 300
-				},
-				{
-					"x_con": 200,
-					"y_con": 200
-				},
-				{
-					"x_con": 300,
-					"y_con": 150
-				},
-				{
-					"x_con": 500,
-					"y_con": 200
-				},
-				{
-					"x_con": 400,
-					"y_con": 300
-				},
-				{
-					"x_con": 300,
-					"y_con": 200
-				},
-				{
-					"x_con": 500,
-					"y_con": 150
-				},
-				{
-					"x_con": 600,
-					"y_con": 200
-				},
-				{
-					"x_con": 600,
-					"y_con": 400
-				},
-				{
-					"x_con": 500,
-					"y_con": 400
-				},
-				{
-					"x_con": 500,
-					"y_con": 300
-				},
-				{
-					"x_con": 600,
-					"y_con": 300
 				}
 			],
 			"spawn": [
 				{
-					"spacing_offset": -3
-				},
-				{
-					"spacing_offset": 3
-				},
-				{
-					"spacing_offset": -5
-				},
-				{
-					"spacing_offset": 0
-				},
-				{
-					"spacing_offset": -1
-				},
-				{
-					"spacing_offset": -4
-				},
-				{
-					"spacing_offset": -2
-				},
-				{
-					"spacing_offset": -3
-				},
-				{
-					"spacing_offset": -2
-				},
-				{
 					"spacing_offset": 2
 				},
 				{
-					"spacing_offset": 2
+					"spacing_offset": -4
+				}
+			]
+		},
+		{
+			"blueprint": true,
+			"smooth": true,
+			"speed_class": 0,
+			"spawn_spacing": 92,
+			"creation_type": 0,
+			"creation_delay": 150,
+			"path": [
+				{
+					"x_con": 500,
+					"y_con": 800
 				},
 				{
-					"spacing_offset": -1
+					"x_con": 500,
+					"y_con": 400
 				},
 				{
-					"spacing_offset": 1
-				},
-				{
-					"spacing_offset": 4
-				},
+					"x_con": 500,
+					"y_con": 800
+				}
+			],
+			"spawn": [
 				{
 					"spacing_offset": -4
-				},
-				{
-					"spacing_offset": 4
-				},
-				{
-					"spacing_offset": 3
-				},
-				{
-					"spacing_offset": -1
-				},
-				{
-					"spacing_offset": 4
-				},
-				{
-					"spacing_offset": -5
-				},
-				{
-					"spacing_offset": -2
 				}
 			]
 		}

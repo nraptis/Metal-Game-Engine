@@ -8,6 +8,7 @@
 
 #include "LevelSectionBlueprint.hpp"
 #include "GameEditor.hpp"
+#include "LevelSection.hpp"
 
 LevelSectionBlueprint::LevelSectionBlueprint() {
     mCurrentWave = NULL;
@@ -19,8 +20,6 @@ LevelSectionBlueprint::~LevelSectionBlueprint() {
 }
 
 void LevelSectionBlueprint::Clear() {
-    
-    
     for (int i=0;i<mWaveList.mCount;i++) {
         LevelWaveBlueprint *aWave = (LevelWaveBlueprint *)mWaveList[i];
         mKillList.Add(aWave);
@@ -126,6 +125,27 @@ int LevelSectionBlueprint::WaveCount(int pIndex) {
         return aWave->mPath.mNodeList.mCount;
     }
     return 0;
+}
+
+void LevelSectionBlueprint::Build() {
+    if (gEditor) {
+        Build(&gEditor->mEditorSection);
+    }
+}
+
+void LevelSectionBlueprint::Build(LevelSection *pSection) {
+    
+    if (pSection == NULL) { return; }
+    
+    pSection->Reset();
+    
+    for (int i=0;i<mWaveList.mCount;i++) {
+        LevelWaveBlueprint *aWaveBlueprint = (LevelWaveBlueprint *)mWaveList[i];
+        LevelWave *aWave = new LevelWave();
+        aWaveBlueprint->Build(aWave);
+        pSection->AddWave(aWave);
+    }
+    
 }
 
 FJSONNode *LevelSectionBlueprint::Save() {

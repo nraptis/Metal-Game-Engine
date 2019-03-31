@@ -47,13 +47,11 @@ public:
     virtual void                                Notify(void *pSender, const char *pNotification) override;
     
     //Everything we BUILD is SECTION...
+    //This is the BLUEPRINT, not the actual section...
     LevelSectionBlueprint                       mSection;
     
-    
-    
-    
-    void                                        RefreshWave();
-    void                                        RefreshWaveSpeed();
+    void                                        RefreshPlayback();
+    void                                        RefreshPlaybackSpeed();
     int                                         mSpeedClassIndex;
     
     
@@ -63,8 +61,6 @@ public:
     
     
     void                                        RefreshSection();
-    
-    
     
     void                                        SetOverlay(FCanvas *pCanvas);
     void                                        SelectClosestObject(float pX, float pY);
@@ -93,15 +89,12 @@ public:
     int                                         WaveCount(int pIndex);
     int                                         WaveIndex();
     
-    
     void                                        SpawnSelect(int pIndex);
     int                                         SpawnIndex();
     LevelWaveSpawnBlueprint                     *SpawnGet();
     
-    
     void                                        OpenPathEditor();
     void                                        ClosePathEditor();
-    
     
     void                                        OpenSpawnMenu();
     void                                        OpenWavePickerMenu();
@@ -176,6 +169,29 @@ public:
     
     int                                         mAutosaveTimer;
     int                                         mEnqueueInitialLoad;
+    
+    
+    
+    
+    
+    //Map to game.
+    //We prefix with EDITOR because these are game control. Not editor internal.
+    //Essentially, it's a fake game that we can look at with our decayed eyeballs.
+    void                                        EditorRestartWave();
+    void                                        EditorRestartSection();
+    
+    bool                                        mEditorWaveLoop;
+    bool                                        mEditorSectionLoop;
+    bool                                        mEditorShowReferenced;
+    bool                                        mEditorPlaybackEnabled;
+    bool                                        mEditorPlaybackWaveOnly;
+    bool                                        mEditorPlaybackFromCurrentWave;
+    
+    LevelSection                                mEditorSection;
+    LevelWave                                   mEditorWave;
+    FList                                       mEditorObjectList;
+    FList                                       mEditorObjectQueue;
+    
     
 };
 

@@ -7,6 +7,7 @@
 //
 
 #include "UISlider.hpp"
+#include "ToolMenu.hpp"
 
 UISlider::UISlider() {
     mPreviousDrawMin = -1;
@@ -279,6 +280,9 @@ void UISlider::Notify(void *pSender, const char *pNotification) {
             }
             SliderDidUpdate();
             gNotify.Post(this, "slider_update");
+            if (mMenu) {
+                mMenu->Notify(this, "slider_update");
+            }
         }
     }
     if (FString("button_click") == pNotification) {

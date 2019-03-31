@@ -20,29 +20,51 @@ EditorMenuSpawn::EditorMenuSpawn(GameEditor *pEditor) : ToolMenu() {
     SetTitle("Spawn (Meta)");
     SetScrollMode(true);
     
+    mGenerationPanel = new ToolMenuPanel();
+    mGenerationPanel->SetTitle("Generation");
+    AddSection(mGenerationPanel);
+    
     mSegmentSpeed = new UISegment();
     mSegmentSpeed->SetSegmentCount(7);
     mSegmentSpeed->SetTitles("XS", "S", "MS", "M", "MF", "F", "XF");
     if (gGame) {
         mSegmentSpeed->SetTarget(&gEditor->mSpeedClassIndex);
     }
-    AddSection(mSegmentSpeed);
-    gNotify.Register(this, mSegmentSpeed, "segment");
+    mGenerationPanel->AddSection(mSegmentSpeed);
     
     
     mStepperSpawnCount = new UIStepper();
     mStepperSpawnCount->SetText("Count");
     mStepperSpawnCount->mMin = 1;
     mStepperSpawnCount->mMax = (MAX_SPAWN_COUNT);
-    gNotify.Register(this, mStepperSpawnCount, "stepper");
-    AddSection(mStepperSpawnCount);
+    mGenerationPanel->AddSection(mStepperSpawnCount);
     
     mStepperSpacing = new UIStepper();
     mStepperSpacing->SetText("Spacing");
     mStepperSpacing->mMin = -1000;
     mStepperSpacing->mMax = 1000;
-    gNotify.Register(this, mStepperSpacing, "stepper");
-    AddSection(mStepperSpacing);
+    mGenerationPanel->AddSection(mStepperSpacing);
+    
+    
+    
+    mTimingPanelPanel = new ToolMenuPanel();
+    mTimingPanelPanel->SetTitle("Timing");
+    AddSection(mTimingPanelPanel);
+    
+    
+    mStepperCreationType = new UISegment();
+    mStepperCreationType->SetSegmentCount(4);
+    mStepperCreationType->SetTitles("P-W-Start", "P-W-End", "P-W-Clear", "Scr-Clear");
+    mTimingPanelPanel->AddSection(mStepperCreationType);
+    
+    
+    mStepperCreationDelay = new UIStepper();
+    mStepperCreationDelay->SetText("Delay");
+    mStepperCreationDelay->mMin = 0;
+    mStepperCreationDelay->mMax = 2048;
+    mTimingPanelPanel->AddSection(mStepperCreationDelay);
+    
+    
 }
 
 EditorMenuSpawn::~EditorMenuSpawn() {
@@ -58,15 +80,14 @@ void EditorMenuSpawn::Layout() {
 
 
 void EditorMenuSpawn::Notify(void *pSender, const char *pNotification) {
-    if (pSender == mSegmentSpeed) {
-        if (gEditor) { gEditor->RefreshWave(); }
-    }
-    if (pSender == mStepperSpawnCount) {
-        if (gEditor) { gEditor->RefreshWave(); }
-    }
-    if (pSender == mStepperSpacing) {
-        if (gEditor) { gEditor->RefreshWave(); }
-    }
+    
+    if (gEditor == NULL) { return; }
+    
+    if (pSender == mSegmentSpeed) { gEditor->RefreshPlayback(); }
+    if (pSender == mStepperSpawnCount) { gEditor->RefreshPlayback(); }
+    if (pSender == mStepperSpacing) { gEditor->RefreshPlayback(); }
+    if (pSender == mStepperCreationType) { gEditor->RefreshPlayback(); }
+    if (pSender == mStepperCreationDelay) { gEditor->RefreshPlayback(); }
 }
 
 void EditorMenuSpawn::Update() {
@@ -75,7 +96,6 @@ void EditorMenuSpawn::Update() {
     if (gEditor) {
         aWave = gEditor->mSection.mCurrentWave;
     }
-    
     
     if (mStepperSpawnCount != NULL) {
         bool aUnlink = true;
@@ -98,5 +118,29 @@ void EditorMenuSpawn::Update() {
             mStepperSpacing->SetTarget(NULL);
         }
     }
+    
+    
+    if (mStepperCreationType != NULL) {
+        bool aUnlink = true;
+        if (aWave != NULL) {
+            aUnlink = false;
+            mStepperCreationType->SetTarget(&(aWave->mCreationType));
+        }
+        if (aUnlink) {
+            mStepperCreationType->SetTarget(NULL);
+        }
+    }
+    
+    if (mStepperCreationDelay != NULL) {
+        bool aUnlink = true;
+        if (aWave != NULL) {
+            aUnlink = false;
+            mStepperCreationDelay->SetTarget(&(aWave->mCreationDelay));
+        }
+        if (aUnlink) {
+            mStepperCreationDelay->SetTarget(NULL);
+        }
+    }
+    \
     
 }

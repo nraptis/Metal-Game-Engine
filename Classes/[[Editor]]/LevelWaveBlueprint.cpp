@@ -20,7 +20,10 @@ LevelWaveBlueprint::LevelWaveBlueprint() {
     mSelectedSpawnIndex = 0;
     
     mSpawnCount = 1;
-    mSpawnSpacing = 88;
+    mSpawnSpacing = 92;
+    
+    mCreationType = WAVE_CREATION_TYPE_PREV_WAVE_START;
+    mCreationDelay = 200;
     
     mKillTimer = 100;
 }
@@ -95,10 +98,8 @@ void LevelWaveBlueprint::ApplyEditorConstraints() {
 }
 
 void LevelWaveBlueprint::Build() {
-    if (gGame) {
-#ifdef EDITOR_MODE
-        Build(&gGame->mEditorWave);
-#endif
+    if (gEditor) {
+        Build(&gEditor->mEditorWave);
     }
 }
 
@@ -110,6 +111,10 @@ void LevelWaveBlueprint::Build(LevelWave *pWave) {
     
     pWave->mPath.mSmooth = mPath.mSmooth;
     pWave->mPath.SetSpeedClass(mPath.mSpeedClass);
+    
+    pWave->mCreationType = mCreationType;
+    pWave->mCreationDelay = mCreationDelay;
+    
     
     for (int i=0;i<mPath.mNodeList.mCount;i++) {
         LevelWavePathBlueprintNode *aNode = (LevelWavePathBlueprintNode *)mPath.mNodeList.mData[i];
@@ -200,7 +205,6 @@ void LevelWaveBlueprint::Build(LevelWave *pWave) {
                 aDiffNextY = -1.0f;
             }
             
-            
             pWave->mPath.AddMove(aNode->mGameX + aDiffBackX * aChamferSize,
                            aNode->mGameY + aDiffBackY * aChamferSize);
             pWave->mPath.AddMove(aNode->mGameX + aDiffNextX * aChamferSize,
@@ -232,6 +236,9 @@ FJSONNode *LevelWaveBlueprint::Save() {
     aExport->AddDictionaryBool("smooth", mPath.mSmooth);
     aExport->AddDictionaryInt("speed_class", mPath.mSpeedClass);
     aExport->AddDictionaryInt("spawn_spacing", mSpawnSpacing);
+    aExport->AddDictionaryInt("creation_type", mCreationType);
+    aExport->AddDictionaryInt("creation_delay", mCreationDelay);
+    
     
     aExport->AddDictionary("path", mPath.Save());
     
@@ -257,10 +264,9 @@ void LevelWaveBlueprint::Load(FJSONNode *pNode) {
     if (pNode == NULL) { return; }
     mPath.mSmooth = pNode->GetBool("smooth", mPath.mSmooth);
     mPath.mSpeedClass = pNode->GetInt("speed_class", mPath.mSpeedClass);
-    
     mSpawnSpacing = pNode->GetInt("spawn_spacing", mSpawnSpacing);
-    //mSpawnCount = pNode->GetInt("spawn_count", mSpawnCount);
-    
+    mCreationType = pNode->GetInt("creation_type", mCreationType);
+    mCreationDelay = pNode->GetInt("creation_delay", mCreationDelay);
     
     mSpawnCount = 0;
     FJSONNode *aSpawnList = pNode->GetArray("spawn");
@@ -272,8 +278,6 @@ void LevelWaveBlueprint::Load(FJSONNode *pNode) {
     }
     if (mSpawnCount <= 0) { mSpawnCount = 1; }
     if (mSpawnCount > MAX_SPAWN_COUNT) { mSpawnCount = MAX_SPAWN_COUNT; }
-    
-    
     
     FJSONNode *aPathNode = pNode->GetArray("path");
     mPath.Load(aPathNode);

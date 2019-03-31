@@ -8,6 +8,8 @@
 
 #include "GameRenderer.hpp"
 #include "Game.hpp"
+#include "GameEditor.hpp"
+
 
 GameRenderer::GameRenderer(Game *pGame, FloatingCamera *pCamera) {
     mGame = pGame;
@@ -138,13 +140,15 @@ void GameRenderer::Draw3D() {
     
     
 #ifdef EDITOR_MODE
-    if (mGame->mEditorShowReferenced) {
-        for (int i=0;i<mGame->mEditorWave.mPath.mNodeList.mCount;i++) {
-            GameObject *aObject = (GameObject *)mGame->mEditorObjectList.Fetch(i);
+    if (gEditor != NULL) {
+    if (gEditor->mEditorShowReferenced) {
+        for (int i=0;i<gEditor->mEditorWave.mPath.mNodeList.mCount;i++) {
+            GameObject *aObject = (GameObject *)gEditor->mEditorObjectList.Fetch(i);
             if (aObject != NULL) {
                 aObject->Draw3D();
             }
         }
+    }
     }
 #endif
     

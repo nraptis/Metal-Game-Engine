@@ -52,6 +52,27 @@ public:
     UIButton                                *mButtonMoveWaveDown;
     
     
+    
+    
+    
+    ToolMenuPanel                           *mPlaybackPanel;
+    ToolMenuSectionRow                      *mRowPlayback1;
+    UICheckBox                              *mCheckBoxPlaybackEnabled;
+    UIButton                                *mButtonPlaybackRestart;
+    
+    ToolMenuSectionRow                      *mRowPlayback2;
+    UICheckBox                              *mCheckBoxCurrentWaveOnly;
+    UICheckBox                              *mCheckBoxPlaybackStartAtSelectedWave;
+    
+    ToolMenuSectionRow                      *mRowPlayback3;
+    
+    
+    
+    
+    
+    
+    
+    
 
     GameEditor                              *mEditor;
     

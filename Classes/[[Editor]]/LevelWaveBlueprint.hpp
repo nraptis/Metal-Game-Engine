@@ -33,6 +33,9 @@ public:
     
     int                                         mSpawnSpacing;
     
+    int                                         mCreationType;
+    int                                         mCreationDelay;
+    
     void                                        ApplyEditorConstraints();
     
     void                                        Build();

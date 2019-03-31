@@ -69,7 +69,7 @@ EditorMenuAttachment::EditorMenuAttachment(GameEditor *pEditor) : ToolMenu() {
     mStepperSpacingOffset->SetText("Spacing Offset");
     mStepperSpacingOffset->mMin = -1000;
     mStepperSpacingOffset->mMax = 1000;
-    gNotify.Register(this, mStepperSpacingOffset, "stepper");
+    //gNotify.Register(this, mStepperSpacingOffset, "stepper");
     mPanelBehavior->AddSection(mStepperSpacingOffset);
     
 
@@ -82,7 +82,7 @@ EditorMenuAttachment::EditorMenuAttachment(GameEditor *pEditor) : ToolMenu() {
     mSegmentRotationSpeed = new UISegment();
     mSegmentRotationSpeed->SetSegmentCount(7);
     mSegmentRotationSpeed->SetTitles("XS", "S", "MS", "M", "MF", "F", "XF");
-    gNotify.Register(this, mSegmentRotationSpeed, "segment");
+    //gNotify.Register(this, mSegmentRotationSpeed, "segment");
     if (gGame) {
         mSegmentRotationSpeed->SetTarget(&gEditor->mSpawnRotationSpeedClassIndex);
     }

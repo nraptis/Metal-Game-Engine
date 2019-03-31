@@ -194,7 +194,7 @@ PGPathEditor *PGMainCanvas::ShowPathEditor(FCanvas *pObserver) {
         mImagePicker = 0;
     }
     mPathEditor = new PGPathEditor();
-    gNotify.Register(pObserver, mPathEditor, "path_edit");
+    //gNotify.Register(pObserver, mPathEditor, "path_edit");
     PushModal(mPathEditor);
     return mPathEditor;
 }
@@ -206,7 +206,7 @@ UIImagePicker *PGMainCanvas::ShowImagePicker(FCanvas *pObserver) {
     }
     mImagePicker = new UIImagePicker();
     mImagePicker->FillWithImages();
-    gNotify.Register(pObserver, mImagePicker, "pick_image");
+    //gNotify.Register(pObserver, mImagePicker, "pick_image");
     PushModal(mImagePicker);
     return mImagePicker;
 }

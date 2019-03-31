@@ -9,6 +9,7 @@
 #include "EditorMenuPath.hpp"
 #include "EditorMenuPath.hpp"
 #include "GamePathEditor.hpp"
+#include "GameEditor.hpp"
 #include "FApp.hpp"
 
 EditorMenuPath::EditorMenuPath(GamePathEditor *pEditor) : ToolMenu() {
@@ -38,10 +39,8 @@ EditorMenuPath::EditorMenuPath(GamePathEditor *pEditor) : ToolMenu() {
     
     mCheckBoxPreview = new UICheckBox();
     mCheckBoxPreview->SetText("References");
-    if (gGame != NULL) {
-#ifdef EDITOR_MODE
-        mCheckBoxPreview->SetTarget(&gGame->mEditorShowReferenced);
-#endif
+    if (gEditor != NULL) {
+        mCheckBoxPreview->SetTarget(&gEditor->mEditorShowReferenced);
     }
     mRowVisuals->AddCheckBox(mCheckBoxPreview);
     
@@ -52,12 +51,12 @@ EditorMenuPath::EditorMenuPath(GamePathEditor *pEditor) : ToolMenu() {
     mStepperWait = new UIStepper();
     mStepperWait->SetText("Wait:");
     mPointsPanel->AddSection(mStepperWait);
-    gNotify.Register(this, mStepperWait, "stepper");
+    //gNotify.Register(this, mStepperWait, "stepper");
     
     mStepperChamfer = new UIStepper();
     mStepperChamfer->SetText("Chamfer:");
     mPointsPanel->AddSection(mStepperChamfer);
-    gNotify.Register(this, mStepperChamfer, "stepper");
+    //gNotify.Register(this, mStepperChamfer, "stepper");
     
     mRowPointOptions = new ToolMenuSectionRow();
     mPointsPanel->AddSection(mRowPointOptions);

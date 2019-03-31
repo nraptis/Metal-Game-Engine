@@ -21,6 +21,7 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     SetTitle("Section");
     SetScrollMode(true);
     
+    
     mRowMain1 = new ToolMenuSectionRow();
     AddSection(mRowMain1);
     
@@ -125,6 +126,50 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     
     
     
+    
+    mPlaybackPanel = new ToolMenuPanel();
+    mPlaybackPanel->SetTitle("Playback");
+    AddSection(mPlaybackPanel);
+    
+    mRowPlayback1 = new ToolMenuSectionRow();
+    mPlaybackPanel->AddSection(mRowPlayback1);
+    
+    
+    
+    mCheckBoxPlaybackEnabled = new UICheckBox();
+    mCheckBoxPlaybackEnabled->SetText("Play...");
+    mCheckBoxPlaybackEnabled->SetTarget(&mEditor->mEditorPlaybackEnabled);
+    mRowPlayback1->AddCheckBox(mCheckBoxPlaybackEnabled);
+    
+    
+    mButtonPlaybackRestart = new UIButton();
+    mButtonPlaybackRestart->SetText("Restart");
+    mRowPlayback1->AddButton(mButtonPlaybackRestart);
+    
+    
+    //mCheckBoxPlaybackEnabled
+    //mButtonPlaybackRestart
+    //mCheckBoxPlaybackStartAtSelectedWave
+    //mCheckBoxCurrentWaveOnly
+    
+    
+    mRowPlayback2 = new ToolMenuSectionRow();
+    mPlaybackPanel->AddSection(mRowPlayback2);
+    
+    mCheckBoxPlaybackStartAtSelectedWave = new UICheckBox();
+    mCheckBoxPlaybackStartAtSelectedWave->SetText("From Selected");
+    mCheckBoxPlaybackStartAtSelectedWave->SetTarget(&mEditor->mEditorPlaybackFromCurrentWave);
+    mRowPlayback2->AddCheckBox(mCheckBoxPlaybackStartAtSelectedWave);
+    
+    mCheckBoxCurrentWaveOnly = new UICheckBox();
+    mCheckBoxCurrentWaveOnly->SetText("Wave Only");
+    mCheckBoxCurrentWaveOnly->SetTarget(&mEditor->mEditorPlaybackWaveOnly);
+    mRowPlayback2->AddCheckBox(mCheckBoxCurrentWaveOnly);
+    
+    mRowPlayback3 = new ToolMenuSectionRow();
+    mPlaybackPanel->AddSection(mRowPlayback3);
+    
+    
     DeactivateCloseButton();
 }
 
@@ -139,43 +184,34 @@ void EditorMenuSections::Layout() {
 
 
 void EditorMenuSections::Notify(void *pSender, const char *pNotification) {
-    if (FString(pNotification) == "button_click") {
-        if (pSender == mButtonEditPaths) { mEditor->OpenPathEditor(); }
-        if (pSender == mButtonAddWave) { mEditor->WaveAdd(); }
-        if (pSender == mButtonDeleteWave) { mEditor->WaveRemove(); }
-        
-        if (pSender == mButtonMoveWaveUp) { mEditor->WaveMoveUp(); }
-        if (pSender == mButtonMoveWaveDown) { mEditor->WaveMoveDown(); }
-        
-        if (pSender == mButtonClear) { mEditor->Clear(); }
-        if (pSender == mButtonLoadCleared) { mEditor->LoadCleared(); }
-        
-        if (pSender == mButtonShowSpawn) { mEditor->OpenSpawnMenu(); }
-        if (pSender == mButtonShowWavePicker) { mEditor->OpenWavePickerMenu(); }
-        if (pSender == mButtonShowSpawnPicker) { mEditor->OpenSpawnPickerMenu(); }
-        
-        if (pSender == mButtonShowAttachments) { mEditor->OpenAttachmentMenu(); }
-        
-        
-        
-        
-    }
+    if (pSender == mButtonEditPaths) { mEditor->OpenPathEditor(); }
+    if (pSender == mButtonAddWave) { mEditor->WaveAdd(); }
+    if (pSender == mButtonDeleteWave) { mEditor->WaveRemove(); }
     
-    if (FString(pNotification) == "segment") {
-        UISegment *aSegment = (UISegment *)pSender;
-        
-    }
+    if (pSender == mButtonMoveWaveUp) { mEditor->WaveMoveUp(); }
+    if (pSender == mButtonMoveWaveDown) { mEditor->WaveMoveDown(); }
+    
+    if (pSender == mButtonClear) { mEditor->Clear(); }
+    if (pSender == mButtonLoadCleared) { mEditor->LoadCleared(); }
+    
+    if (pSender == mButtonShowSpawn) { mEditor->OpenSpawnMenu(); }
+    if (pSender == mButtonShowWavePicker) { mEditor->OpenWavePickerMenu(); }
+    if (pSender == mButtonShowSpawnPicker) { mEditor->OpenSpawnPickerMenu(); }
+    
+    if (pSender == mButtonShowAttachments) { mEditor->OpenAttachmentMenu(); }
+    
+    
+    
+    if (pSender == mCheckBoxCurrentWaveOnly) { mEditor->RefreshPlayback(); }
+    if (pSender == mButtonPlaybackRestart) { mEditor->RefreshPlayback(); }
+    if (pSender == mCheckBoxPlaybackStartAtSelectedWave) { mEditor->RefreshPlayback(); }
+    
+    
+    
 }
 
 void EditorMenuSections::Update() {
-    
-    if (gGame != NULL) {
-#ifdef EDITOR_MODE
-        mCheckBoxPreview->SetTarget(&gGame->mEditorShowReferenced);
-#else
-        mCheckBoxPreview->SetTarget(NULL);
-#endif
+    if (gEditor != NULL) {
+        mCheckBoxPreview->SetTarget(&gEditor->mEditorShowReferenced);
     }
-    
-    
 }

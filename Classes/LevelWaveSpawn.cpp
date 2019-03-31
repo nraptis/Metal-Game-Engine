@@ -63,7 +63,20 @@ void LevelWaveSpawn::Reset() {
     mBaseX = 0.0f;
     mBaseY = 0.0f;
     mDistanceTraveled = 0.0f;
-    
+}
+
+void LevelWaveSpawn::Restart() {
+    if (mObject) {
+        mObject->Kill();
+        mObject = NULL;
+    }
+    mPathIndex = 0;
+    mIsComplete = false;
+    mOffsetSpawnDistance = 0.0f;
+    mBaseX = 0.0f;
+    mBaseY = 0.0f;
+    mDistanceTraveled = 0.0f;
+    mKillTimer = 8;
 }
 
 void LevelWaveSpawn::Update() {

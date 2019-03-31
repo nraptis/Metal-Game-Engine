@@ -11,39 +11,44 @@
 #include "GameLevelController.hpp"
 
 LevelSection::LevelSection() {
-    mCurrentWave = NULL;
-    mCurrentWaveIndex = 0;
+    mCandidateWave = NULL;
+    mCandidateWaveDelay = 0;
+    mCandidateWaveIndex = 0;
     
     mIsComplete = false;
-    
     mDelay = 100;
-    
     mKillTimer = 8;
+    
+    mStartWaveIndex = 0;
 }
 
 LevelSection::~LevelSection() {
     FreeList(LevelWave, mWaveList);
     FreeList(LevelWave, mKillList);
+    mActiveWaveList.RemoveAll();
 }
 
 void LevelSection::Reset() {
+    mActiveWaveList.RemoveAll();
     EnumList(LevelWave, aWave, mWaveList) {
         mKillList.Add(aWave);
     }
     mWaveList.RemoveAll();
-    mCurrentWaveIndex = 0;
+    mCandidateWaveIndex = mStartWaveIndex;
+    mCandidateWave = NULL;
+    mCandidateWaveDelay = 0;
 }
 
 void LevelSection::Restart() {
-    
-    mCurrentWave = NULL;
-    mCurrentWaveIndex = 0;
-    
+    mRemoveActiveWaveList.RemoveAll();
+    mActiveWaveList.RemoveAll();
+    mCandidateWaveIndex = mStartWaveIndex;
+    mCandidateWave = NULL;
+    mCandidateWaveDelay = 0;
 }
 
 void LevelSection::Spawn() {
     Log("LevelSection::Spawn()\n");
-    
 }
 
 void LevelSection::Update() {
@@ -58,28 +63,119 @@ void LevelSection::Update() {
         return;
     }
     
-    if (mCurrentWave == NULL) {
-        if (mCurrentWaveIndex < mWaveList.mCount) {
-            mCurrentWave = (LevelWave *)(mWaveList[mCurrentWaveIndex++]);
-            mCurrentWave->Spawn();
+    if (mCandidateWave == NULL) {
+        mCandidateWave = (LevelWave *)mWaveList.Fetch(mCandidateWaveIndex);
+        if (mCandidateWave != NULL) {
+            
+            if (mCandidateWaveIndex > mStartWaveIndex) {
+                mCandidateWaveDelay = mCandidateWave->mCreationDelay;
+            } else {
+                mCandidateWaveDelay = 0;
+            }
+            
+            ++mCandidateWaveIndex;
             
         }
     }
     
-    if (mCurrentWave != NULL) {
-        mCurrentWave->Update();
-        if (mCurrentWave->mIsComplete) {
-            DisposeWave(mCurrentWave);
+    
+    
+    if (mCandidateWave != NULL) {
+        
+        bool aCanSpawnWave = false;
+        
+        
+        
+       
+        
+        if (mCandidateWave->mCreationType == WAVE_CREATION_TYPE_PREV_WAVE_END ||
+            mCandidateWave->mCreationType == WAVE_CREATION_TYPE_PREV_WAVE_CLEAR) {
+            
+            bool aAllComplete = true;
+            
+            EnumList(LevelWave, aWave, mActiveWaveList) {
+                if (aWave->mIsComplete == false) {
+                    aAllComplete = false;
+                }
+            }
+            
+            if (aAllComplete) {
+                if (mCandidateWave->mCreationType == WAVE_CREATION_TYPE_PREV_WAVE_END) {
+                    aCanSpawnWave = true;
+                }
+                if (mCandidateWave->mCreationType == WAVE_CREATION_TYPE_PREV_WAVE_CLEAR) {
+                    if (gGame->IsWaveClearForSpawn()) {
+                        aCanSpawnWave = true;
+                    }
+                }
+            }
+        } else if (mCandidateWave->mCreationType == WAVE_CREATION_TYPE_SCREEN_CLEAR) {
+            if (gGame->IsScreenClearForSpawn()) {
+                aCanSpawnWave = true;
+            }
+        } else {//}  if (mCandidateWave->mCreationType == WAVE_CREATION_TYPE_PREV_WAVE_START) {
+            aCanSpawnWave = true;
+        }
+        
+        
+        
+        
+        if (aCanSpawnWave) {
+            
+            
+            if (mCandidateWaveDelay > 0) {
+                mCandidateWaveDelay--;
+                printf("mCandidateWaveDelay = %d\n", mCandidateWaveDelay);
+            } else {
+                
+                printf("Spawn Candidate Wave... [%d]\n", mCandidateWaveIndex - 1);
+                mActiveWaveList.Add(mCandidateWave);
+                mCandidateWave->Prepare();
+                mCandidateWave = NULL;
+                
+                
+                //TODO: Probe forward and spawn every
+                //wave with
+                // ->mCreationType == WAVE_CREATION_TYPE_PREV_WAVE_START
+                // &&  ->mCreationDelay == 0
+                //
+                
+                bool aCheckAhead = true;
+                
+                while (aCheckAhead == true) {
+                    aCheckAhead = false;
+                    
+                    LevelWave *aCheckWave = (LevelWave *)mWaveList.Fetch(mCandidateWaveIndex);
+                    if (aCheckWave != NULL) {
+                        if (aCheckWave->mCreationType == WAVE_CREATION_TYPE_PREV_WAVE_START
+                            && aCheckWave->mCreationDelay == 0) {
+                            printf("Spawn Subsequent Wave... [%d]\n", mCandidateWaveIndex);
+                            mActiveWaveList.Add(aCheckWave);
+                            aCheckWave->Prepare();
+                            aCheckAhead = true;
+                            ++mCandidateWaveIndex;
+                        }
+                    }
+                }
+            }
         }
     }
     
     
-    
-    
+    EnumList(LevelWave, aWave, mActiveWaveList) {
+        aWave->Update();
+        if (aWave->mIsComplete) {
+            mRemoveActiveWaveList.Add(aWave);
+        }
+    }
+    EnumList(LevelWave, aWave, mRemoveActiveWaveList) {
+        mActiveWaveList.Remove(aWave);
+    }
+    mRemoveActiveWaveList.RemoveAll();
     
     
     EnumList(LevelWave, aWave, mKillList) {
-        if (mCurrentWave == aWave) { mCurrentWave = NULL; }
+        if (mCandidateWave == aWave) { mCandidateWave = NULL; }
         aWave->mKillTimer--;
         if (aWave->mKillTimer <= 0) { mDeleteList.Add(aWave); }
     }
@@ -88,31 +184,18 @@ void LevelSection::Update() {
         delete aWave;
     }
     mDeleteList.RemoveAll();
-    
 }
 
 void LevelSection::Draw() {
     
 }
 
-void LevelSection::Dispose() {
-    
-}
-
 void LevelSection::DisposeObject(GameObject *pObject) {
-    
-}
-
-void LevelSection::DisposeWave(LevelWave *pLevelWave) {
-    Log("Dispose Wave: [%X]\n", pLevelWave);
-    if (pLevelWave == mCurrentWave) {
-        mCurrentWave = NULL;
+    EnumList(LevelWave, aWave, mWaveList) {
+        aWave->DisposeObject(pObject);
     }
-    
 }
 
 void LevelSection::AddWave(LevelWave *pLevelWave) {
- 
     mWaveList.Add(pLevelWave);
-    
 }

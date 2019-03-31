@@ -7,7 +7,7 @@
 //
 
 #include "UIStepper.hpp"
-
+#include "ToolMenu.hpp"
 
 UIStepper::UIStepper() {
     mValue = 0;
@@ -219,6 +219,9 @@ void UIStepper::SetValue(int pValue) {
     
     if (aNotify) {
         gNotify.Post(this, "stepper");
+        if (mMenu) {
+            mMenu->Notify(this, "stepper");
+        }
     }
 }
 
@@ -252,10 +255,7 @@ void UIStepper::Notify(void *pSender, const char *pNotification) {
         if (pSender == &mButtonSub1) { SetValue(mValue - 1); }
         if (pSender == &mButtonSub10) { SetValue(mValue - 10); }
         if (pSender == &mButtonSub50) { SetValue(mValue - 50); }
-        
     }
-    
-    
 }
 
 void UIStepper::SetText(const char *pText) {

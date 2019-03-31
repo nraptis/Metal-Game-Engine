@@ -12,6 +12,7 @@
 #include "LevelWaveBlueprint.hpp"
 #include "FList.hpp"
 
+class LevelSection;
 class LevelSectionBlueprint {
 public:
     LevelSectionBlueprint();
@@ -35,6 +36,10 @@ public:
     
     FList                                       mWaveList;
     LevelWaveBlueprint                          *mCurrentWave;
+    
+    
+    void                                        Build();
+    void                                        Build(LevelSection *pSection);
     
     
     FJSONNode                                   *Save();

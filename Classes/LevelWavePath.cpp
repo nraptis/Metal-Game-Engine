@@ -39,6 +39,10 @@ LevelWavePath::LevelWavePath() {
     
     mTestPer = 0.0f;
     mDemoIndex = 0;
+    
+    mTempX = 0.0f;
+    mTempY = 0.0f;
+    mTempDist = 0.0f;
 }
 
 LevelWavePath::~LevelWavePath() {

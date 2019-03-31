@@ -23,9 +23,18 @@ public:
     
     GameEditor                              *mEditor;
     
+    ToolMenuPanel                           *mGenerationPanel;
     UISegment                               *mSegmentSpeed;
     UIStepper                               *mStepperSpawnCount;
     UIStepper                               *mStepperSpacing;
+    
+    
+    ToolMenuPanel                           *mTimingPanelPanel;
+    UISegment                               *mStepperCreationType;
+    UIStepper                               *mStepperCreationDelay;
+    
+    
+    
 };
 
 #endif

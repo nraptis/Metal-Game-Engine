@@ -7,6 +7,7 @@
 //
 
 #include "UISegment.hpp"
+#include "ToolMenu.hpp"
 
 UISegment::UISegment() {
     mTarget = 0;
@@ -132,6 +133,11 @@ void UISegment::Notify(void *pSender, const char *pNotification) {
                 mButton[mSelectedIndex]->SetSelected(true);
                 if (mTarget) { *mTarget = mSelectedIndex; }
                 gNotify.Post(this, "segment");
+                
+                if (mMenu) {
+                    mMenu->Notify(this, "segment");
+                }
+                
             }
         }
     }

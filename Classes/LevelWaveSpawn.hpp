@@ -22,7 +22,9 @@ public:
     virtual ~LevelWaveSpawn();
     
     void                                Spawn();
+    
     void                                Reset();
+    void                                Restart();
     
     void                                Update();
     void                                Draw();
