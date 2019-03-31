@@ -1,9 +1,0 @@
-{
-    "fruit": "Apple",
-    "size": false,
-    "color": {
-        "Turks": [19, "poo", [true,true,false], 14, 16],
-        "Geeks": "Winner"
-    }
-}
-

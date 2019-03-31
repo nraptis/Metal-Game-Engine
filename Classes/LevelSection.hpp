@@ -20,7 +20,6 @@ public:
     void                                Reset();
     void                                Restart();
     
-    
     void                                Spawn();
     void                                Update();
     void                                Draw();
@@ -50,6 +49,8 @@ public:
     
     //We ourselves are killed by external controller.
     int                                 mKillTimer;
+    
+    void                                Load(const char *pFile);
     
 };
 

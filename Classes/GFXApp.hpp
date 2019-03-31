@@ -30,9 +30,6 @@ class LevelSelectorScreen;
 class LightMenu;
 class CameraMenu;
 class SoundConfigMenu;
-
-
-
 class GameContainer;
 
 class GFXApp : public FApp {
@@ -64,7 +61,6 @@ public:
     GameEditor                              *mEditor;
 #endif
     
-    
     void                                    Draw3D();
     void                                    Draw2D();
     
@@ -72,17 +68,13 @@ public:
     
     CameraMenu                              *mCameraMenu;
     
-    
     SoundConfigMenu                         *mSoundMenu;
-    
-    
     
     FModelData                              mSnail;
     FSprite                                 mSnailMap;
     
     FModelDataPacked                        mRocket;
     FSprite                                 mRocketMap;
-    
     
     FModelDataPacked                        mGround;
     FSprite                                 mGroundMixedMap;

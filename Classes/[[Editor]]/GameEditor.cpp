@@ -45,6 +45,8 @@ GameEditor::GameEditor(Game *pGame) {
     
     
     mPathEditor = NULL;
+    mFormationEditor = NULL;
+    
     
     mToolContainer = new FCanvas();
     mToolContainer->mConsumesTouches = false;
@@ -82,9 +84,6 @@ GameEditor::~GameEditor() {
         gEditor = NULL;
     }
 }
-
-
-
 
 void GameEditor::Layout() {
     
@@ -150,12 +149,6 @@ void GameEditor::Layout() {
     mCenterH = aCenter.mX;
     mCenterV = aCenter.mY;
     
-    
-    
-    
-    
-    
-    
 }
 
 void GameEditor::Update() {
@@ -190,7 +183,7 @@ void GameEditor::Update() {
     
     
     
-
+    
     
     int aRequiredTestObjectCount = mEditorWave.mPath.mNodeList.mCount;
     
@@ -219,28 +212,44 @@ void GameEditor::Update() {
         }
     }
     
-    if (mEditorPlaybackEnabled) {
-        if (mEditorPlaybackWaveOnly) {
-            mEditorWave.Update();
-            if (mEditorWave.mIsComplete) {
-                if (mEditorWaveLoop) {
-                    mEditorWave.Restart();
+    
+    bool aIsOnMainTools = (mOverlay == mToolContainer);
+    bool aIsOnPathTools = (mOverlay == mPathEditor);
+    
+    if (aIsOnMainTools || aIsOnPathTools) {
+        if (mEditorPlaybackEnabled) {
+            if (mEditorPlaybackWaveOnly) {
+                mEditorWave.Update();
+                if (mEditorWave.mIsComplete) {
+                    if (mEditorWaveLoop) {
+                        mEditorWave.Restart();
+                    }
                 }
-            }
-        } else {
-            mEditorSection.Update();
-            if (mEditorSection.mIsComplete) {
-                if (mEditorSectionLoop) {
-                    mEditorSection.Restart();
+            } else {
+                mEditorSection.Update();
+                if (mEditorSection.mIsComplete) {
+                    if (mEditorSectionLoop) {
+                        mEditorSection.Restart();
+                    }
                 }
             }
         }
+    }else {
+        mEditorWave.Reset();
+        mEditorSection.Reset();
+        
     }
 }
 
 void GameEditor::Draw() {
     
     if (gGame == NULL) { return; }
+    
+    bool aIsOnMainTools = (mOverlay == mToolContainer);
+    bool aIsOnPathTools = (mOverlay == mPathEditor);
+    
+    
+    
     
     gGame->DrawTransform();
     
@@ -254,61 +263,58 @@ void GameEditor::Draw() {
     
     Graphics::PipelineStateSetShape2DAlphaBlending();
     
-    Graphics::SetColor(0.0125f, 0.0125f, 0.0125f, 0.65f);
-    Graphics::DrawRect(0.0f, 0.0f, mGameAreaLeft, gDeviceHeight);
-    Graphics::DrawRect(mGameAreaLeft, 0.0f, mGameAreaRight - mGameAreaLeft, mGameAreaTop);
-    Graphics::DrawRect(mGameAreaLeft, mGameAreaBottom, mGameAreaRight - mGameAreaLeft, gDeviceHeight - mGameAreaBottom);
-    Graphics::DrawRect(mGameAreaLeft + (mGameAreaRight - mGameAreaLeft), 0.0f, gDeviceWidth - (mGameAreaLeft + (mGameAreaRight - mGameAreaLeft)), gDeviceHeight);
+    if (aIsOnMainTools || aIsOnPathTools) {
+        Graphics::SetColor(0.0125f, 0.0125f, 0.0125f, 0.65f);
+        Graphics::DrawRect(0.0f, 0.0f, mGameAreaLeft, gDeviceHeight);
+        Graphics::DrawRect(mGameAreaLeft, 0.0f, mGameAreaRight - mGameAreaLeft, mGameAreaTop);
+        Graphics::DrawRect(mGameAreaLeft, mGameAreaBottom, mGameAreaRight - mGameAreaLeft, gDeviceHeight - mGameAreaBottom);
+        Graphics::DrawRect(mGameAreaLeft + (mGameAreaRight - mGameAreaLeft), 0.0f, gDeviceWidth - (mGameAreaLeft + (mGameAreaRight - mGameAreaLeft)), gDeviceHeight);
+        
+        
+        
+        
+        float aMarkerMult = 0.75f;
+        float aMarkerOpacity = 0.4f;
+        
+        Graphics::SetColor(0.125f * aMarkerMult, 1.0f * aMarkerMult, 0.056f * aMarkerMult, aMarkerOpacity);
+        Graphics::DrawLine(mSpawnZoneLeft, mSpawnZoneTop, mSpawnZoneRight, mSpawnZoneTop);
+        Graphics::DrawLine(mSpawnZoneLeft, mSpawnZoneTop, mSpawnZoneLeft, mSpawnZoneBottom);
+        Graphics::DrawLine(mSpawnZoneRight, mSpawnZoneTop, mSpawnZoneRight, mSpawnZoneBottom);
+        
+        Graphics::SetColor(0.65f * aMarkerMult, 0.65f * aMarkerMult, 0.105f * aMarkerMult, aMarkerOpacity);
+        Graphics::DrawLine(mPeekZoneLeft, mPeekZoneTop, mPeekZoneRight, mPeekZoneTop);
+        Graphics::DrawLine(mPeekZoneLeft, mPeekZoneTop, mPeekZoneLeft, mPlayZoneBottom);
+        Graphics::DrawLine(mPeekZoneRight, mPeekZoneTop, mPeekZoneRight, mPlayZoneBottom);
+        
+        Graphics::SetColor(0.125f * aMarkerMult, 0.125f * aMarkerMult, 0.85f * aMarkerMult, aMarkerOpacity);
+        Graphics::DrawLine(mCenterH, mSpawnZoneTop, mCenterH, mSpawnZoneBottom);
+        Graphics::DrawLine(mSpawnZoneLeft, mCenterV, mSpawnZoneRight, mCenterV);
+        
+        Graphics::SetColor(0.125f * aMarkerMult, 0.125f * aMarkerMult, 0.65f * aMarkerMult, aMarkerOpacity);
+        Graphics::DrawLine(mQuarterZoneLeft, mQuarterZoneTop, mQuarterZoneRight, mQuarterZoneTop);
+        Graphics::DrawLine(mQuarterZoneLeft, mQuarterZoneBottom, mQuarterZoneRight, mQuarterZoneBottom);
+        Graphics::DrawLine(mQuarterZoneLeft, mQuarterZoneTop, mQuarterZoneLeft, mQuarterZoneBottom);
+        Graphics::DrawLine(mQuarterZoneRight, mQuarterZoneTop, mQuarterZoneRight, mQuarterZoneBottom);
+        
+        Graphics::SetColor(0.55f * aMarkerMult, 0.05f * aMarkerMult, 0.05f * aMarkerMult, aMarkerOpacity);
+        Graphics::DrawLine(mExitZoneLeft, mExitZoneTop, mExitZoneRight, mExitZoneTop);
+        Graphics::DrawLine(mExitZoneLeft, mExitZoneTop, mExitZoneLeft, mPlayZoneBottom);
+        Graphics::DrawLine(mExitZoneRight, mExitZoneTop, mExitZoneRight, mPlayZoneBottom);
+        
+        Graphics::SetColor(0.15f * aMarkerMult, 0.15f * aMarkerMult, 0.15f * aMarkerMult, aMarkerOpacity);
+        Graphics::DrawLine(mGameAreaLeft, mGameAreaTop, mGameAreaRight, mGameAreaTop);
+        Graphics::DrawLine(mGameAreaLeft, mGameAreaBottom, mGameAreaRight, mGameAreaBottom);
+        Graphics::DrawLine(mGameAreaLeft, mGameAreaTop, mGameAreaLeft, mGameAreaBottom);
+        Graphics::DrawLine(mGameAreaRight, mGameAreaTop, mGameAreaRight, mGameAreaBottom);
+        
+        
+        Graphics::SetColor();
+        mSection.Draw();
+        
+    }
     
     
     
-    
-    //Graphics::PipelineStateSetShape2DAlphaBlending();
-    //Graphics::SetColor();
-    //Graphics::DrawRect(0.0f, 0.0f, mWidth, mHeight);
-    
-    
-    
-    
-    
-    
-    float aMarkerMult = 0.75f;
-    float aMarkerOpacity = 0.4f;
-    
-    Graphics::SetColor(0.125f * aMarkerMult, 1.0f * aMarkerMult, 0.056f * aMarkerMult, aMarkerOpacity);
-    Graphics::DrawLine(mSpawnZoneLeft, mSpawnZoneTop, mSpawnZoneRight, mSpawnZoneTop);
-    Graphics::DrawLine(mSpawnZoneLeft, mSpawnZoneTop, mSpawnZoneLeft, mSpawnZoneBottom);
-    Graphics::DrawLine(mSpawnZoneRight, mSpawnZoneTop, mSpawnZoneRight, mSpawnZoneBottom);
-    
-    Graphics::SetColor(0.65f * aMarkerMult, 0.65f * aMarkerMult, 0.105f * aMarkerMult, aMarkerOpacity);
-    Graphics::DrawLine(mPeekZoneLeft, mPeekZoneTop, mPeekZoneRight, mPeekZoneTop);
-    Graphics::DrawLine(mPeekZoneLeft, mPeekZoneTop, mPeekZoneLeft, mPlayZoneBottom);
-    Graphics::DrawLine(mPeekZoneRight, mPeekZoneTop, mPeekZoneRight, mPlayZoneBottom);
-    
-    Graphics::SetColor(0.125f * aMarkerMult, 0.125f * aMarkerMult, 0.85f * aMarkerMult, aMarkerOpacity);
-    Graphics::DrawLine(mCenterH, mSpawnZoneTop, mCenterH, mSpawnZoneBottom);
-    Graphics::DrawLine(mSpawnZoneLeft, mCenterV, mSpawnZoneRight, mCenterV);
-    
-    Graphics::SetColor(0.125f * aMarkerMult, 0.125f * aMarkerMult, 0.65f * aMarkerMult, aMarkerOpacity);
-    Graphics::DrawLine(mQuarterZoneLeft, mQuarterZoneTop, mQuarterZoneRight, mQuarterZoneTop);
-    Graphics::DrawLine(mQuarterZoneLeft, mQuarterZoneBottom, mQuarterZoneRight, mQuarterZoneBottom);
-    Graphics::DrawLine(mQuarterZoneLeft, mQuarterZoneTop, mQuarterZoneLeft, mQuarterZoneBottom);
-    Graphics::DrawLine(mQuarterZoneRight, mQuarterZoneTop, mQuarterZoneRight, mQuarterZoneBottom);
-    
-    Graphics::SetColor(0.55f * aMarkerMult, 0.05f * aMarkerMult, 0.05f * aMarkerMult, aMarkerOpacity);
-    Graphics::DrawLine(mExitZoneLeft, mExitZoneTop, mExitZoneRight, mExitZoneTop);
-    Graphics::DrawLine(mExitZoneLeft, mExitZoneTop, mExitZoneLeft, mPlayZoneBottom);
-    Graphics::DrawLine(mExitZoneRight, mExitZoneTop, mExitZoneRight, mPlayZoneBottom);
-    
-    Graphics::SetColor(0.15f * aMarkerMult, 0.15f * aMarkerMult, 0.15f * aMarkerMult, aMarkerOpacity);
-    Graphics::DrawLine(mGameAreaLeft, mGameAreaTop, mGameAreaRight, mGameAreaTop);
-    Graphics::DrawLine(mGameAreaLeft, mGameAreaBottom, mGameAreaRight, mGameAreaBottom);
-    Graphics::DrawLine(mGameAreaLeft, mGameAreaTop, mGameAreaLeft, mGameAreaBottom);
-    Graphics::DrawLine(mGameAreaRight, mGameAreaTop, mGameAreaRight, mGameAreaBottom);
-    
-    
-    Graphics::SetColor();
-    mSection.Draw();
     
     
     
@@ -369,13 +375,17 @@ void GameEditor::KeyDown(int pKey) {
     if (pKey == __KEY__8) { mExportIndex = 8; SaveConfig(); }
     if (pKey == __KEY__9) { mExportIndex = 9; SaveConfig(); }
     
-    
-    
     if (pKey == __KEY__E) {
         if (aShift == false && aCtrl == false && aAlt == false) {
             if (mSection.mCurrentWave) {
                 OpenPathEditor();
             }
+        }
+    }
+    
+    if (pKey == __KEY__F) {
+        if (aShift == false && aCtrl == false && aAlt == false) {
+            OpenFormationEditor();
         }
     }
     
@@ -420,10 +430,6 @@ void GameEditor::KeyDown(int pKey) {
 }
 
 void GameEditor::KeyUp(int pKey) {
-    
-    if (pKey == __KEY__W) {
-        
-    }
     
 }
 
@@ -541,25 +547,31 @@ int GameEditor::PrevYConstraint(int pConstraint) {
 
 
 void GameEditor::SetOverlay(FCanvas *pCanvas) {
-    
     if (mOverlay) {
         if (mOverlay == pCanvas) {
             return;
         }
-        
         mOverlay->Deactivate();
         mOverlay = NULL;
-        //mOverlay->
     }
     if (pCanvas) {
         mOverlay = pCanvas;
         mOverlay->Activate();
-    }    
+    }
 }
 
 void GameEditor::RefreshPlayback() {
-    RefreshPlaybackSpeed();
     
+    if (mSection.mCurrentWave != NULL) {
+        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_EXTRA_SLOW)   { mSpeedClassIndex = 0; }
+        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_SLOW)         { mSpeedClassIndex = 1; }
+        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_MEDIUM_SLOW)  { mSpeedClassIndex = 2; }
+        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_MEDIUM)       { mSpeedClassIndex = 3; }
+        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_MEDIUM_FAST)  { mSpeedClassIndex = 4; }
+        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_FAST)         { mSpeedClassIndex = 5; }
+        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_EXTRA_FAST)   { mSpeedClassIndex = 6; }
+        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_INSANE)       { mSpeedClassIndex = 7; }
+    }
     
     if (mEditorPlaybackWaveOnly) {
         if (mSection.mCurrentWave != NULL) {
@@ -598,7 +610,7 @@ void GameEditor::RefreshSpawn() {
 }
 
 void GameEditor::RefreshSpawnRotationSpeed() {
- 
+    
     
     //mSpawnRotationSpeedClassIndex
     
@@ -698,6 +710,35 @@ void GameEditor::OpenPathEditor() {
     SetOverlay(mPathEditor);
 }
 
+void GameEditor::ClosePathEditor() {
+    SetOverlay(mToolContainer);
+    if (mPathEditor) {
+        mPathEditor->Kill();
+        mPathEditor = NULL;
+    }
+}
+
+
+
+
+void GameEditor::OpenFormationEditor() {
+    
+    mFormationEditor = new GameFormationEditor(this);
+    mFormationEditor->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+    mFormationEditor->mName = "{Form Editor}";
+    AddChild(mFormationEditor);
+    mFormationEditor->SetUp(NULL);
+    SetOverlay(mFormationEditor);
+}
+
+void GameEditor::CloseFormationEditor() {
+    SetOverlay(mToolContainer);
+    if (mFormationEditor) {
+        mFormationEditor->Kill();
+        mFormationEditor = NULL;
+    }
+}
+
 void GameEditor::OpenSpawnMenu() {
     if (mMenuSpawn == NULL) {
         mMenuSpawn = new EditorMenuSpawn(this);
@@ -731,15 +772,6 @@ void GameEditor::OpenAttachmentMenu() {
         mToolContainer->AddChild(mMenuAttachment);
         mMenuAttachment->SetFrame(gDeviceWidth2 - 200.0f,
                                   (gDeviceHeight - gSafeAreaInsetBottom) - 490.0f - 2.0f, 400.0f, 490.0f);
-    }
-}
-
-
-void GameEditor::ClosePathEditor() {
-    SetOverlay(mToolContainer);
-    if (mPathEditor) {
-        mPathEditor->Kill();
-        mPathEditor = NULL;
     }
 }
 

@@ -156,6 +156,11 @@ public:
     
     void                                        Load();
     
+    
+    
+    LevelSection                                mTestSection;
+    
+    
 };
 
 extern Game *gGame;

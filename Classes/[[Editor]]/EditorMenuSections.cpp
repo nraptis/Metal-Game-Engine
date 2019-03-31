@@ -25,9 +25,9 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     mRowMain1 = new ToolMenuSectionRow();
     AddSection(mRowMain1);
     
-    mButtonNewSection = new UIButton();
-    mButtonNewSection->SetText("New Section");
-    mRowMain1->AddButton(mButtonNewSection);
+    mButtonBuildFormation = new UIButton();
+    mButtonBuildFormation->SetText("Formations");
+    mRowMain1->AddButton(mButtonBuildFormation);
     
     mButtonSaveSection = new UIButton();
     mButtonSaveSection->SetText("Save..");
@@ -184,6 +184,9 @@ void EditorMenuSections::Layout() {
 
 
 void EditorMenuSections::Notify(void *pSender, const char *pNotification) {
+    
+    if (pSender == mButtonBuildFormation) { mEditor->OpenFormationEditor(); }
+    
     if (pSender == mButtonEditPaths) { mEditor->OpenPathEditor(); }
     if (pSender == mButtonAddWave) { mEditor->WaveAdd(); }
     if (pSender == mButtonDeleteWave) { mEditor->WaveRemove(); }

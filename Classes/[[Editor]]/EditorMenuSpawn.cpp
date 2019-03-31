@@ -82,8 +82,10 @@ void EditorMenuSpawn::Layout() {
 void EditorMenuSpawn::Notify(void *pSender, const char *pNotification) {
     
     if (gEditor == NULL) { return; }
-    
-    if (pSender == mSegmentSpeed) { gEditor->RefreshPlayback(); }
+    if (pSender == mSegmentSpeed) {
+        gEditor->RefreshPlaybackSpeed();
+        gEditor->RefreshPlayback();
+    }
     if (pSender == mStepperSpawnCount) { gEditor->RefreshPlayback(); }
     if (pSender == mStepperSpacing) { gEditor->RefreshPlayback(); }
     if (pSender == mStepperCreationType) { gEditor->RefreshPlayback(); }

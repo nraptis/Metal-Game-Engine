@@ -58,12 +58,12 @@ void PlatformGraphicsInterface::Postrender() {
     
     [gMetalEngine postrender];
 }
-
+/*
 bool PlatformGraphicsInterface::IsVSyncReady() {
     
     return true;
     
-    /*
+    
     //usleep(90000);
     
     double aTimeStamp = CACurrentMediaTime();
@@ -88,8 +88,9 @@ bool PlatformGraphicsInterface::IsVSyncReady() {
 
     
     return false;
-    */
+ 
 }
+ */
 
 void PlatformGraphicsInterface::SetContext() {
     

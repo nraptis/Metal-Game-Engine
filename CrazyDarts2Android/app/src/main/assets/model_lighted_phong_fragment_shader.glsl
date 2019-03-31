@@ -17,13 +17,12 @@ uniform lowp vec2 Specular;
 void main (void) {
     
     lowp vec3 Direction = vec3(-Diffuse[0], -Diffuse[1], -Diffuse[2]);
-    lowp vec3 L = Direction;
     lowp vec3 N = normalize(vec3(NormalOut[0], NormalOut[1], NormalOut[2]));
     lowp vec3 E = normalize(EyePosOut);
-    lowp vec3 R = normalize(-reflect(L,N));
+    lowp vec3 R = normalize(-reflect(Direction, N));
     
     //calculate Diffuse Term:
-    lowp float DiffuseIntensity = max(dot(N,L), 0.0) * Diffuse[3];
+    lowp float DiffuseIntensity = max(dot(N, Direction), 0.0) * Diffuse[3];
     DiffuseIntensity = clamp(DiffuseIntensity, 0.0, 1.0);
     
     // calculate Specular Term:

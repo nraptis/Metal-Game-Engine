@@ -20,6 +20,7 @@
 #include "EditorMenuAttachment.hpp"
 
 #include "GamePathEditor.hpp"
+#include "GameFormationEditor.hpp"
 #include "LevelWavePathBlueprint.hpp"
 #include "LevelWaveBlueprint.hpp"
 #include "LevelSectionBlueprint.hpp"
@@ -96,6 +97,10 @@ public:
     void                                        OpenPathEditor();
     void                                        ClosePathEditor();
     
+    void                                        OpenFormationEditor();
+    void                                        CloseFormationEditor();
+    
+    
     void                                        OpenSpawnMenu();
     void                                        OpenWavePickerMenu();
     void                                        OpenSpawnPickerMenu();
@@ -118,6 +123,7 @@ public:
     Game                                        *mGame;
     
     GamePathEditor                              *mPathEditor;
+    GameFormationEditor                         *mFormationEditor;
     
     EditorMenuSections                          *mMenuSections;
     EditorMenuSpawn                             *mMenuSpawn;

@@ -22,8 +22,12 @@ public:
     ~LevelWavePathBlueprintNode();
     
     Constraint                                  mConstraint;
-    float                                       mX;
-    float                                       mY;
+    
+    float                                       mEditorX;
+    float                                       mEditorY;
+    
+    float                                       mPercentX;
+    float                                       mPercentY;
     
     float                                       mBaseGameX;
     float                                       mBaseGameY;
@@ -57,6 +61,8 @@ public:
     void                                        Clear();
     void                                        Draw(bool pSelected);
     
+    void                                        RefreshNodePositions();
+    
     int                                         GetClosestIndex(float pX, float pY, float &pDist);
     void                                        GetClosestPointOnLine(float pX, float pY, float &pDist);
     
@@ -82,9 +88,6 @@ public:
     
     void                                        SetSnapXType(int pType);
     void                                        SetSnapYType(int pType);
-    
-    FPoint                                      GetNormalizedPos(LevelWavePathBlueprintNode *pNode);
-    FPoint                                      GetNormalizedPos(float pX, float pY);
     
     FJSONNode                                   *Save();
     void                                        Load(FJSONNode *pNode);

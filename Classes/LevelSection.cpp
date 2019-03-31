@@ -9,6 +9,7 @@
 #include "LevelSection.hpp"
 #include "Game.hpp"
 #include "GameLevelController.hpp"
+#include "LevelSectionBlueprint.hpp"
 
 LevelSection::LevelSection() {
     mCandidateWave = NULL;
@@ -31,6 +32,7 @@ LevelSection::~LevelSection() {
 void LevelSection::Reset() {
     mActiveWaveList.RemoveAll();
     EnumList(LevelWave, aWave, mWaveList) {
+        aWave->Reset();
         mKillList.Add(aWave);
     }
     mWaveList.RemoveAll();
@@ -121,14 +123,12 @@ void LevelSection::Update() {
         
         
         if (aCanSpawnWave) {
-            
-            
             if (mCandidateWaveDelay > 0) {
                 mCandidateWaveDelay--;
-                printf("mCandidateWaveDelay = %d\n", mCandidateWaveDelay);
             } else {
                 
                 printf("Spawn Candidate Wave... [%d]\n", mCandidateWaveIndex - 1);
+                
                 mActiveWaveList.Add(mCandidateWave);
                 mCandidateWave->Prepare();
                 mCandidateWave = NULL;
@@ -141,7 +141,6 @@ void LevelSection::Update() {
                 //
                 
                 bool aCheckAhead = true;
-                
                 while (aCheckAhead == true) {
                     aCheckAhead = false;
                     
@@ -160,7 +159,6 @@ void LevelSection::Update() {
             }
         }
     }
-    
     
     EnumList(LevelWave, aWave, mActiveWaveList) {
         aWave->Update();
@@ -198,4 +196,12 @@ void LevelSection::DisposeObject(GameObject *pObject) {
 
 void LevelSection::AddWave(LevelWave *pLevelWave) {
     mWaveList.Add(pLevelWave);
+}
+
+void LevelSection::Load(const char *pFile) {
+    LevelSectionBlueprint aBlueprint;
+    FJSON aJSON;
+    aJSON.Load(pFile);
+    aBlueprint.Load(aJSON.mRoot);
+    aBlueprint.Build(this);
 }

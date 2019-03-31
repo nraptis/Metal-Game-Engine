@@ -9,6 +9,15 @@
 #ifndef LevelWaveFormation_hpp
 #define LevelWaveFormation_hpp
 
-#include <stdio.h>
+
+
+class LevelWaveSpawnFormationTracer;
+class LevelWaveSpawnFormation {
+public:
+    LevelWaveSpawnFormation();
+    ~LevelWaveSpawnFormation();
+    
+    
+};
 
 #endif /* LevelWaveFormation_hpp */

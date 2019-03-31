@@ -828,19 +828,14 @@ void Game::Load() {
     
     //Create level section (1 of 2) (A)
     aSection = new LevelSection();
+    
+    aSection->Load("test_section.json");
+    
+
+    
     aLevel->AddSection(aSection);
     
-    //  A does not animate in.
-    //  A does not animate out.
-    
-    //  Greate spawn wave group (1 of 2).
-    //      Wave 1: one balloon flies in from the left.
-    aWave = new LevelWave();
-    aSection->AddWave(aWave);
-    //      Wave 2: one balloon flies across from the right.
-    aWave = new LevelWave();
-    aSection->AddWave(aWave);
-    
+
     
     //  Greate spawn wave (2 of 2).
     //      Wave 1: Group of 4 balloons flies down from the top...

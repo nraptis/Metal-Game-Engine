@@ -7,7 +7,6 @@
 //
 
 #include "EditorMenuPathControl.hpp"
-#include "EditorMenuPathControl.hpp"
 #include "GameEditor.hpp"
 #include "FApp.hpp"
 

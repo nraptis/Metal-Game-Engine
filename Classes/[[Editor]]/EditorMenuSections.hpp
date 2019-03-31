@@ -23,7 +23,7 @@ public:
     
     
     ToolMenuSectionRow                      *mRowMain1;
-    UIButton                                *mButtonNewSection;
+    UIButton                                *mButtonBuildFormation;
     UIButton                                *mButtonSaveSection;
     UIButton                                *mButtonLoadSection;
     ToolMenuSectionRow                      *mRowMain2;

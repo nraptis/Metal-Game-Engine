@@ -14,13 +14,13 @@
 #include "GameEditor.hpp"
 #include "FLine.h"
 
-static FPointList cPointList;
-static FPointList cDumpList;
-static FPolyPath cPolyPath;
 
 LevelWavePathBlueprintNode::LevelWavePathBlueprintNode() {
-    mX = 0.0f;
-    mY = 0.0f;
+    mEditorX = 0.0f;
+    mEditorY = 0.0f;
+    
+    mPercentX = 0.0f;
+    mPercentY = 0.0f;
     
     mBaseGameX = 0.0f;
     mBaseGameY = 0.0f;
@@ -41,7 +41,7 @@ LevelWavePathBlueprintNode::~LevelWavePathBlueprintNode() {
 
 void LevelWavePathBlueprintNode::ShiftX(float pShiftX) {
     if (mConstraint.mTypeX == X_CONSTRAINT_NONE) {
-        mX = mX + pShiftX;
+        mEditorX = mEditorX + pShiftX;
     } else {
         mConstraint.mOffsetX += pShiftX;
     }
@@ -49,7 +49,7 @@ void LevelWavePathBlueprintNode::ShiftX(float pShiftX) {
 
 void LevelWavePathBlueprintNode::ShiftY(float pShiftY) {
     if (mConstraint.mTypeY == Y_CONSTRAINT_NONE) {
-        mY = mY + pShiftY;
+        mEditorY = mEditorY + pShiftY;
     } else {
         mConstraint.mOffsetY += pShiftY;
     }
@@ -64,7 +64,7 @@ FJSONNode *LevelWavePathBlueprintNode::Save() {
         float aRight = gEditor->mGameAreaRight;
         
         //100x percision
-        float aX = (mX - aLeft) / (aRight - aLeft) * 100.0f;
+        float aX = (mEditorX - aLeft) / (aRight - aLeft) * 100.0f;
         aExport->AddDictionaryFloat("x", aX);
     } else {
         if (mConstraint.mTypeX != X_CONSTRAINT_NONE) {
@@ -82,7 +82,7 @@ FJSONNode *LevelWavePathBlueprintNode::Save() {
         float aTop = gEditor->mGameAreaTop;
         float aBottom = gEditor->mGameAreaBottom;
         //100x percision
-        float aY = (mY - aTop) / (aBottom - aTop) * 100.0f;
+        float aY = (mEditorY - aTop) / (aBottom - aTop) * 100.0f;
         aExport->AddDictionaryFloat("y", aY);
     } else {
         if (mConstraint.mTypeY != Y_CONSTRAINT_NONE) {
@@ -119,17 +119,22 @@ void LevelWavePathBlueprintNode::Load(FJSONNode *pNode) {
     mConstraint.mTargetY = pNode->GetInt("y_con_target", mConstraint.mTargetY);
     mConstraint.mOffsetY = pNode->GetFloat("y_con_offset", mConstraint.mOffsetY);
     
-    float aX = 0.0f;
-    aX = pNode->GetFloat("x", aX);
+    mPercentX = 0.0f;
+    mPercentX = pNode->GetFloat("x", mPercentX);
+    
+    if (gEditor != NULL) {
     float aLeft = gEditor->mGameAreaLeft;
     float aRight = gEditor->mGameAreaRight;
-    mX = aLeft + (aRight - aLeft) * (aX / 100.0f);
+    mEditorX = aLeft + (aRight - aLeft) * (mPercentX / 100.0f);
+    }
     
-    float aY = 0.0f;
-    aY = pNode->GetFloat("y", aY);
+    mPercentY = 0.0f;
+    mPercentY = pNode->GetFloat("y", mPercentY);
+    if (gEditor != NULL) {
     float aTop = gEditor->mGameAreaTop;
     float aBottom = gEditor->mGameAreaBottom;
-    mY = aTop + (aBottom - aTop) * (aY / 100.0f);
+    mEditorY = aTop + (aBottom - aTop) * (mPercentY / 100.0f);
+    }
     
 
     mChamferSize = pNode->GetInt("chamfer", mChamferSize);
@@ -149,6 +154,9 @@ LevelWavePathBlueprint::~LevelWavePathBlueprint() {
 }
 
 void LevelWavePathBlueprint::Update() {
+    
+    RefreshNodePositions();
+    
     EnumList(LevelWavePathBlueprintNode, aNode, mKillList) {
         aNode->mKillTimer--;
         if (aNode->mKillTimer <= 0) { mDeleteList.Add(aNode); }
@@ -168,7 +176,11 @@ void LevelWavePathBlueprint::Clear() {
     mNodeList.RemoveAll();
     
     mSelectedIndex = -1;
-    mWave->ApplyEditorConstraints();
+    
+    if (gEditor != NULL) {
+        RefreshNodePositions();
+        mWave->ApplyEditorConstraints();
+    }
 }
 
 void LevelWavePathBlueprint::Draw(bool pSelected) {
@@ -177,11 +189,11 @@ void LevelWavePathBlueprint::Draw(bool pSelected) {
         LevelWavePathBlueprintNode *aNode2 = (LevelWavePathBlueprintNode *)mNodeList.mData[i];
         if (pSelected) {
             Graphics::SetColor(0.75f, 0.75f, 0.75f, 0.25f);
-            Graphics::DrawLine(aNode1->mX, aNode1->mY, aNode2->mX, aNode2->mY, 1.0f);
+            Graphics::DrawLine(aNode1->mEditorX, aNode1->mEditorY, aNode2->mEditorX, aNode2->mEditorY, 1.0f);
             
         } else {
             Graphics::SetColor(0.45f, 0.45f, 0.45f, 0.25f);
-            Graphics::DrawLine(aNode1->mX, aNode1->mY, aNode2->mX, aNode2->mY, 1.0f);
+            Graphics::DrawLine(aNode1->mEditorX, aNode1->mEditorY, aNode2->mEditorX, aNode2->mEditorY, 1.0f);
         }
     }
     
@@ -190,58 +202,60 @@ void LevelWavePathBlueprint::Draw(bool pSelected) {
         if (pSelected) {
             if (i == mSelectedIndex) {
                 Graphics::SetColor(1.0f, 0.0f, 0.0f, 0.75f);
-                Graphics::DrawPoint(aNode->mX, aNode->mY, 12.0f);
+                Graphics::DrawPoint(aNode->mEditorX, aNode->mEditorY, 12.0f);
             } else {
                 Graphics::SetColor(1.0f, 0.0f, 0.0f, 0.75f);
-                Graphics::DrawPoint(aNode->mX, aNode->mY, 6.0f);
+                Graphics::DrawPoint(aNode->mEditorX, aNode->mEditorY, 6.0f);
             }
             if (aNode->mConstraint.mTypeX == X_CONSTRAINT_TARGET) {
                 Graphics::SetColor(0.125f, 0.125f, 1.0f, 1.0f);
-                Graphics::DrawLine(aNode->mX, aNode->mY - 10.0f, aNode->mX, aNode->mY + 10.0f);
+                Graphics::DrawLine(aNode->mEditorX, aNode->mEditorY - 10.0f, aNode->mEditorX, aNode->mEditorY + 10.0f);
             } else if (aNode->mConstraint.mTypeX != X_CONSTRAINT_NONE) {
                 Graphics::SetColor(1.0f, 0.0f, 0.0f, 1.0f);
-                Graphics::DrawLine(aNode->mX, aNode->mY - 10.0f, aNode->mX, aNode->mY + 10.0f);
+                Graphics::DrawLine(aNode->mEditorX, aNode->mEditorY - 10.0f, aNode->mEditorX, aNode->mEditorY + 10.0f);
             }
             if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_TARGET) {
                 Graphics::SetColor(0.125f, 0.125f, 1.0f, 1.0f);
-                Graphics::DrawLine(aNode->mX - 10.0f, aNode->mY, aNode->mX + 10.0f, aNode->mY);
+                Graphics::DrawLine(aNode->mEditorX - 10.0f, aNode->mEditorY, aNode->mEditorX + 10.0f, aNode->mEditorY);
             } else if (aNode->mConstraint.mTypeY != Y_CONSTRAINT_NONE) {
                 Graphics::SetColor(1.0f, 0.0f, 0.0f, 1.0f);
-                Graphics::DrawLine(aNode->mX - 10.0f, aNode->mY, aNode->mX + 10.0f, aNode->mY);
+                Graphics::DrawLine(aNode->mEditorX - 10.0f, aNode->mEditorY, aNode->mEditorX + 10.0f, aNode->mEditorY);
             }
         } else {
             Graphics::SetColor(0.65f, 0.65f, 0.65f, 0.35f);
-            Graphics::DrawPoint(aNode->mX, aNode->mY, 4.0f);
+            Graphics::DrawPoint(aNode->mEditorX, aNode->mEditorY, 4.0f);
         }
     }
 }
 
 float LevelWavePathBlueprint::GetX(int pIndex) {
     LevelWavePathBlueprintNode *aNode = (LevelWavePathBlueprintNode *)mNodeList.Fetch(pIndex);
-    if (aNode != NULL) { return aNode->mX; }
+    if (aNode != NULL) { return aNode->mEditorX; }
     return 0.0f;
 }
 
 float LevelWavePathBlueprint::GetY(int pIndex) {
     LevelWavePathBlueprintNode *aNode = (LevelWavePathBlueprintNode *)mNodeList.Fetch(pIndex);
-    if (aNode != NULL) { return aNode->mY; }
+    if (aNode != NULL) { return aNode->mEditorY; }
     return 0.0f;
 }
 
 void LevelWavePathBlueprint::Set(int pIndex, float pX, float pY) {
     LevelWavePathBlueprintNode *aNode = (LevelWavePathBlueprintNode *)mNodeList.Fetch(pIndex);
     if (aNode != NULL) {
-        aNode->mX = pX;
-        aNode->mY = pY;
+        aNode->mEditorX = pX;
+        aNode->mEditorY = pY;
+        RefreshNodePositions();
         mWave->ApplyEditorConstraints();
     }
 }
 
 void LevelWavePathBlueprint::Add(float pX, float pY) {
     LevelWavePathBlueprintNode *aNode = new LevelWavePathBlueprintNode();
-    aNode->mX = pX;
-    aNode->mY = pY;
+    aNode->mEditorX = pX;
+    aNode->mEditorY = pY;
     mNodeList.Add(aNode);
+    RefreshNodePositions();
     mWave->ApplyEditorConstraints();
 }
 
@@ -249,7 +263,6 @@ void LevelWavePathBlueprint::Remove(int pIndex) {
     
     LevelWavePathBlueprintNode *aDeleteNode = (LevelWavePathBlueprintNode *)mNodeList.Fetch(pIndex);
     if (aDeleteNode) {
-        
         for (int i=0;i<mNodeList.mCount;i++) {
             LevelWavePathBlueprintNode *aNode = (LevelWavePathBlueprintNode *)mNodeList.mData[i];
             if (aNode->mConstraint.mTypeX == X_CONSTRAINT_TARGET) {
@@ -267,13 +280,8 @@ void LevelWavePathBlueprint::Remove(int pIndex) {
                 }
             }
         }
-        
-        if (mSelectedIndex >= pIndex) {
-            mSelectedIndex--;
-        }
-        
+        if (mSelectedIndex >= pIndex) { mSelectedIndex--; }
         mKillList.Add(aDeleteNode);
-        
         mNodeList.RemoveAtIndex(pIndex);
     }
     mWave->ApplyEditorConstraints();
@@ -289,6 +297,27 @@ LevelWavePathBlueprintNode *LevelWavePathBlueprint::GetNode() {
     return aResult;
 }
 
+void LevelWavePathBlueprint::RefreshNodePositions() {
+    
+    float aLeft = gEditor->mGameAreaLeft;
+    float aRight = gEditor->mGameAreaRight;
+    float aTop = gEditor->mGameAreaTop;
+    float aBottom = gEditor->mGameAreaBottom;
+    
+    for (int i=0;i<mNodeList.mCount;i++) {
+        LevelWavePathBlueprintNode *aNode = (LevelWavePathBlueprintNode *)mNodeList.mData[i];
+        aNode->mPercentX = (aNode->mEditorX - aLeft) / (aRight - aLeft) * 100.0f;
+        aNode->mPercentY = (aNode->mEditorY - aTop) / (aBottom - aTop) * 100.0f;
+        
+        if (aNode->mConstraint.mTypeX == X_CONSTRAINT_NONE) {
+            aNode->mConstraint.mOffsetX = 0.0f;
+        }
+        if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_NONE) {
+            aNode->mConstraint.mOffsetY = 0.0f;
+        }
+    }
+}
+
 int LevelWavePathBlueprint::GetClosestIndex(float pX, float pY, float &pDist) {
     int aResult = -1;
     if (mNodeList.mCount > 0) {
@@ -296,14 +325,14 @@ int LevelWavePathBlueprint::GetClosestIndex(float pX, float pY, float &pDist) {
         
         aResult = 0;
         float aCheckDist = pDist;
-        float aDiffX = aNode->mX - pX;
-        float aDiffY = aNode->mY - pY;
+        float aDiffX = aNode->mEditorX - pX;
+        float aDiffY = aNode->mEditorY - pY;
         float aDist = aDiffX * aDiffX + aDiffY * aDiffY;
         pDist = aDist;
         for (int i=1;i<mNodeList.mCount;i++) {
             aNode = (LevelWavePathBlueprintNode *)mNodeList.mData[i];
-            aDiffX = aNode->mX - pX;
-            aDiffY = aNode->mY - pY;
+            aDiffX = aNode->mEditorX - pX;
+            aDiffY = aNode->mEditorY - pY;
             aDist = aDiffX * aDiffX + aDiffY * aDiffY;
             if (aDist < pDist) {
                 pDist = aDist;
@@ -324,7 +353,7 @@ void LevelWavePathBlueprint::GetClosestPointOnLine(float pX, float pY, float &pD
         float aClosestX = 0.0f;
         float aClosestY = 0.0f;
         
-        FLine::SegmentClosestPoint(aNode1->mX, aNode1->mY, aNode2->mX, aNode2->mY, pX, pY, aClosestX, aClosestY);
+        FLine::SegmentClosestPoint(aNode1->mEditorX, aNode1->mEditorY, aNode2->mEditorX, aNode2->mEditorY, pX, pY, aClosestX, aClosestY);
         
         float aDiffX = aClosestX - pX;
         float aDiffY = aClosestY - pY;
@@ -370,32 +399,6 @@ void LevelWavePathBlueprint::SetSnapYType(int pType) {
     mWave->ApplyEditorConstraints();
 }
 
-
-
-FPoint LevelWavePathBlueprint::GetNormalizedPos(LevelWavePathBlueprintNode *pNode) {
-    FPoint aResult;
-    if (pNode != NULL) {
-        aResult = GetNormalizedPos(pNode->mX, pNode->mY);
-    }
-    return aResult;
-}
-
-FPoint LevelWavePathBlueprint::GetNormalizedPos(float pX, float pY) {
-    FPoint aPoint = FPoint(pX, pY);
-    if (gEditor) {
-        float aLeft = gEditor->mGameAreaLeft;
-        float aRight = gEditor->mGameAreaRight;
-        float aTop = gEditor->mGameAreaTop;
-        float aBottom = gEditor->mGameAreaBottom;
-        aPoint.mX = (pX - aLeft) / (aRight - aLeft);
-        aPoint.mY = (pY - aTop) / (aBottom - aTop);
-    }
-    
-    //aPoint = FCanvas::Convert(aPoint.mX, aPoint.mY, gEditor, gGame);
-    
-    return aPoint;
-}
-
 FJSONNode *LevelWavePathBlueprint::Save() {
     FJSONNode *aExport = new FJSONNode();
     aExport->mNodeType = JSON_NODE_TYPE_ARRAY;
@@ -414,5 +417,7 @@ void LevelWavePathBlueprint::Load(FJSONNode *pNode) {
         aPathNode->Load(aPathLoadNode);
         mNodeList.Add(aPathNode);
     }
-    mWave->ApplyEditorConstraints();
+    if (gEditor != NULL) {
+        mWave->ApplyEditorConstraints();
+    }
 }

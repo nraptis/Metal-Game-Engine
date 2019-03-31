@@ -65,33 +65,33 @@ void LevelWaveBlueprint::ApplyEditorConstraints() {
             if (aNode->mConstraint.mTypeX == X_CONSTRAINT_TARGET) {
                 LevelWavePathBlueprintNode *aTarget = (LevelWavePathBlueprintNode *)mPath.mNodeList.mData[aNode->mConstraint.mTargetX];
                 if (aTarget != 0) {
-                    aNode->mX = aTarget->mX;
+                    aNode->mEditorX = aTarget->mEditorX;
                 }
             }
             if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_TARGET) {
                 LevelWavePathBlueprintNode *aTarget = (LevelWavePathBlueprintNode *)mPath.mNodeList.mData[aNode->mConstraint.mTargetY];
                 if (aTarget != 0) {
-                    aNode->mY = aTarget->mY;
+                    aNode->mEditorY = aTarget->mEditorY;
                 }
             }
+
+            if (aNode->mConstraint.mTypeX == X_CONSTRAINT_LEFT_EXIT) { aNode->mEditorX = gEditor->mExitZoneLeft; }
+            if (aNode->mConstraint.mTypeX == X_CONSTRAINT_LEFT_SPAWN) { aNode->mEditorX = gEditor->mSpawnZoneLeft; }
+            if (aNode->mConstraint.mTypeX == X_CONSTRAINT_LEFT_PEEK) { aNode->mEditorX = gEditor->mPeekZoneLeft; }
+            if (aNode->mConstraint.mTypeX == X_CONSTRAINT_LEFT_QUARTER) { aNode->mEditorX = gEditor->mQuarterZoneLeft; }
+            if (aNode->mConstraint.mTypeX == X_CONSTRAINT_CENTER) { aNode->mEditorX = gEditor->mCenterH; }
+            if (aNode->mConstraint.mTypeX == X_CONSTRAINT_RIGHT_QUARTER) { aNode->mEditorX = gEditor->mQuarterZoneRight; }
+            if (aNode->mConstraint.mTypeX == X_CONSTRAINT_RIGHT_PEEK) { aNode->mEditorX = gEditor->mPeekZoneRight; }
+            if (aNode->mConstraint.mTypeX == X_CONSTRAINT_RIGHT_SPAWN) { aNode->mEditorX = gEditor->mSpawnZoneRight; }
+            if (aNode->mConstraint.mTypeX == X_CONSTRAINT_RIGHT_EXIT) { aNode->mEditorX = gEditor->mExitZoneRight; }
             
-            if (aNode->mConstraint.mTypeX == X_CONSTRAINT_LEFT_EXIT) { aNode->mX = gEditor->mExitZoneLeft; }
-            if (aNode->mConstraint.mTypeX == X_CONSTRAINT_LEFT_SPAWN) { aNode->mX = gEditor->mSpawnZoneLeft; }
-            if (aNode->mConstraint.mTypeX == X_CONSTRAINT_LEFT_PEEK) { aNode->mX = gEditor->mPeekZoneLeft; }
-            if (aNode->mConstraint.mTypeX == X_CONSTRAINT_LEFT_QUARTER) { aNode->mX = gEditor->mQuarterZoneLeft; }
-            if (aNode->mConstraint.mTypeX == X_CONSTRAINT_CENTER) { aNode->mX = gEditor->mCenterH; }
-            if (aNode->mConstraint.mTypeX == X_CONSTRAINT_RIGHT_QUARTER) { aNode->mX = gEditor->mQuarterZoneRight; }
-            if (aNode->mConstraint.mTypeX == X_CONSTRAINT_RIGHT_PEEK) { aNode->mX = gEditor->mPeekZoneRight; }
-            if (aNode->mConstraint.mTypeX == X_CONSTRAINT_RIGHT_SPAWN) { aNode->mX = gEditor->mSpawnZoneRight; }
-            if (aNode->mConstraint.mTypeX == X_CONSTRAINT_RIGHT_EXIT) { aNode->mX = gEditor->mExitZoneRight; }
-            
-            if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_TOP_EXIT) { aNode->mY = gEditor->mExitZoneTop; }
-            if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_TOP_SPAWN) { aNode->mY = gEditor->mSpawnZoneTop; }
-            if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_TOP_PEEK) { aNode->mY = gEditor->mPeekZoneTop; }
-            if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_TOP_QUARTER) { aNode->mY = gEditor->mQuarterZoneTop; }
-            if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_CENTER) { aNode->mY = gEditor->mCenterV; }
-            if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_BOTTOM_QUARTER) { aNode->mY = gEditor->mQuarterZoneBottom; }
-            if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_BOTTOM) { aNode->mY = gEditor->mPlayZoneBottom; }
+            if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_TOP_EXIT) { aNode->mEditorY = gEditor->mExitZoneTop; }
+            if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_TOP_SPAWN) { aNode->mEditorY = gEditor->mSpawnZoneTop; }
+            if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_TOP_PEEK) { aNode->mEditorY = gEditor->mPeekZoneTop; }
+            if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_TOP_QUARTER) { aNode->mEditorY = gEditor->mQuarterZoneTop; }
+            if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_CENTER) { aNode->mEditorY = gEditor->mCenterV; }
+            if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_BOTTOM_QUARTER) { aNode->mEditorY = gEditor->mQuarterZoneBottom; }
+            if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_BOTTOM) { aNode->mEditorY = gEditor->mPlayZoneBottom; }
         }
     }
     Build();
@@ -118,7 +118,9 @@ void LevelWaveBlueprint::Build(LevelWave *pWave) {
     
     for (int i=0;i<mPath.mNodeList.mCount;i++) {
         LevelWavePathBlueprintNode *aNode = (LevelWavePathBlueprintNode *)mPath.mNodeList.mData[i];
-        FPoint aPoint = mPath.GetNormalizedPos(aNode);
+        FPoint aPoint;
+        aPoint.mX = aNode->mPercentX / 100.0f;
+        aPoint.mY = aNode->mPercentY / 100.0f;
         
         if (aNode->mConstraint.HasX()) {
             aPoint.mX = aNode->mConstraint.GameX(false);
@@ -140,11 +142,11 @@ void LevelWaveBlueprint::Build(LevelWave *pWave) {
             LevelWavePathBlueprintNode *aNode = (LevelWavePathBlueprintNode *)mPath.mNodeList.mData[i];
             if (aNode->mConstraint.mTypeX == X_CONSTRAINT_TARGET) {
                 LevelWavePathBlueprintNode *aTarget = (LevelWavePathBlueprintNode *)mPath.mNodeList.mData[aNode->mConstraint.mTargetX];
-                if (aTarget != 0) { aNode->mBaseGameX = aTarget->mBaseGameX; }
+                if (aTarget != 0) { aNode->mBaseGameX = aTarget->mBaseGameX + aTarget->mConstraint.mOffsetX; }
             }
             if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_TARGET) {
                 LevelWavePathBlueprintNode *aTarget = (LevelWavePathBlueprintNode *)mPath.mNodeList.mData[aNode->mConstraint.mTargetY];
-                if (aTarget != 0) { aNode->mBaseGameY = aTarget->mBaseGameY; }
+                if (aTarget != 0) { aNode->mBaseGameY = aTarget->mBaseGameY + aTarget->mConstraint.mOffsetY; }
             }
         }
     }

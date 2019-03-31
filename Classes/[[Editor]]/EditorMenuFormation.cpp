@@ -1,22 +1,30 @@
 //
-//  EditorMenuPathMain.cpp
+//  EditorMenuFormation.cpp
+//  Crazy Darts 2 Mac
+//
+//  Created by Nicholas Raptis on 3/30/19.
+//  Copyright © 2019 Froggy Studios. All rights reserved.
+//
+
+//
+//  EditorMenuFormationMain.cpp
 //  Crazy Darts 2 Mac
 //
 //  Created by Nicholas Raptis on 3/18/19.
 //  Copyright © 2019 Froggy Studios. All rights reserved.
 //
 
-#include "EditorMenuPath.hpp"
-#include "GamePathEditor.hpp"
+#include "EditorMenuFormation.hpp"
+#include "GameFormationEditor.hpp"
 #include "GameEditor.hpp"
 #include "FApp.hpp"
 
-EditorMenuPath::EditorMenuPath(GamePathEditor *pEditor) : ToolMenu() {
-    mName = "EditorMenuPath";
+EditorMenuFormation::EditorMenuFormation(GameFormationEditor *pEditor) : ToolMenu() {
+    mName = "EditorMenuFormation";
     
     mEditor = pEditor;
     
-    SetTitle("Path Tools");
+    SetTitle("Formation Builder");
     SetScrollMode(true);
     
     mEditorPanel = new ToolMenuPanel();
@@ -26,7 +34,7 @@ EditorMenuPath::EditorMenuPath(GamePathEditor *pEditor) : ToolMenu() {
     mSegmentMode = new UISegment();
     mSegmentMode->SetSegmentCount(3);
     mSegmentMode->SetTitles("Add Point", "Move Point", "Select Point");
-    mSegmentMode->SetTarget(&mEditor->mPathMode);
+    //mSegmentMode->SetTarget(&mEditor->mPathMode);
     mEditorPanel->AddSection(mSegmentMode);
     
     mRowVisuals = new ToolMenuSectionRow();
@@ -50,12 +58,10 @@ EditorMenuPath::EditorMenuPath(GamePathEditor *pEditor) : ToolMenu() {
     mStepperWait = new UIStepper();
     mStepperWait->SetText("Wait:");
     mPointsPanel->AddSection(mStepperWait);
-    //gNotify.Register(this, mStepperWait, "stepper");
     
     mStepperChamfer = new UIStepper();
     mStepperChamfer->SetText("Chamfer:");
     mPointsPanel->AddSection(mStepperChamfer);
-    //gNotify.Register(this, mStepperChamfer, "stepper");
     
     mRowPointOptions = new ToolMenuSectionRow();
     mPointsPanel->AddSection(mRowPointOptions);
@@ -81,7 +87,7 @@ EditorMenuPath::EditorMenuPath(GamePathEditor *pEditor) : ToolMenu() {
     
     mCheckBoxSnapX = new UICheckBox();
     mCheckBoxSnapX->SetText("Target X");
-    mCheckBoxSnapX->SetTarget(&mEditor->mConstrainXToPoint);
+    //mCheckBoxSnapX->SetTarget(&mEditor->mConstrainXToPoint);
     mRowSnapX->AddCheckBox(mCheckBoxSnapX);
     
     mButtonSnapPrevX = new UIButton();
@@ -97,7 +103,7 @@ EditorMenuPath::EditorMenuPath(GamePathEditor *pEditor) : ToolMenu() {
     
     mCheckBoxSnapY = new UICheckBox();
     mCheckBoxSnapY->SetText("Target Y");
-    mCheckBoxSnapY->SetTarget(&mEditor->mConstrainYToPoint);
+    //mCheckBoxSnapY->SetTarget(&mEditor->mConstrainYToPoint);
     mRowSnapY->AddCheckBox(mCheckBoxSnapY);
     
     mButtonSnapPrevY = new UIButton();
@@ -111,18 +117,19 @@ EditorMenuPath::EditorMenuPath(GamePathEditor *pEditor) : ToolMenu() {
     DeactivateCloseButton();
 }
 
-EditorMenuPath::~EditorMenuPath() {
+EditorMenuFormation::~EditorMenuFormation() {
     printf("Kill Editor");
 }
 
-void EditorMenuPath::Layout() {
+void EditorMenuFormation::Layout() {
     ToolMenu::Layout();
     
 }
 
-void EditorMenuPath::Update() {
+void EditorMenuFormation::Update() {
     ToolMenu::Update();
     
+    /*
     if (mCheckBoxSmooth) {
         bool aUnlink = true;
         if (mEditor->mWave != NULL) {
@@ -133,81 +140,13 @@ void EditorMenuPath::Update() {
             mCheckBoxSmooth->SetTarget(NULL);
         }
     }
-    
-    if (mStepperWait) {
-        bool aUnlink = true;
-        if (mEditor->mPath != NULL) {
-            LevelWavePathBlueprintNode *aNode = (LevelWavePathBlueprintNode *)mEditor->mPath->mNodeList.Fetch(mEditor->mPath->mSelectedIndex);
-            if (aNode) {
-                aUnlink = false;
-                mStepperWait->SetTarget(&(aNode->mWaitTimer));
-            }
-        }
-        if (aUnlink) {
-            mStepperWait->SetTarget(NULL);
-        }
-    }
-    
-    if (mStepperChamfer) {
-        bool aUnlink = true;
-        if (mEditor->mPath != NULL) {
-            LevelWavePathBlueprintNode *aNode = (LevelWavePathBlueprintNode *)mEditor->mPath->mNodeList.Fetch(mEditor->mPath->mSelectedIndex);
-            if (aNode) {
-                aUnlink = false;
-                mStepperChamfer->SetTarget(&(aNode->mChamferSize));
-            }
-        }
-        if (aUnlink) {
-            mStepperChamfer->SetTarget(NULL);
-        }
-    }
-    
-    
-    
-    
+    */
     
 }
 //
 
-void EditorMenuPath::Notify(void *pSender, const char *pNotification) {
-    if (FString(pNotification) == "button_click") {
-        
-        if (pSender == mButtonDeletePoint) { mEditor->PathDeletePoint(); }
-        
-        if (pSender == mButtonBreakXConstraint) { mEditor->ConstraintXToType(X_CONSTRAINT_NONE); }
-        if (pSender == mButtonBreakYConstraint) { mEditor->ConstraintYToType(Y_CONSTRAINT_NONE); }
-        
-        if (pSender == mButtonSnapPrevX) { mEditor->ConstraintXToPrev(); }
-        if (pSender == mButtonSnapNextX) { mEditor->ConstraintXToNext(); }
-        
-        if (pSender == mButtonSnapPrevY) { mEditor->ConstraintYToPrev(); }
-        if (pSender == mButtonSnapNextY) { mEditor->ConstraintYToNext(); }
-    }
+void EditorMenuFormation::Notify(void *pSender, const char *pNotification) {
     
-    if (FString(pNotification) == "stepper") {
-        UIStepper *aStepper = (UIStepper *)pSender;
-        if (aStepper == mStepperWait) {
-            mEditor->PathRefresh();
-        }
-        if (aStepper == mStepperChamfer) {
-            mEditor->PathRefresh();
-        }
-        
-    }
-    
-    
-    if (FString(pNotification) == "segment") {
-        UISegment *aSegment = (UISegment *)pSender;
-        
-    }
-    
-    if (FString(pNotification) == "checkbox") {
-        UICheckBox *aCheckbox = (UICheckBox *)pSender;
-        if (aCheckbox == mCheckBoxSmooth) {
-            mEditor->PathRefresh();
-        }
-    }
-    
-    
-    
+    if (pSender == mButtonDeletePoint) { }
+
 }

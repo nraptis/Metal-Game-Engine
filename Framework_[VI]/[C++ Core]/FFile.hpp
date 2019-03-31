@@ -39,20 +39,20 @@ public:
 	void				Write(char *write);
 
 	void				WriteString(char *pString);
-    inline void			WriteString(FString pString){WriteString(pString.c());}
-    inline void			WriteString(const char * pString){WriteString((char*)pString);}
+    inline void			WriteString(FString pString) { WriteString(pString.c()); }
+    inline void			WriteString(const char * pString) { WriteString((char*)pString); }
 	FString				ReadString();
 
     void                WriteColor(FColor pColor);
     FColor              ReadColor();
     
 	void				Save(char *pFile=0);
-    virtual void		Save(const char *pFile){Save((char*)pFile);}
-	inline void			Save(FString pString){Save(pString.c());}
+    virtual void		Save(const char *pFile) {Save((char*)pFile); }
+	inline void			Save(FString pString) {Save(pString.c()); }
 	
-	void				Load(char *pFile=0);
-    virtual void		Load(const char *pFile){Load((char*)pFile);}
-	inline void			Load(FString pString){Load(pString.c());}
+	void				Load(char *pFile = 0);
+    virtual void		Load(const char *pFile) { Load((char*)pFile); }
+	inline void			Load(FString pString) { Load(pString.c()); }
     
     void				LoadDirect(char *pFile=0);
 
