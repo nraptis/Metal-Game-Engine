@@ -12,64 +12,67 @@
 #include "Balloon.hpp"
 
 LevelWave::LevelWave() {
-    mAliveTimer = 0;
-    mIsComplete = false;
-    mRight = true;
     
-    for (int i=0;i<5;i++) {
-        LevelWaveSpawn *aSpawn = new LevelWaveSpawn(this, &mPath);
-        mSpawnList.Add(aSpawn);
-    }
+    mIsComplete = false;
+    
+    
+    mCreationType = WAVE_CREATION_TYPE_PREV_WAVE_START;
+    mCreationDelay = 0;
+    
     mSpawnIndex = 0;
+    
     
     mSpawnSeparationDistance = 90.0f;
     
+    mKillTimer = 8;
 }
 
 LevelWave::~LevelWave() {
-    
+    FreeList(LevelWaveSpawn, mSpawnList);
+    FreeList(LevelWaveSpawn, mSpawnKillList);
+    FreeList(LevelWaveSpawn, mSpawnDeleteList);
 }
 
 void LevelWave::Reset() {
+    mIsComplete = false;
     mPath.Reset();
-    
-    FreeList(LevelWaveSpawn, mSpawnList);
-    mSpawnIndex = 0;
-    
-    //Just re-start the spawners...
-    for (int i=0;i<5;i++) {
-        LevelWaveSpawn *aSpawn = new LevelWaveSpawn(this, &mPath);
-        mSpawnList.Add(aSpawn);
+    EnumList(LevelWaveSpawn, aSpawn, mSpawnList) {
+        aSpawn->Reset();
+        mSpawnKillList.Add(aSpawn);
     }
+    mSpawnList.RemoveAll();
+    mSpawnIndex = 0;
 }
 
 void LevelWave::Restart() {
-    
+    mIsComplete = false;
+    EnumList(LevelWaveSpawn, aSpawn, mSpawnList) {
+        aSpawn->Restart();
+    }
+    mSpawnIndex = 0;
 }
 
-void LevelWave::Spawn() {
-    Log("LevelWave::Spawn()");
-    
-    Balloon *aBalloon = new Balloon();
-    if (mRight) {
-        aBalloon->mTransform.mX = gGame->mWidth;
-        aBalloon->mTransform.mY = gGame->mHeight * 0.33f;
-        
-        aBalloon->mVelX = -2.0f;
-        aBalloon->mVelY = 0.01f;
-    } else {
-        aBalloon->mTransform.mX = 0.0f;
-        aBalloon->mTransform.mY = gGame->mHeight * 0.33f;
-        
-        aBalloon->mVelX = 2.0f;
-        aBalloon->mVelY = 0.01f;
-    }
-    
-    gGame->mBalloonList.Add(aBalloon);
-    
+void LevelWave::Prepare() {
+    mPath.Finalize();
 }
 
 void LevelWave::Update() {
+    //////
+    //
+    EnumList(LevelWaveSpawn, aSpawn, mSpawnKillList) {
+        aSpawn->mKillTimer--;
+        if (aSpawn->mKillTimer <= 0) { mSpawnDeleteList.Add(aSpawn); }
+    }
+    EnumList(LevelWaveSpawn, aSpawn, mSpawnDeleteList) {
+        mSpawnKillList.Remove(aSpawn);
+        delete aSpawn;
+    }
+    mSpawnDeleteList.RemoveAll();
+    //
+    //////
+    
+    
+    mPath.Update();
     
     if (mSpawnList.mCount <= 0) {
         mIsComplete = true;
@@ -88,15 +91,10 @@ void LevelWave::Update() {
         if (aSpawn != NULL) {
             aSpawn->Update();
         }
-        
-        
     }
-    
     
     if (mPath.mDidFinalize == true && mPath.mDidFailFinalize == false && mPath.mPath.mCount > 0) {
         if (mSpawnIndex >= 0 && mSpawnIndex < mSpawnList.mCount) {
-            
-            
             LevelWaveSpawn *aPrevSpawn = (LevelWaveSpawn *)mSpawnList.Fetch(mSpawnIndex - 1);
             LevelWaveSpawn *aSpawn = (LevelWaveSpawn *)mSpawnList.Fetch(mSpawnIndex);
             if (aSpawn !=  NULL) {
@@ -122,13 +120,23 @@ void LevelWave::Update() {
                 }
             }
         }
-        
     }
     
-    //FList                               mSpawnList;
-    //int                                 mSpawnIndex;
     
+   
     
+    if (mSpawnIndex >= mSpawnList.mCount) {
+        bool aComplete = true;
+        EnumList(LevelWaveSpawn, aSpawn, mSpawnList) {
+            if (aSpawn->mIsComplete == false) {
+                aComplete = false;
+            }
+        }
+        if (aComplete == true) {
+            mIsComplete = true;
+        }
+        
+    }
     
     
 }
@@ -141,11 +149,6 @@ void LevelWave::Draw() {
         }
     }
 }
-
-void LevelWave::Dispose() {
-    
-}
-
 void LevelWave::DisposeObject(GameObject *pObject) {
     
 }

@@ -13,7 +13,22 @@
 #include "Game.hpp"
 #include "EditorMenuFormationUtilities.hpp"
 #include "EditorMenuFormation.hpp"
+#include "LevelWaveSpawnFormationBlueprint.hpp"
 #include "LevelWaveSpawnFormation.hpp"
+#include "FPointList.h"
+
+#define FORMATION_MODE_ADD_POINT 0
+#define FORMATION_MODE_MOVE_POINT 1
+#define FORMATION_MODE_SELECT_POINT 2
+
+
+#define FORMATION_GRID_TYPE_RECT 0
+#define FORMATION_GRID_TYPE_CIRCLE 1
+#define FORMATION_GRID_TYPE_STAR 2
+#define FORMATION_GRID_TYPE_TRIANGLE 3
+#define FORMATION_GRID_TYPE_ROUNDED_RECT 4
+#define FORMATION_GRID_TYPE_N_GON 5
+
 
 class GameEditor;
 class GameFormationEditor : public FCanvas {
@@ -42,13 +57,56 @@ public:
     EditorMenuFormationUtilities                *mMenuUtils;
     EditorMenuFormation                         *mMenuFormation;
     
-    void                                        Close();
+    int                                         mFormationMode;
     
+    bool                                        mTracerEnabled;
+    int                                         mTracerMode;
+    
+    
+    bool                                        mGridEnabled;
+    int                                         mGridType;
+    
+    int                                         mGridRectWidth;
+    int                                         mGridRectHeight;
+    int                                         mGridRectSpacing;
+    
+    int                                         mGridCircleCount;
+    int                                         mGridCircleRadius;
+    
+    
+    
+    FPointList                                  mGridList;
+    
+    
+    
+    
+    void                                        *mSelectedTouch;
+    
+    float                                       mSelectNodeStartX;
+    float                                       mSelectNodeStartY;
+    
+    float                                       mSelectTouchStartX;
+    float                                       mSelectTouchStartY;
+    
+    void                                        Close();
+    void                                        Clear();
     void                                        Refresh();
     
-    void                                        SetUp(LevelWaveSpawnFormation *pFormation);
-    LevelWaveSpawnFormation                     *mFormation;
-    bool                                        mLoadedFormation;
+    void                                        Save();
+    void                                        Load();
+    void                                        Print();
+    
+    void                                        BuildGrid();
+    void                                        BuildRectGrid();
+    
+    
+    
+    void                                        SetUp(LevelWaveSpawnFormationBlueprint *pFormation);
+    LevelWaveSpawnFormationBlueprint            mFormation;
+    
+    void                                        DeleteNode();
+    
+    void                                        GridSnap(float *pX, float *pY);
     
     float                                       mGameAreaTop;
     float                                       mGameAreaRight;
@@ -58,7 +116,7 @@ public:
     float                                       mCenterX;
     float                                       mCenterY;
     
-    
+    LevelWaveSpawnFormation                     mEditorFormation;
     
 };
 

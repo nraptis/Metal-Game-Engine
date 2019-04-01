@@ -14,17 +14,20 @@
 
 class LevelWaveSpawnFormation;
 
+class LevelWaveBlueprint;
 class LevelWaveSpawnFormationBlueprintNode {
 public:
     LevelWaveSpawnFormationBlueprintNode();
     ~LevelWaveSpawnFormationBlueprintNode();
     
-    float                                       mX;
-    float                                       mY;
+    float                                       mEditorX;
+    float                                       mEditorY;
     
-    //From the center of the formation, percent * 100 of game width / height..
-    float                                       mFormationX;
-    float                                       mFormationY;
+    float                                       mPercentX;
+    float                                       mPercentY;
+    
+    float                                       mGameX;
+    float                                       mGameY;
     
     int                                         mType;
     
@@ -34,17 +37,20 @@ public:
     int                                         mKillTimer;
 };
 
-
-
 class LevelWaveSpawnFormationBlueprint {
 public:
+    
     LevelWaveSpawnFormationBlueprint();
     ~LevelWaveSpawnFormationBlueprint();
-    
     
     void                                        Update();
     void                                        Clear();
     void                                        Draw(bool pSelected);
+    
+    void                                        Print();
+    
+    
+    void                                        RefreshNodePositions();
     
     int                                         GetClosestIndex(float pX, float pY, float &pDist);
     
@@ -61,11 +67,25 @@ public:
     int                                         mSelectedIndex;
     FList                                       mNodeList;
     
+    
+    float                                       mRotation;
+    
+    bool                                        mRotationEnabled;
+    int                                         mRotationSpeedClass;
+    bool                                        mRotationSpeedNegateAlways;
+    bool                                        mRotationSpeedNegateRandom;
+    
+    
     FJSONNode                                   *Save();
     void                                        Load(FJSONNode *pNode);
+    
+    //Note: BUILD should have NO TIE-IN TO EDITOR...
+    //This HAS to work WITHOUT EDITOR for GAME......
+    void                                        Build();
+    void                                        Build(LevelWaveSpawnFormation *pFormation);
     
     FList                                       mKillList;
     FList                                       mDeleteList;
 };
-
+    
 #endif /* LevelWaveSpawnFormationBlueprint_hpp */

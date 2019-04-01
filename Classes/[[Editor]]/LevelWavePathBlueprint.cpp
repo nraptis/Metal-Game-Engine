@@ -32,7 +32,7 @@ LevelWavePathBlueprintNode::LevelWavePathBlueprintNode() {
     mWaitTimer = 0;
     mChamferSize = 0;
     
-    mKillTimer = 36;
+    mKillTimer = 8;
 }
 
 LevelWavePathBlueprintNode::~LevelWavePathBlueprintNode() {

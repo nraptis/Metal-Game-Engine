@@ -113,9 +113,6 @@ void LevelWaveSpawn::Draw() {
     }
 }
 
-void LevelWaveSpawn::Dispose() {
-    
-}
 
 void LevelWaveSpawn::DisposeObject(GameObject *pObject) {
     

@@ -19,7 +19,7 @@ GamePathEditor::GamePathEditor(GameEditor *pEditor) {
     
     mPathMode = PATH_MODE_CREATE;
     
-    mSelectedTouch = NULL;
+    
     
     mName = "[GamePathEditor]";
     
@@ -28,6 +28,8 @@ GamePathEditor::GamePathEditor(GameEditor *pEditor) {
     
     mConstrainXToPoint = false;
     mConstrainYToPoint = false;
+    
+    mSelectedTouch = NULL;
     
     mSelectPathStartX = 0.0f;
     mSelectPathStartY = 0.0f;
@@ -238,9 +240,6 @@ void GamePathEditor::KeyDown(int pKey) {
                 }
             }
         }
-        
-        
-        
         
         if (pKey == __KEY__L) {
             if (aNode->mConstraint.mTypeX == X_CONSTRAINT_LEFT_SPAWN) {

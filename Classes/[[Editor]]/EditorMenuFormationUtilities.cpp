@@ -35,6 +35,29 @@ EditorMenuFormationUtilities::EditorMenuFormationUtilities(GameFormationEditor *
     
     
     
+    mPanelTracers = new ToolMenuPanel();
+    mPanelTracers->SetTitle("Tracers");
+    AddSection(mPanelTracers);
+    
+    mRowTracers1 = new ToolMenuSectionRow();
+    mPanelTracers->AddSection(mRowTracers1);
+    
+    
+    mCheckBoxTracersEnabled = new UICheckBox();
+    mCheckBoxTracersEnabled->SetText("Tracers Enabled");
+    mCheckBoxTracersEnabled->SetTarget(&mEditor->mTracerEnabled);
+    mRowTracers1->AddCheckBox(mCheckBoxTracersEnabled);
+    
+    mButtonDeleteTracer = new UIButton();
+    mButtonDeleteTracer->SetText("Delete Tracer");
+    mRowTracers1->AddButton(mButtonDeleteTracer);
+    
+    
+    mSegmentTracersMode = new UISegment();
+    mSegmentTracersMode->SetSegmentCount(3);
+    mSegmentTracersMode->SetTitles("Add Point", "Move Point", "Select Point");
+    mSegmentTracersMode->SetTarget(&mEditor->mTracerMode);
+    mPanelTracers->AddSection(mSegmentTracersMode);
     
     
     DeactivateCloseButton();
@@ -52,9 +75,9 @@ void EditorMenuFormationUtilities::Layout() {
 
 void EditorMenuFormationUtilities::Notify(void *pSender, const char *pNotification) {
     
-    if (pSender == mButtonCloseEditor) {
-        mEditor->Close();
-    }
+    if (pSender == mButtonCloseEditor) { mEditor->Close(); }
+    
+    if (pSender == mButtonResetFormation) { mEditor->Clear(); }
     
     if (pSender == mButtonResetFormation) {
         

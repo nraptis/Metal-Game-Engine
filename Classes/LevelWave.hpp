@@ -51,6 +51,7 @@ public:
     
     int                                 mKillTimer;
     
+private:
     FList                               mSpawnKillList;
     FList                               mSpawnDeleteList;
 };

@@ -228,7 +228,7 @@ void UISlider::Draw() {
     }
 }
 
-void UISlider::SetValue(float *pTargetValue) {
+void UISlider::SetTarget(float *pTargetValue) {
     mTargetValue = pTargetValue;
     
     mDefaultValueAssigned = false;

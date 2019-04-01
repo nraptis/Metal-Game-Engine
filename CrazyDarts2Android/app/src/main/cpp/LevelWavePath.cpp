@@ -22,6 +22,7 @@ LevelWavePathNode::LevelWavePathNode() {
     mY = 0.0f;
     mType = PATH_NODE_INVALID;
     mWaitTimer = 0;
+    mKillTimer = 8;
 }
 
 LevelWavePathNode::~LevelWavePathNode() {
@@ -38,10 +39,28 @@ LevelWavePath::LevelWavePath() {
     
     mTestPer = 0.0f;
     mDemoIndex = 0;
+    
+    mTempX = 0.0f;
+    mTempY = 0.0f;
+    mTempDist = 0.0f;
 }
 
 LevelWavePath::~LevelWavePath() {
-    
+    FreeList(LevelWavePathNode, mNodeList);
+    FreeList(LevelWavePathNode, mKillList);
+}
+
+
+void LevelWavePath::Update() {
+    EnumList(LevelWavePathNode, aNode, mKillList) {
+        aNode->mKillTimer--;
+        if (aNode->mKillTimer <= 0) { mDeleteList.Add(aNode); }
+    }
+    EnumList(LevelWavePathNode, aNode, mDeleteList) {
+        mKillList.Remove(aNode);
+        delete aNode;
+    }
+    mDeleteList.RemoveAll();
 }
 
 void LevelWavePath::Add(int pType, float pX, float pY, int pWait) {
@@ -56,7 +75,6 @@ void LevelWavePath::Add(int pType, float pX, float pY, int pWait) {
     mNodeList.Add(aNode);
     mDidFailFinalize = false;
     mDidFinalize = false;
-    
 }
 
 void LevelWavePath::AddMove(float pX, float pY, int pWait) {
@@ -68,7 +86,7 @@ void LevelWavePath::Reset() {
     mDidFailFinalize = false;
     for (int i=0;i<mNodeList.mCount;i++) {
         LevelWavePathNode *aNode = ((LevelWavePathNode *)mNodeList.mData[i]);
-        delete aNode;
+        mKillList.Add(aNode);
     }
     mNodeList.RemoveAll();
     mPath.RemoveAll();
@@ -76,8 +94,6 @@ void LevelWavePath::Reset() {
 }
 
 void LevelWavePath::Finalize() {
-    
-    printf("Finalize...\n");
     mPath.RemoveAll();
     mDist.RemoveAll();
     mDidFailFinalize = false;
@@ -278,21 +294,10 @@ void LevelWavePath::AddSegmentBacktrackingFrom(int pIndex) {
     
     mTempDist += cPolyPath.mLength;
     
-    
     mPath.Add(&cSegmentList);
-    
-    if (mDist.mCount != mPath.mCount) {
-        printf("HMM, BAD EGG CASE?!?!?!\n\n");
-    }
-    printf("Dist[%d] Path[%d]\n\n", mDist.mCount, mPath.mCount);
-    
     
     cSegmentList.Reset();
     cPolyPath.Reset();
-}
-
-void LevelWavePath::Dump(bool pDecel) {
-    
 }
 
 void LevelWavePath::Draw() {

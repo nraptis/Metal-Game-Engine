@@ -9,6 +9,10 @@
 #ifndef LevelWave_hpp
 #define LevelWave_hpp
 
+#define WAVE_CREATION_TYPE_PREV_WAVE_START 0
+#define WAVE_CREATION_TYPE_PREV_WAVE_END 1
+#define WAVE_CREATION_TYPE_PREV_WAVE_CLEAR 2
+#define WAVE_CREATION_TYPE_SCREEN_CLEAR 3
 
 #include "GameObject.hpp"
 #include "LevelWavePath.hpp"
@@ -17,29 +21,39 @@
 class LevelWave {
 public:
     LevelWave();
-    virtual ~LevelWave();
+    ~LevelWave();
     
     void                                Reset();
     void                                Restart();
     
-    virtual void                        Spawn();
-    virtual void                        Update();
-    virtual void                        Draw();
     
-    virtual void                        Dispose();
-    virtual void                        DisposeObject(GameObject *pObject);
+    void                                Prepare();
+    
+    void                                Update();
+    void                                Draw();
+    
+    void                                DisposeObject(GameObject *pObject);
     
     bool                                mIsComplete;
-    bool                                mRight;
-    int                                 mAliveTimer;
     
     LevelWavePath                       mPath;
+    
+    //Decides how the wave is "created" relative to the
+    //previous wave. E.G. 200 ticks after prev wave starts...
+    int                                 mCreationType;
+    int                                 mCreationDelay;
+    
     
     FList                               mSpawnList;
     int                                 mSpawnIndex;
     
     float                               mSpawnSeparationDistance;
     
+    int                                 mKillTimer;
+    
+private:
+    FList                               mSpawnKillList;
+    FList                               mSpawnDeleteList;
 };
 
 

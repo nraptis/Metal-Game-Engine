@@ -1,0 +1,314 @@
+//
+//  LevelWaveSpawnFormationBlueprint.cpp
+//  Crazy Darts 2 Mac
+//
+//  Created by Nicholas Raptis on 3/31/19.
+//  Copyright © 2019 Froggy Studios. All rights reserved.
+//
+
+#include "LevelWaveSpawnFormationBlueprint.hpp"
+#include "os_core_graphics.h"
+#include "FSpline.h"
+#include "FPolyPath.h"
+#include "core_includes.h"
+#include "GameEditor.hpp"
+#include "FLine.h"
+
+
+LevelWaveSpawnFormationBlueprintNode::LevelWaveSpawnFormationBlueprintNode() {
+    mEditorX = 0.0f;
+    mEditorY = 0.0f;
+    
+    mPercentX = 0.0f;
+    mPercentY = 0.0f;
+    
+    mGameX = 0.0f;
+    mGameY = 0.0f;
+    
+    mType = -1;
+    
+    mKillTimer = 36;
+}
+
+LevelWaveSpawnFormationBlueprintNode::~LevelWaveSpawnFormationBlueprintNode() {
+    
+}
+
+FJSONNode *LevelWaveSpawnFormationBlueprintNode::Save() {
+    FJSONNode *aExport = new FJSONNode();
+    aExport->mNodeType = JSON_NODE_TYPE_DICTIONARY;
+    
+    
+    float aLeft = gEditor->mGameAreaLeft;
+    float aRight = gEditor->mGameAreaRight;
+    
+    //100x percision
+    float aX = (mEditorX - aLeft) / (aRight - aLeft) * 100.0f - 50.0f;
+    aExport->AddDictionaryFloat("x", aX);
+    
+    
+    float aTop = gEditor->mGameAreaTop;
+    float aBottom = gEditor->mGameAreaBottom;
+    //100x percision
+    float aY = (mEditorY - aTop) / (aBottom - aTop) * 100.0f - 50.0f;
+    aExport->AddDictionaryFloat("y", aY);
+    
+    return aExport;
+}
+
+void LevelWaveSpawnFormationBlueprintNode::Load(FJSONNode *pNode) {
+    
+    if (pNode == NULL) { return; }
+    
+    mPercentX = 0.0f;
+    mPercentX = pNode->GetFloat("x", mPercentX);
+    
+    if (gEditor != NULL) {
+        float aLeft = gEditor->mGameAreaLeft;
+        float aRight = gEditor->mGameAreaRight;
+        mEditorX = aLeft + (aRight - aLeft) * ((mPercentX + 50.0f) / 100.0f);
+    }
+    
+    mPercentY = 0.0f;
+    mPercentY = pNode->GetFloat("y", mPercentY);
+    if (gEditor != NULL) {
+        float aTop = gEditor->mGameAreaTop;
+        float aBottom = gEditor->mGameAreaBottom;
+        mEditorY = aTop + (aBottom - aTop) * ((mPercentY + 50.0f) / 100.0f);
+    }
+    
+}
+
+LevelWaveSpawnFormationBlueprint::LevelWaveSpawnFormationBlueprint() {
+    
+    mRotationEnabled = false;
+    
+    mRotationSpeedClass = WAVE_SPEED_MEDIUM;
+    
+    mRotationSpeedNegateAlways = false;
+    mRotationSpeedNegateRandom = true;
+    
+    
+}
+
+LevelWaveSpawnFormationBlueprint::~LevelWaveSpawnFormationBlueprint() {
+    FreeList(LevelWaveSpawnFormationBlueprintNode, mNodeList);
+    FreeList(LevelWaveSpawnFormationBlueprintNode, mKillList);
+}
+
+void LevelWaveSpawnFormationBlueprint::Update() {
+    
+    RefreshNodePositions();
+    
+    EnumList(LevelWaveSpawnFormationBlueprintNode, aNode, mKillList) {
+        aNode->mKillTimer--;
+        if (aNode->mKillTimer <= 0) { mDeleteList.Add(aNode); }
+    }
+    EnumList(LevelWaveSpawnFormationBlueprintNode, aNode, mDeleteList) {
+        mKillList.Remove(aNode);
+        delete aNode;
+    }
+    mDeleteList.RemoveAll();
+}
+
+void LevelWaveSpawnFormationBlueprint::Clear() {
+    
+    EnumList(LevelWaveSpawnFormationBlueprintNode, aNode, mNodeList) {
+        mKillList.Add(aNode);
+    }
+    mNodeList.RemoveAll();
+    
+    mSelectedIndex = -1;
+    
+    if (gEditor != NULL) {
+        RefreshNodePositions();
+        if (gFormationEditor != NULL) { gFormationEditor->Refresh(); }
+    }
+}
+
+void LevelWaveSpawnFormationBlueprint::Draw(bool pSelected) {
+    for (int i=1;i<mNodeList.mCount;i++) {
+        LevelWaveSpawnFormationBlueprintNode *aNode1 = (LevelWaveSpawnFormationBlueprintNode *)mNodeList.mData[i - 1];
+        LevelWaveSpawnFormationBlueprintNode *aNode2 = (LevelWaveSpawnFormationBlueprintNode *)mNodeList.mData[i];
+        if (pSelected) {
+            Graphics::SetColor(0.75f, 0.75f, 0.75f, 0.25f);
+            Graphics::DrawLine(aNode1->mEditorX, aNode1->mEditorY, aNode2->mEditorX, aNode2->mEditorY, 1.0f);
+            
+        } else {
+            Graphics::SetColor(0.45f, 0.45f, 0.45f, 0.25f);
+            Graphics::DrawLine(aNode1->mEditorX, aNode1->mEditorY, aNode2->mEditorX, aNode2->mEditorY, 1.0f);
+        }
+    }
+    
+    for (int i=0;i<mNodeList.mCount;i++) {
+        LevelWaveSpawnFormationBlueprintNode *aNode = (LevelWaveSpawnFormationBlueprintNode *)mNodeList.mData[i];
+        if (pSelected) {
+            if (i == mSelectedIndex) {
+                Graphics::SetColor(1.0f, 0.0f, 0.0f, 0.75f);
+                Graphics::DrawPoint(aNode->mEditorX, aNode->mEditorY, 12.0f);
+            } else {
+                Graphics::SetColor(1.0f, 0.0f, 0.0f, 0.75f);
+                Graphics::DrawPoint(aNode->mEditorX, aNode->mEditorY, 6.0f);
+            }
+        } else {
+            Graphics::SetColor(0.65f, 0.65f, 0.65f, 0.35f);
+            Graphics::DrawPoint(aNode->mEditorX, aNode->mEditorY, 4.0f);
+        }
+    }
+}
+
+float LevelWaveSpawnFormationBlueprint::GetX(int pIndex) {
+    LevelWaveSpawnFormationBlueprintNode *aNode = (LevelWaveSpawnFormationBlueprintNode *)mNodeList.Fetch(pIndex);
+    if (aNode != NULL) { return aNode->mEditorX; }
+    return 0.0f;
+}
+
+float LevelWaveSpawnFormationBlueprint::GetY(int pIndex) {
+    LevelWaveSpawnFormationBlueprintNode *aNode = (LevelWaveSpawnFormationBlueprintNode *)mNodeList.Fetch(pIndex);
+    if (aNode != NULL) { return aNode->mEditorY; }
+    return 0.0f;
+}
+
+void LevelWaveSpawnFormationBlueprint::Set(int pIndex, float pX, float pY) {
+    LevelWaveSpawnFormationBlueprintNode *aNode = (LevelWaveSpawnFormationBlueprintNode *)mNodeList.Fetch(pIndex);
+    if (aNode != NULL) {
+        aNode->mEditorX = pX;
+        aNode->mEditorY = pY;
+        RefreshNodePositions();
+        if (gFormationEditor != NULL) { gFormationEditor->Refresh(); }
+    }
+}
+
+void LevelWaveSpawnFormationBlueprint::Add(float pX, float pY) {
+    LevelWaveSpawnFormationBlueprintNode *aNode = new LevelWaveSpawnFormationBlueprintNode();
+    aNode->mEditorX = pX;
+    aNode->mEditorY = pY;
+    mNodeList.Add(aNode);
+    RefreshNodePositions();
+    if (gFormationEditor != NULL) { gFormationEditor->Refresh(); }
+}
+
+void LevelWaveSpawnFormationBlueprint::Remove(int pIndex) {
+    LevelWaveSpawnFormationBlueprintNode *aDeleteNode = (LevelWaveSpawnFormationBlueprintNode *)mNodeList.Fetch(pIndex);
+    if (aDeleteNode) {
+        if (mSelectedIndex >= pIndex) { mSelectedIndex--; }
+        mKillList.Add(aDeleteNode);
+        mNodeList.RemoveAtIndex(pIndex);
+    }
+    if (gFormationEditor != NULL) { gFormationEditor->Refresh(); }
+}
+
+LevelWaveSpawnFormationBlueprintNode *LevelWaveSpawnFormationBlueprint::GetNode(int pIndex) {
+    LevelWaveSpawnFormationBlueprintNode *aResult = (LevelWaveSpawnFormationBlueprintNode *)mNodeList.Fetch(pIndex);
+    return aResult;
+}
+
+LevelWaveSpawnFormationBlueprintNode *LevelWaveSpawnFormationBlueprint::GetNode() {
+    LevelWaveSpawnFormationBlueprintNode *aResult = (LevelWaveSpawnFormationBlueprintNode *)mNodeList.Fetch(mSelectedIndex);
+    return aResult;
+}
+
+void LevelWaveSpawnFormationBlueprint::Print() {
+    
+    printf("FORMATION:: INFO = ??\n");
+    
+    
+}
+      
+void LevelWaveSpawnFormationBlueprint::RefreshNodePositions() {
+    
+    float aLeft = gEditor->mGameAreaLeft;
+    float aRight = gEditor->mGameAreaRight;
+    float aTop = gEditor->mGameAreaTop;
+    float aBottom = gEditor->mGameAreaBottom;
+    
+    for (int i=0;i<mNodeList.mCount;i++) {
+        LevelWaveSpawnFormationBlueprintNode *aNode = (LevelWaveSpawnFormationBlueprintNode *)mNodeList.mData[i];
+        aNode->mPercentX = (aNode->mEditorX - aLeft) / (aRight - aLeft) * 100.0f - 50.0f;
+        aNode->mPercentY = (aNode->mEditorY - aTop) / (aBottom - aTop) * 100.0f - 50.0f;
+    }
+}
+
+int LevelWaveSpawnFormationBlueprint::GetClosestIndex(float pX, float pY, float &pDist) {
+    int aResult = -1;
+    if (mNodeList.mCount > 0) {
+        LevelWaveSpawnFormationBlueprintNode *aNode = (LevelWaveSpawnFormationBlueprintNode *)mNodeList.First();
+        
+        aResult = 0;
+        float aCheckDist = pDist;
+        float aDiffX = aNode->mEditorX - pX;
+        float aDiffY = aNode->mEditorY - pY;
+        float aDist = aDiffX * aDiffX + aDiffY * aDiffY;
+        pDist = aDist;
+        for (int i=1;i<mNodeList.mCount;i++) {
+            aNode = (LevelWaveSpawnFormationBlueprintNode *)mNodeList.mData[i];
+            aDiffX = aNode->mEditorX - pX;
+            aDiffY = aNode->mEditorY - pY;
+            aDist = aDiffX * aDiffX + aDiffY * aDiffY;
+            if (aDist < pDist) {
+                pDist = aDist;
+                aResult = i;
+            }
+        }
+        if (pDist > aCheckDist) { aResult = -1; }
+    }
+    
+    return aResult;
+}
+
+void LevelWaveSpawnFormationBlueprint::Build() {
+    
+}
+
+void LevelWaveSpawnFormationBlueprint::Build(LevelWaveSpawnFormation *pFormation) {
+    
+}
+
+FJSONNode *LevelWaveSpawnFormationBlueprint::Save() {
+    
+    FJSONNode *aExport = new FJSONNode();
+    aExport->mNodeType = JSON_NODE_TYPE_DICTIONARY;
+    
+    //mRotationEnabled = false;
+    
+    //mRotationSpeedClass = WAVE_SPEED_MEDIUM;
+    
+    //mRotationSpeedNegateAlways = false;
+    //mRotationSpeedNegateRandom = true;
+    
+    
+    
+    
+    FJSONNode *aNodeListNode = new FJSONNode();
+    aNodeListNode->mNodeType = JSON_NODE_TYPE_ARRAY;
+    for (int i=0;i<mNodeList.mCount;i++) {
+        LevelWaveSpawnFormationBlueprintNode *aNode = (LevelWaveSpawnFormationBlueprintNode *)mNodeList.mData[i];
+        aNodeListNode->AddArray(aNode->Save());
+    }
+    
+    aExport->AddDictionary("node_list", aNodeListNode);
+    
+    
+    return aExport;
+}
+
+void LevelWaveSpawnFormationBlueprint::Load(FJSONNode *pNode) {
+    Clear();
+    if (pNode == NULL) { return; }
+    
+    
+    
+    
+    
+    FJSONNode *aNodeListNode = pNode->GetArray("node_list");
+    
+    if (aNodeListNode != NULL) {
+        EnumJSONArray(aNodeListNode, aFormationBlueprintLoadNode) {
+            LevelWaveSpawnFormationBlueprintNode *aPathNode = new LevelWaveSpawnFormationBlueprintNode();
+            aPathNode->Load(aFormationBlueprintLoadNode);
+            mNodeList.Add(aPathNode);
+        }
+    }
+        
+    if (gFormationEditor != NULL) { gFormationEditor->Refresh(); }
+}

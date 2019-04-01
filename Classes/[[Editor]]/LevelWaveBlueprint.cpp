@@ -25,7 +25,7 @@ LevelWaveBlueprint::LevelWaveBlueprint() {
     mCreationType = WAVE_CREATION_TYPE_PREV_WAVE_START;
     mCreationDelay = 200;
     
-    mKillTimer = 100;
+    mKillTimer = 8;
 }
 
 LevelWaveBlueprint::~LevelWaveBlueprint() {

@@ -69,14 +69,19 @@ GameEditor::GameEditor(Game *pGame) {
     //WaveAdd();
     //OpenPathEditor();
     
+    
+    
+    
     LoadConfig();
     //
     OpenSpawnMenu();
     OpenWavePickerMenu();
     OpenSpawnPickerMenu();
-    OpenAttachmentMenu();
+    //OpenAttachmentMenu();
     
-    //
+    
+    
+    
 }
 
 GameEditor::~GameEditor() {
@@ -178,6 +183,9 @@ void GameEditor::Update() {
         mEnqueueInitialLoad--;
         if (mEnqueueInitialLoad <= 0) {
             Autoload();
+            
+            //HOOK: We want to jump right to a particular toolset?
+            OpenFormationEditor();
         }
     }
     
@@ -234,11 +242,11 @@ void GameEditor::Update() {
                 }
             }
         }
-    }else {
+    } else {
         mEditorWave.Reset();
         mEditorSection.Reset();
-        
     }
+    
 }
 
 void GameEditor::Draw() {
@@ -247,9 +255,6 @@ void GameEditor::Draw() {
     
     bool aIsOnMainTools = (mOverlay == mToolContainer);
     bool aIsOnPathTools = (mOverlay == mPathEditor);
-    
-    
-    
     
     gGame->DrawTransform();
     
@@ -260,7 +265,6 @@ void GameEditor::Draw() {
     
     DrawTransform();
     
-    
     Graphics::PipelineStateSetShape2DAlphaBlending();
     
     if (aIsOnMainTools || aIsOnPathTools) {
@@ -270,11 +274,8 @@ void GameEditor::Draw() {
         Graphics::DrawRect(mGameAreaLeft, mGameAreaBottom, mGameAreaRight - mGameAreaLeft, gDeviceHeight - mGameAreaBottom);
         Graphics::DrawRect(mGameAreaLeft + (mGameAreaRight - mGameAreaLeft), 0.0f, gDeviceWidth - (mGameAreaLeft + (mGameAreaRight - mGameAreaLeft)), gDeviceHeight);
         
-        
-        
-        
-        float aMarkerMult = 0.75f;
-        float aMarkerOpacity = 0.4f;
+        float aMarkerMult = 1.0f;
+        float aMarkerOpacity = 0.75f;
         
         Graphics::SetColor(0.125f * aMarkerMult, 1.0f * aMarkerMult, 0.056f * aMarkerMult, aMarkerOpacity);
         Graphics::DrawLine(mSpawnZoneLeft, mSpawnZoneTop, mSpawnZoneRight, mSpawnZoneTop);
@@ -307,19 +308,9 @@ void GameEditor::Draw() {
         Graphics::DrawLine(mGameAreaLeft, mGameAreaTop, mGameAreaLeft, mGameAreaBottom);
         Graphics::DrawLine(mGameAreaRight, mGameAreaTop, mGameAreaRight, mGameAreaBottom);
         
-        
         Graphics::SetColor();
         mSection.Draw();
-        
     }
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     Graphics::PipelineStateSetSpritePremultipliedBlending();
@@ -354,10 +345,11 @@ void GameEditor::KeyDown(int pKey) {
         printf("Game doesn't exist?\n");
         return;
     }
-    if (mPathEditor != NULL) {
-        if (mOverlay == mPathEditor) {
-            return;
-        }
+    if (mPathEditor != NULL && mOverlay == mPathEditor) {
+        return;
+    }
+    if (mFormationEditor != NULL && mOverlay == mFormationEditor) {
+        return;
     }
     
     bool aShift = gKeyDownShift;
@@ -858,6 +850,7 @@ void GameEditor::Save(const char *pFile) {
 void GameEditor::Load(const char *pFile) {
     
     ClosePathEditor();
+    CloseFormationEditor();
     
     mEditorWave.mPath.Reset();
     

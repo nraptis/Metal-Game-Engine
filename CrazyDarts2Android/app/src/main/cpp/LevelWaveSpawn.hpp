@@ -22,12 +22,13 @@ public:
     virtual ~LevelWaveSpawn();
     
     void                                Spawn();
+    
     void                                Reset();
+    void                                Restart();
     
     void                                Update();
     void                                Draw();
     
-    void                                Dispose();
     void                                DisposeObject(GameObject *pObject);
     
     LevelWave                           *mWave;
@@ -44,6 +45,7 @@ public:
     
     float                               mOffsetSpawnDistance;
     
+    int                                 mKillTimer;
 };
 
 

@@ -18,13 +18,24 @@ public:
     ToolMenuSection();
     virtual ~ToolMenuSection();
 
-    virtual void                            Update();
-    virtual void                            Draw();
-    virtual void                            Layout();
+    
+    virtual void                            Update() override;
+    virtual void                            Draw() override;
+    virtual void                            Layout() override;
+    
+    virtual void                            TouchDown(float pX, float pY, void *pData) override;
+    virtual void                            TouchMove(float pX, float pY, void *pData) override;
+    virtual void                            TouchUp(float pX, float pY, void *pData) override;
+    virtual void                            TouchFlush() override;
+    
+    virtual void                            Notify(void *pSender, const char *pNotification) override;
 
     void                                    SetTransparentBackground();
+    
+    void                                    StyleSetPicker();
+    
 
-    virtual void                            Notify(void *pSender, const char *pNotification);
+    
 
     int                                     mSectionDepth;
 

@@ -22,8 +22,12 @@ public:
     ~LevelWavePathBlueprintNode();
     
     Constraint                                  mConstraint;
-    float                                       mX;
-    float                                       mY;
+    
+    float                                       mEditorX;
+    float                                       mEditorY;
+    
+    float                                       mPercentX;
+    float                                       mPercentY;
     
     float                                       mBaseGameX;
     float                                       mBaseGameY;
@@ -41,6 +45,8 @@ public:
     FJSONNode                                   *Save();
     void                                        Load(FJSONNode *pNode);
     
+    int                                         mKillTimer;
+    
 };
 
 class LevelWavePathBlueprint {
@@ -51,10 +57,16 @@ public:
     
     LevelWaveBlueprint                          *mWave;
     
+    void                                        Update();
     void                                        Clear();
     void                                        Draw(bool pSelected);
     
+    void                                        RefreshNodePositions();
+    
     int                                         GetClosestIndex(float pX, float pY, float &pDist);
+    void                                        GetClosestPointOnLine(float pX, float pY, float &pDist);
+    
+    
     void                                        Set(int pIndex, float pX, float pY);
     float                                       GetX(int pIndex);
     float                                       GetY(int pIndex);
@@ -77,12 +89,11 @@ public:
     void                                        SetSnapXType(int pType);
     void                                        SetSnapYType(int pType);
     
-    FPoint                                      GetNormalizedPos(LevelWavePathBlueprintNode *pNode);
-    FPoint                                      GetNormalizedPos(float pX, float pY);
-    
     FJSONNode                                   *Save();
     void                                        Load(FJSONNode *pNode);
     
+    FList                                       mKillList;
+    FList                                       mDeleteList;
 };
 
 #endif

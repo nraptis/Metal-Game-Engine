@@ -25,9 +25,28 @@ public:
     UIButton                                *mButtonCloseEditor;
     UIButton                                *mButtonResetFormation;
     
-    GameFormationEditor                     *mEditor;
     
+    ToolMenuPanel                           *mPanelTracers;
+    
+    ToolMenuSectionRow                      *mRowTracers1;
+    UICheckBox                              *mCheckBoxTracersEnabled;
+    
+    UIButton                                *mButtonDeleteTracer;
+    UISegment                               *mSegmentTracersMode;
+    
+    
+    
+    GameFormationEditor                     *mEditor;
 };
 
 
-#endif /* EditorMenuFormationUtilities_hpp */
+#endif
+
+
+
+
+
+
+
+
+

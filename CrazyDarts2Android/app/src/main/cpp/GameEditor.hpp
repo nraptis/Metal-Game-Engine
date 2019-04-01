@@ -16,10 +16,15 @@
 #include "EditorMenuSections.hpp"
 #include "EditorMenuSpawn.hpp"
 #include "EditorMenuWavesPicker.hpp"
+#include "EditorMenuSpawnPicker.hpp"
+#include "EditorMenuAttachment.hpp"
+
 #include "GamePathEditor.hpp"
+#include "GameFormationEditor.hpp"
 #include "LevelWavePathBlueprint.hpp"
 #include "LevelWaveBlueprint.hpp"
 #include "LevelSectionBlueprint.hpp"
+
 
 class GameEditor : public FCanvas {
 public:
@@ -43,18 +48,20 @@ public:
     virtual void                                Notify(void *pSender, const char *pNotification) override;
     
     //Everything we BUILD is SECTION...
+    //This is the BLUEPRINT, not the actual section...
     LevelSectionBlueprint                       mSection;
     
-    
-    
-    
-    void                                        RefreshWave();
-    void                                        RefreshWaveSpeed();
+    void                                        RefreshPlayback();
+    void                                        RefreshPlaybackSpeed();
     int                                         mSpeedClassIndex;
     
+    
+    void                                        RefreshSpawn();
+    void                                        RefreshSpawnRotationSpeed();
+    int                                         mSpawnRotationSpeedClassIndex;
+    
+    
     void                                        RefreshSection();
-    
-    
     
     void                                        SetOverlay(FCanvas *pCanvas);
     void                                        SelectClosestObject(float pX, float pY);
@@ -83,14 +90,22 @@ public:
     int                                         WaveCount(int pIndex);
     int                                         WaveIndex();
     
-    
+    void                                        SpawnSelect(int pIndex);
+    int                                         SpawnIndex();
+    LevelWaveSpawnBlueprint                     *SpawnGet();
     
     void                                        OpenPathEditor();
     void                                        ClosePathEditor();
     
+    void                                        OpenFormationEditor();
+    void                                        CloseFormationEditor();
+    
     
     void                                        OpenSpawnMenu();
     void                                        OpenWavePickerMenu();
+    void                                        OpenSpawnPickerMenu();
+    void                                        OpenAttachmentMenu();
+    
     
     
     void                                        Clear();
@@ -108,10 +123,13 @@ public:
     Game                                        *mGame;
     
     GamePathEditor                              *mPathEditor;
+    GameFormationEditor                         *mFormationEditor;
     
     EditorMenuSections                          *mMenuSections;
     EditorMenuSpawn                             *mMenuSpawn;
     EditorMenuWavesPicker                       *mMenuWavesPicker;
+    EditorMenuSpawnPicker                       *mMenuSpawnPicker;
+    EditorMenuAttachment                        *mMenuAttachment;
     
     
     FCanvas                                     *mToolContainer;
@@ -157,6 +175,29 @@ public:
     
     int                                         mAutosaveTimer;
     int                                         mEnqueueInitialLoad;
+    
+    
+    
+    
+    
+    //Map to game.
+    //We prefix with EDITOR because these are game control. Not editor internal.
+    //Essentially, it's a fake game that we can look at with our decayed eyeballs.
+    void                                        EditorRestartWave();
+    void                                        EditorRestartSection();
+    
+    bool                                        mEditorWaveLoop;
+    bool                                        mEditorSectionLoop;
+    bool                                        mEditorShowReferenced;
+    bool                                        mEditorPlaybackEnabled;
+    bool                                        mEditorPlaybackWaveOnly;
+    bool                                        mEditorPlaybackFromCurrentWave;
+    
+    LevelSection                                mEditorSection;
+    LevelWave                                   mEditorWave;
+    FList                                       mEditorObjectList;
+    FList                                       mEditorObjectQueue;
+    
     
 };
 

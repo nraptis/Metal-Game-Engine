@@ -8,9 +8,10 @@
 
 #include "GameObject.hpp"
 #include "Game.hpp"
+#include "LevelWave.hpp"
 
 GameObject::GameObject() {
-    
+    mWave = NULL;
     mUniform = NULL;
     mModel = NULL;
     mSprite = NULL;

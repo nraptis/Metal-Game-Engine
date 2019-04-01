@@ -23,7 +23,7 @@ public:
     
     
     ToolMenuSectionRow                      *mRowMain1;
-    UIButton                                *mButtonNewSection;
+    UIButton                                *mButtonBuildFormation;
     UIButton                                *mButtonSaveSection;
     UIButton                                *mButtonLoadSection;
     ToolMenuSectionRow                      *mRowMain2;
@@ -36,26 +36,44 @@ public:
     ToolMenuSectionRow                      *mRowMenus2;
     UIButton                                *mButtonShowSpawn;
     UIButton                                *mButtonShowWavePicker;
+    UIButton                                *mButtonShowSpawnPicker;
+    UIButton                                *mButtonShowAttachments;
+    
     
     ToolMenuPanel                           *mWavePanel;
     ToolMenuSectionRow                      *mRowWave1;
     UIButton                                *mButtonAddWave;
     UIButton                                *mButtonDeleteWave;
-    UIButton                                *mButtonSelectNextWave;
-    UIButton                                *mButtonSelectPreviousWave;
+    UIButton                                *mButtonEditPaths;
     
     ToolMenuSectionRow                      *mRowWave2;
     UICheckBox                              *mCheckBoxPreview;
     UIButton                                *mButtonMoveWaveUp;
     UIButton                                *mButtonMoveWaveDown;
     
-    ToolMenuPanel                           *mPathPanel;
-    ToolMenuSectionRow                      *mRowPath1;
-    UIButton                                *mButtonEditPaths;
-    UIButton                                *mButtonSelectNextPath;
-    UIButton                                *mButtonSelectPreviousPath;
-    ToolMenuSectionRow                      *mRowPath2;
     
+    
+    
+    
+    ToolMenuPanel                           *mPlaybackPanel;
+    ToolMenuSectionRow                      *mRowPlayback1;
+    UICheckBox                              *mCheckBoxPlaybackEnabled;
+    UIButton                                *mButtonPlaybackRestart;
+    
+    ToolMenuSectionRow                      *mRowPlayback2;
+    UICheckBox                              *mCheckBoxCurrentWaveOnly;
+    UICheckBox                              *mCheckBoxPlaybackStartAtSelectedWave;
+    
+    ToolMenuSectionRow                      *mRowPlayback3;
+    
+    
+    
+    
+    
+    
+    
+    
+
     GameEditor                              *mEditor;
     
 };

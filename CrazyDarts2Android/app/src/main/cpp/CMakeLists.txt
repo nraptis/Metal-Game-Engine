@@ -4,32 +4,35 @@ cmake_minimum_required(VERSION 3.4.1)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall")
 
 add_library(gl2jni SHARED
-		__DROID.cpp
-        SpawnWave.cpp
+
+        __DROID.cpp
         Balloon.cpp
         CameraMenu.cpp
-		Constraint.cpp
+        Constraint.cpp
         core_app_shell.cpp
         core_social.cpp
         core_web.cpp
+        Dart.cpp
         DiffuseConfiguration.cpp
         DiffuseLightMenu.cpp
-        Dart.cpp
         DragableCanvas.cpp
+        EditorMenuAttachment.cpp
+        EditorMenuAttachmentPicker.cpp
+        EditorMenuFlow.cpp
+        EditorMenuFormation.cpp
+        EditorMenuFormationPicker.cpp
+        EditorMenuFormationUtilities.cpp
+        EditorMenuPath.cpp
+        EditorMenuPathControl.cpp
+        EditorMenuSections.cpp
+        EditorMenuSpawn.cpp
+        EditorMenuSpawnPicker.cpp
+        EditorMenuWavesPicker.cpp
         FAchievement.cpp
         FAnimation.cpp
         FApp.cpp
-        EditorMenuAttachment.cpp
-        EditorMenuAttachmentPicker.cpp
-		EditorMenuFlow.cpp
-		EditorMenuPath.cpp
-		EditorMenuPathControl.cpp
-		EditorMenuSections.cpp
-		EditorMenuSpawn.cpp
-		EditorMenuSpawnPicker.cpp
-		EditorMenuWavesPicker.cpp
-		FBufferCache.cpp
-		FBuffer.cpp
+        FBuffer.cpp
+        FBufferCache.cpp
         FButton.cpp
         FCanvas.cpp
         FColor.cpp
@@ -39,6 +42,7 @@ add_library(gl2jni SHARED
         FFloatBufferCache.cpp
         FFloatList.cpp
         FFont.cpp
+        FFrameController.cpp
         FGestureCanvas.cpp
         FHashMap.cpp
         FImage.cpp
@@ -47,7 +51,7 @@ add_library(gl2jni SHARED
         FIndexList.cpp
         FIntList.cpp
         FJoystick.cpp
-		FJSON.cpp
+        FJSON.cpp
         FLight.cpp
         FLine.cpp
         FList.cpp
@@ -88,25 +92,32 @@ add_library(gl2jni SHARED
         FWindow.cpp
         FXML.cpp
         Game.cpp
-		GamePathEditor.cpp
-		GameEditor.cpp
-		GameContainer.cpp
+        GameContainer.cpp
+        GameEditor.cpp
+        GameFormationEditor.cpp
+        GameLevelController.cpp
         GameObject.cpp
+        GamePathEditor.cpp
         GameRenderer.cpp
         GFXApp.cpp
         GraphicsInterface.cpp
+        LevelData.cpp
+        LevelSection.cpp
+        LevelSectionBlueprint.cpp
         LevelSelectorScreen.cpp
-		LevelSectionBlueprint.cpp
-		LevelWaveBlueprint.cpp
-		LevelWavePathBlueprint.cpp
-		LevelSection.cpp
-		LevelSelectorScreen.cpp
-		LevelWave.cpp
-		LevelWaveChunk.cpp
-		LevelWaveFormation.cpp
-		LevelWavePath.cpp
-		LevelWaveSpawn.cpp
-		LevelWaveSpawnBlueprint.cpp
+        LevelWave.cpp
+        LevelWaveBlueprint.cpp
+        LevelWaveChunk.cpp
+        LevelWaveFormation.cpp
+        LevelWavePath.cpp
+        LevelWavePathBlueprint.cpp
+        LevelWaveSpawn.cpp
+        LevelWaveSpawnBlueprint.cpp
+        LevelWaveSpawnFormation.cpp
+        LevelWaveSpawnFormationBlueprint.cpp
+        LevelWaveSpawnFormationNode.cpp
+        LevelWaveSpawnFormationTracer.cpp
+        LevelWaveSpawnFormationTracerBlueprint.cpp
         LightConfigurationScene.cpp
         OpenGLEngine.cpp
         os_core_app_shell_android.cpp
@@ -117,10 +128,10 @@ add_library(gl2jni SHARED
         os_core_social.cpp
         os_core_sound_android.cpp
         os_core_web.cpp
-		OSMusicBuffer.cpp
-		OSMusicPlayer.cpp
-		OSSoundBuffer.cpp
-		OSSoundBufferPool.cpp
+        OSMusicBuffer.cpp
+        OSMusicPlayer.cpp
+        OSSoundBuffer.cpp
+        OSSoundBufferPool.cpp
         PathEditorMenu.cpp
         PGMainCanvas.cpp
         PGMainToolbar.cpp
@@ -131,22 +142,23 @@ add_library(gl2jni SHARED
         PhongLightMenu.cpp
         PlatformGraphicsInterface.cpp
         ScreenTransformMenu.cpp
-		ShaderProgramSpriteWhite.cpp
-		ShaderProgramSpriteNode.cpp
-		ShaderProgramSprite.cpp
-		ShaderProgramSimpleModelIndexed.cpp
-		ShaderProgramSimpleModel.cpp
-		ShaderProgramShapeNode.cpp
-		ShaderProgramShape3D.cpp
-		ShaderProgramModelIndexedLightedPhong.cpp
+        ShaderProgram.cpp
+        ShaderProgramModelIndexed.cpp
+        ShaderProgramModelIndexedLightedAmbient.cpp
         ShaderProgramModelIndexedLightedDiffuse.cpp
-		ShaderProgramModelIndexedLightedAmbient.cpp
-		ShaderProgramModelIndexedLightedSimpleSpotlight.cpp
-		ShaderProgramModelIndexed.cpp
-		ShaderProgram.cpp
-		SimpleSpotLightMenu.cpp
+        ShaderProgramModelIndexedLightedPhong.cpp
+        ShaderProgramModelIndexedLightedSimpleSpotlight.cpp
+        ShaderProgramShape3D.cpp
+        ShaderProgramShapeNode.cpp
+        ShaderProgramSimpleModel.cpp
+        ShaderProgramSimpleModelIndexed.cpp
+        ShaderProgramSprite.cpp
+        ShaderProgramSpriteNode.cpp
+        ShaderProgramSpriteWhite.cpp
+        SimpleSpotLightMenu.cpp
         SoundConfigMenu.cpp
-		SpotLightSimpleConfiguration.cpp
+        SpawnWave.cpp
+        SpotLightSimpleConfiguration.cpp
         ToolMenu.cpp
         ToolMenuHeader.cpp
         ToolMenuModalUnderlay.cpp
@@ -154,6 +166,8 @@ add_library(gl2jni SHARED
         ToolMenuPanelHeader.cpp
         ToolMenuSection.cpp
         ToolMenuSectionRow.cpp
+        Transform2D.cpp
+        Transform3D.cpp
         UIAlignmentPicker.cpp
         UIAlignmentPickerButton.cpp
         UIButton.cpp
@@ -167,12 +181,9 @@ add_library(gl2jni SHARED
         UISegmentButton.cpp
         UISlider.cpp
         UIStepper.cpp
-		UITextBox.cpp
+        UITextBox.cpp
         Util_ScreenFrame.cpp
-		Transform3D.cpp
-		Transform2D.cpp
-		LevelData.cpp
-		GameLevelController.cpp
+
         )
 
 # add lib dependencies

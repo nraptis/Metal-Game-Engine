@@ -22,8 +22,7 @@ SoundConfigMenu::SoundConfigMenu() : ToolMenu() {
     mPitch = 1.0f;
     
     
-    
-    
+    SetTitle("Sound Testboard");
     SetScrollMode(true);
     //
     //
@@ -265,17 +264,24 @@ void SoundConfigMenu::Notify(void *pSender, const char *pNotification) {
         
         
         
-        if (pSender == mButtonSong1Play) { music_play("music_game_loop.mp3", false); }
-        if (pSender == mButtonSong2Play) { music_play("music_idle.mp3", false); }
+        if (pSender == mButtonSong1Play) { music_play("demo_song_1.mp3", true); }
+        if (pSender == mButtonSong2Play) { music_play("demo_song_2.mp3", true); }
         
         if (pSender == mButtonMusicPause) { music_pause(); }
         if (pSender == mButtonMusicResume) { music_resume(); }
         
         if (pSender == mButtonSongFade) { music_fadeout(mFadeTicks); }
         
-        if (pSender == mButtonSong1Crossfade) { music_crossfade("music_game_loop.mp3", mCrossfadeTicks, false); }
-        if (pSender == mButtonSong2Crossfade) { music_crossfade("music_idle.mp3", mCrossfadeTicks, false); }
+        if (pSender == mButtonSong1Crossfade) { music_crossfade("demo_song_1.mp3", mCrossfadeTicks, true); }
+        if (pSender == mButtonSong2Crossfade) { music_crossfade("demo_song_2.mp3", mCrossfadeTicks, true); }
+        
 
+        
+        
+        
+        
+        
+        
     }
     
     if (FString(pNotification) == "segment") {

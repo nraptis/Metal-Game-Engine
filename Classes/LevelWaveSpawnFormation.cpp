@@ -11,8 +11,77 @@
 
 LevelWaveSpawnFormation::LevelWaveSpawnFormation() {
     
+    mRotation = 0.0f;
 }
 
 LevelWaveSpawnFormation::~LevelWaveSpawnFormation() {
     
+    printf("LevelWaveSpawnFormation::~LevelWaveSpawnFormation()\n");
+    
+    FreeList(LevelWaveSpawnFormationNode, mNodeList);
+    FreeList(LevelWaveSpawnFormationNode, mNodeKillList);
+    
+    FreeList(LevelWaveSpawnFormationTracer, mTracerList);
+    FreeList(LevelWaveSpawnFormationTracer, mTracerKillList);
 }
+
+
+void LevelWaveSpawnFormation::Reset() {
+    for (int i=0;i<mNodeList.mCount;i++) {
+        LevelWaveSpawnFormationNode *aNode = ((LevelWaveSpawnFormationNode *)mNodeList.mData[i]);
+        aNode->Reset();
+        mNodeKillList.Add(aNode);
+    }
+    mNodeList.RemoveAll();
+    
+    for (int i=0;i<mTracerList.mCount;i++) {
+        LevelWaveSpawnFormationTracer *aNode = ((LevelWaveSpawnFormationTracer *)mTracerList.mData[i]);
+        mTracerKillList.Add(aNode);
+    }
+    mNodeList.RemoveAll();
+}
+
+void LevelWaveSpawnFormation::Spawn() {
+    
+    EnumList(LevelWaveSpawnFormationNode, aNode, mNodeList) {
+        
+        aNode->Spawn();
+        
+    }
+    
+    
+}
+
+void LevelWaveSpawnFormation::Update() {
+    
+    EnumList(LevelWaveSpawnFormationNode, aNode, mNodeList) {
+        aNode->Update();
+    }
+    
+    
+    
+    
+    
+    
+    EnumList(LevelWaveSpawnFormationNode, aNode, mNodeKillList) {
+        aNode->mKillTimer--;
+        if (aNode->mKillTimer <= 0) { mNodeDeleteList.Add(aNode); }
+    }
+    EnumList(LevelWaveSpawnFormationNode, aNode, mNodeDeleteList) {
+        mNodeKillList.Remove(aNode);
+        delete aNode;
+    }
+    mNodeDeleteList.RemoveAll();
+    
+    
+    EnumList(LevelWaveSpawnFormationTracer, aTracer, mTracerKillList) {
+        aTracer->mKillTimer--;
+        if (aTracer->mKillTimer <= 0) { mTracerDeleteList.Add(aTracer); }
+    }
+    EnumList(LevelWaveSpawnFormationTracer, aTracer, mTracerDeleteList) {
+        mTracerKillList.Remove(aTracer);
+        delete aTracer;
+    }
+    mTracerDeleteList.RemoveAll();
+}
+

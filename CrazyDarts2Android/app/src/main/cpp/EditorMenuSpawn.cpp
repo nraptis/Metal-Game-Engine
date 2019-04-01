@@ -17,29 +17,12 @@ EditorMenuSpawn::EditorMenuSpawn(GameEditor *pEditor) : ToolMenu() {
     
     mEditor = pEditor;
     
-    SetTitle("Spawn");
+    SetTitle("Spawn (Meta)");
     SetScrollMode(true);
     
-    
-    mPanelGeneration = new ToolMenuPanel();
-    mPanelGeneration->SetTitle("Generation");
-    AddSection(mPanelGeneration);
-    
-    mRowGeneration = new ToolMenuSectionRow();
-    mPanelGeneration->AddSection(mRowGeneration);
-    
-    mLabelSpeed = new UILabel();
-    mLabelSpeed->SetText("Wave Speed");
-    mRowGeneration->AddLabel(mLabelSpeed);
-    
-    mButtonClearFormation = new UIButton();
-    mButtonClearFormation->SetText("No Form");
-    mRowGeneration->AddButton(mButtonClearFormation);
-    
-    mCheckBoxSpeed = new UICheckBox();
-    mCheckBoxSpeed->SetText("Speed Enable");
-    mRowGeneration->AddCheckBox(mCheckBoxSpeed);
-    
+    mGenerationPanel = new ToolMenuPanel();
+    mGenerationPanel->SetTitle("Generation");
+    AddSection(mGenerationPanel);
     
     mSegmentSpeed = new UISegment();
     mSegmentSpeed->SetSegmentCount(7);
@@ -47,55 +30,40 @@ EditorMenuSpawn::EditorMenuSpawn(GameEditor *pEditor) : ToolMenu() {
     if (gGame) {
         mSegmentSpeed->SetTarget(&gEditor->mSpeedClassIndex);
     }
-    mPanelGeneration->AddSection(mSegmentSpeed);
-    gNotify.Register(this, mSegmentSpeed, "segment");
+    mGenerationPanel->AddSection(mSegmentSpeed);
     
     
     mStepperSpawnCount = new UIStepper();
     mStepperSpawnCount->SetText("Count");
-    mPanelGeneration->AddSection(mStepperSpawnCount);
+    mStepperSpawnCount->mMin = 1;
+    mStepperSpawnCount->mMax = (MAX_SPAWN_COUNT);
+    mGenerationPanel->AddSection(mStepperSpawnCount);
+    
+    mStepperSpacing = new UIStepper();
+    mStepperSpacing->SetText("Spacing");
+    mStepperSpacing->mMin = -1000;
+    mStepperSpacing->mMax = 1000;
+    mGenerationPanel->AddSection(mStepperSpacing);
     
     
-    mSliderSpacing = new UISlider();
-    mSliderSpacing->SetText("Spacing");
-    //mSliderViewDistance->SetValue(&mCamera->mDistance);
-    mSliderSpacing->SetRange(10.0f, 100.0f);
-    mPanelGeneration->AddSection(mSliderSpacing);
+    
+    mTimingPanelPanel = new ToolMenuPanel();
+    mTimingPanelPanel->SetTitle("Timing");
+    AddSection(mTimingPanelPanel);
     
     
-    
-    mPanelAttachments = new ToolMenuPanel();
-    mPanelAttachments->SetTitle("Attachments");
-    AddSection(mPanelAttachments);
-    
-    mRowFormations1 = new ToolMenuSectionRow();
-    mPanelAttachments->AddSection(mRowFormations1);
-    
-    mButtonClearFormation = new UIButton();
-    mButtonClearFormation->SetText("No Form");
-    mRowFormations1->AddButton(mButtonClearFormation);
-    
-    mButtonDefaultFormation = new UIButton();
-    mButtonDefaultFormation->SetText("Defualt");
-    mRowFormations1->AddButton(mButtonDefaultFormation);
-    
-    mButtonPickFormation = new UIButton();
-    mButtonPickFormation->SetText("Pick Form");
-    mRowFormations1->AddButton(mButtonPickFormation);
-    
-
+    mStepperCreationType = new UISegment();
+    mStepperCreationType->SetSegmentCount(4);
+    mStepperCreationType->SetTitles("P-W-Start", "P-W-End", "P-W-Clear", "Scr-Clear");
+    mTimingPanelPanel->AddSection(mStepperCreationType);
     
     
-    mPanelMovement = new ToolMenuPanel();
-    mPanelMovement->SetTitle("Movement");
-    AddSection(mPanelMovement);
+    mStepperCreationDelay = new UIStepper();
+    mStepperCreationDelay->SetText("Delay");
+    mStepperCreationDelay->mMin = 0;
+    mStepperCreationDelay->mMax = 2048;
+    mTimingPanelPanel->AddSection(mStepperCreationDelay);
     
-    
-    mSliderRotation = new UISlider();
-    mSliderRotation->SetText("Rotate:");
-    //mSliderViewDistance->SetValue(&mCamera->mDistance);
-    mSliderRotation->SetRange(-20.0f, 20.0f);
-    mPanelMovement->AddSection(mSliderRotation);
     
 }
 
@@ -113,31 +81,68 @@ void EditorMenuSpawn::Layout() {
 
 void EditorMenuSpawn::Notify(void *pSender, const char *pNotification) {
     
-    if (FString("slider_update") == pNotification) {
-        
+    if (gEditor == NULL) { return; }
+    if (pSender == mSegmentSpeed) {
+        gEditor->RefreshPlaybackSpeed();
+        gEditor->RefreshPlayback();
     }
-    
-    if (FString(pNotification) == "button_click") {
-        
-        
-    }
-    
-    if (FString(pNotification) == "segment") {
-        UISegment *aSegment = (UISegment *)pSender;
-        
-        if (pSender == mSegmentSpeed) {
-            if (gEditor) {
-                gEditor->RefreshWaveSpeed();
-            }
-        }
-        
-    }
-    
-    if (FString(pNotification) == "stepper") {
-        UIStepper *aStepper = (UIStepper *)pSender;
-    }
+    if (pSender == mStepperSpawnCount) { gEditor->RefreshPlayback(); }
+    if (pSender == mStepperSpacing) { gEditor->RefreshPlayback(); }
+    if (pSender == mStepperCreationType) { gEditor->RefreshPlayback(); }
+    if (pSender == mStepperCreationDelay) { gEditor->RefreshPlayback(); }
 }
 
 void EditorMenuSpawn::Update() {
+    
+    LevelWaveBlueprint *aWave = NULL;
+    if (gEditor) {
+        aWave = gEditor->mSection.mCurrentWave;
+    }
+    
+    if (mStepperSpawnCount != NULL) {
+        bool aUnlink = true;
+        if (aWave != NULL) {
+            aUnlink = false;
+            mStepperSpawnCount->SetTarget(&(aWave->mSpawnCount));
+        }
+        if (aUnlink) {
+            mStepperSpawnCount->SetTarget(NULL);
+        }
+    }
+    
+    if (mStepperSpacing != NULL) {
+        bool aUnlink = true;
+        if (aWave != NULL) {
+            aUnlink = false;
+            mStepperSpacing->SetTarget(&(aWave->mSpawnSpacing));
+        }
+        if (aUnlink) {
+            mStepperSpacing->SetTarget(NULL);
+        }
+    }
+    
+    
+    if (mStepperCreationType != NULL) {
+        bool aUnlink = true;
+        if (aWave != NULL) {
+            aUnlink = false;
+            mStepperCreationType->SetTarget(&(aWave->mCreationType));
+        }
+        if (aUnlink) {
+            mStepperCreationType->SetTarget(NULL);
+        }
+    }
+    
+    if (mStepperCreationDelay != NULL) {
+        bool aUnlink = true;
+        if (aWave != NULL) {
+            aUnlink = false;
+            mStepperCreationDelay->SetTarget(&(aWave->mCreationDelay));
+        }
+        if (aUnlink) {
+            mStepperCreationDelay->SetTarget(NULL);
+        }
+    }
+    \
     
 }

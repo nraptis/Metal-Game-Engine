@@ -15,10 +15,10 @@
 #include "FSprite.h"
 #include "FUniforms.hpp"
 #include "FAnimation.h"
-
 #include "Transform2D.hpp"
 #include "Transform3D.hpp"
 
+class LevelWave;
 class GameObject : public FObject {
 public:
     GameObject();
@@ -28,6 +28,9 @@ public:
     virtual void                            Draw();
     virtual void                            Draw3D();
     virtual void                            Kill();
+    
+    
+    LevelWave                               *mWave;
     
     FModelDataPacked                        *mModel;
     FSprite                                 *mSprite;

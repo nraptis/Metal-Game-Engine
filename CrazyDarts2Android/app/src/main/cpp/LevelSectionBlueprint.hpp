@@ -12,14 +12,16 @@
 #include "LevelWaveBlueprint.hpp"
 #include "FList.hpp"
 
+class LevelSection;
 class LevelSectionBlueprint {
 public:
     LevelSectionBlueprint();
     ~LevelSectionBlueprint();
     
     void                                        Clear();
-    void                                        Draw();
     
+    void                                        Update();
+    void                                        Draw();
     
     void                                        WaveAdd();
     void                                        WaveRemove();
@@ -36,8 +38,16 @@ public:
     LevelWaveBlueprint                          *mCurrentWave;
     
     
+    void                                        Build();
+    void                                        Build(LevelSection *pSection);
+    
+    
     FJSONNode                                   *Save();
     void                                        Load(FJSONNode *pNode);
+    
+    
+    FList                                       mKillList;
+    FList                                       mDeleteList;
     
 };
 

@@ -10,6 +10,9 @@
 #define LevelWaveFormation_hpp
 
 
+#include "FList.hpp"
+#include "LevelWaveSpawnFormationTracer.hpp"
+#include "LevelWaveSpawnFormationNode.hpp"
 
 class LevelWaveSpawnFormationTracer;
 class LevelWaveSpawnFormation {
@@ -17,6 +20,25 @@ public:
     LevelWaveSpawnFormation();
     ~LevelWaveSpawnFormation();
     
+    void                                        Reset();
+    void                                        Spawn();
+    void                                        Update();
+    
+    FList                                       mNodeList;
+    FList                                       mTracerList;
+    
+    float                                       mX;
+    float                                       mY;
+    
+    float                                       mRotation;
+    
+private:
+    
+    FList                                       mNodeKillList;
+    FList                                       mNodeDeleteList;
+    
+    FList                                       mTracerKillList;
+    FList                                       mTracerDeleteList;
     
 };
 

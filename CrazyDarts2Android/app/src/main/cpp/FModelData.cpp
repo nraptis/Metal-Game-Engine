@@ -1285,6 +1285,7 @@ void FModelDataIndexed::LoadOBJ(FFile *pFile) {
     aTemp.LoadOBJ(pFile);
     FModelDataOptimizer *aOptimizer = new FModelDataOptimizer();
     aOptimizer->Convert(&aTemp, this);
+    delete aOptimizer;
 }
 
 void FModelDataIndexed::LoadOBJ(const char *pFile) {
@@ -1399,28 +1400,37 @@ FModelDataOptimizer::FModelDataOptimizer()
     mIgnoreNormal=false;
 }
 
-FModelDataOptimizer::~FModelDataOptimizer()
-{
-    delete[]mIndex;
-    mIndex=0;
+FModelDataOptimizer::~FModelDataOptimizer() {
+    delete [] mIndex;
+    mIndex = NULL;
     
-    delete[]mCypher;
-    mCypher=0;
+    delete [] mCypher;
+    mCypher = NULL;
     
-    mIndexCount=0;
-    delete[]mHashTable;
+    mIndexCount = 0;
     
-    mHashTable=0;
-    mHashTableSize=0;
+    //ClearHashTable();
+    delete [] mHashTable;
+    mHashTable = NULL;
+    mHashTableSize = 0;
 }
 
-unsigned int FModelDataOptimizer::HashFloat(unsigned int pRunningSum, float pFloat)
-{
+void FModelDataOptimizer::ClearHashTable() {
+    for (int i=0;i<mHashTableSize;i++) {
+        FModelDataOptimizerNode *aNode = mHashTable[i];
+        while (aNode != NULL) {
+            FModelDataOptimizerNode *aNext = aNode->mNextNode;
+            delete aNode;
+            aNode = aNext;
+        }
+    }
+}
+
+unsigned int FModelDataOptimizer::HashFloat(unsigned int pRunningSum, float pFloat) {
     unsigned int aResult = pRunningSum;
     float aFloat = pFloat;
     char *aChar = ((char*)(&aFloat));
-    for(int i=0;i<4;i++)
-    {
+    for (int i=0;i<4;i++) {
         aResult=((aResult << 5) + aResult) ^ ((int)(aChar[i]));
     }
     return aResult;
@@ -1588,14 +1598,14 @@ void FModelDataOptimizer::Push(FModelData *pData, FList *pList) {
     }
 }
 
-void FModelDataOptimizer::SizeHashTable(int pSize, FList *pList)
-{
+void FModelDataOptimizer::SizeHashTable(int pSize, FList *pList) {
+    delete [] mHashTable;
+    mHashTable = NULL;
     
-    mHashTableSize=pSize;
-    
+    mHashTableSize = pSize;
     mHashTable = new FModelDataOptimizerNode*[pSize];
     
-    for(int i=0;i<pSize;i++)
+    for (int i=0;i<pSize;i++)
     {
         mHashTable[i] = 0;
     }

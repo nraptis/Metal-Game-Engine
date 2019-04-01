@@ -167,6 +167,8 @@ void FModelDataPacked::LoadOBJ(FFile *pFile) {
     aTemp.LoadOBJ(pFile);
     FModelDataOptimizer *aOptimizer = new FModelDataOptimizer();
     aOptimizer->Convert(&aTemp, &aData);
+    delete aOptimizer;
+    aOptimizer = NULL;
     
     if (aData.mIndexCount > 0 && aData.mXYZCount > 0) {
         mHasXYZ = true;

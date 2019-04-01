@@ -34,6 +34,8 @@ public:
     
     UILabel                                     mLabelTitle;
     
+    int                                         mMax;
+    int                                         mMin;
     
     UITextBox                                   mTextBox;
     

@@ -12,8 +12,6 @@
 #include "GameEditor.hpp"
 #include "FAnimation.h"
 
-
-
 GamePathEditor::GamePathEditor(GameEditor *pEditor) {
     
     mEditor = pEditor;
@@ -426,7 +424,7 @@ void GamePathEditor::ConstraintXToPrev() {
     if (mWave == NULL || mPath == NULL) { return; }
     LevelWavePathBlueprintNode *aNode = mPath->GetNode();
     if (aNode == NULL) { return; }
-    aNode->mConstraint.mTypeX = gEditor->PrevXConstraintf(aNode->mX);
+    aNode->mConstraint.mTypeX = gEditor->PrevXConstraintf(aNode->mEditorX);
     mWave->ApplyEditorConstraints();
 }
 
@@ -434,7 +432,7 @@ void GamePathEditor::ConstraintXToNext() {
     if (mWave == NULL || mPath == NULL) { return; }
     LevelWavePathBlueprintNode *aNode = mPath->GetNode();
     if (aNode == NULL) { return; }
-    aNode->mConstraint.mTypeX = gEditor->NextXConstraintf(aNode->mX);
+    aNode->mConstraint.mTypeX = gEditor->NextXConstraintf(aNode->mEditorX);
     mWave->ApplyEditorConstraints();
 }
 
@@ -442,7 +440,7 @@ void GamePathEditor::ConstraintYToPrev() {
     if (mWave == NULL || mPath == NULL) { return; }
     LevelWavePathBlueprintNode *aNode = mPath->GetNode();
     if (aNode == NULL) { return; }
-    aNode->mConstraint.mTypeY = gEditor->PrevYConstraintf(aNode->mY);
+    aNode->mConstraint.mTypeY = gEditor->PrevYConstraintf(aNode->mEditorY);
     mWave->ApplyEditorConstraints();
 }
 
@@ -450,7 +448,7 @@ void GamePathEditor::ConstraintYToNext() {
     if (mWave == NULL || mPath == NULL) { return; }
     LevelWavePathBlueprintNode *aNode = mPath->GetNode();
     if (aNode == NULL) { return; }
-    aNode->mConstraint.mTypeY = gEditor->NextYConstraintf(aNode->mY);
+    aNode->mConstraint.mTypeY = gEditor->NextYConstraintf(aNode->mEditorY);
     mWave->ApplyEditorConstraints();
 }
 

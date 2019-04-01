@@ -16,10 +16,6 @@ Game::Game() {
     
     mName = "[Game]";
     
-    mEditorCursorX = 400.0f;
-    mEditorCursorY = 400.0f;
-    
-    
     gGame = this;
     
     mRenderShiftX = 0.0f;
@@ -107,13 +103,7 @@ Game::Game() {
     mDartResetAnimationTick = 0;
     mDartResetAnimationTime = 200;
     
-#ifdef EDITOR_MODE
-    mEditorShowReferenced = true;
-    mEditorWavePlayback = true;
-    mEditorWaveLoop = true;
-    mEditorSectionPlayback = true;
-    mEditorSectionLoop = true;
-#endif
+
     
 }
 
@@ -193,7 +183,9 @@ void Game::LayoutTransform() {
         //
         float aTestSceneLeft = Convert2DXTo3D(0.0f);
         float aTestSceneRight = Convert2DXTo3D(mWidth);
-        float aExpectedWidth = 34.0f;
+        //float aExpectedWidth = 34.0f;
+        float aExpectedWidth = 40.0f;
+        
         float aActualWidth = (aTestSceneRight - aTestSceneLeft);
         if (aActualWidth < aExpectedWidth) {
             mCamera->mDistance += 0.05f;
@@ -393,68 +385,7 @@ void Game::Update() {
         }
         */
     }
-    
     mLevelController->Update();
-    
-    
-    
-#ifdef EDITOR_MODE
-    
-    int aRequiredTestObjectCount = mEditorWave.mPath.mNodeList.mCount;
-    
-    while (mEditorObjectList.mCount > aRequiredTestObjectCount) {
-        mEditorObjectQueue.Add(mEditorObjectList.PopLast());
-    }
-    
-    while (mEditorObjectList.mCount < aRequiredTestObjectCount && mEditorObjectQueue.mCount > 0) {
-        mEditorObjectList.Add(mEditorObjectQueue.PopLast());
-    }
-    
-    while (mEditorObjectList.mCount < aRequiredTestObjectCount) {
-        Balloon *aBalloon = new Balloon();
-        mEditorObjectList.Add(aBalloon);
-    }
-    
-    for (int i=0;i<mEditorWave.mPath.mNodeList.mCount;i++) {
-        
-        GameObject *aObject = (GameObject *)mEditorObjectList.Fetch(i);
-        LevelWavePathNode *aPathNode = (LevelWavePathNode *)mEditorWave.mPath.mNodeList.Fetch(i);
-        
-        if (aObject != NULL && aPathNode != NULL) {
-            aObject->mTransform.mX = aPathNode->mX;
-            aObject->mTransform.mY = aPathNode->mY;
-            aObject->Update();
-        }
-    }
-    
-    if (mEditorWavePlayback) {
-        mEditorWave.Update();
-        if (mEditorWave.mIsComplete) {
-            if (mEditorWaveLoop) {
-                mEditorWave.Restart();
-            }
-        }
-    }
-    
-    if (mEditorSectionPlayback) {
-        mEditorSection.Update();
-        if (mEditorSection.mIsComplete) {
-            if (mEditorSectionLoop) {
-                
-            }
-        }
-    }
-    
-#endif
-    
-    
-    
-    
-    //FList                                       mEditorObjectList;
-    //FList                                       mEditorObjectQueue;
-    
-    
-    
 }
 
 void Game::Draw() {
@@ -565,15 +496,7 @@ void Game::Draw() {
     
 
     
-#ifdef EDITOR_MODE
-    Graphics::PipelineStateSetShape2DNoBlending();
-    Graphics::SetColor();
-    mEditorWave.mPath.Draw();
-    mEditorWave.Draw();
-    
-    //Graphics::DrawLine(mEditorCursorX - 20.0f, mEditorCursorY - 20.0f, mEditorCursorX + 20.0f, mEditorCursorY + 20.0f);
-    //Graphics::DrawLine(mEditorCursorX + 20.0f, mEditorCursorY - 20.0f, mEditorCursorX - 20.0f, mEditorCursorY + 20.0f);
-#endif
+
     
 }
 
@@ -672,6 +595,25 @@ void Game::KeyUp(int pKey) {
 
 void Game::Notify(void *pSender, const char *pNotification) {
     
+}
+
+bool Game::IsWaveClearForSpawn() {
+    EnumList (Balloon, aBalloon, mBalloonList.mObjectList) {
+        if (aBalloon->mKill == 0 && aBalloon->mWave != NULL) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+bool Game::IsScreenClearForSpawn() {
+    EnumList (Balloon, aBalloon, mBalloonList.mObjectList) {
+        if (aBalloon->mKill == 0) {
+            return false;
+        }
+    }
+    return true;
 }
 
 void Game::Convert2DTransformTo3D(Transform2D *p2D, Transform3D *p3D) {
@@ -886,21 +828,14 @@ void Game::Load() {
     
     //Create level section (1 of 2) (A)
     aSection = new LevelSection();
+    
+    aSection->Load("test_section.json");
+    
+
+    
     aLevel->AddSection(aSection);
     
-    //  A does not animate in.
-    //  A does not animate out.
-    
-    //  Greate spawn wave group (1 of 2).
-    //      Wave 1: one balloon flies in from the left.
-    aWave = new LevelWave();
-    aWave->mRight = false;
-    aSection->AddWave(aWave);
-    //      Wave 2: one balloon flies across from the right.
-    aWave = new LevelWave();
-    aWave->mRight = true;
-    aSection->AddWave(aWave);
-    
+
     
     //  Greate spawn wave (2 of 2).
     //      Wave 1: Group of 4 balloons flies down from the top...
@@ -937,15 +872,4 @@ void Game::Load() {
 
 
 
-#ifdef EDITOR_MODE
 
-void Game::EditorRestartWave() {
-    
-}
-
-
-void Game::EditorRestartSection() {
-    
-}
-
-#endif

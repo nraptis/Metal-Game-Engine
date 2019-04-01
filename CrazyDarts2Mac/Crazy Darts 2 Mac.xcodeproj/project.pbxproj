@@ -125,7 +125,6 @@
 		0D4364A5224BD01F00B9C58A /* FJSON.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D4363B3224BD01F00B9C58A /* FJSON.cpp */; };
 		0D4364A6224BD01F00B9C58A /* FVec3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D4363B5224BD01F00B9C58A /* FVec3.cpp */; };
 		0D4364A7224BD01F00B9C58A /* FVec2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D4363B6224BD01F00B9C58A /* FVec2.cpp */; };
-		0D4364A8224BD01F00B9C58A /* FFrameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D4363B7224BD01F00B9C58A /* FFrameController.cpp */; };
 		0D4364A9224BD01F00B9C58A /* FCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D4363B9224BD01F00B9C58A /* FCanvas.cpp */; };
 		0D4364AA224BD01F00B9C58A /* GraphicsInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D4363BA224BD01F00B9C58A /* GraphicsInterface.cpp */; };
 		0D4364AB224BD01F00B9C58A /* FButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D4363BB224BD01F00B9C58A /* FButton.cpp */; };
@@ -171,6 +170,7 @@
 		0DBB1AD2224E9E3700783C66 /* EditorMenuAttachmentPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBB1AD0224E9E3700783C66 /* EditorMenuAttachmentPicker.cpp */; };
 		0DBB1AD5224E9EC300783C66 /* EditorMenuAttachment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBB1AD3224E9EC300783C66 /* EditorMenuAttachment.cpp */; };
 		0DBB1AD8224EC97F00783C66 /* LevelWaveSpawnBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBB1AD6224EC97F00783C66 /* LevelWaveSpawnBlueprint.cpp */; };
+		0DBE44902251483A001EBE5C /* LevelWaveSpawnFormationNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE448E2251483A001EBE5C /* LevelWaveSpawnFormationNode.cpp */; };
 		0DC5895622506640001E9D75 /* LevelWaveSpawnFormation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC5895422506640001E9D75 /* LevelWaveSpawnFormation.cpp */; };
 		0DC5895922506670001E9D75 /* EditorMenuFormationPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC5895722506670001E9D75 /* EditorMenuFormationPicker.cpp */; };
 		0DC5895C2250668B001E9D75 /* EditorMenuFormation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC5895A2250668B001E9D75 /* EditorMenuFormation.cpp */; };
@@ -395,7 +395,6 @@
 		0D436394224BD01F00B9C58A /* FJSON.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FJSON.hpp; sourceTree = "<group>"; };
 		0D436395224BD01F00B9C58A /* FScrollCanvasPaged.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FScrollCanvasPaged.cpp; sourceTree = "<group>"; };
 		0D436396224BD01F00B9C58A /* core_social.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = core_social.cpp; sourceTree = "<group>"; };
-		0D436397224BD01F00B9C58A /* FFrameController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FFrameController.hpp; sourceTree = "<group>"; };
 		0D436398224BD01F00B9C58A /* FRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRect.h; sourceTree = "<group>"; };
 		0D436399224BD01F00B9C58A /* FVec2.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FVec2.hpp; sourceTree = "<group>"; };
 		0D43639A224BD01F00B9C58A /* core_web.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = core_web.cpp; sourceTree = "<group>"; };
@@ -427,7 +426,6 @@
 		0D4363B4224BD01F00B9C58A /* FScrollCanvasPaged.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FScrollCanvasPaged.hpp; sourceTree = "<group>"; };
 		0D4363B5224BD01F00B9C58A /* FVec3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FVec3.cpp; sourceTree = "<group>"; };
 		0D4363B6224BD01F00B9C58A /* FVec2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FVec2.cpp; sourceTree = "<group>"; };
-		0D4363B7224BD01F00B9C58A /* FFrameController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFrameController.cpp; sourceTree = "<group>"; };
 		0D4363B8224BD01F00B9C58A /* FDrawQuad.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FDrawQuad.hpp; sourceTree = "<group>"; };
 		0D4363B9224BD01F00B9C58A /* FCanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FCanvas.cpp; sourceTree = "<group>"; };
 		0D4363BA224BD01F00B9C58A /* GraphicsInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicsInterface.cpp; sourceTree = "<group>"; };
@@ -511,6 +509,8 @@
 		0DBB1AD4224E9EC300783C66 /* EditorMenuAttachment.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuAttachment.hpp; sourceTree = "<group>"; };
 		0DBB1AD6224EC97F00783C66 /* LevelWaveSpawnBlueprint.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWaveSpawnBlueprint.cpp; sourceTree = "<group>"; };
 		0DBB1AD7224EC97F00783C66 /* LevelWaveSpawnBlueprint.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelWaveSpawnBlueprint.hpp; sourceTree = "<group>"; };
+		0DBE448E2251483A001EBE5C /* LevelWaveSpawnFormationNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWaveSpawnFormationNode.cpp; sourceTree = "<group>"; };
+		0DBE448F2251483A001EBE5C /* LevelWaveSpawnFormationNode.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelWaveSpawnFormationNode.hpp; sourceTree = "<group>"; };
 		0DC5895422506640001E9D75 /* LevelWaveSpawnFormation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWaveSpawnFormation.cpp; sourceTree = "<group>"; };
 		0DC5895522506640001E9D75 /* LevelWaveSpawnFormation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWaveSpawnFormation.hpp; sourceTree = "<group>"; };
 		0DC5895722506670001E9D75 /* EditorMenuFormationPicker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuFormationPicker.cpp; sourceTree = "<group>"; };
@@ -594,6 +594,8 @@
 				0D4362E5224BD01800B9C58A /* LevelWave.hpp */,
 				0DC5895422506640001E9D75 /* LevelWaveSpawnFormation.cpp */,
 				0DC5895522506640001E9D75 /* LevelWaveSpawnFormation.hpp */,
+				0DBE448E2251483A001EBE5C /* LevelWaveSpawnFormationNode.cpp */,
+				0DBE448F2251483A001EBE5C /* LevelWaveSpawnFormationNode.hpp */,
 				0DC58963225109E2001E9D75 /* LevelWaveSpawnFormationTracer.cpp */,
 				0DC58964225109E2001E9D75 /* LevelWaveSpawnFormationTracer.hpp */,
 				0D4362DD224BD01800B9C58A /* LevelWavePath.cpp */,
@@ -726,18 +728,18 @@
 		0D4362EA224BD01800B9C58A /* [[Editor]] */ = {
 			isa = PBXGroup;
 			children = (
-				0DC5895722506670001E9D75 /* EditorMenuFormationPicker.cpp */,
-				0DC5895822506670001E9D75 /* EditorMenuFormationPicker.hpp */,
-				0DC5895A2250668B001E9D75 /* EditorMenuFormation.cpp */,
-				0DC5895B2250668B001E9D75 /* EditorMenuFormation.hpp */,
-				0DC5895D225066A1001E9D75 /* EditorMenuFormationUtilities.cpp */,
-				0DC5895E225066A1001E9D75 /* EditorMenuFormationUtilities.hpp */,
 				0DBB1AD3224E9EC300783C66 /* EditorMenuAttachment.cpp */,
 				0DBB1AD4224E9EC300783C66 /* EditorMenuAttachment.hpp */,
 				0DBB1AD0224E9E3700783C66 /* EditorMenuAttachmentPicker.cpp */,
 				0DBB1AD1224E9E3700783C66 /* EditorMenuAttachmentPicker.hpp */,
 				0D4362F5224BD01800B9C58A /* EditorMenuFlow.cpp */,
 				0D4362FB224BD01800B9C58A /* EditorMenuFlow.hpp */,
+				0DC5895A2250668B001E9D75 /* EditorMenuFormation.cpp */,
+				0DC5895B2250668B001E9D75 /* EditorMenuFormation.hpp */,
+				0DC5895722506670001E9D75 /* EditorMenuFormationPicker.cpp */,
+				0DC5895822506670001E9D75 /* EditorMenuFormationPicker.hpp */,
+				0DC5895D225066A1001E9D75 /* EditorMenuFormationUtilities.cpp */,
+				0DC5895E225066A1001E9D75 /* EditorMenuFormationUtilities.hpp */,
 				0D4362FF224BD01800B9C58A /* EditorMenuPath.cpp */,
 				0D4362EE224BD01800B9C58A /* EditorMenuPath.hpp */,
 				0D436300224BD01800B9C58A /* EditorMenuPathControl.cpp */,
@@ -750,10 +752,6 @@
 				0DBB1ACE224E9E2B00783C66 /* EditorMenuSpawnPicker.hpp */,
 				0D4362F1224BD01800B9C58A /* EditorMenuWavesPicker.cpp */,
 				0D4362F7224BD01800B9C58A /* EditorMenuWavesPicker.hpp */,
-				0DC5896622510A3B001E9D75 /* LevelWaveSpawnFormationBlueprint.cpp */,
-				0DC5896722510A3B001E9D75 /* LevelWaveSpawnFormationBlueprint.hpp */,
-				0DC5896922510A56001E9D75 /* LevelWaveSpawnFormationTracerBlueprint.cpp */,
-				0DC5896A22510A56001E9D75 /* LevelWaveSpawnFormationTracerBlueprint.hpp */,
 				0D4362FA224BD01800B9C58A /* GameEditor.cpp */,
 				0D4362F4224BD01800B9C58A /* GameEditor.hpp */,
 				0DC58960225067B5001E9D75 /* GameFormationEditor.cpp */,
@@ -768,6 +766,10 @@
 				0D4362EB224BD01800B9C58A /* LevelWavePathBlueprint.hpp */,
 				0DBB1AD6224EC97F00783C66 /* LevelWaveSpawnBlueprint.cpp */,
 				0DBB1AD7224EC97F00783C66 /* LevelWaveSpawnBlueprint.hpp */,
+				0DC5896622510A3B001E9D75 /* LevelWaveSpawnFormationBlueprint.cpp */,
+				0DC5896722510A3B001E9D75 /* LevelWaveSpawnFormationBlueprint.hpp */,
+				0DC5896922510A56001E9D75 /* LevelWaveSpawnFormationTracerBlueprint.cpp */,
+				0DC5896A22510A56001E9D75 /* LevelWaveSpawnFormationTracerBlueprint.hpp */,
 			);
 			path = "[[Editor]]";
 			sourceTree = "<group>";
@@ -854,8 +856,6 @@
 				0D436365224BD01E00B9C58A /* FFloatList.h */,
 				0D436377224BD01E00B9C58A /* FFont.cpp */,
 				0D4363D7224BD01F00B9C58A /* FFont.hpp */,
-				0D4363B7224BD01F00B9C58A /* FFrameController.cpp */,
-				0D436397224BD01F00B9C58A /* FFrameController.hpp */,
 				0D4363A3224BD01F00B9C58A /* FGestureCanvas.cpp */,
 				0D4363C0224BD01F00B9C58A /* FGestureCanvas.hpp */,
 				0D436361224BD01E00B9C58A /* FHashMap.cpp */,
@@ -993,9 +993,9 @@
 		E1704FF8222232CF000C5127 = {
 			isa = PBXGroup;
 			children = (
-				0D43634B224BD01E00B9C58A /* Framework_[VI] */,
 				0D436278224BD01800B9C58A /* Classes */,
 				E1705003222232CF000C5127 /* Crazy Darts 2 Mac */,
+				0D43634B224BD01E00B9C58A /* Framework_[VI] */,
 				E1705002222232CF000C5127 /* Products */,
 				E17054AB222236F9000C5127 /* Frameworks */,
 			);
@@ -1138,7 +1138,6 @@
 				0D43631C224BD01800B9C58A /* DragableCanvas.cpp in Sources */,
 				0D436475224BD01F00B9C58A /* BufferBindingWrapper.mm in Sources */,
 				0D43632C224BD01800B9C58A /* UIAlignmentPickerButton.cpp in Sources */,
-				0D4364A8224BD01F00B9C58A /* FFrameController.cpp in Sources */,
 				0D43630B224BD01800B9C58A /* SpotLightSimpleConfiguration.cpp in Sources */,
 				0D436489224BD01F00B9C58A /* FAchievement.cpp in Sources */,
 				0D4364AD224BD01F00B9C58A /* FXML.cpp in Sources */,
@@ -1249,6 +1248,7 @@
 				0D4364A6224BD01F00B9C58A /* FVec3.cpp in Sources */,
 				0D436493224BD01F00B9C58A /* FJoystick.cpp in Sources */,
 				0D436494224BD01F00B9C58A /* FScrollCanvasPaged.cpp in Sources */,
+				0DBE44902251483A001EBE5C /* LevelWaveSpawnFormationNode.cpp in Sources */,
 				0DBB1ACF224E9E2B00783C66 /* EditorMenuSpawnPicker.cpp in Sources */,
 				0D43630F224BD01800B9C58A /* GameObject.cpp in Sources */,
 				0D4364A3224BD01F00B9C58A /* FScrollCanvas.cpp in Sources */,

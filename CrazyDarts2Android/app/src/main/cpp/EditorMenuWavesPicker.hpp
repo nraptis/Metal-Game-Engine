@@ -44,10 +44,6 @@ public:
     
     FList                                   mCells;
     FList                                   mCellQueue;
-    //EditorMenuWavesPickerCell
-    
-    
-    
 };
 
 #endif /* EditorMenuWavesPicker_hpp */

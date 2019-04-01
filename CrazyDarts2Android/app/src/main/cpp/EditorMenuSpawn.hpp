@@ -23,26 +23,17 @@ public:
     
     GameEditor                              *mEditor;
     
-    
-    ToolMenuPanel                           *mPanelGeneration;
-    
-    ToolMenuSectionRow                      *mRowGeneration;
-    UILabel                                 *mLabelSpeed;
-    UICheckBox                              *mCheckBoxSpeed;
-    
+    ToolMenuPanel                           *mGenerationPanel;
     UISegment                               *mSegmentSpeed;
     UIStepper                               *mStepperSpawnCount;
-    UISlider                                *mSliderSpacing;
-    
-    ToolMenuPanel                           *mPanelAttachments;
-    ToolMenuSectionRow                      *mRowFormations1;
-    UIButton                                *mButtonClearFormation;
-    UIButton                                *mButtonDefaultFormation;
-    UIButton                                *mButtonPickFormation;
+    UIStepper                               *mStepperSpacing;
     
     
-    ToolMenuPanel                           *mPanelMovement;
-    UISlider                                *mSliderRotation;
+    ToolMenuPanel                           *mTimingPanelPanel;
+    UISegment                               *mStepperCreationType;
+    UIStepper                               *mStepperCreationDelay;
+    
+    
     
 };
 

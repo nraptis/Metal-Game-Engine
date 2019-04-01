@@ -92,7 +92,6 @@ public:
     FJSONNode                                   *Save();
     void                                        Load(FJSONNode *pNode);
     
-    
     FList                                       mKillList;
     FList                                       mDeleteList;
 };

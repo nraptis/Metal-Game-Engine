@@ -15,10 +15,7 @@ ToolMenuSection::ToolMenuSection() {
     mConsumesTouches = false;
 
     mSectionDepth = 0;
-
-    mSectionBackgroundOutline.mCornerRadius = 5.0f;
-    mSectionBackground.mCornerRadius = 5.0f;
-
+    
     mSectionBackground.SetColorTop(0.325f, 0.125f, 0.125f);
     mSectionBackground.SetColorBottom(0.365f, 0.135f, 0.085f);
     mSectionBackground.mCornerRadius = 5.0f;
@@ -56,11 +53,30 @@ void ToolMenuSection::Draw() {
     mSectionBackground.Draw();
 }
 
+void ToolMenuSection::TouchDown(float pX, float pY, void *pData) {
+    if (mMenu != NULL) {
+        if (mMenu->mParent != NULL) {
+            mMenu->mParent->BringChildToFront(mMenu);
+        }
+    }
+}
+
+void ToolMenuSection::TouchMove(float pX, float pY, void *pData) {
+    
+}
+
+void ToolMenuSection::TouchUp(float pX, float pY, void *pData) {
+    
+}
+
+void ToolMenuSection::TouchFlush() {
+    
+}
+
 void ToolMenuSection::Notify(void *pSender, const char *pNotification) {
     if (mMenu) {
         mMenu->Notify(pSender, pNotification);
     }
-
 }
 
 void ToolMenuSection::SetTransparentBackground() {
@@ -68,4 +84,20 @@ void ToolMenuSection::SetTransparentBackground() {
     mSectionBackgroundOutline.ResetColor(1.0f, 1.0f, 1.0f, 0.0f);
     mSectionBackground.mRefresh = true;
     mSectionBackgroundOutline.mRefresh = true;
+}
+
+void ToolMenuSection::StyleSetPicker() {
+    
+    
+    mSectionBackground.SetColorTop(0.48f, 0.48f, 0.51f);
+    mSectionBackground.SetColorBottom(0.45f, 0.45f, 0.48f);
+    mSectionBackground.mRefresh = true;
+    
+    mSectionBackgroundOutline.SetColorTop(0.68f, 0.68f, 0.68f);
+    mSectionBackgroundOutline.SetColorBottom(0.65f, 0.65f, 0.65f);
+    mSectionBackgroundOutline.mRefresh = true;
+    
+    
+    
+    
 }

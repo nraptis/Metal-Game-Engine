@@ -24,18 +24,33 @@ public:
     void                                Update();
     void                                Draw();
     
-    void                                Dispose();
     void                                DisposeObject(GameObject *pObject);
-    void                                DisposeWave(LevelWave *pLevelWave);
     
     void                                AddWave(LevelWave *pLevelWave);
     FList                               mWaveList;
-    LevelWave                           *mCurrentWave;
-    int                                 mCurrentWaveIndex;
+    
+    int                                 mCandidateWaveIndex;
+    
+    LevelWave                           *mCandidateWave;
+    int                                 mCandidateWaveDelay;
+    
+    FList                               mActiveWaveList;
+    FList                               mRemoveActiveWaveList;
+    
+    //Mainly for editor, if we want to start later in the queue
+    int                                 mStartWaveIndex;
     
     int                                 mDelay;
     
     bool                                mIsComplete;
+    
+    FList                               mKillList;
+    FList                               mDeleteList;
+    
+    //We ourselves are killed by external controller.
+    int                                 mKillTimer;
+    
+    void                                Load(const char *pFile);
     
 };
 

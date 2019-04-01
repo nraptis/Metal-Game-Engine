@@ -23,10 +23,13 @@ LevelWaveSpawn::LevelWaveSpawn(LevelWave *pWave, LevelWavePath *pPath) {
     mBaseX = 0.0f;
     mBaseY = 0.0f;
     mDistanceTraveled = 0.0f;
-    
+    mKillTimer = 8;
 }
 
 LevelWaveSpawn::~LevelWaveSpawn() {
+    
+    //printf("Dealloc[LevelWaveSpawn:%X] Obj[%d]\n", this, mObject);
+    
     if (mObject) {
         mObject->Kill();
         mObject = NULL;
@@ -34,8 +37,6 @@ LevelWaveSpawn::~LevelWaveSpawn() {
 }
 
 void LevelWaveSpawn::Spawn() {
-    Log("LevelWaveSpawn::Spawn()");
-    
     mBaseX = 0.0f;
     mBaseY = 0.0f;
     mDistanceTraveled = 0.0f;
@@ -49,8 +50,6 @@ void LevelWaveSpawn::Spawn() {
     mObject->mTransform.mX = mBaseX;
     mObject->mTransform.mY = mBaseY;
     gGame->mBalloonList.Add(mObject);
-    
-    
 }
 
 void LevelWaveSpawn::Reset() {
@@ -58,14 +57,26 @@ void LevelWaveSpawn::Reset() {
     if (mObject) {
         mObject->Kill();
         mObject = NULL;
-        //mObject->Ki
     }
     
     mPathIndex = 0;
     mBaseX = 0.0f;
     mBaseY = 0.0f;
     mDistanceTraveled = 0.0f;
-    
+}
+
+void LevelWaveSpawn::Restart() {
+    if (mObject) {
+        mObject->Kill();
+        mObject = NULL;
+    }
+    mPathIndex = 0;
+    mIsComplete = false;
+    mOffsetSpawnDistance = 0.0f;
+    mBaseX = 0.0f;
+    mBaseY = 0.0f;
+    mDistanceTraveled = 0.0f;
+    mKillTimer = 8;
 }
 
 void LevelWaveSpawn::Update() {
@@ -102,9 +113,6 @@ void LevelWaveSpawn::Draw() {
     }
 }
 
-void LevelWaveSpawn::Dispose() {
-    
-}
 
 void LevelWaveSpawn::DisposeObject(GameObject *pObject) {
     

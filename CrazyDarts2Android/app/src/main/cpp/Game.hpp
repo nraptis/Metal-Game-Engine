@@ -48,6 +48,9 @@ public:
     
     virtual void                                Notify(void *pSender, const char *pNotification) override;
     
+    bool                                        IsWaveClearForSpawn();
+    bool                                        IsScreenClearForSpawn();
+    
     void                                        Convert2DTransformTo3D(Transform2D *p2D, Transform3D *p3D);
     
     FVec3                                       Convert2DCoordsTo3D(float pX, float pY);
@@ -105,26 +108,24 @@ public:
     float                                       mDartTouchStartX;
     float                                       mDartTouchStartY;
     
-    /////////////////////////////////////////////
-    
     float                                       mPlayAreaTop;
     float                                       mPlayAreaRight;
     float                                       mPlayAreaBottom;
     float                                       mPlayAreaLeft;
-    
     
     float                                       mGameAreaTop;
     float                                       mGameAreaRight;
     float                                       mGameAreaBottom;
     float                                       mGameAreaLeft;
     
+    //
     // This is the region where collisions are permitted...
+    //
     float                                       mHitZoneTop;
     float                                       mHitZoneRight;
     float                                       mHitZoneBottom;
     float                                       mHitZoneLeft;
     
-    //
     float                                       mSpawnZoneTop;
     float                                       mSpawnZoneRight;
     float                                       mSpawnZoneBottom;
@@ -134,19 +135,19 @@ public:
     float                                       mPeekZoneRight;
     float                                       mPeekZoneLeft;
     
-    
     float                                       mQuarterZoneTop;
     float                                       mQuarterZoneRight;
     float                                       mQuarterZoneLeft;
     float                                       mQuarterZoneBottom;
     
-    
     float                                       mExitZoneTop;
     float                                       mExitZoneRight;
     float                                       mExitZoneLeft;
     
+    //
     // Once darts, items, etc get into this area, they
     // are automatically killed. "Out of bounds"
+    //
     float                                       mKillZoneTop;
     float                                       mKillZoneRight;
     float                                       mKillZoneBottom;
@@ -155,24 +156,10 @@ public:
     
     void                                        Load();
     
-    float                                       mEditorCursorX;
-    float                                       mEditorCursorY;
     
-#ifdef EDITOR_MODE
-    void                                        EditorRestartWave();
-    void                                        EditorRestartSection();
     
-    bool                                        mEditorWavePlayback;
-    bool                                        mEditorWaveLoop;
-    bool                                        mEditorSectionPlayback;
-    bool                                        mEditorSectionLoop;
+    LevelSection                                mTestSection;
     
-    bool                                        mEditorShowReferenced;
-    LevelSection                                mEditorSection;
-    LevelWave                                   mEditorWave;
-    FList                                       mEditorObjectList;
-    FList                                       mEditorObjectQueue;
-#endif
     
 };
 

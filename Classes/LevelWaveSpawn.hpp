@@ -29,7 +29,6 @@ public:
     void                                Update();
     void                                Draw();
     
-    void                                Dispose();
     void                                DisposeObject(GameObject *pObject);
     
     LevelWave                           *mWave;

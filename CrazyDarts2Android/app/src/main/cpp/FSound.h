@@ -48,14 +48,13 @@ public:
     
     FSound                          *mSound;
     
-    unsigned int                    mIndexOpenAL;
-
+    //unsigned int                    mIndexOpenAL;
+	
     //SLObjectItf                     mPlayerObject;
     //SLPlayItf                       mPlayerPlay;
     //SLMuteSoloItf                   mPlayerMuteSolo;
     //SLVolumeItf                     mPlayerVolume;
     //SLPitchItf                      mPlayerPitch;
-
 };
 
 //OS Specific
