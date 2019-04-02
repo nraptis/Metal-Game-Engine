@@ -94,6 +94,10 @@ public:
     int                                         SpawnIndex();
     LevelWaveSpawnBlueprint                     *SpawnGet();
     
+    int                                         SpeedConvertSegmentToType(int pSegmentIndex);
+    int                                         SpeedConvertTypeToSegment(int pType);
+    
+    
     void                                        OpenPathEditor();
     void                                        ClosePathEditor();
     

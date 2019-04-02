@@ -27,6 +27,7 @@ LevelWaveSpawnFormation::~LevelWaveSpawnFormation() {
 
 
 void LevelWaveSpawnFormation::Reset() {
+    printf("LevelWaveSpawnFormation::Reset()\n");
     for (int i=0;i<mNodeList.mCount;i++) {
         LevelWaveSpawnFormationNode *aNode = ((LevelWaveSpawnFormationNode *)mNodeList.mData[i]);
         aNode->Reset();
@@ -35,21 +36,20 @@ void LevelWaveSpawnFormation::Reset() {
     mNodeList.RemoveAll();
     
     for (int i=0;i<mTracerList.mCount;i++) {
-        LevelWaveSpawnFormationTracer *aNode = ((LevelWaveSpawnFormationTracer *)mTracerList.mData[i]);
-        mTracerKillList.Add(aNode);
+        LevelWaveSpawnFormationTracer *aTracer = ((LevelWaveSpawnFormationTracer *)mTracerList.mData[i]);
+        aTracer->Reset();
+        mTracerKillList.Add(aTracer);
     }
-    mNodeList.RemoveAll();
+    mTracerList.RemoveAll();
 }
 
 void LevelWaveSpawnFormation::Spawn() {
-    
     EnumList(LevelWaveSpawnFormationNode, aNode, mNodeList) {
-        
         aNode->Spawn();
-        
     }
-    
-    
+    EnumList(LevelWaveSpawnFormationTracer, aTracer, mTracerList) {
+        aTracer->Spawn();
+    }
 }
 
 void LevelWaveSpawnFormation::Update() {
@@ -58,10 +58,9 @@ void LevelWaveSpawnFormation::Update() {
         aNode->Update();
     }
     
-    
-    
-    
-    
+    EnumList(LevelWaveSpawnFormationTracer, aTracer, mTracerList) {
+        aTracer->Update();
+    }
     
     EnumList(LevelWaveSpawnFormationNode, aNode, mNodeKillList) {
         aNode->mKillTimer--;
@@ -83,5 +82,38 @@ void LevelWaveSpawnFormation::Update() {
         delete aTracer;
     }
     mTracerDeleteList.RemoveAll();
+}
+
+void LevelWaveSpawnFormation::Draw() {
+    
+    
+    Graphics::PipelineStateSetShape2DAlphaBlending();
+    Graphics::SetColor(1.0f, 0.65f, 1.0f, 0.75f);
+    EnumList(LevelWaveSpawnFormationTracer, aTracer, mTracerList) {
+        
+        for (int i=0;i<aTracer->mPath.mCount;i++) {
+            
+            float aX = aTracer->mPath.mX[i];
+            float aY = aTracer->mPath.mY[i];
+            
+            if (mRotation != 0.0f) {
+                
+                
+                
+            }
+            
+            aX += mX;
+            aY += mY;
+            
+            Graphics::DrawPoint(aX + 2.0f, aY + 2.0f, 4.0f);
+            
+            
+        }
+        
+        
+        
+    }
+    
+    
 }
 

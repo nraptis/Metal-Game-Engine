@@ -31,6 +31,8 @@ public:
     ToolMenuSectionRow                      *mRowTracers1;
     UICheckBox                              *mCheckBoxTracersEnabled;
     
+    UISegment                               *mSegmentCurrentTracer;
+    
     UIButton                                *mButtonDeleteTracer;
     UISegment                               *mSegmentTracersMode;
     

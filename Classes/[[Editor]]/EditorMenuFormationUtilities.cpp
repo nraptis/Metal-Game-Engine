@@ -39,6 +39,8 @@ EditorMenuFormationUtilities::EditorMenuFormationUtilities(GameFormationEditor *
     mPanelTracers->SetTitle("Tracers");
     AddSection(mPanelTracers);
     
+    
+    
     mRowTracers1 = new ToolMenuSectionRow();
     mPanelTracers->AddSection(mRowTracers1);
     
@@ -51,6 +53,13 @@ EditorMenuFormationUtilities::EditorMenuFormationUtilities(GameFormationEditor *
     mButtonDeleteTracer = new UIButton();
     mButtonDeleteTracer->SetText("Delete Tracer");
     mRowTracers1->AddButton(mButtonDeleteTracer);
+    
+    
+    mSegmentCurrentTracer = new UISegment();
+    mSegmentCurrentTracer->SetSegmentCount(4);
+    mSegmentCurrentTracer->SetTitles("Tracer 1", "Tracer 2", "Tracer 3", "Tracer 4");
+    mSegmentCurrentTracer->SetTarget(&mEditor->mFormation.mCurrentTracerIndex);
+    mPanelTracers->AddSection(mSegmentCurrentTracer);
     
     
     mSegmentTracersMode = new UISegment();

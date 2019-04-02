@@ -60,6 +60,9 @@ public:
     void                                        GetAllNodes(void *pKey, FList &pList);
     
 public:
+    
+    int                                         GetCount() { return mTableCount; }
+    
     void                                        Print();
     void                                        PrintList();
     FHashMapNode                                *mListHead;
@@ -126,6 +129,9 @@ public:
 public:
     void                                        Print();
     void                                        PrintList();
+    
+    int                                         GetCount() { return mTableCount; }
+    
     FIntMapNode                                 *mListHead;
     FIntMapNode                                 *mListTail;
     
@@ -188,8 +194,11 @@ public:
 public:
     void                                        Print();
     void                                        PrintList();
+    
     FStringMapNode                              *mListHead;
     FStringMapNode                              *mListTail;
+    
+    int                                         GetCount() { return mTableCount; }
     
 protected:
     

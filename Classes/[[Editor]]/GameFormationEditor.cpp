@@ -40,7 +40,7 @@ GameFormationEditor::GameFormationEditor(GameEditor *pEditor) {
     mSelectTouchStartX = 0.0f;
     mSelectTouchStartY = 0.0f;
     
-    mTracerMode = FORMATION_MODE_MOVE_POINT;
+    mTracerMode = FORMATION_MODE_ADD_POINT;
     mFormationMode = FORMATION_MODE_ADD_POINT;
     
     mTracerEnabled = false;
@@ -49,13 +49,12 @@ GameFormationEditor::GameFormationEditor(GameEditor *pEditor) {
     mGridEnabled = true;
     mGridType = FORMATION_GRID_TYPE_RECT;
     
-    mGridRectWidth = 4;
+    mGridRectWidth = 7;
     mGridRectHeight = 7;
-    mGridRectSpacing = 22;
+    mGridRectSpacing = 44;
     
     mGridCircleCount = 14;
     mGridCircleRadius = 220;
-    
     
     mName = "[GameFormationEditor]";
     
@@ -69,7 +68,6 @@ GameFormationEditor::GameFormationEditor(GameEditor *pEditor) {
     mMenuUtils = new EditorMenuFormationUtilities(this);
     AddChild(mMenuUtils);
     mMenuUtils->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), gSafeAreaInsetTop + 20.0f, 400.0f, 480.0f);
-    
     
 }
 
@@ -128,6 +126,14 @@ void GameFormationEditor::Draw() {
     Graphics::SetColor(1.0f, 0.5f, 0.75f, 0.65f);
     mGridList.DrawPoints(4.0f);
     
+    
+    
+    
+    if (gGame) {
+        gGame->DrawTransform();
+    }
+    mEditorFormation.Draw();
+    
 }
 
 void GameFormationEditor::TouchDown(float pX, float pY, void *pData) {
@@ -143,18 +149,70 @@ void GameFormationEditor::TouchDown(float pX, float pY, void *pData) {
     
     if (mTracerEnabled == true) {
         
-        printf("Tracer Stuff...\n");
+        if (mTracerMode == FORMATION_MODE_ADD_POINT) {
+            mFormation.TracerAdd(aX, aY);
+        } else if (mTracerMode == FORMATION_MODE_MOVE_POINT) {
+            if (mSelectedTouch == NULL) {
+                float aDist = 50.0f * 50.0f;
+                
+                LevelWaveSpawnFormationTracerBlueprint *aTracerBlueprint = mFormation.GetTracer();
+                
+                if (aTracerBlueprint != NULL) {
+                    
+                    int aIndex = aTracerBlueprint->GetClosestIndex(pX, pY, aDist);
+                    if (aIndex != -1) {
+                        
+                        
+                        
+                        aTracerBlueprint->mSelectedNodeIndex = aIndex;
+                        mSelectedTouch = pData;
+                        mSelectNodeStartX = mFormation.TracerGetX(aIndex);
+                        mSelectNodeStartY = mFormation.TracerGetY(aIndex);
+                        mSelectTouchStartX = pX;
+                        mSelectTouchStartY = pY;
+                    }
+                    
+                }
+            } else {
+                mSelectedTouch = NULL;
+                LevelWaveSpawnFormationTracerBlueprint *aTracerBlueprint = mFormation.GetTracer();
+                if (aTracerBlueprint != NULL) {
+                    aTracerBlueprint->mSelectedNodeIndex = -1;
+                }
+                
+            }
+        } else if (mTracerMode == FORMATION_MODE_SELECT_POINT) {
+            if (mSelectedTouch == NULL) {
+                float aDist = 50.0f * 50.0f;
+                
+                LevelWaveSpawnFormationTracerBlueprint *aTracerBlueprint = mFormation.GetTracer();
+                
+                if (aTracerBlueprint != NULL) {
+                    
+                    int aIndex = aTracerBlueprint->GetClosestIndex(pX, pY, aDist);
+                    if (aIndex != -1) {
+                        
+                        mSelectedTouch = pData;
+                        aTracerBlueprint->mSelectedNodeIndex = aIndex;
+                        mSelectNodeStartX = mFormation.GetX(aIndex);
+                        mSelectNodeStartY = mFormation.GetY(aIndex);
+                        mSelectTouchStartX = pX; mSelectTouchStartY = pY;
+                    }
+                }
+            } else {
+                LevelWaveSpawnFormationTracerBlueprint *aTracerBlueprint = mFormation.GetTracer();
+                if (aTracerBlueprint != NULL) {
+                    aTracerBlueprint->mSelectedNodeIndex = -1;
+                }
+                mSelectedTouch = NULL;
+            }
+        }
         
     } else {
         
         
         if (mFormationMode == FORMATION_MODE_ADD_POINT) {
-            
             mFormation.Add(aX, aY);
-            mFormation.mSelectedIndex = mFormation.mNodeList.mCount - 1;
-            
-            Refresh();
-            
         } else if (mFormationMode == FORMATION_MODE_MOVE_POINT) {
             if (mSelectedTouch == NULL) {
                 float aDist = 50.0f * 50.0f;
@@ -162,7 +220,7 @@ void GameFormationEditor::TouchDown(float pX, float pY, void *pData) {
                 int aIndex = mFormation.GetClosestIndex(pX, pY, aDist);
                 if (aIndex != -1) {
                     mSelectedTouch = pData;
-                    mFormation.mSelectedIndex = aIndex;
+                    mFormation.mSelectedNodeIndex = aIndex;
                     mSelectNodeStartX = mFormation.GetX(aIndex);
                     mSelectNodeStartY = mFormation.GetY(aIndex);
                     mSelectTouchStartX = pX;
@@ -170,7 +228,7 @@ void GameFormationEditor::TouchDown(float pX, float pY, void *pData) {
                 }
             } else {
                 mSelectedTouch = NULL;
-                mFormation.mSelectedIndex = -1;
+                mFormation.mSelectedNodeIndex = -1;
             }
         } else if (mFormationMode == FORMATION_MODE_SELECT_POINT) {
             if (mSelectedTouch == NULL) {
@@ -178,39 +236,44 @@ void GameFormationEditor::TouchDown(float pX, float pY, void *pData) {
                 int aIndex = mFormation.GetClosestIndex(pX, pY, aDist);
                 if (aIndex != -1) {
                     mSelectedTouch = pData;
-                    mFormation.mSelectedIndex = aIndex;
+                    mFormation.mSelectedNodeIndex = aIndex;
                     mSelectNodeStartX = mFormation.GetX(aIndex);
                     mSelectNodeStartY = mFormation.GetY(aIndex);
                     mSelectTouchStartX = pX; mSelectTouchStartY = pY;
                 }
             } else {
                 mSelectedTouch = NULL;
-                mFormation.mSelectedIndex = -1;
+                mFormation.mSelectedNodeIndex = -1;
             }
         }
         
     }
-    
-    
-    
 }
 
 void GameFormationEditor::TouchMove(float pX, float pY, void *pData) {
     
+    float aX = mSelectNodeStartX + (pX - mSelectTouchStartX);
+    float aY = mSelectNodeStartY + (pY - mSelectTouchStartY);
+    
+    GridSnap(&aX, &aY);
+    
     if (mTracerEnabled == true) {
         
-        printf("Tracer Stuff...\n");
-        
-    } else {
-        if (mFormationMode == PATH_MODE_EDIT) {
+        if (mTracerMode == FORMATION_MODE_MOVE_POINT) {
             if (mSelectedTouch == pData) {
                 
-                float aX = mSelectNodeStartX + (pX - mSelectTouchStartX);
-                float aY = mSelectNodeStartY + (pY - mSelectTouchStartY);
                 
-                GridSnap(&aX, &aY);
                 
-                mFormation.Set(mFormation.mSelectedIndex, aX, aY);
+                LevelWaveSpawnFormationTracerBlueprint *aTracerBlueprint = mFormation.GetTracer();
+                if (aTracerBlueprint != NULL) {
+                    aTracerBlueprint->Set(aTracerBlueprint->mSelectedNodeIndex, aX, aY);
+                }
+            }
+        }
+    } else {
+        if (mFormationMode == FORMATION_MODE_MOVE_POINT) {
+            if (mSelectedTouch == pData) {
+                mFormation.Set(mFormation.mSelectedNodeIndex, aX, aY);
             }
         }
     }
@@ -235,8 +298,39 @@ void GameFormationEditor::KeyDown(int pKey) {
     if (gEditor == NULL) { return; }
     if (gGame == NULL) { return; }
     
+    if (pKey == __KEY__1) { mFormation.mCurrentTracerIndex = 0; }
+    if (pKey == __KEY__2) { mFormation.mCurrentTracerIndex = 1; }
+    if (pKey == __KEY__3) { mFormation.mCurrentTracerIndex = 2; }
+    if (pKey == __KEY__4) { mFormation.mCurrentTracerIndex = 3; }
     
     if (pKey == __KEY__P) { Print(); }
+    
+    if (pKey == __KEY__T) { mTracerEnabled = !mTracerEnabled; }
+    
+    if (pKey == __KEY__A) {
+        if (mTracerEnabled) {
+            mTracerMode = FORMATION_MODE_ADD_POINT;
+        } else {
+            mFormationMode = FORMATION_MODE_ADD_POINT;
+        }
+    }
+    
+    if (pKey == __KEY__E) {
+        if (mTracerEnabled) {
+            mTracerMode = FORMATION_MODE_MOVE_POINT;
+        } else {
+            mFormationMode = FORMATION_MODE_MOVE_POINT;
+        }
+    }
+    
+    if (pKey == __KEY__S) {
+        if (mTracerEnabled) {
+            mTracerMode = FORMATION_MODE_SELECT_POINT;
+        } else {
+            mFormationMode = FORMATION_MODE_SELECT_POINT;
+        }
+    }
+    
     
     if (pKey == __KEY__S) {
         if (aShift == false && aCtrl == true && aAlt == false) {
@@ -253,7 +347,11 @@ void GameFormationEditor::KeyDown(int pKey) {
     
     if (pKey == __KEY__DELETE) {
         if (aShift == false && aCtrl == false && aAlt == false) {
-            
+            if (mTracerEnabled == true) {
+                mFormation.TracerRemove();
+            } else {
+                mFormation.Remove(mFormation.mSelectedNodeIndex);
+            }
         }
     }
     
@@ -349,6 +447,9 @@ void GameFormationEditor::Clear() {
     printf("GameFormationEditor::Clear()\n");
     mFormation.Clear();
     Refresh();
+    
+    mTracerMode = FORMATION_MODE_ADD_POINT;
+    mFormationMode = FORMATION_MODE_ADD_POINT;
 }
 
 void GameFormationEditor::Refresh() {
@@ -381,7 +482,7 @@ void GameFormationEditor::Load() {
 
 void GameFormationEditor::Print() {
     
-     mFormation.Print();
+    mFormation.Print();
 }
 
 void GameFormationEditor::BuildGrid() {
@@ -393,9 +494,11 @@ void GameFormationEditor::BuildRectGrid() {
     if (mGridRectWidth < 1) {
         mGridRectWidth = 1;
     }
+    
     if (mGridRectHeight < 1) {
         mGridRectHeight = 1;
     }
+    
     if (mGridRectSpacing < 0) {
         mGridRectSpacing = 0;
     }
@@ -413,21 +516,14 @@ void GameFormationEditor::BuildRectGrid() {
         float aX = aLeft + ((float)mGridRectSpacing) * ((float)i);
         
         for (int n=0;n<mGridRectHeight;n++) {
-            
             float aY = aTop + ((float)mGridRectSpacing) * ((float)n);
-            
             mGridList.Add(aX, aY);
-            
         }
-        
     }
-    
 }
 
-
-
 void GameFormationEditor::DeleteNode() {
-    mFormation.Remove(mFormation.mSelectedIndex);
+    mFormation.Remove(mFormation.mSelectedNodeIndex);
 }
 
 
@@ -437,7 +533,6 @@ void GameFormationEditor::GridSnap(float *pX, float *pY) {
         float aBestDist = 60.0f * 60.0f;
         int aIndex = mGridList.GetClosestIndex(*pX, *pY, aBestDist);
         if (aIndex != -1) {
-            
             *pX = mGridList.GetX(aIndex);
             *pY = mGridList.GetY(aIndex);
         }

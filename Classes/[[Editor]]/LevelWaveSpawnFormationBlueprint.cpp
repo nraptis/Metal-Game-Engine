@@ -91,48 +91,63 @@ LevelWaveSpawnFormationBlueprint::LevelWaveSpawnFormationBlueprint() {
     mRotationSpeedNegateRandom = true;
     
     
+    mSelectedNodeIndex = -1;
+    mCurrentTracerIndex = 0;
+    
 }
 
 LevelWaveSpawnFormationBlueprint::~LevelWaveSpawnFormationBlueprint() {
     FreeList(LevelWaveSpawnFormationBlueprintNode, mNodeList);
-    FreeList(LevelWaveSpawnFormationBlueprintNode, mKillList);
+    FreeList(LevelWaveSpawnFormationBlueprintNode, mKillNodeList);
 }
 
 void LevelWaveSpawnFormationBlueprint::Update() {
     
     RefreshNodePositions();
     
-    EnumList(LevelWaveSpawnFormationBlueprintNode, aNode, mKillList) {
+    EnumList(LevelWaveSpawnFormationBlueprintNode, aNode, mKillNodeList) {
         aNode->mKillTimer--;
-        if (aNode->mKillTimer <= 0) { mDeleteList.Add(aNode); }
+        if (aNode->mKillTimer <= 0) { mDeleteNodeList.Add(aNode); }
     }
-    EnumList(LevelWaveSpawnFormationBlueprintNode, aNode, mDeleteList) {
-        mKillList.Remove(aNode);
+    EnumList(LevelWaveSpawnFormationBlueprintNode, aNode, mDeleteNodeList) {
+        mKillNodeList.Remove(aNode);
         delete aNode;
     }
-    mDeleteList.RemoveAll();
+    mDeleteNodeList.RemoveAll();
+    
+    //
 }
 
 void LevelWaveSpawnFormationBlueprint::Clear() {
     
+    for (int i=0;i<4;i++) {
+        mTracer[i].Clear();
+    }
+    
     EnumList(LevelWaveSpawnFormationBlueprintNode, aNode, mNodeList) {
-        mKillList.Add(aNode);
+        mKillNodeList.Add(aNode);
     }
     mNodeList.RemoveAll();
     
-    mSelectedIndex = -1;
+    mSelectedNodeIndex = -1;
     
-    if (gEditor != NULL) {
+    if (gFormationEditor != NULL) {
         RefreshNodePositions();
-        if (gFormationEditor != NULL) { gFormationEditor->Refresh(); }
+    //    if (gFormationEditor != NULL) { gFormationEditor->Refresh(); }
+        
     }
+    
 }
 
 void LevelWaveSpawnFormationBlueprint::Draw(bool pSelected) {
+    
+    
+    
+    
     for (int i=0;i<mNodeList.mCount;i++) {
         LevelWaveSpawnFormationBlueprintNode *aNode = (LevelWaveSpawnFormationBlueprintNode *)mNodeList.mData[i];
         if (pSelected) {
-            if (i == mSelectedIndex) {
+            if (i == mSelectedNodeIndex) {
                 Graphics::SetColor(1.0f, 0.0f, 0.0f, 0.75f);
                 Graphics::DrawPoint(aNode->mEditorX, aNode->mEditorY, 12.0f);
             } else {
@@ -143,6 +158,10 @@ void LevelWaveSpawnFormationBlueprint::Draw(bool pSelected) {
             Graphics::SetColor(0.65f, 0.65f, 0.65f, 0.35f);
             Graphics::DrawPoint(aNode->mEditorX, aNode->mEditorY, 4.0f);
         }
+    }
+    
+    for (int i=0;i<4;i++) {
+        mTracer[i].Draw(mCurrentTracerIndex == i);
     }
 }
 
@@ -173,6 +192,7 @@ void LevelWaveSpawnFormationBlueprint::Add(float pX, float pY) {
     aNode->mEditorX = pX;
     aNode->mEditorY = pY;
     mNodeList.Add(aNode);
+    mSelectedNodeIndex = mNodeList.mCount - 1;
     RefreshNodePositions();
     if (gFormationEditor != NULL) { gFormationEditor->Refresh(); }
 }
@@ -180,8 +200,8 @@ void LevelWaveSpawnFormationBlueprint::Add(float pX, float pY) {
 void LevelWaveSpawnFormationBlueprint::Remove(int pIndex) {
     LevelWaveSpawnFormationBlueprintNode *aDeleteNode = (LevelWaveSpawnFormationBlueprintNode *)mNodeList.Fetch(pIndex);
     if (aDeleteNode) {
-        if (mSelectedIndex >= pIndex) { mSelectedIndex--; }
-        mKillList.Add(aDeleteNode);
+        if (mSelectedNodeIndex >= pIndex) { mSelectedNodeIndex--; }
+        mKillNodeList.Add(aDeleteNode);
         mNodeList.RemoveAtIndex(pIndex);
     }
     if (gFormationEditor != NULL) { gFormationEditor->Refresh(); }
@@ -193,8 +213,71 @@ LevelWaveSpawnFormationBlueprintNode *LevelWaveSpawnFormationBlueprint::GetNode(
 }
 
 LevelWaveSpawnFormationBlueprintNode *LevelWaveSpawnFormationBlueprint::GetNode() {
-    LevelWaveSpawnFormationBlueprintNode *aResult = (LevelWaveSpawnFormationBlueprintNode *)mNodeList.Fetch(mSelectedIndex);
+    LevelWaveSpawnFormationBlueprintNode *aResult = (LevelWaveSpawnFormationBlueprintNode *)mNodeList.Fetch(mSelectedNodeIndex);
     return aResult;
+}
+
+
+
+
+void LevelWaveSpawnFormationBlueprint::TracerAdd(float pX, float pY) {
+    LevelWaveSpawnFormationTracerBlueprint *aTracer = GetTracer();
+    if (aTracer != NULL) {
+        aTracer->Add(pX, pY);
+    }
+}
+
+void LevelWaveSpawnFormationBlueprint::TracerRemove() {
+    LevelWaveSpawnFormationTracerBlueprint *aTracer = GetTracer();
+    if (aTracer != NULL) {
+        aTracer->Remove(aTracer->mSelectedNodeIndex);
+    }
+}
+
+void LevelWaveSpawnFormationBlueprint::TracerSet(int pIndex, float pX, float pY) {
+    LevelWaveSpawnFormationTracerBlueprint *aTracer = GetTracer();
+    if (aTracer != NULL) {
+        aTracer->Set(pIndex, pX, pY);
+    }
+}
+
+float LevelWaveSpawnFormationBlueprint::TracerGetX(int pIndex) {
+    LevelWaveSpawnFormationTracerBlueprint *aTracer = GetTracer();
+    if (aTracer != NULL) {
+        return aTracer->GetX(pIndex);
+    }
+    return 0.0f;
+}
+
+float LevelWaveSpawnFormationBlueprint::TracerGetY(int pIndex) {
+    LevelWaveSpawnFormationTracerBlueprint *aTracer = GetTracer();
+    if (aTracer != NULL) {
+        return aTracer->GetY(pIndex);
+    }
+    return 0.0f;
+}
+
+LevelWaveSpawnFormationTracerBlueprint *LevelWaveSpawnFormationBlueprint::GetTracer() {
+    if (mCurrentTracerIndex >= 0 && mCurrentTracerIndex < 4) {
+        return &(mTracer[mCurrentTracerIndex]);
+    }
+    return NULL;
+}
+
+LevelWaveSpawnFormationTracerBlueprintNode *LevelWaveSpawnFormationBlueprint::TracerGetNode(int pIndex) {
+    LevelWaveSpawnFormationTracerBlueprint *aTracer = GetTracer();
+    if (aTracer != NULL) {
+        return aTracer->GetNode(pIndex);
+    }
+    return NULL;
+}
+
+LevelWaveSpawnFormationTracerBlueprintNode *LevelWaveSpawnFormationBlueprint::TracerGetNode() {
+    LevelWaveSpawnFormationTracerBlueprint *aTracer = GetTracer();
+    if (aTracer != NULL) {
+        return aTracer->GetNode();
+    }
+    return NULL;
 }
 
 void LevelWaveSpawnFormationBlueprint::Print() {
@@ -254,18 +337,22 @@ void LevelWaveSpawnFormationBlueprint::Build(LevelWaveSpawnFormation *pFormation
     if (pFormation == NULL) { return; }
     
     pFormation->Reset();
-    
     pFormation->mRotation = mRotation;
     
     for (int i=0;i<mNodeList.mCount;i++) {
         LevelWaveSpawnFormationBlueprintNode *aNodeBlueprint = (LevelWaveSpawnFormationBlueprintNode *)mNodeList.mData[i];
-        
         LevelWaveSpawnFormationNode *aNode = new LevelWaveSpawnFormationNode(pFormation);
-        
         aNode->mBaseX = aNodeBlueprint->mPercentX;
         aNode->mBaseY = aNodeBlueprint->mPercentY;
-        
         pFormation->mNodeList.Add(aNode);
+    }
+    
+    for (int i=0;i<4;i++) {
+        if (mTracer[i].IsValid()) {
+            LevelWaveSpawnFormationTracer *aTracer = new LevelWaveSpawnFormationTracer();
+            mTracer[i].Build(aTracer);
+            pFormation->mTracerList.Add(aTracer);
+        }
     }
     
     
@@ -277,17 +364,9 @@ FJSONNode *LevelWaveSpawnFormationBlueprint::Save() {
     FJSONNode *aExport = new FJSONNode();
     aExport->mNodeType = JSON_NODE_TYPE_DICTIONARY;
     
-    //mRotationEnabled = false;
-    
-    //mRotationSpeedClass = WAVE_SPEED_MEDIUM;
-    
-    //mRotationSpeedNegateAlways = false;
-    //mRotationSpeedNegateRandom = true;
-    
-    aExport->AddDictionaryFloat("rotation", mRotation);
-    
-    
-    
+    if (mRotation != 0) {
+        aExport->AddDictionaryFloat("rotation", mRotation);
+    }
     
     FJSONNode *aNodeListNode = new FJSONNode();
     aNodeListNode->mNodeType = JSON_NODE_TYPE_ARRAY;
@@ -295,8 +374,28 @@ FJSONNode *LevelWaveSpawnFormationBlueprint::Save() {
         LevelWaveSpawnFormationBlueprintNode *aNode = (LevelWaveSpawnFormationBlueprintNode *)mNodeList.mData[i];
         aNodeListNode->AddArray(aNode->Save());
     }
-    
     aExport->AddDictionary("node_list", aNodeListNode);
+    
+    
+    bool aSaveTracers = false;
+    for (int i=0;i<4;i++) {
+        if (mTracer[i].IsValid()) {
+            aSaveTracers = true;
+        }
+    }
+    if (aSaveTracers) {
+        FJSONNode *aTracerListNode = new FJSONNode();
+        aTracerListNode->mNodeType = JSON_NODE_TYPE_ARRAY;
+        for (int i=0;i<4;i++) {
+            
+            if (mTracer[i].IsValid()) {
+                aTracerListNode->AddArray(mTracer[i].Save());
+            }
+            
+        }
+        aExport->AddDictionary("tracer_list", aTracerListNode);
+    }
+    
     
     
     return aExport;
@@ -312,11 +411,33 @@ void LevelWaveSpawnFormationBlueprint::Load(FJSONNode *pNode) {
     FJSONNode *aNodeListNode = pNode->GetArray("node_list");
     if (aNodeListNode != NULL) {
         EnumJSONArray(aNodeListNode, aFormationBlueprintLoadNode) {
-            LevelWaveSpawnFormationBlueprintNode *aPathNode = new LevelWaveSpawnFormationBlueprintNode();
-            aPathNode->Load(aFormationBlueprintLoadNode);
-            mNodeList.Add(aPathNode);
+            LevelWaveSpawnFormationBlueprintNode *aNode = new LevelWaveSpawnFormationBlueprintNode();
+            aNode->Load(aFormationBlueprintLoadNode);
+            mNodeList.Add(aNode);
         }
     }
-        
-    if (gFormationEditor != NULL) { gFormationEditor->Refresh(); }
+    
+    
+    FJSONNode *aTracerListNode = pNode->GetArray("tracer_list");
+    if (aTracerListNode != NULL) {
+        int aIndex = 0;
+        EnumJSONArray(aTracerListNode, aTracerBlueprintLoadNode) {
+            mTracer[aIndex].Load(aTracerBlueprintLoadNode);
+            ++aIndex;
+            if (aIndex == 4) { break; }
+        }
+    }
 }
+
+bool LevelWaveSpawnFormationBlueprint::IsValid() {
+    if (mNodeList.mCount > 0) {
+        return true;
+    }
+    for (int i=0;i<4;i++) {
+        if (mTracer[i].IsValid() == true) {
+            return true;
+        }
+    }
+    return false;
+}
+

@@ -417,7 +417,8 @@ void LevelWavePathBlueprint::Load(FJSONNode *pNode) {
         aPathNode->Load(aPathLoadNode);
         mNodeList.Add(aPathNode);
     }
-    if (gEditor != NULL) {
-        mWave->ApplyEditorConstraints();
-    }
+    //if (gEditor != NULL) {
+    //    mWave->ApplyEditorConstraints();
+    //}
+    
 }

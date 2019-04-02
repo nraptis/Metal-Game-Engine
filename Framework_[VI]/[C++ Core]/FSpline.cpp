@@ -148,13 +148,11 @@ void FSpline::Add(float x,float y)
 	if(mProperties&SPLINE_CLOSED&&mPointCount>0){Delete(mMax);mProperties&=~SPLINE_CLOSED;}
 	//if((!(mProperties&SPLINE_ALLOW_SAME_POINT_TWICE_IN_ROW))&&mPointCount>0)if(mX[mMax]==x&&mY[mMax]==y){return;}
 	
-    mX[mPointCount]=x;
-	mY[mPointCount]=y;
+    mX[mPointCount] = x;
+	mY[mPointCount] = y;
 	
-    //mMax=
-	
-    mPointCount++;
-	mChanged=true;
+    ++mPointCount;
+	mChanged = true;
 }
 
 void FSpline::SetPoint(int theIndex,float x, float y)
@@ -168,12 +166,10 @@ void FSpline::SetPoint(int theIndex,float x, float y)
         mPointCount = (theIndex + 1);
     }
     
-    
-    
-	if(mProperties&SPLINE_CLOSED&&mPointCount>0)
-	{
-		Delete(mMax);mProperties&=~SPLINE_CLOSED;
-		if(theIndex==mPointCount)theIndex=0;
+	if ((mProperties&SPLINE_CLOSED) && mPointCount > 0) {
+		Delete(mMax);
+        mProperties &= ~SPLINE_CLOSED;
+        if (theIndex == mPointCount) { theIndex=0; }
 	}
     
 	mX[theIndex]=x;

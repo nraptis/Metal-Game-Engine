@@ -10,7 +10,7 @@
 #define LevelWaveSpawnFormationBlueprint_hpp
 
 #include "FJSON.hpp"
-#include "FPoint.h"
+#include "LevelWaveSpawnFormationTracerBlueprint.hpp"
 
 class LevelWaveSpawnFormation;
 
@@ -49,24 +49,36 @@ public:
     
     void                                        Print();
     
-    
     void                                        RefreshNodePositions();
     
     int                                         GetClosestIndex(float pX, float pY, float &pDist);
     
-    void                                        Set(int pIndex, float pX, float pY);
-    float                                       GetX(int pIndex);
-    float                                       GetY(int pIndex);
+    
     
     void                                        Add(float pX, float pY);
     void                                        Remove(int pIndex);
-    
+    void                                        Set(int pIndex, float pX, float pY);
+    float                                       GetX(int pIndex);
+    float                                       GetY(int pIndex);
     LevelWaveSpawnFormationBlueprintNode        *GetNode(int pIndex);
     LevelWaveSpawnFormationBlueprintNode        *GetNode();
     
-    int                                         mSelectedIndex;
+    int                                         mSelectedNodeIndex;
     FList                                       mNodeList;
     
+    
+    
+    void                                        TracerAdd(float pX, float pY);
+    void                                        TracerRemove();
+    void                                        TracerSet(int pIndex, float pX, float pY);
+    float                                       TracerGetX(int pIndex);
+    float                                       TracerGetY(int pIndex);
+    LevelWaveSpawnFormationTracerBlueprint      *GetTracer();
+    LevelWaveSpawnFormationTracerBlueprintNode  *TracerGetNode(int pIndex);
+    LevelWaveSpawnFormationTracerBlueprintNode  *TracerGetNode();
+    
+    int                                         mCurrentTracerIndex;
+    LevelWaveSpawnFormationTracerBlueprint      mTracer[4];
     
     float                                       mRotation;
     
@@ -78,14 +90,17 @@ public:
     
     FJSONNode                                   *Save();
     void                                        Load(FJSONNode *pNode);
+    bool                                        IsValid();
+    
     
     //Note: BUILD should have NO TIE-IN TO EDITOR...
     //This HAS to work WITHOUT EDITOR for GAME......
     void                                        Build();
     void                                        Build(LevelWaveSpawnFormation *pFormation);
     
-    FList                                       mKillList;
-    FList                                       mDeleteList;
+private:
+    FList                                       mKillNodeList;
+    FList                                       mDeleteNodeList;
 };
     
 #endif /* LevelWaveSpawnFormationBlueprint_hpp */

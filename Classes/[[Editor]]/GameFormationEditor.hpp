@@ -85,6 +85,7 @@ public:
     float                                       mSelectNodeStartX;
     float                                       mSelectNodeStartY;
     
+    
     float                                       mSelectTouchStartX;
     float                                       mSelectTouchStartY;
     

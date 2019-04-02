@@ -22,9 +22,6 @@ public:
     void                                        Load(FJSONNode *pNode);
     
     int                                         mSpawnSpacingOffset;
-    
-    
-    
 };
 
 

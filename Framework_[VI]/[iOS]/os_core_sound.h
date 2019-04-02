@@ -21,7 +21,6 @@ public:
     unsigned int                    mIndexOpenAL;
 };
 
-
 class FSoundDataMac : public FSoundData
 {
 public:

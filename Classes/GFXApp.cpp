@@ -8,8 +8,10 @@
 
 //#include "MetalEngine.h"
 
-#include "GFXApp.hpp"
 #include "core_app_shell.h"
+#include "GFXApp.hpp"
+#include "FormationCollection.hpp"
+
 #include "LevelSelectorScreen.hpp"
 #include "LightConfigurationScene.hpp"
 #include "Balloon.hpp"
@@ -122,13 +124,8 @@ void GFXApp::Load() {
     mBalloonMap[2].Load("balloon_skin_03");
     mBalloonMap[3].Load("balloon_skin_04");
     mBalloonMap[4].Load("balloon_skin_05");
-    //
-    //
-    //
-    Log("mBalloon[%d][%d]\n", mBalloon.mDataCount, mBalloon.mIndexCount);
-    //
-    //
-    //
+
+    /*
     //We need to have differently named files OR clean
     //out the texture cache when we CHANGE resolution.
     //As long as we START with the RIGHT resolution,
@@ -156,9 +153,6 @@ void GFXApp::Load() {
     mRay[3].Load("effect_ray_wide_4_0");
     
     
-    
-    
-    
     mSoundOne[0].Load("burn_stinger.caf", 1);
     mSoundOne[1].Load("drilling.caf", 1);
     mSoundOne[2].Load("magic_woosh.caf", 1);
@@ -173,11 +167,10 @@ void GFXApp::Load() {
     mSoundMulti[3].Load("burn_stinger.caf", 5);
     mSoundMulti[4].Load("timer_tick.caf", 5);
     mSoundMulti[5].Load("timer_tock.caf", 5);
+    */
     
     
-    //demo_song_1.mp3
-    //demo_song_2.mp3
-    
+    gFormationCollection.Load();
     
 }
 

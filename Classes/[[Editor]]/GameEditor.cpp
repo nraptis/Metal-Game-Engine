@@ -161,16 +161,8 @@ void GameEditor::Update() {
     mSection.Update();
     
     if (mSection.mCurrentWave) {
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_EXTRA_SLOW )  { mSpeedClassIndex = 0; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_SLOW )        { mSpeedClassIndex = 1; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_MEDIUM_SLOW ) { mSpeedClassIndex = 2; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_MEDIUM )      { mSpeedClassIndex = 3; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_MEDIUM_FAST ) { mSpeedClassIndex = 4; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_FAST )        { mSpeedClassIndex = 5; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_EXTRA_FAST )  { mSpeedClassIndex = 6; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_INSANE )      { mSpeedClassIndex = 7; }
-    } else {
-        mSpeedClassIndex = -1;
+        
+        mSpeedClassIndex = SpeedConvertSegmentToType(mSection.mCurrentWave->mPath.mSpeedClass);
     }
     
     mAutosaveTimer += 1;
@@ -552,17 +544,36 @@ void GameEditor::SetOverlay(FCanvas *pCanvas) {
     }
 }
 
+int GameEditor::SpeedConvertSegmentToType(int pSegmentIndex) {
+    int aResult = WAVE_SPEED_MEDIUM_FAST;
+    if (pSegmentIndex == 0) { aResult = WAVE_SPEED_EXTRA_SLOW; }
+    if (pSegmentIndex == 1) { aResult = WAVE_SPEED_SLOW; }
+    if (pSegmentIndex == 2) { aResult = WAVE_SPEED_MEDIUM_SLOW; }
+    if (pSegmentIndex == 3) { aResult = WAVE_SPEED_MEDIUM; }
+    if (pSegmentIndex == 4) { aResult = WAVE_SPEED_MEDIUM_FAST; }
+    if (pSegmentIndex == 5) { aResult = WAVE_SPEED_FAST; }
+    if (pSegmentIndex == 6) { aResult = WAVE_SPEED_EXTRA_FAST; }
+    if (pSegmentIndex == 7) { aResult = WAVE_SPEED_INSANE; }
+    return aResult;
+}
+
+int GameEditor::SpeedConvertTypeToSegment(int pType) {
+    int aResult = 0;
+    if (pType == WAVE_SPEED_EXTRA_SLOW)   { aResult = 0; }
+    if (pType == WAVE_SPEED_SLOW)         { aResult = 1; }
+    if (pType == WAVE_SPEED_MEDIUM_SLOW)  { aResult = 2; }
+    if (pType == WAVE_SPEED_MEDIUM)       { aResult = 3; }
+    if (pType == WAVE_SPEED_MEDIUM_FAST)  { aResult = 4; }
+    if (pType == WAVE_SPEED_FAST)         { aResult = 5; }
+    if (pType == WAVE_SPEED_EXTRA_FAST)   { aResult = 6; }
+    if (pType == WAVE_SPEED_INSANE)       { aResult = 7; }
+    return aResult;
+}
+
 void GameEditor::RefreshPlayback() {
     
     if (mSection.mCurrentWave != NULL) {
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_EXTRA_SLOW)   { mSpeedClassIndex = 0; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_SLOW)         { mSpeedClassIndex = 1; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_MEDIUM_SLOW)  { mSpeedClassIndex = 2; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_MEDIUM)       { mSpeedClassIndex = 3; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_MEDIUM_FAST)  { mSpeedClassIndex = 4; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_FAST)         { mSpeedClassIndex = 5; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_EXTRA_FAST)   { mSpeedClassIndex = 6; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_INSANE)       { mSpeedClassIndex = 7; }
+        mSpeedClassIndex = SpeedConvertTypeToSegment(mSection.mCurrentWave->mPath.mSpeedClass);
     }
     
     if (mEditorPlaybackWaveOnly) {
@@ -586,7 +597,13 @@ void GameEditor::RefreshPlayback() {
 
 void GameEditor::RefreshPlaybackSpeed() {
     if (mSection.mCurrentWave != NULL) {
-        if (mSpeedClassIndex == 0) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_EXTRA_SLOW; }
+        
+        mSection.mCurrentWave->mPath.mSpeedClass = SpeedConvertSegmentToType(mSpeedClassIndex);
+        
+        
+        
+        /*
+        if (mSpeedClassIndex == 0) {  = WAVE_SPEED_EXTRA_SLOW; }
         if (mSpeedClassIndex == 1) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_SLOW; }
         if (mSpeedClassIndex == 2) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_MEDIUM_SLOW; }
         if (mSpeedClassIndex == 3) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_MEDIUM; }
@@ -594,6 +611,7 @@ void GameEditor::RefreshPlaybackSpeed() {
         if (mSpeedClassIndex == 5) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_FAST; }
         if (mSpeedClassIndex == 6) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_EXTRA_FAST; }
         if (mSpeedClassIndex == 7) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_INSANE; }
+        */
     }
 }
 

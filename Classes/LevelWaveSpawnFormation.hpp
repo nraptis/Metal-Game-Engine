@@ -23,6 +23,8 @@ public:
     void                                        Reset();
     void                                        Spawn();
     void                                        Update();
+    void                                        Draw();
+    
     
     FList                                       mNodeList;
     FList                                       mTracerList;
