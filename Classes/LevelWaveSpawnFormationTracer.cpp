@@ -7,6 +7,7 @@
 //
 
 #include "LevelWaveSpawnFormationTracer.hpp"
+#include "LevelWaveSpawnFormationNode.hpp"
 #include "os_core_graphics.h"
 #include "FPolyPath.h"
 #include "LevelWavePath.hpp"
@@ -17,29 +18,44 @@ static FPolyPath cPolyPath;
 static FPointList cSegmentList;
 
 
-LevelWaveSpawnFormationTracer::LevelWaveSpawnFormationTracer() {
+LevelWaveSpawnFormationTracer::LevelWaveSpawnFormationTracer(LevelWaveSpawnFormation *pFormation) {
     
     SetSpeedClass(WAVE_SPEED_MEDIUM);
     
-    //TODO: Remove
-    mSpeed = 42.0f;
+    mFormation = pFormation;
+    mCount = 5;
+    mPathIndex = 0;
+    
     
     mKillTimer = 8;
-    
 }
+
 
 LevelWaveSpawnFormationTracer::~LevelWaveSpawnFormationTracer() {
     printf("LevelWaveSpawnFormationTracer::~LevelWaveSpawnFormationTracer()\n");
-    FreeList(LevelWaveSpawnFormationTracerNode, mNodeList);
-    FreeList(LevelWaveSpawnFormationTracerNode, mNodeKillList);
+    FreeList(LevelWaveSpawnFormationTracerNode, mTracerNodeList);
+    FreeList(LevelWaveSpawnFormationTracerNode, mTracerNodeKillList);
+    
+    FreeList(LevelWaveSpawnFormationNode, mSpawnNodeList);
+    FreeList(LevelWaveSpawnFormationNode, mSpawnNodeKillList);
+    
 }
 
 void LevelWaveSpawnFormationTracer::Reset() {
-    for (int i=0;i<mNodeList.mCount;i++) {
-        LevelWaveSpawnFormationTracerNode *aNode = ((LevelWaveSpawnFormationTracerNode *)mNodeList.mData[i]);
-        mNodeKillList.Add(aNode);
+    for (int i=0;i<mTracerNodeList.mCount;i++) {
+        LevelWaveSpawnFormationTracerNode *aNode = ((LevelWaveSpawnFormationTracerNode *)mTracerNodeList.mData[i]);
+        mTracerNodeKillList.Add(aNode);
     }
-    mNodeList.RemoveAll();
+    mTracerNodeList.RemoveAll();
+    
+    
+    
+    for (int i=0;i<mSpawnNodeList.mCount;i++) {
+        LevelWaveSpawnFormationNode *aNode = ((LevelWaveSpawnFormationNode *)mSpawnNodeList.mData[i]);
+        aNode->Reset();
+        mSpawnNodeKillList.Add(aNode);
+    }
+    mSpawnNodeList.RemoveAll();
     
     mPath.RemoveAll();
     mDist.RemoveAll();
@@ -48,15 +64,15 @@ void LevelWaveSpawnFormationTracer::Reset() {
 
 void LevelWaveSpawnFormationTracer::Spawn() {
     
-    EnumList(LevelWaveSpawnFormationTracerNode, aNode, mNodeList) {
+    EnumList(LevelWaveSpawnFormationTracerNode, aNode, mTracerNodeList) {
         aNode->SetUp();
     }
     
     cDumpList.Reset();
     
     if (true) {
-        for (int i=0;i<mNodeList.mCount;i++) {
-            LevelWaveSpawnFormationTracerNode *aNode = ((LevelWaveSpawnFormationTracerNode *)mNodeList.mData[i]);
+        for (int i=0;i<mTracerNodeList.mCount;i++) {
+            LevelWaveSpawnFormationTracerNode *aNode = ((LevelWaveSpawnFormationTracerNode *)mTracerNodeList.mData[i]);
             cDumpList.Add(aNode->mX, aNode->mY);
         }
     } else {
@@ -75,7 +91,6 @@ void LevelWaveSpawnFormationTracer::Spawn() {
     
     //IMPORTANT: Tracers always loop and thus "closed" !!!
     
-    
     float aSpeed = mSpeed;
     if (aSpeed > 100.0f) { aSpeed = 100.0f; }
     if (aSpeed < 1.0f) { aSpeed = 1.0f; }
@@ -93,8 +108,9 @@ void LevelWaveSpawnFormationTracer::Spawn() {
         mDist.Add(aCurrentDist);
     }
     
-    float aLastX = cDumpList.mX[cDumpList.mCount - 1];
-    float aLastY = cDumpList.mY[cDumpList.mCount - 1];
+    //IMPORTANT: Loop back to start...
+    float aLastX = cDumpList.mX[0];
+    float aLastY = cDumpList.mY[0];
     float aSegmentLastX = 0.0f;
     float aSegmentLastY = 0.0f;
     if (cSegmentList.mCount > 0) {
@@ -102,54 +118,82 @@ void LevelWaveSpawnFormationTracer::Spawn() {
         aSegmentLastY = cSegmentList.mY[cSegmentList.mCount - 1];
     }
     
+    //If we land too close to the start, remove the point.
     float aDistanceToEnd = DistanceSquared(aLastX, aLastY, aSegmentLastX, aSegmentLastY);
-    
-    if (aDistanceToEnd > 0.5f) {
-        //cSegmentList.Add(aLastX, aLastY);
-        //mDist.Add(aCurrentDist + cPolyPath.mLength);
-    } else {
-        cSegmentList.mX[cSegmentList.mCount - 1] = aLastX;
-        cSegmentList.mY[cSegmentList.mCount - 1] = aLastY;
-        mDist.mData[mDist.mCount - 1] = cPolyPath.mLength;
+    if (aDistanceToEnd <= ((aSpeed * aSpeed) * 0.5f)) {
+        cSegmentList.mCount -= 1;
+        mDist.mCount -= 1;
     }
     
+    
+    if (cSegmentList.mCount <= 2) { return; }
+    
     mPath.Add(&cSegmentList);
+    
+    
+    ///////////////////////////////////////////////
+    ///////////////////////////////////////////////
+    ///////////////////////////////////////////////
+    
+    int aPathCount = mPath.mCount;
+    for (int i=0;i<mCount;i++) {
+        LevelWaveSpawnFormationNode *aFormationNode = new LevelWaveSpawnFormationNode(mFormation);
+        aFormationNode->mTracer = this;
+        float aPercent = ((float)i) / ((float)mCount);
+        aFormationNode->mPathIndexOffset = (int)round(aPercent * ((float)aPathCount));
+        
+        aFormationNode->Spawn();
+        mSpawnNodeList.Add(aFormationNode);
+    }
 }
 
 void LevelWaveSpawnFormationTracer::Update() {
     
-    EnumList(LevelWaveSpawnFormationTracerNode, aNode, mNodeList) {
+    
+    if (mPath.mCount > 2) {
+        mPathIndex += 1;
+        if (mPathIndex >= (mPath.mCount - 1)) {
+            mPathIndex = 0;
+        }
+    }
+    
+    EnumList(LevelWaveSpawnFormationTracerNode, aNode, mTracerNodeList) {
         aNode->Update();
     }
     
-    EnumList(LevelWaveSpawnFormationTracerNode, aNode, mNodeKillList) {
-        aNode->mKillTimer--;
-        if (aNode->mKillTimer <= 0) { mNodeDeleteList.Add(aNode); }
+    EnumList(LevelWaveSpawnFormationNode, aNode, mSpawnNodeList) {
+        aNode->Update();
     }
-    EnumList(LevelWaveSpawnFormationTracerNode, aNode, mNodeDeleteList) {
-        mNodeKillList.Remove(aNode);
+        
+    
+    EnumList(LevelWaveSpawnFormationTracerNode, aNode, mTracerNodeKillList) {
+        aNode->mKillTimer--;
+        if (aNode->mKillTimer <= 0) { mTracerNodeDeleteList.Add(aNode); }
+    }
+    EnumList(LevelWaveSpawnFormationTracerNode, aNode, mTracerNodeDeleteList) {
+        mTracerNodeKillList.Remove(aNode);
         delete aNode;
     }
-    mNodeDeleteList.RemoveAll();
+    mTracerNodeDeleteList.RemoveAll();
 }
 
 void LevelWaveSpawnFormationTracer::SetSpeedClass(int pSpeedClass) {
     if (pSpeedClass == WAVE_SPEED_EXTRA_SLOW) {
-        mSpeed = 1.5f;
+        mSpeed = 0.45f;
     } else if (pSpeedClass == WAVE_SPEED_SLOW) {
-        mSpeed = 2.25f;
+        mSpeed = 0.65f;
     } else if (pSpeedClass == WAVE_SPEED_MEDIUM_SLOW) {
-        mSpeed = 3.65f;
+        mSpeed = 1.25f;
     } else if (pSpeedClass == WAVE_SPEED_MEDIUM_FAST) {
-        mSpeed = 6.25f;
+        mSpeed = 3.75f;
     } else if (pSpeedClass == WAVE_SPEED_FAST) {
-        mSpeed = 9.0f;
+        mSpeed = 6.5f;
     } else if (pSpeedClass == WAVE_SPEED_EXTRA_FAST) {
-        mSpeed = 12.0f;
+        mSpeed = 9.0f;
     } else if (pSpeedClass == WAVE_SPEED_INSANE) {
-        mSpeed = 18.0f;
+        mSpeed = 14.0f;
     } else { //"Default /
-        mSpeed = 6.0f;
+        mSpeed = 2.5f;
     }
 }
 

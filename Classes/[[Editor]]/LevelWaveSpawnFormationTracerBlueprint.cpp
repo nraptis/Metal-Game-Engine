@@ -77,6 +77,8 @@ void LevelWaveSpawnFormationTracerBlueprintNode::Load(FJSONNode *pNode) {
 
 LevelWaveSpawnFormationTracerBlueprint::LevelWaveSpawnFormationTracerBlueprint() {
     mSelectedNodeIndex = -1;
+    mCount = 5;
+    mSpeedClass = 3;
 }
 
 LevelWaveSpawnFormationTracerBlueprint::~LevelWaveSpawnFormationTracerBlueprint() {
@@ -245,6 +247,10 @@ void LevelWaveSpawnFormationTracerBlueprint::Build(LevelWaveSpawnFormationTracer
     
     pTracer->Reset();
     
+    pTracer->SetSpeedClass(mSpeedClass);
+    pTracer->mCount = mCount;
+    
+    
     for (int i=0;i<mNodeList.mCount;i++) {
         LevelWaveSpawnFormationTracerBlueprintNode *aNodeBlueprint = (LevelWaveSpawnFormationTracerBlueprintNode *)mNodeList.mData[i];
         
@@ -253,7 +259,7 @@ void LevelWaveSpawnFormationTracerBlueprint::Build(LevelWaveSpawnFormationTracer
         aNode->mBaseX = aNodeBlueprint->mPercentX;
         aNode->mBaseY = aNodeBlueprint->mPercentY;
         
-        pTracer->mNodeList.Add(aNode);
+        pTracer->mTracerNodeList.Add(aNode);
     }
     
 }
@@ -262,6 +268,12 @@ FJSONNode *LevelWaveSpawnFormationTracerBlueprint::Save() {
     
     FJSONNode *aExport = new FJSONNode();
     aExport->mNodeType = JSON_NODE_TYPE_DICTIONARY;
+    
+    
+    aExport->AddDictionaryInt("object_count", mCount);
+    aExport->AddDictionaryInt("speed_class", mSpeedClass);
+    
+    
     
     FJSONNode *aNodeListNode = new FJSONNode();
     aNodeListNode->mNodeType = JSON_NODE_TYPE_ARRAY;
@@ -276,6 +288,12 @@ FJSONNode *LevelWaveSpawnFormationTracerBlueprint::Save() {
 void LevelWaveSpawnFormationTracerBlueprint::Load(FJSONNode *pNode) {
     Clear();
     if (pNode == NULL) { return; }
+    
+    
+    mCount = pNode->GetInt("object_count", mCount);
+    mSpeedClass = pNode->GetInt("speed_class", mSpeedClass);
+    
+    
     FJSONNode *aNodeListNode = pNode->GetArray("tracer_node_list");
     if (aNodeListNode != NULL) {
         EnumJSONArray(aNodeListNode, aFormationBlueprintLoadNode) {

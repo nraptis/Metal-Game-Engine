@@ -13,16 +13,22 @@
 #include "FList.hpp"
 #include "FPointList.h"
 
+class LevelWaveSpawnFormation;
 class LevelWaveSpawnFormationTracer {
 public:
-    LevelWaveSpawnFormationTracer();
+    LevelWaveSpawnFormationTracer(LevelWaveSpawnFormation *pFormation);
     ~LevelWaveSpawnFormationTracer();
     
     void                                        Reset();
     void                                        Spawn();
     void                                        Update();
     
-    FList                                       mNodeList;
+    
+    FList                                       mSpawnNodeList;
+    
+    FList                                       mTracerNodeList;
+    
+    LevelWaveSpawnFormation                     *mFormation;
     
     //Note: Path is NOT transformed...
     FPointList                                  mPath;
@@ -30,13 +36,26 @@ public:
     
     int                                         mKillTimer;
     
+    int                                         mCount;
+    
+    int                                         mPathIndex;
+    
+    
     void                                        SetSpeedClass(int pSpeedClass);
     float                                       mSpeed;
     
 private:
     
-    FList                                       mNodeKillList;
-    FList                                       mNodeDeleteList;
+    FList                                       mTracerNodeKillList;
+    FList                                       mTracerNodeDeleteList;
+    
+    
+    
+    FList                                       mSpawnNodeKillList;
+    FList                                       mSpawnNodeDeleteList;
+    
+    
+    
     
 };
     

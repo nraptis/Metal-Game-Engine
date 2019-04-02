@@ -12,6 +12,7 @@
 #include "GameObject.hpp"
 
 class LevelWaveSpawnFormation;
+class LevelWaveSpawnFormationTracer;
 class LevelWaveSpawnFormationNode {
 public:
     LevelWaveSpawnFormationNode(LevelWaveSpawnFormation *pFormation);
@@ -30,7 +31,10 @@ public:
     void                                PositionObject();
     
     LevelWaveSpawnFormation             *mFormation;
+    LevelWaveSpawnFormationTracer       *mTracer;
     GameObject                          *mObject;
+    
+    int                                 mPathIndexOffset;
     
     float                               mBaseX;
     float                               mBaseY;

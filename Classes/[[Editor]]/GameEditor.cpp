@@ -161,8 +161,8 @@ void GameEditor::Update() {
     mSection.Update();
     
     if (mSection.mCurrentWave) {
+        mSpeedClassIndex = SpeedConvertTypeToSegment(mSection.mCurrentWave->mPath.mSpeedClass);
         
-        mSpeedClassIndex = SpeedConvertSegmentToType(mSection.mCurrentWave->mPath.mSpeedClass);
     }
     
     mAutosaveTimer += 1;
@@ -576,10 +576,13 @@ void GameEditor::RefreshPlayback() {
         mSpeedClassIndex = SpeedConvertTypeToSegment(mSection.mCurrentWave->mPath.mSpeedClass);
     }
     
+    
+    if (mSection.mCurrentWave != NULL) {
+        mSection.mCurrentWave->Build();
+    }
+    
     if (mEditorPlaybackWaveOnly) {
-        if (mSection.mCurrentWave != NULL) {
-            mSection.mCurrentWave->Build();
-        }
+        
     } else {
         
         int aWaveIndex = WaveIndex();
@@ -599,19 +602,6 @@ void GameEditor::RefreshPlaybackSpeed() {
     if (mSection.mCurrentWave != NULL) {
         
         mSection.mCurrentWave->mPath.mSpeedClass = SpeedConvertSegmentToType(mSpeedClassIndex);
-        
-        
-        
-        /*
-        if (mSpeedClassIndex == 0) {  = WAVE_SPEED_EXTRA_SLOW; }
-        if (mSpeedClassIndex == 1) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_SLOW; }
-        if (mSpeedClassIndex == 2) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_MEDIUM_SLOW; }
-        if (mSpeedClassIndex == 3) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_MEDIUM; }
-        if (mSpeedClassIndex == 4) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_MEDIUM_FAST; }
-        if (mSpeedClassIndex == 5) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_FAST; }
-        if (mSpeedClassIndex == 6) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_EXTRA_FAST; }
-        if (mSpeedClassIndex == 7) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_INSANE; }
-        */
     }
 }
 
@@ -875,6 +865,11 @@ void GameEditor::Load(const char *pFile) {
     FJSON aJSON;
     aJSON.Load(pFile);
     mSection.Load(aJSON.mRoot);
+    
+    //Moved out of load procedure...
+    EnumList(LevelWaveBlueprint, aWaveBlueprint, mSection.mWaveList) {
+        aWaveBlueprint->ApplyEditorConstraints();
+    }
 }
 
 

@@ -266,6 +266,89 @@
 		0D5E89BA22512EAB0080FABD /* os_core_music_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D5E87FB22512EAA0080FABD /* os_core_music_ios.mm */; };
 		0D5E89BB22512EAB0080FABD /* OSMusicPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D5E87FF22512EAA0080FABD /* OSMusicPlayer.mm */; };
 		0D735543223337F900F975B6 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D735542223337F900F975B6 /* OpenGLES.framework */; };
+		0DC352E722533AA60026C27D /* LevelSection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3523B22533AA60026C27D /* LevelSection.cpp */; };
+		0DC352E822533AA60026C27D /* GameContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3523C22533AA60026C27D /* GameContainer.cpp */; };
+		0DC352E922533AA60026C27D /* FloatingCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3523F22533AA60026C27D /* FloatingCamera.cpp */; };
+		0DC352EA22533AA60026C27D /* PhongConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3524022533AA60026C27D /* PhongConfiguration.cpp */; };
+		0DC352EB22533AA60026C27D /* SpotLightSimpleConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3524122533AA60026C27D /* SpotLightSimpleConfiguration.cpp */; };
+		0DC352EC22533AA60026C27D /* GFXApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3524322533AA60026C27D /* GFXApp.cpp */; };
+		0DC352ED22533AA60026C27D /* Dart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3524422533AA60026C27D /* Dart.cpp */; };
+		0DC352EE22533AA60026C27D /* LevelData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3524522533AA60026C27D /* LevelData.cpp */; };
+		0DC352EF22533AA60026C27D /* GameObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3524622533AA60026C27D /* GameObject.cpp */; };
+		0DC352F022533AA60026C27D /* Constraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3524722533AA60026C27D /* Constraint.cpp */; };
+		0DC352F122533AA60026C27D /* Balloon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3524822533AA60026C27D /* Balloon.cpp */; };
+		0DC352F222533AA60026C27D /* DiffuseConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3524922533AA60026C27D /* DiffuseConfiguration.cpp */; };
+		0DC352F322533AA60026C27D /* GameLevelController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3524D22533AA60026C27D /* GameLevelController.cpp */; };
+		0DC352F422533AA60026C27D /* LevelWaveSpawnFormationNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3524F22533AA60026C27D /* LevelWaveSpawnFormationNode.cpp */; };
+		0DC352F522533AA60026C27D /* PhongLightMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3525322533AA60026C27D /* PhongLightMenu.cpp */; };
+		0DC352F622533AA60026C27D /* DiffuseLightMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3525422533AA60026C27D /* DiffuseLightMenu.cpp */; };
+		0DC352F722533AA60026C27D /* SimpleSpotLightMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3525522533AA60026C27D /* SimpleSpotLightMenu.cpp */; };
+		0DC352F822533AA60026C27D /* SoundConfigMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3525622533AA60026C27D /* SoundConfigMenu.cpp */; };
+		0DC352F922533AA60026C27D /* CameraMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3525B22533AA60026C27D /* CameraMenu.cpp */; };
+		0DC352FA22533AA60026C27D /* LevelWaveSpawnFormationTracer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3525D22533AA60026C27D /* LevelWaveSpawnFormationTracer.cpp */; };
+		0DC352FB22533AA60026C27D /* LevelWave.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3526022533AA60026C27D /* LevelWave.cpp */; };
+		0DC352FC22533AA60026C27D /* PGPathEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3526422533AA60026C27D /* PGPathEditor.cpp */; };
+		0DC352FD22533AA60026C27D /* ToolMenuHeader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3526A22533AA60026C27D /* ToolMenuHeader.cpp */; };
+		0DC352FE22533AA60026C27D /* ToolMenuSectionRow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3526D22533AA60026C27D /* ToolMenuSectionRow.cpp */; };
+		0DC352FF22533AA60026C27D /* DragableCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3526E22533AA60026C27D /* DragableCanvas.cpp */; };
+		0DC3530022533AA60026C27D /* ToolMenuSection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3527022533AA60026C27D /* ToolMenuSection.cpp */; };
+		0DC3530122533AA60026C27D /* ToolMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3527122533AA60026C27D /* ToolMenu.cpp */; };
+		0DC3530222533AA60026C27D /* ToolMenuPanelHeader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3527322533AA60026C27D /* ToolMenuPanelHeader.cpp */; };
+		0DC3530322533AA60026C27D /* ToolMenuPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3527422533AA60026C27D /* ToolMenuPanel.cpp */; };
+		0DC3530422533AA60026C27D /* PGNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3527722533AA60026C27D /* PGNode.cpp */; };
+		0DC3530522533AA60026C27D /* ScreenTransformMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3527822533AA60026C27D /* ScreenTransformMenu.cpp */; };
+		0DC3530622533AA60026C27D /* ToolMenuModalUnderlay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3527922533AA60026C27D /* ToolMenuModalUnderlay.cpp */; };
+		0DC3530722533AA60026C27D /* UILabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3527D22533AA60026C27D /* UILabel.cpp */; };
+		0DC3530822533AA60026C27D /* UIElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3527E22533AA60026C27D /* UIElement.cpp */; };
+		0DC3530922533AA60026C27D /* UISegment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3528022533AA60026C27D /* UISegment.cpp */; };
+		0DC3530A22533AA60026C27D /* UITextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3528122533AA60026C27D /* UITextBox.cpp */; };
+		0DC3530B22533AA60026C27D /* UIButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3528222533AA60026C27D /* UIButton.cpp */; };
+		0DC3530C22533AA60026C27D /* UISegmentButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3528322533AA60026C27D /* UISegmentButton.cpp */; };
+		0DC3530D22533AA60026C27D /* UICheckBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3528422533AA60026C27D /* UICheckBox.cpp */; };
+		0DC3530E22533AA60026C27D /* UIAlignmentPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3528522533AA60026C27D /* UIAlignmentPicker.cpp */; };
+		0DC3530F22533AA60026C27D /* UIAlignmentPickerButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3528622533AA60026C27D /* UIAlignmentPickerButton.cpp */; };
+		0DC3531022533AA60026C27D /* UIRoundedRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3528B22533AA60026C27D /* UIRoundedRect.cpp */; };
+		0DC3531122533AA60026C27D /* UIStepper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3528C22533AA60026C27D /* UIStepper.cpp */; };
+		0DC3531222533AA60026C27D /* UISlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3529122533AA60026C27D /* UISlider.cpp */; };
+		0DC3531322533AA60026C27D /* PGMainToolbar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3529422533AA60026C27D /* PGMainToolbar.cpp */; };
+		0DC3531422533AA60026C27D /* PGPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3529522533AA60026C27D /* PGPath.cpp */; };
+		0DC3531522533AA60026C27D /* UIImagePicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3529922533AA60026C27D /* UIImagePicker.cpp */; };
+		0DC3531622533AA60026C27D /* UIImagePickerCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3529A22533AA60026C27D /* UIImagePickerCell.cpp */; };
+		0DC3531722533AA60026C27D /* PGMainCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3529E22533AA60026C27D /* PGMainCanvas.cpp */; };
+		0DC3531822533AA60026C27D /* Util_ScreenFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3529F22533AA60026C27D /* Util_ScreenFrame.cpp */; };
+		0DC3531922533AA60026C27D /* PathEditorMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352A122533AA60026C27D /* PathEditorMenu.cpp */; };
+		0DC3531A22533AA60026C27D /* LevelWavePath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352A522533AA60026C27D /* LevelWavePath.cpp */; };
+		0DC3531B22533AA60026C27D /* Transform3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352A722533AA60026C27D /* Transform3D.cpp */; };
+		0DC3531C22533AA60026C27D /* LevelSelectorScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352A822533AA60026C27D /* LevelSelectorScreen.cpp */; };
+		0DC3531D22533AA60026C27D /* Transform2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352A922533AA60026C27D /* Transform2D.cpp */; };
+		0DC3531E22533AA60026C27D /* FormationCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352AC22533AA60026C27D /* FormationCollection.cpp */; };
+		0DC3531F22533AA60026C27D /* LevelWaveSpawnFormation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352AE22533AA60026C27D /* LevelWaveSpawnFormation.cpp */; };
+		0DC3532022533AA60026C27D /* LevelWaveSpawn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352AF22533AA60026C27D /* LevelWaveSpawn.cpp */; };
+		0DC3532122533AA60026C27D /* GameRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352B122533AA60026C27D /* GameRenderer.cpp */; };
+		0DC3532222533AA60026C27D /* LevelWaveSpawnFormationTracerNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352B422533AA60026C27D /* LevelWaveSpawnFormationTracerNode.cpp */; };
+		0DC3532322533AA60026C27D /* LightConfigurationScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352B522533AA60026C27D /* LightConfigurationScene.cpp */; };
+		0DC3532422533AA60026C27D /* EditorMenuFormationPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352B722533AA60026C27D /* EditorMenuFormationPicker.cpp */; };
+		0DC3532522533AA60026C27D /* GamePathEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352BA22533AA60026C27D /* GamePathEditor.cpp */; };
+		0DC3532622533AA60026C27D /* LevelSectionBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352BB22533AA60026C27D /* LevelSectionBlueprint.cpp */; };
+		0DC3532722533AA60026C27D /* EditorMenuFormationUtilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352BC22533AA60026C27D /* EditorMenuFormationUtilities.cpp */; };
+		0DC3532822533AA60026C27D /* EditorMenuSpawnPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352BD22533AA60026C27D /* EditorMenuSpawnPicker.cpp */; };
+		0DC3532922533AA60026C27D /* LevelWaveSpawnFormationTracerBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352C122533AA60026C27D /* LevelWaveSpawnFormationTracerBlueprint.cpp */; };
+		0DC3532A22533AA60026C27D /* LevelWaveSpawnBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352C222533AA60026C27D /* LevelWaveSpawnBlueprint.cpp */; };
+		0DC3532B22533AA60026C27D /* LevelWaveBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352C422533AA60026C27D /* LevelWaveBlueprint.cpp */; };
+		0DC3532C22533AA60026C27D /* EditorMenuWavesPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352C622533AA60026C27D /* EditorMenuWavesPicker.cpp */; };
+		0DC3532D22533AA60026C27D /* EditorMenuSpawn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352C722533AA60026C27D /* EditorMenuSpawn.cpp */; };
+		0DC3532E22533AA60026C27D /* EditorMenuFormation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352C822533AA60026C27D /* EditorMenuFormation.cpp */; };
+		0DC3532F22533AA60026C27D /* EditorMenuSections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352C922533AA60026C27D /* EditorMenuSections.cpp */; };
+		0DC3533022533AA60026C27D /* EditorMenuFlow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352CB22533AA60026C27D /* EditorMenuFlow.cpp */; };
+		0DC3533122533AA60026C27D /* GameFormationEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352CE22533AA60026C27D /* GameFormationEditor.cpp */; };
+		0DC3533222533AA60026C27D /* EditorMenuAttachmentPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352D122533AA60026C27D /* EditorMenuAttachmentPicker.cpp */; };
+		0DC3533322533AA60026C27D /* GameEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352D522533AA60026C27D /* GameEditor.cpp */; };
+		0DC3533422533AA60026C27D /* EditorMenuAttachment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352D722533AA60026C27D /* EditorMenuAttachment.cpp */; };
+		0DC3533522533AA60026C27D /* LevelWavePathBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352D922533AA60026C27D /* LevelWavePathBlueprint.cpp */; };
+		0DC3533622533AA60026C27D /* EditorMenuPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352DE22533AA60026C27D /* EditorMenuPath.cpp */; };
+		0DC3533722533AA60026C27D /* LevelWaveSpawnFormationBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352DF22533AA60026C27D /* LevelWaveSpawnFormationBlueprint.cpp */; };
+		0DC3533822533AA60026C27D /* EditorMenuPathControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352E022533AA60026C27D /* EditorMenuPathControl.cpp */; };
+		0DC3533922533AA60026C27D /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC352E622533AA60026C27D /* Game.cpp */; };
 		0DCEBEED2251B53F00EEC847 /* ShaderProgramSpriteWhite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBEBB2251B53F00EEC847 /* ShaderProgramSpriteWhite.cpp */; };
 		0DCEBEEE2251B53F00EEC847 /* ShaderProgramModelIndexed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBEBC2251B53F00EEC847 /* ShaderProgramModelIndexed.cpp */; };
 		0DCEBEEF2251B53F00EEC847 /* ShaderProgramSimpleModelIndexed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBEBF2251B53F00EEC847 /* ShaderProgramSimpleModelIndexed.cpp */; };
@@ -306,87 +389,6 @@
 		0DCEBF192251B54500EEC847 /* OpenGLViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF152251B54500EEC847 /* OpenGLViewController.mm */; };
 		0DCEBF1A2251B54500EEC847 /* PlatformGraphicsInterface.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF162251B54500EEC847 /* PlatformGraphicsInterface.mm */; };
 		0DCEBF1B2251B54500EEC847 /* OpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF182251B54500EEC847 /* OpenGLView.mm */; };
-		0DCEBFC52251B5DD00EEC847 /* LevelSection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF1D2251B5DD00EEC847 /* LevelSection.cpp */; };
-		0DCEBFC62251B5DD00EEC847 /* GameContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF1E2251B5DD00EEC847 /* GameContainer.cpp */; };
-		0DCEBFC72251B5DD00EEC847 /* FloatingCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF202251B5DD00EEC847 /* FloatingCamera.cpp */; };
-		0DCEBFC82251B5DD00EEC847 /* PhongConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF212251B5DD00EEC847 /* PhongConfiguration.cpp */; };
-		0DCEBFC92251B5DD00EEC847 /* SpotLightSimpleConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF222251B5DD00EEC847 /* SpotLightSimpleConfiguration.cpp */; };
-		0DCEBFCA2251B5DD00EEC847 /* GFXApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF242251B5DD00EEC847 /* GFXApp.cpp */; };
-		0DCEBFCB2251B5DD00EEC847 /* Dart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF252251B5DD00EEC847 /* Dart.cpp */; };
-		0DCEBFCC2251B5DD00EEC847 /* LevelData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF262251B5DD00EEC847 /* LevelData.cpp */; };
-		0DCEBFCD2251B5DD00EEC847 /* GameObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF272251B5DD00EEC847 /* GameObject.cpp */; };
-		0DCEBFCE2251B5DD00EEC847 /* Constraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF282251B5DD00EEC847 /* Constraint.cpp */; };
-		0DCEBFCF2251B5DD00EEC847 /* Balloon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF292251B5DD00EEC847 /* Balloon.cpp */; };
-		0DCEBFD02251B5DD00EEC847 /* DiffuseConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF2A2251B5DD00EEC847 /* DiffuseConfiguration.cpp */; };
-		0DCEBFD12251B5DD00EEC847 /* GameLevelController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF2E2251B5DD00EEC847 /* GameLevelController.cpp */; };
-		0DCEBFD22251B5DD00EEC847 /* LevelWaveSpawnFormationNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF302251B5DD00EEC847 /* LevelWaveSpawnFormationNode.cpp */; };
-		0DCEBFD32251B5DD00EEC847 /* PhongLightMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF332251B5DD00EEC847 /* PhongLightMenu.cpp */; };
-		0DCEBFD42251B5DD00EEC847 /* DiffuseLightMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF342251B5DD00EEC847 /* DiffuseLightMenu.cpp */; };
-		0DCEBFD52251B5DD00EEC847 /* SimpleSpotLightMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF352251B5DD00EEC847 /* SimpleSpotLightMenu.cpp */; };
-		0DCEBFD62251B5DD00EEC847 /* SoundConfigMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF362251B5DD00EEC847 /* SoundConfigMenu.cpp */; };
-		0DCEBFD72251B5DD00EEC847 /* CameraMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF3B2251B5DD00EEC847 /* CameraMenu.cpp */; };
-		0DCEBFD82251B5DD00EEC847 /* LevelWaveSpawnFormationTracer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF3D2251B5DD00EEC847 /* LevelWaveSpawnFormationTracer.cpp */; };
-		0DCEBFD92251B5DD00EEC847 /* LevelWave.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF402251B5DD00EEC847 /* LevelWave.cpp */; };
-		0DCEBFDA2251B5DD00EEC847 /* PGPathEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF442251B5DD00EEC847 /* PGPathEditor.cpp */; };
-		0DCEBFDB2251B5DD00EEC847 /* ToolMenuHeader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF4A2251B5DD00EEC847 /* ToolMenuHeader.cpp */; };
-		0DCEBFDC2251B5DD00EEC847 /* ToolMenuSectionRow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF4D2251B5DD00EEC847 /* ToolMenuSectionRow.cpp */; };
-		0DCEBFDD2251B5DD00EEC847 /* DragableCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF4E2251B5DD00EEC847 /* DragableCanvas.cpp */; };
-		0DCEBFDE2251B5DD00EEC847 /* ToolMenuSection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF502251B5DD00EEC847 /* ToolMenuSection.cpp */; };
-		0DCEBFDF2251B5DD00EEC847 /* ToolMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF512251B5DD00EEC847 /* ToolMenu.cpp */; };
-		0DCEBFE02251B5DD00EEC847 /* ToolMenuPanelHeader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF532251B5DD00EEC847 /* ToolMenuPanelHeader.cpp */; };
-		0DCEBFE12251B5DD00EEC847 /* ToolMenuPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF542251B5DD00EEC847 /* ToolMenuPanel.cpp */; };
-		0DCEBFE22251B5DD00EEC847 /* PGNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF572251B5DD00EEC847 /* PGNode.cpp */; };
-		0DCEBFE32251B5DD00EEC847 /* ScreenTransformMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF582251B5DD00EEC847 /* ScreenTransformMenu.cpp */; };
-		0DCEBFE42251B5DD00EEC847 /* ToolMenuModalUnderlay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF592251B5DD00EEC847 /* ToolMenuModalUnderlay.cpp */; };
-		0DCEBFE52251B5DD00EEC847 /* UILabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF5D2251B5DD00EEC847 /* UILabel.cpp */; };
-		0DCEBFE62251B5DD00EEC847 /* UIElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF5E2251B5DD00EEC847 /* UIElement.cpp */; };
-		0DCEBFE72251B5DD00EEC847 /* UISegment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF602251B5DD00EEC847 /* UISegment.cpp */; };
-		0DCEBFE82251B5DD00EEC847 /* UITextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF612251B5DD00EEC847 /* UITextBox.cpp */; };
-		0DCEBFE92251B5DD00EEC847 /* UIButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF622251B5DD00EEC847 /* UIButton.cpp */; };
-		0DCEBFEA2251B5DD00EEC847 /* UISegmentButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF632251B5DD00EEC847 /* UISegmentButton.cpp */; };
-		0DCEBFEB2251B5DD00EEC847 /* UICheckBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF642251B5DD00EEC847 /* UICheckBox.cpp */; };
-		0DCEBFEC2251B5DD00EEC847 /* UIAlignmentPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF652251B5DD00EEC847 /* UIAlignmentPicker.cpp */; };
-		0DCEBFED2251B5DD00EEC847 /* UIAlignmentPickerButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF662251B5DD00EEC847 /* UIAlignmentPickerButton.cpp */; };
-		0DCEBFEE2251B5DD00EEC847 /* UIRoundedRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF6B2251B5DD00EEC847 /* UIRoundedRect.cpp */; };
-		0DCEBFEF2251B5DD00EEC847 /* UIStepper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF6C2251B5DD00EEC847 /* UIStepper.cpp */; };
-		0DCEBFF02251B5DD00EEC847 /* UISlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF712251B5DD00EEC847 /* UISlider.cpp */; };
-		0DCEBFF12251B5DD00EEC847 /* PGMainToolbar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF742251B5DD00EEC847 /* PGMainToolbar.cpp */; };
-		0DCEBFF22251B5DD00EEC847 /* PGPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF752251B5DD00EEC847 /* PGPath.cpp */; };
-		0DCEBFF32251B5DD00EEC847 /* UIImagePicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF792251B5DD00EEC847 /* UIImagePicker.cpp */; };
-		0DCEBFF42251B5DD00EEC847 /* UIImagePickerCell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF7A2251B5DD00EEC847 /* UIImagePickerCell.cpp */; };
-		0DCEBFF52251B5DD00EEC847 /* PGMainCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF7E2251B5DD00EEC847 /* PGMainCanvas.cpp */; };
-		0DCEBFF62251B5DD00EEC847 /* Util_ScreenFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF7F2251B5DD00EEC847 /* Util_ScreenFrame.cpp */; };
-		0DCEBFF72251B5DD00EEC847 /* PathEditorMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF812251B5DD00EEC847 /* PathEditorMenu.cpp */; };
-		0DCEBFF82251B5DD00EEC847 /* LevelWavePath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF852251B5DD00EEC847 /* LevelWavePath.cpp */; };
-		0DCEBFF92251B5DD00EEC847 /* Transform3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF872251B5DD00EEC847 /* Transform3D.cpp */; };
-		0DCEBFFA2251B5DD00EEC847 /* LevelSelectorScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF882251B5DD00EEC847 /* LevelSelectorScreen.cpp */; };
-		0DCEBFFB2251B5DD00EEC847 /* Transform2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF892251B5DD00EEC847 /* Transform2D.cpp */; };
-		0DCEBFFC2251B5DD00EEC847 /* LevelWaveSpawnFormation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF8D2251B5DD00EEC847 /* LevelWaveSpawnFormation.cpp */; };
-		0DCEBFFD2251B5DD00EEC847 /* LevelWaveSpawn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF8E2251B5DD00EEC847 /* LevelWaveSpawn.cpp */; };
-		0DCEBFFE2251B5DD00EEC847 /* GameRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF902251B5DD00EEC847 /* GameRenderer.cpp */; };
-		0DCEBFFF2251B5DD00EEC847 /* LightConfigurationScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF932251B5DD00EEC847 /* LightConfigurationScene.cpp */; };
-		0DCEC0002251B5DD00EEC847 /* EditorMenuFormationPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF952251B5DD00EEC847 /* EditorMenuFormationPicker.cpp */; };
-		0DCEC0012251B5DD00EEC847 /* GamePathEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF982251B5DD00EEC847 /* GamePathEditor.cpp */; };
-		0DCEC0022251B5DD00EEC847 /* LevelSectionBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF992251B5DD00EEC847 /* LevelSectionBlueprint.cpp */; };
-		0DCEC0032251B5DD00EEC847 /* EditorMenuFormationUtilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF9A2251B5DD00EEC847 /* EditorMenuFormationUtilities.cpp */; };
-		0DCEC0042251B5DD00EEC847 /* EditorMenuSpawnPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF9B2251B5DD00EEC847 /* EditorMenuSpawnPicker.cpp */; };
-		0DCEC0052251B5DD00EEC847 /* LevelWaveSpawnFormationTracerBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBF9F2251B5DD00EEC847 /* LevelWaveSpawnFormationTracerBlueprint.cpp */; };
-		0DCEC0062251B5DD00EEC847 /* LevelWaveSpawnBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBFA02251B5DD00EEC847 /* LevelWaveSpawnBlueprint.cpp */; };
-		0DCEC0072251B5DD00EEC847 /* LevelWaveBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBFA22251B5DD00EEC847 /* LevelWaveBlueprint.cpp */; };
-		0DCEC0082251B5DD00EEC847 /* EditorMenuWavesPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBFA42251B5DD00EEC847 /* EditorMenuWavesPicker.cpp */; };
-		0DCEC0092251B5DD00EEC847 /* EditorMenuSpawn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBFA52251B5DD00EEC847 /* EditorMenuSpawn.cpp */; };
-		0DCEC00A2251B5DD00EEC847 /* EditorMenuFormation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBFA62251B5DD00EEC847 /* EditorMenuFormation.cpp */; };
-		0DCEC00B2251B5DD00EEC847 /* EditorMenuSections.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBFA72251B5DD00EEC847 /* EditorMenuSections.cpp */; };
-		0DCEC00C2251B5DD00EEC847 /* EditorMenuFlow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBFA92251B5DD00EEC847 /* EditorMenuFlow.cpp */; };
-		0DCEC00D2251B5DD00EEC847 /* GameFormationEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBFAC2251B5DD00EEC847 /* GameFormationEditor.cpp */; };
-		0DCEC00E2251B5DD00EEC847 /* EditorMenuAttachmentPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBFAF2251B5DD00EEC847 /* EditorMenuAttachmentPicker.cpp */; };
-		0DCEC00F2251B5DD00EEC847 /* GameEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBFB32251B5DD00EEC847 /* GameEditor.cpp */; };
-		0DCEC0102251B5DD00EEC847 /* EditorMenuAttachment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBFB52251B5DD00EEC847 /* EditorMenuAttachment.cpp */; };
-		0DCEC0112251B5DD00EEC847 /* LevelWavePathBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBFB72251B5DD00EEC847 /* LevelWavePathBlueprint.cpp */; };
-		0DCEC0122251B5DD00EEC847 /* EditorMenuPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBFBC2251B5DD00EEC847 /* EditorMenuPath.cpp */; };
-		0DCEC0132251B5DD00EEC847 /* LevelWaveSpawnFormationBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBFBD2251B5DD00EEC847 /* LevelWaveSpawnFormationBlueprint.cpp */; };
-		0DCEC0142251B5DD00EEC847 /* EditorMenuPathControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBFBE2251B5DD00EEC847 /* EditorMenuPathControl.cpp */; };
-		0DCEC0152251B5DD00EEC847 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEBFC42251B5DD00EEC847 /* Game.cpp */; };
 		E1704FEC222232B5000C5127 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1704FEB222232B5000C5127 /* Assets.xcassets */; };
 		E1704FEF222232B5000C5127 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1704FED222232B5000C5127 /* LaunchScreen.storyboard */; };
 		E1705301222234C8000C5127 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E17052FD222234C8000C5127 /* AVFoundation.framework */; };
@@ -730,6 +732,172 @@
 		0D5E87FE22512EAA0080FABD /* os_core_sound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os_core_sound.h; sourceTree = "<group>"; };
 		0D5E87FF22512EAA0080FABD /* OSMusicPlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OSMusicPlayer.mm; sourceTree = "<group>"; };
 		0D735542223337F900F975B6 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		0DC3523B22533AA60026C27D /* LevelSection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelSection.cpp; sourceTree = "<group>"; };
+		0DC3523C22533AA60026C27D /* GameContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameContainer.cpp; sourceTree = "<group>"; };
+		0DC3523D22533AA60026C27D /* LightConfigurationScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LightConfigurationScene.hpp; sourceTree = "<group>"; };
+		0DC3523E22533AA60026C27D /* LevelWaveSpawnFormationTracerNode.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWaveSpawnFormationTracerNode.hpp; sourceTree = "<group>"; };
+		0DC3523F22533AA60026C27D /* FloatingCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FloatingCamera.cpp; sourceTree = "<group>"; };
+		0DC3524022533AA60026C27D /* PhongConfiguration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PhongConfiguration.cpp; sourceTree = "<group>"; };
+		0DC3524122533AA60026C27D /* SpotLightSimpleConfiguration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpotLightSimpleConfiguration.cpp; sourceTree = "<group>"; };
+		0DC3524222533AA60026C27D /* Game.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Game.hpp; sourceTree = "<group>"; };
+		0DC3524322533AA60026C27D /* GFXApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GFXApp.cpp; sourceTree = "<group>"; };
+		0DC3524422533AA60026C27D /* Dart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dart.cpp; sourceTree = "<group>"; };
+		0DC3524522533AA60026C27D /* LevelData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelData.cpp; sourceTree = "<group>"; };
+		0DC3524622533AA60026C27D /* GameObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameObject.cpp; sourceTree = "<group>"; };
+		0DC3524722533AA60026C27D /* Constraint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Constraint.cpp; sourceTree = "<group>"; };
+		0DC3524822533AA60026C27D /* Balloon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Balloon.cpp; sourceTree = "<group>"; };
+		0DC3524922533AA60026C27D /* DiffuseConfiguration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DiffuseConfiguration.cpp; sourceTree = "<group>"; };
+		0DC3524A22533AA60026C27D /* LevelWavePath.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWavePath.hpp; sourceTree = "<group>"; };
+		0DC3524B22533AA60026C27D /* Transform3D.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Transform3D.hpp; sourceTree = "<group>"; };
+		0DC3524C22533AA60026C27D /* LevelSelectorScreen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelSelectorScreen.hpp; sourceTree = "<group>"; };
+		0DC3524D22533AA60026C27D /* GameLevelController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameLevelController.cpp; sourceTree = "<group>"; };
+		0DC3524E22533AA60026C27D /* Transform2D.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Transform2D.hpp; sourceTree = "<group>"; };
+		0DC3524F22533AA60026C27D /* LevelWaveSpawnFormationNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWaveSpawnFormationNode.cpp; sourceTree = "<group>"; };
+		0DC3525022533AA60026C27D /* LevelWaveSpawnFormation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWaveSpawnFormation.hpp; sourceTree = "<group>"; };
+		0DC3525122533AA60026C27D /* FormationCollection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FormationCollection.hpp; sourceTree = "<group>"; };
+		0DC3525322533AA60026C27D /* PhongLightMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PhongLightMenu.cpp; sourceTree = "<group>"; };
+		0DC3525422533AA60026C27D /* DiffuseLightMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DiffuseLightMenu.cpp; sourceTree = "<group>"; };
+		0DC3525522533AA60026C27D /* SimpleSpotLightMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleSpotLightMenu.cpp; sourceTree = "<group>"; };
+		0DC3525622533AA60026C27D /* SoundConfigMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundConfigMenu.cpp; sourceTree = "<group>"; };
+		0DC3525722533AA60026C27D /* CameraMenu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CameraMenu.hpp; sourceTree = "<group>"; };
+		0DC3525822533AA60026C27D /* DiffuseLightMenu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DiffuseLightMenu.hpp; sourceTree = "<group>"; };
+		0DC3525922533AA60026C27D /* SimpleSpotLightMenu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SimpleSpotLightMenu.hpp; sourceTree = "<group>"; };
+		0DC3525A22533AA60026C27D /* SoundConfigMenu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SoundConfigMenu.hpp; sourceTree = "<group>"; };
+		0DC3525B22533AA60026C27D /* CameraMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CameraMenu.cpp; sourceTree = "<group>"; };
+		0DC3525C22533AA60026C27D /* PhongLightMenu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PhongLightMenu.hpp; sourceTree = "<group>"; };
+		0DC3525D22533AA60026C27D /* LevelWaveSpawnFormationTracer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWaveSpawnFormationTracer.cpp; sourceTree = "<group>"; };
+		0DC3525E22533AA60026C27D /* GameRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameRenderer.hpp; sourceTree = "<group>"; };
+		0DC3525F22533AA60026C27D /* LevelWaveSpawn.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWaveSpawn.hpp; sourceTree = "<group>"; };
+		0DC3526022533AA60026C27D /* LevelWave.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWave.cpp; sourceTree = "<group>"; };
+		0DC3526122533AA60026C27D /* LevelData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelData.hpp; sourceTree = "<group>"; };
+		0DC3526222533AA60026C27D /* GameObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameObject.hpp; sourceTree = "<group>"; };
+		0DC3526422533AA60026C27D /* PGPathEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PGPathEditor.cpp; sourceTree = "<group>"; };
+		0DC3526522533AA60026C27D /* PathEditorMenu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PathEditorMenu.hpp; sourceTree = "<group>"; };
+		0DC3526722533AA60026C27D /* ToolMenuPanelHeader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ToolMenuPanelHeader.hpp; sourceTree = "<group>"; };
+		0DC3526822533AA60026C27D /* ToolMenuPanel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ToolMenuPanel.hpp; sourceTree = "<group>"; };
+		0DC3526922533AA60026C27D /* DragableCanvas.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DragableCanvas.hpp; sourceTree = "<group>"; };
+		0DC3526A22533AA60026C27D /* ToolMenuHeader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ToolMenuHeader.cpp; sourceTree = "<group>"; };
+		0DC3526B22533AA60026C27D /* ToolMenuSection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ToolMenuSection.hpp; sourceTree = "<group>"; };
+		0DC3526C22533AA60026C27D /* ToolMenu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ToolMenu.hpp; sourceTree = "<group>"; };
+		0DC3526D22533AA60026C27D /* ToolMenuSectionRow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ToolMenuSectionRow.cpp; sourceTree = "<group>"; };
+		0DC3526E22533AA60026C27D /* DragableCanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DragableCanvas.cpp; sourceTree = "<group>"; };
+		0DC3526F22533AA60026C27D /* ToolMenuHeader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ToolMenuHeader.hpp; sourceTree = "<group>"; };
+		0DC3527022533AA60026C27D /* ToolMenuSection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ToolMenuSection.cpp; sourceTree = "<group>"; };
+		0DC3527122533AA60026C27D /* ToolMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ToolMenu.cpp; sourceTree = "<group>"; };
+		0DC3527222533AA60026C27D /* ToolMenuSectionRow.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ToolMenuSectionRow.hpp; sourceTree = "<group>"; };
+		0DC3527322533AA60026C27D /* ToolMenuPanelHeader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ToolMenuPanelHeader.cpp; sourceTree = "<group>"; };
+		0DC3527422533AA60026C27D /* ToolMenuPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ToolMenuPanel.cpp; sourceTree = "<group>"; };
+		0DC3527522533AA60026C27D /* PGMainToolbar.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PGMainToolbar.hpp; sourceTree = "<group>"; };
+		0DC3527622533AA60026C27D /* PGPath.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PGPath.hpp; sourceTree = "<group>"; };
+		0DC3527722533AA60026C27D /* PGNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PGNode.cpp; sourceTree = "<group>"; };
+		0DC3527822533AA60026C27D /* ScreenTransformMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScreenTransformMenu.cpp; sourceTree = "<group>"; };
+		0DC3527922533AA60026C27D /* ToolMenuModalUnderlay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ToolMenuModalUnderlay.cpp; sourceTree = "<group>"; };
+		0DC3527A22533AA60026C27D /* PGMainCanvas.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PGMainCanvas.hpp; sourceTree = "<group>"; };
+		0DC3527C22533AA60026C27D /* UIStepper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UIStepper.hpp; sourceTree = "<group>"; };
+		0DC3527D22533AA60026C27D /* UILabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabel.cpp; sourceTree = "<group>"; };
+		0DC3527E22533AA60026C27D /* UIElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIElement.cpp; sourceTree = "<group>"; };
+		0DC3527F22533AA60026C27D /* UISlider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UISlider.hpp; sourceTree = "<group>"; };
+		0DC3528022533AA60026C27D /* UISegment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UISegment.cpp; sourceTree = "<group>"; };
+		0DC3528122533AA60026C27D /* UITextBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITextBox.cpp; sourceTree = "<group>"; };
+		0DC3528222533AA60026C27D /* UIButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIButton.cpp; sourceTree = "<group>"; };
+		0DC3528322533AA60026C27D /* UISegmentButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UISegmentButton.cpp; sourceTree = "<group>"; };
+		0DC3528422533AA60026C27D /* UICheckBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UICheckBox.cpp; sourceTree = "<group>"; };
+		0DC3528522533AA60026C27D /* UIAlignmentPicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIAlignmentPicker.cpp; sourceTree = "<group>"; };
+		0DC3528622533AA60026C27D /* UIAlignmentPickerButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIAlignmentPickerButton.cpp; sourceTree = "<group>"; };
+		0DC3528722533AA60026C27D /* UIRoundedRect.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UIRoundedRect.hpp; sourceTree = "<group>"; };
+		0DC3528822533AA60026C27D /* UICheckBox.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UICheckBox.hpp; sourceTree = "<group>"; };
+		0DC3528922533AA60026C27D /* UIAlignmentPicker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UIAlignmentPicker.hpp; sourceTree = "<group>"; };
+		0DC3528A22533AA60026C27D /* UIAlignmentPickerButton.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UIAlignmentPickerButton.hpp; sourceTree = "<group>"; };
+		0DC3528B22533AA60026C27D /* UIRoundedRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIRoundedRect.cpp; sourceTree = "<group>"; };
+		0DC3528C22533AA60026C27D /* UIStepper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIStepper.cpp; sourceTree = "<group>"; };
+		0DC3528D22533AA60026C27D /* UILabel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UILabel.hpp; sourceTree = "<group>"; };
+		0DC3528E22533AA60026C27D /* UIElement.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UIElement.hpp; sourceTree = "<group>"; };
+		0DC3528F22533AA60026C27D /* UISegment.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UISegment.hpp; sourceTree = "<group>"; };
+		0DC3529022533AA60026C27D /* UITextBox.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UITextBox.hpp; sourceTree = "<group>"; };
+		0DC3529122533AA60026C27D /* UISlider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UISlider.cpp; sourceTree = "<group>"; };
+		0DC3529222533AA60026C27D /* UIButton.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UIButton.hpp; sourceTree = "<group>"; };
+		0DC3529322533AA60026C27D /* UISegmentButton.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UISegmentButton.hpp; sourceTree = "<group>"; };
+		0DC3529422533AA60026C27D /* PGMainToolbar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PGMainToolbar.cpp; sourceTree = "<group>"; };
+		0DC3529522533AA60026C27D /* PGPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PGPath.cpp; sourceTree = "<group>"; };
+		0DC3529722533AA60026C27D /* UIImagePickerCell.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UIImagePickerCell.hpp; sourceTree = "<group>"; };
+		0DC3529822533AA60026C27D /* UIImagePicker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UIImagePicker.hpp; sourceTree = "<group>"; };
+		0DC3529922533AA60026C27D /* UIImagePicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIImagePicker.cpp; sourceTree = "<group>"; };
+		0DC3529A22533AA60026C27D /* UIImagePickerCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIImagePickerCell.cpp; sourceTree = "<group>"; };
+		0DC3529B22533AA60026C27D /* PGNode.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PGNode.hpp; sourceTree = "<group>"; };
+		0DC3529C22533AA60026C27D /* ScreenTransformMenu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ScreenTransformMenu.hpp; sourceTree = "<group>"; };
+		0DC3529D22533AA60026C27D /* ToolMenuModalUnderlay.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ToolMenuModalUnderlay.hpp; sourceTree = "<group>"; };
+		0DC3529E22533AA60026C27D /* PGMainCanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PGMainCanvas.cpp; sourceTree = "<group>"; };
+		0DC3529F22533AA60026C27D /* Util_ScreenFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Util_ScreenFrame.cpp; sourceTree = "<group>"; };
+		0DC352A022533AA60026C27D /* PGPathEditor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PGPathEditor.hpp; sourceTree = "<group>"; };
+		0DC352A122533AA60026C27D /* PathEditorMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PathEditorMenu.cpp; sourceTree = "<group>"; };
+		0DC352A222533AA60026C27D /* Util_ScreenFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util_ScreenFrame.h; sourceTree = "<group>"; };
+		0DC352A322533AA60026C27D /* Balloon.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Balloon.hpp; sourceTree = "<group>"; };
+		0DC352A422533AA60026C27D /* Constraint.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Constraint.hpp; sourceTree = "<group>"; };
+		0DC352A522533AA60026C27D /* LevelWavePath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWavePath.cpp; sourceTree = "<group>"; };
+		0DC352A622533AA60026C27D /* DiffuseConfiguration.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DiffuseConfiguration.hpp; sourceTree = "<group>"; };
+		0DC352A722533AA60026C27D /* Transform3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Transform3D.cpp; sourceTree = "<group>"; };
+		0DC352A822533AA60026C27D /* LevelSelectorScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelSelectorScreen.cpp; sourceTree = "<group>"; };
+		0DC352A922533AA60026C27D /* Transform2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Transform2D.cpp; sourceTree = "<group>"; };
+		0DC352AA22533AA60026C27D /* GameLevelController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameLevelController.hpp; sourceTree = "<group>"; };
+		0DC352AB22533AA60026C27D /* LevelWaveSpawnFormationNode.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWaveSpawnFormationNode.hpp; sourceTree = "<group>"; };
+		0DC352AC22533AA60026C27D /* FormationCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FormationCollection.cpp; sourceTree = "<group>"; };
+		0DC352AD22533AA60026C27D /* LevelWaveSpawnFormationTracer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWaveSpawnFormationTracer.hpp; sourceTree = "<group>"; };
+		0DC352AE22533AA60026C27D /* LevelWaveSpawnFormation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWaveSpawnFormation.cpp; sourceTree = "<group>"; };
+		0DC352AF22533AA60026C27D /* LevelWaveSpawn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWaveSpawn.cpp; sourceTree = "<group>"; };
+		0DC352B022533AA60026C27D /* LevelWave.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWave.hpp; sourceTree = "<group>"; };
+		0DC352B122533AA60026C27D /* GameRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameRenderer.cpp; sourceTree = "<group>"; };
+		0DC352B222533AA60026C27D /* LevelSection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelSection.hpp; sourceTree = "<group>"; };
+		0DC352B322533AA60026C27D /* GameContainer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameContainer.hpp; sourceTree = "<group>"; };
+		0DC352B422533AA60026C27D /* LevelWaveSpawnFormationTracerNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWaveSpawnFormationTracerNode.cpp; sourceTree = "<group>"; };
+		0DC352B522533AA60026C27D /* LightConfigurationScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LightConfigurationScene.cpp; sourceTree = "<group>"; };
+		0DC352B722533AA60026C27D /* EditorMenuFormationPicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuFormationPicker.cpp; sourceTree = "<group>"; };
+		0DC352B822533AA60026C27D /* EditorMenuAttachment.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuAttachment.hpp; sourceTree = "<group>"; };
+		0DC352B922533AA60026C27D /* LevelWavePathBlueprint.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWavePathBlueprint.hpp; sourceTree = "<group>"; };
+		0DC352BA22533AA60026C27D /* GamePathEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GamePathEditor.cpp; sourceTree = "<group>"; };
+		0DC352BB22533AA60026C27D /* LevelSectionBlueprint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelSectionBlueprint.cpp; sourceTree = "<group>"; };
+		0DC352BC22533AA60026C27D /* EditorMenuFormationUtilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuFormationUtilities.cpp; sourceTree = "<group>"; };
+		0DC352BD22533AA60026C27D /* EditorMenuSpawnPicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuSpawnPicker.cpp; sourceTree = "<group>"; };
+		0DC352BE22533AA60026C27D /* EditorMenuPath.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuPath.hpp; sourceTree = "<group>"; };
+		0DC352BF22533AA60026C27D /* EditorMenuPathControl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuPathControl.hpp; sourceTree = "<group>"; };
+		0DC352C022533AA60026C27D /* LevelWaveSpawnFormationBlueprint.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWaveSpawnFormationBlueprint.hpp; sourceTree = "<group>"; };
+		0DC352C122533AA60026C27D /* LevelWaveSpawnFormationTracerBlueprint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWaveSpawnFormationTracerBlueprint.cpp; sourceTree = "<group>"; };
+		0DC352C222533AA60026C27D /* LevelWaveSpawnBlueprint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWaveSpawnBlueprint.cpp; sourceTree = "<group>"; };
+		0DC352C322533AA60026C27D /* GameFormationEditor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameFormationEditor.hpp; sourceTree = "<group>"; };
+		0DC352C422533AA60026C27D /* LevelWaveBlueprint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWaveBlueprint.cpp; sourceTree = "<group>"; };
+		0DC352C522533AA60026C27D /* EditorMenuAttachmentPicker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuAttachmentPicker.hpp; sourceTree = "<group>"; };
+		0DC352C622533AA60026C27D /* EditorMenuWavesPicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuWavesPicker.cpp; sourceTree = "<group>"; };
+		0DC352C722533AA60026C27D /* EditorMenuSpawn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuSpawn.cpp; sourceTree = "<group>"; };
+		0DC352C822533AA60026C27D /* EditorMenuFormation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuFormation.cpp; sourceTree = "<group>"; };
+		0DC352C922533AA60026C27D /* EditorMenuSections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuSections.cpp; sourceTree = "<group>"; };
+		0DC352CA22533AA60026C27D /* GameEditor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameEditor.hpp; sourceTree = "<group>"; };
+		0DC352CB22533AA60026C27D /* EditorMenuFlow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuFlow.cpp; sourceTree = "<group>"; };
+		0DC352CC22533AA60026C27D /* LevelWaveSpawnFormationTracerBlueprint.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWaveSpawnFormationTracerBlueprint.hpp; sourceTree = "<group>"; };
+		0DC352CD22533AA60026C27D /* LevelWaveSpawnBlueprint.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWaveSpawnBlueprint.hpp; sourceTree = "<group>"; };
+		0DC352CE22533AA60026C27D /* GameFormationEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameFormationEditor.cpp; sourceTree = "<group>"; };
+		0DC352CF22533AA60026C27D /* LevelWaveBlueprint.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWaveBlueprint.hpp; sourceTree = "<group>"; };
+		0DC352D022533AA60026C27D /* EditorMenuWavesPicker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuWavesPicker.hpp; sourceTree = "<group>"; };
+		0DC352D122533AA60026C27D /* EditorMenuAttachmentPicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuAttachmentPicker.cpp; sourceTree = "<group>"; };
+		0DC352D222533AA60026C27D /* EditorMenuSpawn.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuSpawn.hpp; sourceTree = "<group>"; };
+		0DC352D322533AA60026C27D /* EditorMenuFormation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuFormation.hpp; sourceTree = "<group>"; };
+		0DC352D422533AA60026C27D /* EditorMenuSections.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuSections.hpp; sourceTree = "<group>"; };
+		0DC352D522533AA60026C27D /* GameEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameEditor.cpp; sourceTree = "<group>"; };
+		0DC352D622533AA60026C27D /* EditorMenuFlow.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuFlow.hpp; sourceTree = "<group>"; };
+		0DC352D722533AA60026C27D /* EditorMenuAttachment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuAttachment.cpp; sourceTree = "<group>"; };
+		0DC352D822533AA60026C27D /* EditorMenuFormationPicker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuFormationPicker.hpp; sourceTree = "<group>"; };
+		0DC352D922533AA60026C27D /* LevelWavePathBlueprint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWavePathBlueprint.cpp; sourceTree = "<group>"; };
+		0DC352DA22533AA60026C27D /* GamePathEditor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GamePathEditor.hpp; sourceTree = "<group>"; };
+		0DC352DB22533AA60026C27D /* LevelSectionBlueprint.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelSectionBlueprint.hpp; sourceTree = "<group>"; };
+		0DC352DC22533AA60026C27D /* EditorMenuFormationUtilities.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuFormationUtilities.hpp; sourceTree = "<group>"; };
+		0DC352DD22533AA60026C27D /* EditorMenuSpawnPicker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuSpawnPicker.hpp; sourceTree = "<group>"; };
+		0DC352DE22533AA60026C27D /* EditorMenuPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuPath.cpp; sourceTree = "<group>"; };
+		0DC352DF22533AA60026C27D /* LevelWaveSpawnFormationBlueprint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWaveSpawnFormationBlueprint.cpp; sourceTree = "<group>"; };
+		0DC352E022533AA60026C27D /* EditorMenuPathControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuPathControl.cpp; sourceTree = "<group>"; };
+		0DC352E122533AA60026C27D /* FloatingCamera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FloatingCamera.hpp; sourceTree = "<group>"; };
+		0DC352E222533AA60026C27D /* PhongConfiguration.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PhongConfiguration.hpp; sourceTree = "<group>"; };
+		0DC352E322533AA60026C27D /* SpotLightSimpleConfiguration.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SpotLightSimpleConfiguration.hpp; sourceTree = "<group>"; };
+		0DC352E422533AA60026C27D /* Dart.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dart.hpp; sourceTree = "<group>"; };
+		0DC352E522533AA60026C27D /* GFXApp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GFXApp.hpp; sourceTree = "<group>"; };
+		0DC352E622533AA60026C27D /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
 		0DCEBEB82251B53F00EEC847 /* ShaderProgramModelIndexedLightedDiffuse.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShaderProgramModelIndexedLightedDiffuse.hpp; sourceTree = "<group>"; };
 		0DCEBEB92251B53F00EEC847 /* ShaderProgramSprite.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShaderProgramSprite.hpp; sourceTree = "<group>"; };
 		0DCEBEBA2251B53F00EEC847 /* ShaderProgramSimpleModel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShaderProgramSimpleModel.hpp; sourceTree = "<group>"; };
@@ -788,168 +956,6 @@
 		0DCEBF162251B54500EEC847 /* PlatformGraphicsInterface.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PlatformGraphicsInterface.mm; sourceTree = "<group>"; };
 		0DCEBF172251B54500EEC847 /* PlatformGraphicsInterface.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PlatformGraphicsInterface.hpp; sourceTree = "<group>"; };
 		0DCEBF182251B54500EEC847 /* OpenGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenGLView.mm; sourceTree = "<group>"; };
-		0DCEBF1D2251B5DD00EEC847 /* LevelSection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelSection.cpp; sourceTree = "<group>"; };
-		0DCEBF1E2251B5DD00EEC847 /* GameContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameContainer.cpp; sourceTree = "<group>"; };
-		0DCEBF1F2251B5DD00EEC847 /* LightConfigurationScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LightConfigurationScene.hpp; sourceTree = "<group>"; };
-		0DCEBF202251B5DD00EEC847 /* FloatingCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FloatingCamera.cpp; sourceTree = "<group>"; };
-		0DCEBF212251B5DD00EEC847 /* PhongConfiguration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PhongConfiguration.cpp; sourceTree = "<group>"; };
-		0DCEBF222251B5DD00EEC847 /* SpotLightSimpleConfiguration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpotLightSimpleConfiguration.cpp; sourceTree = "<group>"; };
-		0DCEBF232251B5DD00EEC847 /* Game.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Game.hpp; sourceTree = "<group>"; };
-		0DCEBF242251B5DD00EEC847 /* GFXApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GFXApp.cpp; sourceTree = "<group>"; };
-		0DCEBF252251B5DD00EEC847 /* Dart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dart.cpp; sourceTree = "<group>"; };
-		0DCEBF262251B5DD00EEC847 /* LevelData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelData.cpp; sourceTree = "<group>"; };
-		0DCEBF272251B5DD00EEC847 /* GameObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameObject.cpp; sourceTree = "<group>"; };
-		0DCEBF282251B5DD00EEC847 /* Constraint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Constraint.cpp; sourceTree = "<group>"; };
-		0DCEBF292251B5DD00EEC847 /* Balloon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Balloon.cpp; sourceTree = "<group>"; };
-		0DCEBF2A2251B5DD00EEC847 /* DiffuseConfiguration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DiffuseConfiguration.cpp; sourceTree = "<group>"; };
-		0DCEBF2B2251B5DD00EEC847 /* LevelWavePath.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWavePath.hpp; sourceTree = "<group>"; };
-		0DCEBF2C2251B5DD00EEC847 /* Transform3D.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Transform3D.hpp; sourceTree = "<group>"; };
-		0DCEBF2D2251B5DD00EEC847 /* LevelSelectorScreen.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelSelectorScreen.hpp; sourceTree = "<group>"; };
-		0DCEBF2E2251B5DD00EEC847 /* GameLevelController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameLevelController.cpp; sourceTree = "<group>"; };
-		0DCEBF2F2251B5DD00EEC847 /* Transform2D.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Transform2D.hpp; sourceTree = "<group>"; };
-		0DCEBF302251B5DD00EEC847 /* LevelWaveSpawnFormationNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWaveSpawnFormationNode.cpp; sourceTree = "<group>"; };
-		0DCEBF312251B5DD00EEC847 /* LevelWaveSpawnFormation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWaveSpawnFormation.hpp; sourceTree = "<group>"; };
-		0DCEBF332251B5DD00EEC847 /* PhongLightMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PhongLightMenu.cpp; sourceTree = "<group>"; };
-		0DCEBF342251B5DD00EEC847 /* DiffuseLightMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DiffuseLightMenu.cpp; sourceTree = "<group>"; };
-		0DCEBF352251B5DD00EEC847 /* SimpleSpotLightMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleSpotLightMenu.cpp; sourceTree = "<group>"; };
-		0DCEBF362251B5DD00EEC847 /* SoundConfigMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundConfigMenu.cpp; sourceTree = "<group>"; };
-		0DCEBF372251B5DD00EEC847 /* CameraMenu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CameraMenu.hpp; sourceTree = "<group>"; };
-		0DCEBF382251B5DD00EEC847 /* DiffuseLightMenu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DiffuseLightMenu.hpp; sourceTree = "<group>"; };
-		0DCEBF392251B5DD00EEC847 /* SimpleSpotLightMenu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SimpleSpotLightMenu.hpp; sourceTree = "<group>"; };
-		0DCEBF3A2251B5DD00EEC847 /* SoundConfigMenu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SoundConfigMenu.hpp; sourceTree = "<group>"; };
-		0DCEBF3B2251B5DD00EEC847 /* CameraMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CameraMenu.cpp; sourceTree = "<group>"; };
-		0DCEBF3C2251B5DD00EEC847 /* PhongLightMenu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PhongLightMenu.hpp; sourceTree = "<group>"; };
-		0DCEBF3D2251B5DD00EEC847 /* LevelWaveSpawnFormationTracer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWaveSpawnFormationTracer.cpp; sourceTree = "<group>"; };
-		0DCEBF3E2251B5DD00EEC847 /* GameRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameRenderer.hpp; sourceTree = "<group>"; };
-		0DCEBF3F2251B5DD00EEC847 /* LevelWaveSpawn.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWaveSpawn.hpp; sourceTree = "<group>"; };
-		0DCEBF402251B5DD00EEC847 /* LevelWave.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWave.cpp; sourceTree = "<group>"; };
-		0DCEBF412251B5DD00EEC847 /* LevelData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelData.hpp; sourceTree = "<group>"; };
-		0DCEBF422251B5DD00EEC847 /* GameObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameObject.hpp; sourceTree = "<group>"; };
-		0DCEBF442251B5DD00EEC847 /* PGPathEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PGPathEditor.cpp; sourceTree = "<group>"; };
-		0DCEBF452251B5DD00EEC847 /* PathEditorMenu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PathEditorMenu.hpp; sourceTree = "<group>"; };
-		0DCEBF472251B5DD00EEC847 /* ToolMenuPanelHeader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ToolMenuPanelHeader.hpp; sourceTree = "<group>"; };
-		0DCEBF482251B5DD00EEC847 /* ToolMenuPanel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ToolMenuPanel.hpp; sourceTree = "<group>"; };
-		0DCEBF492251B5DD00EEC847 /* DragableCanvas.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DragableCanvas.hpp; sourceTree = "<group>"; };
-		0DCEBF4A2251B5DD00EEC847 /* ToolMenuHeader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ToolMenuHeader.cpp; sourceTree = "<group>"; };
-		0DCEBF4B2251B5DD00EEC847 /* ToolMenuSection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ToolMenuSection.hpp; sourceTree = "<group>"; };
-		0DCEBF4C2251B5DD00EEC847 /* ToolMenu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ToolMenu.hpp; sourceTree = "<group>"; };
-		0DCEBF4D2251B5DD00EEC847 /* ToolMenuSectionRow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ToolMenuSectionRow.cpp; sourceTree = "<group>"; };
-		0DCEBF4E2251B5DD00EEC847 /* DragableCanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DragableCanvas.cpp; sourceTree = "<group>"; };
-		0DCEBF4F2251B5DD00EEC847 /* ToolMenuHeader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ToolMenuHeader.hpp; sourceTree = "<group>"; };
-		0DCEBF502251B5DD00EEC847 /* ToolMenuSection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ToolMenuSection.cpp; sourceTree = "<group>"; };
-		0DCEBF512251B5DD00EEC847 /* ToolMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ToolMenu.cpp; sourceTree = "<group>"; };
-		0DCEBF522251B5DD00EEC847 /* ToolMenuSectionRow.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ToolMenuSectionRow.hpp; sourceTree = "<group>"; };
-		0DCEBF532251B5DD00EEC847 /* ToolMenuPanelHeader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ToolMenuPanelHeader.cpp; sourceTree = "<group>"; };
-		0DCEBF542251B5DD00EEC847 /* ToolMenuPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ToolMenuPanel.cpp; sourceTree = "<group>"; };
-		0DCEBF552251B5DD00EEC847 /* PGMainToolbar.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PGMainToolbar.hpp; sourceTree = "<group>"; };
-		0DCEBF562251B5DD00EEC847 /* PGPath.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PGPath.hpp; sourceTree = "<group>"; };
-		0DCEBF572251B5DD00EEC847 /* PGNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PGNode.cpp; sourceTree = "<group>"; };
-		0DCEBF582251B5DD00EEC847 /* ScreenTransformMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScreenTransformMenu.cpp; sourceTree = "<group>"; };
-		0DCEBF592251B5DD00EEC847 /* ToolMenuModalUnderlay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ToolMenuModalUnderlay.cpp; sourceTree = "<group>"; };
-		0DCEBF5A2251B5DD00EEC847 /* PGMainCanvas.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PGMainCanvas.hpp; sourceTree = "<group>"; };
-		0DCEBF5C2251B5DD00EEC847 /* UIStepper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UIStepper.hpp; sourceTree = "<group>"; };
-		0DCEBF5D2251B5DD00EEC847 /* UILabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabel.cpp; sourceTree = "<group>"; };
-		0DCEBF5E2251B5DD00EEC847 /* UIElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIElement.cpp; sourceTree = "<group>"; };
-		0DCEBF5F2251B5DD00EEC847 /* UISlider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UISlider.hpp; sourceTree = "<group>"; };
-		0DCEBF602251B5DD00EEC847 /* UISegment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UISegment.cpp; sourceTree = "<group>"; };
-		0DCEBF612251B5DD00EEC847 /* UITextBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITextBox.cpp; sourceTree = "<group>"; };
-		0DCEBF622251B5DD00EEC847 /* UIButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIButton.cpp; sourceTree = "<group>"; };
-		0DCEBF632251B5DD00EEC847 /* UISegmentButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UISegmentButton.cpp; sourceTree = "<group>"; };
-		0DCEBF642251B5DD00EEC847 /* UICheckBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UICheckBox.cpp; sourceTree = "<group>"; };
-		0DCEBF652251B5DD00EEC847 /* UIAlignmentPicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIAlignmentPicker.cpp; sourceTree = "<group>"; };
-		0DCEBF662251B5DD00EEC847 /* UIAlignmentPickerButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIAlignmentPickerButton.cpp; sourceTree = "<group>"; };
-		0DCEBF672251B5DD00EEC847 /* UIRoundedRect.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UIRoundedRect.hpp; sourceTree = "<group>"; };
-		0DCEBF682251B5DD00EEC847 /* UICheckBox.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UICheckBox.hpp; sourceTree = "<group>"; };
-		0DCEBF692251B5DD00EEC847 /* UIAlignmentPicker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UIAlignmentPicker.hpp; sourceTree = "<group>"; };
-		0DCEBF6A2251B5DD00EEC847 /* UIAlignmentPickerButton.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UIAlignmentPickerButton.hpp; sourceTree = "<group>"; };
-		0DCEBF6B2251B5DD00EEC847 /* UIRoundedRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIRoundedRect.cpp; sourceTree = "<group>"; };
-		0DCEBF6C2251B5DD00EEC847 /* UIStepper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIStepper.cpp; sourceTree = "<group>"; };
-		0DCEBF6D2251B5DD00EEC847 /* UILabel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UILabel.hpp; sourceTree = "<group>"; };
-		0DCEBF6E2251B5DD00EEC847 /* UIElement.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UIElement.hpp; sourceTree = "<group>"; };
-		0DCEBF6F2251B5DD00EEC847 /* UISegment.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UISegment.hpp; sourceTree = "<group>"; };
-		0DCEBF702251B5DD00EEC847 /* UITextBox.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UITextBox.hpp; sourceTree = "<group>"; };
-		0DCEBF712251B5DD00EEC847 /* UISlider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UISlider.cpp; sourceTree = "<group>"; };
-		0DCEBF722251B5DD00EEC847 /* UIButton.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UIButton.hpp; sourceTree = "<group>"; };
-		0DCEBF732251B5DD00EEC847 /* UISegmentButton.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UISegmentButton.hpp; sourceTree = "<group>"; };
-		0DCEBF742251B5DD00EEC847 /* PGMainToolbar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PGMainToolbar.cpp; sourceTree = "<group>"; };
-		0DCEBF752251B5DD00EEC847 /* PGPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PGPath.cpp; sourceTree = "<group>"; };
-		0DCEBF772251B5DD00EEC847 /* UIImagePickerCell.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UIImagePickerCell.hpp; sourceTree = "<group>"; };
-		0DCEBF782251B5DD00EEC847 /* UIImagePicker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UIImagePicker.hpp; sourceTree = "<group>"; };
-		0DCEBF792251B5DD00EEC847 /* UIImagePicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIImagePicker.cpp; sourceTree = "<group>"; };
-		0DCEBF7A2251B5DD00EEC847 /* UIImagePickerCell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIImagePickerCell.cpp; sourceTree = "<group>"; };
-		0DCEBF7B2251B5DD00EEC847 /* PGNode.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PGNode.hpp; sourceTree = "<group>"; };
-		0DCEBF7C2251B5DD00EEC847 /* ScreenTransformMenu.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ScreenTransformMenu.hpp; sourceTree = "<group>"; };
-		0DCEBF7D2251B5DD00EEC847 /* ToolMenuModalUnderlay.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ToolMenuModalUnderlay.hpp; sourceTree = "<group>"; };
-		0DCEBF7E2251B5DD00EEC847 /* PGMainCanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PGMainCanvas.cpp; sourceTree = "<group>"; };
-		0DCEBF7F2251B5DD00EEC847 /* Util_ScreenFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Util_ScreenFrame.cpp; sourceTree = "<group>"; };
-		0DCEBF802251B5DD00EEC847 /* PGPathEditor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PGPathEditor.hpp; sourceTree = "<group>"; };
-		0DCEBF812251B5DD00EEC847 /* PathEditorMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PathEditorMenu.cpp; sourceTree = "<group>"; };
-		0DCEBF822251B5DD00EEC847 /* Util_ScreenFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util_ScreenFrame.h; sourceTree = "<group>"; };
-		0DCEBF832251B5DD00EEC847 /* Balloon.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Balloon.hpp; sourceTree = "<group>"; };
-		0DCEBF842251B5DD00EEC847 /* Constraint.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Constraint.hpp; sourceTree = "<group>"; };
-		0DCEBF852251B5DD00EEC847 /* LevelWavePath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWavePath.cpp; sourceTree = "<group>"; };
-		0DCEBF862251B5DD00EEC847 /* DiffuseConfiguration.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DiffuseConfiguration.hpp; sourceTree = "<group>"; };
-		0DCEBF872251B5DD00EEC847 /* Transform3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Transform3D.cpp; sourceTree = "<group>"; };
-		0DCEBF882251B5DD00EEC847 /* LevelSelectorScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelSelectorScreen.cpp; sourceTree = "<group>"; };
-		0DCEBF892251B5DD00EEC847 /* Transform2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Transform2D.cpp; sourceTree = "<group>"; };
-		0DCEBF8A2251B5DD00EEC847 /* GameLevelController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameLevelController.hpp; sourceTree = "<group>"; };
-		0DCEBF8B2251B5DD00EEC847 /* LevelWaveSpawnFormationNode.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWaveSpawnFormationNode.hpp; sourceTree = "<group>"; };
-		0DCEBF8C2251B5DD00EEC847 /* LevelWaveSpawnFormationTracer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWaveSpawnFormationTracer.hpp; sourceTree = "<group>"; };
-		0DCEBF8D2251B5DD00EEC847 /* LevelWaveSpawnFormation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWaveSpawnFormation.cpp; sourceTree = "<group>"; };
-		0DCEBF8E2251B5DD00EEC847 /* LevelWaveSpawn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWaveSpawn.cpp; sourceTree = "<group>"; };
-		0DCEBF8F2251B5DD00EEC847 /* LevelWave.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWave.hpp; sourceTree = "<group>"; };
-		0DCEBF902251B5DD00EEC847 /* GameRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameRenderer.cpp; sourceTree = "<group>"; };
-		0DCEBF912251B5DD00EEC847 /* LevelSection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelSection.hpp; sourceTree = "<group>"; };
-		0DCEBF922251B5DD00EEC847 /* GameContainer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameContainer.hpp; sourceTree = "<group>"; };
-		0DCEBF932251B5DD00EEC847 /* LightConfigurationScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LightConfigurationScene.cpp; sourceTree = "<group>"; };
-		0DCEBF952251B5DD00EEC847 /* EditorMenuFormationPicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuFormationPicker.cpp; sourceTree = "<group>"; };
-		0DCEBF962251B5DD00EEC847 /* EditorMenuAttachment.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuAttachment.hpp; sourceTree = "<group>"; };
-		0DCEBF972251B5DD00EEC847 /* LevelWavePathBlueprint.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWavePathBlueprint.hpp; sourceTree = "<group>"; };
-		0DCEBF982251B5DD00EEC847 /* GamePathEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GamePathEditor.cpp; sourceTree = "<group>"; };
-		0DCEBF992251B5DD00EEC847 /* LevelSectionBlueprint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelSectionBlueprint.cpp; sourceTree = "<group>"; };
-		0DCEBF9A2251B5DD00EEC847 /* EditorMenuFormationUtilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuFormationUtilities.cpp; sourceTree = "<group>"; };
-		0DCEBF9B2251B5DD00EEC847 /* EditorMenuSpawnPicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuSpawnPicker.cpp; sourceTree = "<group>"; };
-		0DCEBF9C2251B5DD00EEC847 /* EditorMenuPath.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuPath.hpp; sourceTree = "<group>"; };
-		0DCEBF9D2251B5DD00EEC847 /* EditorMenuPathControl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuPathControl.hpp; sourceTree = "<group>"; };
-		0DCEBF9E2251B5DD00EEC847 /* LevelWaveSpawnFormationBlueprint.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWaveSpawnFormationBlueprint.hpp; sourceTree = "<group>"; };
-		0DCEBF9F2251B5DD00EEC847 /* LevelWaveSpawnFormationTracerBlueprint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWaveSpawnFormationTracerBlueprint.cpp; sourceTree = "<group>"; };
-		0DCEBFA02251B5DD00EEC847 /* LevelWaveSpawnBlueprint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWaveSpawnBlueprint.cpp; sourceTree = "<group>"; };
-		0DCEBFA12251B5DD00EEC847 /* GameFormationEditor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameFormationEditor.hpp; sourceTree = "<group>"; };
-		0DCEBFA22251B5DD00EEC847 /* LevelWaveBlueprint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWaveBlueprint.cpp; sourceTree = "<group>"; };
-		0DCEBFA32251B5DD00EEC847 /* EditorMenuAttachmentPicker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuAttachmentPicker.hpp; sourceTree = "<group>"; };
-		0DCEBFA42251B5DD00EEC847 /* EditorMenuWavesPicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuWavesPicker.cpp; sourceTree = "<group>"; };
-		0DCEBFA52251B5DD00EEC847 /* EditorMenuSpawn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuSpawn.cpp; sourceTree = "<group>"; };
-		0DCEBFA62251B5DD00EEC847 /* EditorMenuFormation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuFormation.cpp; sourceTree = "<group>"; };
-		0DCEBFA72251B5DD00EEC847 /* EditorMenuSections.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuSections.cpp; sourceTree = "<group>"; };
-		0DCEBFA82251B5DD00EEC847 /* GameEditor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameEditor.hpp; sourceTree = "<group>"; };
-		0DCEBFA92251B5DD00EEC847 /* EditorMenuFlow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuFlow.cpp; sourceTree = "<group>"; };
-		0DCEBFAA2251B5DD00EEC847 /* LevelWaveSpawnFormationTracerBlueprint.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWaveSpawnFormationTracerBlueprint.hpp; sourceTree = "<group>"; };
-		0DCEBFAB2251B5DD00EEC847 /* LevelWaveSpawnBlueprint.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWaveSpawnBlueprint.hpp; sourceTree = "<group>"; };
-		0DCEBFAC2251B5DD00EEC847 /* GameFormationEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameFormationEditor.cpp; sourceTree = "<group>"; };
-		0DCEBFAD2251B5DD00EEC847 /* LevelWaveBlueprint.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWaveBlueprint.hpp; sourceTree = "<group>"; };
-		0DCEBFAE2251B5DD00EEC847 /* EditorMenuWavesPicker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuWavesPicker.hpp; sourceTree = "<group>"; };
-		0DCEBFAF2251B5DD00EEC847 /* EditorMenuAttachmentPicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuAttachmentPicker.cpp; sourceTree = "<group>"; };
-		0DCEBFB02251B5DD00EEC847 /* EditorMenuSpawn.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuSpawn.hpp; sourceTree = "<group>"; };
-		0DCEBFB12251B5DD00EEC847 /* EditorMenuFormation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuFormation.hpp; sourceTree = "<group>"; };
-		0DCEBFB22251B5DD00EEC847 /* EditorMenuSections.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuSections.hpp; sourceTree = "<group>"; };
-		0DCEBFB32251B5DD00EEC847 /* GameEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameEditor.cpp; sourceTree = "<group>"; };
-		0DCEBFB42251B5DD00EEC847 /* EditorMenuFlow.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuFlow.hpp; sourceTree = "<group>"; };
-		0DCEBFB52251B5DD00EEC847 /* EditorMenuAttachment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuAttachment.cpp; sourceTree = "<group>"; };
-		0DCEBFB62251B5DD00EEC847 /* EditorMenuFormationPicker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuFormationPicker.hpp; sourceTree = "<group>"; };
-		0DCEBFB72251B5DD00EEC847 /* LevelWavePathBlueprint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWavePathBlueprint.cpp; sourceTree = "<group>"; };
-		0DCEBFB82251B5DD00EEC847 /* GamePathEditor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GamePathEditor.hpp; sourceTree = "<group>"; };
-		0DCEBFB92251B5DD00EEC847 /* LevelSectionBlueprint.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelSectionBlueprint.hpp; sourceTree = "<group>"; };
-		0DCEBFBA2251B5DD00EEC847 /* EditorMenuFormationUtilities.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuFormationUtilities.hpp; sourceTree = "<group>"; };
-		0DCEBFBB2251B5DD00EEC847 /* EditorMenuSpawnPicker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuSpawnPicker.hpp; sourceTree = "<group>"; };
-		0DCEBFBC2251B5DD00EEC847 /* EditorMenuPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuPath.cpp; sourceTree = "<group>"; };
-		0DCEBFBD2251B5DD00EEC847 /* LevelWaveSpawnFormationBlueprint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWaveSpawnFormationBlueprint.cpp; sourceTree = "<group>"; };
-		0DCEBFBE2251B5DD00EEC847 /* EditorMenuPathControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuPathControl.cpp; sourceTree = "<group>"; };
-		0DCEBFBF2251B5DD00EEC847 /* FloatingCamera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FloatingCamera.hpp; sourceTree = "<group>"; };
-		0DCEBFC02251B5DD00EEC847 /* PhongConfiguration.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PhongConfiguration.hpp; sourceTree = "<group>"; };
-		0DCEBFC12251B5DD00EEC847 /* SpotLightSimpleConfiguration.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SpotLightSimpleConfiguration.hpp; sourceTree = "<group>"; };
-		0DCEBFC22251B5DD00EEC847 /* Dart.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dart.hpp; sourceTree = "<group>"; };
-		0DCEBFC32251B5DD00EEC847 /* GFXApp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GFXApp.hpp; sourceTree = "<group>"; };
-		0DCEBFC42251B5DD00EEC847 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
 		E1704FDF222232B4000C5127 /* Crazy Darts 2 iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crazy Darts 2 iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1704FEB222232B5000C5127 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1704FEE222232B5000C5127 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -1503,6 +1509,228 @@
 			path = "[iOS]";
 			sourceTree = "<group>";
 		};
+		0DC3523A22533AA60026C27D /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				0DC352B622533AA60026C27D /* [[Editor]] */,
+				0DC3526322533AA60026C27D /* [[Playground]] */,
+				0DC3525222533AA60026C27D /* [Menus] */,
+				0DC3524822533AA60026C27D /* Balloon.cpp */,
+				0DC352A322533AA60026C27D /* Balloon.hpp */,
+				0DC3524722533AA60026C27D /* Constraint.cpp */,
+				0DC352A422533AA60026C27D /* Constraint.hpp */,
+				0DC3524422533AA60026C27D /* Dart.cpp */,
+				0DC352E422533AA60026C27D /* Dart.hpp */,
+				0DC3524922533AA60026C27D /* DiffuseConfiguration.cpp */,
+				0DC352A622533AA60026C27D /* DiffuseConfiguration.hpp */,
+				0DC3523F22533AA60026C27D /* FloatingCamera.cpp */,
+				0DC352E122533AA60026C27D /* FloatingCamera.hpp */,
+				0DC352AC22533AA60026C27D /* FormationCollection.cpp */,
+				0DC3525122533AA60026C27D /* FormationCollection.hpp */,
+				0DC352E622533AA60026C27D /* Game.cpp */,
+				0DC3524222533AA60026C27D /* Game.hpp */,
+				0DC3523C22533AA60026C27D /* GameContainer.cpp */,
+				0DC352B322533AA60026C27D /* GameContainer.hpp */,
+				0DC3524D22533AA60026C27D /* GameLevelController.cpp */,
+				0DC352AA22533AA60026C27D /* GameLevelController.hpp */,
+				0DC3524622533AA60026C27D /* GameObject.cpp */,
+				0DC3526222533AA60026C27D /* GameObject.hpp */,
+				0DC352B122533AA60026C27D /* GameRenderer.cpp */,
+				0DC3525E22533AA60026C27D /* GameRenderer.hpp */,
+				0DC3524322533AA60026C27D /* GFXApp.cpp */,
+				0DC352E522533AA60026C27D /* GFXApp.hpp */,
+				0DC3524522533AA60026C27D /* LevelData.cpp */,
+				0DC3526122533AA60026C27D /* LevelData.hpp */,
+				0DC3523B22533AA60026C27D /* LevelSection.cpp */,
+				0DC352B222533AA60026C27D /* LevelSection.hpp */,
+				0DC352A822533AA60026C27D /* LevelSelectorScreen.cpp */,
+				0DC3524C22533AA60026C27D /* LevelSelectorScreen.hpp */,
+				0DC3526022533AA60026C27D /* LevelWave.cpp */,
+				0DC352B022533AA60026C27D /* LevelWave.hpp */,
+				0DC352A522533AA60026C27D /* LevelWavePath.cpp */,
+				0DC3524A22533AA60026C27D /* LevelWavePath.hpp */,
+				0DC352AF22533AA60026C27D /* LevelWaveSpawn.cpp */,
+				0DC3525F22533AA60026C27D /* LevelWaveSpawn.hpp */,
+				0DC352AE22533AA60026C27D /* LevelWaveSpawnFormation.cpp */,
+				0DC3525022533AA60026C27D /* LevelWaveSpawnFormation.hpp */,
+				0DC3524F22533AA60026C27D /* LevelWaveSpawnFormationNode.cpp */,
+				0DC352AB22533AA60026C27D /* LevelWaveSpawnFormationNode.hpp */,
+				0DC3525D22533AA60026C27D /* LevelWaveSpawnFormationTracer.cpp */,
+				0DC352AD22533AA60026C27D /* LevelWaveSpawnFormationTracer.hpp */,
+				0DC352B422533AA60026C27D /* LevelWaveSpawnFormationTracerNode.cpp */,
+				0DC3523E22533AA60026C27D /* LevelWaveSpawnFormationTracerNode.hpp */,
+				0DC352B522533AA60026C27D /* LightConfigurationScene.cpp */,
+				0DC3523D22533AA60026C27D /* LightConfigurationScene.hpp */,
+				0DC3524022533AA60026C27D /* PhongConfiguration.cpp */,
+				0DC352E222533AA60026C27D /* PhongConfiguration.hpp */,
+				0DC3524122533AA60026C27D /* SpotLightSimpleConfiguration.cpp */,
+				0DC352E322533AA60026C27D /* SpotLightSimpleConfiguration.hpp */,
+				0DC352A922533AA60026C27D /* Transform2D.cpp */,
+				0DC3524E22533AA60026C27D /* Transform2D.hpp */,
+				0DC352A722533AA60026C27D /* Transform3D.cpp */,
+				0DC3524B22533AA60026C27D /* Transform3D.hpp */,
+			);
+			name = Classes;
+			path = ../Classes;
+			sourceTree = "<group>";
+		};
+		0DC3525222533AA60026C27D /* [Menus] */ = {
+			isa = PBXGroup;
+			children = (
+				0DC3525B22533AA60026C27D /* CameraMenu.cpp */,
+				0DC3525722533AA60026C27D /* CameraMenu.hpp */,
+				0DC3525422533AA60026C27D /* DiffuseLightMenu.cpp */,
+				0DC3525822533AA60026C27D /* DiffuseLightMenu.hpp */,
+				0DC3525322533AA60026C27D /* PhongLightMenu.cpp */,
+				0DC3525C22533AA60026C27D /* PhongLightMenu.hpp */,
+				0DC3525522533AA60026C27D /* SimpleSpotLightMenu.cpp */,
+				0DC3525922533AA60026C27D /* SimpleSpotLightMenu.hpp */,
+				0DC3525622533AA60026C27D /* SoundConfigMenu.cpp */,
+				0DC3525A22533AA60026C27D /* SoundConfigMenu.hpp */,
+			);
+			path = "[Menus]";
+			sourceTree = "<group>";
+		};
+		0DC3526322533AA60026C27D /* [[Playground]] */ = {
+			isa = PBXGroup;
+			children = (
+				0DC3526622533AA60026C27D /* [[Menu Components]] */,
+				0DC3527B22533AA60026C27D /* [[UI Components]] */,
+				0DC3529622533AA60026C27D /* [Image Picker] */,
+				0DC352A122533AA60026C27D /* PathEditorMenu.cpp */,
+				0DC3526522533AA60026C27D /* PathEditorMenu.hpp */,
+				0DC3529E22533AA60026C27D /* PGMainCanvas.cpp */,
+				0DC3527A22533AA60026C27D /* PGMainCanvas.hpp */,
+				0DC3529422533AA60026C27D /* PGMainToolbar.cpp */,
+				0DC3527522533AA60026C27D /* PGMainToolbar.hpp */,
+				0DC3527722533AA60026C27D /* PGNode.cpp */,
+				0DC3529B22533AA60026C27D /* PGNode.hpp */,
+				0DC3529522533AA60026C27D /* PGPath.cpp */,
+				0DC3527622533AA60026C27D /* PGPath.hpp */,
+				0DC3526422533AA60026C27D /* PGPathEditor.cpp */,
+				0DC352A022533AA60026C27D /* PGPathEditor.hpp */,
+				0DC3527822533AA60026C27D /* ScreenTransformMenu.cpp */,
+				0DC3529C22533AA60026C27D /* ScreenTransformMenu.hpp */,
+				0DC3527922533AA60026C27D /* ToolMenuModalUnderlay.cpp */,
+				0DC3529D22533AA60026C27D /* ToolMenuModalUnderlay.hpp */,
+				0DC3529F22533AA60026C27D /* Util_ScreenFrame.cpp */,
+				0DC352A222533AA60026C27D /* Util_ScreenFrame.h */,
+			);
+			path = "[[Playground]]";
+			sourceTree = "<group>";
+		};
+		0DC3526622533AA60026C27D /* [[Menu Components]] */ = {
+			isa = PBXGroup;
+			children = (
+				0DC3526E22533AA60026C27D /* DragableCanvas.cpp */,
+				0DC3526922533AA60026C27D /* DragableCanvas.hpp */,
+				0DC3527122533AA60026C27D /* ToolMenu.cpp */,
+				0DC3526C22533AA60026C27D /* ToolMenu.hpp */,
+				0DC3526A22533AA60026C27D /* ToolMenuHeader.cpp */,
+				0DC3526F22533AA60026C27D /* ToolMenuHeader.hpp */,
+				0DC3527422533AA60026C27D /* ToolMenuPanel.cpp */,
+				0DC3526822533AA60026C27D /* ToolMenuPanel.hpp */,
+				0DC3527322533AA60026C27D /* ToolMenuPanelHeader.cpp */,
+				0DC3526722533AA60026C27D /* ToolMenuPanelHeader.hpp */,
+				0DC3527022533AA60026C27D /* ToolMenuSection.cpp */,
+				0DC3526B22533AA60026C27D /* ToolMenuSection.hpp */,
+				0DC3526D22533AA60026C27D /* ToolMenuSectionRow.cpp */,
+				0DC3527222533AA60026C27D /* ToolMenuSectionRow.hpp */,
+			);
+			path = "[[Menu Components]]";
+			sourceTree = "<group>";
+		};
+		0DC3527B22533AA60026C27D /* [[UI Components]] */ = {
+			isa = PBXGroup;
+			children = (
+				0DC3528522533AA60026C27D /* UIAlignmentPicker.cpp */,
+				0DC3528922533AA60026C27D /* UIAlignmentPicker.hpp */,
+				0DC3528622533AA60026C27D /* UIAlignmentPickerButton.cpp */,
+				0DC3528A22533AA60026C27D /* UIAlignmentPickerButton.hpp */,
+				0DC3528222533AA60026C27D /* UIButton.cpp */,
+				0DC3529222533AA60026C27D /* UIButton.hpp */,
+				0DC3528422533AA60026C27D /* UICheckBox.cpp */,
+				0DC3528822533AA60026C27D /* UICheckBox.hpp */,
+				0DC3527E22533AA60026C27D /* UIElement.cpp */,
+				0DC3528E22533AA60026C27D /* UIElement.hpp */,
+				0DC3527D22533AA60026C27D /* UILabel.cpp */,
+				0DC3528D22533AA60026C27D /* UILabel.hpp */,
+				0DC3528B22533AA60026C27D /* UIRoundedRect.cpp */,
+				0DC3528722533AA60026C27D /* UIRoundedRect.hpp */,
+				0DC3528022533AA60026C27D /* UISegment.cpp */,
+				0DC3528F22533AA60026C27D /* UISegment.hpp */,
+				0DC3528322533AA60026C27D /* UISegmentButton.cpp */,
+				0DC3529322533AA60026C27D /* UISegmentButton.hpp */,
+				0DC3529122533AA60026C27D /* UISlider.cpp */,
+				0DC3527F22533AA60026C27D /* UISlider.hpp */,
+				0DC3528C22533AA60026C27D /* UIStepper.cpp */,
+				0DC3527C22533AA60026C27D /* UIStepper.hpp */,
+				0DC3528122533AA60026C27D /* UITextBox.cpp */,
+				0DC3529022533AA60026C27D /* UITextBox.hpp */,
+			);
+			path = "[[UI Components]]";
+			sourceTree = "<group>";
+		};
+		0DC3529622533AA60026C27D /* [Image Picker] */ = {
+			isa = PBXGroup;
+			children = (
+				0DC3529922533AA60026C27D /* UIImagePicker.cpp */,
+				0DC3529822533AA60026C27D /* UIImagePicker.hpp */,
+				0DC3529A22533AA60026C27D /* UIImagePickerCell.cpp */,
+				0DC3529722533AA60026C27D /* UIImagePickerCell.hpp */,
+			);
+			path = "[Image Picker]";
+			sourceTree = "<group>";
+		};
+		0DC352B622533AA60026C27D /* [[Editor]] */ = {
+			isa = PBXGroup;
+			children = (
+				0DC352D722533AA60026C27D /* EditorMenuAttachment.cpp */,
+				0DC352B822533AA60026C27D /* EditorMenuAttachment.hpp */,
+				0DC352D122533AA60026C27D /* EditorMenuAttachmentPicker.cpp */,
+				0DC352C522533AA60026C27D /* EditorMenuAttachmentPicker.hpp */,
+				0DC352CB22533AA60026C27D /* EditorMenuFlow.cpp */,
+				0DC352D622533AA60026C27D /* EditorMenuFlow.hpp */,
+				0DC352C822533AA60026C27D /* EditorMenuFormation.cpp */,
+				0DC352D322533AA60026C27D /* EditorMenuFormation.hpp */,
+				0DC352B722533AA60026C27D /* EditorMenuFormationPicker.cpp */,
+				0DC352D822533AA60026C27D /* EditorMenuFormationPicker.hpp */,
+				0DC352BC22533AA60026C27D /* EditorMenuFormationUtilities.cpp */,
+				0DC352DC22533AA60026C27D /* EditorMenuFormationUtilities.hpp */,
+				0DC352DE22533AA60026C27D /* EditorMenuPath.cpp */,
+				0DC352BE22533AA60026C27D /* EditorMenuPath.hpp */,
+				0DC352E022533AA60026C27D /* EditorMenuPathControl.cpp */,
+				0DC352BF22533AA60026C27D /* EditorMenuPathControl.hpp */,
+				0DC352C922533AA60026C27D /* EditorMenuSections.cpp */,
+				0DC352D422533AA60026C27D /* EditorMenuSections.hpp */,
+				0DC352C722533AA60026C27D /* EditorMenuSpawn.cpp */,
+				0DC352D222533AA60026C27D /* EditorMenuSpawn.hpp */,
+				0DC352BD22533AA60026C27D /* EditorMenuSpawnPicker.cpp */,
+				0DC352DD22533AA60026C27D /* EditorMenuSpawnPicker.hpp */,
+				0DC352C622533AA60026C27D /* EditorMenuWavesPicker.cpp */,
+				0DC352D022533AA60026C27D /* EditorMenuWavesPicker.hpp */,
+				0DC352D522533AA60026C27D /* GameEditor.cpp */,
+				0DC352CA22533AA60026C27D /* GameEditor.hpp */,
+				0DC352CE22533AA60026C27D /* GameFormationEditor.cpp */,
+				0DC352C322533AA60026C27D /* GameFormationEditor.hpp */,
+				0DC352BA22533AA60026C27D /* GamePathEditor.cpp */,
+				0DC352DA22533AA60026C27D /* GamePathEditor.hpp */,
+				0DC352BB22533AA60026C27D /* LevelSectionBlueprint.cpp */,
+				0DC352DB22533AA60026C27D /* LevelSectionBlueprint.hpp */,
+				0DC352C422533AA60026C27D /* LevelWaveBlueprint.cpp */,
+				0DC352CF22533AA60026C27D /* LevelWaveBlueprint.hpp */,
+				0DC352D922533AA60026C27D /* LevelWavePathBlueprint.cpp */,
+				0DC352B922533AA60026C27D /* LevelWavePathBlueprint.hpp */,
+				0DC352C222533AA60026C27D /* LevelWaveSpawnBlueprint.cpp */,
+				0DC352CD22533AA60026C27D /* LevelWaveSpawnBlueprint.hpp */,
+				0DC352DF22533AA60026C27D /* LevelWaveSpawnFormationBlueprint.cpp */,
+				0DC352C022533AA60026C27D /* LevelWaveSpawnFormationBlueprint.hpp */,
+				0DC352C122533AA60026C27D /* LevelWaveSpawnFormationTracerBlueprint.cpp */,
+				0DC352CC22533AA60026C27D /* LevelWaveSpawnFormationTracerBlueprint.hpp */,
+			);
+			path = "[[Editor]]";
+			sourceTree = "<group>";
+		};
 		0DCEBEB72251B53F00EEC847 /* [OpenGL] */ = {
 			isa = PBXGroup;
 			children = (
@@ -1583,228 +1811,10 @@
 			path = "[OpenGL]";
 			sourceTree = "<group>";
 		};
-		0DCEBF1C2251B5DD00EEC847 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				0DCEBF942251B5DD00EEC847 /* [[Editor]] */,
-				0DCEBF432251B5DD00EEC847 /* [[Playground]] */,
-				0DCEBF322251B5DD00EEC847 /* [Menus] */,
-				0DCEBF292251B5DD00EEC847 /* Balloon.cpp */,
-				0DCEBF832251B5DD00EEC847 /* Balloon.hpp */,
-				0DCEBF282251B5DD00EEC847 /* Constraint.cpp */,
-				0DCEBF842251B5DD00EEC847 /* Constraint.hpp */,
-				0DCEBF252251B5DD00EEC847 /* Dart.cpp */,
-				0DCEBFC22251B5DD00EEC847 /* Dart.hpp */,
-				0DCEBF2A2251B5DD00EEC847 /* DiffuseConfiguration.cpp */,
-				0DCEBF862251B5DD00EEC847 /* DiffuseConfiguration.hpp */,
-				0DCEBF202251B5DD00EEC847 /* FloatingCamera.cpp */,
-				0DCEBFBF2251B5DD00EEC847 /* FloatingCamera.hpp */,
-				0DCEBFC42251B5DD00EEC847 /* Game.cpp */,
-				0DCEBF232251B5DD00EEC847 /* Game.hpp */,
-				0DCEBF1E2251B5DD00EEC847 /* GameContainer.cpp */,
-				0DCEBF922251B5DD00EEC847 /* GameContainer.hpp */,
-				0DCEBF2E2251B5DD00EEC847 /* GameLevelController.cpp */,
-				0DCEBF8A2251B5DD00EEC847 /* GameLevelController.hpp */,
-				0DCEBF272251B5DD00EEC847 /* GameObject.cpp */,
-				0DCEBF422251B5DD00EEC847 /* GameObject.hpp */,
-				0DCEBF902251B5DD00EEC847 /* GameRenderer.cpp */,
-				0DCEBF3E2251B5DD00EEC847 /* GameRenderer.hpp */,
-				0DCEBF242251B5DD00EEC847 /* GFXApp.cpp */,
-				0DCEBFC32251B5DD00EEC847 /* GFXApp.hpp */,
-				0DCEBF262251B5DD00EEC847 /* LevelData.cpp */,
-				0DCEBF412251B5DD00EEC847 /* LevelData.hpp */,
-				0DCEBF1D2251B5DD00EEC847 /* LevelSection.cpp */,
-				0DCEBF912251B5DD00EEC847 /* LevelSection.hpp */,
-				0DCEBF882251B5DD00EEC847 /* LevelSelectorScreen.cpp */,
-				0DCEBF2D2251B5DD00EEC847 /* LevelSelectorScreen.hpp */,
-				0DCEBF402251B5DD00EEC847 /* LevelWave.cpp */,
-				0DCEBF8F2251B5DD00EEC847 /* LevelWave.hpp */,
-				0DCEBF852251B5DD00EEC847 /* LevelWavePath.cpp */,
-				0DCEBF2B2251B5DD00EEC847 /* LevelWavePath.hpp */,
-				0DCEBF8E2251B5DD00EEC847 /* LevelWaveSpawn.cpp */,
-				0DCEBF3F2251B5DD00EEC847 /* LevelWaveSpawn.hpp */,
-				0DCEBF8D2251B5DD00EEC847 /* LevelWaveSpawnFormation.cpp */,
-				0DCEBF312251B5DD00EEC847 /* LevelWaveSpawnFormation.hpp */,
-				0DCEBF302251B5DD00EEC847 /* LevelWaveSpawnFormationNode.cpp */,
-				0DCEBF8B2251B5DD00EEC847 /* LevelWaveSpawnFormationNode.hpp */,
-				0DCEBF3D2251B5DD00EEC847 /* LevelWaveSpawnFormationTracer.cpp */,
-				0DCEBF8C2251B5DD00EEC847 /* LevelWaveSpawnFormationTracer.hpp */,
-				0DCEBF932251B5DD00EEC847 /* LightConfigurationScene.cpp */,
-				0DCEBF1F2251B5DD00EEC847 /* LightConfigurationScene.hpp */,
-				0DCEBF212251B5DD00EEC847 /* PhongConfiguration.cpp */,
-				0DCEBFC02251B5DD00EEC847 /* PhongConfiguration.hpp */,
-				0DCEBF222251B5DD00EEC847 /* SpotLightSimpleConfiguration.cpp */,
-				0DCEBFC12251B5DD00EEC847 /* SpotLightSimpleConfiguration.hpp */,
-				0DCEBF892251B5DD00EEC847 /* Transform2D.cpp */,
-				0DCEBF2F2251B5DD00EEC847 /* Transform2D.hpp */,
-				0DCEBF872251B5DD00EEC847 /* Transform3D.cpp */,
-				0DCEBF2C2251B5DD00EEC847 /* Transform3D.hpp */,
-			);
-			name = Classes;
-			path = ../Classes;
-			sourceTree = "<group>";
-		};
-		0DCEBF322251B5DD00EEC847 /* [Menus] */ = {
-			isa = PBXGroup;
-			children = (
-				0DCEBF3B2251B5DD00EEC847 /* CameraMenu.cpp */,
-				0DCEBF372251B5DD00EEC847 /* CameraMenu.hpp */,
-				0DCEBF342251B5DD00EEC847 /* DiffuseLightMenu.cpp */,
-				0DCEBF382251B5DD00EEC847 /* DiffuseLightMenu.hpp */,
-				0DCEBF332251B5DD00EEC847 /* PhongLightMenu.cpp */,
-				0DCEBF3C2251B5DD00EEC847 /* PhongLightMenu.hpp */,
-				0DCEBF352251B5DD00EEC847 /* SimpleSpotLightMenu.cpp */,
-				0DCEBF392251B5DD00EEC847 /* SimpleSpotLightMenu.hpp */,
-				0DCEBF362251B5DD00EEC847 /* SoundConfigMenu.cpp */,
-				0DCEBF3A2251B5DD00EEC847 /* SoundConfigMenu.hpp */,
-			);
-			path = "[Menus]";
-			sourceTree = "<group>";
-		};
-		0DCEBF432251B5DD00EEC847 /* [[Playground]] */ = {
-			isa = PBXGroup;
-			children = (
-				0DCEBF462251B5DD00EEC847 /* [[Menu Components]] */,
-				0DCEBF5B2251B5DD00EEC847 /* [[UI Components]] */,
-				0DCEBF762251B5DD00EEC847 /* [Image Picker] */,
-				0DCEBF812251B5DD00EEC847 /* PathEditorMenu.cpp */,
-				0DCEBF452251B5DD00EEC847 /* PathEditorMenu.hpp */,
-				0DCEBF7E2251B5DD00EEC847 /* PGMainCanvas.cpp */,
-				0DCEBF5A2251B5DD00EEC847 /* PGMainCanvas.hpp */,
-				0DCEBF742251B5DD00EEC847 /* PGMainToolbar.cpp */,
-				0DCEBF552251B5DD00EEC847 /* PGMainToolbar.hpp */,
-				0DCEBF572251B5DD00EEC847 /* PGNode.cpp */,
-				0DCEBF7B2251B5DD00EEC847 /* PGNode.hpp */,
-				0DCEBF752251B5DD00EEC847 /* PGPath.cpp */,
-				0DCEBF562251B5DD00EEC847 /* PGPath.hpp */,
-				0DCEBF442251B5DD00EEC847 /* PGPathEditor.cpp */,
-				0DCEBF802251B5DD00EEC847 /* PGPathEditor.hpp */,
-				0DCEBF582251B5DD00EEC847 /* ScreenTransformMenu.cpp */,
-				0DCEBF7C2251B5DD00EEC847 /* ScreenTransformMenu.hpp */,
-				0DCEBF592251B5DD00EEC847 /* ToolMenuModalUnderlay.cpp */,
-				0DCEBF7D2251B5DD00EEC847 /* ToolMenuModalUnderlay.hpp */,
-				0DCEBF7F2251B5DD00EEC847 /* Util_ScreenFrame.cpp */,
-				0DCEBF822251B5DD00EEC847 /* Util_ScreenFrame.h */,
-			);
-			path = "[[Playground]]";
-			sourceTree = "<group>";
-		};
-		0DCEBF462251B5DD00EEC847 /* [[Menu Components]] */ = {
-			isa = PBXGroup;
-			children = (
-				0DCEBF4E2251B5DD00EEC847 /* DragableCanvas.cpp */,
-				0DCEBF492251B5DD00EEC847 /* DragableCanvas.hpp */,
-				0DCEBF512251B5DD00EEC847 /* ToolMenu.cpp */,
-				0DCEBF4C2251B5DD00EEC847 /* ToolMenu.hpp */,
-				0DCEBF4A2251B5DD00EEC847 /* ToolMenuHeader.cpp */,
-				0DCEBF4F2251B5DD00EEC847 /* ToolMenuHeader.hpp */,
-				0DCEBF542251B5DD00EEC847 /* ToolMenuPanel.cpp */,
-				0DCEBF482251B5DD00EEC847 /* ToolMenuPanel.hpp */,
-				0DCEBF532251B5DD00EEC847 /* ToolMenuPanelHeader.cpp */,
-				0DCEBF472251B5DD00EEC847 /* ToolMenuPanelHeader.hpp */,
-				0DCEBF502251B5DD00EEC847 /* ToolMenuSection.cpp */,
-				0DCEBF4B2251B5DD00EEC847 /* ToolMenuSection.hpp */,
-				0DCEBF4D2251B5DD00EEC847 /* ToolMenuSectionRow.cpp */,
-				0DCEBF522251B5DD00EEC847 /* ToolMenuSectionRow.hpp */,
-			);
-			path = "[[Menu Components]]";
-			sourceTree = "<group>";
-		};
-		0DCEBF5B2251B5DD00EEC847 /* [[UI Components]] */ = {
-			isa = PBXGroup;
-			children = (
-				0DCEBF652251B5DD00EEC847 /* UIAlignmentPicker.cpp */,
-				0DCEBF692251B5DD00EEC847 /* UIAlignmentPicker.hpp */,
-				0DCEBF662251B5DD00EEC847 /* UIAlignmentPickerButton.cpp */,
-				0DCEBF6A2251B5DD00EEC847 /* UIAlignmentPickerButton.hpp */,
-				0DCEBF622251B5DD00EEC847 /* UIButton.cpp */,
-				0DCEBF722251B5DD00EEC847 /* UIButton.hpp */,
-				0DCEBF642251B5DD00EEC847 /* UICheckBox.cpp */,
-				0DCEBF682251B5DD00EEC847 /* UICheckBox.hpp */,
-				0DCEBF5E2251B5DD00EEC847 /* UIElement.cpp */,
-				0DCEBF6E2251B5DD00EEC847 /* UIElement.hpp */,
-				0DCEBF5D2251B5DD00EEC847 /* UILabel.cpp */,
-				0DCEBF6D2251B5DD00EEC847 /* UILabel.hpp */,
-				0DCEBF6B2251B5DD00EEC847 /* UIRoundedRect.cpp */,
-				0DCEBF672251B5DD00EEC847 /* UIRoundedRect.hpp */,
-				0DCEBF602251B5DD00EEC847 /* UISegment.cpp */,
-				0DCEBF6F2251B5DD00EEC847 /* UISegment.hpp */,
-				0DCEBF632251B5DD00EEC847 /* UISegmentButton.cpp */,
-				0DCEBF732251B5DD00EEC847 /* UISegmentButton.hpp */,
-				0DCEBF712251B5DD00EEC847 /* UISlider.cpp */,
-				0DCEBF5F2251B5DD00EEC847 /* UISlider.hpp */,
-				0DCEBF6C2251B5DD00EEC847 /* UIStepper.cpp */,
-				0DCEBF5C2251B5DD00EEC847 /* UIStepper.hpp */,
-				0DCEBF612251B5DD00EEC847 /* UITextBox.cpp */,
-				0DCEBF702251B5DD00EEC847 /* UITextBox.hpp */,
-			);
-			path = "[[UI Components]]";
-			sourceTree = "<group>";
-		};
-		0DCEBF762251B5DD00EEC847 /* [Image Picker] */ = {
-			isa = PBXGroup;
-			children = (
-				0DCEBF792251B5DD00EEC847 /* UIImagePicker.cpp */,
-				0DCEBF782251B5DD00EEC847 /* UIImagePicker.hpp */,
-				0DCEBF7A2251B5DD00EEC847 /* UIImagePickerCell.cpp */,
-				0DCEBF772251B5DD00EEC847 /* UIImagePickerCell.hpp */,
-			);
-			path = "[Image Picker]";
-			sourceTree = "<group>";
-		};
-		0DCEBF942251B5DD00EEC847 /* [[Editor]] */ = {
-			isa = PBXGroup;
-			children = (
-				0DCEBFB52251B5DD00EEC847 /* EditorMenuAttachment.cpp */,
-				0DCEBF962251B5DD00EEC847 /* EditorMenuAttachment.hpp */,
-				0DCEBFAF2251B5DD00EEC847 /* EditorMenuAttachmentPicker.cpp */,
-				0DCEBFA32251B5DD00EEC847 /* EditorMenuAttachmentPicker.hpp */,
-				0DCEBFA92251B5DD00EEC847 /* EditorMenuFlow.cpp */,
-				0DCEBFB42251B5DD00EEC847 /* EditorMenuFlow.hpp */,
-				0DCEBFA62251B5DD00EEC847 /* EditorMenuFormation.cpp */,
-				0DCEBFB12251B5DD00EEC847 /* EditorMenuFormation.hpp */,
-				0DCEBF952251B5DD00EEC847 /* EditorMenuFormationPicker.cpp */,
-				0DCEBFB62251B5DD00EEC847 /* EditorMenuFormationPicker.hpp */,
-				0DCEBF9A2251B5DD00EEC847 /* EditorMenuFormationUtilities.cpp */,
-				0DCEBFBA2251B5DD00EEC847 /* EditorMenuFormationUtilities.hpp */,
-				0DCEBFBC2251B5DD00EEC847 /* EditorMenuPath.cpp */,
-				0DCEBF9C2251B5DD00EEC847 /* EditorMenuPath.hpp */,
-				0DCEBFBE2251B5DD00EEC847 /* EditorMenuPathControl.cpp */,
-				0DCEBF9D2251B5DD00EEC847 /* EditorMenuPathControl.hpp */,
-				0DCEBFA72251B5DD00EEC847 /* EditorMenuSections.cpp */,
-				0DCEBFB22251B5DD00EEC847 /* EditorMenuSections.hpp */,
-				0DCEBFA52251B5DD00EEC847 /* EditorMenuSpawn.cpp */,
-				0DCEBFB02251B5DD00EEC847 /* EditorMenuSpawn.hpp */,
-				0DCEBF9B2251B5DD00EEC847 /* EditorMenuSpawnPicker.cpp */,
-				0DCEBFBB2251B5DD00EEC847 /* EditorMenuSpawnPicker.hpp */,
-				0DCEBFA42251B5DD00EEC847 /* EditorMenuWavesPicker.cpp */,
-				0DCEBFAE2251B5DD00EEC847 /* EditorMenuWavesPicker.hpp */,
-				0DCEBFB32251B5DD00EEC847 /* GameEditor.cpp */,
-				0DCEBFA82251B5DD00EEC847 /* GameEditor.hpp */,
-				0DCEBFAC2251B5DD00EEC847 /* GameFormationEditor.cpp */,
-				0DCEBFA12251B5DD00EEC847 /* GameFormationEditor.hpp */,
-				0DCEBF982251B5DD00EEC847 /* GamePathEditor.cpp */,
-				0DCEBFB82251B5DD00EEC847 /* GamePathEditor.hpp */,
-				0DCEBF992251B5DD00EEC847 /* LevelSectionBlueprint.cpp */,
-				0DCEBFB92251B5DD00EEC847 /* LevelSectionBlueprint.hpp */,
-				0DCEBFA22251B5DD00EEC847 /* LevelWaveBlueprint.cpp */,
-				0DCEBFAD2251B5DD00EEC847 /* LevelWaveBlueprint.hpp */,
-				0DCEBFB72251B5DD00EEC847 /* LevelWavePathBlueprint.cpp */,
-				0DCEBF972251B5DD00EEC847 /* LevelWavePathBlueprint.hpp */,
-				0DCEBFA02251B5DD00EEC847 /* LevelWaveSpawnBlueprint.cpp */,
-				0DCEBFAB2251B5DD00EEC847 /* LevelWaveSpawnBlueprint.hpp */,
-				0DCEBFBD2251B5DD00EEC847 /* LevelWaveSpawnFormationBlueprint.cpp */,
-				0DCEBF9E2251B5DD00EEC847 /* LevelWaveSpawnFormationBlueprint.hpp */,
-				0DCEBF9F2251B5DD00EEC847 /* LevelWaveSpawnFormationTracerBlueprint.cpp */,
-				0DCEBFAA2251B5DD00EEC847 /* LevelWaveSpawnFormationTracerBlueprint.hpp */,
-			);
-			path = "[[Editor]]";
-			sourceTree = "<group>";
-		};
 		E1704FD6222232B4000C5127 = {
 			isa = PBXGroup;
 			children = (
-				0DCEBF1C2251B5DD00EEC847 /* Classes */,
+				0DC3523A22533AA60026C27D /* Classes */,
 				0D5E858D22512EAA0080FABD /* Assets */,
 				0D5E86FF22512EAA0080FABD /* Framework_[VI] */,
 				E1704FE1222232B4000C5127 /* Crazy Darts 2 iOS */,
@@ -2116,178 +2126,180 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0DCEBFF82251B5DD00EEC847 /* LevelWavePath.cpp in Sources */,
+				0DC3531A22533AA60026C27D /* LevelWavePath.cpp in Sources */,
 				0D5E896722512EAA0080FABD /* FResource.cpp in Sources */,
-				0DCEC00E2251B5DD00EEC847 /* EditorMenuAttachmentPicker.cpp in Sources */,
+				0DC3533622533AA60026C27D /* EditorMenuPath.cpp in Sources */,
 				0D5E896122512EAA0080FABD /* FGestureCanvas.cpp in Sources */,
-				0DCEBFE72251B5DD00EEC847 /* UISegment.cpp in Sources */,
-				0DCEBFD82251B5DD00EEC847 /* LevelWaveSpawnFormationTracer.cpp in Sources */,
-				0DCEBFE52251B5DD00EEC847 /* UILabel.cpp in Sources */,
+				0DC3533822533AA60026C27D /* EditorMenuPathControl.cpp in Sources */,
+				0DC3530922533AA60026C27D /* UISegment.cpp in Sources */,
+				0DC352FA22533AA60026C27D /* LevelWaveSpawnFormationTracer.cpp in Sources */,
+				0DC3530722533AA60026C27D /* UILabel.cpp in Sources */,
 				0DCEBF102251B53F00EEC847 /* ShaderProgramSimpleModel.cpp in Sources */,
 				0D5E896522512EAA0080FABD /* FSize.cpp in Sources */,
-				0DCEBFCE2251B5DD00EEC847 /* Constraint.cpp in Sources */,
+				0DC352F022533AA60026C27D /* Constraint.cpp in Sources */,
 				0D5E898522512EAB0080FABD /* FApp.cpp in Sources */,
 				0D5E898622512EAB0080FABD /* FNotificationCenter.cpp in Sources */,
 				0D5E894822512EAA0080FABD /* FHashMap.cpp in Sources */,
-				0DCEC00D2251B5DD00EEC847 /* GameFormationEditor.cpp in Sources */,
-				0DCEC0102251B5DD00EEC847 /* EditorMenuAttachment.cpp in Sources */,
-				0DCEBFD32251B5DD00EEC847 /* PhongLightMenu.cpp in Sources */,
-				0DCEBFC52251B5DD00EEC847 /* LevelSection.cpp in Sources */,
-				0DCEBFDB2251B5DD00EEC847 /* ToolMenuHeader.cpp in Sources */,
+				0DC352F522533AA60026C27D /* PhongLightMenu.cpp in Sources */,
+				0DC352E722533AA60026C27D /* LevelSection.cpp in Sources */,
+				0DC352FD22533AA60026C27D /* ToolMenuHeader.cpp in Sources */,
 				0D5E894B22512EAA0080FABD /* FIntList.cpp in Sources */,
-				0DCEC0132251B5DD00EEC847 /* LevelWaveSpawnFormationBlueprint.cpp in Sources */,
 				0D5E89AD22512EAB0080FABD /* RecursiveLockWrapper.m in Sources */,
-				0DCEBFF02251B5DD00EEC847 /* UISlider.cpp in Sources */,
+				0DC3531222533AA60026C27D /* UISlider.cpp in Sources */,
 				0D5E895C22512EAA0080FABD /* core_social.cpp in Sources */,
-				0DCEBFEA2251B5DD00EEC847 /* UISegmentButton.cpp in Sources */,
+				0DC3530C22533AA60026C27D /* UISegmentButton.cpp in Sources */,
 				0D5E895322512EAA0080FABD /* FBufferCache.cpp in Sources */,
 				0D5E898722512EAB0080FABD /* core_app_shell.cpp in Sources */,
 				0DCEBEEE2251B53F00EEC847 /* ShaderProgramModelIndexed.cpp in Sources */,
 				0D5E895122512EAA0080FABD /* FVertexBuffer.cpp in Sources */,
 				0D5E89B422512EAB0080FABD /* main.mm in Sources */,
-				0DCEBFE22251B5DD00EEC847 /* PGNode.cpp in Sources */,
-				0DCEBFED2251B5DD00EEC847 /* UIAlignmentPickerButton.cpp in Sources */,
+				0DC3530422533AA60026C27D /* PGNode.cpp in Sources */,
+				0DC3530F22533AA60026C27D /* UIAlignmentPickerButton.cpp in Sources */,
 				0D5E897722512EAB0080FABD /* FImage.cpp in Sources */,
-				0DCEBFF92251B5DD00EEC847 /* Transform3D.cpp in Sources */,
+				0DC3531B22533AA60026C27D /* Transform3D.cpp in Sources */,
 				0D5E897C22512EAB0080FABD /* FIndexList.cpp in Sources */,
-				0DCEC0152251B5DD00EEC847 /* Game.cpp in Sources */,
+				0DC3532222533AA60026C27D /* LevelWaveSpawnFormationTracerNode.cpp in Sources */,
 				0D5E896422512EAA0080FABD /* FLine.cpp in Sources */,
-				0DCEBFFB2251B5DD00EEC847 /* Transform2D.cpp in Sources */,
-				0DCEBFF62251B5DD00EEC847 /* Util_ScreenFrame.cpp in Sources */,
+				0DC3533222533AA60026C27D /* EditorMenuAttachmentPicker.cpp in Sources */,
+				0DC3531D22533AA60026C27D /* Transform2D.cpp in Sources */,
+				0DC3531822533AA60026C27D /* Util_ScreenFrame.cpp in Sources */,
 				0D5E895622512EAA0080FABD /* FPrimitive.cpp in Sources */,
 				0D5E897522512EAA0080FABD /* FParticle.cpp in Sources */,
-				0DCEBFF22251B5DD00EEC847 /* PGPath.cpp in Sources */,
-				0DCEBFCD2251B5DD00EEC847 /* GameObject.cpp in Sources */,
+				0DC3531422533AA60026C27D /* PGPath.cpp in Sources */,
+				0DC352EF22533AA60026C27D /* GameObject.cpp in Sources */,
 				0D5E894922512EAA0080FABD /* FTextureCache.cpp in Sources */,
-				0DCEBFC92251B5DD00EEC847 /* SpotLightSimpleConfiguration.cpp in Sources */,
-				0DCEBFD52251B5DD00EEC847 /* SimpleSpotLightMenu.cpp in Sources */,
+				0DC352EB22533AA60026C27D /* SpotLightSimpleConfiguration.cpp in Sources */,
+				0DC352F722533AA60026C27D /* SimpleSpotLightMenu.cpp in Sources */,
 				0DCEBF0C2251B53F00EEC847 /* ShaderProgram.cpp in Sources */,
-				0DCEC0122251B5DD00EEC847 /* EditorMenuPath.cpp in Sources */,
-				0DCEC0012251B5DD00EEC847 /* GamePathEditor.cpp in Sources */,
+				0DC3533522533AA60026C27D /* LevelWavePathBlueprint.cpp in Sources */,
 				0D5E896022512EAA0080FABD /* FTexture.cpp in Sources */,
 				0DCEBF1B2251B54500EEC847 /* OpenGLView.mm in Sources */,
-				0DCEBFEB2251B5DD00EEC847 /* UICheckBox.cpp in Sources */,
+				0DC3533322533AA60026C27D /* GameEditor.cpp in Sources */,
+				0DC3530D22533AA60026C27D /* UICheckBox.cpp in Sources */,
+				0DC3532822533AA60026C27D /* EditorMenuSpawnPicker.cpp in Sources */,
+				0DC3532522533AA60026C27D /* GamePathEditor.cpp in Sources */,
 				0D5E897A22512EAB0080FABD /* FSprite.cpp in Sources */,
 				0D5E895A22512EAA0080FABD /* FJoystick.cpp in Sources */,
+				0DC3532F22533AA60026C27D /* EditorMenuSections.cpp in Sources */,
 				0DCEBEF02251B53F00EEC847 /* ShaderProgramModelIndexedLightedPhong.cpp in Sources */,
-				0DCEBFCA2251B5DD00EEC847 /* GFXApp.cpp in Sources */,
-				0DCEBFF32251B5DD00EEC847 /* UIImagePicker.cpp in Sources */,
+				0DC3532C22533AA60026C27D /* EditorMenuWavesPicker.cpp in Sources */,
+				0DC352EC22533AA60026C27D /* GFXApp.cpp in Sources */,
+				0DC3531522533AA60026C27D /* UIImagePicker.cpp in Sources */,
 				0DCEBF0F2251B53F00EEC847 /* ShaderProgramSprite.cpp in Sources */,
 				0DCEBF112251B53F00EEC847 /* ShaderProgramSpriteNode.cpp in Sources */,
 				0DCEBF1A2251B54500EEC847 /* PlatformGraphicsInterface.mm in Sources */,
-				0DCEC0052251B5DD00EEC847 /* LevelWaveSpawnFormationTracerBlueprint.cpp in Sources */,
-				0DCEBFC62251B5DD00EEC847 /* GameContainer.cpp in Sources */,
+				0DC352E822533AA60026C27D /* GameContainer.cpp in Sources */,
 				0D5E897322512EAA0080FABD /* FLight.cpp in Sources */,
-				0DCEBFFA2251B5DD00EEC847 /* LevelSelectorScreen.cpp in Sources */,
+				0DC3531C22533AA60026C27D /* LevelSelectorScreen.cpp in Sources */,
 				0D5E897F22512EAB0080FABD /* FUniforms.cpp in Sources */,
 				0D5E895222512EAA0080FABD /* FMath.cpp in Sources */,
+				0DC3532722533AA60026C27D /* EditorMenuFormationUtilities.cpp in Sources */,
 				0D5E89B322512EAB0080FABD /* os_core_sound_ios.mm in Sources */,
 				0D5E89BB22512EAB0080FABD /* OSMusicPlayer.mm in Sources */,
-				0DCEBFC72251B5DD00EEC847 /* FloatingCamera.cpp in Sources */,
+				0DC352E922533AA60026C27D /* FloatingCamera.cpp in Sources */,
 				0D5E89AA22512EAB0080FABD /* os_core_outlets_ios.mm in Sources */,
+				0DC3532B22533AA60026C27D /* LevelWaveBlueprint.cpp in Sources */,
 				0D5E896322512EAA0080FABD /* FSpline.cpp in Sources */,
 				0DCEBEF32251B53F00EEC847 /* ShaderProgramShapeNode.cpp in Sources */,
 				0D5E896822512EAA0080FABD /* FModelDataPacked.cpp in Sources */,
 				0D5E895722512EAA0080FABD /* FSound.cpp in Sources */,
-				0DCEBFD42251B5DD00EEC847 /* DiffuseLightMenu.cpp in Sources */,
+				0DC3533722533AA60026C27D /* LevelWaveSpawnFormationBlueprint.cpp in Sources */,
+				0DC352F622533AA60026C27D /* DiffuseLightMenu.cpp in Sources */,
 				0D5E896922512EAA0080FABD /* FFileTable.cpp in Sources */,
-				0DCEC00C2251B5DD00EEC847 /* EditorMenuFlow.cpp in Sources */,
-				0DCEC0022251B5DD00EEC847 /* LevelSectionBlueprint.cpp in Sources */,
-				0DCEBFE82251B5DD00EEC847 /* UITextBox.cpp in Sources */,
-				0DCEBFCC2251B5DD00EEC847 /* LevelData.cpp in Sources */,
+				0DC3531E22533AA60026C27D /* FormationCollection.cpp in Sources */,
+				0DC3530A22533AA60026C27D /* UITextBox.cpp in Sources */,
+				0DC352EE22533AA60026C27D /* LevelData.cpp in Sources */,
 				0D5E895822512EAA0080FABD /* FPoint.cpp in Sources */,
-				0DCEC00B2251B5DD00EEC847 /* EditorMenuSections.cpp in Sources */,
 				0D5E898322512EAB0080FABD /* FFile.cpp in Sources */,
-				0DCEC0042251B5DD00EEC847 /* EditorMenuSpawnPicker.cpp in Sources */,
-				0DCEC0142251B5DD00EEC847 /* EditorMenuPathControl.cpp in Sources */,
 				0D5E894C22512EAA0080FABD /* FQuad.cpp in Sources */,
+				0DC3532922533AA60026C27D /* LevelWaveSpawnFormationTracerBlueprint.cpp in Sources */,
+				0DC3532122533AA60026C27D /* GameRenderer.cpp in Sources */,
 				0D5E895922512EAA0080FABD /* FSlider.cpp in Sources */,
-				0DCEC0002251B5DD00EEC847 /* EditorMenuFormationPicker.cpp in Sources */,
-				0DCEBFD62251B5DD00EEC847 /* SoundConfigMenu.cpp in Sources */,
-				0DCEBFD22251B5DD00EEC847 /* LevelWaveSpawnFormationNode.cpp in Sources */,
-				0DCEC0032251B5DD00EEC847 /* EditorMenuFormationUtilities.cpp in Sources */,
+				0DC352F822533AA60026C27D /* SoundConfigMenu.cpp in Sources */,
+				0DC352F422533AA60026C27D /* LevelWaveSpawnFormationNode.cpp in Sources */,
 				0D5E896B22512EAA0080FABD /* FColor.cpp in Sources */,
+				0DC3532422533AA60026C27D /* EditorMenuFormationPicker.cpp in Sources */,
 				0D5E896C22512EAA0080FABD /* FJSON.cpp in Sources */,
+				0DC3532A22533AA60026C27D /* LevelWaveSpawnBlueprint.cpp in Sources */,
 				0DCEBF0E2251B53F00EEC847 /* ShaderProgramModelIndexedLightedDiffuse.cpp in Sources */,
-				0DCEBFDF2251B5DD00EEC847 /* ToolMenu.cpp in Sources */,
-				0DCEC0092251B5DD00EEC847 /* EditorMenuSpawn.cpp in Sources */,
-				0DCEC0062251B5DD00EEC847 /* LevelWaveSpawnBlueprint.cpp in Sources */,
-				0DCEC0112251B5DD00EEC847 /* LevelWavePathBlueprint.cpp in Sources */,
-				0DCEBFFC2251B5DD00EEC847 /* LevelWaveSpawnFormation.cpp in Sources */,
+				0DC3530122533AA60026C27D /* ToolMenu.cpp in Sources */,
 				0D5E89B222512EAB0080FABD /* os_core_includes.cpp in Sources */,
 				0D5E895B22512EAA0080FABD /* FScrollCanvasPaged.cpp in Sources */,
-				0DCEBFF52251B5DD00EEC847 /* PGMainCanvas.cpp in Sources */,
+				0DC3533922533AA60026C27D /* Game.cpp in Sources */,
+				0DC3531722533AA60026C27D /* PGMainCanvas.cpp in Sources */,
 				0D5E898122512EAB0080FABD /* FFloatList.cpp in Sources */,
 				0D5E896A22512EAA0080FABD /* FScrollCanvas.cpp in Sources */,
 				0D5E895022512EAA0080FABD /* FAchievement.cpp in Sources */,
-				0DCEBFFD2251B5DD00EEC847 /* LevelWaveSpawn.cpp in Sources */,
 				0D5E897122512EAA0080FABD /* GraphicsInterface.cpp in Sources */,
 				0D5E895F22512EAA0080FABD /* FAnimation.cpp in Sources */,
 				0D5E896222512EAA0080FABD /* FIndexBufferCache.cpp in Sources */,
 				0D5E897422512EAA0080FABD /* FXML.cpp in Sources */,
-				0DCEBFCF2251B5DD00EEC847 /* Balloon.cpp in Sources */,
+				0DC352F122533AA60026C27D /* Balloon.cpp in Sources */,
 				0DCEBEF42251B53F00EEC847 /* ShaderProgramModelIndexedLightedSimpleSpotlight.cpp in Sources */,
 				0DCEBF192251B54500EEC847 /* OpenGLViewController.mm in Sources */,
+				0DC3532D22533AA60026C27D /* EditorMenuSpawn.cpp in Sources */,
 				0D5E894F22512EAA0080FABD /* FTouchManager.cpp in Sources */,
 				0D5E89B922512EAB0080FABD /* AppDelegate.mm in Sources */,
-				0DCEBFD92251B5DD00EEC847 /* LevelWave.cpp in Sources */,
+				0DC352FB22533AA60026C27D /* LevelWave.cpp in Sources */,
 				0D5E898422512EAB0080FABD /* FBuffer.cpp in Sources */,
 				0D5E89AB22512EAB0080FABD /* os_core_app_shell_ios.cpp in Sources */,
-				0DCEBFF42251B5DD00EEC847 /* UIImagePickerCell.cpp in Sources */,
+				0DC3531622533AA60026C27D /* UIImagePickerCell.cpp in Sources */,
 				0D5E898822512EAB0080FABD /* FString.cpp in Sources */,
 				0D5E894D22512EAA0080FABD /* FImageBundler.cpp in Sources */,
-				0DCEC00F2251B5DD00EEC847 /* GameEditor.cpp in Sources */,
 				0D5E898222512EAB0080FABD /* FList.cpp in Sources */,
 				0DCEBEF22251B53F00EEC847 /* os_core_graphics.cpp in Sources */,
-				0DCEBFDE2251B5DD00EEC847 /* ToolMenuSection.cpp in Sources */,
-				0DCEBFF72251B5DD00EEC847 /* PathEditorMenu.cpp in Sources */,
+				0DC3530022533AA60026C27D /* ToolMenuSection.cpp in Sources */,
+				0DC3532622533AA60026C27D /* LevelSectionBlueprint.cpp in Sources */,
+				0DC3531922533AA60026C27D /* PathEditorMenu.cpp in Sources */,
+				0DC3532322533AA60026C27D /* LightConfigurationScene.cpp in Sources */,
 				0D5E897622512EAB0080FABD /* FSpriteSequence.cpp in Sources */,
 				0DCEBEF12251B53F00EEC847 /* OpenGLEngine.cpp in Sources */,
 				0DCEBEEF2251B53F00EEC847 /* ShaderProgramSimpleModelIndexed.cpp in Sources */,
 				0D5E895E22512EAA0080FABD /* FDrawQuad.cpp in Sources */,
-				0DCEBFE02251B5DD00EEC847 /* ToolMenuPanelHeader.cpp in Sources */,
-				0DCEBFEC2251B5DD00EEC847 /* UIAlignmentPicker.cpp in Sources */,
+				0DC3530222533AA60026C27D /* ToolMenuPanelHeader.cpp in Sources */,
+				0DC3530E22533AA60026C27D /* UIAlignmentPicker.cpp in Sources */,
+				0DC3532022533AA60026C27D /* LevelWaveSpawn.cpp in Sources */,
 				0D5E895D22512EAA0080FABD /* core_web.cpp in Sources */,
+				0DC3533022533AA60026C27D /* EditorMenuFlow.cpp in Sources */,
 				0D5E894A22512EAA0080FABD /* FModelData.cpp in Sources */,
 				0D5E897022512EAA0080FABD /* FCanvas.cpp in Sources */,
 				0D5E895422512EAA0080FABD /* FFloatBufferCache.cpp in Sources */,
-				0DCEBFDD2251B5DD00EEC847 /* DragableCanvas.cpp in Sources */,
+				0DC352FF22533AA60026C27D /* DragableCanvas.cpp in Sources */,
 				0D5E89AC22512EAB0080FABD /* RootViewController.mm in Sources */,
 				0D5E89BA22512EAB0080FABD /* os_core_music_ios.mm in Sources */,
 				0D5E89AE22512EAB0080FABD /* os_core_social.mm in Sources */,
-				0DCEBFF12251B5DD00EEC847 /* PGMainToolbar.cpp in Sources */,
-				0DCEBFE92251B5DD00EEC847 /* UIButton.cpp in Sources */,
-				0DCEBFFE2251B5DD00EEC847 /* GameRenderer.cpp in Sources */,
+				0DC3531322533AA60026C27D /* PGMainToolbar.cpp in Sources */,
+				0DC3530B22533AA60026C27D /* UIButton.cpp in Sources */,
 				0D5E897E22512EAB0080FABD /* FPolyPath.cpp in Sources */,
-				0DCEBFE62251B5DD00EEC847 /* UIElement.cpp in Sources */,
-				0DCEC0082251B5DD00EEC847 /* EditorMenuWavesPicker.cpp in Sources */,
-				0DCEBFD12251B5DD00EEC847 /* GameLevelController.cpp in Sources */,
-				0DCEBFEE2251B5DD00EEC847 /* UIRoundedRect.cpp in Sources */,
+				0DC3530822533AA60026C27D /* UIElement.cpp in Sources */,
+				0DC352F322533AA60026C27D /* GameLevelController.cpp in Sources */,
+				0DC3531022533AA60026C27D /* UIRoundedRect.cpp in Sources */,
 				0DCEBEED2251B53F00EEC847 /* ShaderProgramSpriteWhite.cpp in Sources */,
 				0D5E897B22512EAB0080FABD /* FObject.cpp in Sources */,
-				0DCEBFE12251B5DD00EEC847 /* ToolMenuPanel.cpp in Sources */,
+				0DC3530322533AA60026C27D /* ToolMenuPanel.cpp in Sources */,
 				0D5E897D22512EAB0080FABD /* FWindow.cpp in Sources */,
 				0D5E897822512EAB0080FABD /* FModelDataSequence.cpp in Sources */,
-				0DCEBFD72251B5DD00EEC847 /* CameraMenu.cpp in Sources */,
+				0DC352F922533AA60026C27D /* CameraMenu.cpp in Sources */,
 				0D5E896622512EAA0080FABD /* FRandomizer.cpp in Sources */,
-				0DCEC00A2251B5DD00EEC847 /* EditorMenuFormation.cpp in Sources */,
-				0DCEBFC82251B5DD00EEC847 /* PhongConfiguration.cpp in Sources */,
-				0DCEBFE42251B5DD00EEC847 /* ToolMenuModalUnderlay.cpp in Sources */,
+				0DC352EA22533AA60026C27D /* PhongConfiguration.cpp in Sources */,
+				0DC3530622533AA60026C27D /* ToolMenuModalUnderlay.cpp in Sources */,
 				0D5E89B822512EAB0080FABD /* os_core_web.cpp in Sources */,
-				0DCEBFCB2251B5DD00EEC847 /* Dart.cpp in Sources */,
-				0DCEBFE32251B5DD00EEC847 /* ScreenTransformMenu.cpp in Sources */,
+				0DC352ED22533AA60026C27D /* Dart.cpp in Sources */,
+				0DC3530522533AA60026C27D /* ScreenTransformMenu.cpp in Sources */,
 				0DCEBEF52251B53F00EEC847 /* ShaderProgramShape3D.cpp in Sources */,
 				0D5E896E22512EAA0080FABD /* FVec2.cpp in Sources */,
 				0D5E897222512EAA0080FABD /* FButton.cpp in Sources */,
-				0DCEBFEF2251B5DD00EEC847 /* UIStepper.cpp in Sources */,
-				0DCEBFDA2251B5DD00EEC847 /* PGPathEditor.cpp in Sources */,
-				0DCEBFD02251B5DD00EEC847 /* DiffuseConfiguration.cpp in Sources */,
-				0DCEBFDC2251B5DD00EEC847 /* ToolMenuSectionRow.cpp in Sources */,
-				0DCEC0072251B5DD00EEC847 /* LevelWaveBlueprint.cpp in Sources */,
+				0DC3533422533AA60026C27D /* EditorMenuAttachment.cpp in Sources */,
+				0DC3531122533AA60026C27D /* UIStepper.cpp in Sources */,
+				0DC352FC22533AA60026C27D /* PGPathEditor.cpp in Sources */,
+				0DC352F222533AA60026C27D /* DiffuseConfiguration.cpp in Sources */,
+				0DC3532E22533AA60026C27D /* EditorMenuFormation.cpp in Sources */,
+				0DC352FE22533AA60026C27D /* ToolMenuSectionRow.cpp in Sources */,
+				0DC3531F22533AA60026C27D /* LevelWaveSpawnFormation.cpp in Sources */,
 				0D5E898022512EAB0080FABD /* FRect.cpp in Sources */,
-				0DCEBFFF2251B5DD00EEC847 /* LightConfigurationScene.cpp in Sources */,
 				0D5E895522512EAA0080FABD /* FMatrix.cpp in Sources */,
 				0D5E894E22512EAA0080FABD /* FFont.cpp in Sources */,
+				0DC3533122533AA60026C27D /* GameFormationEditor.cpp in Sources */,
 				0D5E896D22512EAA0080FABD /* FVec3.cpp in Sources */,
 				0DCEBF0D2251B53F00EEC847 /* ShaderProgramModelIndexedLightedAmbient.cpp in Sources */,
 				0D5E897922512EAB0080FABD /* FPointList.cpp in Sources */,

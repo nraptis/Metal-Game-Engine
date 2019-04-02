@@ -8,6 +8,8 @@
 
 #include "EditorMenuFormationUtilities.hpp"
 #include "GameFormationEditor.hpp"
+#include "LevelWaveSpawnFormationTracerBlueprint.hpp"
+#include "LevelWaveSpawnFormationTracer.hpp"
 #include "GameEditor.hpp"
 #include "FApp.hpp"
 
@@ -36,7 +38,7 @@ EditorMenuFormationUtilities::EditorMenuFormationUtilities(GameFormationEditor *
     
     
     mPanelTracers = new ToolMenuPanel();
-    mPanelTracers->SetTitle("Tracers");
+    mPanelTracers->SetTitle("Tracer Mode");
     AddSection(mPanelTracers);
     
     
@@ -54,6 +56,11 @@ EditorMenuFormationUtilities::EditorMenuFormationUtilities(GameFormationEditor *
     mButtonDeleteTracer->SetText("Delete Tracer");
     mRowTracers1->AddButton(mButtonDeleteTracer);
     
+    mSegmentTracersMode = new UISegment();
+    mSegmentTracersMode->SetSegmentCount(3);
+    mSegmentTracersMode->SetTitles("Add Point", "Move Point", "Select Point");
+    mSegmentTracersMode->SetTarget(&mEditor->mTracerMode);
+    mPanelTracers->AddSection(mSegmentTracersMode);
     
     mSegmentCurrentTracer = new UISegment();
     mSegmentCurrentTracer->SetSegmentCount(4);
@@ -62,11 +69,30 @@ EditorMenuFormationUtilities::EditorMenuFormationUtilities(GameFormationEditor *
     mPanelTracers->AddSection(mSegmentCurrentTracer);
     
     
-    mSegmentTracersMode = new UISegment();
-    mSegmentTracersMode->SetSegmentCount(3);
-    mSegmentTracersMode->SetTitles("Add Point", "Move Point", "Select Point");
-    mSegmentTracersMode->SetTarget(&mEditor->mTracerMode);
-    mPanelTracers->AddSection(mSegmentTracersMode);
+    
+    mPanelTracerTweaks = new ToolMenuPanel();
+    mPanelTracerTweaks->SetTitle("Tracer Tweaks");
+    AddSection(mPanelTracerTweaks);
+    
+    
+    mStepperTracerSpawnCount = new UIStepper();
+    mStepperTracerSpawnCount->SetText("Spawn Count: ");
+    mPanelTracerTweaks->AddSection(mStepperTracerSpawnCount);
+    
+    
+    mSegmentTracersSpeed = new UISegment();
+    mSegmentTracersSpeed->SetSegmentCount(7);
+    mSegmentTracersSpeed->SetTitles("XS", "S", "MS", "M", "MF", "F", "XF");
+    mSegmentTracersSpeed->SetTarget(&(mEditor->mTracerSpeedClassIndex));
+    mPanelTracerTweaks->AddSection(mSegmentTracersSpeed);
+
+    
+    
+    mStepperTestIndex = new UIStepper();
+    mStepperTestIndex->SetText("Test Step: ");
+    mPanelTracerTweaks->AddSection(mStepperTestIndex);
+    
+    
     
     
     DeactivateCloseButton();
@@ -84,15 +110,65 @@ void EditorMenuFormationUtilities::Layout() {
 
 void EditorMenuFormationUtilities::Notify(void *pSender, const char *pNotification) {
     
+    if (mEditor == NULL) { return; }
+    
     if (pSender == mButtonCloseEditor) { mEditor->Close(); }
     
     if (pSender == mButtonResetFormation) { mEditor->Clear(); }
     
-    if (pSender == mButtonResetFormation) {
-        
+    
+    if (pSender == mSegmentTracersSpeed) {
+        mEditor->RefreshTracerSpeed();
+        mEditor->Refresh();
     }
+    
+    if (pSender == mStepperTracerSpawnCount) { mEditor->Refresh(); }
+    
 }
 
 void EditorMenuFormationUtilities::Update() {
     
+    if (mEditor == NULL) { return; }
+    if (gEditor == NULL) { return; }
+    
+    LevelWaveSpawnFormationTracerBlueprint *aTracer = NULL;
+    aTracer = mEditor->mFormation.GetTracer();
+    
+    
+    if (mStepperTracerSpawnCount) {
+        bool aUnlink = true;
+        if (aTracer != NULL) {
+            aUnlink = false;
+            mStepperTracerSpawnCount->SetTarget(&(aTracer->mCount));
+        }
+        if (aUnlink) {
+            mStepperTracerSpawnCount->SetTarget(NULL);
+        }
+    }
+    
+    
+    
+    if (mStepperTestIndex) {
+        bool aUnlink = true;
+        
+        LevelWaveSpawnFormationTracer *TT = NULL;
+        
+        int aIndex = 0;
+        EnumList(LevelWaveSpawnFormationTracer, AAA, mEditor->mEditorFormation.mTracerList) {
+            if (aIndex == mEditor->mFormation.mCurrentTracerIndex) {
+                TT = AAA;
+            }
+        }
+        
+        
+        if (TT != NULL) {
+            aUnlink = false;
+            mStepperTestIndex->SetTarget(&(TT->mPathIndex));
+        }
+        if (aUnlink) {
+            mStepperTestIndex->SetTarget(NULL);
+        }
+    }
+    
+
 }

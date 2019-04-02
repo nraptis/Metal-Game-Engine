@@ -28,6 +28,8 @@ LevelWavePathBlueprintNode::LevelWavePathBlueprintNode() {
     mGameX = 0.0f;
     mGameY = 0.0f;
     
+    
+    
     mType = -1;
     mWaitTimer = 0;
     mChamferSize = 0;

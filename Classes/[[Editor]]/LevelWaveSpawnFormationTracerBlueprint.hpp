@@ -65,6 +65,11 @@ public:
     
     bool                                                IsValid();
     
+    
+    int                                                 mCount;
+    int                                                 mSpeedClass;
+    
+    
 private:
     FList                                               mKillNodeList;
     FList                                               mDeleteNodeList;

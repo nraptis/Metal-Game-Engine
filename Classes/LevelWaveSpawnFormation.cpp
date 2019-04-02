@@ -97,9 +97,10 @@ void LevelWaveSpawnFormation::Draw() {
             float aY = aTracer->mPath.mY[i];
             
             if (mRotation != 0.0f) {
-                
-                
-                
+                FVec2 aPoint;
+                aPoint.mX = aX; aPoint.mY = aY;
+                aPoint = PivotPoint(aPoint, mRotation);
+                aX = aPoint.mX; aY = aPoint.mY;
             }
             
             aX += mX;

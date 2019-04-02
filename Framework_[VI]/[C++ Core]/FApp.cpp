@@ -45,6 +45,7 @@ FApp::FApp() {
     
     mThrottleLock = -1;
     mSystemLock = -1;
+    mInterfaceLock = -1;
     //
     //
     //

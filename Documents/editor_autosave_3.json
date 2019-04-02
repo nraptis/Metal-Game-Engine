@@ -4,7 +4,7 @@
 		{
 			"blueprint": true,
 			"smooth": false,
-			"speed_class": 300,
+			"speed_class": -300,
 			"spawn_spacing": 92,
 			"creation_type": 0,
 			"creation_delay": 200,
@@ -21,7 +21,7 @@
 				{
 					"x_con": 100,
 					"x_con_target": 1,
-					"y": 24.925430
+					"y": 24.925476
 				},
 				{
 					"x_con": 200,
@@ -29,8 +29,8 @@
 					"y_con_target": 2
 				},
 				{
-					"x": -13.020863,
-					"y": 42.975948
+					"x": -13.020812,
+					"y": 42.976036
 				},
 				{
 					"x_con": 100,
@@ -42,7 +42,7 @@
 				{
 					"x_con": 100,
 					"x_con_target": 5,
-					"y": 61.026581
+					"y": 61.026669
 				},
 				{
 					"x_con": 150,
@@ -74,7 +74,7 @@
 		{
 			"blueprint": true,
 			"smooth": false,
-			"speed_class": -300,
+			"speed_class": -200,
 			"spawn_spacing": 92,
 			"creation_type": 1,
 			"creation_delay": 200,
@@ -84,28 +84,28 @@
 					"y_con": 200
 				},
 				{
-					"x": 38.733860,
-					"y": 2.233199
+					"x": 38.733555,
+					"y": 2.233243
 				},
 				{
-					"x": 29.473007,
-					"y": 8.060597
+					"x": 29.472738,
+					"y": 8.060630
 				},
 				{
-					"x": 30.403223,
-					"y": 15.769643
+					"x": 30.403027,
+					"y": 15.769664
 				},
 				{
-					"x": 42.013233,
-					"y": 19.945158
+					"x": 42.012890,
+					"y": 19.945223
 				},
 				{
-					"x": 47.986565,
-					"y": 27.866114
+					"x": 47.986145,
+					"y": 27.866150
 				},
 				{
-					"x": 41.735531,
-					"y": 35.798981
+					"x": 41.735146,
+					"y": 35.799019
 				},
 				{
 					"x_con": 200,
@@ -120,6 +120,72 @@
 			"spawn": [
 				{
 					"spacing_offset": 1
+				}
+			]
+		},
+		{
+			"blueprint": true,
+			"smooth": true,
+			"speed_class": 100,
+			"spawn_spacing": 92,
+			"creation_type": 0,
+			"creation_delay": 200,
+			"path": [
+				{
+					"x_con": 300,
+					"y_con": 500
+				},
+				{
+					"x_con": 500,
+					"y_con": 500
+				},
+				{
+					"x_con": 700,
+					"y_con": 300
+				},
+				{
+					"x_con": 700,
+					"y_con": 500
+				}
+			],
+			"spawn": [
+				{
+					"spacing_offset": -3
+				}
+			]
+		},
+		{
+			"blueprint": true,
+			"smooth": true,
+			"speed_class": 300,
+			"spawn_spacing": 92,
+			"creation_type": 0,
+			"creation_delay": 200,
+			"path": [
+				{
+					"x_con": 300,
+					"y_con": 500
+				},
+				{
+					"x_con": 500,
+					"y_con": 600
+				},
+				{
+					"x_con": 700,
+					"y_con": 500
+				},
+				{
+					"x_con": 600,
+					"y_con": 400
+				},
+				{
+					"x_con": 800,
+					"y_con": 300
+				}
+			],
+			"spawn": [
+				{
+					"spacing_offset": -5
 				}
 			]
 		}

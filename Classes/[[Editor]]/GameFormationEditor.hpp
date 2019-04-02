@@ -57,6 +57,12 @@ public:
     EditorMenuFormationUtilities                *mMenuUtils;
     EditorMenuFormation                         *mMenuFormation;
     
+    
+    //Speed Classes...
+    int                                         mFormationRotationSpeedClassIndex;
+    int                                         mTracerSpeedClassIndex;
+    
+    
     int                                         mFormationMode;
     
     bool                                        mTracerEnabled;
@@ -91,6 +97,10 @@ public:
     
     void                                        Close();
     void                                        Clear();
+    
+    
+    void                                        RefreshTracerSpeed();
+    void                                        RefreshRotationSpeed();
     void                                        Refresh();
     
     void                                        Save();

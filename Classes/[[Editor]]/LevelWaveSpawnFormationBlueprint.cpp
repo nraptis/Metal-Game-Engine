@@ -349,7 +349,7 @@ void LevelWaveSpawnFormationBlueprint::Build(LevelWaveSpawnFormation *pFormation
     
     for (int i=0;i<4;i++) {
         if (mTracer[i].IsValid()) {
-            LevelWaveSpawnFormationTracer *aTracer = new LevelWaveSpawnFormationTracer();
+            LevelWaveSpawnFormationTracer *aTracer = new LevelWaveSpawnFormationTracer(pFormation);
             mTracer[i].Build(aTracer);
             pFormation->mTracerList.Add(aTracer);
         }

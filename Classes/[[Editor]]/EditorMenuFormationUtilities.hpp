@@ -37,8 +37,20 @@ public:
     UISegment                               *mSegmentTracersMode;
     
     
+    ToolMenuPanel                           *mPanelTracerTweaks;
+    UIStepper                               *mStepperTracerSpawnCount;
+    
+    UISegment                               *mSegmentTracersSpeed;
+    
+    
     
     GameFormationEditor                     *mEditor;
+    
+    
+    
+    UIStepper                               *mStepperTestIndex;
+    
+    
 };
 
 

@@ -25,7 +25,6 @@ public:
     void                                        Update();
     void                                        Draw();
     
-    
     FList                                       mNodeList;
     FList                                       mTracerList;
     

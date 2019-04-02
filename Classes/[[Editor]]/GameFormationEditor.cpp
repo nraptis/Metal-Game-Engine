@@ -24,6 +24,10 @@ GameFormationEditor::GameFormationEditor(GameEditor *pEditor) {
     mGameAreaBottom = pEditor->mGameAreaBottom;
     mGameAreaLeft = pEditor->mGameAreaLeft;
     
+    mFormationRotationSpeedClassIndex = 3;
+    mTracerSpeedClassIndex = 3;
+    
+    
     mCenterX = (float)((int)(mGameAreaLeft + (mGameAreaRight - mGameAreaLeft) / 2.0f + 0.5f));
     mCenterY = (float)((int)(mGameAreaTop + (mGameAreaBottom - mGameAreaTop) / 2.0f + 0.5f));
     
@@ -67,7 +71,7 @@ GameFormationEditor::GameFormationEditor(GameEditor *pEditor) {
     
     mMenuUtils = new EditorMenuFormationUtilities(this);
     AddChild(mMenuUtils);
-    mMenuUtils->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), gSafeAreaInsetTop + 20.0f, 400.0f, 480.0f);
+    mMenuUtils->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), gSafeAreaInsetTop + 20.0f, 400.0f, 670.0f);
     
 }
 
@@ -91,6 +95,15 @@ void GameFormationEditor::Layout() {
 }
 
 void GameFormationEditor::Update() {
+    
+    if (gEditor != NULL) {
+        LevelWaveSpawnFormationTracerBlueprint *aTracerBlueprint = mFormation.GetTracer();
+        if (aTracerBlueprint != NULL) {
+            mTracerSpeedClassIndex = gEditor->SpeedConvertTypeToSegment(aTracerBlueprint->mSpeedClass);
+        }
+    }
+    
+    
     
     mFormation.Update();
     mEditorFormation.Update();
@@ -304,7 +317,6 @@ void GameFormationEditor::KeyDown(int pKey) {
     if (pKey == __KEY__4) { mFormation.mCurrentTracerIndex = 3; }
     
     if (pKey == __KEY__P) { Print(); }
-    
     if (pKey == __KEY__T) { mTracerEnabled = !mTracerEnabled; }
     
     if (pKey == __KEY__A) {
@@ -324,15 +336,15 @@ void GameFormationEditor::KeyDown(int pKey) {
     }
     
     if (pKey == __KEY__S) {
-        if (mTracerEnabled) {
-            mTracerMode = FORMATION_MODE_SELECT_POINT;
-        } else {
-            mFormationMode = FORMATION_MODE_SELECT_POINT;
-        }
-    }
-    
-    
-    if (pKey == __KEY__S) {
+        
+         if (aShift == false && aCtrl == false && aAlt == false) {
+             if (mTracerEnabled) {
+                 mTracerMode = FORMATION_MODE_SELECT_POINT;
+             } else {
+                 mFormationMode = FORMATION_MODE_SELECT_POINT;
+             }
+         }
+        
         if (aShift == false && aCtrl == true && aAlt == false) {
             Save();
         }
@@ -452,7 +464,36 @@ void GameFormationEditor::Clear() {
     mFormationMode = FORMATION_MODE_ADD_POINT;
 }
 
+void GameFormationEditor::RefreshTracerSpeed() {
+    
+    if (gEditor != NULL) {
+        LevelWaveSpawnFormationTracerBlueprint *aTracerBlueprint = mFormation.GetTracer();
+        if (aTracerBlueprint != NULL) {
+            
+            //mSpeedClassIndex = SpeedConvertTypeToSegment(mSection.mCurrentWave->mPath.mSpeedClass);
+            //mSection.mCurrentWave->mPath.mSpeedClass = SpeedConvertSegmentToType(mSpeedClassIndex);
+            
+            aTracerBlueprint->mSpeedClass = gEditor->SpeedConvertSegmentToType(mTracerSpeedClassIndex);
+        }
+        
+    }
+    
+    
+}
+
+void GameFormationEditor::RefreshRotationSpeed() {
+    
+}
+
+
 void GameFormationEditor::Refresh() {
+    
+    
+    //mFormationRotationSpeedClassIndex = 3;
+    //mTracerSpeedClassIndex = 3;
+    
+    
+    
     mFormation.Build(&mEditorFormation);
     mEditorFormation.Spawn();
 }
