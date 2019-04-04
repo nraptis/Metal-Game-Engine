@@ -161,9 +161,10 @@ void os_unlock_thread(int pLockIndex) {
 }
 
 bool os_fileExists(const char *pFilePath) {
-    FString aPath;
-    aPath.Set(pFilePath);
-    return [[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithUTF8String:(aPath.c())]];
+    if (pFilePath != NULL) {
+        return [[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithUTF8String: pFilePath]];
+    }
+    return false;
 }
 
 bool os_is_portrait() {

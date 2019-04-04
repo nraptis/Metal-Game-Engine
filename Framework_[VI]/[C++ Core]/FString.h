@@ -375,9 +375,9 @@ public:
 	inline bool						operator ==(const char *pString){return (CompareI(pString) == 0);}
 	inline bool						operator ==(char *pString){return (CompareI(pString) == 0);}
     
-    void                            operator = (char*pString){ Set((const char *)pString);}
-	void                            operator = (const char *pString){ Set(pString);}
-	void                            operator = (const FString pString){Set((const char *)(pString.mData));}
+    void                            operator = (char*pString){ Set((const char *)pString); }
+	void                            operator = (const char *pString) { Set(pString); }
+	void                            operator = (const FString pString) { Set((const char *)(pString.mData)); }
     
 	inline void                     operator += (FString pString){Append(pString);}
 	inline void                     operator += (char*pString){Append(pString);}

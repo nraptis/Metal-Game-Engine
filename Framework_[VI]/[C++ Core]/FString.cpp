@@ -212,8 +212,10 @@ void FString::Size(int pSize) {
 		if (mLength > mSize) {
 			mLength = mSize;
 		}
-		for(int i=0; i<mLength; i++)aNew[i] = mData[i];
-		for(int i = mLength; i <= mSize; i++) aNew[i] = 0;
+        for (int i=0; i<mLength; i++) { aNew[i] = mData[i]; }
+		//for (int i = mLength; i <= mSize; i++) aNew[i] = 0;
+        aNew[mLength] = 0;
+        
 		delete[] mData;
 		mData = aNew;
 	}
@@ -248,35 +250,52 @@ void FString::Set(const char *pString) {
     mData[mLength] = 0;
     mSize = mLength;
     */
+
     
     
-	if ((pString != 0) && (pString != mData)) {
+	if ((pString != NULL) && (pString != mData)) {
+        
         mLength = Length(pString);
+        
         if (mLength > mSize) {
             
-            if (mSize == 0) {
-                mSize = mLength;
-            } else {
-                 mSize = mLength + mLength / 2 + 1;
-            }
-            char *aNew = new char[mLength+1];
+            mSize = mLength;
             delete [] mData;
-            mData = aNew;
+            mData = new char[mLength + 1];
+            
+            char *aPaste = mData;
+            char *aCopy = (char *)pString;
+            if (aCopy != NULL) {
+                while (*aCopy) {
+                    *aPaste++ = *aCopy++;
+                }
+            }
+            *aPaste = 0;
+        } else {
+            
+            if (mLength == 0) {
+                if (mSize > 0) {
+                    mData[0] = 0;
+                }
+            } else {
+                char *aPaste = mData;
+                char *aCopy = (char *)pString;
+                if (aCopy != NULL) {
+                    while (*aCopy) {
+                        *aPaste++ = *aCopy++;
+                    }
+                }
+                *aPaste = 0;
+            }
         }
-        
-        for (int i=0;i<mLength;i++) {
-            mData[i] = pString[i];
-        }
-        if (mData != NULL) {
-            mData[mLength] = 0;
-        }
-        
-    } else if (pString == NULL) {
+    } else if (mLength == 0) {
         mLength = 0;
-        if (mData != NULL) {
+        if (mSize > 0) {
             mData[0] = 0;
         }
     }
+    
+    
 }
 
 void FString::Append(char pChar) {
@@ -557,8 +576,7 @@ void FString::RemoveExtension()
 {
     int aIndex = GetExtensionIndex();
     
-    if((aIndex >= 0) && (aIndex < mLength))
-    {
+    if ((aIndex >= 0) && (aIndex < mLength)) {
 		Delete(aIndex);
         //Truncate(aIndex);
     }
@@ -842,8 +860,7 @@ void FString::Delete(int thePosition, int theLength)
 
 }
 
-void FString::Delete(int thePosition)
-{
+void FString::Delete(int thePosition) {
 	Truncate(thePosition);
 }
 
@@ -957,8 +974,27 @@ FString FString::operator+(FString theString)
     int aNewLength = mLength + theString.mLength;
 	aResult.Size(aNewLength);
 
-	for(int i = 0; i < mLength; i++)aResult.mData[i] = mData[i];
-	for(int i = 0; i < theString.mLength; i++)aResult.mData[i + mLength] = theString.mData[i];
+    char *aPaste = aResult.mData;
+    char *aCopy = mData;
+    
+    if (aCopy != NULL) {
+        while (*aCopy) {
+            *aPaste++ = *aCopy++;
+        }
+    }
+    
+    aCopy = theString.mData;
+    if (aCopy != NULL) {
+        while (*aCopy) {
+            *aPaste++ = *aCopy++;
+        }
+    }
+    
+    *aPaste = 0;
+    
+	//for(int i = 0; i < mLength; i++)aResult.mData[i] = mData[i];
+    //int aCap = theString.mLength + mLength;
+	//for(int i = 0; i < theString.mLength; i++)aResult.mData[i + mLength] = theString.mData[i];
     
     aResult.mLength = aNewLength;
     
