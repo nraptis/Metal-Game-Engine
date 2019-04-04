@@ -18,6 +18,7 @@
 #include "EditorMenuWavesPicker.hpp"
 #include "EditorMenuSpawnPicker.hpp"
 #include "EditorMenuAttachment.hpp"
+#include "EditorMenuFormationPicker.hpp"
 
 #include "GamePathEditor.hpp"
 #include "GameFormationEditor.hpp"
@@ -101,8 +102,11 @@ public:
     void                                        OpenPathEditor();
     void                                        ClosePathEditor();
     
-    void                                        OpenFormationEditor();
+    void                                        OpenFormationEditor(LevelWaveSpawnFormation *pFormation);
+    
     void                                        CloseFormationEditor();
+    
+    void                                        PickFormationForFormationEditor();
     
     
     void                                        OpenSpawnMenu();

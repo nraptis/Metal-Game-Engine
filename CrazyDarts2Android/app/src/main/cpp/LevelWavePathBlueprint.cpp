@@ -28,11 +28,13 @@ LevelWavePathBlueprintNode::LevelWavePathBlueprintNode() {
     mGameX = 0.0f;
     mGameY = 0.0f;
     
+    
+    
     mType = -1;
     mWaitTimer = 0;
     mChamferSize = 0;
     
-    mKillTimer = 36;
+    mKillTimer = 8;
 }
 
 LevelWavePathBlueprintNode::~LevelWavePathBlueprintNode() {
@@ -417,7 +419,8 @@ void LevelWavePathBlueprint::Load(FJSONNode *pNode) {
         aPathNode->Load(aPathLoadNode);
         mNodeList.Add(aPathNode);
     }
-    if (gEditor != NULL) {
-        mWave->ApplyEditorConstraints();
-    }
+    //if (gEditor != NULL) {
+    //    mWave->ApplyEditorConstraints();
+    //}
+    
 }

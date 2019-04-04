@@ -211,7 +211,7 @@ void LevelWavePath::AddSegmentBacktrackingFrom(int pIndex) {
         return;
     }
     
-    cPolyPath.Reset();
+    cPolyPath.RemoveAll();
     cPolyPath.Add(&cDumpList);
     cPolyPath.Generate();
     
@@ -296,8 +296,8 @@ void LevelWavePath::AddSegmentBacktrackingFrom(int pIndex) {
     
     mPath.Add(&cSegmentList);
     
-    cSegmentList.Reset();
-    cPolyPath.Reset();
+    cSegmentList.RemoveAll();
+    cPolyPath.RemoveAll();
 }
 
 void LevelWavePath::Draw() {

@@ -464,7 +464,7 @@ char *FJSON::ParseHelperArray(char *pData, FList *pStack, bool *pSuccess) {
                 return NULL;
             }
         } else {
-            if (*aPtr == '}') {
+            if (*aPtr == ']') {
                 ++aPtr;
                 goto ParseHelperArray_COMPLETE;
             }

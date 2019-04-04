@@ -45,15 +45,11 @@ FApp::FApp() {
     
     mThrottleLock = -1;
     mSystemLock = -1;
-    //
-    //
-    //
+    mInterfaceLock = -1;
+    
     mWindowMain.mRoot.mName = "root-main";
     mWindowModal.mRoot.mName = "root-modal";
     mWindowTools.mRoot.mName = "root-tools";
-    //
-    //
-    //
     
     mIsLoading = false;
     mIsLoadingComplete = false;

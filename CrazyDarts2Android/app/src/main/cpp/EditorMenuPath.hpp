@@ -22,7 +22,7 @@ public:
     virtual void                            Notify(void *pSender, const char *pNotification) override;
     virtual void                            Update() override;
     
-    ToolMenuPanel                           *mEditorPanel;
+    ToolMenuPanel                           *mPanelEditor;
     UISegment                               *mSegmentMode;
     
     ToolMenuSectionRow                      *mRowVisuals;

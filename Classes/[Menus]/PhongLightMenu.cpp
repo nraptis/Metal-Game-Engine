@@ -9,7 +9,6 @@
 #include "LightConfigurationScene.hpp"
 #include "PhongLightMenu.hpp"
 #include "PhongConfiguration.hpp"
-#include "PGMainCanvas.hpp"
 #include "FApp.hpp"
 
 PhongLightMenu::PhongLightMenu(PhongConfiguration *pConfiguration) : ToolMenu() {

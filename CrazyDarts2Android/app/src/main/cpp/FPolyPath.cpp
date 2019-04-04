@@ -84,7 +84,7 @@ void FPolyPath::Clear() {
     mFaceCenterRotation = 0;
 }
 
-void FPolyPath::Reset() {
+void FPolyPath::RemoveAll() {
     mCount = 0;
     mRefresh = true;
 }
@@ -477,10 +477,11 @@ bool FPolyPath::Interpolate(FPolyPathInterp *pInterp, float pLength)
                         aLoops--;
                     }
                 }
+            } else {
+                if (pLength > mLength) {
+                    pLength = mLength;
+                }
             }
-            
-            
-            
             
             int aInd1 = 0;
             int aInd2 = 0;

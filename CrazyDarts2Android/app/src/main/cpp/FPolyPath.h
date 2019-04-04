@@ -53,7 +53,7 @@ public:
     virtual ~FPolyPath();
     
     void                            Clear();
-    void                            Reset();
+    void                            RemoveAll();
     
     void                            Add(FPointList *pList);
     void                            Add(float pX, float pY);

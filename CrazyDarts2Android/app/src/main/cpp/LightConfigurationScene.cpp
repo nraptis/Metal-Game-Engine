@@ -44,12 +44,12 @@ LightConfigurationScene::LightConfigurationScene() {
     mCameraMenu = new CameraMenu(&mCamera);
     mCameraMenu->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 320.0f), gDeviceHeight - (gSafeAreaInsetBottom + 280.0f), 320.0f, 280.0f);
     mCameraMenu->SetTitle("Cameras");
-    mCameraMenu->mSliderDummyX->SetValue(&mDummyObjectX);
-    mCameraMenu->mSliderDummyY->SetValue(&mDummyObjectY);
-    mCameraMenu->mSliderDummyZ->SetValue(&mDummyObjectZ);
+    mCameraMenu->mSliderDummyX->SetTarget(&mDummyObjectX);
+    mCameraMenu->mSliderDummyY->SetTarget(&mDummyObjectY);
+    mCameraMenu->mSliderDummyZ->SetTarget(&mDummyObjectZ);
     
-    mCameraMenu->mSliderDummyRot1->SetValue(&mDummyRot1);
-    mCameraMenu->mSliderDummyRot2->SetValue(&mDummyRot2);
+    mCameraMenu->mSliderDummyRot1->SetTarget(&mDummyRot1);
+    mCameraMenu->mSliderDummyRot2->SetTarget(&mDummyRot2);
     
     AddChild(mCameraMenu);
     

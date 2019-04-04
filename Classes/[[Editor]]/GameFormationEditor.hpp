@@ -116,6 +116,7 @@ public:
     LevelWaveSpawnFormationBlueprint            mFormation;
     
     void                                        DeleteNode();
+    void                                        DeleteTracer();
     
     void                                        GridSnap(float *pX, float *pY);
     

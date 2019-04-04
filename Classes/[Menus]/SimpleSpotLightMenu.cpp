@@ -6,20 +6,9 @@
 //  Copyright © 2019 Froggy Studios. All rights reserved.
 //
 
-#include "SimpleSpotLightMenu.hpp"
-
-//
-//  PhongSimpleSpotLightMenu.cpp
-//  MacMetal
-//
-//  Created by Nicholas Raptis on 2/21/19.
-//  Copyright © 2019 Nicholas Raptis. All rights reserved.
-//
-
 #include "LightConfigurationScene.hpp"
 #include "SimpleSpotLightMenu.hpp"
 #include "SpotLightSimpleConfiguration.hpp"
-#include "PGMainCanvas.hpp"
 #include "FApp.hpp"
 
 SimpleSpotLightMenu::SimpleSpotLightMenu(SpotLightSimpleConfiguration *pConfiguration) : ToolMenu() {

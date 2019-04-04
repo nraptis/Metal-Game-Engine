@@ -177,7 +177,9 @@ void GameEditor::Update() {
             Autoload();
             
             //HOOK: We want to jump right to a particular toolset?
-            OpenFormationEditor();
+            //OpenFormationEditor();
+            //PickFormationForFormationEditor();
+            
         }
     }
     
@@ -369,7 +371,11 @@ void GameEditor::KeyDown(int pKey) {
     
     if (pKey == __KEY__F) {
         if (aShift == false && aCtrl == false && aAlt == false) {
-            OpenFormationEditor();
+            OpenFormationEditor(NULL);
+        }
+        
+        if (aShift == false && aCtrl == true && aAlt == false) {
+            PickFormationForFormationEditor();
         }
     }
     
@@ -425,6 +431,12 @@ void GameEditor::Notify(void *pSender, const char *pNotification) {
         
         
     }
+    
+    if (FString("formation_selected") == pNotification) {
+        OpenFormationEditor(gSelectedFormation);
+    }
+    
+    
 }
 
 
@@ -721,13 +733,37 @@ void GameEditor::ClosePathEditor() {
 
 
 
-void GameEditor::OpenFormationEditor() {
+void GameEditor::OpenFormationEditor(LevelWaveSpawnFormation *pFormation) {
     
     mFormationEditor = new GameFormationEditor(this);
     mFormationEditor->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
     mFormationEditor->mName = "{Form Editor}";
     AddChild(mFormationEditor);
-    mFormationEditor->SetUp(NULL);
+    
+    
+
+    
+    
+    LevelWaveSpawnFormationBlueprint *aBBB = NULL;
+    if (pFormation != NULL) {
+        
+        aBBB = new LevelWaveSpawnFormationBlueprint();
+        
+        FJSON aJSON;
+        aJSON.Load(pFormation->mID.c());
+        aBBB->Load(aJSON.mRoot);
+        if (aBBB->IsValid()) {
+            
+        } else {
+            delete aBBB;
+            aBBB = NULL;
+        }
+        
+        
+    }
+    
+    mFormationEditor->SetUp(aBBB);
+    
     SetOverlay(mFormationEditor);
 }
 
@@ -737,6 +773,17 @@ void GameEditor::CloseFormationEditor() {
         mFormationEditor->Kill();
         mFormationEditor = NULL;
     }
+}
+
+void GameEditor::PickFormationForFormationEditor() {
+    
+    EditorMenuFormationPicker *aFormationPicker = new EditorMenuFormationPicker();
+    mToolContainer->AddChild(aFormationPicker);
+    
+    gNotify.Register(this, aFormationPicker, "formation_selected");
+    gNotify.Register(this, aFormationPicker, "formation_canceled");
+    
+    aFormationPicker->SetFrame(gDeviceWidth2 / 2.0f, gDeviceHeight2 / 2.0f, gDeviceWidth2, gDeviceHeight2);
 }
 
 void GameEditor::OpenSpawnMenu() {

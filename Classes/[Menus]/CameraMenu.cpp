@@ -7,7 +7,6 @@
 //
 
 #include "CameraMenu.hpp"
-#include "PGMainCanvas.hpp"
 #include "FApp.hpp"
 
 CameraMenu::CameraMenu(FloatingCamera *pCamera) : ToolMenu() {

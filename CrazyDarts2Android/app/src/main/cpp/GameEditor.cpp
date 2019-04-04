@@ -69,14 +69,19 @@ GameEditor::GameEditor(Game *pGame) {
     //WaveAdd();
     //OpenPathEditor();
     
+    
+    
+    
     LoadConfig();
     //
     OpenSpawnMenu();
     OpenWavePickerMenu();
     OpenSpawnPickerMenu();
-    OpenAttachmentMenu();
+    //OpenAttachmentMenu();
     
-    //
+    
+    
+    
 }
 
 GameEditor::~GameEditor() {
@@ -156,16 +161,8 @@ void GameEditor::Update() {
     mSection.Update();
     
     if (mSection.mCurrentWave) {
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_EXTRA_SLOW )  { mSpeedClassIndex = 0; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_SLOW )        { mSpeedClassIndex = 1; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_MEDIUM_SLOW ) { mSpeedClassIndex = 2; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_MEDIUM )      { mSpeedClassIndex = 3; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_MEDIUM_FAST ) { mSpeedClassIndex = 4; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_FAST )        { mSpeedClassIndex = 5; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_EXTRA_FAST )  { mSpeedClassIndex = 6; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_INSANE )      { mSpeedClassIndex = 7; }
-    } else {
-        mSpeedClassIndex = -1;
+        mSpeedClassIndex = SpeedConvertTypeToSegment(mSection.mCurrentWave->mPath.mSpeedClass);
+        
     }
     
     mAutosaveTimer += 1;
@@ -178,6 +175,11 @@ void GameEditor::Update() {
         mEnqueueInitialLoad--;
         if (mEnqueueInitialLoad <= 0) {
             Autoload();
+            
+            //HOOK: We want to jump right to a particular toolset?
+            //OpenFormationEditor();
+            //PickFormationForFormationEditor();
+            
         }
     }
     
@@ -248,9 +250,6 @@ void GameEditor::Draw() {
     bool aIsOnMainTools = (mOverlay == mToolContainer);
     bool aIsOnPathTools = (mOverlay == mPathEditor);
     
-    
-    
-    
     gGame->DrawTransform();
     
     Graphics::PipelineStateSetShape2DNoBlending();
@@ -259,7 +258,6 @@ void GameEditor::Draw() {
     mEditorWave.Draw();
     
     DrawTransform();
-    
     
     Graphics::PipelineStateSetShape2DAlphaBlending();
     
@@ -270,11 +268,8 @@ void GameEditor::Draw() {
         Graphics::DrawRect(mGameAreaLeft, mGameAreaBottom, mGameAreaRight - mGameAreaLeft, gDeviceHeight - mGameAreaBottom);
         Graphics::DrawRect(mGameAreaLeft + (mGameAreaRight - mGameAreaLeft), 0.0f, gDeviceWidth - (mGameAreaLeft + (mGameAreaRight - mGameAreaLeft)), gDeviceHeight);
         
-        
-        
-        
-        float aMarkerMult = 0.75f;
-        float aMarkerOpacity = 0.4f;
+        float aMarkerMult = 1.0f;
+        float aMarkerOpacity = 0.75f;
         
         Graphics::SetColor(0.125f * aMarkerMult, 1.0f * aMarkerMult, 0.056f * aMarkerMult, aMarkerOpacity);
         Graphics::DrawLine(mSpawnZoneLeft, mSpawnZoneTop, mSpawnZoneRight, mSpawnZoneTop);
@@ -307,19 +302,9 @@ void GameEditor::Draw() {
         Graphics::DrawLine(mGameAreaLeft, mGameAreaTop, mGameAreaLeft, mGameAreaBottom);
         Graphics::DrawLine(mGameAreaRight, mGameAreaTop, mGameAreaRight, mGameAreaBottom);
         
-        
         Graphics::SetColor();
         mSection.Draw();
-        
     }
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     Graphics::PipelineStateSetSpritePremultipliedBlending();
@@ -354,13 +339,11 @@ void GameEditor::KeyDown(int pKey) {
         printf("Game doesn't exist?\n");
         return;
     }
-    if (mPathEditor != NULL) {
-        if (mOverlay == mPathEditor) {
-            return;
-        }
-        if (mOverlay == mFormationEditor) {
-            return;
-        }
+    if (mPathEditor != NULL && mOverlay == mPathEditor) {
+        return;
+    }
+    if (mFormationEditor != NULL && mOverlay == mFormationEditor) {
+        return;
     }
     
     bool aShift = gKeyDownShift;
@@ -388,7 +371,11 @@ void GameEditor::KeyDown(int pKey) {
     
     if (pKey == __KEY__F) {
         if (aShift == false && aCtrl == false && aAlt == false) {
-            OpenFormationEditor();
+            OpenFormationEditor(NULL);
+        }
+        
+        if (aShift == false && aCtrl == true && aAlt == false) {
+            PickFormationForFormationEditor();
         }
     }
     
@@ -444,6 +431,12 @@ void GameEditor::Notify(void *pSender, const char *pNotification) {
         
         
     }
+    
+    if (FString("formation_selected") == pNotification) {
+        OpenFormationEditor(gSelectedFormation);
+    }
+    
+    
 }
 
 
@@ -563,23 +556,45 @@ void GameEditor::SetOverlay(FCanvas *pCanvas) {
     }
 }
 
+int GameEditor::SpeedConvertSegmentToType(int pSegmentIndex) {
+    int aResult = WAVE_SPEED_MEDIUM_FAST;
+    if (pSegmentIndex == 0) { aResult = WAVE_SPEED_EXTRA_SLOW; }
+    if (pSegmentIndex == 1) { aResult = WAVE_SPEED_SLOW; }
+    if (pSegmentIndex == 2) { aResult = WAVE_SPEED_MEDIUM_SLOW; }
+    if (pSegmentIndex == 3) { aResult = WAVE_SPEED_MEDIUM; }
+    if (pSegmentIndex == 4) { aResult = WAVE_SPEED_MEDIUM_FAST; }
+    if (pSegmentIndex == 5) { aResult = WAVE_SPEED_FAST; }
+    if (pSegmentIndex == 6) { aResult = WAVE_SPEED_EXTRA_FAST; }
+    if (pSegmentIndex == 7) { aResult = WAVE_SPEED_INSANE; }
+    return aResult;
+}
+
+int GameEditor::SpeedConvertTypeToSegment(int pType) {
+    int aResult = 0;
+    if (pType == WAVE_SPEED_EXTRA_SLOW)   { aResult = 0; }
+    if (pType == WAVE_SPEED_SLOW)         { aResult = 1; }
+    if (pType == WAVE_SPEED_MEDIUM_SLOW)  { aResult = 2; }
+    if (pType == WAVE_SPEED_MEDIUM)       { aResult = 3; }
+    if (pType == WAVE_SPEED_MEDIUM_FAST)  { aResult = 4; }
+    if (pType == WAVE_SPEED_FAST)         { aResult = 5; }
+    if (pType == WAVE_SPEED_EXTRA_FAST)   { aResult = 6; }
+    if (pType == WAVE_SPEED_INSANE)       { aResult = 7; }
+    return aResult;
+}
+
 void GameEditor::RefreshPlayback() {
     
     if (mSection.mCurrentWave != NULL) {
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_EXTRA_SLOW)   { mSpeedClassIndex = 0; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_SLOW)         { mSpeedClassIndex = 1; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_MEDIUM_SLOW)  { mSpeedClassIndex = 2; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_MEDIUM)       { mSpeedClassIndex = 3; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_MEDIUM_FAST)  { mSpeedClassIndex = 4; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_FAST)         { mSpeedClassIndex = 5; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_EXTRA_FAST)   { mSpeedClassIndex = 6; }
-        if (mSection.mCurrentWave->mPath.mSpeedClass == WAVE_SPEED_INSANE)       { mSpeedClassIndex = 7; }
+        mSpeedClassIndex = SpeedConvertTypeToSegment(mSection.mCurrentWave->mPath.mSpeedClass);
+    }
+    
+    
+    if (mSection.mCurrentWave != NULL) {
+        mSection.mCurrentWave->Build();
     }
     
     if (mEditorPlaybackWaveOnly) {
-        if (mSection.mCurrentWave != NULL) {
-            mSection.mCurrentWave->Build();
-        }
+        
     } else {
         
         int aWaveIndex = WaveIndex();
@@ -597,14 +612,8 @@ void GameEditor::RefreshPlayback() {
 
 void GameEditor::RefreshPlaybackSpeed() {
     if (mSection.mCurrentWave != NULL) {
-        if (mSpeedClassIndex == 0) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_EXTRA_SLOW; }
-        if (mSpeedClassIndex == 1) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_SLOW; }
-        if (mSpeedClassIndex == 2) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_MEDIUM_SLOW; }
-        if (mSpeedClassIndex == 3) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_MEDIUM; }
-        if (mSpeedClassIndex == 4) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_MEDIUM_FAST; }
-        if (mSpeedClassIndex == 5) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_FAST; }
-        if (mSpeedClassIndex == 6) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_EXTRA_FAST; }
-        if (mSpeedClassIndex == 7) { mSection.mCurrentWave->mPath.mSpeedClass = WAVE_SPEED_INSANE; }
+        
+        mSection.mCurrentWave->mPath.mSpeedClass = SpeedConvertSegmentToType(mSpeedClassIndex);
     }
 }
 
@@ -724,13 +733,37 @@ void GameEditor::ClosePathEditor() {
 
 
 
-void GameEditor::OpenFormationEditor() {
+void GameEditor::OpenFormationEditor(LevelWaveSpawnFormation *pFormation) {
     
     mFormationEditor = new GameFormationEditor(this);
     mFormationEditor->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
     mFormationEditor->mName = "{Form Editor}";
     AddChild(mFormationEditor);
-    mFormationEditor->SetUp(NULL);
+    
+    
+
+    
+    
+    LevelWaveSpawnFormationBlueprint *aBBB = NULL;
+    if (pFormation != NULL) {
+        
+        aBBB = new LevelWaveSpawnFormationBlueprint();
+        
+        FJSON aJSON;
+        aJSON.Load(pFormation->mID.c());
+        aBBB->Load(aJSON.mRoot);
+        if (aBBB->IsValid()) {
+            
+        } else {
+            delete aBBB;
+            aBBB = NULL;
+        }
+        
+        
+    }
+    
+    mFormationEditor->SetUp(aBBB);
+    
     SetOverlay(mFormationEditor);
 }
 
@@ -740,6 +773,17 @@ void GameEditor::CloseFormationEditor() {
         mFormationEditor->Kill();
         mFormationEditor = NULL;
     }
+}
+
+void GameEditor::PickFormationForFormationEditor() {
+    
+    EditorMenuFormationPicker *aFormationPicker = new EditorMenuFormationPicker();
+    mToolContainer->AddChild(aFormationPicker);
+    
+    gNotify.Register(this, aFormationPicker, "formation_selected");
+    gNotify.Register(this, aFormationPicker, "formation_canceled");
+    
+    aFormationPicker->SetFrame(gDeviceWidth2 / 2.0f, gDeviceHeight2 / 2.0f, gDeviceWidth2, gDeviceHeight2);
 }
 
 void GameEditor::OpenSpawnMenu() {
@@ -861,12 +905,18 @@ void GameEditor::Save(const char *pFile) {
 void GameEditor::Load(const char *pFile) {
     
     ClosePathEditor();
+    CloseFormationEditor();
     
     mEditorWave.mPath.Reset();
     
     FJSON aJSON;
     aJSON.Load(pFile);
     mSection.Load(aJSON.mRoot);
+    
+    //Moved out of load procedure...
+    EnumList(LevelWaveBlueprint, aWaveBlueprint, mSection.mWaveList) {
+        aWaveBlueprint->ApplyEditorConstraints();
+    }
 }
 
 

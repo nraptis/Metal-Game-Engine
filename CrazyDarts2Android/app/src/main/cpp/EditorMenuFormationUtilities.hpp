@@ -26,10 +26,41 @@ public:
     UIButton                                *mButtonResetFormation;
     
     
+    ToolMenuPanel                           *mPanelTracers;
+    
+    ToolMenuSectionRow                      *mRowTracers1;
+    UICheckBox                              *mCheckBoxTracersEnabled;
+    
+    UISegment                               *mSegmentCurrentTracer;
+    
+    UIButton                                *mButtonDeleteTracer;
+    UISegment                               *mSegmentTracersMode;
+    
+    
+    ToolMenuPanel                           *mPanelTracerTweaks;
+    UIStepper                               *mStepperTracerSpawnCount;
+    
+    UISegment                               *mSegmentTracersSpeed;
+    
     
     
     GameFormationEditor                     *mEditor;
+    
+    
+    
+    UIStepper                               *mStepperTestIndex;
+    
+    
 };
 
 
-#endif /* EditorMenuFormationUtilities_hpp */
+#endif
+
+
+
+
+
+
+
+
+

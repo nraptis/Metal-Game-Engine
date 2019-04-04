@@ -8,7 +8,6 @@
 
 
 #include "SoundConfigMenu.hpp"
-#include "PGMainCanvas.hpp"
 #include "FApp.hpp"
 #include "core_includes.h"
 #include "GFXApp.hpp"
@@ -37,20 +36,20 @@ SoundConfigMenu::SoundConfigMenu() : ToolMenu() {
     
     mSliderSoundVolume = new UISlider();
     mSliderSoundVolume->SetText("Sound");
-    mSliderSoundVolume->SetValue(&gSoundVolume);
+    mSliderSoundVolume->SetTarget(&gSoundVolume);
     mSliderSoundVolume->SetRange(0.0f, 1.0f);
     mPanelVolume->AddSection(mSliderSoundVolume);
     
     
     mSliderMusicVolume = new UISlider();
     mSliderMusicVolume->SetText("Music");
-    mSliderMusicVolume->SetValue(&gMusicVolume);
+    mSliderMusicVolume->SetTarget(&gMusicVolume);
     mSliderMusicVolume->SetRange(0.0f, 1.0f);
     mPanelVolume->AddSection(mSliderMusicVolume);
     
     mSliderPitch = new UISlider();
     mSliderPitch->SetText("Pitch");
-    mSliderPitch->SetValue(&mPitch);
+    mSliderPitch->SetTarget(&mPitch);
     mSliderPitch->SetRange(0.25f, 3.0f);
     mPanelVolume->AddSection(mSliderPitch);
     

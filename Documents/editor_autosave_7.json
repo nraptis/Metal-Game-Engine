@@ -6,6 +6,8 @@
 			"smooth": true,
 			"speed_class": 300,
 			"spawn_spacing": 200,
+			"creation_type": 0,
+			"creation_delay": 200,
 			"path": [
 				{
 					"x_con": 150,
@@ -14,8 +16,8 @@
 					"y_con_offset": 1.000000
 				},
 				{
-					"x": -26.850172,
-					"y": 19.337502
+					"x": -26.850180,
+					"y": 19.337503
 				},
 				{
 					"x_con": 150,
@@ -137,6 +139,8 @@
 			"smooth": true,
 			"speed_class": -200,
 			"spawn_spacing": 88,
+			"creation_type": 0,
+			"creation_delay": 200,
 			"path": [
 				{
 					"x_con": 200,
@@ -190,6 +194,8 @@
 			"smooth": true,
 			"speed_class": -100,
 			"spawn_spacing": 88,
+			"creation_type": 0,
+			"creation_delay": 200,
 			"path": [
 				{
 					"x_con": 300,
@@ -200,8 +206,8 @@
 					"y_con": 300
 				},
 				{
-					"x": 12.936200,
-					"y": 24.660297
+					"x": 12.936202,
+					"y": 24.660299
 				},
 				{
 					"x_con": 300,
@@ -260,6 +266,8 @@
 			"smooth": true,
 			"speed_class": 0,
 			"spawn_spacing": 88,
+			"creation_type": 0,
+			"creation_delay": 200,
 			"path": [
 				{
 					"x_con": 400,
@@ -331,6 +339,8 @@
 			"smooth": true,
 			"speed_class": 100,
 			"spawn_spacing": 88,
+			"creation_type": 0,
+			"creation_delay": 200,
 			"path": [
 				{
 					"x_con": 500,
@@ -372,6 +382,8 @@
 			"smooth": true,
 			"speed_class": 200,
 			"spawn_spacing": 88,
+			"creation_type": 0,
+			"creation_delay": 200,
 			"path": [
 				{
 					"x_con": 600,
@@ -413,6 +425,8 @@
 			"smooth": true,
 			"speed_class": 300,
 			"spawn_spacing": 88,
+			"creation_type": 0,
+			"creation_delay": 200,
 			"path": [
 				{
 					"x_con": 700,
@@ -450,6 +464,8 @@
 			"smooth": true,
 			"speed_class": -300,
 			"spawn_spacing": 88,
+			"creation_type": 0,
+			"creation_delay": 200,
 			"path": [
 				{
 					"x_con": 800,
@@ -487,6 +503,8 @@
 			"smooth": true,
 			"speed_class": -200,
 			"spawn_spacing": 88,
+			"creation_type": 0,
+			"creation_delay": 200,
 			"path": [
 				{
 					"x_con": 850,
@@ -528,6 +546,8 @@
 			"smooth": true,
 			"speed_class": 0,
 			"spawn_spacing": 88,
+			"creation_type": 0,
+			"creation_delay": 200,
 			"path": [
 				{
 					"x_con": 300,
@@ -573,6 +593,8 @@
 			"smooth": true,
 			"speed_class": 0,
 			"spawn_spacing": 88,
+			"creation_type": 0,
+			"creation_delay": 200,
 			"path": [
 				{
 					"x_con": 850,
@@ -830,6 +852,8 @@
 			"smooth": false,
 			"speed_class": 0,
 			"spawn_spacing": 88,
+			"creation_type": 0,
+			"creation_delay": 200,
 			"path": [
 				{
 					"x_con": 200,
@@ -895,6 +919,8 @@
 			"smooth": true,
 			"speed_class": 0,
 			"spawn_spacing": 88,
+			"creation_type": 0,
+			"creation_delay": 200,
 			"path": [
 				{
 					"x_con": 400,
@@ -940,6 +966,8 @@
 			"smooth": true,
 			"speed_class": 0,
 			"spawn_spacing": 88,
+			"creation_type": 0,
+			"creation_delay": 200,
 			"path": [
 				{
 					"x_con": 300,
@@ -1013,6 +1041,8 @@
 			"smooth": true,
 			"speed_class": 0,
 			"spawn_spacing": 88,
+			"creation_type": 0,
+			"creation_delay": 200,
 			"path": [
 				{
 					"x_con": 200,
@@ -1218,6 +1248,8 @@
 			"smooth": true,
 			"speed_class": 0,
 			"spawn_spacing": 88,
+			"creation_type": 0,
+			"creation_delay": 200,
 			"path": [
 				{
 					"x_con": 200,

@@ -21,6 +21,7 @@ add_library(gl2jni SHARED
         EditorMenuFlow.cpp
         EditorMenuFormation.cpp
         EditorMenuFormationPicker.cpp
+        EditorMenuFormationPickerCell.cpp
         EditorMenuFormationUtilities.cpp
         EditorMenuPath.cpp
         EditorMenuPathControl.cpp
@@ -63,6 +64,7 @@ add_library(gl2jni SHARED
         FModelDataSequence.cpp
         FNotificationCenter.cpp
         FObject.cpp
+        FormationCollection.cpp
         FParticle.cpp
         FPoint.cpp
         FPointList.cpp
@@ -118,6 +120,7 @@ add_library(gl2jni SHARED
         LevelWaveSpawnFormationNode.cpp
         LevelWaveSpawnFormationTracer.cpp
         LevelWaveSpawnFormationTracerBlueprint.cpp
+        LevelWaveSpawnFormationTracerNode.cpp
         LightConfigurationScene.cpp
         OpenGLEngine.cpp
         os_core_app_shell_android.cpp
@@ -183,7 +186,6 @@ add_library(gl2jni SHARED
         UIStepper.cpp
         UITextBox.cpp
         Util_ScreenFrame.cpp
-
         )
 
 # add lib dependencies

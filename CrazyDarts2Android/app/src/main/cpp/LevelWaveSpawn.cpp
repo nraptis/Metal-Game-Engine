@@ -81,18 +81,15 @@ void LevelWaveSpawn::Restart() {
 
 void LevelWaveSpawn::Update() {
     if (mPathIndex >= 0 && mPathIndex < mPath->mPath.mCount) {
-        
         mBaseX = mPath->mPath.mX[mPathIndex];
         mBaseY = mPath->mPath.mY[mPathIndex];
         mDistanceTraveled = mPath->mDist.mData[mPathIndex];
-        
     } else {
         if (mPath->mPath.mCount > 0 && mPathIndex > 0) {
             mBaseX = mPath->mPath.mX[mPath->mPath.mCount - 1];
             mBaseY = mPath->mPath.mY[mPath->mPath.mCount - 1];
             mDistanceTraveled = mPath->mDist.mData[mPath->mDist.mCount - 1];
         }
-        
     }
     if (mObject != NULL) {
         mObject->mTransform.mX = mBaseX;

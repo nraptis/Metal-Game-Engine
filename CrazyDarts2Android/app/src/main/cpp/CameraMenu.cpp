@@ -7,7 +7,6 @@
 //
 
 #include "CameraMenu.hpp"
-#include "PGMainCanvas.hpp"
 #include "FApp.hpp"
 
 CameraMenu::CameraMenu(FloatingCamera *pCamera) : ToolMenu() {
@@ -33,7 +32,7 @@ CameraMenu::CameraMenu(FloatingCamera *pCamera) : ToolMenu() {
     //
     mSliderViewRotationPrimary = new UISlider();
     mSliderViewRotationPrimary->SetText("R-1");
-    mSliderViewRotationPrimary->SetValue(&mCamera->mRotationPrimary);
+    mSliderViewRotationPrimary->SetTarget(&mCamera->mRotationPrimary);
     //mSliderViewRotationPrimary->SetRange(-180.0f, 360.0f);
     mSliderViewRotationPrimary->SetRange(0.0f, 360.0f);
     mPanelView->AddSection(mSliderViewRotationPrimary);
@@ -41,14 +40,14 @@ CameraMenu::CameraMenu(FloatingCamera *pCamera) : ToolMenu() {
     //
     mSliderViewRotationSecondary = new UISlider();
     mSliderViewRotationSecondary->SetText("R-1");
-    mSliderViewRotationSecondary->SetValue(&mCamera->mRotationSecondary);
+    mSliderViewRotationSecondary->SetTarget(&mCamera->mRotationSecondary);
     mSliderViewRotationSecondary->SetRange(-80.0f, 80.0f);
     mPanelView->AddSection(mSliderViewRotationSecondary);
     //
     //
     mSliderViewDistance = new UISlider();
     mSliderViewDistance->SetText("Distance");
-    mSliderViewDistance->SetValue(&mCamera->mDistance);
+    mSliderViewDistance->SetTarget(&mCamera->mDistance);
     mSliderViewDistance->SetRange(1.0f, 40.0f);
     mPanelView->AddSection(mSliderViewDistance);
     
@@ -58,13 +57,13 @@ CameraMenu::CameraMenu(FloatingCamera *pCamera) : ToolMenu() {
     AddSection(mPanelTarget);
     
     mSliderDummyRot1 = new UISlider();
-    mSliderDummyRot1->SetValue(&mCamera->mTarget.mX);
+    mSliderDummyRot1->SetTarget(&mCamera->mTarget.mX);
     mSliderDummyRot1->SetRange(0.0f, 360.0f);
     mSliderDummyRot1->SetText("MROT1:");
     mPanelTarget->AddSection(mSliderDummyRot1);
     
     mSliderDummyRot2 = new UISlider();
-    mSliderDummyRot2->SetValue(&mCamera->mTarget.mX);
+    mSliderDummyRot2->SetTarget(&mCamera->mTarget.mX);
     mSliderDummyRot2->SetRange(0.0f, 360.0f);
     mSliderDummyRot2->SetText("MROT2:");
     mPanelTarget->AddSection(mSliderDummyRot2);

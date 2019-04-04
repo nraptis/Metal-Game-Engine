@@ -6,21 +6,9 @@
 //  Copyright © 2019 Froggy Studios. All rights reserved.
 //
 
-#include "DiffuseLightMenu.hpp"
-
-
-//
-//  PhongDiffuseLightMenu.cpp
-//  MacMetal
-//
-//  Created by Nicholas Raptis on 2/21/19.
-//  Copyright © 2019 Nicholas Raptis. All rights reserved.
-//
-
 #include "LightConfigurationScene.hpp"
 #include "DiffuseLightMenu.hpp"
 #include "DiffuseConfiguration.hpp"
-#include "PGMainCanvas.hpp"
 #include "FApp.hpp"
 
 DiffuseLightMenu::DiffuseLightMenu(DiffuseConfiguration *pConfiguration) : ToolMenu() {

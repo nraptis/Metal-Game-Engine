@@ -32,7 +32,7 @@ public:
     void                                        SetRange(float pMin, float pMax);
 
     float                                       GetValue();
-    void                                        SetValue(float *pTargetValue);
+    void                                        SetTarget(float *pTargetValue);
     float                                       *mTargetValue;
     float                                       mValue;
     

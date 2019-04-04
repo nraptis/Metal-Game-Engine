@@ -19,18 +19,18 @@ EditorMenuPath::EditorMenuPath(GamePathEditor *pEditor) : ToolMenu() {
     SetTitle("Path Tools");
     SetScrollMode(true);
     
-    mEditorPanel = new ToolMenuPanel();
-    mEditorPanel->SetTitle("Edit Paths");
-    AddSection(mEditorPanel);
+    mPanelEditor = new ToolMenuPanel();
+    mPanelEditor->SetTitle("Edit Paths");
+    AddSection(mPanelEditor);
     
     mSegmentMode = new UISegment();
     mSegmentMode->SetSegmentCount(3);
     mSegmentMode->SetTitles("Add Point", "Move Point", "Select Point");
     mSegmentMode->SetTarget(&mEditor->mPathMode);
-    mEditorPanel->AddSection(mSegmentMode);
+    mPanelEditor->AddSection(mSegmentMode);
     
     mRowVisuals = new ToolMenuSectionRow();
-    mEditorPanel->AddSection(mRowVisuals);
+    mPanelEditor->AddSection(mRowVisuals);
     
     mCheckBoxSmooth = new UICheckBox();
     mCheckBoxSmooth->SetText("Smoothing");

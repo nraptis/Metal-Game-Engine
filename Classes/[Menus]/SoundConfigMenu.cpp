@@ -8,7 +8,6 @@
 
 
 #include "SoundConfigMenu.hpp"
-#include "PGMainCanvas.hpp"
 #include "FApp.hpp"
 #include "core_includes.h"
 #include "GFXApp.hpp"

@@ -9,7 +9,6 @@
 #include "LightConfigurationScene.hpp"
 #include "PhongLightMenu.hpp"
 #include "PhongConfiguration.hpp"
-#include "PGMainCanvas.hpp"
 #include "FApp.hpp"
 
 PhongLightMenu::PhongLightMenu(PhongConfiguration *pConfiguration) : ToolMenu() {
@@ -24,7 +23,7 @@ PhongLightMenu::PhongLightMenu(PhongConfiguration *pConfiguration) : ToolMenu() 
     AddSection(mSpecularPanel);
     
     mSliderSpecularShininess = new UISlider();
-    mSliderSpecularShininess->SetValue(&pConfiguration->mUniform.mLight.mShininess);
+    mSliderSpecularShininess->SetTarget(&pConfiguration->mUniform.mLight.mShininess);
     mSliderSpecularShininess->SetRange(0.0f, 128.0f);
     mSliderSpecularShininess->SetText("Shininess:");
     mSpecularPanel->AddSection(mSliderSpecularShininess);
@@ -35,14 +34,14 @@ PhongLightMenu::PhongLightMenu(PhongConfiguration *pConfiguration) : ToolMenu() 
     AddSection(mDirectionPanel);
     
     mSliderDirectionRotationPrimary = new UISlider();
-    mSliderDirectionRotationPrimary->SetValue(&pConfiguration->mDirectionRotationPrimary);
+    mSliderDirectionRotationPrimary->SetTarget(&pConfiguration->mDirectionRotationPrimary);
     mSliderDirectionRotationPrimary->SetRange(0.0f, 360.0f);
     mSliderDirectionRotationPrimary->SetText("Dir-R1:");
     mDirectionPanel->AddSection(mSliderDirectionRotationPrimary);
     
     
     mSliderDirectionRotationSecondary = new UISlider();
-    mSliderDirectionRotationSecondary->SetValue(&pConfiguration->mDirectionRotationSecondary);
+    mSliderDirectionRotationSecondary->SetTarget(&pConfiguration->mDirectionRotationSecondary);
     mSliderDirectionRotationSecondary->SetRange(0.0f, 360.0f);
     mSliderDirectionRotationSecondary->SetText("Dir-R2:");
     mDirectionPanel->AddSection(mSliderDirectionRotationSecondary);
@@ -61,19 +60,19 @@ PhongLightMenu::PhongLightMenu(PhongConfiguration *pConfiguration) : ToolMenu() 
     AddSection(mColorPanel);
     
     mSliderColorR = new UISlider();
-    mSliderColorR->SetValue(&pConfiguration->mUniform.mLight.mRed);
+    mSliderColorR->SetTarget(&pConfiguration->mUniform.mLight.mRed);
     mSliderColorR->SetRange(0.0f, 1.0f);
     mSliderColorR->SetText("Red:");
     mColorPanel->AddSection(mSliderColorR);
     
     mSliderColorG = new UISlider();
-    mSliderColorG->SetValue(&pConfiguration->mUniform.mLight.mGreen);
+    mSliderColorG->SetTarget(&pConfiguration->mUniform.mLight.mGreen);
     mSliderColorG->SetRange(0.0f, 1.0f);
     mSliderColorG->SetText("Green:");
     mColorPanel->AddSection(mSliderColorG);
     
     mSliderColorB = new UISlider();
-    mSliderColorB->SetValue(&pConfiguration->mUniform.mLight.mBlue);
+    mSliderColorB->SetTarget(&pConfiguration->mUniform.mLight.mBlue);
     mSliderColorB->SetRange(0.0f, 1.0f);
     mSliderColorB->SetText("Blue:");
     mColorPanel->AddSection(mSliderColorB);
@@ -90,19 +89,19 @@ PhongLightMenu::PhongLightMenu(PhongConfiguration *pConfiguration) : ToolMenu() 
     AddSection(mIntensityPanel);
     
     mSliderIntensityAmbient = new UISlider();
-    mSliderIntensityAmbient->SetValue(&pConfiguration->mUniform.mLight.mAmbientIntensity);
+    mSliderIntensityAmbient->SetTarget(&pConfiguration->mUniform.mLight.mAmbientIntensity);
     mSliderIntensityAmbient->SetRange(0.0f, 1.0f);
     mSliderIntensityAmbient->SetText("Ambient:");
     mIntensityPanel->AddSection(mSliderIntensityAmbient);
     
     mSliderIntensityDiffuse = new UISlider();
-    mSliderIntensityDiffuse->SetValue(&pConfiguration->mUniform.mLight.mDiffuseIntensity);
+    mSliderIntensityDiffuse->SetTarget(&pConfiguration->mUniform.mLight.mDiffuseIntensity);
     mSliderIntensityDiffuse->SetRange(0.0f, 1.0f);
     mSliderIntensityDiffuse->SetText("Diffuse:");
     mIntensityPanel->AddSection(mSliderIntensityDiffuse);
     
     mSliderIntensitySpecular = new UISlider();
-    mSliderIntensitySpecular->SetValue(&pConfiguration->mUniform.mLight.mSpecularIntensity);
+    mSliderIntensitySpecular->SetTarget(&pConfiguration->mUniform.mLight.mSpecularIntensity);
     mSliderIntensitySpecular->SetRange(0.0f, 5.0f);
     mSliderIntensitySpecular->SetText("Specular:");
     mIntensityPanel->AddSection(mSliderIntensitySpecular);

@@ -315,6 +315,9 @@ void GameFormationEditor::KeyDown(int pKey) {
     if (pKey == __KEY__2) { mFormation.mCurrentTracerIndex = 1; }
     if (pKey == __KEY__3) { mFormation.mCurrentTracerIndex = 2; }
     if (pKey == __KEY__4) { mFormation.mCurrentTracerIndex = 3; }
+    if (pKey == __KEY__5) { mFormation.mCurrentTracerIndex = 4; }
+    if (pKey == __KEY__6) { mFormation.mCurrentTracerIndex = 5; }
+    
     
     if (pKey == __KEY__P) { Print(); }
     if (pKey == __KEY__T) { mTracerEnabled = !mTracerEnabled; }
@@ -360,9 +363,21 @@ void GameFormationEditor::KeyDown(int pKey) {
     if (pKey == __KEY__DELETE) {
         if (aShift == false && aCtrl == false && aAlt == false) {
             if (mTracerEnabled == true) {
-                mFormation.TracerRemove();
+                mFormation.TracerRemovePoint();
             } else {
                 mFormation.Remove(mFormation.mSelectedNodeIndex);
+            }
+        }
+        
+        if (aShift == false && aCtrl == true && aAlt == false) {
+            if (mTracerEnabled == true) {
+                mFormation.TracerClear();
+                Refresh();
+                
+            } else {
+                for (int i=mFormation.mNodeList.mCount - 1;i>=0;i--) {
+                    mFormation.Remove(i);
+                }
             }
         }
     }
@@ -449,10 +464,11 @@ void GameFormationEditor::SetUp(LevelWaveSpawnFormationBlueprint *pFormation) {
 void GameFormationEditor::Close() {
     
     mFormation.Print();
-    
     mFormation.Clear();
     mEditorFormation.Reset();
-    mEditor->ClosePathEditor();
+    
+    mEditor->CloseFormationEditor();
+
 }
 
 void GameFormationEditor::Clear() {
@@ -567,6 +583,10 @@ void GameFormationEditor::DeleteNode() {
     mFormation.Remove(mFormation.mSelectedNodeIndex);
 }
 
+void GameFormationEditor::DeleteTracer() {
+    mFormation.TracerClear();
+    Refresh();
+}
 
 void GameFormationEditor::GridSnap(float *pX, float *pY) {
     

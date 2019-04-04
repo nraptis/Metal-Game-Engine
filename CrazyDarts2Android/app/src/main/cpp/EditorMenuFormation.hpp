@@ -12,6 +12,9 @@
 #include "ToolMenu.hpp"
 
 
+
+
+
 class GameFormationEditor;
 class EditorMenuFormation : public ToolMenu {
 public:
@@ -22,38 +25,54 @@ public:
     virtual void                            Notify(void *pSender, const char *pNotification) override;
     virtual void                            Update() override;
     
-    ToolMenuPanel                           *mEditorPanel;
+    ToolMenuPanel                           *mPanelMain;
+    
+    ToolMenuSectionRow                      *mRowMain1;
+    UIButton                                *mButtonSaveFormation;
+    UIButton                                *mButtonLoadFormation;
+    UIButton                                *mButtonPrintFormation;
+    
     UISegment                               *mSegmentMode;
     
-    ToolMenuSectionRow                      *mRowVisuals;
-    UICheckBox                              *mCheckBoxSmooth;
-    UICheckBox                              *mCheckBoxPreview;
-    
-    ToolMenuPanel                           *mPointsPanel;
-    
-    UIStepper                               *mStepperWait;
-    UIStepper                               *mStepperChamfer;
-    
-    ToolMenuSectionRow                      *mRowPointOptions;
-    UIButton                                *mButtonDeletePoint;
-    UIButton                                *mButtonBreakXConstraint;
-    UIButton                                *mButtonBreakYConstraint;
-    
-    ToolMenuPanel                           *mConstraintPanel;
+    UISlider                                *mSliderRotation;
     
 
     
-    ToolMenuSectionRow                      *mRowSnapX;
-    UICheckBox                              *mCheckBoxSnapX;
-    UIButton                                *mButtonSnapPrevX;
-    UIButton                                *mButtonSnapNextX;
     
-    ToolMenuSectionRow                      *mRowSnapY;
-    UICheckBox                              *mCheckBoxSnapY;
-    UIButton                                *mButtonSnapPrevY;
-    UIButton                                *mButtonSnapNextY;
+    ToolMenuPanel                           *mPanelNodes;
+    ToolMenuSectionRow                      *mRowNodes1;
+    UIButton                                *mButtonDeleteNode;
+    
+    ToolMenuSectionRow                      *mRowNodes2;
+    ToolMenuSectionRow                      *mRowNodes3;
+    
+    
+    ToolMenuPanel                           *mPanelGrid;
+    UISegment                               *mSegmentGridType;
+    
+    ToolMenuPanel                           *mPanelRectGrid;
+    UIStepper                               *mStepperRectGridWidth;
+    UIStepper                               *mStepperRectGridHeight;
+    UIStepper                               *mStepperRectGridSpacing;
+    
+    ToolMenuPanel                           *mPanelCircleGrid;
+    UIStepper                               *mStepperCircleGridCount;
+    UIStepper                               *mStepperCircleRadius;
+    
+    
+    
+
+    ToolMenuPanel                           *mPanelTestBottomBuffer;
+    ToolMenuSectionRow                      *mTestBufferRow1;
+    ToolMenuSectionRow                      *mTestBufferRow2;
+    UIButton                                *mButtonCreep1;
+    UIButton                                *mButtonCreep2;
+    UIButton                                *mButtonCreep3;
+    
     
     GameFormationEditor                     *mEditor;
+    
+    void                                    RefreshGridPanels();
     
 };
 

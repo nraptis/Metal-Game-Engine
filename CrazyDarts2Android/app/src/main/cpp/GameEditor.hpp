@@ -18,6 +18,7 @@
 #include "EditorMenuWavesPicker.hpp"
 #include "EditorMenuSpawnPicker.hpp"
 #include "EditorMenuAttachment.hpp"
+#include "EditorMenuFormationPicker.hpp"
 
 #include "GamePathEditor.hpp"
 #include "GameFormationEditor.hpp"
@@ -94,11 +95,18 @@ public:
     int                                         SpawnIndex();
     LevelWaveSpawnBlueprint                     *SpawnGet();
     
+    int                                         SpeedConvertSegmentToType(int pSegmentIndex);
+    int                                         SpeedConvertTypeToSegment(int pType);
+    
+    
     void                                        OpenPathEditor();
     void                                        ClosePathEditor();
     
-    void                                        OpenFormationEditor();
+    void                                        OpenFormationEditor(LevelWaveSpawnFormation *pFormation);
+    
     void                                        CloseFormationEditor();
+    
+    void                                        PickFormationForFormationEditor();
     
     
     void                                        OpenSpawnMenu();

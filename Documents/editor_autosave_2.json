@@ -28,7 +28,7 @@
 			],
 			"spawn": [
 				{
-					"spacing_offset": 1
+					"spacing_offset": -2
 				}
 			]
 		},
