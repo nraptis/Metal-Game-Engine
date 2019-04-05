@@ -23,6 +23,23 @@
 #include "ToolMenuSection.hpp"
 #include "ToolMenuPanel.hpp"
 
+class ToolMenu;
+class ToolMenuScrollCanvas : public FScrollCanvas {
+public:
+    ToolMenuScrollCanvas();
+    virtual ~ToolMenuScrollCanvas();
+    virtual void                            TouchDown(float pX, float pY, void *pData) override;
+    ToolMenu                                *mMenu;
+};
+
+class ToolMenuCanvas : public FCanvas {
+public:
+    ToolMenuCanvas();
+    virtual ~ToolMenuCanvas();
+    virtual void                            TouchDown(float pX, float pY, void *pData) override;
+    ToolMenu                                *mMenu;
+};
+
 class ToolMenu : public DragableCanvas {
 public:
     ToolMenu();
@@ -63,8 +80,8 @@ public:
     ToolMenuHeader                          mHeader;
 
     //Use either flat content or scroll content...
-    FCanvas                                 mContent;
-    FScrollCanvas                           mScrollContent;
+    ToolMenuCanvas                          mContent;
+    ToolMenuScrollCanvas                    mScrollContent;
 
     bool                                    mManualSectionLayout;
 
