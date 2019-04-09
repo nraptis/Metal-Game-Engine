@@ -25,11 +25,20 @@ public:
     GameEditor                              *mEditor;
     
     
+    ToolMenuPanel                           *mPanelObjectTypes;
+    
+    ToolMenuSectionRow                      *mRowObjectTypes1;
+    ToolMenuSectionRow                      *mRowObjectTypes2;
+    
+    UIButton                                *mButtonPickBalloon;
+    UIButton                                *mButtonPickBrickHead;
+    
+    
+    
     ToolMenuPanel                           *mPanelFormations;
     
     ToolMenuSectionRow                      *mRowFormations1;
-    UIButton                                *mButtonPickFormation1;
-    UIButton                                *mButtonPickFormation2;
+    UIButton                                *mButtonPickFormation;
     UIButton                                *mButtonClearFormation;
     
     ToolMenuSectionRow                      *mRowFormations2;

@@ -16,11 +16,13 @@ LevelWave::LevelWave() {
     mIsComplete = false;
     
     
+    
+    mExitType = WAVE_EXIT_TYPE_DISPERSE;
+    
     mCreationType = WAVE_CREATION_TYPE_PREV_WAVE_START;
     mCreationDelay = 0;
     
     mSpawnIndex = 0;
-    
     
     mSpawnSeparationDistance = 90.0f;
     
@@ -86,6 +88,10 @@ void LevelWave::Update() {
             aSpawn->mPathIndex += 1;
             if (aSpawn->mPathIndex >= mPath.mPath.mCount) {
                 aSpawn->mIsComplete = true;
+                
+                //HOOK: The wave is complete at this point...
+                mRecentlyCompletedList.Add(aSpawn);
+                
             }
         }
         if (aSpawn != NULL) {
@@ -123,6 +129,13 @@ void LevelWave::Update() {
     }
     
     
+    
+    EnumList(LevelWaveSpawn, aSpawn, mRecentlyCompletedList) {
+        HandleSpawnComplete(aSpawn);
+    }
+    mRecentlyCompletedList.RemoveAll();
+    
+    
    
     
     if (mSpawnIndex >= mSpawnList.mCount) {
@@ -145,13 +158,99 @@ void LevelWave::Draw() {
     for (int i=0;i<mSpawnIndex;i++) {
         LevelWaveSpawn *aSpawn = (LevelWaveSpawn *)mSpawnList.Fetch(i);
         if (aSpawn != NULL) {
-            aSpawn->Draw();
+            //aSpawn->Draw();
+            
         }
     }
 }
+
 void LevelWave::DisposeObject(GameObject *pObject) {
     
 }
+
+
+void LevelWave::HandleSpawnComplete(LevelWaveSpawn *pSpawn) {
+    printf("HandleSpawnComplete(%llx)\n", pSpawn);
+    
+    FList aList;
+    if (pSpawn) {
+        pSpawn->HandOffAllGameObjects(&aList);
+    }
+    
+    //TODO: Hand the different disperse types.....
+    
+    // If there is only one object, the disperse
+    // values are 0.0, 0.0, 0.0...
+    
+    //This is for "DISPERSE" only..
+    
+    if (true) {
+    if (aList.mCount > 1) {
+        
+        float aCenterX = 0.0f;
+        float aCenterY = 0.0f;
+        
+        for (int i=0;i<aList.mCount;i++) {
+            GameObject *aObject = ((GameObject *)aList.mData[i]);
+            aCenterX += aObject->mTransform.mX;
+            aCenterY += aObject->mTransform.mY;
+        }
+        
+        aCenterX /= (float)aList.mCount;
+        aCenterY /= (float)aList.mCount;
+        
+        
+        float aMaxDist = 0.0f;
+        
+        for (int i=0;i<aList.mCount;i++) {
+            GameObject *aObject = ((GameObject *)aList.mData[i]);
+            float aDist = Distance(aCenterX, aCenterY, aObject->mTransform.mX, aObject->mTransform.mY);
+            if (aDist > aMaxDist) {
+                aMaxDist = aDist;
+            }
+        }
+        
+        
+        for (int i=0;i<aList.mCount;i++) {
+            GameObject *aObject = ((GameObject *)aList.mData[i]);
+            
+            float aDiffX = aObject->mTransform.mX - aCenterX;
+            float aDiffY = aObject->mTransform.mY - aCenterY;
+            
+            float aDist = aDiffX * aDiffX + aDiffY * aDiffY;
+            float aMagnitude = 0.0f;
+            
+            if (aDist > SQRT_EPSILON) {
+                aDist = sqrtf(aDist);
+                aDiffX /= aDist;
+                aDiffY /= aDist;
+            } else {
+                aDiffX = 0.0f;
+                aDiffY = 0.0f;
+            }
+            
+            if (aMaxDist > SQRT_EPSILON) { aMagnitude = aDist / aMaxDist; }
+            
+            aObject->Disperse(aDiffX, aDiffY, aMagnitude);
+            
+        }
+        
+        
+        
+        
+        
+        
+    } else if (aList.mCount == 1) {
+        GameObject *aObject = ((GameObject *)aList.First());
+        aObject->Disperse(0.0f, 0.0f, 0.0f);
+    }
+        
+    }
+    
+    
+    
+}
+
 
 
 

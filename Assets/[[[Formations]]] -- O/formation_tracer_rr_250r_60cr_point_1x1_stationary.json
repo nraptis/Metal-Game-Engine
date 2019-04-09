@@ -1,0 +1,20 @@
+{
+	"node_list": [
+		{
+			"x": 0.000019,
+			"y": -0.000011
+		}
+	],
+	"tracer_list": [
+		{
+			"object_count": 8,
+			"speed_class": -300,
+			"special_type": 2,
+			"special_x": -0.000019,
+			"special_y": -0.000027,
+			"special_type_size": 250,
+			"special_type_corner_radius": 60,
+			"tracer_node_list": []
+		}
+	]
+}

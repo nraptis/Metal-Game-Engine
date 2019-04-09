@@ -40,22 +40,19 @@ public:
     UIButton                                *mButtonShowAttachments;
     UIButton                                *mButtonShowFormationEditor;
     UIButton                                *mButtonShowFormationPicker;
+    UIButton                                *mButtonShowPermanentEditor;
     
     
     ToolMenuPanel                           *mWavePanel;
     ToolMenuSectionRow                      *mRowWave1;
     UIButton                                *mButtonAddWave;
     UIButton                                *mButtonDeleteWave;
-    UIButton                                *mButtonEditPaths;
+    UIButton                                *mButtonEditWavePaths;
     
     ToolMenuSectionRow                      *mRowWave2;
     UICheckBox                              *mCheckBoxPreview;
     UIButton                                *mButtonMoveWaveUp;
     UIButton                                *mButtonMoveWaveDown;
-    
-    
-    
-    
     
     ToolMenuPanel                           *mPlaybackPanel;
     ToolMenuSectionRow                      *mRowPlayback1;
@@ -68,6 +65,8 @@ public:
     
     ToolMenuSectionRow                      *mRowPlayback3;
     
+    UICheckBox                              *mCheckBoxPlaybackFromOffScreen;
+    UISegment                               *mSegmentPlaybackFromOffScreenType;
     
     
     

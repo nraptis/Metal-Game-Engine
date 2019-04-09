@@ -12,7 +12,7 @@
 #include "FList.hpp"
 #include "FString.h"
 #include "FHashMap.hpp"
-#include "LevelWaveSpawnFormation.hpp"
+#include "LevelFormation.hpp"
 
 
 class FormationCollection {
@@ -23,7 +23,7 @@ public:
     void                                Load();
     bool                                Load(const char *pName);
     
-    LevelWaveSpawnFormation             *Get(const char *pName);
+    LevelFormation                      *Get(const char *pName);
     
     FList                               mNameList;
     FList                               mFormationList;

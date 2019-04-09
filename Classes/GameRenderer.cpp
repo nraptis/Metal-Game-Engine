@@ -124,13 +124,21 @@ void GameRenderer::Draw3D() {
         }
     }
     
-    Graphics::PipelineStateSetModelIndexedLightedPhongAlphaBlending();
-    
+    Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending();
     EnumList (Balloon, aBalloon, mGame->mBalloonList.mObjectList) {
         if (aBalloon->mKill == 0) {
             aBalloon->Draw3D();
         }
     }
+    
+    EnumList (BrickHead, aBrickHead, mGame->mBrickHeadList.mObjectList) {
+        if (aBrickHead->mKill == 0) {
+            aBrickHead->Draw3D();
+        }
+    }
+    
+    
+    
     
     if (mGame->mCurrentDart) {
         mGame->mCurrentDart->Draw3D();

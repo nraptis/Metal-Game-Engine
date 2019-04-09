@@ -92,11 +92,11 @@ public:
     FSpriteSequence                             *mSelectedSpriteSequence;
     
     void                                        AddAllFormations();
-    void                                        AddFormation(LevelWaveSpawnFormation *pFormation);
+    void                                        AddFormation(LevelFormation *pFormation);
     
     bool                                        mDidSetUp;
 };
 
-extern LevelWaveSpawnFormation *gSelectedFormation;
+extern LevelFormation *gSelectedFormation;
 
 #endif /* EditorMenuFormationPicker_hpp */

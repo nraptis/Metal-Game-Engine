@@ -24,9 +24,6 @@ public:
     
     float                                   mSpinSpeed;
     
-    int                                     mDeathTimer;
-    int                                     mTimer;
-    
     float                                   mVelX;
     float                                   mVelY;
 };

@@ -18,6 +18,16 @@
 #include "Transform2D.hpp"
 #include "Transform3D.hpp"
 
+
+#define GAME_OBJECT_TYPE_UNKNOWN -1
+#define GAME_OBJECT_TYPE_BALLOON 0
+#define GAME_OBJECT_TYPE_BRICKHEAD 1
+
+#define GAME_OBJECT_TYPE_DART 1000
+
+
+
+
 class LevelWave;
 class GameObject : public FObject {
 public:
@@ -28,6 +38,24 @@ public:
     virtual void                            Draw();
     virtual void                            Draw3D();
     virtual void                            Kill();
+    
+    
+    //Where did we come from?
+    bool                                    mDidOriginateOnWave;
+    bool                                    mDidOriginateAsPermanent;
+    
+    
+    //Essentially, the objects will "disperse" as a cluster, and pMagnitude will be 1.0 for
+    //the furthest object away from the centroid of all the objects in the cluster.........
+    
+    virtual void                            Disperse(float pDirX, float pDirY, float pMagnitude);
+    
+    virtual void                            FloatAway(float pDirX, float pDirY, float pMagnitude);
+    
+    
+    bool                                    mFloatAway;
+    float                                   mFloatAwaySpeedX;
+    float                                   mFloatAwaySpeedY;
     
     
     LevelWave                               *mWave;
@@ -57,6 +85,8 @@ public:
     
     Transform2D                             mTransform;
     Transform3D                             mTransform3D;
+    
+    int                                     mGameObjectType;
     
 };
 

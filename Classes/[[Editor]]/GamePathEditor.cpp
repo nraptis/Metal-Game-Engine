@@ -51,6 +51,12 @@ GamePathEditor::GamePathEditor(GameEditor *pEditor) {
 
 GamePathEditor::~GamePathEditor() {
     
+    if (gEditor != NULL) {
+        if (gEditor->mPathEditor == this) {
+            gEditor->mPathEditor = NULL;
+        }
+    }
+    
 }
 
 void GamePathEditor::SetFrame(float pX, float pY, float pWidth, float pHeight) {
@@ -112,7 +118,7 @@ void GamePathEditor::TouchDown(float pX, float pY, void *pData) {
             mPath->Add(pX, pY);
             mPath->mSelectedIndex = mPath->mNodeList.mCount - 1;
             
-            LevelWavePathBlueprintNode *aNode = mPath->GetNode();
+            LevelPathNodeBlueprint *aNode = mPath->GetNode();
             if (aNode) {
                 aNode->mConstraint.mTypeX = gEditor->ClosestXConstraint(pX);
                 aNode->mConstraint.mTypeY = gEditor->ClosestYConstraint(pY);
@@ -155,6 +161,9 @@ void GamePathEditor::TouchMove(float pX, float pY, void *pData) {
     if (mPathMode == PATH_MODE_EDIT) {
         if (mSelectedTouch == pData && mPath != NULL) {
             mPath->Set(mPath->mSelectedIndex, mSelectPathStartX + (pX - mSelectTouchStartX), mSelectPathStartY + (pY - mSelectTouchStartY));
+            if (gEditor) {
+                gEditor->RefreshPlayback();
+            }
         }
     }
 }
@@ -177,7 +186,7 @@ void GamePathEditor::KeyDown(int pKey) {
     
     if (mWave == NULL) { return; }
     if (mPath == NULL) { return; }
-    LevelWavePathBlueprintNode *aNode = mPath->GetNode();
+    LevelPathNodeBlueprint *aNode = mPath->GetNode();
     
     if (pKey == __KEY__P) {
         PathPrint();
@@ -207,7 +216,6 @@ void GamePathEditor::KeyDown(int pKey) {
             ConstraintXToType(X_CONSTRAINT_NONE);
             ConstraintYToType(Y_CONSTRAINT_NONE);
         }
-        
     }
     
     if (pKey == __KEY__E) {
@@ -353,6 +361,11 @@ void GamePathEditor::Close() {
 }
 
 void GamePathEditor::SetUp(LevelWaveBlueprint *pWave) {
+    
+    if (gGame != NULL) {
+        gGame->DisposeAllObjects();
+    }
+    
     if (pWave == NULL) {
         mWave = NULL;
         mPath = NULL;
@@ -376,7 +389,7 @@ void GamePathEditor::PathRefresh() {
 
 void GamePathEditor::PathReset() {
     if (mPath == NULL) { return; }
-    mPath->Clear();
+    mPath->Reset();
 }
 
 void GamePathEditor::PathPrint() {
@@ -421,7 +434,7 @@ void GamePathEditor::ConstraintYToType(int pType) {
 
 void GamePathEditor::ConstraintXToPrev() {
     if (mWave == NULL || mPath == NULL) { return; }
-    LevelWavePathBlueprintNode *aNode = mPath->GetNode();
+    LevelPathNodeBlueprint *aNode = mPath->GetNode();
     if (aNode == NULL) { return; }
     aNode->mConstraint.mTypeX = gEditor->PrevXConstraintf(aNode->mEditorX);
     mWave->ApplyEditorConstraints();
@@ -429,7 +442,7 @@ void GamePathEditor::ConstraintXToPrev() {
 
 void GamePathEditor::ConstraintXToNext() {
     if (mWave == NULL || mPath == NULL) { return; }
-    LevelWavePathBlueprintNode *aNode = mPath->GetNode();
+    LevelPathNodeBlueprint *aNode = mPath->GetNode();
     if (aNode == NULL) { return; }
     aNode->mConstraint.mTypeX = gEditor->NextXConstraintf(aNode->mEditorX);
     mWave->ApplyEditorConstraints();
@@ -437,7 +450,7 @@ void GamePathEditor::ConstraintXToNext() {
 
 void GamePathEditor::ConstraintYToPrev() {
     if (mWave == NULL || mPath == NULL) { return; }
-    LevelWavePathBlueprintNode *aNode = mPath->GetNode();
+    LevelPathNodeBlueprint *aNode = mPath->GetNode();
     if (aNode == NULL) { return; }
     aNode->mConstraint.mTypeY = gEditor->PrevYConstraintf(aNode->mEditorY);
     mWave->ApplyEditorConstraints();
@@ -445,7 +458,7 @@ void GamePathEditor::ConstraintYToPrev() {
 
 void GamePathEditor::ConstraintYToNext() {
     if (mWave == NULL || mPath == NULL) { return; }
-    LevelWavePathBlueprintNode *aNode = mPath->GetNode();
+    LevelPathNodeBlueprint *aNode = mPath->GetNode();
     if (aNode == NULL) { return; }
     aNode->mConstraint.mTypeY = gEditor->NextYConstraintf(aNode->mEditorY);
     mWave->ApplyEditorConstraints();

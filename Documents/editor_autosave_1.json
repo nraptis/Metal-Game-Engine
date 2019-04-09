@@ -3,8 +3,8 @@
 	"wave_list": [
 		{
 			"blueprint": true,
-			"smooth": false,
-			"speed_class": -100,
+			"smooth": true,
+			"speed_class": 0,
 			"spawn_spacing": 92,
 			"creation_type": 0,
 			"creation_delay": 200,
@@ -14,18 +14,22 @@
 					"y_con": 500
 				},
 				{
-					"x_con": 500,
-					"y_con": 500,
-					"wait": 280
+					"x_con": 400,
+					"y_con": 400
+				},
+				{
+					"x_con": 400,
+					"y_con": 500
 				},
 				{
 					"x_con": 500,
-					"y_con": 150
+					"y_con": 500,
+					"wait": 110
 				}
 			],
 			"spawn": [
 				{
-					"spacing_offset": -4
+					"spacing_offset": 0
 				}
 			]
 		}

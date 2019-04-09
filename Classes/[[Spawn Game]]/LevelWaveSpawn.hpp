@@ -13,12 +13,13 @@
 //a single balloon, or a cluster of ANYTHING (Space Lords? Maybe?)
 
 #include "GameObject.hpp"
+#include "LevelFormation.hpp"
 
 class LevelWave;
-class LevelWavePath;
+class LevelPath;
 class LevelWaveSpawn {
 public:
-    LevelWaveSpawn(LevelWave *pWave, LevelWavePath *pPath);
+    LevelWaveSpawn(LevelWave *pWave, LevelPath *pPath);
     virtual ~LevelWaveSpawn();
     
     void                                Spawn();
@@ -32,8 +33,9 @@ public:
     void                                DisposeObject(GameObject *pObject);
     
     LevelWave                           *mWave;
-    LevelWavePath                       *mPath;
+    LevelPath                           *mPath;
     GameObject                          *mObject;
+    LevelFormation                      *mFormation;
     
     int                                 mPathIndex;
     bool                                mIsComplete;
@@ -42,6 +44,14 @@ public:
     float                               mBaseY;
     float                               mDistanceTraveled;
     
+    
+    //Possibility 1.) We have a formation...
+    FString                             mFormationID;
+    
+    //Possibility 2.) We have an object...
+    int                                 mObjectType;
+    
+    void                                HandOffAllGameObjects(FList *pList);
     
     float                               mOffsetSpawnDistance;
     

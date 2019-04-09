@@ -18,7 +18,10 @@ EditorMenuSpawn::EditorMenuSpawn(GameEditor *pEditor) : ToolMenu() {
     mEditor = pEditor;
     
     SetTitle("Spawn (Meta)");
-    SetScrollMode(true);
+    
+    //TODO: set TRUE
+    SetScrollMode(false);
+    
     
     mGenerationPanel = new ToolMenuPanel();
     mGenerationPanel->SetTitle("Generation");
@@ -54,8 +57,15 @@ EditorMenuSpawn::EditorMenuSpawn(GameEditor *pEditor) : ToolMenu() {
     
     mStepperCreationType = new UISegment();
     mStepperCreationType->SetSegmentCount(4);
-    mStepperCreationType->SetTitles("P-W-Start", "P-W-End", "P-W-Clear", "Scr-Clear");
+    mStepperCreationType->SetTitles("P-W-Sta", "P-W-End", "P-W-Clr", "S-Clr-NoP", "S-Cle-AndP");
     mTimingPanelPanel->AddSection(mStepperCreationType);
+    
+//#define WAVE_CREATION_TYPE_PREV_WAVE_START 0
+//#define WAVE_CREATION_TYPE_PREV_WAVE_END 1
+//#define WAVE_CREATION_TYPE_PREV_WAVE_CLEAR 2
+//#define WAVE_CREATION_TYPE_SCREEN_CLEAR_IGNORE_PERMS 3
+//#define WAVE_CREATION_TYPE_SCREEN_CLEAR_AND_PERMS 3
+    
     
     
     mStepperCreationDelay = new UIStepper();
@@ -143,6 +153,4 @@ void EditorMenuSpawn::Update() {
             mStepperCreationDelay->SetTarget(NULL);
         }
     }
-    \
-    
 }

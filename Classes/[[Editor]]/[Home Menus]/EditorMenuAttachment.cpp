@@ -22,6 +22,26 @@ EditorMenuAttachment::EditorMenuAttachment(GameEditor *pEditor) : ToolMenu() {
     
     
     
+    mPanelObjectTypes = new ToolMenuPanel();
+    mPanelObjectTypes->SetTitle("Object");
+    AddSection(mPanelObjectTypes);
+    
+    mRowObjectTypes1 = new ToolMenuSectionRow();
+    mPanelObjectTypes->AddSection(mRowObjectTypes1);
+    
+    
+    mButtonPickBalloon = new UIButton();
+    mButtonPickBalloon->SetText("Bloon");
+    mRowObjectTypes1->AddButton(mButtonPickBalloon);
+    
+    mButtonPickBrickHead = new UIButton();
+    mButtonPickBrickHead->SetText("Brick");
+    mRowObjectTypes1->AddButton(mButtonPickBrickHead);
+    
+    
+    mRowObjectTypes2 = new ToolMenuSectionRow();
+    mPanelObjectTypes->AddSection(mRowObjectTypes2);
+    
 
     
     mPanelFormations = new ToolMenuPanel();
@@ -32,16 +52,12 @@ EditorMenuAttachment::EditorMenuAttachment(GameEditor *pEditor) : ToolMenu() {
     mPanelFormations->AddSection(mRowFormations1);
     
     
-    mButtonPickFormation1 = new UIButton();
-    mButtonPickFormation1->SetText("Form 1");
-    mRowFormations1->AddButton(mButtonPickFormation1);
-    
-    mButtonPickFormation2 = new UIButton();
-    mButtonPickFormation2->SetText("Form 2");
-    mRowFormations1->AddButton(mButtonPickFormation2);
+    mButtonPickFormation = new UIButton();
+    mButtonPickFormation->SetText("Pick Form");
+    mRowFormations1->AddButton(mButtonPickFormation);
     
     mButtonClearFormation = new UIButton();
-    mButtonClearFormation->SetText("1 Balloon");
+    mButtonClearFormation->SetText("Clear Form");
     mRowFormations1->AddButton(mButtonClearFormation);
     
     
@@ -117,12 +133,20 @@ void EditorMenuAttachment::Layout() {
 
 
 void EditorMenuAttachment::Notify(void *pSender, const char *pNotification) {
-    if (pSender == mSegmentRotationSpeed) {
-        if (gEditor) { gEditor->RefreshSpawn(); }
-    }
-    if (pSender == mStepperSpacingOffset) {
-        if (gEditor) { gEditor->RefreshSpawn(); }
-    }
+    
+    if (gEditor == NULL) { return; }
+    
+    if (pSender == mSegmentRotationSpeed) { gEditor->RefreshPlayback(); }
+    if (pSender == mStepperSpacingOffset) { gEditor->RefreshPlayback(); }
+    
+    
+    if (pSender == mButtonPickFormation)  { gEditor->PickFormationForSpawnNode(); }
+    if (pSender == mButtonClearFormation) { gEditor->SpawnClearFormation(); }
+
+    
+    if (pSender == mButtonPickBalloon)   { gEditor->SpawnPickBalloon(); }
+    if (pSender == mButtonPickBrickHead) { gEditor->SpawnPickBrickHead(); }
+    
     
 }
 

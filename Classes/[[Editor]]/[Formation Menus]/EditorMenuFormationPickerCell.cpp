@@ -9,7 +9,7 @@
 #include "EditorMenuFormationPickerCell.hpp"
 #include "Game.hpp"
 
-EditorMenuFormationPickerCell::EditorMenuFormationPickerCell(LevelWaveSpawnFormation *pFormation) {
+EditorMenuFormationPickerCell::EditorMenuFormationPickerCell(LevelFormation *pFormation) {
     mTouchCanceled = false;
     mFormation = pFormation;
     
@@ -74,13 +74,13 @@ void EditorMenuFormationPickerCell::Draw() {
     if (mFormation) {
         
         /*
-        EnumList(LevelWaveSpawnFormationTracer, aTracer, mFormation->mTracerList) {
+        EnumList(LevelFormationTracer, aTracer, mFormation->mTracerList) {
             if (aTracer->mTracerNodeList.mCount > 0) {
                 
                 for (int i=0;i<aTracer->mTracerNodeList.mCount;i++) {
                     
-                    LevelWaveSpawnFormationTracerNode *aNode1 = (LevelWaveSpawnFormationTracerNode *)aTracer->mTracerNodeList.FetchCircular(i - 1);
-                    LevelWaveSpawnFormationTracerNode *aNode2 = (LevelWaveSpawnFormationTracerNode *)aTracer->mTracerNodeList.Fetch(i);
+                    LevelFormationTracerNode *aNode1 = (LevelFormationTracerNode *)aTracer->mTracerNodeList.FetchCircular(i - 1);
+                    LevelFormationTracerNode *aNode2 = (LevelFormationTracerNode *)aTracer->mTracerNodeList.Fetch(i);
                     
                     float aX1 = (aNode1->mBaseX / 100.0f) * ((float)GAME_WIDTH) + (GAME_WIDTH / 2);
                     float aY1 = (aNode1->mBaseY / 100.0f) * ((float)GAME_HEIGHT) + (GAME_HEIGHT / 2);
@@ -117,9 +117,8 @@ void EditorMenuFormationPickerCell::Draw() {
         }
         */
         
-        
         Graphics::SetColor(1.0f, 0.25f, 0.35f, 0.9f);
-        EnumList(LevelWaveSpawnFormationNode, aNode, mFormation->mNodeList) {
+        EnumList(LevelFormationNode, aNode, mFormation->mSpawnNodeList) {
             
             float aX = (aNode->mBaseX / 100.0f) * ((float)GAME_WIDTH) + (GAME_WIDTH / 2);
             float aY = (aNode->mBaseY / 100.0f) * ((float)GAME_HEIGHT) + (GAME_HEIGHT / 2);
@@ -142,11 +141,11 @@ void EditorMenuFormationPickerCell::Draw() {
         }
         
         
-        EnumList(LevelWaveSpawnFormationTracer, aTracer, mFormation->mTracerList) {
+        EnumList(LevelFormationTracer, aTracer, mFormation->mTracerList) {
             if (aTracer->mSpawnNodeList.mCount > 0) {
                 
                 for (int i=0;i<aTracer->mSpawnNodeList.mCount;i++) {
-                    LevelWaveSpawnFormationNode *aNode = (LevelWaveSpawnFormationNode *)aTracer->mSpawnNodeList.Fetch(i);
+                    LevelFormationNode *aNode = (LevelFormationNode *)aTracer->mSpawnNodeList.Fetch(i);
                     
                     float aX = aNode->mX + (GAME_WIDTH / 2);
                     float aY = aNode->mY + (GAME_HEIGHT / 2);
@@ -172,13 +171,19 @@ void EditorMenuFormationPickerCell::Draw() {
     
 }
 
-void EditorMenuFormationPickerCell::DrawFormationNode(LevelWaveSpawnFormationNode *pNode, float pX, float pY) {
+void EditorMenuFormationPickerCell::DrawFormationNode(LevelFormationNode *pNode, float pX, float pY) {
     
     if (pNode == NULL) { return; }
     
+    if (pNode->mObjectType == GAME_OBJECT_TYPE_BALLOON) {
+        Graphics::SetColor(0.85f, 0.85f, 0.125f, 0.90f);
+        Graphics::DrawRect(pX - 1.0f, pY - 1.0f, 3.0f, 3.0f);
+    }
     
-    
-    Graphics::DrawRect(pX - 1.0f, pY - 1.0f, 3.0f, 3.0f);
+    if (pNode->mObjectType == GAME_OBJECT_TYPE_BRICKHEAD) {
+        Graphics::SetColor(0.56f, 0.56f, 0.74f, 0.90f);
+        Graphics::DrawRect(pX - 2.0f, pY - 2.0f, 5.0f, 5.0f);
+    }
     
 }
 

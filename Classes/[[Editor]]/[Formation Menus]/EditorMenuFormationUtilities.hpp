@@ -44,11 +44,13 @@ public:
     
     
     
+    ToolMenuPanel                           *mPanelTracerSpecial;
+    UISegment                               *mSegmentTracerSpecialType;
+    UIStepper                               *mStepperTracerSpecialRadius;
+    UIStepper                               *mStepperTracerSpecialCornerRadius;
+    
+    
     GameFormationEditor                     *mEditor;
-    
-    
-    
-    UIStepper                               *mStepperTestIndex;
     
     
 };

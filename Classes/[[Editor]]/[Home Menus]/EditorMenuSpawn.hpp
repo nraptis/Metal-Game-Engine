@@ -28,13 +28,9 @@ public:
     UIStepper                               *mStepperSpawnCount;
     UIStepper                               *mStepperSpacing;
     
-    
     ToolMenuPanel                           *mTimingPanelPanel;
     UISegment                               *mStepperCreationType;
     UIStepper                               *mStepperCreationDelay;
-    
-    
-    
 };
 
 #endif

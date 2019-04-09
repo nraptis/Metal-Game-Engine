@@ -10,6 +10,7 @@
 #define LevelSectionBlueprint_hpp
 
 #include "LevelWaveBlueprint.hpp"
+#include "LevelSectionPermanentBlueprint.hpp"
 #include "FList.hpp"
 
 class LevelSection;
@@ -18,7 +19,7 @@ public:
     LevelSectionBlueprint();
     ~LevelSectionBlueprint();
     
-    void                                        Clear();
+    void                                        Reset();
     
     void                                        Update();
     void                                        Draw();
@@ -32,10 +33,30 @@ public:
     void                                        WaveMoveDown();
     void                                        WaveSelect(int pIndex);
     int                                         WaveCount(int pIndex);
-
     
     FList                                       mWaveList;
     LevelWaveBlueprint                          *mCurrentWave;
+    
+    
+    
+    void                                        PermAdd(float pX, float pY);
+    void                                        PermRemove();
+    void                                        PermSelectNext();
+    void                                        PermSelectPrev();
+    void                                        PermDeselect();
+    void                                        PermMoveUp();
+    void                                        PermMoveDown();
+    void                                        PermSelect(int pIndex);
+    int                                         PermCount(int pIndex);
+    int                                         PermSelectClosest(float pX, float pY);
+    void                                        PermRefreshPositions();
+    
+    
+    
+    
+    FList                                       mPermList;
+    LevelSectionPermanentBlueprint              *mCurrentPerm;
+    
     
     
     void                                        Build();
@@ -46,9 +67,11 @@ public:
     void                                        Load(FJSONNode *pNode);
     
     
-    FList                                       mKillList;
-    FList                                       mDeleteList;
+    FList                                       mKillWaveList;
+    FList                                       mDeleteWaveList;
     
+    FList                                       mKillPermList;
+    FList                                       mDeletePermList;
 };
 
 #endif /* LevelSectionBlueprint_hpp */

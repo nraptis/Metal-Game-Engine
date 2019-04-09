@@ -26,6 +26,7 @@ public:
     float                                   mScale;
     float                                   mScaleX;
     float                                   mScaleY;
+    float                                   mScaleZ; //Pass through...
     
     float                                   mOffsetScale;
     

@@ -14,9 +14,10 @@
 #include "EditorMenuPathControl.hpp"
 #include "EditorMenuPath.hpp"
 #include "FPointList.h"
-#include "LevelWavePathBlueprint.hpp"
+#include "LevelPathBlueprint.hpp"
 #include "LevelWaveBlueprint.hpp"
 #include "LevelSectionBlueprint.hpp"
+#include "LevelSectionPermanentBlueprint.hpp"
 
 #define PATH_MODE_CREATE 0
 #define PATH_MODE_EDIT 1
@@ -47,7 +48,6 @@ public:
     
     void                                        Load();
     
-    //FPointList                                  mPath;
     int                                         mPathMode;
     void                                        *mSelectedTouch;
     
@@ -56,7 +56,6 @@ public:
     
     float                                       mSelectTouchStartX;
     float                                       mSelectTouchStartY;
-    
     
     void                                        PathRefresh();
     void                                        PathReset();
@@ -80,9 +79,6 @@ public:
     void                                        ConstraintYToPrev();
     void                                        ConstraintYToNext();
     
-    
-    
-    
     GameEditor                                  *mEditor;
     EditorMenuPathControl                       *mMenuControls;
     EditorMenuPath                              *mMenuPaths;
@@ -90,8 +86,10 @@ public:
     void                                        Close();
     
     void                                        SetUp(LevelWaveBlueprint *pWave);
-    LevelWavePathBlueprint                      *mPath;
+    LevelPathBlueprint                          *mPath;
     LevelWaveBlueprint                          *mWave;
+    LevelSectionPermanentBlueprint              *mPerm;
+    
 };
 
 #endif /* GamePathEditor_hpp */

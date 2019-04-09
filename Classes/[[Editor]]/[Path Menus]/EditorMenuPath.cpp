@@ -112,12 +112,11 @@ EditorMenuPath::EditorMenuPath(GamePathEditor *pEditor) : ToolMenu() {
 }
 
 EditorMenuPath::~EditorMenuPath() {
-    printf("Kill Editor");
+    
 }
 
 void EditorMenuPath::Layout() {
     ToolMenu::Layout();
-    
 }
 
 void EditorMenuPath::Update() {
@@ -137,7 +136,7 @@ void EditorMenuPath::Update() {
     if (mStepperWait) {
         bool aUnlink = true;
         if (mEditor->mPath != NULL) {
-            LevelWavePathBlueprintNode *aNode = (LevelWavePathBlueprintNode *)mEditor->mPath->mNodeList.Fetch(mEditor->mPath->mSelectedIndex);
+            LevelPathNodeBlueprint *aNode = (LevelPathNodeBlueprint *)mEditor->mPath->mNodeList.Fetch(mEditor->mPath->mSelectedIndex);
             if (aNode) {
                 aUnlink = false;
                 mStepperWait->SetTarget(&(aNode->mWaitTimer));
@@ -151,7 +150,7 @@ void EditorMenuPath::Update() {
     if (mStepperChamfer) {
         bool aUnlink = true;
         if (mEditor->mPath != NULL) {
-            LevelWavePathBlueprintNode *aNode = (LevelWavePathBlueprintNode *)mEditor->mPath->mNodeList.Fetch(mEditor->mPath->mSelectedIndex);
+            LevelPathNodeBlueprint *aNode = (LevelPathNodeBlueprint *)mEditor->mPath->mNodeList.Fetch(mEditor->mPath->mSelectedIndex);
             if (aNode) {
                 aUnlink = false;
                 mStepperChamfer->SetTarget(&(aNode->mChamferSize));
@@ -161,53 +160,19 @@ void EditorMenuPath::Update() {
             mStepperChamfer->SetTarget(NULL);
         }
     }
-    
-    
-    
-    
-    
 }
-//
 
 void EditorMenuPath::Notify(void *pSender, const char *pNotification) {
-    if (FString(pNotification) == "button_click") {
-        
-        if (pSender == mButtonDeletePoint) { mEditor->PathDeletePoint(); }
-        
-        if (pSender == mButtonBreakXConstraint) { mEditor->ConstraintXToType(X_CONSTRAINT_NONE); }
-        if (pSender == mButtonBreakYConstraint) { mEditor->ConstraintYToType(Y_CONSTRAINT_NONE); }
-        
-        if (pSender == mButtonSnapPrevX) { mEditor->ConstraintXToPrev(); }
-        if (pSender == mButtonSnapNextX) { mEditor->ConstraintXToNext(); }
-        
-        if (pSender == mButtonSnapPrevY) { mEditor->ConstraintYToPrev(); }
-        if (pSender == mButtonSnapNextY) { mEditor->ConstraintYToNext(); }
-    }
     
-    if (FString(pNotification) == "stepper") {
-        UIStepper *aStepper = (UIStepper *)pSender;
-        if (aStepper == mStepperWait) {
-            mEditor->PathRefresh();
-        }
-        if (aStepper == mStepperChamfer) {
-            mEditor->PathRefresh();
-        }
-        
-    }
-    
-    
-    if (FString(pNotification) == "segment") {
-        UISegment *aSegment = (UISegment *)pSender;
-        
-    }
-    
-    if (FString(pNotification) == "checkbox") {
-        UICheckBox *aCheckbox = (UICheckBox *)pSender;
-        if (aCheckbox == mCheckBoxSmooth) {
-            mEditor->PathRefresh();
-        }
-    }
-    
-    
+    if (pSender == mButtonDeletePoint) { mEditor->PathDeletePoint(); }
+    if (pSender == mButtonBreakXConstraint) { mEditor->ConstraintXToType(X_CONSTRAINT_NONE); }
+    if (pSender == mButtonBreakYConstraint) { mEditor->ConstraintYToType(Y_CONSTRAINT_NONE); }
+    if (pSender == mButtonSnapPrevX) { mEditor->ConstraintXToPrev(); }
+    if (pSender == mButtonSnapNextX) { mEditor->ConstraintXToNext(); }
+    if (pSender == mButtonSnapPrevY) { mEditor->ConstraintYToPrev(); }
+    if (pSender == mButtonSnapNextY) { mEditor->ConstraintYToNext(); }
+    if (pSender == mStepperWait) { mEditor->PathRefresh(); }
+    if (pSender == mStepperChamfer) { mEditor->PathRefresh(); }
+    if (pSender == mCheckBoxSmooth) { mEditor->PathRefresh(); }
     
 }

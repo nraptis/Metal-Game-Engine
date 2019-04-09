@@ -1,0 +1,14 @@
+{
+	"grid_type": 0,
+	"rect_width": 4,
+	"rect_height": 4,
+	"rect_spacing": 44,
+	"circle_ring_spacing": 46,
+	"circle_ring_count": 1,
+	"circle_radial_count": 6,
+	"ngon1_sides": 4,
+	"ngon1_ring_spacing": 50,
+	"ngon1_ring_count": 2,
+	"ngon1_point_spacing": 30,
+	"ngon1_start_rotation": 1
+}

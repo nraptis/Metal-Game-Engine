@@ -118,6 +118,7 @@ Game::~Game() {
     
     mDartList.Free();
     mBalloonList.Free();
+    mBrickHeadList.Free();
     
 }
 
@@ -319,6 +320,7 @@ void Game::Update() {
     
     mBalloonList.Update();
     mDartList.Update();
+    mBrickHeadList.Update();
     
     if (mDartTouch != NULL && mDartResetAnimation == false) {
         float aDiffX = mDartTargetPullX - mDartPullX;
@@ -430,6 +432,7 @@ void Game::Draw() {
     */
     
     
+    mBrickHeadList.Draw();
     mBalloonList.Draw();
     mDartList.Draw();
     
@@ -607,12 +610,34 @@ bool Game::IsWaveClearForSpawn() {
 }
 
 
-bool Game::IsScreenClearForSpawn() {
+bool Game::IsScreenClearForSpawn(bool pIncludePerms) {
+    
+    //TODO: We need to know if the PERMS are clear too...
+    
+    int aPermCount = 0;
+    int aWaveCount = 0;
+    
     EnumList (Balloon, aBalloon, mBalloonList.mObjectList) {
         if (aBalloon->mKill == 0) {
+            if (aBalloon->mDidOriginateAsPermanent == true) {
+                ++aPermCount;
+            }
+            if (aBalloon->mDidOriginateOnWave == true) {
+                ++aWaveCount;
+            }
+        }
+    }
+    
+    if (pIncludePerms) {
+        if (aPermCount > 0 || aWaveCount > 0) {
+            return false;
+        }
+    } else {
+        if (aWaveCount > 0) {
             return false;
         }
     }
+    
     return true;
 }
 
@@ -629,6 +654,7 @@ void Game::Convert2DTransformTo3D(Transform2D *p2D, Transform3D *p3D) {
     
     p3D->mScaleX = p2D->mScaleX;
     p3D->mScaleY = p2D->mScaleY;
+    p3D->mScaleZ = p2D->mScaleZ;
     //p3D->mScaleZ = ???;
     
     p3D->mRotation2D = p2D->mRotation + p2D->mOffsetRotation;
@@ -664,6 +690,34 @@ float Game::Convert3DXTo2D(float pX) {
 float Game::Convert3DYTo2D(float pY) {
     return ((pY * gDeviceHeight2) / (mTransformAbsolute.mScale * mCamera->mDistance)) + mHeight2 - mRenderShiftY;
 }
+
+void Game::DisposeObject(GameObject *pObject) {
+    
+    //printf("GAME::DisposeObject(%llx)\n", pObject);
+    
+    if (pObject != NULL) {
+        pObject->Kill();
+    }
+    
+    //TODO: Pass dispose along to all sections, waves, etc
+    if (mLevelData != NULL) {
+        mLevelData->DisposeObject(pObject);
+    }
+}
+
+void Game::DisposeAllObjects() {
+    EnumList (Dart, aDart, mDartList.mObjectList) {
+        DisposeObject(aDart);
+    }
+    EnumList (Balloon, aBalloon, mBalloonList.mObjectList) {
+        DisposeObject(aBalloon);
+    }
+    
+    EnumList (BrickHead, aBrickHead, mBrickHeadList.mObjectList) {
+        DisposeObject(aBrickHead);
+    }
+}
+
 
 void Game::ReleaseDart() {
     
@@ -828,46 +882,11 @@ void Game::Load() {
     
     //Create level section (1 of 2) (A)
     aSection = new LevelSection();
-    
-    aSection->Load("test_section.json");
-    
-
-    
+    aSection->Load("test_section_02.json");
     aLevel->AddSection(aSection);
-    
-
-    
-    //  Greate spawn wave (2 of 2).
-    //      Wave 1: Group of 4 balloons flies down from the top...
-    
-    //
-    
-    //Create level section (2 of 2) (B)
-    
-    //  B animates in from the left.
-    
-    //  B has 2 "blockers"
-    //      Blocker 1 is at (X: 25%, Y: 25%)
-    //      Blocker 2 is at (X: 75%, Y: 25%)
-    
-    //  Greate spawn wave group (1 of 2).
-    //      Wave 1: one balloon flies across from the left.
-    //      Wave 2: one balloon flies across from the right.
-    
-    //  Greate spawn wave (2 of 2).
-    //      Wave 1: Group of 2 balloons flies in from the left...
-    //      Wave 2: Group of 2 balloons flies in from the right...
-    
-    
-    
-    
-    
-    
-    
     
     mLevelData = aLevel;
     mLevelController->Setup(mLevelData);
-    
 }
 
 

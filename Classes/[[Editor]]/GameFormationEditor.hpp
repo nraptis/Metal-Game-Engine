@@ -13,8 +13,11 @@
 #include "Game.hpp"
 #include "EditorMenuFormationUtilities.hpp"
 #include "EditorMenuFormation.hpp"
-#include "LevelWaveSpawnFormationBlueprint.hpp"
-#include "LevelWaveSpawnFormation.hpp"
+#include "EditorMenuFormationSpawnPicker.hpp"
+#include "EditorMenuFormationGrid.hpp"
+
+#include "LevelFormationBlueprint.hpp"
+#include "LevelFormation.hpp"
 #include "FPointList.h"
 
 #define FORMATION_MODE_ADD_POINT 0
@@ -26,8 +29,8 @@
 #define FORMATION_GRID_TYPE_CIRCLE 1
 #define FORMATION_GRID_TYPE_STAR 2
 #define FORMATION_GRID_TYPE_TRIANGLE 3
-#define FORMATION_GRID_TYPE_ROUNDED_RECT 4
-#define FORMATION_GRID_TYPE_N_GON 5
+#define FORMATION_GRID_TYPE_NGON1 4
+#define FORMATION_GRID_TYPE_NGON2 5
 
 
 class GameEditor;
@@ -56,6 +59,8 @@ public:
     GameEditor                                  *mEditor;
     EditorMenuFormationUtilities                *mMenuUtils;
     EditorMenuFormation                         *mMenuFormation;
+    EditorMenuFormationSpawnPicker              *mMenuSpawn;
+    EditorMenuFormationGrid                     *mMenuGrid;
     
     
     //Speed Classes...
@@ -70,21 +75,25 @@ public:
     
     
     bool                                        mGridEnabled;
+    bool                                        mMarkersDisplay;
+    
     int                                         mGridType;
     
     int                                         mGridRectWidth;
     int                                         mGridRectHeight;
     int                                         mGridRectSpacing;
     
-    int                                         mGridCircleCount;
-    int                                         mGridCircleRadius;
+    int                                         mGridCircleRingSpacing;
+    int                                         mGridCircleRingCount;
+    int                                         mGridCircleRadialCount;
     
-    
+    int                                         mGridNGON1Sides;
+    int                                         mGridNGON1RingSpacing;
+    int                                         mGridNGON1RingCount;
+    int                                         mGridNGON1PointSpacing;
+    int                                         mGridNGON1StartRotation;
     
     FPointList                                  mGridList;
-    
-    
-    
     
     void                                        *mSelectedTouch;
     
@@ -106,17 +115,35 @@ public:
     void                                        Save();
     void                                        Load();
     void                                        Print();
+    void                                        PickDefaultModes();
     
     void                                        BuildGrid();
+    
     void                                        BuildRectGrid();
+    void                                        BuildCircleGrid();
+    void                                        BuildStarGrid();
+    void                                        BuildNGON1Grid();
+    void                                        BuildNGON2Grid();
     
     
-    
-    void                                        SetUp(LevelWaveSpawnFormationBlueprint *pFormation);
-    LevelWaveSpawnFormationBlueprint            mFormation;
+    void                                        SetUp(LevelFormationBlueprint *pFormation);
+    LevelFormationBlueprint                     mFormation;
     
     void                                        DeleteNode();
     void                                        DeleteTracer();
+    
+    
+    void                                        SpawnSelect(int pIndex);
+    int                                         SpawnIndex();
+    LevelFormationNodeBlueprint                 *SpawnGet();
+    //int                                         mSelectedSpawnIndex; // Not on tracer...
+    //int                                         mSelectedTracerSpawnIndex; // Not on tracer...
+    void                                        SpawnPickBalloon();
+    void                                        SpawnPickBrickHead();
+    
+    
+    LevelFormationTracerBlueprint               *TracerGet();
+    
     
     void                                        GridSnap(float *pX, float *pY);
     
@@ -128,7 +155,25 @@ public:
     float                                       mCenterX;
     float                                       mCenterY;
     
-    LevelWaveSpawnFormation                     mEditorFormation;
+    LevelFormation                              mEditorFormation;
+    
+    void                                        SaveGridState();
+    void                                        LoadGridState();
+    int                                         mSaveGridTimer;
+    
+    
+    
+    FString                                     GetShortNameForGameObjectType(int pGameObjectType);
+    FString                                     GetPathSpeedName(int pSpeedClass);
+    FString                                     GetObjectListName(FIntList *pList);
+    FString                                     GenerateTracerName(LevelFormationTracerBlueprint *pTracer);
+    
+    FString                                     GenerateGridName();
+    FString                                     GenerateNodesName();
+    
+    
+    FString                                     GenerateName();
+    
     
 };
 

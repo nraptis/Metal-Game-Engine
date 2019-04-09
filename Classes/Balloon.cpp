@@ -11,12 +11,10 @@
 
 Balloon::Balloon() {
     
+    mGameObjectType = GAME_OBJECT_TYPE_BALLOON;
+    
     mSpinSpeed = gRand.GetFloat(0.25f, 0.45f);
     if (gRand.GetBool()) mSpinSpeed = -mSpinSpeed;
-    
-    mDeathTimer = 5000;
-    mTimer = 0;
-    
     
     mModel = &gApp->mBalloon;
     mSprite = &gApp->mBalloonMap[gRand.Get(5)];
@@ -31,19 +29,26 @@ Balloon::~Balloon() {
 }
 
 void Balloon::Update() {
+    
+    GameObject::Update();
+    
     mTransform3D.mSpin += mSpinSpeed;
     
-    mTransform.mX += mVelX;
-    mTransform.mY += mVelY;
+    if (mFloatAway == false) {
+        mTransform.mX += mVelX;
+        mTransform.mY += mVelY;
+    }
     
 }
 
 void Balloon::Draw() {
     
-    Graphics::PipelineStateSetShape2DNoBlending();
-    Graphics::SetColor(1.0f, 0.25f, 0.25f, 0.35f);
+    GameObject::Draw();
     
-    Graphics::DrawPoint(mTransform.mX, mTransform.mY);
+    //Graphics::PipelineStateSetShape2DNoBlending();
+    //Graphics::SetColor(1.0f, 0.25f, 0.25f, 0.35f);
+    //Graphics::DrawPoint(mTransform.mX, mTransform.mY);
+    
 }
 
 void Balloon::Draw3D() {

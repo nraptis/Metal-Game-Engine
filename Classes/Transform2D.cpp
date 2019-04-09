@@ -21,6 +21,7 @@ Transform2D::Transform2D() {
     mScale = 1.0f;
     mScaleX = 1.0f;
     mScaleY = 1.0f;
+    mScaleZ = 1.0f;
     
     mOffsetScale = 1.0f;
     

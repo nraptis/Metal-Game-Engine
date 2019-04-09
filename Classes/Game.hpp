@@ -15,8 +15,9 @@
 #include "FloatingCamera.hpp"
 #include "Dart.hpp"
 #include "Balloon.hpp"
+#include "BrickHead.hpp"
 #include "LevelData.hpp"
-#include "LevelWavePath.hpp"
+#include "LevelPath.hpp"
 #include "Transform2D.hpp"
 #include "Transform3D.hpp"
 
@@ -49,7 +50,7 @@ public:
     virtual void                                Notify(void *pSender, const char *pNotification) override;
     
     bool                                        IsWaveClearForSpawn();
-    bool                                        IsScreenClearForSpawn();
+    bool                                        IsScreenClearForSpawn(bool pIncludePerms);
     
     void                                        Convert2DTransformTo3D(Transform2D *p2D, Transform3D *p3D);
     
@@ -60,6 +61,12 @@ public:
     FVec2                                       Convert3DCoordsTo2D(float pX, float pY);
     float                                       Convert3DXTo2D(float pX);
     float                                       Convert3DYTo2D(float pY);
+    
+    void                                        DisposeObject(GameObject *pObject);
+    
+    //Mainly used by editor to "flush" screen before re-spawn...
+    void                                        DisposeAllObjects();
+    
     
     float                                       mRenderShiftX;
     float                                       mRenderShiftY;
@@ -74,6 +81,7 @@ public:
     
     FObjectList                                 mDartList;
     FObjectList                                 mBalloonList;
+    FObjectList                                 mBrickHeadList;
     
     Dart                                        *mCurrentDart;
     int                                         mCurrentDartRespawnTimer;

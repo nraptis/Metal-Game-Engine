@@ -16,7 +16,7 @@
 #include "core_includes.h"
 
 
-LevelWaveSpawnFormation *gSelectedFormation = NULL;
+LevelFormation *gSelectedFormation = NULL;
 
 EditorMenuFormationPicker::EditorMenuFormationPicker() {
     float aX = gDeviceWidth2 / 3.0f;
@@ -82,14 +82,12 @@ void EditorMenuFormationPicker::Notify(void *pSender, const char *pNotification)
 }
 
 void EditorMenuFormationPicker::AddAllFormations() {
-    for (int i=0;i<12;i++) {
-        EnumList(LevelWaveSpawnFormation, aFormation, gFormationCollection.mFormationList) {
-            AddFormation(aFormation->Clone());
-        }
+    EnumList(LevelFormation, aFormation, gFormationCollection.mFormationList) {
+        AddFormation(aFormation->Clone());
     }
 }
 
-void EditorMenuFormationPicker::AddFormation(LevelWaveSpawnFormation *pFormation) {
+void EditorMenuFormationPicker::AddFormation(LevelFormation *pFormation) {
     EditorMenuFormationPickerCell *aCell = new EditorMenuFormationPickerCell(pFormation);
     aCell->SetFrame(0.0f, 0.0f, mScrollContent->mCellWidth, mScrollContent->mCellHeight);
     gNotify.Register(this, aCell, "button_click");
@@ -122,7 +120,6 @@ EditorMenuFormationPickerScrollContent::EditorMenuFormationPickerScrollContent()
     mColCount = 0;
     mRowCount = 0;
     float aWidth = gAppWidth;
-    
     float aProbeX = mCellSpacingH;
     int aScreenColCount = 0;
     while (aProbeX < aWidth) {

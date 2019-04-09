@@ -15,6 +15,16 @@ GameObject::GameObject() {
     mUniform = NULL;
     mModel = NULL;
     mSprite = NULL;
+    
+    mDidOriginateOnWave = false;
+    mDidOriginateAsPermanent = false;
+    
+    mGameObjectType = GAME_OBJECT_TYPE_UNKNOWN;
+    
+    mFloatAway = false;
+    mFloatAwaySpeedX = 0.0f;
+    mFloatAwaySpeedY = 0.0f;
+    
 }
 
 GameObject::~GameObject() {
@@ -23,10 +33,38 @@ GameObject::~GameObject() {
 
 void GameObject::Update() {
     
+    if (mFloatAway == true) {
+        
+        mTransform.mX += mFloatAwaySpeedX;
+        mTransform.mY += mFloatAwaySpeedY;
+        
+        mFloatAwaySpeedX *= 0.972f;
+        
+        mFloatAwaySpeedY -= 0.042f;
+        mFloatAwaySpeedY *= 0.987f;
+        
+        if (gGame != NULL) {
+            if (mTransform.mY <= gGame->mSpawnZoneTop) {
+                gGame->DisposeObject(this);
+            }
+        }
+    }
     
 }
 
 void GameObject::Draw() {
+    
+    /*
+    Graphics::PipelineStateSetSpritePremultipliedBlending();
+    Graphics::SetColor();
+    if (mDidOriginateOnWave) {
+        gApp->mSysFontBold.Center("W", mTransform.mX, mTransform.mY);
+    }
+    
+    if (mDidOriginateAsPermanent) {
+        gApp->mSysFontBold.Center("P", mTransform.mX, mTransform.mY);
+    }
+    */
     
 }
 
@@ -182,6 +220,25 @@ void GameObject::Draw3D() {
         */
     }
 }
+
+
+void GameObject::FloatAway(float pDirX, float pDirY, float pMagnitude) {
+    
+    mFloatAway = true;
+    
+    mFloatAwaySpeedX = pDirX * pMagnitude * 4.0f;
+    mFloatAwaySpeedY = pDirY * pMagnitude * 4.0f;
+    
+    
+}
+
+
+void GameObject::Disperse(float pDirX, float pDirY, float pMagnitude) {
+    
+    
+    FloatAway(pDirX, pDirY, pMagnitude);
+}
+
 
 void GameObject::Kill() {
     FObject::Kill();

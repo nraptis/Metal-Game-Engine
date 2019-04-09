@@ -22,9 +22,12 @@
 
 #include "GamePathEditor.hpp"
 #include "GameFormationEditor.hpp"
-#include "LevelWavePathBlueprint.hpp"
+#include "GamePermanentEditor.hpp"
+
+#include "LevelPathBlueprint.hpp"
 #include "LevelWaveBlueprint.hpp"
 #include "LevelSectionBlueprint.hpp"
+#include "LevelSectionPermanentBlueprint.hpp"
 
 
 class GameEditor : public FCanvas {
@@ -57,12 +60,9 @@ public:
     int                                         mSpeedClassIndex;
     
     
-    void                                        RefreshSpawn();
     void                                        RefreshSpawnRotationSpeed();
     int                                         mSpawnRotationSpeedClassIndex;
     
-    
-    void                                        RefreshSection();
     
     void                                        SetOverlay(FCanvas *pCanvas);
     void                                        SelectClosestObject(float pX, float pY);
@@ -94,19 +94,34 @@ public:
     void                                        SpawnSelect(int pIndex);
     int                                         SpawnIndex();
     LevelWaveSpawnBlueprint                     *SpawnGet();
+    void                                        SpawnClearFormation();
+    void                                        SpawnPickBalloon();
+    void                                        SpawnPickBrickHead();
+    
+    void                                        PermSelect(int pIndex);
+    int                                         PermIndex();
+    LevelSectionPermanentBlueprint              *PermnGet();
     
     int                                         SpeedConvertSegmentToType(int pSegmentIndex);
     int                                         SpeedConvertTypeToSegment(int pType);
     
     
-    void                                        OpenPathEditor();
+    void                                        OpenPathEditorForWave();
     void                                        ClosePathEditor();
     
-    void                                        OpenFormationEditor(LevelWaveSpawnFormation *pFormation);
-    
+    void                                        OpenFormationEditor(LevelFormation *pFormation);
     void                                        CloseFormationEditor();
     
+    void                                        OpenPermanentEditor();
+    void                                        ClosePermanentEditor();
+    
+    
     void                                        PickFormationForFormationEditor();
+    void                                        PickFormationForSpawnNode();
+    void                                        PickFormation(int pReason);
+    
+    
+    int                                         mPickFormationReason;
     
     
     void                                        OpenSpawnMenu();
@@ -121,24 +136,19 @@ public:
     void                                        Autosave();
     void                                        Autoload();
     
-    
-    //Our current "overlay" which will be either "path editor" or "tool container" etc...
     FCanvas                                     *mOverlay;
-    
-    
-    
     
     Game                                        *mGame;
     
     GamePathEditor                              *mPathEditor;
     GameFormationEditor                         *mFormationEditor;
+    GamePermanentEditor                         *mPermEditor;
     
     EditorMenuSections                          *mMenuSections;
     EditorMenuSpawn                             *mMenuSpawn;
     EditorMenuWavesPicker                       *mMenuWavesPicker;
     EditorMenuSpawnPicker                       *mMenuSpawnPicker;
     EditorMenuAttachment                        *mMenuAttachment;
-    
     
     FCanvas                                     *mToolContainer;
     
@@ -201,8 +211,18 @@ public:
     bool                                        mEditorPlaybackWaveOnly;
     bool                                        mEditorPlaybackFromCurrentWave;
     
+    bool                                        mEditorPlaybackFromOffScreen;
+    int                                         mEditorPlaybackFromOffScreenType; //left, right, or top... [probably left...]
+    
+    
+    
+    
+    
+    bool                                        mIsRefreshingPlayback;
+    
     LevelSection                                mEditorSection;
     LevelWave                                   mEditorWave;
+    
     FList                                       mEditorObjectList;
     FList                                       mEditorObjectQueue;
     

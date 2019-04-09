@@ -1,4 +1,36 @@
 {
 	"section": true,
-	"wave_list": []
+	"wave_list": [
+		{
+			"spawn_spacing": 90,
+			"creation_type": 3,
+			"creation_delay": 0,
+			"max_spawn_size": 273,
+			"path": {
+				"smooth": true,
+				"speed_class": -300,
+				"node_list": [
+					{
+						"x_con": 200,
+						"y_con": 400
+					},
+					{
+						"x": 53.540104,
+						"y": 27.305147,
+						"wait": 500
+					},
+					{
+						"x_con": 850,
+						"y_con": 400
+					}
+				]
+			},
+			"spawn": [
+				{
+					"spacing_offset": 0,
+					"formation": "formation_tracer_5x5_rect_xs_tracer_3x3_rect_xs_stationary"
+				}
+			]
+		}
+	]
 }

@@ -11,6 +11,8 @@
 
 Dart::Dart() {
     
+    mGameObjectType = GAME_OBJECT_TYPE_DART;
+    
     mSpinSpeed = gRand.GetFloat(1.25f, 1.45f);
     if (gRand.GetBool()) mSpinSpeed = -mSpinSpeed;
     
@@ -98,6 +100,8 @@ void Dart::Update() {
 }
 
 void Dart::Draw() {
+    
+    GameObject::Draw();
     
     /*
     Graphics::PipelineStateSetShape2DNoBlending();

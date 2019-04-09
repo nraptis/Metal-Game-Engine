@@ -78,6 +78,10 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     mRowMenus2 = new ToolMenuSectionRow();
     mMenusPanel->AddSection(mRowMenus2);
     
+    mButtonShowPermanentEditor = new UIButton();
+    mButtonShowPermanentEditor->SetText("Perms");
+    mRowMenus2->AddButton(mButtonShowPermanentEditor);
+    
     mButtonShowFormationEditor = new UIButton();
     mButtonShowFormationEditor->SetText("F-Edit");
     mRowMenus2->AddButton(mButtonShowFormationEditor);
@@ -109,9 +113,9 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     mRowWave1->AddButton(mButtonDeleteWave);
     
     
-    mButtonEditPaths = new UIButton();
-    mButtonEditPaths->SetText("[E]dit Paths");
-    mRowWave1->AddButton(mButtonEditPaths);
+    mButtonEditWavePaths = new UIButton();
+    mButtonEditWavePaths->SetText("[E]dit Paths");
+    mRowWave1->AddButton(mButtonEditWavePaths);
     
     
     mRowWave2 = new ToolMenuSectionRow();
@@ -133,6 +137,10 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     
     
     
+    
+    
+    
+
     
     mPlaybackPanel = new ToolMenuPanel();
     mPlaybackPanel->SetTitle("Playback");
@@ -177,6 +185,23 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     mPlaybackPanel->AddSection(mRowPlayback3);
     
     
+    //mRowPlayback3
+    
+    mCheckBoxPlaybackFromOffScreen = new UICheckBox();
+    mCheckBoxPlaybackFromOffScreen->SetText("Off Screen");
+    mCheckBoxPlaybackFromOffScreen->SetTarget(&mEditor->mEditorPlaybackFromOffScreen);
+    mRowPlayback3->AddCheckBox(mCheckBoxPlaybackFromOffScreen);
+    
+    
+    mSegmentPlaybackFromOffScreenType = new UISegment();
+    mSegmentPlaybackFromOffScreenType->SetSegmentCount(3);
+    mSegmentPlaybackFromOffScreenType->SetTitles("Left", "Top", "Right");
+    if (gEditor) {
+        mSegmentPlaybackFromOffScreenType->SetTarget(&gEditor->mEditorPlaybackFromOffScreenType);
+    }
+    mPlaybackPanel->AddSection(mSegmentPlaybackFromOffScreenType);
+    
+    
     DeactivateCloseButton();
 }
 
@@ -194,7 +219,9 @@ void EditorMenuSections::Notify(void *pSender, const char *pNotification) {
     
     if (pSender == mButtonBuildFormation) { mEditor->OpenFormationEditor(NULL); }
     
-    if (pSender == mButtonEditPaths) { mEditor->OpenPathEditor(); }
+    if (pSender == mButtonShowPermanentEditor) { mEditor->OpenPermanentEditor(); }
+    
+    if (pSender == mButtonEditWavePaths) { mEditor->OpenPathEditorForWave(); }
     if (pSender == mButtonAddWave) { mEditor->WaveAdd(); }
     if (pSender == mButtonDeleteWave) { mEditor->WaveRemove(); }
     
@@ -210,17 +237,15 @@ void EditorMenuSections::Notify(void *pSender, const char *pNotification) {
     
     if (pSender == mButtonShowAttachments) { mEditor->OpenAttachmentMenu(); }
     
-    
     if (pSender == mButtonShowFormationEditor) { mEditor->OpenFormationEditor(NULL); }
     if (pSender == mButtonShowFormationPicker) { mEditor->PickFormationForFormationEditor(); }
-    
-    
     
     if (pSender == mCheckBoxCurrentWaveOnly) { mEditor->RefreshPlayback(); }
     if (pSender == mButtonPlaybackRestart) { mEditor->RefreshPlayback(); }
     if (pSender == mCheckBoxPlaybackStartAtSelectedWave) { mEditor->RefreshPlayback(); }
     
-    
+    if (pSender == mSegmentPlaybackFromOffScreenType) { mEditor->RefreshPlayback(); }
+    if (pSender == mCheckBoxPlaybackFromOffScreen) { mEditor->RefreshPlayback(); }
     
 }
 

@@ -9,10 +9,10 @@
 #ifndef LevelWaveBlueprint_hpp
 #define LevelWaveBlueprint_hpp
 
-#include "LevelWavePathBlueprint.hpp"
+#include "LevelPathBlueprint.hpp"
 #include "LevelWaveSpawnBlueprint.hpp"
 
-#define MAX_SPAWN_COUNT 64
+#define MAX_SPAWN_COUNT 32
 
 class LevelWave;
 class LevelWaveBlueprint {
@@ -20,13 +20,13 @@ public:
     LevelWaveBlueprint();
     ~LevelWaveBlueprint();
     
-    void                                        Clear();
+    void                                        Reset();
     
     void                                        Update();
     void                                        Draw(bool pSelected);
     
-    LevelWavePathBlueprint                      mPath;
-    LevelWaveSpawnBlueprint                     mSpawn[MAX_SPAWN_COUNT + 4];
+    LevelPathBlueprint                          mPath;
+    LevelWaveSpawnBlueprint                     mSpawn[MAX_SPAWN_COUNT];
     
     int                                         mSpawnCount;
     int                                         mSelectedSpawnIndex;
@@ -37,6 +37,9 @@ public:
     int                                         mCreationDelay;
     
     void                                        ApplyEditorConstraints();
+    
+    void                                        FindLargestSpawnSize();
+    int                                         mMaxSpawnSize;
     
     //Note: BUILD should have NO TIE-IN TO EDITOR...
     //This HAS to work WITHOUT EDITOR for GAME......
