@@ -45,6 +45,11 @@ RootViewController *gRootBase = NULL;
     
 }
 
+- (void)resize: (NSSize)pSize {
+    self.view.frame = CGRectMake(0.0f, 0.0f, pSize.width, pSize.height);
+    [_metalViewController resize: pSize];
+    AppShellSetDeviceSize(round(pSize.width), round(pSize.height));
+}
 
 
 /*

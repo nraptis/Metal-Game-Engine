@@ -21,6 +21,9 @@
 @property (nonatomic, assign) int screenScale;
 
 - (void)setup;
+- (void)teardown;
+
+- (void)resize: (NSSize)pSize;
 
 - (int)convertKey:(unichar)keycode;
 

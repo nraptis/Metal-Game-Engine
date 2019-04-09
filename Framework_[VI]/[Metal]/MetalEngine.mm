@@ -219,9 +219,7 @@
     aSamplerDescriptor.sAddressMode = MTLSamplerAddressModeClampToEdge;
     aSamplerDescriptor.tAddressMode = MTLSamplerAddressModeClampToEdge;
     _samplerStateLinearClamp = [_device newSamplerStateWithDescriptor: aSamplerDescriptor];
-    //
-    //////////////
-    //
+    
     aSamplerDescriptor.sAddressMode = MTLSamplerAddressModeRepeat;
     aSamplerDescriptor.tAddressMode = MTLSamplerAddressModeRepeat;
     _samplerStateLinearRepeat = [_device newSamplerStateWithDescriptor: aSamplerDescriptor];
@@ -264,7 +262,6 @@
     [aDescriptor setResourceOptions: MTLResourceStorageModePrivate];
     return  [_device newTextureWithDescriptor: aDescriptor];
 }
-
 
 /*
 Drawable [<AGXA7Texture: 0x11bd73c20>

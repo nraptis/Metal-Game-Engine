@@ -195,20 +195,34 @@ void FPointList::Size(int pSize) {
     }
 }
 
-void FPointList::DrawPoints(float pSize)
-{
+void FPointList::DrawPoints(float pSize) {
     float aX = 0.0f;
     float aY = 0.0f;
     
     float aSize2 = pSize * 0.5f;
     
-    for(int i=0;i<mCount;i++)
-    {
+    Graphics::PipelineStateSetShape2DAlphaBlending();
+    for (int i=0;i<mCount;i++) {
         aX = mX[i];
         aY = mY[i];
         Graphics::DrawRect(aX - aSize2, aY - aSize2, pSize, pSize);
     }
 }
+
+void FPointList::OutlinePoints(float pSize, float pBorderWidth) {
+    float aX = 0.0f;
+    float aY = 0.0f;
+    
+    float aSize2 = pSize * 0.5f;
+    
+    Graphics::PipelineStateSetShape2DAlphaBlending();
+    for (int i=0;i<mCount;i++) {
+        aX = mX[i];
+        aY = mY[i];
+        Graphics::OutlineRect(aX - aSize2, aY - aSize2, pSize, pSize, pBorderWidth);
+    }
+}
+
 
 void FPointList::DrawEdges(float pLineSize)
 {

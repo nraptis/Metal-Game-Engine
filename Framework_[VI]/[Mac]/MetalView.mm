@@ -66,6 +66,24 @@ CVReturn displayCallback(CVDisplayLinkRef CV_NONNULL displayLink,
     [self becomeFirstResponder];
 }
 
+
+- (void)teardown {
+    
+    NSLog(@"Tear Down Linl [%@]\n", _displayLink);
+    
+    if (_displayLink != NULL) {
+        CVDisplayLinkStop(_displayLink);
+        CVDisplayLinkRelease(_displayLink);
+        _displayLink = NULL;
+    }
+    
+}
+
+- (void)resize: (NSSize)pSize {
+    _metalLayer.frame = CGRectMake(0.0f, 0.0f, pSize.width, pSize.height);
+    self.frame = CGRectMake(0.0f, 0.0f, pSize.width, pSize.height);
+}
+
 - (CGPoint)correctMousePos: (CGPoint)pos {
     CGPoint aResult = CGPointMake(pos.x, gDeviceHeight - pos.y);
     return aResult;

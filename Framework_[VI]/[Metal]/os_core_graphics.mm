@@ -996,6 +996,8 @@ void Graphics::ClipDisable() {
 
 static MTLScissorRect cScissorRect;
 void Graphics::Clip(float pX, float pY, float pWidth, float pHeight) {
+    
+    
     int aMaxX = gDeviceWidth * gMetalEngine.screenScale;
     int aMaxY = gDeviceHeight * gMetalEngine.screenScale;
     int aLeft = roundf(pX);
@@ -1028,6 +1030,8 @@ void Graphics::Clip(float pX, float pY, float pWidth, float pHeight) {
     cScissorRect.width = NSUInteger(aWidth);
     cScissorRect.height = NSUInteger(aHeight);
     [gMetalEngine.renderCommandEncoder setScissorRect: cScissorRect];
+    
+    
 }
 
 void Graphics::ClipSetAppFrame(float pX, float pY, float pWidth, float pHeight) {

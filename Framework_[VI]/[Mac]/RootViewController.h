@@ -15,8 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 @interface RootViewController : NSViewController
 
 - (void)setup;
-
 - (BOOL)isLandscape;
+
+- (void)resize: (NSSize)pSize;
+
+
 
 @property (nonatomic, strong) NSView *view;
 @property (nonatomic, strong) MetalViewController *metalViewController;

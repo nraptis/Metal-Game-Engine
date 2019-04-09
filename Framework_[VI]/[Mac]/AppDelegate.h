@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "RootViewController.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>
 
 @property (strong, nonatomic) IBOutlet NSWindow *window;
 @property (strong, nonatomic) RootViewController *rootViewController;

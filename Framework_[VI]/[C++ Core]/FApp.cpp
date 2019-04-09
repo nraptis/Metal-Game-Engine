@@ -842,7 +842,7 @@ void FApp::FrameController() {
         
         /////////////////////////////////////////////////////////////////
         //
-        // Main control loop... calls Update() and Draw() appropriately
+        // Main control loop... calls Update() appropriately
         //
         /////////////////////////////////////////////////////////////////
         

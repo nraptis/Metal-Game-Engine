@@ -38,14 +38,24 @@ MetalPipeline *gMetalPipeline = NULL;
     [_metalPipeline setup];
 }
 
+- (void)teardown {
+    [_metalView teardown];
+}
+
 - (void)loadView {
     _metalView = [[MetalView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kDeviceWidth, kDeviceHeight)];
     gMetalView = _metalView;
     
-    _metalView.layer = [[CALayer alloc] init];
+    //_metalView.layer = [[CALayer alloc] init];
     self.view = _metalView;
+    
 }
 
+
+- (void)resize: (NSSize)pSize {
+    self.view.frame = CGRectMake(0.0f, 0.0f, pSize.width, pSize.height);
+    [_metalView resize: pSize];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

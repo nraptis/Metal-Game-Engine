@@ -77,7 +77,11 @@ public:
     void                        Clear();
     
     void                        Save(const char *pFile);
+    inline void                 Save(FString pString) { Save((const char *)pString.c()); }
+    
     void                        Load(const char *pFile);
+    inline void                 Load(FString pString) { Load((const char *)pString.c()); }
+    
     void                        Parse(const char *pData, int pLength);
     
     void                        Print();

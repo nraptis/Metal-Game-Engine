@@ -86,7 +86,10 @@ public:
 	void					DrawTriangleList(GFX_MODEL_INDEX_TYPE *pIndex, int pCount);
 
 
-    void                    DrawPoints(float pSize=7.0f);
+    void                    DrawPoints(float pSize = 5.0f);
+    void                    OutlinePoints(float pSize = 8.0f, float pBorderWidth = 1.0f);
+    
+    
     void                    DrawEdges(float pLineSize=2.0f);
     void                    DrawEdgesOpen(float pLineSize=2.0f);
     

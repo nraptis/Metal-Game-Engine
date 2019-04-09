@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "core_app_shell.h"
+#include "FApp.hpp"
 
 //int kDeviceWidth = 480;
 //int kDeviceHeight = 320;
@@ -90,6 +91,7 @@ int kDeviceHeight = 760;
     [_window setTitle:@"Space Whores 6"];
     [_window setOpaque: YES];
     [_window setHasShadow: YES];
+    [_window setDelegate: self];
     _window.contentViewController = self.rootViewController;
     
     
@@ -120,12 +122,42 @@ int kDeviceHeight = 760;
     
 }
 
-- (void)applicationWillTerminate:(NSNotification *)aNotification {
+- (void)applicationWillTerminate: (NSNotification *)aNotification {
     // Insert code here to tear down your application
+    
+    NSLog(@"applicationWillTerminate\n");
+    
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
     return YES;
 }
+
+- (BOOL)windowShouldClose:(NSWindow *)sender {
+    
+    if (gAppBase != NULL) {
+        gAppBase->BaseQuit();
+    }
+    
+    [_rootViewController.metalViewController teardown];
+    
+    os_sleep(220);
+    return YES;
+}
+
+//- (nullable id)windowWillReturnFieldEditor:(NSWindow *)sender toObject:(nullable id)client;
+- (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)frameSize {
+    
+    NSLog(@"App Resize (%f x %f)\n", frameSize.width, frameSize.height);
+    
+    //Bad thing to do. All textures and render pass need resize.
+    
+    //gAppBase->ThrottleLock();
+    //[_rootViewController resize: frameSize];
+    //gAppBase->ThrottleUnlock();
+    
+    return frameSize;
+}
+
 
 @end
