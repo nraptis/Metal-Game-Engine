@@ -10,7 +10,7 @@
 #define PhongPhongLightMenu_hpp
 
 #include "ToolMenu.hpp"
-#include "FPoint.h"
+#include "FPoint.hpp"
 
 class PhongConfiguration;
 class PhongLightMenu : public ToolMenu {

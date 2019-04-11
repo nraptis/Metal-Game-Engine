@@ -47,7 +47,6 @@ public:
     void                                        PermMoveUp();
     void                                        PermMoveDown();
     void                                        PermSelect(int pIndex);
-    int                                         PermCount(int pIndex);
     int                                         PermSelectClosest(float pX, float pY);
     void                                        PermRefreshPositions();
     

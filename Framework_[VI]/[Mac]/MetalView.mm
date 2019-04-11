@@ -9,8 +9,8 @@
 #import "AppDelegate.h"
 #import "MetalView.h"
 #import "RootViewController.h"
-#import "FTouchManager.h"
-#include "core_app_shell.h"
+#import "FTouchManager.hpp"
+#include "core_app_shell.hpp"
 
 
 //TODO: Change contents of non-uniform buffer mid-render and compare results versus un changed non-uniform buffer which remains
@@ -33,12 +33,7 @@ CVReturn displayCallback(CVDisplayLinkRef CV_NONNULL displayLink,
                          CVOptionFlags flagsIn,
                          CVOptionFlags * CV_NONNULL flagsOut,
                          void * CV_NULLABLE displayLinkContext ) {
-    // For now this does nothing,
-    // without semaphore, we could
-    // control frame from here..
-    
     AppShellFrame();
-    
     return kCVReturnSuccess;
 }
 
@@ -68,15 +63,11 @@ CVReturn displayCallback(CVDisplayLinkRef CV_NONNULL displayLink,
 
 
 - (void)teardown {
-    
-    NSLog(@"Tear Down Linl [%@]\n", _displayLink);
-    
     if (_displayLink != NULL) {
         CVDisplayLinkStop(_displayLink);
         CVDisplayLinkRelease(_displayLink);
         _displayLink = NULL;
     }
-    
 }
 
 - (void)resize: (NSSize)pSize {

@@ -28,6 +28,17 @@ LevelFormation::~LevelFormation() {
     FreeList(LevelFormationTracer, mTracerKillList);
 }
 
+void LevelFormation::DisposeObject(GameObject *pObject) {
+    for (int i=0;i<mSpawnNodeList.mCount;i++) {
+        LevelFormationNode *aNode = ((LevelFormationNode *)mSpawnNodeList.mData[i]);
+        aNode->DisposeObject(pObject);
+    }
+    for (int i=0;i<mTracerList.mCount;i++) {
+        LevelFormationTracer *aTracer = ((LevelFormationTracer *)mTracerList.mData[i]);
+        aTracer->DisposeObject(pObject);
+    }
+}
+
 void LevelFormation::Reset() {
     for (int i=0;i<mSpawnNodeList.mCount;i++) {
         LevelFormationNode *aNode = ((LevelFormationNode *)mSpawnNodeList.mData[i]);

@@ -2,10 +2,10 @@
 	"section": true,
 	"wave_list": [
 		{
-			"blueprint": true,
-			"spawn_spacing": 92,
-			"creation_type": 1,
+			"spawn_spacing": 90,
+			"creation_type": 3,
 			"creation_delay": 0,
+			"max_spawn_size": 310,
 			"path": {
 				"speed_class": -200,
 				"node_list": [
@@ -16,7 +16,7 @@
 					{
 						"x_con": 500,
 						"y_con": 500,
-						"wait": 200
+						"wait": 400
 					},
 					{
 						"x_con": 150,
@@ -26,31 +26,181 @@
 			},
 			"spawn": [
 				{
+					"spacing_offset": 0,
+					"formation": "f_tr_brbrbrbrbr_circ_250rd_spxs~tr_8ct_circ_140rd_spxs.json"
+				}
+			]
+		},
+		{
+			"spawn_spacing": 90,
+			"creation_type": 1,
+			"creation_delay": 0,
+			"max_spawn_size": 60,
+			"path": {
+				"node_list": [
+					{
+						"x_con": 150,
+						"y_con": 500
+					},
+					{
+						"x_con": 300,
+						"y_con": 500
+					}
+				]
+			},
+			"spawn": [
+				{
 					"spacing_offset": 0
+				}
+			]
+		},
+		{
+			"spawn_spacing": 90,
+			"creation_type": 0,
+			"creation_delay": 0,
+			"max_spawn_size": 60,
+			"path": {
+				"node_list": [
+					{
+						"x_con": 200,
+						"y_con": 200
+					},
+					{
+						"x_con": 300,
+						"y_con": 300
+					}
+				]
+			},
+			"spawn": [
+				{
+					"spacing_offset": 0
+				}
+			]
+		},
+		{
+			"spawn_spacing": 90,
+			"creation_type": 0,
+			"creation_delay": 0,
+			"max_spawn_size": 60,
+			"path": {
+				"node_list": [
+					{
+						"x_con": 500,
+						"y_con": 200
+					},
+					{
+						"x_con": 500,
+						"y_con": 300
+					}
+				]
+			},
+			"spawn": [
+				{
+					"spacing_offset": 0
+				}
+			]
+		},
+		{
+			"spawn_spacing": 90,
+			"creation_type": 0,
+			"creation_delay": 0,
+			"max_spawn_size": 60,
+			"path": {
+				"node_list": [
+					{
+						"x_con": 800,
+						"y_con": 200
+					},
+					{
+						"x_con": 700,
+						"y_con": 300
+					}
+				]
+			},
+			"spawn": [
+				{
+					"spacing_offset": 0
+				}
+			]
+		},
+		{
+			"spawn_spacing": 800,
+			"creation_type": 2,
+			"creation_delay": 0,
+			"max_spawn_size": 170,
+			"path": {
+				"node_list": [
+					{
+						"x_con": 800,
+						"y_con": 500
+					},
+					{
+						"x_con": 500,
+						"y_con": 500,
+						"wait": 300
+					},
+					{
+						"x_con": 150,
+						"y_con": 500
+					}
+				]
+			},
+			"spawn": [
+				{
+					"spacing_offset": 0,
+					"formation": "f_grid_rect_1x1_44spc_solid__nodes_cfg1xb__tr_circ_110sz_cfg6xb_spms"
+				},
+				{
+					"spacing_offset": 0,
+					"formation": "f_tr_rrct_200sz_65cr_cfg6xb_spxs"
+				},
+				{
+					"spacing_offset": 0,
+					"formation": "f_grid_46rngs_1rngc_6radc_solid__nodes_cfg7xb"
+				},
+				{
+					"spacing_offset": 0,
+					"formation": "formation_tracer_rr_250r_60cr_point_1x1_stationary"
 				}
 			]
 		}
 	],
 	"perm_list": [
 		{
-			"x_con": 400,
-			"y_con": 400
-		},
-		{
-			"x_con": 500,
-			"y_con": 400
+			"x": 45.849819,
+			"y": 7.133611
 		},
 		{
 			"x_con": 400,
-			"y_con": 500
+			"y_con": 300
 		},
 		{
-			"x_con": 600,
-			"y_con": 500
+			"x": 62.227142,
+			"y": 7.299320
 		},
 		{
-			"x_con": 600,
-			"y_con": 400
+			"x": 74.770142,
+			"y": 8.042498
+		},
+		{
+			"x": 37.952213,
+			"y": 12.936447
+		},
+		{
+			"x": 62.450905,
+			"y": 12.783447
+		},
+		{
+			"x": 15.036495,
+			"y": 11.492411
+		},
+		{
+			"x": 83.310089,
+			"y": 13.943325
+		},
+		{
+			"x": 90.146019,
+			"y": 8.803859
 		}
 	]
 }

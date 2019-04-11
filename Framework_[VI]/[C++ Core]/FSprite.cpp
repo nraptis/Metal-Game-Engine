@@ -1,8 +1,8 @@
 #include "FApp.hpp"
-#include "FSprite.h"
+#include "FSprite.hpp"
 #include "FTexture.hpp"
 #include "FVertexBuffer.h"
-#include "FString.h"
+#include "FString.hpp"
 #include "core_includes.h"
 
 //TODO: Turn off for release...
@@ -375,8 +375,8 @@ void FSprite::Draw(float pX, float pY, float pScale, float pRotationDegrees) {
     Graphics::MatrixModelViewGet(&cSpriteMatrixHold);
     cSpriteMatrixModelView.Set(cSpriteMatrixHold);
     cSpriteMatrixModelView.Translate(pX, pY);
-    cSpriteMatrixModelView.Scale(pScale);
     cSpriteMatrixModelView.Rotate(pRotationDegrees);
+    cSpriteMatrixModelView.Scale(pScale);
     Graphics::MatrixModelViewSet(cSpriteMatrixModelView);
     Draw();
     Graphics::MatrixModelViewSet(cSpriteMatrixHold);
@@ -938,16 +938,43 @@ void FSprite::DrawSlice(float pStartX, float pStartY, float pEndX, float pEndY) 
 }
 
 void FSprite::DrawScaled(float pX, float pY, float pScale) {
-    Draw(pX, pY, pScale, 0.0f);
+    //Draw(pX, pY, pScale, 0.0f);
+
+    Graphics::MatrixModelViewGet(&cSpriteMatrixHold);
+    cSpriteMatrixModelView.Set(cSpriteMatrixHold);
+    cSpriteMatrixModelView.Translate(pX, pY);
+    cSpriteMatrixModelView.Scale(pScale);
+    Graphics::MatrixModelViewSet(cSpriteMatrixModelView);
+    Draw();
+    Graphics::MatrixModelViewSet(cSpriteMatrixHold);
+    
 }
 
 void FSprite::DrawScaled(float pX, float pY, float pScaleX, float pScaleY) {
-    Graphics::DrawSprite(pX, pY, pScaleX, pScaleY, 1.0f, 0.0f, mTextureRect.mPositions, mTextureRect.mTextureCoords, mTexture);
+    //Graphics::DrawSprite(pX, pY, pScaleX, pScaleY, 1.0f, 0.0f, mTextureRect.mPositions, mTextureRect.mTextureCoords, mTexture);
+    
+    Graphics::MatrixModelViewGet(&cSpriteMatrixHold);
+    cSpriteMatrixModelView.Set(cSpriteMatrixHold);
+    cSpriteMatrixModelView.Translate(pX, pY);
+    cSpriteMatrixModelView.Scale(pScaleX, pScaleY, 1.0f);
+    Graphics::MatrixModelViewSet(cSpriteMatrixModelView);
+    Draw();
+    Graphics::MatrixModelViewSet(cSpriteMatrixHold);
+    
 }
 
-void FSprite::DrawScaled(float pX, float pY, float pScaleX, float pScaleY, float pRotation)
-{
-    Graphics::DrawSprite(pX, pY, pScaleX, pScaleY, 1.0f, pRotation, mTextureRect.mPositions, mTextureRect.mTextureCoords, mTexture);
+void FSprite::DrawScaled(float pX, float pY, float pScaleX, float pScaleY, float pRotation) {
+    //Graphics::DrawSprite(pX, pY, pScaleX, pScaleY, 1.0f, pRotation, mTextureRect.mPositions, mTextureRect.mTextureCoords, mTexture);
+    
+    Graphics::MatrixModelViewGet(&cSpriteMatrixHold);
+    cSpriteMatrixModelView.Set(cSpriteMatrixHold);
+    cSpriteMatrixModelView.Translate(pX, pY);
+    cSpriteMatrixModelView.Rotate(pRotation);
+    cSpriteMatrixModelView.Scale(pScaleX, pScaleY, 1.0f);
+    Graphics::MatrixModelViewSet(cSpriteMatrixModelView);
+    Draw();
+    Graphics::MatrixModelViewSet(cSpriteMatrixHold);
+    
 }
 
 void FSprite::DrawRotated(float pX, float pY, float pRotation) {

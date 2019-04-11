@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Nick Raptis. All rights reserved.
 //
 
-#include "FTouchManager.h"
+#include "FTouchManager.hpp"
 #include "FApp.hpp"
 #include "core_includes.h"
 

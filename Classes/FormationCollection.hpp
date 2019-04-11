@@ -10,7 +10,7 @@
 #define FormationCollection_hpp
 
 #include "FList.hpp"
-#include "FString.h"
+#include "FString.hpp"
 #include "FHashMap.hpp"
 #include "LevelFormation.hpp"
 

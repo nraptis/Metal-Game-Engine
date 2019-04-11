@@ -9,7 +9,7 @@
 #ifndef __DigMMMac__FQuad__
 #define __DigMMMac__FQuad__
 
-#include "FSprite.h"
+#include "FSprite.hpp"
 
 class FQuad {
 public:

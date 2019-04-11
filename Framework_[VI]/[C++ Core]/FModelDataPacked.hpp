@@ -13,7 +13,7 @@
 #include "FModelData.h"
 #include "FFile.hpp"
 #include "FImage.hpp"
-#include "FSprite.h"
+#include "FSprite.hpp"
 #include "FBuffer.hpp"
 
 class FModelDataPacked {

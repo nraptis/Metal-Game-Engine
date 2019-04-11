@@ -9,7 +9,7 @@
 #ifndef FUniforms_hpp
 #define FUniforms_hpp
 
-#include "FMatrix.h"
+#include "FMatrix.hpp"
 #include "FColor.hpp"
 #include "FLight.hpp"
 

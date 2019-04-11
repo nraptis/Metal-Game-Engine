@@ -10,11 +10,11 @@
 #define GameObject_hpp
 
 #include "GFXApp.hpp"
-#include "FObject.h"
+#include "FObject.hpp"
 #include "FModelDataPacked.hpp"
-#include "FSprite.h"
+#include "FSprite.hpp"
 #include "FUniforms.hpp"
-#include "FAnimation.h"
+#include "FAnimation.hpp"
 #include "Transform2D.hpp"
 #include "Transform3D.hpp"
 
@@ -38,6 +38,11 @@ public:
     virtual void                            Draw();
     virtual void                            Draw3D();
     virtual void                            Kill();
+    
+    //Basically, an object / dart moves from (startX, startY) to (endX, endY)
+    virtual bool                            WillCollide(float pStartX, float pStartY, float pEndX, float pEndY);
+    float                                   mEllipseRadiusH;
+    float                                   mEllipseRadiusV;
     
     
     //Where did we come from?

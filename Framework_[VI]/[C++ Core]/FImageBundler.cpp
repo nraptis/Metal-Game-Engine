@@ -9,7 +9,7 @@
 
 #include "core_includes.h"
 #include "FImageBundler.h"
-#include "FXML.h"
+#include "FXML.hpp"
 #include "FFile.hpp"
 
 FImageBundler gImageBundler;

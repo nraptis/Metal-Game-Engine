@@ -33,7 +33,7 @@ void FList::Size(int pSize) {
 }
 
 void FList::Add(void *pItem) {
-	if(!pItem)return;
+    if (pItem == NULL) { return; }
 	if (mCount>=mSize) {
 		Size(mCount + mCount / 2 + 1);
 	}

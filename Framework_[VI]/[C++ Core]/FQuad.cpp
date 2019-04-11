@@ -7,7 +7,7 @@
 //
 
 #include "core_includes.h"
-#include "FQuad.h"
+#include "FQuad.hpp"
 
 FQuad::FQuad() {
     mX[0] = 0.0f;

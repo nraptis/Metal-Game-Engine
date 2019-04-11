@@ -13,7 +13,7 @@
 #include "Game.hpp"
 #include "EditorMenuPathControl.hpp"
 #include "EditorMenuPath.hpp"
-#include "FPointList.h"
+#include "FPointList.hpp"
 #include "LevelPathBlueprint.hpp"
 #include "LevelWaveBlueprint.hpp"
 #include "LevelSectionBlueprint.hpp"

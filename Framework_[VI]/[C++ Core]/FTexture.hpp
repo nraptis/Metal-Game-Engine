@@ -11,7 +11,7 @@
 
 #define SET_TEXTURE_BODY if(mTexture){if(pTexture != mTexture){if(gTextureCache.mAutoMode == true)gTextureCache.TextureBindRemove(mTexture);mTexture = 0;}}if(pTexture){mTexture = pTexture;if(gTextureCache.mAutoMode == true)gTextureCache.TextureBindAdd(mTexture);}
 
-#include "FString.h"
+#include "FString.hpp"
 
 class FSprite;
 class FImage;

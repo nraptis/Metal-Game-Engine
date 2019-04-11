@@ -5,7 +5,7 @@
 
 #include "os_core_outlets.h"
 #include "core_includes.h"
-#include "FString.h"
+#include "FString.hpp"
 #include "FFile.hpp"
 #include "FList.hpp"
 #include "FApp.hpp"

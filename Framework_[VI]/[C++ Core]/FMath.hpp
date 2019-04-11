@@ -12,7 +12,8 @@
 #define PHYSICS_CROSS(x1,y1,x2,y2)((x1)*(y2)-(x2)*(y1))
 
 #include "FVec2.hpp"
-#include "FVec3.h"
+#include "FVec3.hpp"
+#include "FPoint.hpp"
 
 float Distance(float x1, float y1, float x2, float y2);
 inline float Distance(float x1, float y1, FVec2 p2){return Distance(x1,y1,p2.mX,p2.mY);}
@@ -54,16 +55,13 @@ float DistanceBetweenAngles(float theDegrees1, float theDegrees2);
 float FaceTarget(float pOriginX, float pOriginY, float pTargetX=0, float pTargetY=0);
 inline float FaceTarget(FVec2 pPos, FVec2 pTarget=FVec2(0,0)){return FaceTarget(pPos.mX, pPos.mY, pTarget.mX, pTarget.mY);}
 
-
-
-
 FVec2 PivotPoint(FVec2 pPoint, float pDegrees, FVec2 pCenter, float pScaleX, float pScaleY);
 FVec2 PivotPoint(FVec2 pPoint, float pDegrees, FVec2 pCenter, float pScale=1.0f);
 FVec2 PivotPoint(FVec2 pPoint, float pDegrees);
 
 float MinC(float pNum, float pMin);
 float MaxC(float pNum, float pMax);
-float Trim(float pNum, float pMin=-10000000.0f, float pMax=10000000.0f);
+float Clamp(float pNum, float pMin=-10000000.0f, float pMax=10000000.0f);
 
 //(Bx - Ax) * (Cy - Ay) - (By - Ay) * (Cx - Ax)
 int SideOfLine(float pTestX, float pTestY, float pLineX1, float pLineY1, float pLineX2, float pLineY2);
@@ -80,6 +78,14 @@ bool QuadContainsPoint(float pPointX, float pPointY, float pX1, float pY1, float
 float TriangleArea(float x1, float y1, float x2, float y2, float x3, float y3);
 bool Between(float x1, float y1, float x2, float y2, float x3, float y3);
 bool SegmentsIntersect(FVec2 theStart1, FVec2 theEnd1, FVec2 theStart2, FVec2 theEnd2);
+
+
+bool EllipseContainsPoint(float pPointX, float pPointY, float pEllipseX, float pEllipseY, float pEllipseAxisH, float pEllipseAxisV);
+bool EllipseContainsPoint(float pPointX, float pPointY, float pEllipseX, float pEllipseY, float pEllipseAxisH, float pEllipseAxisV, float pEllipseRotation);
+
+
+
+
 
 /*
 class func fallOffDampen(input:CGFloat, falloffStart:CGFloat, resultMax: CGFloat, inputMax:CGFloat) -> CGFloat {

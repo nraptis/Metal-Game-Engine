@@ -48,7 +48,6 @@ MetalPipeline *gMetalPipeline = NULL;
     
     //_metalView.layer = [[CALayer alloc] init];
     self.view = _metalView;
-    
 }
 
 

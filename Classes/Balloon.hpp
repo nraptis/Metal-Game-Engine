@@ -9,7 +9,7 @@
 #ifndef Balloon_hpp
 #define Balloon_hpp
 
-#include "FSprite.h"
+#include "FSprite.hpp"
 #include "FModelDataPacked.hpp"
 #include "GameObject.hpp"
 
@@ -26,6 +26,8 @@ public:
     
     float                                   mVelX;
     float                                   mVelY;
+    
+    bool                                    mTagged;
 };
 
 

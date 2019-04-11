@@ -50,7 +50,6 @@ public:
     float                                       mCenterX;
     float                                       mCenterY;
     
-    
     float                                       mDummyRot1;
     float                                       mDummyRot2;
     

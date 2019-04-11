@@ -10,7 +10,7 @@
 #define FRAMEWORK_BUTTON_H
 
 #include "FCanvas.hpp"
-#include "FSprite.h"
+#include "FSprite.hpp"
 #include "FColor.hpp"
 
 class FButtonLayer;

@@ -28,7 +28,7 @@
 //#define RESOURCE_TYPE_ARCHIVE 1024
 //#define RESOURCE_TYPE_FILE 2048
 
-#include "FString.h"
+#include "FString.hpp"
 #include "FList.hpp"
 #include "FFileTable.hpp"
 

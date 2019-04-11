@@ -11,7 +11,8 @@
 
 #include "LevelFormationTracerNode.hpp"
 #include "FList.hpp"
-#include "FPointList.h"
+#include "FPointList.hpp"
+#include "GameObject.hpp"
 
 #define TRACER_SPECIAL_TYPE_NONE 0
 #define TRACER_SPECIAL_TYPE_CIRCLE 1
@@ -26,7 +27,7 @@ public:
     void                                        Reset();
     void                                        Spawn();
     void                                        Update();
-    
+    void                                        DisposeObject(GameObject *pObject);
     
     FList                                       mSpawnNodeList;
     
@@ -70,7 +71,7 @@ public:
     
     
     //We must clone inside of a formation (basically, only the formation will call this)
-    LevelFormationTracer               *Clone(LevelFormation *pFormation);
+    LevelFormationTracer                        *Clone(LevelFormation *pFormation);
     
     
     void                                        HandOffAllGameObjects(FList *pList);

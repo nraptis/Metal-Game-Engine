@@ -10,7 +10,7 @@
 #include "core_includes.h"
 #include "GamePathEditor.hpp"
 #include "GameEditor.hpp"
-#include "FAnimation.h"
+#include "FAnimation.hpp"
 
 GamePathEditor::GamePathEditor(GameEditor *pEditor) {
     

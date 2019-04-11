@@ -1,5 +1,5 @@
 
-#include "core_app_shell.h"
+#include "core_app_shell.hpp"
 #include "os_core_graphics.h"
 #include "os_core_social.h"
 #include "os_core_sound.h"

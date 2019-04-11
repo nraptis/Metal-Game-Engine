@@ -9,37 +9,37 @@
 #ifndef FRAMEWORK_POINT_HPP
 #define FRAMEWORK_POINT_HPP
 
-class FPoint
-{
+class FPoint {
 public:
-    FPoint(){mX=0;mY=0;}
-    FPoint(const float pX, const float pY) {mX=pX;mY=pY;}
-    FPoint(const float pX, const int pY) {mX=pX;mY=(float)pY;}
-    FPoint(const int pX, const float pY) {mX=(float)pX;mY=pY;}
-    FPoint(const int pX, const int pY) {mX=(float)pX;mY=(float)pY;}
-    FPoint(const FPoint &pFPoint) {*this=pFPoint;}
     
-    inline FPoint &operator=(const FPoint &pFPoint) {if(this!=&pFPoint) {mX=pFPoint.mX;mY=pFPoint.mY;}return *this;}
+    FPoint() { mX = 0.0f; mY = 0.0f; }
+    FPoint(const float pX, const float pY) { mX=pX; mY = pY; }
+    FPoint(const float pX, const int pY) { mX = pX; mY = (float)pY;}
+    FPoint(const int pX, const float pY) { mX = (float)pX; mY = pY;}
+    FPoint(const int pX, const int pY) { mX = (float)pX; mY = (float)pY;}
+    FPoint(const FPoint &pPoint) { *this = pPoint;}
+    
+    inline FPoint &operator=(const FPoint &pPoint) {if(this!=&pPoint) {mX=pPoint.mX;mY=pPoint.mY;}return *this;}
     inline FPoint &operator=(float &pValue) {mX=pValue;mY=pValue;return *this;}
     inline FPoint &operator=(int &pValue) {mX=(float)pValue;mY=(float)pValue;return *this;}
     
-    inline bool    operator==(const FPoint &pFPoint) {return (mX==pFPoint.mX)&(mY==pFPoint.mY);}
-    inline bool    operator!=(const FPoint &pFPoint) {return (mX!=pFPoint.mX)|(mY!=pFPoint.mY);}
+    inline bool    operator==(const FPoint &pPoint) {return (mX==pPoint.mX)&(mY==pPoint.mY);}
+    inline bool    operator!=(const FPoint &pPoint) {return (mX!=pPoint.mX)|(mY!=pPoint.mY);}
     
-    inline const FPoint    operator*(const FPoint &pFPoint) const {return FPoint(mX*pFPoint.mX,mY*pFPoint.mY);}
-    inline FPoint &operator*=(const FPoint &pFPoint) {mX*=pFPoint.mX;mY*=pFPoint.mY;return *this;}
+    inline const FPoint    operator*(const FPoint &pPoint) const {return FPoint(mX*pPoint.mX,mY*pPoint.mY);}
+    inline FPoint &operator*=(const FPoint &pPoint) {mX*=pPoint.mX;mY*=pPoint.mY;return *this;}
     inline const FPoint operator*(const float pFloat) const {return FPoint(mX*pFloat,mY*pFloat);}
     inline FPoint &operator*=(const float pFloat) {mX*=pFloat;mY*=pFloat;return *this;}
-    inline const FPoint    operator/(const FPoint &pFPoint) const {return FPoint(mX/pFPoint.mX,mY/pFPoint.mY);}
-    inline FPoint &operator/=(const FPoint &pFPoint) {mX/=pFPoint.mX;mY/=pFPoint.mY;return *this;}
+    inline const FPoint    operator/(const FPoint &pPoint) const {return FPoint(mX/pPoint.mX,mY/pPoint.mY);}
+    inline FPoint &operator/=(const FPoint &pPoint) {mX/=pPoint.mX;mY/=pPoint.mY;return *this;}
     inline const FPoint operator/(const float pFloat) const {return FPoint(mX/pFloat,mY/pFloat);}
     inline FPoint &operator/=(const float pFloat) {mX/=pFloat;mY/=pFloat;return *this;}
-    inline const FPoint operator+(const FPoint &pFPoint) const {return FPoint(mX+pFPoint.mX,mY+pFPoint.mY);}
-    inline FPoint &operator+=(const FPoint &pFPoint) {mX+=pFPoint.mX;mY+=pFPoint.mY;return *this;}
+    inline const FPoint operator+(const FPoint &pPoint) const {return FPoint(mX+pPoint.mX,mY+pPoint.mY);}
+    inline FPoint &operator+=(const FPoint &pPoint) {mX+=pPoint.mX;mY+=pPoint.mY;return *this;}
     inline const FPoint operator+(const float pFloat) const {return FPoint(mX+pFloat,mY+pFloat);}
     inline FPoint &operator+=(const float pFloat) {mX+=pFloat;mY+=pFloat;return *this;}
-    inline const FPoint operator-(const FPoint &pFPoint) const {return FPoint(mX-pFPoint.mX,mY-pFPoint.mY);}
-    inline FPoint &operator-=(const FPoint &pFPoint) {mX-=pFPoint.mX;mY-=pFPoint.mY;return *this;}
+    inline const FPoint operator-(const FPoint &pPoint) const {return FPoint(mX-pPoint.mX,mY-pPoint.mY);}
+    inline FPoint &operator-=(const FPoint &pPoint) {mX-=pPoint.mX;mY-=pPoint.mY;return *this;}
     inline const FPoint operator-(const float pFloat) const {return FPoint(mX-pFloat,mY-pFloat);}
     inline FPoint & operator-=(const float pFloat) {mX-=pFloat;mY-=pFloat;return *this;}
     inline const FPoint operator-() const {return FPoint(-mX,-mY);}

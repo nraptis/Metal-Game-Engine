@@ -99,7 +99,7 @@ void LevelSectionBlueprint::WaveAdd() {
 }
 
 void LevelSectionBlueprint::WaveRemove() {
-    if (mCurrentWave) {
+    if (mCurrentWave != NULL) {
         mWaveList.Remove(mCurrentWave);
         mKillWaveList.Add(mCurrentWave);
         mCurrentWave = NULL;
@@ -136,6 +136,7 @@ void LevelSectionBlueprint::WaveSelectPrev() {
 
 void LevelSectionBlueprint::WaveDeselect() {
     mCurrentWave = NULL;
+    if (gEditor != NULL) { gEditor->RefreshPlayback(); }
 }
 
 void LevelSectionBlueprint::WaveMoveUp() {
@@ -164,8 +165,6 @@ int LevelSectionBlueprint::WaveCount(int pIndex) {
 }
 
 
-
-
 void LevelSectionBlueprint::PermAdd(float pX, float pY) {
     mCurrentPerm = new LevelSectionPermanentBlueprint();
     
@@ -185,7 +184,7 @@ void LevelSectionBlueprint::PermAdd(float pX, float pY) {
 }
 
 void LevelSectionBlueprint::PermRemove() {
-    if (mCurrentPerm) {
+    if (mCurrentPerm != NULL) {
         mPermList.Remove(mCurrentPerm);
         mKillPermList.Add(mCurrentPerm);
         mCurrentPerm = NULL;
@@ -234,16 +233,7 @@ void LevelSectionBlueprint::PermSelect(int pIndex) {
     if (gEditor != NULL) { gEditor->RefreshPlayback(); }
 }
 
-int LevelSectionBlueprint::PermCount(int pIndex) {
-    LevelSectionPermanentBlueprint *aWave = (LevelSectionPermanentBlueprint *)mPermList.Fetch(pIndex);
-    if (aWave != NULL) {
-        return aWave->mPath.mNodeList.mCount;
-    }
-    return 0;
-}
-
 int LevelSectionBlueprint::PermSelectClosest(float pX, float pY) {
-    
     int aResult = -1;
     float aBestDist = 80.0f * 80.0f;
     
@@ -306,12 +296,15 @@ void LevelSectionBlueprint::Build(LevelSection *pSection) {
         pSection->AddWave(aWave);
     }
     
+    //TODO:
+    
     for (int i=0;i<mPermList.mCount;i++) {
         LevelSectionPermanentBlueprint *aPermBlueprint = (LevelSectionPermanentBlueprint *)mPermList.mData[i];
         LevelSectionPermanent *aPerm = new LevelSectionPermanent(pSection);
         aPermBlueprint->Build(aPerm);
         pSection->AddPerm(aPerm);
     }
+    
     
 }
 
@@ -366,6 +359,7 @@ void LevelSectionBlueprint::Load(FJSONNode *pNode) {
     //TODO: Remove
     if (gEditor != NULL) {
         WaveSelectNext();
+        PermSelectNext();
     }
 }
 

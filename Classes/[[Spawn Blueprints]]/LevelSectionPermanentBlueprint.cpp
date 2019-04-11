@@ -6,50 +6,9 @@
 //  Copyright © 2019 Froggy Studios. All rights reserved.
 //
 
-//
-//  LevelSectionPermanentBlueprint.cpp
-//  Crazy Darts 2 Mac
-//
-//  Created by Nicholas Raptis on 3/18/19.
-//  Copyright © 2019 Froggy Studios. All rights reserved.
-//
-
 #include "LevelSectionPermanentBlueprint.hpp"
 #include "GameEditor.hpp"
 #include "LevelSectionPermanent.hpp"
-
-
-/*
- 
- 
- FJSONNode *LevelPathNodeBlueprint::Save() {
- FJSONNode *aExport = new FJSONNode();
- aExport->mNodeType = JSON_NODE_TYPE_DICTIONARY;
- 
- 
- if (mChamferSize > 0) {
- aExport->AddDictionaryInt("chamfer", mChamferSize);
- }
- 
- if (mWaitTimer > 0) {
- aExport->AddDictionaryInt("wait", mWaitTimer);
- }
- 
- return aExport;
- }
- 
- void LevelPathNodeBlueprint::Load(FJSONNode *pNode) {
- 
- if (pNode == NULL) { return; }
- 
- 
- 
- 
- mChamferSize = pNode->GetInt("chamfer", mChamferSize);
- mWaitTimer = pNode->GetInt("wait", mWaitTimer);
- 
- }
- */
 
 LevelSectionPermanentBlueprint::LevelSectionPermanentBlueprint() {
     mPath.mPerm = this;
@@ -68,8 +27,6 @@ LevelSectionPermanentBlueprint::~LevelSectionPermanentBlueprint() {
 
 void LevelSectionPermanentBlueprint::Reset() {
     mPath.Reset();
-    
-    
 }
 
 //mPath
@@ -168,8 +125,6 @@ void LevelSectionPermanentBlueprint::Build(LevelSectionPermanent *pPerm) {
     
     pPerm->Reset();
     mPath.Build(&pPerm->mPath);
-    
-    
     
     FPoint aPoint;
     aPoint.mX = mPercentX / 100.0f;

@@ -9,7 +9,7 @@
 #include "core_includes.h"
 #include "GamePermanentEditor.hpp"
 #include "GameEditor.hpp"
-#include "FAnimation.h"
+#include "FAnimation.hpp"
 
 GamePermanentEditor *gPermEditor = NULL;
 GamePermanentEditor::GamePermanentEditor(GameEditor *pEditor) {

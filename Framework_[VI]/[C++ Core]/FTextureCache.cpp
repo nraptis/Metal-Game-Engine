@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Nick Raptis. All rights reserved.
 //
 
-#include "FTextureCache.h"
+#include "FTextureCache.hpp"
 #include "core_includes.h"
 
 FTextureCacheNode::FTextureCacheNode(FTexture *pTexture) {

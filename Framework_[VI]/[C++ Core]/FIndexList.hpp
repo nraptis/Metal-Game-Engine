@@ -12,8 +12,8 @@
 #define GFX_MODEL_INDEX_TYPE unsigned short
 //#define GFX_MODEL_INDEX_TYPE unsigned int
 
-#include "FSprite.h"
-#include "FString.h"
+#include "FSprite.hpp"
+#include "FString.hpp"
 #include "FFile.hpp"
 
 class FIndexList {

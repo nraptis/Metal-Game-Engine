@@ -8,8 +8,8 @@
 
 #include "LevelPath.hpp"
 #include "os_core_graphics.h"
-#include "FSpline.h"
-#include "FPolyPath.h"
+#include "FSpline.hpp"
+#include "FPolyPath.hpp"
 #include "core_includes.h"
 
 

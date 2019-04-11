@@ -8,12 +8,14 @@
 
 //#include "MetalEngine.h"
 
-#include "core_app_shell.h"
+#include "core_app_shell.hpp"
 #include "GFXApp.hpp"
 #include "FormationCollection.hpp"
 
 #include "LevelSelectorScreen.hpp"
 #include "LightConfigurationScene.hpp"
+#include "WorldConfigScene.hpp"
+
 #include "Balloon.hpp"
 #include "Util_ScreenFrame.h"
 #include "Game.hpp"
@@ -38,6 +40,9 @@ GFXApp::GFXApp() {
     mGameContainer = NULL;
     mLevelSelect = NULL;
     mLightScene = NULL;
+    mWorldScene = NULL;
+    
+    
     mScreenTool = NULL;
     mCameraMenu = NULL;
     mSoundMenu = NULL;
@@ -76,6 +81,12 @@ GFXApp::~GFXApp() {
 }
 
 void GFXApp::Load() {
+    
+    
+    mCircle256.Load("circle_256");
+    mCircle512.Load("circle_512");
+    
+    
     
     mRocket.mUseNormals = false;
     mRocket.LoadOBJ("rocket.obj");
@@ -185,6 +196,15 @@ void GFXApp::LoadComplete() {
     
     
     //music_play("song2.mp3", true);
+    
+    /*
+    if (mWorldScene == NULL) {
+        mWorldScene = new WorldConfigScene();
+        mWindowTools.AddChild(mWorldScene);
+        mWorldScene->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+    }
+    */
+    
     
     /*
     if (mCameraMenu == NULL) {
@@ -610,10 +630,11 @@ void GFXApp::Draw() {
                                   true, //Clear Color
                                   true); //Clear Depth
         
-        if (mGameContainer) mGameContainer->Draw3D();
+        if (mGameContainer != NULL) mGameContainer->Draw3D();
         //if (mLevelSelect) mLevelSelect->mPage1->Draw3D();
-        if (mLightScene) { mLightScene->Draw3D(); }
+        if (mLightScene != NULL) { mLightScene->Draw3D(); }
         
+        if (mWorldScene != NULL) { mWorldScene->Draw3D(); }
         
         /*
         Draw3D();
@@ -656,15 +677,19 @@ void GFXApp::SetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
         
         
     }
-    if (mLevelSelect) {
+    if (mLevelSelect != NULL) {
         mLevelSelect->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
         mLevelSelect->mPage1->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
         mLevelSelect->mPage2->SetFrame(gVirtualDevWidth, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
         mLevelSelect->mPage3->SetFrame(gVirtualDevWidth + gVirtualDevWidth, 0.0f, gVirtualDevHeight, gVirtualDevHeight);
     }
     
-    if (mLightScene) {
+    if (mLightScene != NULL) {
         mLightScene->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+    }
+    
+    if (mWorldScene != NULL) {
+        mWorldScene->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
     }
     
 }
@@ -770,15 +795,25 @@ void GFXApp::KeyUp(int pKey) {
 }
 
 void GFXApp::SetDeviceSize(int pWidth, int pHeight) {
-    if (mGameContainer) {
+    if (mGameContainer != NULL) {
         mGameContainer->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
 #ifdef EDITOR_MODE
         mEditor->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
 #endif
     }
     
-    if (mLightScene) {
+    if (mLightScene != NULL) {
         mLightScene->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
     }
+    
+    
+    if (mWorldScene != NULL) {
+        mWorldScene->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+    }
+    
+    
+    
+    
+    
     
 }

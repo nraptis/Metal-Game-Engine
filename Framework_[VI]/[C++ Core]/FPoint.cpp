@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Nick Raptis. All rights reserved.
 //
 
-#include "FPoint.h"
+#include "FPoint.hpp"
 #include "core_includes.h"
 
 float FPoint::Length() {

@@ -12,7 +12,7 @@
 #include "FCanvas.hpp"
 #include "UIRoundedRect.hpp"
 #include "UIAlignmentPickerButton.hpp"
-#include "FPoint.h"
+#include "FPoint.hpp"
 
 class UIAlignmentPicker : public FCanvas {
 public:

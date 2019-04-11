@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Nick Raptis. All rights reserved.
 //
 
-#include "FMatrix.h"
+#include "FMatrix.hpp"
 #include "core_includes.h"
 
 FMatrix::FMatrix() {

@@ -4,7 +4,7 @@
 #include "FImage.hpp"
 #include "FImageBundler.h"
 #include "FTexture.hpp"
-#include "FString.h"
+#include "FString.hpp"
 #include "FBuffer.hpp"
 #include "FVec2.hpp"
 

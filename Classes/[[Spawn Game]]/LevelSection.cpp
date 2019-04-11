@@ -198,7 +198,6 @@ void LevelSection::Update() {
             aCanSpawnWave = true;
         }
         
-        
         if (aCanSpawnWave) {
             if (mCandidateWaveDelay > 0) {
                 mCandidateWaveDelay--;
@@ -209,13 +208,6 @@ void LevelSection::Update() {
                 mActiveWaveList.Add(mCandidateWave);
                 mCandidateWave->Prepare();
                 mCandidateWave = NULL;
-                
-                
-                //TODO: Probe forward and spawn every
-                //wave with
-                // ->mCreationType == WAVE_CREATION_TYPE_PREV_WAVE_START
-                // &&  ->mCreationDelay == 0
-                //
                 
                 bool aCheckAhead = true;
                 while (aCheckAhead == true) {
@@ -248,7 +240,6 @@ void LevelSection::Update() {
     }
     mRemoveActiveWaveList.RemoveAll();
     
-    
     EnumList(LevelWave, aWave, mKillWaveList) {
         if (mCandidateWave == aWave) { mCandidateWave = NULL; }
         aWave->mKillTimer--;
@@ -272,15 +263,11 @@ void LevelSection::DisposeObject(GameObject *pObject) {
 }
 
 void LevelSection::AddWave(LevelWave *pLevelWave) {
-    if (pLevelWave != NULL) {
-        mWaveList.Add(pLevelWave);
-    }
+    mWaveList.Add(pLevelWave);
 }
 
 void LevelSection::AddPerm(LevelSectionPermanent *pPerm) {
-    if (pPerm != NULL) {
-        mPermList.Add(pPerm);
-    }
+    mPermList.Add(pPerm);
 }
 
 void LevelSection::FlyInReset(int pType) {

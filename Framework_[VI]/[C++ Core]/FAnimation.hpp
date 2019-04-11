@@ -9,7 +9,7 @@
 #ifndef FRAMEWORK_FANIMATION_H
 #define FRAMEWORK_FANIMATION_H
 
-#include "FString.h"
+#include "FString.hpp"
 
 #define ANIMATION_TYPE_AUTOMATIC -1
 #define ANIMATION_TYPE_LINEAR 0

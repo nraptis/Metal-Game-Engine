@@ -10,7 +10,7 @@
 #define FIndexBufferCache_hpp
 
 #include "FList.hpp"
-#include "FIndexList.h"
+#include "FIndexList.hpp"
 #include "FBuffer.hpp"
 
 #define INDEX_CACHE_SLICE_SIZE 32768

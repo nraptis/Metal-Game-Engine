@@ -33,6 +33,13 @@ public:
     
     FVec2                                   GetTipPoint();
     
+    float                                   mPrevTipX;
+    float                                   mPrevTipY;
+    
+    float                                   mTipX;
+    float                                   mTipY;
+    
+    
     float                                   mSpinSpeed;
     
     int                                     mDeathTimer;

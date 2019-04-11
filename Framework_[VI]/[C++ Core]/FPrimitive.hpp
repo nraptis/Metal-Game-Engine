@@ -11,8 +11,8 @@
 #define PRIMITIVE_MESH_H
 
 
-#include "FString.h"
-#include "FIndexList.h"
+#include "FString.hpp"
+#include "FIndexList.hpp"
 
 class FFile;
 class FSprite;

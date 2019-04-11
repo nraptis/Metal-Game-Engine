@@ -10,7 +10,7 @@
 #ifndef FRAMEWORK_SLIDER_H
 #define FRAMEWORK_SLIDER_H
 
-#include "FSprite.h"
+#include "FSprite.hpp"
 #include "FCanvas.hpp"
 
 class FSlider : public FCanvas {

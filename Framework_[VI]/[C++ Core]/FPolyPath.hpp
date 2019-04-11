@@ -9,7 +9,7 @@
 #ifndef __DigMMMac__FPolyPath__
 #define __DigMMMac__FPolyPath__
 
-#include "FPointList.h"
+#include "FPointList.hpp"
 
 class FPolyPathInterp
 {

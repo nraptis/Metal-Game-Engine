@@ -1,6 +1,6 @@
 // (C) 2006-2009 Nick Rapis
 
-#include "FString.h"
+#include "FString.hpp"
 #include "FColor.hpp"
 
 #ifndef FRAMEWORK_XML_H

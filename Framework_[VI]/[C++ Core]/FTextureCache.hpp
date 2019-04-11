@@ -10,7 +10,7 @@
 #define FRAMEWORK_TEXTURE_CACHE_H
 
 #include "FFileTable.hpp"
-#include "FSprite.h"
+#include "FSprite.hpp"
 #include "FImage.hpp"
 #include "FTexture.hpp"
 

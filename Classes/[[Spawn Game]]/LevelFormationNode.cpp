@@ -99,11 +99,8 @@ void LevelFormationNode::Update() {
     PositionObject();
     
     if (mObject != NULL && mObject->mKill != 0) {
-        printf("Missed DISPOSE on LevelFormationNode?\n");
-        //TODO: Nullify object here...
         mObject = NULL;
     }
-    
 }
 
 void LevelFormationNode::Draw() {
@@ -111,6 +108,13 @@ void LevelFormationNode::Draw() {
     Graphics::SetColor(0.25f, 0.65f, 0.85f, 0.85f);
     Graphics::DrawPoint(mX, mY, 4.0f);
     Graphics::SetColor();
+}
+
+void LevelFormationNode::DisposeObject(GameObject *pObject) {
+    if (mObject != NULL && mObject == pObject) {
+        printf("LevelFormationNode::SUCCESS - DisposeObject(%llx)\n", pObject);
+        mObject = NULL;
+    }
 }
 
 void LevelFormationNode::PositionObject() {
@@ -181,11 +185,6 @@ void LevelFormationNode::PositionObject() {
         mObject->mTransform.mY = mY;
     }
 }
-
-void LevelFormationNode::DisposeObject(GameObject *pObject) {
-    
-}
-
 
 LevelFormationNode *LevelFormationNode::Clone(LevelFormation *pFormation) {
     

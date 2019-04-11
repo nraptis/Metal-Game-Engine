@@ -12,12 +12,12 @@
 #define CANVAS_TRACKED_TOUCH_COUNT 6
 
 #include "FList.hpp"
-#include "FRect.h"
+#include "FRect.hpp"
 #include "FColor.hpp"
-#include "FString.h"
-#include "FSprite.h"
-#include "FPoint.h"
-#include "FObject.h"
+#include "FString.hpp"
+#include "FSprite.hpp"
+#include "FPoint.hpp"
+#include "FObject.hpp"
 
 class FCanvasTransform {
 public:

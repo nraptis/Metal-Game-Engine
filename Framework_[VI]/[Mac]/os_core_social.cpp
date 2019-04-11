@@ -9,7 +9,7 @@
 #include "os_core_social.h"
 #include "os_core_outlets.h"
 
-#include "FString.h"
+#include "FString.hpp"
 
 bool cFacebookLoggedIn = false;
 bool cFacebookLoggingIn = false;

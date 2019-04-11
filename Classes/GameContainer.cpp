@@ -7,7 +7,7 @@
 //
 #include "core_includes.h"
 #include "GameContainer.hpp"
-#include "FAnimation.h"
+#include "FAnimation.hpp"
 #include "Game.hpp"
 
 GameContainer *gGameContainer = NULL;

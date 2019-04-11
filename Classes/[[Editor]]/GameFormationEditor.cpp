@@ -9,7 +9,7 @@
 #include "core_includes.h"
 #include "GameFormationEditor.hpp"
 #include "GameEditor.hpp"
-#include "FAnimation.h"
+#include "FAnimation.hpp"
 
 GameFormationEditor *gFormationEditor = NULL;
 

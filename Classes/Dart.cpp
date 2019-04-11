@@ -34,6 +34,17 @@ Dart::Dart() {
     mSpawnAnimationTime = 38;
     mSpawnAnimationTimer = 0;
     mSpawnAnimationDelay = 0;
+    
+    
+    mPrevTipX = 0.0f;
+    mPrevTipY = 0.0f;
+    
+    mTipX = 0.0f;
+    mTipY = 0.0f;
+    
+    mEllipseRadiusH = 0.0f;
+    mEllipseRadiusV = 0.0f;
+    
 }
 
 Dart::~Dart() {
@@ -42,6 +53,13 @@ Dart::~Dart() {
 
 void Dart::Update() {
     mTransform3D.mSpin += mSpinSpeed;
+    
+
+    mPrevTipX = mTipX;
+    mPrevTipY = mTipY;
+
+    
+    
     
     if (mSpawnAnimation) {
         
@@ -97,31 +115,21 @@ void Dart::Update() {
             Kill();
         }
     }
+    
+    FVec2 aTip = GetTipPoint();
+    
+    mTipX = aTip.mX;
+    mTipY = aTip.mY;
+    
 }
 
 void Dart::Draw() {
     
     GameObject::Draw();
     
-    /*
-    Graphics::PipelineStateSetShape2DNoBlending();
-    Graphics::SetColor(0.5f, 0.8f, 0.25f, 0.5f);
-    
-    Graphics::DrawPoint(mTransform.mX, mTransform.mY);
-    
-    
     FVec2 aTipPoint = GetTipPoint();
-    
     Graphics::SetColor(0.25f, 0.25f, 1.0f, 0.75f);
-    
     Graphics::DrawLine(mTransform.mX, mTransform.mY, aTipPoint.mX, aTipPoint.mY);
-    
-    Graphics::SetColor(1.0f, 0.25f, 0.25f, 0.5f);
-    
-    
-    //FVec2 aConverted = gGame->Convert3DCoordsTo2D(mX, mY);
-    Graphics::DrawPoint(aTipPoint.mX, aTipPoint.mY);
-    */
 }
 
 void Dart::Draw3D() {
@@ -181,4 +189,10 @@ void Dart::Fling(float pVelocityX, float pVelocityY) {
     mIdle = false;
     mVelX = pVelocityX;
     mVelY = pVelocityY;
+    
+    FVec2 aTip = GetTipPoint();
+    mTipX = aTip.mX;
+    mTipY = aTip.mY;
+    mPrevTipX = aTip.mX;
+    mPrevTipY = aTip.mY;
 }

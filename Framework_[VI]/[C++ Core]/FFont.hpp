@@ -11,7 +11,7 @@
 #ifndef FONT_DRAW_H
 #define FONT_DRAW_H
 
-#include "FSprite.h"
+#include "FSprite.hpp"
 
 class FFontKern;
 class FFontImportGlyph;

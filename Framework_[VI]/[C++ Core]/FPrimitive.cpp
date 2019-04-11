@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Nick Raptis. All rights reserved.
 //
 
-#include "FPrimitive.h"
-#include "FSprite.h"
+#include "FPrimitive.hpp"
+#include "FSprite.hpp"
 #include "FFile.hpp"
 #include "core_includes.h"
 

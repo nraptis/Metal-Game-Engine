@@ -1,7 +1,7 @@
 #ifndef FRAMEWORK_IMAGE_H
 #define FRAMEWORK_IMAGE_H
 
-#include "FString.h"
+#include "FString.hpp"
 
 #define RGBA_TYPE 0
 #define RGB_TYPE 1

@@ -25,7 +25,6 @@ public:
     
     void                                Update();
     void                                Draw();
-    
     void                                DisposeObject(GameObject *pObject);
     
     void                                PositionObject();
@@ -35,6 +34,7 @@ public:
     
     LevelFormation                      *mFormation;
     LevelFormationTracer                *mTracer;
+    
     GameObject                          *mObject;
     
     int                                 mObjectType;

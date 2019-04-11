@@ -9,7 +9,7 @@
 #ifndef UICheckBox_hpp
 #define UICheckBox_hpp
 
-#include "FButton.h"
+#include "FButton.hpp"
 #include "UIRoundedRect.hpp"
 
 class UICheckBox : public FButton {

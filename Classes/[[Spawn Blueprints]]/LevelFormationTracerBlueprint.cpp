@@ -9,11 +9,11 @@
 #include "LevelFormationTracerBlueprint.hpp"
 #include "LevelFormationBlueprint.hpp"
 #include "os_core_graphics.h"
-#include "FSpline.h"
-#include "FPolyPath.h"
+#include "FSpline.hpp"
+#include "FPolyPath.hpp"
 #include "core_includes.h"
 #include "GameEditor.hpp"
-#include "FLine.h"
+#include "FLine.hpp"
 
 
 LevelFormationTracerNodeBlueprint::LevelFormationTracerNodeBlueprint() {

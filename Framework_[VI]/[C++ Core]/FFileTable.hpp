@@ -9,7 +9,7 @@
 #ifndef FRAMEWORK_HASH_TABLE_H
 #define FRAMEWORK_HASH_TABLE_H
 
-#include "FString.h"
+#include "FString.hpp"
 #include "FList.hpp"
 
 class FFileTableNode {

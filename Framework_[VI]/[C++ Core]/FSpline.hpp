@@ -2,9 +2,9 @@
 #define SPLINE_H
 
 #include "FVec2.hpp"
-#include "FVec3.h"
+#include "FVec3.hpp"
 
-#include "FString.h"
+#include "FString.hpp"
 
 #define SPLINE_LINEAR 0x001
 #define SPLINE_CLOSED 0x002

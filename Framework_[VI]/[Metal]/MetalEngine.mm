@@ -7,7 +7,7 @@
 //
 
 #import "core_includes.h"
-#import "core_app_shell.h"
+#import "core_app_shell.hpp"
 #import "os_core_graphics.h"
 #import "MetalEngine.h"
 #import "MetalViewController.h"
@@ -92,6 +92,8 @@
 
 - (void)prerender {
     
+    dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_FOREVER);
+    
     _renderPass = -1;
     _renderCommandEncoder = NULL;
     
@@ -119,7 +121,7 @@
     */
     
     
-    dispatch_semaphore_wait(_semaphore, DISPATCH_TIME_FOREVER);
+    
     
     __block dispatch_semaphore_t aSemaphore = _semaphore;
     [_commandBuffer addCompletedHandler:^(id<MTLCommandBuffer> buffer) {

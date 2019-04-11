@@ -22,6 +22,8 @@ Balloon::Balloon() {
     
     mVelX = 0.0f;
     mVelY = 0.0f;
+    
+    mTagged = false;
 }
 
 Balloon::~Balloon() {
@@ -39,9 +41,13 @@ void Balloon::Update() {
         mTransform.mY += mVelY;
     }
     
+    
+    
 }
 
 void Balloon::Draw() {
+    
+    
     
     GameObject::Draw();
     
@@ -53,6 +59,10 @@ void Balloon::Draw() {
 
 void Balloon::Draw3D() {
     
+    
+    if (mTagged) {
+        mTransform.mOffsetRotation = 90.0f;
+    }
     
     //aNormal.SetNormalMatrix(aModelView);
     //((FUniformsLightPhong *)mUniform)->mLight.mShininess = 58.0f;

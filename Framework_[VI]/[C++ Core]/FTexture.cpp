@@ -1,5 +1,5 @@
 #include "FTexture.hpp"
-#include "FSprite.h"
+#include "FSprite.hpp"
 #include "FImage.hpp"
 #include "FApp.hpp"
 #include "PlatformGraphicsInterface.hpp"

@@ -1,7 +1,7 @@
 #include "core_includes.h"
 #include "FImage.hpp"
 #include "FApp.hpp"
-#include "FResource.h"
+#include "FResource.hpp"
 
 FString cImageLoadHelper;
 

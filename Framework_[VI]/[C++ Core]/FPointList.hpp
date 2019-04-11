@@ -9,10 +9,10 @@
 #ifndef FRAMEWORK_POINT_LIST_HPP
 #define FRAMEWORK_POINT_LIST_HPP
 
-#include "FString.h"
-#include "FPrimitive.h"
-#include "FIndexList.h"
-#include "FFloatList.h"
+#include "FString.hpp"
+#include "FPrimitive.hpp"
+#include "FIndexList.hpp"
+#include "FFloatList.hpp"
 
 class FFile;
 class FPointList {

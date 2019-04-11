@@ -103,6 +103,16 @@ void LevelWaveSpawn::Spawn() {
     }
 }
 
+void LevelWaveSpawn::DisposeObject(GameObject *pObject) {
+    if (mObject != NULL && mObject == pObject) {
+        printf("LevelWaveSpawn::SUCCESS - DisposeObject(%llx)\n", pObject);
+        mObject = NULL;
+    }
+    if (mFormation != NULL) {
+        mFormation->DisposeObject(pObject);
+    }
+}
+
 void LevelWaveSpawn::Reset() {
     
     if (mObject != NULL) {
@@ -154,9 +164,7 @@ void LevelWaveSpawn::Update() {
         mObject->mTransform.mX = mBaseX;
         mObject->mTransform.mY = mBaseY;
         
-        if (mObject->mKill) {
-            printf("Missed DISPOSE on Spawn?\n");
-            //TODO: Nullify object here...
+        if (mObject->mKill != 0) {
             mObject = NULL;
         }
     }
@@ -195,9 +203,7 @@ void LevelWaveSpawn::HandOffAllGameObjects(FList *pList) {
 }
 
 
-void LevelWaveSpawn::DisposeObject(GameObject *pObject) {
-    
-}
+
 
 
 

@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "core_app_shell.h"
+#import "core_app_shell.hpp"
 #include "FApp.hpp"
 
 //int kDeviceWidth = 480;
@@ -124,9 +124,6 @@ int kDeviceHeight = 760;
 
 - (void)applicationWillTerminate: (NSNotification *)aNotification {
     // Insert code here to tear down your application
-    
-    NSLog(@"applicationWillTerminate\n");
-    
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {

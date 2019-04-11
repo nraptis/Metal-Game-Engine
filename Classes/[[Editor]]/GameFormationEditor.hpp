@@ -18,7 +18,7 @@
 
 #include "LevelFormationBlueprint.hpp"
 #include "LevelFormation.hpp"
-#include "FPointList.h"
+#include "FPointList.hpp"
 
 #define FORMATION_MODE_ADD_POINT 0
 #define FORMATION_MODE_MOVE_POINT 1

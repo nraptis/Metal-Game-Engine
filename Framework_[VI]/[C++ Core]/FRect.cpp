@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Nick Raptis. All rights reserved.
 //
 
-#include "FRect.h"
+#include "FRect.hpp"
 #include "core_includes.h"
 
 FRect::FRect(float pX, float pY, float pWidth, float pHeight) {

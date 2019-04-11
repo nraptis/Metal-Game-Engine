@@ -8,7 +8,7 @@
 
 #include "core_includes.h"
 #include "Game.hpp"
-#include "FAnimation.h"
+#include "FAnimation.hpp"
 
 Game *gGame = NULL;
 
@@ -51,7 +51,7 @@ Game::Game() {
     mGameAreaRight = 0.0f;
     mGameAreaBottom = 0.0f;
     mGameAreaLeft = 0.0f;
-
+    
     mHitZoneTop = 0.0f;
     mHitZoneRight = 0.0f;
     mHitZoneBottom = 0.0f;
@@ -103,7 +103,9 @@ Game::Game() {
     mDartResetAnimationTick = 0;
     mDartResetAnimationTime = 200;
     
-
+    
+    mSlowMo = false;
+    mSlowMoTimer = 0;
     
 }
 
@@ -115,14 +117,10 @@ Game::~Game() {
         delete mCurrentDart;
         mCurrentDart = NULL;
     }
-    
     mDartList.Free();
     mBalloonList.Free();
     mBrickHeadList.Free();
-    
 }
-
-
 
 void Game::SetFrame(float pX, float pY, float pWidth, float pHeight) {
     FCanvas::SetFrame(pX, pY, pWidth, pHeight);
@@ -195,7 +193,6 @@ void Game::LayoutTransform() {
         }
     }
     
-    
     //Keep in mind, the hit zone we are expanding based on screen size...
     float aHitZonePaddingH = 12.0f;
     float aHitZonePaddingV = 60.0f;
@@ -221,7 +218,6 @@ void Game::LayoutTransform() {
     if (aPlayAreaPadding < 24.0f) {
         aPlayAreaPadding = 24.0f;
     }
-    
     
     mPlayAreaTop = gSafeAreaInsetTop + aPlayAreaPadding;
     mPlayAreaRight = (mWidth - gSafeAreaInsetRight) - aPlayAreaPadding;
@@ -287,6 +283,18 @@ void Game::Layout() {
 }
 
 void Game::Update() {
+    
+    if (mSlowMo == true) {
+        
+        ++mSlowMoTimer;
+        if (mSlowMoTimer < 5) {
+            return;
+        } else {
+            mSlowMoTimer = 0;
+        }
+    }
+    
+    
     if (mDartResetAnimation) {
         mDartResetAnimationTick += 1;
         if (mDartResetAnimationTick >= mDartResetAnimationTime) {
@@ -318,9 +326,38 @@ void Game::Update() {
         }
     }
     
+    
     mBalloonList.Update();
     mDartList.Update();
     mBrickHeadList.Update();
+    
+    
+    for (int i=0;i<mDartList.mObjectList.mCount;i++) {
+        Dart *aDart = (Dart *)mDartList.mObjectList.mData[i];
+        
+        if (aDart->mIdle == false && aDart->mKill == 0) {
+            
+            for (int n=0;n<mBalloonList.mObjectList.mCount;n++) {
+                Balloon *aBalloon = (Balloon *)mBalloonList.mObjectList.mData[n];
+                if (aBalloon->mKill == 0) {
+                    
+                    if (aBalloon->WillCollide(aDart->mPrevTipX, aDart->mPrevTipY, aDart->mTipX, aDart->mTipY)) {
+                        
+                        printf("POP!!!\n");
+                        //aBalloon->Kill();
+                        aBalloon->mTagged = true;
+                    }
+                    
+                    
+                    
+                }
+                
+                
+            }
+            
+        }
+    }
+    
     
     if (mDartTouch != NULL && mDartResetAnimation == false) {
         float aDiffX = mDartTargetPullX - mDartPullX;
@@ -375,17 +412,17 @@ void Game::Update() {
         
         
         /*
-        FVec3 aDartPos = Convert2DCoordsTo3D(mDartSpawnX + mDartPullX, mDartSpawnY + mDartPullY);
-        mCurrentDart->SetPos(aDartPos);
-        float aSceneDirX = Convert2DXTo3D(mDartSpawnX + mDartPullX) - Convert2DXTo3D(mDartSpawnX);
-        float aSceneDirY = Convert2DYTo3D(mDartSpawnY + mDartPullY) - Convert2DYTo3D(mDartSpawnY);
-        float aScenePullLength = aSceneDirX * aSceneDirX + aSceneDirY * aSceneDirY;
-        if (aScenePullLength > SQRT_EPSILON) {
-            mCurrentDart->mRotation2D = FaceTarget(aSceneDirX, aSceneDirY);
-        } else {
-            mCurrentDart->mTransform. mRotation2D = mDartPullRotation;
-        }
-        */
+         FVec3 aDartPos = Convert2DCoordsTo3D(mDartSpawnX + mDartPullX, mDartSpawnY + mDartPullY);
+         mCurrentDart->SetPos(aDartPos);
+         float aSceneDirX = Convert2DXTo3D(mDartSpawnX + mDartPullX) - Convert2DXTo3D(mDartSpawnX);
+         float aSceneDirY = Convert2DYTo3D(mDartSpawnY + mDartPullY) - Convert2DYTo3D(mDartSpawnY);
+         float aScenePullLength = aSceneDirX * aSceneDirX + aSceneDirY * aSceneDirY;
+         if (aScenePullLength > SQRT_EPSILON) {
+         mCurrentDart->mRotation2D = FaceTarget(aSceneDirX, aSceneDirY);
+         } else {
+         mCurrentDart->mTransform. mRotation2D = mDartPullRotation;
+         }
+         */
     }
     mLevelController->Update();
 }
@@ -410,26 +447,25 @@ void Game::Draw() {
     
     
     
-    /*
     gApp->mChaosEgg1X.Draw(mWidth2 / 2.0f + 20.0f, 200.0f, 1.5f, 0.0f);
     gApp->mChaosEgg2X.Draw(mWidth2 + mWidth2 / 2.0f, 200.0f, 1.5f, 0.0f);
     gApp->mChaosEgg3X.Draw(mWidth2 / 2.0f + 20.0f, 380.0f, 1.5f, 0.0f);
     gApp->mChaosEgg4X.Draw(mWidth2 + mWidth2 / 2.0f, 380.0f, 1.5f, 0.0f);
-    */
     
-
+    
+    
     
     /*
-    Graphics::PipelineStateSetShape2DAlphaBlending();
-    Graphics::SetColor(0.66f, 0.25f, 0.25f, 0.66f);
-    Graphics::DrawPoint(mDartSpawnX, mDartSpawnY, 8.0f);
-    Graphics::DrawLine(mDartSpawnX, mDartSpawnY, mDartSpawnX + mDartPullX, mDartSpawnY + mDartPullY);
-    for (float aAngle = 0.0f;aAngle < 360.0f; aAngle += 6.0f) {
-        Graphics::SetColor(0.75f + (aAngle / 360.0f) * 0.25f, (aAngle / 360.0f) * 0.25f, 0.65f, 0.32f);
-        FVec2 aDir = AngleToVector(aAngle);
-        Graphics::DrawLine(mDartSpawnX, mDartSpawnY, mDartSpawnX + aDir.mX * sqrtf(mDartPullbackGrabRangeSquared), mDartSpawnY + aDir.mY * sqrtf(mDartPullbackGrabRangeSquared));
-    }
-    */
+     Graphics::PipelineStateSetShape2DAlphaBlending();
+     Graphics::SetColor(0.66f, 0.25f, 0.25f, 0.66f);
+     Graphics::DrawPoint(mDartSpawnX, mDartSpawnY, 8.0f);
+     Graphics::DrawLine(mDartSpawnX, mDartSpawnY, mDartSpawnX + mDartPullX, mDartSpawnY + mDartPullY);
+     for (float aAngle = 0.0f;aAngle < 360.0f; aAngle += 6.0f) {
+     Graphics::SetColor(0.75f + (aAngle / 360.0f) * 0.25f, (aAngle / 360.0f) * 0.25f, 0.65f, 0.32f);
+     FVec2 aDir = AngleToVector(aAngle);
+     Graphics::DrawLine(mDartSpawnX, mDartSpawnY, mDartSpawnX + aDir.mX * sqrtf(mDartPullbackGrabRangeSquared), mDartSpawnY + aDir.mY * sqrtf(mDartPullbackGrabRangeSquared));
+     }
+     */
     
     
     mBrickHeadList.Draw();
@@ -447,59 +483,55 @@ void Game::Draw() {
     
     
     /*
-    FSprite *aDart = &(gApp->mRay[3]);
-    if (mIsDartBeingPulled) Graphics::SetColor(1.0f, 0.5f, 0.5f, 1.0f);
-    aDart->Draw(mDartSpawnX + mDartPullX, mDartSpawnY + mDartPullY,
-                1.5f, mDartPullRotation + 180.0f);
-    */
+     FSprite *aDart = &(gApp->mRay[3]);
+     if (mIsDartBeingPulled) Graphics::SetColor(1.0f, 0.5f, 0.5f, 1.0f);
+     aDart->Draw(mDartSpawnX + mDartPullX, mDartSpawnY + mDartPullY,
+     1.5f, mDartPullRotation + 180.0f);
+     */
     
     
     /*
-    float aIndicatorCenterX = mDartSpawnX - mWidth * 0.1f;
-    float aIndicatorCenterY = mDartSpawnY;
-    
-    float aIndicatorWidth = 30.0f;
-    float aIndicatorHeight = 100.0f;
-    
-    float aIndicatorX = aIndicatorCenterX - (aIndicatorWidth / 2.0f);
-    float aIndicatorY = aIndicatorCenterY - (aIndicatorHeight / 2.0f);
-    
-    Graphics::PipelineStateSetShape2DNoBlending();
-    
-    Graphics::SetColor(0.66f, 0.66f, 0.66f, 0.35f);
-    Graphics::DrawRect(aIndicatorX - 2.0f, aIndicatorY - 2.0f, aIndicatorWidth + 4.0f, aIndicatorHeight + 4.0f);
-    
-    if (mIsDartBeingPulled) {
-    Graphics::SetColor(0.045f, 0.045f, 0.0626f, 0.45f);
-    } else {
-        Graphics::SetColor(0.045f, 0.045f, 0.1226f, 0.45f);
-    }
-    Graphics::DrawRect(aIndicatorX, aIndicatorY, aIndicatorWidth, aIndicatorHeight);
-    
-    float aPullLength = mDartPullX * mDartPullX + mDartPullY * mDartPullY;
-    float aPullPercent = 0.0f;
-    if (aPullLength > SQRT_EPSILON) {
-        aPullLength = (float)(sqrtf(aPullLength));
-        aPullPercent = (aPullLength - mDartPullbackRangeMin) / (mDartPullbackRangeMax - mDartPullbackRangeMin);
-    }
-    aPullPercent *= 1.10f;
-    if (aPullPercent > 1.0f) aPullPercent = 1.0f;
-    if (aPullPercent < 0.0f) aPullPercent = 0.0f;
-    aPullPercent = FAnimation::EaseInCirc(aPullPercent) * 0.5f + aPullPercent * 0.5f;
-    
-    if (mIsDartBeingPulled) {
-    Graphics::SetColor(1.0f, 0.35f, 0.25f, 0.525f);
-    float aPowerBarHeight = aPullPercent * aIndicatorHeight;
-    float aPowerBarY = (aIndicatorY + aIndicatorHeight) - aPowerBarHeight;
-    Graphics::DrawRect(aIndicatorX, aPowerBarY, aIndicatorWidth, aPowerBarHeight);
-    } else {
-        
-    }
-    */
-    
-
-    
-
+     float aIndicatorCenterX = mDartSpawnX - mWidth * 0.1f;
+     float aIndicatorCenterY = mDartSpawnY;
+     
+     float aIndicatorWidth = 30.0f;
+     float aIndicatorHeight = 100.0f;
+     
+     float aIndicatorX = aIndicatorCenterX - (aIndicatorWidth / 2.0f);
+     float aIndicatorY = aIndicatorCenterY - (aIndicatorHeight / 2.0f);
+     
+     Graphics::PipelineStateSetShape2DNoBlending();
+     
+     Graphics::SetColor(0.66f, 0.66f, 0.66f, 0.35f);
+     Graphics::DrawRect(aIndicatorX - 2.0f, aIndicatorY - 2.0f, aIndicatorWidth + 4.0f, aIndicatorHeight + 4.0f);
+     
+     if (mIsDartBeingPulled) {
+     Graphics::SetColor(0.045f, 0.045f, 0.0626f, 0.45f);
+     } else {
+     Graphics::SetColor(0.045f, 0.045f, 0.1226f, 0.45f);
+     }
+     Graphics::DrawRect(aIndicatorX, aIndicatorY, aIndicatorWidth, aIndicatorHeight);
+     
+     float aPullLength = mDartPullX * mDartPullX + mDartPullY * mDartPullY;
+     float aPullPercent = 0.0f;
+     if (aPullLength > SQRT_EPSILON) {
+     aPullLength = (float)(sqrtf(aPullLength));
+     aPullPercent = (aPullLength - mDartPullbackRangeMin) / (mDartPullbackRangeMax - mDartPullbackRangeMin);
+     }
+     aPullPercent *= 1.10f;
+     if (aPullPercent > 1.0f) aPullPercent = 1.0f;
+     if (aPullPercent < 0.0f) aPullPercent = 0.0f;
+     aPullPercent = FAnimation::EaseInCirc(aPullPercent) * 0.5f + aPullPercent * 0.5f;
+     
+     if (mIsDartBeingPulled) {
+     Graphics::SetColor(1.0f, 0.35f, 0.25f, 0.525f);
+     float aPowerBarHeight = aPullPercent * aIndicatorHeight;
+     float aPowerBarY = (aIndicatorY + aIndicatorHeight) - aPowerBarHeight;
+     Graphics::DrawRect(aIndicatorX, aPowerBarY, aIndicatorWidth, aPowerBarHeight);
+     } else {
+     
+     }
+     */
     
 }
 
@@ -642,7 +674,7 @@ bool Game::IsScreenClearForSpawn(bool pIncludePerms) {
 }
 
 void Game::Convert2DTransformTo3D(Transform2D *p2D, Transform3D *p3D) {
- 
+    
     if (p2D == NULL) return;
     if (p3D == NULL) return;
     
@@ -749,6 +781,9 @@ void Game::ReleaseDart() {
             
             float aReleaseVelocity = mDartReleaseVelocityMin + (mDartReleaseVelocityMax - mDartReleaseVelocityMin) * aReleaseFactor;
             
+            
+            //aReleaseVelocity *= 50.0f;
+            
             mCurrentDart->Fling(aDiffX * aReleaseVelocity, aDiffY * aReleaseVelocity);
             
         } else {
@@ -758,42 +793,42 @@ void Game::ReleaseDart() {
         
         
         /*
-        float aSceneDirX = Convert2DXTo3D(mDartSpawnX) - Convert2DXTo3D(mDartSpawnX + mDartPullX);
-        float aSceneDirY = Convert2DYTo3D(mDartSpawnY) - Convert2DYTo3D(mDartSpawnY + mDartPullY);
-        
-        float aPullLength = aDiffX * aDiffX + aDiffY * aDiffY;
-        float aScenePullLength = aSceneDirX * aSceneDirX + aSceneDirY * aSceneDirY;
-        
-        if (aPullLength > SQRT_EPSILON && aScenePullLength > SQRT_EPSILON) {
-            
-            mDartList.Add(mCurrentDart);
-            
-            aPullLength = (float)(sqrtf(aPullLength));
-            aScenePullLength = (float)(sqrtf(aScenePullLength));
-            
-            aDiffX /= aPullLength;
-            aDiffY /= aPullLength;
-            
-            aSceneDirX /= aScenePullLength;
-            aSceneDirY /= aScenePullLength;
-            
-            aReleaseFactor = (aPullLength - mDartPullbackRangeMin) / (mDartPullbackRangeMax - mDartPullbackRangeMin);
-            if (aReleaseFactor < 0.0f) aReleaseFactor = 0.0f;
-            if (aReleaseFactor > 1.0f) aReleaseFactor = 1.0f;
-            
-            aReleaseFactor = FAnimation::EaseInCirc(aReleaseFactor) * 0.5f + aReleaseFactor * 0.5f;
-            
-            //Log("Release Factor: %f\n", aReleaseFactor);
-            
-            float aReleaseVelocity = mDartReleaseVelocityMin + (mDartReleaseVelocityMax - mDartReleaseVelocityMin) * aReleaseFactor;
-            
-            mCurrentDart->Fling(aSceneDirX * aReleaseVelocity, aSceneDirY * aReleaseVelocity);
-            
-        } else {
-            Log("Fizzle? This should never trigger...\n");
-            delete mCurrentDart;
-        }
-        */
+         float aSceneDirX = Convert2DXTo3D(mDartSpawnX) - Convert2DXTo3D(mDartSpawnX + mDartPullX);
+         float aSceneDirY = Convert2DYTo3D(mDartSpawnY) - Convert2DYTo3D(mDartSpawnY + mDartPullY);
+         
+         float aPullLength = aDiffX * aDiffX + aDiffY * aDiffY;
+         float aScenePullLength = aSceneDirX * aSceneDirX + aSceneDirY * aSceneDirY;
+         
+         if (aPullLength > SQRT_EPSILON && aScenePullLength > SQRT_EPSILON) {
+         
+         mDartList.Add(mCurrentDart);
+         
+         aPullLength = (float)(sqrtf(aPullLength));
+         aScenePullLength = (float)(sqrtf(aScenePullLength));
+         
+         aDiffX /= aPullLength;
+         aDiffY /= aPullLength;
+         
+         aSceneDirX /= aScenePullLength;
+         aSceneDirY /= aScenePullLength;
+         
+         aReleaseFactor = (aPullLength - mDartPullbackRangeMin) / (mDartPullbackRangeMax - mDartPullbackRangeMin);
+         if (aReleaseFactor < 0.0f) aReleaseFactor = 0.0f;
+         if (aReleaseFactor > 1.0f) aReleaseFactor = 1.0f;
+         
+         aReleaseFactor = FAnimation::EaseInCirc(aReleaseFactor) * 0.5f + aReleaseFactor * 0.5f;
+         
+         //Log("Release Factor: %f\n", aReleaseFactor);
+         
+         float aReleaseVelocity = mDartReleaseVelocityMin + (mDartReleaseVelocityMax - mDartReleaseVelocityMin) * aReleaseFactor;
+         
+         mCurrentDart->Fling(aSceneDirX * aReleaseVelocity, aSceneDirY * aReleaseVelocity);
+         
+         } else {
+         Log("Fizzle? This should never trigger...\n");
+         delete mCurrentDart;
+         }
+         */
         
         mCurrentDart = NULL;
         mDartTouch = NULL;
@@ -861,11 +896,11 @@ void Game::ResetDartTouch() {
 bool Game::IsGameObjectOutsideKillZone(GameObject *pObject) {
     if (pObject != NULL) {
         /*
-        if (pObject->mX < mKillZoneLeft) { return true; }
-        if (pObject->mX > mKillZoneRight) { return true; }
-        if (pObject->mY < mKillZoneTop) { return true; }
-        if (pObject->mY > mKillZoneBottom) { return true; }
-        */
+         if (pObject->mX < mKillZoneLeft) { return true; }
+         if (pObject->mX > mKillZoneRight) { return true; }
+         if (pObject->mY < mKillZoneTop) { return true; }
+         if (pObject->mY > mKillZoneBottom) { return true; }
+         */
     }
     return false;
 }
@@ -882,8 +917,11 @@ void Game::Load() {
     
     //Create level section (1 of 2) (A)
     aSection = new LevelSection();
-    aSection->Load("test_section_02.json");
+    aSection->Load("test_section_03.json");
     aLevel->AddSection(aSection);
+    
+    //TODO: ?
+    aSection->mDelay = 0;
     
     mLevelData = aLevel;
     mLevelController->Setup(mLevelData);

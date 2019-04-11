@@ -2,13 +2,13 @@
 #define GRAPHICS_H
 
 #include "FColor.hpp"
-#include "FRect.h"
-#include "FPoint.h"
+#include "FRect.hpp"
+#include "FPoint.hpp"
 #include "FVec2.hpp"
-#include "FVec3.h"
-#include "FPrimitive.h"
-#include "FMatrix.h"
-#include "FIndexList.h"
+#include "FVec3.hpp"
+#include "FPrimitive.hpp"
+#include "FMatrix.hpp"
+#include "FIndexList.hpp"
 #include "FUniforms.hpp"
 #include "FBuffer.hpp"
 

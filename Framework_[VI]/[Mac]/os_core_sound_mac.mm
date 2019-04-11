@@ -17,7 +17,7 @@
 #include "core_includes.h"
 #include "openal/al.h"
 #include "OpenAL/alc.h"
-#import "FSound.h"
+#import "FSound.hpp"
 
 FSoundInstanceMac::FSoundInstanceMac() {
     

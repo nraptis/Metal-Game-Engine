@@ -1,7 +1,7 @@
-#include "FString.h"
-#include "FPointList.h"
+#include "FString.hpp"
+#include "FPointList.hpp"
 #include "core_includes.h"
-#include "FLine.h"
+#include "FLine.hpp"
 #include "FFile.hpp"
 
 FPointList::FPointList() {

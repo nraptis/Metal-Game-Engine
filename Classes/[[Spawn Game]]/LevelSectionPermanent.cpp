@@ -35,6 +35,10 @@ LevelSectionPermanent::~LevelSectionPermanent() {
 void LevelSectionPermanent::Reset() {
     mPath.Reset();
     
+    if (mObject != NULL) {
+        mObject->Kill();
+        mObject = NULL;
+    }
 }
 
 void LevelSectionPermanent::Restart() {
@@ -76,6 +80,10 @@ void LevelSectionPermanent::Spawn() {
 }
 
 void LevelSectionPermanent::Update() {
+    
+    if (mObject != NULL && mObject->mKill != 0) {
+        mObject = NULL;
+    }
     
     mPath.Update();
     

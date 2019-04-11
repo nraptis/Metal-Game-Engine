@@ -9,9 +9,9 @@
 #ifndef PARTICLE_H
 #define PARTICLE_H
 
-#include "FObject.h"
+#include "FObject.hpp"
 #include "FSpriteSequence.h"
-#include "FSprite.h"
+#include "FSprite.hpp"
 
 class FParticle : public FObject
 {

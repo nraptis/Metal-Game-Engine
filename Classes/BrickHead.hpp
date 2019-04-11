@@ -9,7 +9,7 @@
 #ifndef BrickHead_hpp
 #define BrickHead_hpp
 
-#include "FSprite.h"
+#include "FSprite.hpp"
 #include "FModelDataPacked.hpp"
 #include "GameObject.hpp"
 

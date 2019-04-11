@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Nick Raptis. All rights reserved.
 //
 
-#include "FResource.h"
+#include "FResource.hpp"
 #include "core_includes.h"
 
 FResourceManager gRes;

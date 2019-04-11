@@ -8,7 +8,7 @@
 
 #include "core_includes.h"
 #include "FCanvas.hpp"
-#include "FAnimation.h"
+#include "FAnimation.hpp"
 #include "FFileTable.hpp"
 
 FCanvas::FCanvas() {

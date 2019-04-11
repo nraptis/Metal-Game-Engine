@@ -21,7 +21,7 @@ public:
     void                                Update();
     void                                Draw();
     
-    LevelFormationTracer       *mTracer;
+    LevelFormationTracer                *mTracer;
     
     //////////
     //
@@ -37,7 +37,7 @@ public:
     float                               mX;
     float                               mY;
     
-    LevelFormationTracerNode   *Clone(LevelFormationTracer *pTracer);
+    LevelFormationTracerNode            *Clone(LevelFormationTracer *pTracer);
     
     
     int                                 mKillTimer;

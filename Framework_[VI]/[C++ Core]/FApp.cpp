@@ -8,7 +8,7 @@
 
 #include "FApp.hpp"
 #include "core_includes.h"
-#include "core_app_shell.h"
+#include "core_app_shell.hpp"
 #include "PlatformGraphicsInterface.hpp"
 
 FApp *gAppBase = NULL;

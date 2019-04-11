@@ -8,7 +8,7 @@
 
 #include "core_includes.h"
 #include "GameEditor.hpp"
-#include "FAnimation.h"
+#include "FAnimation.hpp"
 
 GameEditor *gEditor = NULL;
 
@@ -169,6 +169,30 @@ void GameEditor::Layout() {
 
 void GameEditor::Update() {
     
+    /*
+    if (gRand.Get(20) == 2) {
+        OpenPathEditorForWave();
+    }
+    
+    if (gRand.Get(20) == 2) {
+        OpenPathEditorForWave();
+    }
+    
+    if (gRand.Get(20) == 3) {
+        ClosePathEditor();
+    }
+    
+    if (gRand.Get(20) == 3) {
+        CloseFormationEditor();
+    }
+    
+    if (gRand.Get(20) == 3) {
+        RefreshPlayback();
+    }
+    */
+    
+    
+    
     mSection.Update();
     
     if (mSection.mCurrentWave) {
@@ -189,7 +213,8 @@ void GameEditor::Update() {
             
             //HOOK: We want to jump right to a particular toolset?
             
-            OpenFormationEditor(NULL);
+            //OpenFormationEditor(NULL);
+            
             
             //PickFormationForFormationEditor();
             

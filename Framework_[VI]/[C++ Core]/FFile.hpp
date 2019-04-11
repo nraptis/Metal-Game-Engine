@@ -9,7 +9,7 @@
 #ifndef FRAMEWORK_FILE_H
 #define FRAMEWORK_FILE_H
 
-#include "FString.h"
+#include "FString.hpp"
 #include "FList.hpp"
 #include "FColor.hpp"
 

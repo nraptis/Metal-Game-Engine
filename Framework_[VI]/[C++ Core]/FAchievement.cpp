@@ -8,7 +8,7 @@
  */
 
 #include "FApp.hpp"
-#include "FAchievement.h"
+#include "FAchievement.hpp"
 #include "core_includes.h"
 
 FAchievement::FAchievement(const char *pName, int pProgressMax) {

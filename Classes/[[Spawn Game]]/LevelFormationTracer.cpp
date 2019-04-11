@@ -9,7 +9,7 @@
 #include "LevelFormationTracer.hpp"
 #include "LevelFormationNode.hpp"
 #include "os_core_graphics.h"
-#include "FPolyPath.h"
+#include "FPolyPath.hpp"
 #include "LevelPath.hpp"
 #include "Game.hpp"
 #include "core_includes.h"
@@ -49,7 +49,6 @@ LevelFormationTracer::~LevelFormationTracer() {
     
     FreeList(LevelFormationNode, mSpawnNodeList);
     FreeList(LevelFormationNode, mSpawnNodeKillList);
-    
 }
 
 void LevelFormationTracer::Reset() {
@@ -69,6 +68,14 @@ void LevelFormationTracer::Reset() {
     mPath.RemoveAll();
     mDist.RemoveAll();
 }
+
+void LevelFormationTracer::DisposeObject(GameObject *pObject) {
+    for (int i=0;i<mSpawnNodeList.mCount;i++) {
+        LevelFormationNode *aNode = ((LevelFormationNode *)mSpawnNodeList.mData[i]);
+        aNode->DisposeObject(pObject);
+    }
+}
+
 
 void LevelFormationTracer::Spawn() {
     

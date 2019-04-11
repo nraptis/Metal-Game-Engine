@@ -9,11 +9,11 @@
 #include "LevelPathBlueprint.hpp"
 #include "LevelSectionPermanentBlueprint.hpp"
 #include "os_core_graphics.h"
-#include "FSpline.h"
-#include "FPolyPath.h"
+#include "FSpline.hpp"
+#include "FPolyPath.hpp"
 #include "core_includes.h"
 #include "GameEditor.hpp"
-#include "FLine.h"
+#include "FLine.hpp"
 
 
 LevelPathNodeBlueprint::LevelPathNodeBlueprint() {
@@ -618,7 +618,6 @@ FJSONNode *LevelPathBlueprint::Save() {
 void LevelPathBlueprint::Load(FJSONNode *pNode) {
     Reset();
     if (pNode == NULL) { return; }
-    
     
     mSmooth = pNode->GetBool("smooth", false);
     mSpeedClass = pNode->GetInt("speed_class", SPEED_CLASS_MEDIUM);

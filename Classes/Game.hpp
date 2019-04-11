@@ -169,6 +169,11 @@ public:
     LevelSection                                mTestSection;
     
     
+    bool                                        mSlowMo;
+    int                                         mSlowMoTimer;
+    
+    
+    
 };
 
 extern Game *gGame;
