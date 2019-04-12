@@ -90,8 +90,31 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     mButtonShowFormationPicker->SetText("F-Pick");
     mRowMenus2->AddButton(mButtonShowFormationPicker);
     
+    mButtonKillAll = new UIButton();
+    mButtonKillAll->SetText("K-All");
+    mRowMenus2->AddButton(mButtonKillAll);
     
     
+    mRowMain3 = new ToolMenuSectionRow();
+    mMenusPanel->AddSection(mRowMain3);
+    
+    
+    
+    mButtonKillAllBalloons = new UIButton();
+    mButtonKillAllBalloons->SetText("KA-B");
+    mRowMain3->AddButton(mButtonKillAllBalloons);
+    
+    mButtonKillAllNonBalloons = new UIButton();
+    mButtonKillAllNonBalloons->SetText("KA-NonB");
+    mRowMain3->AddButton(mButtonKillAllNonBalloons);
+    
+    mButtonKillPerms = new UIButton();
+    mButtonKillPerms->SetText("KA-Per");
+    mRowMain3->AddButton(mButtonKillPerms);
+    
+    mButtonKillWaves = new UIButton();
+    mButtonKillWaves->SetText("KA-Wav");
+    mRowMain3->AddButton(mButtonKillWaves);
     
     
     
@@ -246,6 +269,13 @@ void EditorMenuSections::Notify(void *pSender, const char *pNotification) {
     
     if (pSender == mSegmentPlaybackFromOffScreenType) { mEditor->RefreshPlayback(); }
     if (pSender == mCheckBoxPlaybackFromOffScreen) { mEditor->RefreshPlayback(); }
+    
+    
+    if (pSender == mButtonKillAll) { mEditor->KillAll(); }
+    if (pSender == mButtonKillAllBalloons) { mEditor->KillAllBalloons(); }
+    if (pSender == mButtonKillAllNonBalloons) { mEditor->KillAllNonBalloons(); }
+    if (pSender == mButtonKillPerms) { mEditor->KillAllPerms(); }
+    if (pSender == mButtonKillWaves) { mEditor->KillAllWave(); }
     
 }
 

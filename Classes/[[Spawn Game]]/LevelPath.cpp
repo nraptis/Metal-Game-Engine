@@ -23,6 +23,7 @@ LevelPathNode::LevelPathNode() {
     mY = 0.0f;
     mType = PATH_NODE_INVALID;
     mWaitTimer = 0;
+    mDecelDistance = 0;
     mKillTimer = 8;
 }
 
@@ -81,7 +82,7 @@ void LevelPath::Update() {
     mDeleteList.RemoveAll();
 }
 
-void LevelPath::Add(int pType, float pX, float pY, int pWait) {
+void LevelPath::Add(int pType, float pX, float pY, int pDecel, int pWait) {
     //
     //
     //
@@ -89,14 +90,15 @@ void LevelPath::Add(int pType, float pX, float pY, int pWait) {
     aNode->mX = pX;
     aNode->mY = pY;
     aNode->mType = pType;
+    aNode->mDecelDistance = pDecel;
     aNode->mWaitTimer = pWait;
     mNodeList.Add(aNode);
     mDidFailFinalize = false;
     mDidFinalize = false;
 }
 
-void LevelPath::AddMove(float pX, float pY, int pWait) {
-    Add(PATH_NODE_NORMAL, pX, pY, pWait);
+void LevelPath::AddMove(float pX, float pY, int pDecel, int pWait) {
+    Add(PATH_NODE_NORMAL, pX, pY, pDecel, pWait);
 }
 
 void LevelPath::Reset() {
@@ -177,6 +179,9 @@ void LevelPath::AddSegmentBacktrackingFrom(int pIndex) {
     mTempY = aPrev->mY;
     
     float aTotalDist = 0.0f;
+    
+    int aDecelDistance = 0;
+    
     for (int i=aStartIndex+1;i<=pIndex;i++) {
         LevelPathNode *aNode = ((LevelPathNode *)mNodeList.mData[i]);
         
@@ -189,6 +194,8 @@ void LevelPath::AddSegmentBacktrackingFrom(int pIndex) {
         if (aDist > 1.0f) {
             cPointList.Add(aNode->mX, aNode->mY);
         }
+        
+        aDecelDistance = aNode->mDecelDistance;
         
         aPrev = aNode;
     }
@@ -235,8 +242,8 @@ void LevelPath::AddSegmentBacktrackingFrom(int pIndex) {
     
     bool aDecelerationEnabled = true;
     
-    float aDecelerationCutoffDistance = 118.0f;
-    float aDecelerationCutoff = cPolyPath.mLength - aDecelerationCutoffDistance;
+    //float aDecelerationCutoffDistance = 118.0f;
+    float aDecelerationCutoff = cPolyPath.mLength - ((float)aDecelDistance);
     float aDeceleration = 0.0f;
     
     bool aAccelerationEnabled = true;
@@ -248,14 +255,14 @@ void LevelPath::AddSegmentBacktrackingFrom(int pIndex) {
     if (aSpeed > 100.0f) { aSpeed = 100.0f; }
     if (aSpeed < 1.0f) { aSpeed = 1.0f; }
     
-    if (cPolyPath.mLength < aDecelerationCutoffDistance || (pIndex >= mNodeList.mCount - 1)) {
+    if (cPolyPath.mLength < ((float)aDecelDistance) || aDecelDistance < 10) {
         aDecelerationEnabled = false;
     } else {
-        aDeceleration = (aSpeed * aSpeed) / (2.0f * aDecelerationCutoffDistance);
+        aDeceleration = (aSpeed * aSpeed) / (2.0f * ((float)aDecelDistance));
     }
     
     if (cPolyPath.mLength > aAccelerationDistance && aAccelerationEnabled == true) {
-        aAcceleration = (aSpeed * aSpeed) / (2.0f * aAccelerationDistance);
+        aAcceleration = (aSpeed * aSpeed) / (2.0f * ((float)aAccelerationDistance));
     } else {
         aAccelerationEnabled = false;
     }
@@ -364,21 +371,21 @@ void LevelPath::Draw() {
 
 void LevelPath::SetSpeedClass(int pSpeedClass) {
     if (pSpeedClass == SPEED_CLASS_EXTRA_SLOW) {
-        mSpeed = 1.5f;
+        mSpeed = 0.4f;
     } else if (pSpeedClass == SPEED_CLASS_SLOW) {
-        mSpeed = 2.25f;
+        mSpeed = 0.75f;
     } else if (pSpeedClass == SPEED_CLASS_MEDIUM_SLOW) {
-        mSpeed = 3.65f;
+        mSpeed = 1.125f;
     } else if (pSpeedClass == SPEED_CLASS_MEDIUM_FAST) {
-        mSpeed = 6.25f;
+        mSpeed = 1.85f;
     } else if (pSpeedClass == SPEED_CLASS_FAST) {
-        mSpeed = 9.0f;
+        mSpeed = 2.5f;
     } else if (pSpeedClass == SPEED_CLASS_EXTRA_FAST) {
-        mSpeed = 12.0f;
+        mSpeed = 3.40f;
     } else if (pSpeedClass == SPEED_CLASS_INSANE) {
-        mSpeed = 18.0f;
+        mSpeed = 5.0f;
     } else { //"Default /
-        mSpeed = 6.0f;
+        mSpeed = 1.45f;
     }
 }
 

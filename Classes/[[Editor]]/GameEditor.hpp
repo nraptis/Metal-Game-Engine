@@ -136,6 +136,14 @@ public:
     void                                        Autosave();
     void                                        Autoload();
     
+    void                                        KillAll();
+    void                                        KillAllBalloons();
+    void                                        KillAllNonBalloons();
+    void                                        KillAllPerms();
+    void                                        KillAllWave();
+    
+    
+    
     FCanvas                                     *mOverlay;
     
     Game                                        *mGame;

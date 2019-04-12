@@ -29,12 +29,14 @@ public:
     void                                        Draw(int pSelectedIndex);
     void                                        DisposeObject(GameObject *pObject);
     
+    bool                                        IsClear();
     
     void                                        HandOffAllGameObjects(FList *pList);
     
-    
     bool                                        mDidOriginateOnWave;
     bool                                        mDidOriginateAsPermanent;
+    
+    bool                                        mDidSpawn;
     
     FString                                     mID;
     

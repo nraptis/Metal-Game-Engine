@@ -103,7 +103,6 @@ Game::Game() {
     mDartResetAnimationTick = 0;
     mDartResetAnimationTime = 200;
     
-    
     mSlowMo = false;
     mSlowMoTimer = 0;
     
@@ -248,34 +247,13 @@ void Game::LayoutTransform() {
     mExitZoneRight = mWidth + aExitZonePaddingSides;
     mExitZoneLeft = -aExitZonePaddingSides;
     
-    float aKillZonePaddingTop = gDeviceHeight * 0.75f;
-    float aKillZonePaddingBottom = gDeviceHeight * 0.5f;
-    float aKillZonePaddingSides = gDeviceWidth * 0.5f + 200.0f;
-    mKillZoneTop = aKillZonePaddingTop;
+    float aKillZonePaddingTop = ((float)GAME_HEIGHT) * 3.0f;
+    float aKillZonePaddingBottom = ((float)GAME_HEIGHT) * 0.5f;
+    float aKillZonePaddingSides = ((float)GAME_WIDTH) * 0.75f + 200.0f;
+    mKillZoneTop = -aKillZonePaddingTop;
     mKillZoneRight = mWidth + aKillZonePaddingSides;
     mKillZoneBottom = mHeight + aKillZonePaddingBottom;
     mKillZoneLeft = -aKillZonePaddingSides;
-    
-    
-    
-    
-    
-    
-    
-    
-    //Gravity shoul be a percent of the total height of the play area...
-    
-    
-    
-    
-    //float aVelocityFactor = aGameAreaMaxDimension / aScreenMaxDimension;
-    
-    //Takes ONE second to fly across screen...
-    //float aMaxVelocity2D = aScreenMaxDimension * (1.90f / 100.0f);
-    //float aMinVelocity2D = aScreenMaxDimension * (0.38f / 100.0f);
-    //float aGravity2D = aScreenMaxDimension * (0.012 / 100.0f);
-    
-    //Log("Gravity = %.3f\n", mGravity);
 }
 
 void Game::Layout() {
@@ -293,7 +271,6 @@ void Game::Update() {
             mSlowMoTimer = 0;
         }
     }
-    
     
     if (mDartResetAnimation) {
         mDartResetAnimationTick += 1;
@@ -326,38 +303,23 @@ void Game::Update() {
         }
     }
     
-    
     mBalloonList.Update();
     mDartList.Update();
     mBrickHeadList.Update();
     
-    
     for (int i=0;i<mDartList.mObjectList.mCount;i++) {
         Dart *aDart = (Dart *)mDartList.mObjectList.mData[i];
-        
         if (aDart->mIdle == false && aDart->mKill == 0) {
-            
             for (int n=0;n<mBalloonList.mObjectList.mCount;n++) {
                 Balloon *aBalloon = (Balloon *)mBalloonList.mObjectList.mData[n];
                 if (aBalloon->mKill == 0) {
-                    
                     if (aBalloon->WillCollide(aDart->mPrevTipX, aDart->mPrevTipY, aDart->mTipX, aDart->mTipY)) {
-                        
-                        printf("POP!!!\n");
-                        //aBalloon->Kill();
-                        aBalloon->mTagged = true;
+                        aBalloon->Kill();
                     }
-                    
-                    
-                    
                 }
-                
-                
             }
-            
         }
     }
-    
     
     if (mDartTouch != NULL && mDartResetAnimation == false) {
         float aDiffX = mDartTargetPullX - mDartPullX;
@@ -433,14 +395,16 @@ void Game::Draw() {
     //Graphics::SetColor();
     //Graphics::DrawRect(0.0f, 0.0f, mWidth, mHeight);
     
+    Graphics::PipelineStateSetShape2DAlphaBlending();
+    Graphics::SetColor(1.0f, 1.0f, 0.25f, 0.25f);
+    Graphics::OutlineRect(0.0f, 0.0f, mWidth, mHeight, 2000.0f);
+    Graphics::SetColor();
     
     Graphics::PipelineStateSetSpriteAlphaBlending();
     Graphics::SetColor();
     
     
-    //Graphics::SetColor(1.0f, 1.0f, 0.25f, 0.25f);
-    //Graphics::OutlineRectInside(0.0f, 0.0f, mWidth, mHeight, 1.0f);
-    //Graphics::SetColor();
+    
     
     
     //gApp->mGameAreaMarker.Draw(0.0f, 0.0f);
@@ -750,6 +714,16 @@ void Game::DisposeAllObjects() {
     }
 }
 
+//...
+void Game::FlyOffMiss(GameObject *pObject) {
+    
+    if (pObject != NULL) {
+        printf("Miss Object...\n");
+        pObject->Kill();
+    }
+    
+    
+}
 
 void Game::ReleaseDart() {
     
@@ -895,12 +869,12 @@ void Game::ResetDartTouch() {
 
 bool Game::IsGameObjectOutsideKillZone(GameObject *pObject) {
     if (pObject != NULL) {
-        /*
-         if (pObject->mX < mKillZoneLeft) { return true; }
-         if (pObject->mX > mKillZoneRight) { return true; }
-         if (pObject->mY < mKillZoneTop) { return true; }
-         if (pObject->mY > mKillZoneBottom) { return true; }
-         */
+        
+         if (pObject->mTransform.mX < mKillZoneLeft) { return true; }
+         if (pObject->mTransform.mX > mKillZoneRight) { return true; }
+         if (pObject->mTransform.mY < mKillZoneTop) { return true; }
+         if (pObject->mTransform.mY > mKillZoneBottom) { return true; }
+        
     }
     return false;
 }
@@ -917,10 +891,9 @@ void Game::Load() {
     
     //Create level section (1 of 2) (A)
     aSection = new LevelSection();
-    aSection->Load("test_section_03.json");
+    aSection->Load("section_learn_the_game.json");
     aLevel->AddSection(aSection);
     
-    //TODO: ?
     aSection->mDelay = 0;
     
     mLevelData = aLevel;

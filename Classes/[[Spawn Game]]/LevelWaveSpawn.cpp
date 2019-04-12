@@ -21,6 +21,10 @@ LevelWaveSpawn::LevelWaveSpawn(LevelWave *pWave, LevelPath *pPath) {
     mObject = NULL;
     mFormation = NULL;
     mIsComplete = false;
+    
+    mDidSpawn = false;
+    mDidUpdateAfterSpawn = false;
+    
     mOffsetSpawnDistance = 0.0f;
     mBaseX = 0.0f;
     mBaseY = 0.0f;
@@ -56,6 +60,8 @@ void LevelWaveSpawn::Spawn() {
         delete mFormation;
         mFormation = NULL;
     }
+    
+    
     
     mBaseX = 0.0f;
     mBaseY = 0.0f;
@@ -101,17 +107,55 @@ void LevelWaveSpawn::Spawn() {
             mObject->mTransform.mY = mBaseY;
         }
     }
+    
+    mDidSpawn = true;
+    mDidUpdateAfterSpawn = false;
 }
 
 void LevelWaveSpawn::DisposeObject(GameObject *pObject) {
     if (mObject != NULL && mObject == pObject) {
-        printf("LevelWaveSpawn::SUCCESS - DisposeObject(%llx)\n", pObject);
         mObject = NULL;
     }
     if (mFormation != NULL) {
         mFormation->DisposeObject(pObject);
     }
 }
+
+bool LevelWaveSpawn::DidStart() {
+    if (mDidSpawn == true) {
+        if (mDidUpdateAfterSpawn == true) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool LevelWaveSpawn::IsClear() {
+    
+    if (mDidSpawn == false) {
+        return false;
+    }
+    
+    if (mObject != NULL) {
+        if (mObject->mKill == 0) {
+            return false;
+        }
+    }
+    
+    if (mFormation != NULL) {
+        if (mFormation->IsClear() == false) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+
+
+
+
+
 
 void LevelWaveSpawn::Reset() {
     
@@ -128,6 +172,9 @@ void LevelWaveSpawn::Reset() {
     mBaseX = 0.0f;
     mBaseY = 0.0f;
     mDistanceTraveled = 0.0f;
+    
+    mDidSpawn = false;
+    mDidUpdateAfterSpawn = false;
 }
 
 void LevelWaveSpawn::Restart() {
@@ -144,11 +191,20 @@ void LevelWaveSpawn::Restart() {
     mOffsetSpawnDistance = 0.0f;
     mBaseX = 0.0f;
     mBaseY = 0.0f;
+    
+    mDidSpawn = false;
+    mDidUpdateAfterSpawn = false;
+    
     mDistanceTraveled = 0.0f;
     mKillTimer = 8;
 }
 
 void LevelWaveSpawn::Update() {
+    
+    if (mDidSpawn == true) {
+        mDidUpdateAfterSpawn = true;
+    }
+    
     if (mPathIndex >= 0 && mPathIndex < mPath->mPath.mCount) {
         mBaseX = mPath->mPath.mX[mPathIndex];
         mBaseY = mPath->mPath.mY[mPathIndex];

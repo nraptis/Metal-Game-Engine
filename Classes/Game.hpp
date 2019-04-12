@@ -64,6 +64,11 @@ public:
     
     void                                        DisposeObject(GameObject *pObject);
     
+    
+    //...
+    void                                        FlyOffMiss(GameObject *pObject);
+    
+    
     //Mainly used by editor to "flush" screen before re-spawn...
     void                                        DisposeAllObjects();
     

@@ -112,6 +112,7 @@ void Dart::Update() {
         if (mDeathTimer <= 0) { Kill(); }
         
         if (gGame->IsGameObjectOutsideKillZone(this)) {
+            printf("Kill Dart[ %f %f ]\n\n", mTransform.mX, mTransform.mY);
             Kill();
         }
     }

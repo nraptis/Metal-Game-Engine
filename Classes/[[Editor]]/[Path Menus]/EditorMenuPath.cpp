@@ -50,12 +50,20 @@ EditorMenuPath::EditorMenuPath(GamePathEditor *pEditor) : ToolMenu() {
     mStepperWait = new UIStepper();
     mStepperWait->SetText("Wait:");
     mPointsPanel->AddSection(mStepperWait);
-    //gNotify.Register(this, mStepperWait, "stepper");
+    
     
     mStepperChamfer = new UIStepper();
     mStepperChamfer->SetText("Chamfer:");
     mPointsPanel->AddSection(mStepperChamfer);
-    //gNotify.Register(this, mStepperChamfer, "stepper");
+    
+    
+    mStepperDecel = new UIStepper();
+    mStepperDecel->SetText("Decel:");
+    mPointsPanel->AddSection(mStepperDecel);
+    
+    
+    
+    
     
     mRowPointOptions = new ToolMenuSectionRow();
     mPointsPanel->AddSection(mRowPointOptions);
@@ -122,7 +130,7 @@ void EditorMenuPath::Layout() {
 void EditorMenuPath::Update() {
     ToolMenu::Update();
     
-    if (mCheckBoxSmooth) {
+    if (mCheckBoxSmooth != NULL) {
         bool aUnlink = true;
         if (mEditor->mWave != NULL) {
             aUnlink = false;
@@ -133,7 +141,7 @@ void EditorMenuPath::Update() {
         }
     }
     
-    if (mStepperWait) {
+    if (mStepperWait != NULL) {
         bool aUnlink = true;
         if (mEditor->mPath != NULL) {
             LevelPathNodeBlueprint *aNode = (LevelPathNodeBlueprint *)mEditor->mPath->mNodeList.Fetch(mEditor->mPath->mSelectedIndex);
@@ -147,7 +155,7 @@ void EditorMenuPath::Update() {
         }
     }
     
-    if (mStepperChamfer) {
+    if (mStepperChamfer != NULL) {
         bool aUnlink = true;
         if (mEditor->mPath != NULL) {
             LevelPathNodeBlueprint *aNode = (LevelPathNodeBlueprint *)mEditor->mPath->mNodeList.Fetch(mEditor->mPath->mSelectedIndex);
@@ -160,6 +168,23 @@ void EditorMenuPath::Update() {
             mStepperChamfer->SetTarget(NULL);
         }
     }
+    
+    
+    if (mStepperDecel != NULL) {
+        bool aUnlink = true;
+        if (mEditor->mPath != NULL) {
+            LevelPathNodeBlueprint *aNode = (LevelPathNodeBlueprint *)mEditor->mPath->mNodeList.Fetch(mEditor->mPath->mSelectedIndex);
+            if (aNode) {
+                aUnlink = false;
+                mStepperDecel->SetTarget(&(aNode->mDecelDistance));
+            }
+        }
+        if (aUnlink) {
+            mStepperDecel->SetTarget(NULL);
+        }
+    }
+    
+    
 }
 
 void EditorMenuPath::Notify(void *pSender, const char *pNotification) {

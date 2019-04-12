@@ -42,6 +42,7 @@ public:
     int                                         mType;
     int                                         mWaitTimer;
     int                                         mChamferSize;
+    int                                         mDecelDistance;
     
     void                                        ShiftX(float pShiftX);
     void                                        ShiftY(float pShiftY);
@@ -97,6 +98,13 @@ public:
     void                                        ApplyEditorConstraints();
     
     int                                         mMaxSpawnSize;
+    
+    
+    //
+    //
+    //
+    
+    int                                         GetExitType();
     
     //Note: BUILD should have NO TIE-IN TO EDITOR...
     //This HAS to work WITHOUT EDITOR for GAME......

@@ -32,6 +32,10 @@ public:
     
     void                                DisposeObject(GameObject *pObject);
     
+    bool                                DidStart();
+    bool                                IsClear(); //all of the objects are either null or "un-killable" types
+    
+    
     LevelWave                           *mWave;
     LevelPath                           *mPath;
     GameObject                          *mObject;
@@ -39,6 +43,9 @@ public:
     
     int                                 mPathIndex;
     bool                                mIsComplete;
+    bool                                mDidSpawn;
+    bool                                mDidUpdateAfterSpawn;
+    
     
     float                               mBaseX;
     float                               mBaseY;

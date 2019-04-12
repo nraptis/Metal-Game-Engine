@@ -18,6 +18,8 @@ LevelFormation::LevelFormation() {
     
     mDidOriginateOnWave = false;
     mDidOriginateAsPermanent = false;
+    
+    mDidSpawn = false;
 }
 
 LevelFormation::~LevelFormation() {
@@ -40,6 +42,9 @@ void LevelFormation::DisposeObject(GameObject *pObject) {
 }
 
 void LevelFormation::Reset() {
+    
+    mDidSpawn = false;
+    
     for (int i=0;i<mSpawnNodeList.mCount;i++) {
         LevelFormationNode *aNode = ((LevelFormationNode *)mSpawnNodeList.mData[i]);
         aNode->Reset();
@@ -72,6 +77,8 @@ void LevelFormation::Spawn() {
         
         aTracer->Spawn();
     }
+    
+    mDidSpawn = true;
 }
 
 void LevelFormation::Update() {
@@ -166,6 +173,22 @@ LevelFormation *LevelFormation::Clone() {
     }
     
     return aClone;
+}
+
+
+bool LevelFormation::IsClear() {
+    
+    if (mDidSpawn == false) {
+        //If we did not spawn, then we are not clear...
+        return false;
+    }
+    
+    EnumList(LevelFormationNode, aNode, mSpawnNodeList) {
+        if (aNode->mObject != NULL && aNode->mObject->mKill == 0) {
+            return false;
+        }
+    }
+    return true;
 }
 
 

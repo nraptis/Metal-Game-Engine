@@ -33,6 +33,7 @@ public:
     
     UIStepper                               *mStepperWait;
     UIStepper                               *mStepperChamfer;
+    UIStepper                               *mStepperDecel;
     
     ToolMenuSectionRow                      *mRowPointOptions;
     UIButton                                *mButtonDeletePoint;

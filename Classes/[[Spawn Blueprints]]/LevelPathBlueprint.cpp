@@ -26,6 +26,8 @@ LevelPathNodeBlueprint::LevelPathNodeBlueprint() {
     mWaitTimer = 0;
     mChamferSize = 0;
     
+    mDecelDistance = 0;
+    
     mKillTimer = 8;
 }
 
@@ -90,6 +92,10 @@ FJSONNode *LevelPathNodeBlueprint::Save() {
         }
     }
     
+    if (mDecelDistance > 0) {
+        aExport->AddDictionaryInt("decel", mDecelDistance);
+    }
+    
     if (mChamferSize > 0) {
         aExport->AddDictionaryInt("chamfer", mChamferSize);
     }
@@ -117,23 +123,23 @@ void LevelPathNodeBlueprint::Load(FJSONNode *pNode) {
     mPercentX = pNode->GetFloat("x", mPercentX);
     
     if (gEditor != NULL) {
-    float aLeft = gEditor->mGameAreaLeft;
-    float aRight = gEditor->mGameAreaRight;
-    mEditorX = aLeft + (aRight - aLeft) * (mPercentX / 100.0f);
+        float aLeft = gEditor->mGameAreaLeft;
+        float aRight = gEditor->mGameAreaRight;
+        mEditorX = aLeft + (aRight - aLeft) * (mPercentX / 100.0f);
     }
     
     mPercentY = 0.0f;
     mPercentY = pNode->GetFloat("y", mPercentY);
     if (gEditor != NULL) {
-    float aTop = gEditor->mGameAreaTop;
-    float aBottom = gEditor->mGameAreaBottom;
-    mEditorY = aTop + (aBottom - aTop) * (mPercentY / 100.0f);
+        float aTop = gEditor->mGameAreaTop;
+        float aBottom = gEditor->mGameAreaBottom;
+        mEditorY = aTop + (aBottom - aTop) * (mPercentY / 100.0f);
     }
     
-
+    
     mChamferSize = pNode->GetInt("chamfer", mChamferSize);
     mWaitTimer = pNode->GetInt("wait", mWaitTimer);
-    
+    mDecelDistance = pNode->GetInt("decel", mDecelDistance);
 }
 
 LevelPathBlueprint::LevelPathBlueprint() {
@@ -447,6 +453,17 @@ void LevelPathBlueprint::ApplyEditorConstraints() {
     }
 }
 
+int LevelPathBlueprint::GetExitType() {
+    LevelPathNodeBlueprint *aNode = (LevelPathNodeBlueprint *)mNodeList.Last();
+    if (aNode != NULL) {
+        if (aNode->mConstraint.mTypeX == X_CONSTRAINT_LEFT_EXIT) { return WAVE_EXIT_TYPE_INSTANT; }
+        if (aNode->mConstraint.mTypeX == X_CONSTRAINT_RIGHT_EXIT) { return WAVE_EXIT_TYPE_INSTANT; }
+        if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_TOP_EXIT) { return WAVE_EXIT_TYPE_INSTANT; }
+    }
+    return WAVE_EXIT_TYPE_DISPERSE;
+}
+
+
 void LevelPathBlueprint::Build(LevelPath *pPath) {
     
     if (pPath == NULL) { return; }
@@ -578,12 +595,14 @@ void LevelPathBlueprint::Build(LevelPath *pPath) {
             
             pPath->AddMove(aNode->mGameX + aDiffBackX * aChamferSize,
                            aNode->mGameY + aDiffBackY * aChamferSize,
+                           aNode->mDecelDistance,
                            aNode->mWaitTimer);
             pPath->AddMove(aNode->mGameX + aDiffNextX * aChamferSize,
                            aNode->mGameY + aDiffNextY * aChamferSize,
+                           0,
                            aNode->mWaitTimer);
         } else {
-            pPath->AddMove(aNode->mGameX, aNode->mGameY, aNode->mWaitTimer);
+            pPath->AddMove(aNode->mGameX, aNode->mGameY, aNode->mDecelDistance, aNode->mWaitTimer);
         }
     }
     

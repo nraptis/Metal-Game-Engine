@@ -130,8 +130,6 @@ void LevelWaveBlueprint::FindLargestSpawnSize() {
 
             aFormation->GetExtremeties(aTop, aRight, aBottom, aLeft);
             
-            printf("Extreme[%f %f %f %f]\n", aTop, aRight, aBottom, aLeft);
-            
             if (aTop < aMinY) { aMinY = aTop; }
             if (aBottom > aMaxY) { aMaxY = aBottom; }
             
@@ -156,13 +154,8 @@ void LevelWaveBlueprint::FindLargestSpawnSize() {
     if (aMaxY > aRadius) { aRadius = aMaxY; }
     
     mMaxSpawnSize = (int)(round(aRadius));
-    
-    printf("Spawn Size Here: %d\n\n", mMaxSpawnSize);
-    
     mMaxSpawnSize += 60;
 }
-
-
 
 void LevelWaveBlueprint::Build() {
     if (gEditor) {
@@ -178,6 +171,8 @@ void LevelWaveBlueprint::Build(LevelWave *pWave) {
     
     mPath.mMaxSpawnSize = mMaxSpawnSize;
     mPath.Build(&pWave->mPath);
+    
+    pWave->mExitType = mPath.GetExitType();
     
     pWave->mCreationType = mCreationType;
     pWave->mCreationDelay = mCreationDelay;

@@ -29,6 +29,15 @@ public:
     ToolMenuSectionRow                      *mRowMain2;
     UIButton                                *mButtonClear;
     UIButton                                *mButtonLoadCleared;
+    UIButton                                *mButtonKillAll;
+    
+    ToolMenuSectionRow                      *mRowMain3;
+    
+    UIButton                                *mButtonKillAllBalloons;
+    UIButton                                *mButtonKillAllNonBalloons;
+    UIButton                                *mButtonKillPerms;
+    UIButton                                *mButtonKillWaves;
+    
     
     
     ToolMenuPanel                           *mMenusPanel;
