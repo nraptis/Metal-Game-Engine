@@ -106,20 +106,20 @@ EditorMenuPermanent::EditorMenuPermanent(GamePermanentEditor *pEditor) : ToolMen
     mStepperSpacing->mMax = 1000;
     mGenerationPanel->AddSection(mStepperSpacing);
     
-    mTimingPanelPanel = new ToolMenuPanel();
-    mTimingPanelPanel->SetTitle("Timing");
-    AddSection(mTimingPanelPanel);
+    mTimingPanel = new ToolMenuPanel();
+    mTimingPanel->SetTitle("Timing");
+    AddSection(mTimingPanel);
     
     mStepperCreationType = new UISegment();
     mStepperCreationType->SetSegmentCount(5);
     mStepperCreationType->SetTitles("PW-Sta", "PW-End", "PW-Clr", "Scr-C-P" "Scr-C+P");
-    mTimingPanelPanel->AddSection(mStepperCreationType);
+    mTimingPanel->AddSection(mStepperCreationType);
     
     mStepperCreationDelay = new UIStepper();
     mStepperCreationDelay->SetText("Delay");
     mStepperCreationDelay->mMin = 0;
     mStepperCreationDelay->mMax = 2048;
-    mTimingPanelPanel->AddSection(mStepperCreationDelay);
+    mTimingPanel->AddSection(mStepperCreationDelay);
 }
 
 EditorMenuPermanent::~EditorMenuPermanent() {

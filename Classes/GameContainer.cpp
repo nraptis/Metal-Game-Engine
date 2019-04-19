@@ -16,7 +16,6 @@ GameContainer::GameContainer() {
     
     mName = "{{Game Container}}";
     
-    
     SetWidth(1000.0f);
     SetHeight(1000.0f);
     

@@ -159,43 +159,43 @@ void LevelSection::Update() {
     
     if (mCandidateWave != NULL) {
         
-        bool aCanSpawnWave = false;
+        bool aCanSpawnWave = true;
         
+        if (mCandidateWave->mCreationRequiresPrevWaveStart == true) {
+            //Always yes...
+        }
         
+        bool aAllComplete = true;
+        EnumList(LevelWave, aWave, mActiveWaveList) {
+            if (aWave->mIsComplete == false) {
+                aAllComplete = false;
+            }
+        }
         
-       
+        if (mCandidateWave->mCreationRequiresPrevWaveComplete == true) {
+            if (aAllComplete == false) {
+                aCanSpawnWave = false;
+            }
+        }
         
-        if (mCandidateWave->mCreationType == WAVE_CREATION_TYPE_PREV_WAVE_END ||
-            mCandidateWave->mCreationType == WAVE_CREATION_TYPE_PREV_WAVE_CLEAR) {
-            
-            bool aAllComplete = true;
-            
-            EnumList(LevelWave, aWave, mActiveWaveList) {
-                if (aWave->mIsComplete == false) {
-                    aAllComplete = false;
+        //if (gGame->IsWaveClearForSpawn()) {
+        //    aCanSpawnWave = true;
+        //}
+        
+        if (mCandidateWave->mCreationRequiresScreenWavesClear == true) {
+            if (gGame != NULL) {
+                if (gGame->IsScreenClearForSpawn(false) == false) {
+                    aCanSpawnWave = false;
                 }
             }
-            
-            if (aAllComplete) {
-                if (mCandidateWave->mCreationType == WAVE_CREATION_TYPE_PREV_WAVE_END) {
-                    aCanSpawnWave = true;
-                }
-                if (mCandidateWave->mCreationType == WAVE_CREATION_TYPE_PREV_WAVE_CLEAR) {
-                    if (gGame->IsWaveClearForSpawn()) {
-                        aCanSpawnWave = true;
-                    }
+        }
+        
+        if (mCandidateWave->mCreationRequiresScreenPermsClear == true) {
+            if (gGame != NULL) {
+                if (gGame->IsScreenClearForSpawn(true) == false) {
+                    aCanSpawnWave = false;
                 }
             }
-        } else if (mCandidateWave->mCreationType == WAVE_CREATION_TYPE_SCREEN_CLEAR_IGNORE_PERMS) {
-            if (gGame->IsScreenClearForSpawn(false)) {
-                aCanSpawnWave = true;
-            }
-        } else if (mCandidateWave->mCreationType == WAVE_CREATION_TYPE_SCREEN_CLEAR_AND_PERMS) {
-            if (gGame->IsScreenClearForSpawn(true)) {
-                aCanSpawnWave = true;
-            }
-        } else {//}  if (mCandidateWave->mCreationType == WAVE_CREATION_TYPE_PREV_WAVE_START) {
-            aCanSpawnWave = true;
         }
         
         if (aCanSpawnWave) {
@@ -214,9 +214,18 @@ void LevelSection::Update() {
                     aCheckAhead = false;
                     
                     LevelWave *aCheckWave = (LevelWave *)mWaveList.Fetch(mCandidateWaveIndex);
-                    if (aCheckWave != NULL) {
-                        if (aCheckWave->mCreationType == WAVE_CREATION_TYPE_PREV_WAVE_START
-                            && aCheckWave->mCreationDelay == 0) {
+                    if (aCheckWave != NULL && aCheckWave->mCreationDelay == 0) {
+                        
+                        //All the conditions to insta-spawn these preceeding waves...
+                        
+                        //mCreationRequiresPrevWaveStart; (Don't Care)
+                        //mCreationRequiresPrevWaveComplete; (Can't Do It)
+                        //mCreationRequiresScreenWavesClear; (Can't Do It)
+                        //mCreationRequiresScreenPermsClear; (Can't Do It)
+                        if (   aCheckWave->mCreationRequiresPrevWaveComplete == false
+                            && aCheckWave->mCreationRequiresScreenWavesClear == false
+                            && aCheckWave->mCreationRequiresScreenPermsClear == false) {
+                            
                             printf("Spawn Subsequent Wave... [%d]\n", mCandidateWaveIndex);
                             mActiveWaveList.Add(aCheckWave);
                             aCheckWave->Prepare();

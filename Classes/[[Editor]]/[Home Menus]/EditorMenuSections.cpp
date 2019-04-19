@@ -90,33 +90,17 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     mButtonShowFormationPicker->SetText("F-Pick");
     mRowMenus2->AddButton(mButtonShowFormationPicker);
     
-    mButtonKillAll = new UIButton();
-    mButtonKillAll->SetText("K-All");
-    mRowMenus2->AddButton(mButtonKillAll);
     
+    mRowMenus3 = new ToolMenuSectionRow();
+    mMenusPanel->AddSection(mRowMenus3);
     
-    mRowMain3 = new ToolMenuSectionRow();
-    mMenusPanel->AddSection(mRowMain3);
+    mButtonShowMotionEditor = new UIButton();
+    mButtonShowMotionEditor->SetText("Motion");
+    mRowMenus3->AddButton(mButtonShowMotionEditor);
     
-    
-    
-    mButtonKillAllBalloons = new UIButton();
-    mButtonKillAllBalloons->SetText("KA-B");
-    mRowMain3->AddButton(mButtonKillAllBalloons);
-    
-    mButtonKillAllNonBalloons = new UIButton();
-    mButtonKillAllNonBalloons->SetText("KA-NonB");
-    mRowMain3->AddButton(mButtonKillAllNonBalloons);
-    
-    mButtonKillPerms = new UIButton();
-    mButtonKillPerms->SetText("KA-Per");
-    mRowMain3->AddButton(mButtonKillPerms);
-    
-    mButtonKillWaves = new UIButton();
-    mButtonKillWaves->SetText("KA-Wav");
-    mRowMain3->AddButton(mButtonKillWaves);
-    
-    
+    mButtonShowObjectClearer = new UIButton();
+    mButtonShowObjectClearer->SetText("Clr-Obj");
+    mRowMenus3->AddButton(mButtonShowObjectClearer);
     
     
     mWavePanel = new ToolMenuPanel();
@@ -263,6 +247,13 @@ void EditorMenuSections::Notify(void *pSender, const char *pNotification) {
     if (pSender == mButtonShowFormationEditor) { mEditor->OpenFormationEditor(NULL); }
     if (pSender == mButtonShowFormationPicker) { mEditor->PickFormationForFormationEditor(); }
     
+    
+    if (pSender == mButtonShowMotionEditor) { mEditor->OpenMotionMenu(); }
+    if (pSender == mButtonShowObjectClearer) { mEditor->OpenObjectClearingMenu(); }
+    
+    
+    
+    
     if (pSender == mCheckBoxCurrentWaveOnly) { mEditor->RefreshPlayback(); }
     if (pSender == mButtonPlaybackRestart) { mEditor->RefreshPlayback(); }
     if (pSender == mCheckBoxPlaybackStartAtSelectedWave) { mEditor->RefreshPlayback(); }
@@ -271,11 +262,7 @@ void EditorMenuSections::Notify(void *pSender, const char *pNotification) {
     if (pSender == mCheckBoxPlaybackFromOffScreen) { mEditor->RefreshPlayback(); }
     
     
-    if (pSender == mButtonKillAll) { mEditor->KillAll(); }
-    if (pSender == mButtonKillAllBalloons) { mEditor->KillAllBalloons(); }
-    if (pSender == mButtonKillAllNonBalloons) { mEditor->KillAllNonBalloons(); }
-    if (pSender == mButtonKillPerms) { mEditor->KillAllPerms(); }
-    if (pSender == mButtonKillWaves) { mEditor->KillAllWave(); }
+    
     
 }
 

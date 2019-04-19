@@ -9,12 +9,6 @@
 #ifndef LevelWave_hpp
 #define LevelWave_hpp
 
-#define WAVE_CREATION_TYPE_PREV_WAVE_START 0
-#define WAVE_CREATION_TYPE_PREV_WAVE_END 1
-#define WAVE_CREATION_TYPE_PREV_WAVE_CLEAR 2
-#define WAVE_CREATION_TYPE_SCREEN_CLEAR_IGNORE_PERMS 3
-#define WAVE_CREATION_TYPE_SCREEN_CLEAR_AND_PERMS 4
-
 #define WAVE_EXIT_TYPE_DISPERSE 0
 #define WAVE_EXIT_TYPE_INSTANT 1
 //??
@@ -50,13 +44,23 @@ public:
     
     //Decides how the wave is "created" relative to the
     //previous wave. E.G. 200 ticks after prev wave starts...
-    int                                 mCreationType;
+    
+    //TODO: We deprecate CREATION type in favor of
+    //multiple flags which can be turned on and off...
+    //int                                 mCreationType;
+    
+    bool                                mCreationRequiresPrevWaveStart;
+    bool                                mCreationRequiresPrevWaveComplete;
+    bool                                mCreationRequiresScreenWavesClear;
+    bool                                mCreationRequiresScreenPermsClear;
+    
+    
     int                                 mCreationDelay;
     
     FList                               mSpawnList;
     int                                 mSpawnIndex;
     
-    float                               mSpawnSeparationDistance;
+    float                               mSpawnSpacing;
     
     int                                 mKillTimer;
     

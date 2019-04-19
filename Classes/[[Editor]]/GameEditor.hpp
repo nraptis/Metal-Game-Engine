@@ -19,6 +19,10 @@
 #include "EditorMenuSpawnPicker.hpp"
 #include "EditorMenuAttachment.hpp"
 #include "EditorMenuFormationPicker.hpp"
+#include "EditorMenuObjectClearing.hpp"
+#include "EditorMenuMotion.hpp"
+
+
 
 #include "GamePathEditor.hpp"
 #include "GameFormationEditor.hpp"
@@ -128,6 +132,8 @@ public:
     void                                        OpenWavePickerMenu();
     void                                        OpenSpawnPickerMenu();
     void                                        OpenAttachmentMenu();
+    void                                        OpenObjectClearingMenu();
+    void                                        OpenMotionMenu();
     
     
     
@@ -157,6 +163,9 @@ public:
     EditorMenuWavesPicker                       *mMenuWavesPicker;
     EditorMenuSpawnPicker                       *mMenuSpawnPicker;
     EditorMenuAttachment                        *mMenuAttachment;
+    EditorMenuObjectClearing                    *mMenuObjectClearing;
+    EditorMenuMotion                            *mMenuMotion;
+    
     
     FCanvas                                     *mToolContainer;
     

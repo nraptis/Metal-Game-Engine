@@ -33,7 +33,7 @@ public:
     UIStepper                               *mStepperSpacing;
     
     
-    ToolMenuPanel                           *mTimingPanelPanel;
+    ToolMenuPanel                           *mTimingPanel;
     UISegment                               *mStepperCreationType;
     UIStepper                               *mStepperCreationDelay;
 };

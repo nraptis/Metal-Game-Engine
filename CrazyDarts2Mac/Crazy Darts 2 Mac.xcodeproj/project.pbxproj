@@ -12,6 +12,10 @@
 		0D2A0F53225D866C0098B023 /* SceneryConfigUtilsMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D2A0F51225D866C0098B023 /* SceneryConfigUtilsMenu.cpp */; };
 		0D2A0F56225D87380098B023 /* WorldConfigScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D2A0F54225D87380098B023 /* WorldConfigScene.cpp */; };
 		0D509186225AB4650082ED8E /* EditorMenuFormationGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D509184225AB4650082ED8E /* EditorMenuFormationGrid.cpp */; };
+		0D77851B2262CF040049103A /* EditorMenuMotion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D7785192262CF040049103A /* EditorMenuMotion.cpp */; };
+		0D77851E2262D1860049103A /* EditorMenuObjectClearing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D77851C2262D1860049103A /* EditorMenuObjectClearing.cpp */; };
+		0D7785212262D4BF0049103A /* LevelMotionController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D77851F2262D4BF0049103A /* LevelMotionController.cpp */; };
+		0D7785242262D4D20049103A /* LevelMotionControllerBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D7785222262D4D20049103A /* LevelMotionControllerBlueprint.cpp */; };
 		0D8FCF18225DA8ED00A74580 /* BufferBindingWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDB8225DA8EC00A74580 /* BufferBindingWrapper.mm */; };
 		0D8FCF19225DA8ED00A74580 /* os_core_graphics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDB9225DA8EC00A74580 /* os_core_graphics.mm */; };
 		0D8FCF1A225DA8ED00A74580 /* Shape3DShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDBD225DA8EC00A74580 /* Shape3DShaders.metal */; };
@@ -204,6 +208,14 @@
 		0D2A0F55225D87380098B023 /* WorldConfigScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WorldConfigScene.hpp; sourceTree = "<group>"; };
 		0D509184225AB4650082ED8E /* EditorMenuFormationGrid.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuFormationGrid.cpp; sourceTree = "<group>"; };
 		0D509185225AB4650082ED8E /* EditorMenuFormationGrid.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuFormationGrid.hpp; sourceTree = "<group>"; };
+		0D7785192262CF040049103A /* EditorMenuMotion.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuMotion.cpp; sourceTree = "<group>"; };
+		0D77851A2262CF040049103A /* EditorMenuMotion.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuMotion.hpp; sourceTree = "<group>"; };
+		0D77851C2262D1860049103A /* EditorMenuObjectClearing.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuObjectClearing.cpp; sourceTree = "<group>"; };
+		0D77851D2262D1860049103A /* EditorMenuObjectClearing.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuObjectClearing.hpp; sourceTree = "<group>"; };
+		0D77851F2262D4BF0049103A /* LevelMotionController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelMotionController.cpp; sourceTree = "<group>"; };
+		0D7785202262D4BF0049103A /* LevelMotionController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelMotionController.hpp; sourceTree = "<group>"; };
+		0D7785222262D4D20049103A /* LevelMotionControllerBlueprint.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelMotionControllerBlueprint.cpp; sourceTree = "<group>"; };
+		0D7785232262D4D20049103A /* LevelMotionControllerBlueprint.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelMotionControllerBlueprint.hpp; sourceTree = "<group>"; };
 		0D8FCDB8225DA8EC00A74580 /* BufferBindingWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BufferBindingWrapper.mm; sourceTree = "<group>"; };
 		0D8FCDB9225DA8EC00A74580 /* os_core_graphics.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = os_core_graphics.mm; sourceTree = "<group>"; };
 		0D8FCDBA225DA8EC00A74580 /* TextureBindingWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureBindingWrapper.h; sourceTree = "<group>"; };
@@ -908,6 +920,8 @@
 				0DB05DFB2255A364006AE702 /* LevelFormationTracerBlueprint.hpp */,
 				0DD15B3A2258350B005C06D8 /* LevelSectionPermanentBlueprint.cpp */,
 				0DD15B3B2258350B005C06D8 /* LevelSectionPermanentBlueprint.hpp */,
+				0D7785222262D4D20049103A /* LevelMotionControllerBlueprint.cpp */,
+				0D7785232262D4D20049103A /* LevelMotionControllerBlueprint.hpp */,
 			);
 			path = "[[Spawn Blueprints]]";
 			sourceTree = "<group>";
@@ -986,6 +1000,10 @@
 				0DB05E442255A364006AE702 /* EditorMenuSpawnPicker.hpp */,
 				0DB05E3D2255A364006AE702 /* EditorMenuWavesPicker.cpp */,
 				0DB05E402255A364006AE702 /* EditorMenuWavesPicker.hpp */,
+				0D7785192262CF040049103A /* EditorMenuMotion.cpp */,
+				0D77851A2262CF040049103A /* EditorMenuMotion.hpp */,
+				0D77851C2262D1860049103A /* EditorMenuObjectClearing.cpp */,
+				0D77851D2262D1860049103A /* EditorMenuObjectClearing.hpp */,
 			);
 			path = "[Home Menus]";
 			sourceTree = "<group>";
@@ -1024,6 +1042,8 @@
 				0DD15B1D22582C09005C06D8 /* LevelFormationTracerNode.hpp */,
 				0DD15B37225834F8005C06D8 /* LevelSectionPermanent.cpp */,
 				0DD15B38225834F8005C06D8 /* LevelSectionPermanent.hpp */,
+				0D77851F2262D4BF0049103A /* LevelMotionController.cpp */,
+				0D7785202262D4BF0049103A /* LevelMotionController.hpp */,
 			);
 			path = "[[Spawn Game]]";
 			sourceTree = "<group>";
@@ -1166,6 +1186,7 @@
 				0DB05E6C2255A365006AE702 /* Transform3D.cpp in Sources */,
 				0D8FCF76225DA8ED00A74580 /* FApp.cpp in Sources */,
 				0D8FCF7F225DA8ED00A74580 /* MetalViewController.mm in Sources */,
+				0D7785242262D4D20049103A /* LevelMotionControllerBlueprint.cpp in Sources */,
 				0D8FCF3A225DA8ED00A74580 /* FDrawQuad.cpp in Sources */,
 				0D8FCF3F225DA8ED00A74580 /* FSpline.cpp in Sources */,
 				0D8FCF2D225DA8ED00A74580 /* FVertexBuffer.cpp in Sources */,
@@ -1176,6 +1197,7 @@
 				0D8FCF58225DA8ED00A74580 /* UILabel.cpp in Sources */,
 				0D8FCF6B225DA8ED00A74580 /* UISlider.cpp in Sources */,
 				0D8FCF36225DA8ED00A74580 /* FJoystick.cpp in Sources */,
+				0D77851B2262CF040049103A /* EditorMenuMotion.cpp in Sources */,
 				0D8FCF2B225DA8ED00A74580 /* FTouchManager.cpp in Sources */,
 				0D8FCF5C225DA8ED00A74580 /* UIButton.cpp in Sources */,
 				0D8FCF60225DA8ED00A74580 /* UIAlignmentPickerButton.cpp in Sources */,
@@ -1220,6 +1242,7 @@
 				0DB05E7A2255A365006AE702 /* EditorMenuFormationUtilities.cpp in Sources */,
 				0DC68C3822572723001BDDA5 /* EditorMenuFormationSpawnPicker.cpp in Sources */,
 				0D8FCF53225DA8ED00A74580 /* FModelDataSequence.cpp in Sources */,
+				0D7785212262D4BF0049103A /* LevelMotionController.cpp in Sources */,
 				0D8FCF79225DA8ED00A74580 /* FString.cpp in Sources */,
 				0D8FCF50225DA8ED00A74580 /* FParticle.cpp in Sources */,
 				0D8FCF1D225DA8ED00A74580 /* Shape2DShaders.metal in Sources */,
@@ -1250,6 +1273,7 @@
 				0D8FCF7E225DA8ED00A74580 /* os_core_includes.cpp in Sources */,
 				0D8FCF37225DA8ED00A74580 /* FScrollCanvasPaged.cpp in Sources */,
 				0D8FCF39225DA8ED00A74580 /* core_web.cpp in Sources */,
+				0D77851E2262D1860049103A /* EditorMenuObjectClearing.cpp in Sources */,
 				0D8FCF32225DA8ED00A74580 /* FPrimitive.cpp in Sources */,
 				0D8FCF44225DA8ED00A74580 /* FModelDataPacked.cpp in Sources */,
 				0DB05E702255A365006AE702 /* GameRenderer.cpp in Sources */,

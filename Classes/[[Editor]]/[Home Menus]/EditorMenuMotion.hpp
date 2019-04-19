@@ -1,21 +1,21 @@
 //
-//  EditorMenuSpawn.hpp
+//  EditorMenuMotion.hpp
 //  Crazy Darts 2 Mac
 //
-//  Created by Nicholas Raptis on 3/21/19.
+//  Created by Nicholas Raptis on 4/13/19.
 //  Copyright © 2019 Froggy Studios. All rights reserved.
 //
 
-#ifndef EditorMenuSpawn_hpp
-#define EditorMenuSpawn_hpp
+#ifndef EditorMenuMotion_hpp
+#define EditorMenuMotion_hpp
 
 #include "ToolMenu.hpp"
 
 class GameEditor;
-class EditorMenuSpawn : public ToolMenu {
+class EditorMenuMotion : public ToolMenu {
 public:
-    EditorMenuSpawn(GameEditor *pEditor);
-    virtual ~EditorMenuSpawn();
+    EditorMenuMotion(GameEditor *pEditor);
+    virtual ~EditorMenuMotion();
     
     virtual void                            Layout() override;
     virtual void                            Notify(void *pSender, const char *pNotification) override;
@@ -42,4 +42,4 @@ public:
     UICheckBox                              *mCheckBoxCreationRequiresScreenPermsClear;
 };
 
-#endif
+#endif /* EditorMenuMotion_hpp */

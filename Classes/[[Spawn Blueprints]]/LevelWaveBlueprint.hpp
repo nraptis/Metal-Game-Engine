@@ -33,7 +33,14 @@ public:
     
     int                                         mSpawnSpacing;
     
-    int                                         mCreationType;
+    //int                                         mCreationType;
+    
+    bool                                        mCreationRequiresPrevWaveStart;
+    bool                                        mCreationRequiresPrevWaveComplete;
+    bool                                        mCreationRequiresScreenWavesClear;
+    bool                                        mCreationRequiresScreenPermsClear;
+    
+    
     int                                         mCreationDelay;
     
     void                                        ApplyEditorConstraints();

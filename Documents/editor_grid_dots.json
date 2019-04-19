@@ -1,5 +1,5 @@
 {
-	"grid_type": 0,
+	"grid_type": 4,
 	"rect_width": 7,
 	"rect_height": 7,
 	"rect_spacing": 44,
@@ -7,8 +7,8 @@
 	"circle_ring_count": 8,
 	"circle_radial_count": 24,
 	"ngon1_sides": 5,
-	"ngon1_ring_spacing": 52,
-	"ngon1_ring_count": 6,
-	"ngon1_point_spacing": 40,
-	"ngon1_start_rotation": 0
+	"ngon1_ring_spacing": 21,
+	"ngon1_ring_count": 3,
+	"ngon1_point_spacing": 210,
+	"ngon1_start_rotation": 1
 }

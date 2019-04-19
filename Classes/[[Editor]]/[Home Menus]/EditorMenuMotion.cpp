@@ -1,25 +1,24 @@
 //
-//  EditorMenuSpawn.cpp
+//  EditorMenuMotion.cpp
 //  Crazy Darts 2 Mac
 //
-//  Created by Nicholas Raptis on 3/21/19.
+//  Created by Nicholas Raptis on 4/13/19.
 //  Copyright © 2019 Froggy Studios. All rights reserved.
 //
 
-#include "EditorMenuSpawn.hpp"
+#include "EditorMenuMotion.hpp"
 #include "LightConfigurationScene.hpp"
-#include "EditorMenuSpawn.hpp"
+#include "EditorMenuMotion.hpp"
 #include "GameEditor.hpp"
 #include "FApp.hpp"
 
-EditorMenuSpawn::EditorMenuSpawn(GameEditor *pEditor) : ToolMenu() {
-    mName = "EditorMenuSpawn";
+EditorMenuMotion::EditorMenuMotion(GameEditor *pEditor) : ToolMenu() {
+    mName = "EditorMenuMotion";
     
     mEditor = pEditor;
     
     SetTitle("Spawn (Meta)");
     
-    //TODO: set TRUE
     SetScrollMode(false);
     
     
@@ -63,7 +62,7 @@ EditorMenuSpawn::EditorMenuSpawn(GameEditor *pEditor) : ToolMenu() {
     //mStepperCreationType->SetSegmentCount(4);
     //mStepperCreationType->SetTitles("P-W-Sta", "P-W-End", "P-W-Clr", "S-Clr-NoP", "S-Cle-AndP");
     //mTimingPanel->AddSection(mStepperCreationType);
-
+    
     
     
     mStepperCreationDelay = new UIStepper();
@@ -95,7 +94,7 @@ EditorMenuSpawn::EditorMenuSpawn(GameEditor *pEditor) : ToolMenu() {
     mCheckBoxCreationRequiresScreenPermsClear = new UICheckBox();
     mCheckBoxCreationRequiresScreenPermsClear->SetText("Scr-Prm-Clr");
     mTimingRow2->AddCheckBox(mCheckBoxCreationRequiresScreenPermsClear);
-
+    
     
     
     
@@ -103,19 +102,19 @@ EditorMenuSpawn::EditorMenuSpawn(GameEditor *pEditor) : ToolMenu() {
     
 }
 
-EditorMenuSpawn::~EditorMenuSpawn() {
-    if (gEditor->mMenuSpawn == this) {
-        gEditor->mMenuSpawn = NULL;
+EditorMenuMotion::~EditorMenuMotion() {
+    if (gEditor->mMenuMotion == this) {
+        gEditor->mMenuMotion = NULL;
     }
 }
 
-void EditorMenuSpawn::Layout() {
+void EditorMenuMotion::Layout() {
     ToolMenu::Layout();
     
 }
 
 
-void EditorMenuSpawn::Notify(void *pSender, const char *pNotification) {
+void EditorMenuMotion::Notify(void *pSender, const char *pNotification) {
     
     if (gEditor == NULL) { return; }
     if (pSender == mSegmentSpeed) {
@@ -134,7 +133,7 @@ void EditorMenuSpawn::Notify(void *pSender, const char *pNotification) {
     
 }
 
-void EditorMenuSpawn::Update() {
+void EditorMenuMotion::Update() {
     
     LevelWaveBlueprint *aWave = NULL;
     if (gEditor) {

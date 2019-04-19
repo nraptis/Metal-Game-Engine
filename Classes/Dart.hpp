@@ -39,7 +39,6 @@ public:
     float                                   mTipX;
     float                                   mTipY;
     
-    
     float                                   mSpinSpeed;
     
     int                                     mDeathTimer;

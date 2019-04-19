@@ -29,8 +29,11 @@ void LevelWaveSpawnBlueprint::Reset() {
 
 FJSONNode *LevelWaveSpawnBlueprint::Save() {
     FJSONNode *aExport = new FJSONNode();
-    aExport->AddDictionaryInt("spacing_offset", mSpawnSpacingOffset);
     
+    
+    if (mSpawnSpacingOffset != 0) {
+        aExport->AddDictionaryInt("spacing_offset", mSpawnSpacingOffset);
+    }
     
     if (mFormationID.mLength > 0) {
         //Possibility 1.) We have a formation...
@@ -49,7 +52,8 @@ FJSONNode *LevelWaveSpawnBlueprint::Save() {
 void LevelWaveSpawnBlueprint::Load(FJSONNode *pNode) {
     Reset();
     if (pNode == NULL) { return; }
-    mSpawnSpacingOffset = pNode->GetInt("spacing_offset", mSpawnSpacingOffset);
+    
+    mSpawnSpacingOffset = pNode->GetInt("spacing_offset", 0);
     
     mFormationID = pNode->GetString("formation", mFormationID);
     if (mFormationID.mLength > 0) {

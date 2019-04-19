@@ -42,6 +42,7 @@ ToolMenu::ToolMenu() {
     AddChild(mScrollContent);
 
     mContent.mMenu = this;
+    mContent.mClipEnabled = true;
     AddChild(mContent);
 
     mHeader.mMenu = this;

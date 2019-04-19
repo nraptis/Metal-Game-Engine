@@ -25,7 +25,15 @@ LevelWaveBlueprint::LevelWaveBlueprint() {
     
     mMaxSpawnSize = 60;
     
-    mCreationType = WAVE_CREATION_TYPE_SCREEN_CLEAR_IGNORE_PERMS;
+    
+    //mCreationType = WAVE_CREATION_TYPE_SCREEN_CLEAR_IGNORE_PERMS;
+    
+    mCreationRequiresPrevWaveStart = false;
+    mCreationRequiresPrevWaveComplete = false;
+    mCreationRequiresScreenWavesClear = false;
+    mCreationRequiresScreenPermsClear = false;
+    
+    
     mCreationDelay = 0;
     
     mKillTimer = 8;
@@ -141,7 +149,6 @@ void LevelWaveBlueprint::FindLargestSpawnSize() {
         }
     }
     
-    
     aMinX = fabsf(aMinX);
     aMinY = fabsf(aMinY);
     aMaxX = fabsf(aMaxX);
@@ -174,13 +181,22 @@ void LevelWaveBlueprint::Build(LevelWave *pWave) {
     
     pWave->mExitType = mPath.GetExitType();
     
-    pWave->mCreationType = mCreationType;
+    //pWave->mCreationType = mCreationType;
+    
+    pWave->mCreationRequiresPrevWaveStart = mCreationRequiresPrevWaveStart;
+    pWave->mCreationRequiresPrevWaveComplete = mCreationRequiresPrevWaveComplete;
+    pWave->mCreationRequiresScreenWavesClear = mCreationRequiresScreenWavesClear;
+    pWave->mCreationRequiresScreenPermsClear = mCreationRequiresScreenPermsClear;
+    
     pWave->mCreationDelay = mCreationDelay;
     
     if (mSpawnCount < 1) mSpawnCount = 1;
     if (mSpawnCount > MAX_SPAWN_COUNT) mSpawnCount = MAX_SPAWN_COUNT;
     
-    pWave->mSpawnSeparationDistance = (float)mSpawnSpacing;
+    
+    pWave->mSpawnSpacing = (float)mSpawnSpacing;
+    
+    
     for (int i=0;i<mSpawnCount;i++) {
         LevelWaveSpawn *aSpawn = new LevelWaveSpawn(pWave, &pWave->mPath);
         
@@ -201,10 +217,39 @@ FJSONNode *LevelWaveBlueprint::Save() {
     
     FJSONNode *aExport = new FJSONNode();
     
-    aExport->AddDictionaryInt("spawn_spacing", mSpawnSpacing);
-    aExport->AddDictionaryInt("creation_type", mCreationType);
-    aExport->AddDictionaryInt("creation_delay", mCreationDelay);
-    aExport->AddDictionaryInt("max_spawn_size", mMaxSpawnSize);
+    if (mSpawnSpacing != 90) {
+        aExport->AddDictionaryInt("spawn_spacing", mSpawnSpacing);
+    }
+    
+    //aExport->AddDictionaryInt("creation_type", mCreationType);
+    
+    if (mCreationRequiresPrevWaveStart == true) {
+        aExport->AddDictionaryBool("creation_prev_wave_start", true);
+    }
+    if (mCreationRequiresPrevWaveComplete == true) {
+        aExport->AddDictionaryBool("creation_prev_wave_complete", true);
+    }
+    if (mCreationRequiresScreenWavesClear == true) {
+        aExport->AddDictionaryBool("creation_screen_waves_clear", true);
+    }
+    if (mCreationRequiresScreenPermsClear == true) {
+        aExport->AddDictionaryBool("creation_screen_perms_clear", true);
+    }
+    
+    
+    //mCreationRequiresPrevWaveStart
+    //mCreationRequiresPrevWaveComplete
+    //mCreationRequiresScreenWavesClear
+    //mCreationRequiresScreenPermsClear
+    
+    
+    if (mCreationDelay != 0) {
+        aExport->AddDictionaryInt("creation_delay", mCreationDelay);
+    }
+    
+    if (mMaxSpawnSize != 60) {
+        aExport->AddDictionaryInt("max_spawn_size", mMaxSpawnSize);
+    }
     
     if (mPath.mNodeList.mCount > 0) {
         aExport->AddDictionary("path", mPath.Save());
@@ -227,7 +272,15 @@ void LevelWaveBlueprint::Load(FJSONNode *pNode) {
     if (pNode == NULL) { return; }
     
     mSpawnSpacing = pNode->GetInt("spawn_spacing", 90);
-    mCreationType = pNode->GetInt("creation_type", WAVE_CREATION_TYPE_SCREEN_CLEAR_IGNORE_PERMS);
+    //mCreationType = pNode->GetInt("creation_type", WAVE_CREATION_TYPE_SCREEN_CLEAR_IGNORE_PERMS);
+    
+    
+
+    mCreationRequiresPrevWaveStart = pNode->GetBool("creation_prev_wave_start", false);
+    mCreationRequiresPrevWaveComplete = pNode->GetBool("creation_prev_wave_complete", false);
+    mCreationRequiresScreenWavesClear = pNode->GetBool("creation_screen_waves_clear", false);
+    mCreationRequiresScreenPermsClear = pNode->GetBool("creation_screen_perms_clear", false);
+    
     mCreationDelay = pNode->GetInt("creation_delay", 0);
     mMaxSpawnSize = pNode->GetInt("max_spawn_size", 60);
     

@@ -17,12 +17,18 @@ LevelWave::LevelWave() {
     
     mExitType = WAVE_EXIT_TYPE_DISPERSE;
     
-    mCreationType = WAVE_CREATION_TYPE_PREV_WAVE_START;
+    //mCreationType = WAVE_CREATION_TYPE_PREV_WAVE_START;
+    
+    mCreationRequiresPrevWaveStart = false;
+    mCreationRequiresPrevWaveComplete = false;
+    mCreationRequiresScreenWavesClear = false;
+    mCreationRequiresScreenPermsClear = false;
+    
     mCreationDelay = 0;
     
     mSpawnIndex = 0;
     
-    mSpawnSeparationDistance = 90.0f;
+    mSpawnSpacing = 90.0f;
     
     mKillTimer = 8;
 }
@@ -129,7 +135,7 @@ void LevelWave::Update() {
                         aShouldSpawn = true;
                     } else {
                         
-                        if (aPrevSpawn->mDistanceTraveled > (mSpawnSeparationDistance + aSpawn->mOffsetSpawnDistance)) {
+                        if (aPrevSpawn->mDistanceTraveled > (mSpawnSpacing + aSpawn->mOffsetSpawnDistance)) {
                             aShouldSpawn = true;
                         }
                     }

@@ -36,6 +36,11 @@ GameEditor::GameEditor(Game *pGame) {
     mMenuWavesPicker = NULL;
     mMenuSpawn = NULL;
     
+    mMenuObjectClearing = NULL;
+    mMenuMotion = NULL;
+    
+    
+    
     mPickFormationReason = 0;
     
     mEnqueueInitialLoad = 3;
@@ -191,8 +196,6 @@ void GameEditor::Update() {
     }
     */
     
-    
-    
     mSection.Update();
     
     if (mSection.mCurrentWave) {
@@ -257,8 +260,9 @@ void GameEditor::Update() {
     
     bool aIsOnMainTools = (mOverlay == mToolContainer);
     bool aIsOnPathTools = (mOverlay == mPathEditor);
+    bool aIsOnPermTools = (mOverlay == mPermEditor);
     
-    if (aIsOnMainTools || aIsOnPathTools) {
+    if (aIsOnMainTools || aIsOnPathTools || aIsOnPermTools) {
         if (mEditorPlaybackEnabled) {
             if (mEditorPlaybackWaveOnly) {
                 mEditorWave.Update();
@@ -663,6 +667,7 @@ int GameEditor::SpeedConvertTypeToSegment(int pType) {
 
 void GameEditor::RefreshPlayback() {
     
+    
     if (mIsRefreshingPlayback == true) {
         printf("Niffing refreshing...\n");
         return;
@@ -1003,7 +1008,7 @@ void GameEditor::OpenSpawnMenu() {
         mMenuSpawn = new EditorMenuSpawn(this);
         mToolContainer->AddChild(mMenuSpawn);
         mMenuSpawn->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f),
-                             gSafeAreaInsetTop + 20.0f, 400.0f, 420.0f);
+                             gSafeAreaInsetTop, 400.0f, 466.0f);
     }
 }
 
@@ -1012,7 +1017,7 @@ void GameEditor::OpenWavePickerMenu() {
         mMenuWavesPicker = new EditorMenuWavesPicker(this);
         mToolContainer->AddChild(mMenuWavesPicker);
         mMenuWavesPicker->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f),
-                                   (gDeviceHeight - gSafeAreaInsetBottom - 2.0f) - (154.0f + 154.0f + 2.0f), 400.0f, 154.0f);
+                                   (gDeviceHeight - gSafeAreaInsetBottom - 2.0f) - (154.0f + 134.0f + 2.0f), 400.0f, 154.0f);
     }
 }
 
@@ -1021,7 +1026,7 @@ void GameEditor::OpenSpawnPickerMenu() {
         mMenuSpawnPicker = new EditorMenuSpawnPicker(this);
         mToolContainer->AddChild(mMenuSpawnPicker);
         mMenuSpawnPicker->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f),
-                                   (gDeviceHeight - gSafeAreaInsetBottom - 2.0f) - 154.0f, 400.0f, 154.0f);
+                                   (gDeviceHeight - gSafeAreaInsetBottom - 2.0f) - 134.0f, 400.0f, 154.0f);
     }
 }
 
@@ -1033,6 +1038,25 @@ void GameEditor::OpenAttachmentMenu() {
                                   (gDeviceHeight - gSafeAreaInsetBottom) - 600.0f - 2.0f, 400.0f, 600.0f);
     }
 }
+
+void GameEditor::OpenObjectClearingMenu() {
+    
+    if (mMenuObjectClearing == NULL) {
+        mMenuObjectClearing = new EditorMenuObjectClearing(this);
+        mToolContainer->AddChild(mMenuObjectClearing);
+        mMenuObjectClearing->SetFrame(gDeviceWidth2 / 2.0f - 420.0f / 2.0f, 250.0f, 420.0f, 400.0f);
+    }
+}
+
+void GameEditor::OpenMotionMenu() {
+    
+    if (mMenuMotion == NULL) {
+        mMenuMotion = new EditorMenuMotion(this);
+        mToolContainer->AddChild(mMenuMotion);
+        mMenuMotion->SetFrame(gDeviceWidth2 / 2.0f - 420.0f / 2.0f, 250.0f, 420.0f, 400.0f);
+    }
+}
+
 
 void GameEditor::Clear() {
     FString aRecoverPath = gDirDocuments + FString("clear_backup.json");
