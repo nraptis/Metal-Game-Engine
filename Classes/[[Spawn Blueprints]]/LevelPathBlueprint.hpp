@@ -11,7 +11,7 @@
 
 #include "LevelPath.hpp"
 #include "Constraint.hpp"
-#include "FPoint.hpp"
+#include "FVec2.hpp"
 #include "FJSON.hpp"
 
 class LevelWaveBlueprint;

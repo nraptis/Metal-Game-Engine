@@ -44,7 +44,6 @@
 		0D8FCF31225DA8ED00A74580 /* FMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDEA225DA8ED00A74580 /* FMatrix.cpp */; };
 		0D8FCF32225DA8ED00A74580 /* FPrimitive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDEC225DA8ED00A74580 /* FPrimitive.cpp */; };
 		0D8FCF33225DA8ED00A74580 /* FSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDF0225DA8ED00A74580 /* FSound.cpp */; };
-		0D8FCF34225DA8ED00A74580 /* FPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDF4225DA8ED00A74580 /* FPoint.cpp */; };
 		0D8FCF35225DA8ED00A74580 /* FSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDF7225DA8ED00A74580 /* FSlider.cpp */; };
 		0D8FCF36225DA8ED00A74580 /* FJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDFA225DA8ED00A74580 /* FJoystick.cpp */; };
 		0D8FCF37225DA8ED00A74580 /* FScrollCanvasPaged.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDFD225DA8ED00A74580 /* FScrollCanvasPaged.cpp */; };
@@ -188,6 +187,7 @@
 		0DD15B4322591E71005C06D8 /* EditorMenuPermanent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DD15B4122591E71005C06D8 /* EditorMenuPermanent.cpp */; };
 		0DD15B4622591E7B005C06D8 /* EditorMenuPermanentUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DD15B4422591E7B005C06D8 /* EditorMenuPermanentUtils.cpp */; };
 		0DD9C4702256EF7500F53214 /* BrickHead.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DD9C46E2256EF7500F53214 /* BrickHead.cpp */; };
+		0DDFC6A0226AC50A0034FF58 /* LevelMotionControllerSlice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DDFC69E226AC50A0034FF58 /* LevelMotionControllerSlice.cpp */; };
 		E1705008222232CF000C5127 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1705007222232CF000C5127 /* Assets.xcassets */; };
 		E17054B0222236F9000C5127 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E17054AC222236F9000C5127 /* Cocoa.framework */; };
 		E17054B1222236F9000C5127 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E17054AD222236F9000C5127 /* AVFoundation.framework */; };
@@ -274,7 +274,6 @@
 		0D8FCDF1225DA8ED00A74580 /* FSize.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FSize.hpp; sourceTree = "<group>"; };
 		0D8FCDF2225DA8ED00A74580 /* FRandomizer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FRandomizer.hpp; sourceTree = "<group>"; };
 		0D8FCDF3225DA8ED00A74580 /* FFileTable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FFileTable.hpp; sourceTree = "<group>"; };
-		0D8FCDF4225DA8ED00A74580 /* FPoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FPoint.cpp; sourceTree = "<group>"; };
 		0D8FCDF5225DA8ED00A74580 /* FResource.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FResource.hpp; sourceTree = "<group>"; };
 		0D8FCDF6225DA8ED00A74580 /* FModelDataPacked.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FModelDataPacked.hpp; sourceTree = "<group>"; };
 		0D8FCDF7225DA8ED00A74580 /* FSlider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FSlider.cpp; sourceTree = "<group>"; };
@@ -307,7 +306,6 @@
 		0D8FCE12225DA8ED00A74580 /* FResource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FResource.cpp; sourceTree = "<group>"; };
 		0D8FCE13225DA8ED00A74580 /* FModelDataPacked.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FModelDataPacked.cpp; sourceTree = "<group>"; };
 		0D8FCE14225DA8ED00A74580 /* FFileTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FFileTable.cpp; sourceTree = "<group>"; };
-		0D8FCE15225DA8ED00A74580 /* FPoint.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FPoint.hpp; sourceTree = "<group>"; };
 		0D8FCE16225DA8ED00A74580 /* FScrollCanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FScrollCanvas.cpp; sourceTree = "<group>"; };
 		0D8FCE17225DA8ED00A74580 /* core_includes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = core_includes.h; sourceTree = "<group>"; };
 		0D8FCE18225DA8ED00A74580 /* FSlider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FSlider.hpp; sourceTree = "<group>"; };
@@ -554,6 +552,8 @@
 		0DD15B4522591E7B005C06D8 /* EditorMenuPermanentUtils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuPermanentUtils.hpp; sourceTree = "<group>"; };
 		0DD9C46E2256EF7500F53214 /* BrickHead.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BrickHead.cpp; sourceTree = "<group>"; };
 		0DD9C46F2256EF7500F53214 /* BrickHead.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BrickHead.hpp; sourceTree = "<group>"; };
+		0DDFC69E226AC50A0034FF58 /* LevelMotionControllerSlice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelMotionControllerSlice.cpp; sourceTree = "<group>"; };
+		0DDFC69F226AC50A0034FF58 /* LevelMotionControllerSlice.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelMotionControllerSlice.hpp; sourceTree = "<group>"; };
 		E1705001222232CF000C5127 /* Crazy Darts 2 Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crazy Darts 2 Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1705007222232CF000C5127 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E170500C222232CF000C5127 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -706,8 +706,6 @@
 				0D8FCDCE225DA8ED00A74580 /* FObject.hpp */,
 				0D8FCE26225DA8ED00A74580 /* FParticle.cpp */,
 				0D8FCE09225DA8ED00A74580 /* FParticle.hpp */,
-				0D8FCDF4225DA8ED00A74580 /* FPoint.cpp */,
-				0D8FCE15225DA8ED00A74580 /* FPoint.hpp */,
 				0D8FCE31225DA8ED00A74580 /* FPointList.cpp */,
 				0D8FCDD0225DA8ED00A74580 /* FPointList.hpp */,
 				0D8FCE65225DA8ED00A74580 /* FPolyPath.cpp */,
@@ -1044,6 +1042,8 @@
 				0DD15B38225834F8005C06D8 /* LevelSectionPermanent.hpp */,
 				0D77851F2262D4BF0049103A /* LevelMotionController.cpp */,
 				0D7785202262D4BF0049103A /* LevelMotionController.hpp */,
+				0DDFC69E226AC50A0034FF58 /* LevelMotionControllerSlice.cpp */,
+				0DDFC69F226AC50A0034FF58 /* LevelMotionControllerSlice.hpp */,
 			);
 			path = "[[Spawn Game]]";
 			sourceTree = "<group>";
@@ -1202,10 +1202,10 @@
 				0D8FCF5C225DA8ED00A74580 /* UIButton.cpp in Sources */,
 				0D8FCF60225DA8ED00A74580 /* UIAlignmentPickerButton.cpp in Sources */,
 				0D8FCF38225DA8ED00A74580 /* core_social.cpp in Sources */,
-				0D8FCF34225DA8ED00A74580 /* FPoint.cpp in Sources */,
 				0D8FCF2C225DA8ED00A74580 /* FAchievement.cpp in Sources */,
 				0D8FCF4F225DA8ED00A74580 /* FXML.cpp in Sources */,
 				0D8FCF4E225DA8ED00A74580 /* FLight.cpp in Sources */,
+				0DDFC6A0226AC50A0034FF58 /* LevelMotionControllerSlice.cpp in Sources */,
 				0D8FCF26225DA8ED00A74580 /* FModelData.cpp in Sources */,
 				0D8FCF25225DA8ED00A74580 /* FTextureCache.cpp in Sources */,
 				0DB05E782255A365006AE702 /* LightConfigurationScene.cpp in Sources */,

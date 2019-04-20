@@ -358,8 +358,8 @@ void FCanvas::ConvertPoint(float &pX, float &pY, FCanvas *pFromCanvas, FCanvas *
     }
 }
 
-FPoint FCanvas::Convert(float pX, float pY, FCanvas *pFromCanvas, FCanvas *pToCanvas) {
-    FPoint aResult;
+FVec2 FCanvas::Convert(float pX, float pY, FCanvas *pFromCanvas, FCanvas *pToCanvas) {
+    FVec2 aResult;
     aResult.mX = pX; aResult.mY = pY;
     ConvertPoint(aResult.mX, aResult.mY, pFromCanvas, pToCanvas);
     return aResult;

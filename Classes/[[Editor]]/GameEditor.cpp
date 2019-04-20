@@ -111,9 +111,9 @@ void GameEditor::Layout() {
     mToolContainer->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
     if (mPathEditor) mPathEditor->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
     
-    FPoint aSpawnZone1 = FPoint(gGame->mSpawnZoneLeft, gGame->mSpawnZoneTop);
+    FVec2 aSpawnZone1 = FVec2(gGame->mSpawnZoneLeft, gGame->mSpawnZoneTop);
     aSpawnZone1 = FCanvas::Convert(aSpawnZone1, gGame, this);
-    FPoint aSpawnZone2 = FPoint(gGame->mSpawnZoneRight, gGame->mSpawnZoneBottom);
+    FVec2 aSpawnZone2 = FVec2(gGame->mSpawnZoneRight, gGame->mSpawnZoneBottom);
     aSpawnZone2 = FCanvas::Convert(aSpawnZone2, gGame, this);
     mSpawnZoneTop = aSpawnZone1.mY;
     mSpawnZoneRight = aSpawnZone2.mX;
@@ -121,17 +121,17 @@ void GameEditor::Layout() {
     mSpawnZoneBottom = aSpawnZone2.mY;
     
     
-    FPoint aPeekZone1 = FPoint(gGame->mPeekZoneLeft, gGame->mPeekZoneTop);
+    FVec2 aPeekZone1 = FVec2(gGame->mPeekZoneLeft, gGame->mPeekZoneTop);
     aPeekZone1 = FCanvas::Convert(aPeekZone1, gGame, this);
-    FPoint aPeekZone2 = FPoint(gGame->mPeekZoneRight, 0.0f);
+    FVec2 aPeekZone2 = FVec2(gGame->mPeekZoneRight, 0.0f);
     aPeekZone2 = FCanvas::Convert(aPeekZone2, gGame, this);
     mPeekZoneTop = aPeekZone1.mY;
     mPeekZoneRight = aPeekZone2.mX;
     mPeekZoneLeft = aPeekZone1.mX;
     
-    FPoint aQuarterZone1 = FPoint(gGame->mQuarterZoneLeft, gGame->mQuarterZoneTop);
+    FVec2 aQuarterZone1 = FVec2(gGame->mQuarterZoneLeft, gGame->mQuarterZoneTop);
     aQuarterZone1 = FCanvas::Convert(aQuarterZone1, gGame, this);
-    FPoint aQuarterZone2 = FPoint(gGame->mQuarterZoneRight, gGame->mQuarterZoneBottom);
+    FVec2 aQuarterZone2 = FVec2(gGame->mQuarterZoneRight, gGame->mQuarterZoneBottom);
     aQuarterZone2 = FCanvas::Convert(aQuarterZone2, gGame, this);
     mQuarterZoneTop = aQuarterZone1.mY;
     mQuarterZoneRight = aQuarterZone2.mX;
@@ -139,23 +139,23 @@ void GameEditor::Layout() {
     mQuarterZoneBottom = aQuarterZone2.mY;
     
     
-    FPoint aExitZone1 = FPoint(gGame->mExitZoneLeft, gGame->mExitZoneTop);
+    FVec2 aExitZone1 = FVec2(gGame->mExitZoneLeft, gGame->mExitZoneTop);
     aExitZone1 = FCanvas::Convert(aExitZone1, gGame, this);
-    FPoint aExitZone2 = FPoint(gGame->mExitZoneRight, 0.0f);
+    FVec2 aExitZone2 = FVec2(gGame->mExitZoneRight, 0.0f);
     aExitZone2 = FCanvas::Convert(aExitZone2, gGame, this);
     mExitZoneTop = aExitZone1.mY;
     mExitZoneRight = aExitZone2.mX;
     mExitZoneLeft = aExitZone1.mX;
     
     
-    FPoint aPlayZone1 = FPoint(0.0f, gGame->mPlayAreaBottom);
+    FVec2 aPlayZone1 = FVec2(0.0f, gGame->mPlayAreaBottom);
     aPlayZone1 = FCanvas::Convert(aPlayZone1, gGame, this);
     mPlayZoneBottom = aPlayZone1.mY;
     
     
-    FPoint aGameArea1 = FPoint(gGame->mGameAreaLeft, gGame->mGameAreaTop);
+    FVec2 aGameArea1 = FVec2(gGame->mGameAreaLeft, gGame->mGameAreaTop);
     aGameArea1 = FCanvas::Convert(aGameArea1, gGame, this);
-    FPoint aGameArea2 = FPoint(gGame->mGameAreaRight, gGame->mGameAreaBottom);
+    FVec2 aGameArea2 = FVec2(gGame->mGameAreaRight, gGame->mGameAreaBottom);
     aGameArea2 = FCanvas::Convert(aGameArea2, gGame, this);
     mGameAreaTop = aGameArea1.mY;
     mGameAreaRight = aGameArea2.mX;
@@ -164,7 +164,7 @@ void GameEditor::Layout() {
     
     
     
-    FPoint aCenter = FPoint((gGame->mPlayAreaLeft + gGame->mPlayAreaRight) / 2.0f,
+    FVec2 aCenter = FVec2((gGame->mPlayAreaLeft + gGame->mPlayAreaRight) / 2.0f,
                             (gGame->mPlayAreaTop + gGame->mPlayAreaBottom) / 2.0f);
     aCenter = FCanvas::Convert(aCenter, gGame, this);
     mCenterH = aCenter.mX;
@@ -271,6 +271,12 @@ void GameEditor::Update() {
                         mEditorWave.Restart();
                     }
                 }
+                
+                //We do this to prevent crash when
+                //we mass delete objects and have switched
+                //modes back and forth too many times...
+                mEditorSection.Update();
+                mEditorSection.Reset();
             } else {
                 mEditorSection.Update();
                 if (mEditorSection.mIsComplete) {
@@ -278,6 +284,12 @@ void GameEditor::Update() {
                         mEditorSection.Restart();
                     }
                 }
+                
+                //We do this to prevent crash when
+                //we mass delete objects and have switched
+                //modes back and forth too many times...
+                mEditorWave.Update();
+                mEditorWave.Reset();
             }
         }
     } else {

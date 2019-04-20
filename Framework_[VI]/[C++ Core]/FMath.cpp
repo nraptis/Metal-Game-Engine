@@ -109,8 +109,7 @@ bool TriangleIsClockwise(float pX1, float pY1, float pX2, float pY2, float pX3, 
     return (pX2 - pX1) * (pY3 - pY2) - (pX3 - pX2) * (pY2 - pY1) > 0.0f;
 }
 
-bool QuadContainsPoint(float pPointX, float pPointY, float pX1, float pY1, float pX2, float pY2, float pX3, float pY3, float pX4, float pY4)
-{
+bool QuadContainsPoint(float pPointX, float pPointY, float pX1, float pY1, float pX2, float pY2, float pX3, float pY3, float pX4, float pY4) {
     float aX[4];
     float aY[4];
     
@@ -125,8 +124,7 @@ bool QuadContainsPoint(float pPointX, float pPointY, float pX1, float pY1, float
     aY[3]=pY4;
     
     bool aResult = false;
-    for(int aStart=0,aEnd=3;aStart<4;aEnd=aStart++)
-    {
+    for (int aStart=0,aEnd=3;aStart<4;aEnd=aStart++) {
         if((((aY[aStart]<=pPointY) && (pPointY<aY[aEnd]))||
             ((aY[aEnd]<=pPointY) && (pPointY<aY[aStart])))&&
            (pPointX < (aX[aEnd] - aX[aStart])*(pPointY - aY[aStart])

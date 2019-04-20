@@ -78,6 +78,8 @@ void LevelFormation::Spawn() {
         aTracer->Spawn();
     }
     
+    ApplyMotionController();
+    
     mDidSpawn = true;
 }
 
@@ -90,6 +92,9 @@ void LevelFormation::Update() {
     EnumList(LevelFormationTracer, aTracer, mTracerList) {
         aTracer->Update();
     }
+    
+    mMotionController.Update();
+    ApplyMotionController();
     
     EnumList(LevelFormationNode, aNode, mNodeKillList) {
         aNode->mKillTimer--;
@@ -175,14 +180,10 @@ LevelFormation *LevelFormation::Clone() {
     return aClone;
 }
 
-
 bool LevelFormation::IsClear() {
-    
     if (mDidSpawn == false) {
-        //If we did not spawn, then we are not clear...
         return false;
     }
-    
     EnumList(LevelFormationNode, aNode, mSpawnNodeList) {
         if (aNode->mObject != NULL && aNode->mObject->mKill == 0) {
             return false;
@@ -191,14 +192,32 @@ bool LevelFormation::IsClear() {
     return true;
 }
 
+void LevelFormation::ApplyMotionController() {
+    
+    EnumList(LevelFormationTracer, aTracer, mTracerList) {
+        EnumList(LevelFormationNode, aNode, aTracer->mSpawnNodeList) {
+            mMotionController.Apply(mX, mY, aNode->mObject);
+        }
+        
+    }
+    
+    EnumList(LevelFormationNode, aNode, mSpawnNodeList) {
+        mMotionController.Apply(mX, mY, aNode->mObject);
+    }
+    
+    //float                                       mX;
+    //float                                       mY;
+    
+    
+}
+
+//mMotionController
 
 
 void LevelFormation::HandOffAllGameObjects(FList *pList) {
-    
     EnumList(LevelFormationTracer, aTracer, mTracerList) {
         aTracer->HandOffAllGameObjects(pList);
     }
-    
     EnumList(LevelFormationNode, aNode, mSpawnNodeList) {
         if (aNode->mObject != NULL && aNode->mObject->mKill == 0 && pList != NULL) {
             pList->Add(aNode->mObject);

@@ -126,7 +126,7 @@ void LevelSectionPermanentBlueprint::Build(LevelSectionPermanent *pPerm) {
     pPerm->Reset();
     mPath.Build(&pPerm->mPath);
     
-    FPoint aPoint;
+    FVec2 aPoint;
     aPoint.mX = mPercentX / 100.0f;
     aPoint.mY = mPercentY / 100.0f;
     

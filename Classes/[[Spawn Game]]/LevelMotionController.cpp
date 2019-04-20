@@ -23,14 +23,9 @@
 #include "Balloon.hpp"
 
 LevelMotionController::LevelMotionController() {
-    
-    mBaseX = 0.0f;
-    mBaseY = 0.0f;
-    
-    mX = 0.0f;
-    mY = 0.0f;
-    
     mKillTimer = 8;
+    
+    mTestRotation = 0.0f;
 }
 
 LevelMotionController::~LevelMotionController() {
@@ -49,9 +44,43 @@ void LevelMotionController::Restart() {
 
 void LevelMotionController::Update() {
 
+    mTestRotation += 1.0f;
+    if (mTestRotation >= 360.0f) {
+        mTestRotation -= 360.0f;
+    }
     
 }
 
 void LevelMotionController::Draw() {
     
 }
+
+void LevelMotionController::Apply(float pReferenceX, float pReferenceY, GameObject *pObject) {
+    
+    if (pObject != NULL && pObject->mKill == 0) {
+        
+        
+        FVec2 aPos = FVec2(pObject->mTransform.mX, pObject->mTransform.mY);
+        FVec2 aCenter = FVec2(pReferenceX, pReferenceY);
+        
+        aPos = PivotPoint(aPos, mTestRotation, aCenter);
+        
+        pObject->mTransform.mX = aPos.mX;
+        pObject->mTransform.mY = aPos.mY;
+        
+        //PivotPoint(<#FVec2 pPoint#>, <#float pDegrees#>, <#FVec2 pCenter#>, <#float pScaleX#>, <#float pScaleY#>)
+        
+        
+        //pObject->mTransform.mY += 60.0f;
+        
+        
+        
+        
+    }
+    
+    
+    
+}
+
+
+

@@ -11,7 +11,7 @@
 
 #include "ToolMenu.hpp"
 #include "FloatingCamera.hpp"
-#include "FPoint.hpp"
+#include "FVec2.hpp"
 
 
 class WorldConfigScene;

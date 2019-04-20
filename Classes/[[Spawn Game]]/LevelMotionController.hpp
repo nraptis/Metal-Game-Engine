@@ -21,16 +21,14 @@ public:
     
     void                                Update();
     void                                Draw();
+
     
-    //Since the permanents will be positioned relative
-    //to the "section" we need a base position and real
-    float                               mBaseX;
-    float                               mBaseY;
+    void                                Apply(float pReferenceX, float pReferenceY, GameObject *pObject);
     
-    float                               mX;
-    float                               mY;
     
     int                                 mKillTimer;
+    
+    float                               mTestRotation;
     
 };
 

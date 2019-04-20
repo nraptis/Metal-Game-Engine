@@ -55,7 +55,7 @@
 #include "FString.hpp"
 #include "FVec2.hpp"
 #include "FVec3.hpp"
-#include "FPoint.hpp"
+#include "FVec2.hpp"
 #include "FCanvas.hpp"
 #include "FWindow.hpp"
 #include "FTexture.hpp"

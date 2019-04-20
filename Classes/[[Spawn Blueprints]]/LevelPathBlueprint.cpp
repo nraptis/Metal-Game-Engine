@@ -476,7 +476,7 @@ void LevelPathBlueprint::Build(LevelPath *pPath) {
     for (int i=0;i<mNodeList.mCount;i++) {
         LevelPathNodeBlueprint *aNode = (LevelPathNodeBlueprint *)mNodeList.mData[i];
         
-        FPoint aPoint;
+        FVec2 aPoint;
         aPoint.mX = aNode->mPercentX / 100.0f;
         aPoint.mY = aNode->mPercentY / 100.0f;
         

@@ -10,7 +10,7 @@
 #define DiffuseLightMenu_hpp
 
 #include "ToolMenu.hpp"
-#include "FPoint.hpp"
+#include "FVec2.hpp"
 
 class DiffuseConfiguration;
 class DiffuseLightMenu : public ToolMenu {

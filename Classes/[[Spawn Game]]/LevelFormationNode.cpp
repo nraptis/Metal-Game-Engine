@@ -151,10 +151,6 @@ void LevelFormationNode::PositionObject() {
             } else {
                 printf("Miss?\n");
             }
-            
-            
-            
-            
         } else if (mFormation != NULL) {
             
             float aLeft = gGame->mGameAreaLeft;

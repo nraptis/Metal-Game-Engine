@@ -13,23 +13,17 @@
 
 #include "FVec2.hpp"
 #include "FVec3.hpp"
-#include "FPoint.hpp"
+#include "FVec2.hpp"
 
 float Distance(float x1, float y1, float x2, float y2);
 inline float Distance(float x1, float y1, FVec2 p2){return Distance(x1,y1,p2.mX,p2.mY);}
 inline float Distance(FVec2 p1, float x2, float y2){return Distance(p1.mX,p1.mY,x2,y2);}
 inline float Distance(FVec2 p1, FVec2 p2){return Distance(p1.mX,p1.mY,p2.mX,p2.mY);}
-inline float Distance(float x1, float y1, FPoint p2){return Distance(x1,y1,p2.mX,p2.mY);}
-inline float Distance(FPoint p1, float x2, float y2){return Distance(p1.mX,p1.mY,x2,y2);}
-inline float Distance(FPoint p1, FPoint p2){return Distance(p1.mX,p1.mY,p2.mX,p2.mY);}
 
 float DistanceSquared(float x1, float y1, float x2, float y2);
 inline float DistanceSquared(float x1, float y1, FVec2 p2){return DistanceSquared(x1,y1,p2.mX,p2.mY);}
 inline float DistanceSquared(FVec2 p1, float x2, float y2){return DistanceSquared(p1.mX,p1.mY,x2,y2);}
 inline float DistanceSquared(FVec2 p1, FVec2 p2){return DistanceSquared(p1.mX,p1.mY,p2.mX,p2.mY);}
-inline float DistanceSquared(float x1, float y1, FPoint p2){return DistanceSquared(x1,y1,p2.mX,p2.mY);}
-inline float DistanceSquared(FPoint p1, float x2, float y2){return DistanceSquared(p1.mX,p1.mY,x2,y2);}
-inline float DistanceSquared(FPoint p1, FPoint p2){return DistanceSquared(p1.mX,p1.mY,p2.mX,p2.mY);}
 
 float DistanceSquared(float x1, float y1, float z1, float x2, float y2, float z2);
 inline float DistanceSquared(FVec3 p1, FVec3 p2){return DistanceSquared(p1.mX,p1.mY,p1.mZ,p2.mX,p2.mY,p2.mZ);}

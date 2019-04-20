@@ -19,8 +19,8 @@ class FPointList {
 public:
 
     FPointList();
-    virtual ~FPointList();
-
+    ~FPointList();
+    
     float                   *mX;
     float                   *mY;
 

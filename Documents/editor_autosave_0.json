@@ -98,13 +98,25 @@
 				"node_list": [
 					{
 						"x_con": 500,
-						"y_con": 200
+						"y_con": 200,
+						"decel": 400
 					},
 					{
 						"x_con": 500,
 						"y_con": 500,
+						"decel": 350,
+						"wait": 10
+					},
+					{
+						"x_con": 800,
+						"y_con": 500,
 						"decel": 150,
-						"wait": 2500
+						"wait": 20
+					},
+					{
+						"x_con": 150,
+						"y_con": 500,
+						"decel": 400
 					}
 				]
 			},

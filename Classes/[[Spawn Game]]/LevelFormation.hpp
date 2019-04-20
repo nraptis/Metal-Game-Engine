@@ -13,9 +13,7 @@
 #include "FList.hpp"
 #include "LevelFormationTracer.hpp"
 #include "LevelFormationNode.hpp"
-
-
-
+#include "LevelMotionController.hpp"
 
 class LevelFormationTracer;
 class LevelFormation {
@@ -28,6 +26,8 @@ public:
     void                                        Update();
     void                                        Draw(int pSelectedIndex);
     void                                        DisposeObject(GameObject *pObject);
+    
+    void                                        ApplyMotionController();
     
     bool                                        IsClear();
     
@@ -54,6 +54,8 @@ public:
     //
     float                                       mX;
     float                                       mY;
+    
+    LevelMotionController                       mMotionController;
     //
     //
     //////////////////
@@ -63,7 +65,7 @@ public:
     
     void                                        GetExtremeties(float &pTop, float &pRight, float &pBottom, float &pLeft);
     
-    LevelFormation                     *Clone();
+    LevelFormation                              *Clone();
     
     
     //For Editor

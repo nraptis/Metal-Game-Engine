@@ -127,7 +127,7 @@ void UIAlignmentPicker::Notify(void *pSender, const char *pNotification) {
     UpdateDisplay();
 }
 
-void UIAlignmentPicker::SetTarget(FIntPoint *pTarget) {
+void UIAlignmentPicker::SetTarget(FIVec2 *pTarget) {
     if (pTarget) {
         mTarget = pTarget;
         mAlignX = pTarget->mX;

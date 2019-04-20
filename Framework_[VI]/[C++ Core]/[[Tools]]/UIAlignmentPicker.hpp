@@ -12,7 +12,7 @@
 #include "FCanvas.hpp"
 #include "UIRoundedRect.hpp"
 #include "UIAlignmentPickerButton.hpp"
-#include "FPoint.hpp"
+#include "FVec2.hpp"
 
 class UIAlignmentPicker : public FCanvas {
 public:
@@ -23,7 +23,7 @@ public:
 
     virtual void                            Notify(void *pSender, const char *pNotification);
 
-    void                                    SetTarget(FIntPoint *pTarget);
+    void                                    SetTarget(FIVec2 *pTarget);
     void                                    UpdateDisplay();
     
     UIAlignmentPickerButton                 *mButtonTL;
@@ -38,7 +38,7 @@ public:
     UIAlignmentPickerButton                 *mButtonBC;
     UIAlignmentPickerButton                 *mButtonBR;
 
-    FIntPoint                               *mTarget;
+    FIVec2                               *mTarget;
     int                                     mAlignX;
     int                                     mAlignY;
 
