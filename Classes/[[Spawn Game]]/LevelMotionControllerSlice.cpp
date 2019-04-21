@@ -7,3 +7,13 @@
 //
 
 #include "LevelMotionControllerSlice.hpp"
+
+
+LevelMotionControllerSlice::LevelMotionControllerSlice() {
+    mType = LEVEL_MOTION_SLICE_TYPE_NONE;
+    
+}
+
+LevelMotionControllerSlice::~LevelMotionControllerSlice() {
+    
+}

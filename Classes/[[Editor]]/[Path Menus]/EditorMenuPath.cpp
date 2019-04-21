@@ -33,15 +33,23 @@ EditorMenuPath::EditorMenuPath(GamePathEditor *pEditor) : ToolMenu() {
     mPanelEditor->AddSection(mRowVisuals);
     
     mCheckBoxSmooth = new UICheckBox();
-    mCheckBoxSmooth->SetText("Smoothing");
+    mCheckBoxSmooth->SetText("Smooth");
     mRowVisuals->AddCheckBox(mCheckBoxSmooth);
     
     mCheckBoxPreview = new UICheckBox();
-    mCheckBoxPreview->SetText("References");
+    mCheckBoxPreview->SetText("Refs");
     if (gEditor != NULL) {
         mCheckBoxPreview->SetTarget(&gEditor->mEditorShowReferenced);
     }
     mRowVisuals->AddCheckBox(mCheckBoxPreview);
+    
+    mCheckBoxClosed = new UICheckBox();
+    mCheckBoxClosed->SetText("Closed");
+    mRowVisuals->AddCheckBox(mCheckBoxClosed);
+    
+    
+    
+    
     
     mPointsPanel = new ToolMenuPanel();
     mPointsPanel->SetTitle("Points");
@@ -130,16 +138,31 @@ void EditorMenuPath::Layout() {
 void EditorMenuPath::Update() {
     ToolMenu::Update();
     
+    
+    
     if (mCheckBoxSmooth != NULL) {
         bool aUnlink = true;
-        if (mEditor->mWave != NULL) {
+        if (mEditor->mPath != NULL) {
             aUnlink = false;
-            mCheckBoxSmooth->SetTarget(&(mEditor->mWave->mPath.mSmooth));
+            mCheckBoxSmooth->SetTarget(&(mEditor->mPath->mSmooth));
         }
         if (aUnlink) {
             mCheckBoxSmooth->SetTarget(NULL);
         }
     }
+    
+    
+    if (mCheckBoxClosed != NULL) {
+        bool aUnlink = true;
+        if (mEditor->mPath != NULL) {
+            aUnlink = false;
+            mCheckBoxClosed->SetTarget(&(mEditor->mPath->mClosed));
+        }
+        if (aUnlink) {
+            mCheckBoxClosed->SetTarget(NULL);
+        }
+    }
+    
     
     if (mStepperWait != NULL) {
         bool aUnlink = true;
@@ -169,7 +192,6 @@ void EditorMenuPath::Update() {
         }
     }
     
-    
     if (mStepperDecel != NULL) {
         bool aUnlink = true;
         if (mEditor->mPath != NULL) {
@@ -183,8 +205,6 @@ void EditorMenuPath::Update() {
             mStepperDecel->SetTarget(NULL);
         }
     }
-    
-    
 }
 
 void EditorMenuPath::Notify(void *pSender, const char *pNotification) {
@@ -199,5 +219,6 @@ void EditorMenuPath::Notify(void *pSender, const char *pNotification) {
     if (pSender == mStepperWait) { mEditor->PathRefresh(); }
     if (pSender == mStepperChamfer) { mEditor->PathRefresh(); }
     if (pSender == mCheckBoxSmooth) { mEditor->PathRefresh(); }
+    if (pSender == mCheckBoxClosed) { mEditor->PathRefresh(); }
     
 }

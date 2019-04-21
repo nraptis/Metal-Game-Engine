@@ -85,6 +85,7 @@ public:
     
     int                                         mSpeedClass; //Default: SPEED_CLASS_MEDIUM
     bool                                        mSmooth; //Default: false
+    bool                                        mClosed;
     
     void                                        SnapX(int pIndex);
     void                                        SnapY(int pIndex);

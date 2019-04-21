@@ -65,6 +65,7 @@ public:
     void                                Finalize();
     
     bool                                mSmooth;
+    bool                                mClosed;
     
     void                                SetSpeedClass(int pSpeedClass);
     float                               mSpeed;

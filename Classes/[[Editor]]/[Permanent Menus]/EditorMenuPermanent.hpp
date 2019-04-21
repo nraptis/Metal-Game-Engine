@@ -34,26 +34,25 @@ public:
     UIButton                                *mButtonSnapsBreakX;
     UIButton                                *mButtonSnapsBreakY;
     
+    ToolMenuSectionRow                      *mRowSnaps2;
+    UILabel                                 *mLabelOffsetX;
+    UILabel                                 *mLabelOffsetY;
+    UIButton                                *mButtonResetOffsetX;
+    UIButton                                *mButtonResetOffsetY;
+    
+    
     
     
     
     ToolMenuPanel                           *mPermPanel;
     ToolMenuSectionRow                      *mRowPermanent1;
-    UIButton                                *mButtonAddPermanent;
     UIButton                                *mButtonDeletePermanent;
     UIButton                                *mButtonEditPermanentPaths;
     
+    ToolMenuSectionRow                      *mRowPermanent2;
+    UIButton                                *mButtonAddPath;
+    UIButton                                *mButtonDeletePath;
     
-    
-    ToolMenuPanel                           *mGenerationPanel;
-    UISegment                               *mSegmentSpeed;
-    UIStepper                               *mStepperSpawnCount;
-    UIStepper                               *mStepperSpacing;
-    
-    
-    ToolMenuPanel                           *mTimingPanel;
-    UISegment                               *mStepperCreationType;
-    UIStepper                               *mStepperCreationDelay;
 };
 
 #endif /* EditorMenuPermanent_hpp */

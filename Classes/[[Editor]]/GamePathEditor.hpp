@@ -24,9 +24,17 @@
 #define PATH_MODE_SELECT 2
 
 class GameEditor;
+class GamePermanentEditor;
 class GamePathEditor : public FCanvas {
 public:
     GamePathEditor(GameEditor *pEditor);
+    GamePathEditor(GamePermanentEditor *pEditor);
+    
+    void                                        Init();
+    
+    
+    
+    
     virtual ~GamePathEditor();
     
     virtual void                                SetFrame(float pX, float pY, float pWidth, float pHeight) override;
@@ -80,12 +88,22 @@ public:
     void                                        ConstraintYToNext();
     
     GameEditor                                  *mEditor;
+    GamePermanentEditor                         *mPermanentEditor;
+    
     EditorMenuPathControl                       *mMenuControls;
     EditorMenuPath                              *mMenuPaths;
     
     void                                        Close();
     
     void                                        SetUp(LevelWaveBlueprint *pWave);
+    void                                        SetUp(LevelSectionPermanentBlueprint *pPerm);
+    
+    void                                        SetUpPath(LevelPathBlueprint *pPath);
+    
+    
+    
+    
+    
     LevelPathBlueprint                          *mPath;
     LevelWaveBlueprint                          *mWave;
     LevelSectionPermanentBlueprint              *mPerm;

@@ -1,0 +1,78 @@
+{
+	"section": true,
+	"wave_list": [
+		{
+			"spawn_spacing": 370,
+			"max_spawn_size": 393,
+			"path": {
+				"speed_class": -100,
+				"node_list": [
+					{
+						"x_con": 400,
+						"y_con": 600
+					},
+					{
+						"x_con": 500,
+						"y_con": 500
+					},
+					{
+						"x_con": 500,
+						"y_con": 400
+					},
+					{
+						"x_con": 500,
+						"y_con": 400
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "formation_tracer_5x5_rect_xs_tracer_3x3_rect_xs_stationary"
+				},
+				{
+					"formation": "formation_2count_tracer_3x5_rect_s_stationary"
+				},
+				{
+					"formation": "f_tr_brbrbrbrbr_circ_250rd_spxs~tr_8ct_circ_140rd_spxs.json"
+				},
+				{
+					"formation": "formation_3count_tracer_3x3_rect_s_2count_line_9_hor_stationary"
+				},
+				{
+					"formation": "formation_4count_tracer_3x3_rect_ms_stationary"
+				}
+			]
+		},
+		{
+			"spawn_spacing": 290,
+			"max_spawn_size": 273,
+			"path": {
+				"node_list": [
+					{
+						"x_con": 800,
+						"y_con": 200
+					},
+					{
+						"x_con": 500,
+						"y_con": 300
+					},
+					{
+						"x_con": 200,
+						"y_con": 200
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "formation_tracer_5x5_rect_xs_tracer_3x3_rect_xs_stationary"
+				},
+				{
+					"formation": "f_tr_circ_90sz_cfg5xb_spms"
+				},
+				{
+					"type": 1
+				}
+			]
+		}
+	]
+}

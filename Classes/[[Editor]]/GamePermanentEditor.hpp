@@ -15,6 +15,7 @@
 #include "EditorMenuPermanent.hpp"
 #include "LevelSectionPermanentBlueprint.hpp"
 #include "LevelSectionPermanent.hpp"
+#include "GamePathEditor.hpp"
 
 #define PERMANENT_MODE_ADD 0
 #define PERMANENT_MODE_MOVE 1
@@ -47,6 +48,24 @@ public:
     EditorMenuPermanentUtils                    *mMenuUtils;
     EditorMenuPermanent                         *mMenuPerm;
     
+    void                                        SetOverlay(FCanvas *pCanvas);
+    FCanvas                                     *mOverlay;
+    FCanvas                                     *mToolContainer;
+    GamePathEditor                              *mPathEditor;
+    
+    void                                        OpenPathEditor();
+    void                                        ClosePathEditor();
+    
+    
+    
+    
+    void                                        AddPath();
+    void                                        DeletePath();
+    void                                        DeletePermanent();
+    
+    
+    LevelSectionPermanentBlueprint              *GetPerm();
+    
     bool                                        mSnapsEnabled;
     
     int                                         mPermMode;
@@ -75,6 +94,25 @@ public:
     
     void                                        BreakConstraintX();
     void                                        BreakConstraintY();
+    
+    
+    void                                        ResetOffsetX();
+    void                                        ResetOffsetY();
+
+    
+    
+    
+    
+    
+    //if (pSender == mButtonDeletePermanent) { mEditor->BreakConstraintY(); }
+    //if (pSender == mButtonEditPermanentPaths) { mEditor->BreakConstraintY(); }
+    //if (pSender == mButtonAddPath) { mEditor->BreakConstraintY(); }
+    //if (pSender == mButtonDeletePath) { mEditor->BreakConstraintY(); }
+    
+    
+    
+    
+    
     
     float                                       mGameAreaTop;
     float                                       mGameAreaRight;

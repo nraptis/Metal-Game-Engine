@@ -25,7 +25,6 @@ public:
     
     void                                Apply(float pReferenceX, float pReferenceY, GameObject *pObject);
     
-    
     int                                 mKillTimer;
     
     float                               mTestRotation;

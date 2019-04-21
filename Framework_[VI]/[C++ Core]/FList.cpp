@@ -131,7 +131,7 @@ void *FList::FetchClosest(int pIndex) {
 
 void *FList::Fetch(int pIndex) {
     if (pIndex >= 0 && pIndex < mCount) return mData[pIndex];
-    return 0;
+    return NULL;
 }
 
 void *FList::FetchCircular(int pIndex) {
@@ -142,7 +142,7 @@ void *FList::FetchCircular(int pIndex) {
         }
         return mData[pIndex];
     }
-    return 0;
+    return NULL;
 }
 
 void *FList::PopFirst() {
@@ -166,21 +166,17 @@ void *FList::PopLast() {
     return aResult;
 }
 
-void FList::RemoveFirst(void *pItem)
-{
+void FList::RemoveFirst(void *pItem) {
 	void **aSeek=mData;
 	void **aShelf=mData+mCount;
-	while(aSeek<aShelf)
-	{
+	while (aSeek<aShelf) {
 		if(*aSeek==pItem)break;
 		aSeek++;
 	}
-	if(aSeek<aShelf)
-	{
+	if (aSeek<aShelf) {
 		void **aCopy=aSeek;
 		aSeek++;
-		while(aSeek<aShelf)
-		{
+		while (aSeek<aShelf) {
 			*aCopy=*aSeek;
 			aCopy++;
 			aSeek++;
@@ -223,37 +219,23 @@ void FList::MoveObjectDown(void *pItem) {
 	}
 }
 
-void FList::RotateObjectUp(void *pItem)
-{
+void FList::RotateObjectUp(void *pItem) {
     int aIndex = Find(pItem);
-    
-    if(aIndex != -1)
-    {
-        if(aIndex >= (mCount - 1))
-        {
+    if (aIndex != -1) {
+        if (aIndex >= (mCount - 1)) {
             MoveToFirst(pItem);
-        }
-        else
-        {
+        } else {
             MoveObjectUp(pItem);
         }
     }
 }
 
-void FList::RotateObjectDown(void *pItem)
-{
+void FList::RotateObjectDown(void *pItem) {
     int aIndex = Find(pItem);
-    
-    if(aIndex != -1)
-    {
-        if(aIndex <= 0)
-        {
+    if (aIndex != -1) {
+        if (aIndex <= 0) {
             MoveToLast(pItem);
-            
-            
-        }
-        else
-        {
+        } else {
             MoveObjectDown(pItem);
         }
     }

@@ -29,11 +29,8 @@ void LevelSectionPermanentBlueprint::Reset() {
     mPath.Reset();
 }
 
-//mPath
 void LevelSectionPermanentBlueprint::Update() {
     mPath.Update();
-    
-    
 }
 
 void LevelSectionPermanentBlueprint::Draw(bool pSelected) {
@@ -100,7 +97,6 @@ void LevelSectionPermanentBlueprint::ApplyEditorConstraints() {
         gEditor->mSection.PermRefreshPositions();
         gEditor->RefreshPlayback();
     }
-    
 }
 
 void LevelSectionPermanentBlueprint::ShiftX(float pShiftX) {
@@ -108,6 +104,10 @@ void LevelSectionPermanentBlueprint::ShiftX(float pShiftX) {
         mEditorX = mEditorX + pShiftX;
     } else {
         mConstraint.mOffsetX += pShiftX;
+    }
+    if (gEditor) {
+        gEditor->mSection.PermRefreshPositions();
+        gEditor->RefreshPlayback();
     }
 }
 
@@ -117,6 +117,14 @@ void LevelSectionPermanentBlueprint::ShiftY(float pShiftY) {
     } else {
         mConstraint.mOffsetY += pShiftY;
     }
+    if (gEditor) {
+        gEditor->mSection.PermRefreshPositions();
+        gEditor->RefreshPlayback();
+    }
+}
+
+void LevelSectionPermanentBlueprint::DeletePath() {
+    mPath.Reset();
 }
 
 void LevelSectionPermanentBlueprint::Build(LevelSectionPermanent *pPerm) {
@@ -131,7 +139,7 @@ void LevelSectionPermanentBlueprint::Build(LevelSectionPermanent *pPerm) {
     aPoint.mY = mPercentY / 100.0f;
     
     if (mConstraint.HasX()) {
-        aPoint.mX = mConstraint.GameX(false);
+        aPoint.mX = mConstraint.GameX(true);
         
         pPerm->mBaseX = aPoint.mX;
     } else {
@@ -139,11 +147,13 @@ void LevelSectionPermanentBlueprint::Build(LevelSectionPermanent *pPerm) {
     }
     
     if (mConstraint.HasY()) {
-        aPoint.mY = mConstraint.GameY(false);
+        aPoint.mY = mConstraint.GameY(true);
         pPerm->mBaseY = aPoint.mY;
     } else {
         pPerm->mBaseY = gGame->mGameAreaTop + (gGame->mGameAreaBottom - gGame->mGameAreaTop) * aPoint.mY;
     }
+    
+    printf("Node Count: %d\n", pPerm->mPath.mNodeList.mCount);
     
     
     /*
@@ -239,4 +249,5 @@ void LevelSectionPermanentBlueprint::Load(FJSONNode *pNode) {
     
     FJSONNode *aPathNode = pNode->GetDictionary("path");
     mPath.Load(aPathNode);
+    
 }

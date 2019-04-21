@@ -69,13 +69,12 @@ void LevelSection::Spawn() {
     Log("LevelSection::Spawn()\n");
     
     EnumList(LevelSectionPermanent, aPerm, mPermList) {
-        aPerm->Spawn();
-    
-        //TODO: Move per fly-in...
-    
+        aPerm->Prepare();
     }
     
-    
+    EnumList(LevelSectionPermanent, aPerm, mPermList) {
+        aPerm->Spawn();
+    }
 }
 
 void LevelSection::Update() {

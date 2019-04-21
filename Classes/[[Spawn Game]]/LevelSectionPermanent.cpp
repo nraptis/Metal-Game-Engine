@@ -46,7 +46,21 @@ void LevelSectionPermanent::Restart() {
 }
 
 void LevelSectionPermanent::Prepare() {
+    
+    
+    
+    for (int i=0;i<mPath.mNodeList.mCount;i++) {
+        LevelPathNode *aNode = ((LevelPathNode *)mPath.mNodeList.Fetch(i));
+        
+        
+        printf("Node[%d] (%f x %f) \n", i, aNode->mX, aNode->mY);
+        
+    }
+    
     mPath.Finalize();
+    
+    
+    
 }
 
 void LevelSectionPermanent::Spawn() {
@@ -58,7 +72,10 @@ void LevelSectionPermanent::Spawn() {
     
     if (mObjectType == GAME_OBJECT_TYPE_BALLOON) {
         mObject = new Balloon();
-        ((Balloon *)mObject)->mSprite = &(gApp->mBalloonMap[3]);
+        
+        //TODO: For auto-tech
+        //((Balloon *)mObject)->mSprite = &(gApp->mBalloonMap[3]);
+        
         gGame->mBalloonList.Add(mObject);
     }
     

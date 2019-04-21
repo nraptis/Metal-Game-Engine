@@ -53,7 +53,10 @@ void LevelFormationNode::Spawn() {
     
     if (mObjectType == GAME_OBJECT_TYPE_BALLOON) {
         mObject = new Balloon();
-        ((Balloon *)mObject)->mSprite = &(gApp->mBalloonMap[3]);
+        
+        //TODO: For auto-tech
+        //((Balloon *)mObject)->mSprite = &(gApp->mBalloonMap[3]);
+        
         gGame->mBalloonList.Add(mObject);
     }
     

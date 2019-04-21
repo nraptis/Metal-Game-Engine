@@ -22,15 +22,12 @@ public:
     void                                        Load(FJSONNode *pNode);
     
     int                                         mSpawnSpacingOffset;
-
     
     //Possibility 1.) We have a formation...
     FString                                     mFormationID;
     
     //Possibility 2.) We have an object...
     int                                         mObjectType;
-    //
-    
     
 };
 

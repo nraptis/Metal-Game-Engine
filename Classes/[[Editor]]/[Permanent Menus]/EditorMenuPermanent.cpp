@@ -52,12 +52,31 @@ EditorMenuPermanent::EditorMenuPermanent(GamePermanentEditor *pEditor) : ToolMen
     
     
     mButtonSnapsBreakX = new UIButton();
-    mButtonSnapsBreakX->SetText("Break-X");
+    mButtonSnapsBreakX->SetText("Brk-X");
     mRowSnaps1->AddButton(mButtonSnapsBreakX);
     
     mButtonSnapsBreakY = new UIButton();
-    mButtonSnapsBreakY->SetText("Break-X");
+    mButtonSnapsBreakY->SetText("Brk-Y");
     mRowSnaps1->AddButton(mButtonSnapsBreakY);
+    
+    mRowSnaps2 = new ToolMenuSectionRow();
+    mSnapsPanel->AddSection(mRowSnaps2);
+    
+    mLabelOffsetX = new UILabel();
+    mRowSnaps2->AddLabel(mLabelOffsetX);
+    
+    mLabelOffsetY = new UILabel();
+    mRowSnaps2->AddLabel(mLabelOffsetY);
+    
+    mButtonResetOffsetX = new UIButton();
+    mButtonResetOffsetX->SetText("Res X");
+    mRowSnaps2->AddButton(mButtonResetOffsetX);
+    
+    mButtonResetOffsetY = new UIButton();
+    mButtonResetOffsetY->SetText("Res Y");
+    mRowSnaps2->AddButton(mButtonResetOffsetY);
+    
+    
     
     
     mPermPanel = new ToolMenuPanel();
@@ -67,15 +86,9 @@ EditorMenuPermanent::EditorMenuPermanent(GamePermanentEditor *pEditor) : ToolMen
     mRowPermanent1 = new ToolMenuSectionRow();
     mPermPanel->AddSection(mRowPermanent1);
     
-    
-    mButtonAddPermanent = new UIButton();
-    mButtonAddPermanent->SetText("Add Perm");
-    mRowPermanent1->AddButton(mButtonAddPermanent);
-    
     mButtonDeletePermanent = new UIButton();
     mButtonDeletePermanent->SetText("Delete Perm");
     mRowPermanent1->AddButton(mButtonDeletePermanent);
-    
     
     mButtonEditPermanentPaths = new UIButton();
     mButtonEditPermanentPaths->SetText("Edit Paths");
@@ -83,50 +96,25 @@ EditorMenuPermanent::EditorMenuPermanent(GamePermanentEditor *pEditor) : ToolMen
     
     
     
+    mRowPermanent2 = new ToolMenuSectionRow();
+    mPermPanel->AddSection(mRowPermanent2);
+    
+    mButtonAddPath = new UIButton();
+    mButtonAddPath->SetText("Add Path");
+    mRowPermanent2->AddButton(mButtonAddPath);
+    
+    mButtonDeletePath = new UIButton();
+    mButtonDeletePath->SetText("Delete Path");
+    mRowPermanent2->AddButton(mButtonDeletePath);
     
     
-    mGenerationPanel = new ToolMenuPanel();
-    mGenerationPanel->SetTitle("Generation");
-    AddSection(mGenerationPanel);
-    
-    mSegmentSpeed = new UISegment();
-    mSegmentSpeed->SetSegmentCount(7);
-    mSegmentSpeed->SetTitles("XS", "S", "MS", "M", "MF", "F", "XF");
-    mGenerationPanel->AddSection(mSegmentSpeed);
-    
-    
-    mStepperSpawnCount = new UIStepper();
-    mStepperSpawnCount->SetText("Count");
-    mStepperSpawnCount->mMin = 1;
-    mGenerationPanel->AddSection(mStepperSpawnCount);
-    
-    mStepperSpacing = new UIStepper();
-    mStepperSpacing->SetText("Spacing");
-    mStepperSpacing->mMin = -1000;
-    mStepperSpacing->mMax = 1000;
-    mGenerationPanel->AddSection(mStepperSpacing);
-    
-    mTimingPanel = new ToolMenuPanel();
-    mTimingPanel->SetTitle("Timing");
-    AddSection(mTimingPanel);
-    
-    mStepperCreationType = new UISegment();
-    mStepperCreationType->SetSegmentCount(5);
-    mStepperCreationType->SetTitles("PW-Sta", "PW-End", "PW-Clr", "Scr-C-P" "Scr-C+P");
-    mTimingPanel->AddSection(mStepperCreationType);
-    
-    mStepperCreationDelay = new UIStepper();
-    mStepperCreationDelay->SetText("Delay");
-    mStepperCreationDelay->mMin = 0;
-    mStepperCreationDelay->mMax = 2048;
-    mTimingPanel->AddSection(mStepperCreationDelay);
 }
 
 EditorMenuPermanent::~EditorMenuPermanent() {
     if (mEditor != NULL) {
-    if (mEditor->mMenuPerm == this) {
-        mEditor->mMenuPerm = NULL;
-    }
+        if (mEditor->mMenuPerm == this) {
+            mEditor->mMenuPerm = NULL;
+        }
     }
 }
 
@@ -144,73 +132,104 @@ void EditorMenuPermanent::Notify(void *pSender, const char *pNotification) {
     if (pSender == mButtonSnapsBreakX) { mEditor->BreakConstraintX(); }
     if (pSender == mButtonSnapsBreakY) { mEditor->BreakConstraintY(); }
     
+    if (pSender == mButtonDeletePermanent) { mEditor->DeletePermanent(); }
+    if (pSender == mButtonEditPermanentPaths) { mEditor->OpenPathEditor(); }
+    if (pSender == mButtonAddPath) { mEditor->AddPath(); gEditor->RefreshPlayback(); }
+    if (pSender == mButtonDeletePath) { mEditor->DeletePath(); gEditor->RefreshPlayback(); }
     
     
-    /*
-    if (pSender == mSegmentSpeed) {
-        gEditor->RefreshPlaybackSpeed();
-        gEditor->RefreshPlayback();
-    }
-    if (pSender == mStepperSpawnCount) { gEditor->RefreshPlayback(); }
-    if (pSender == mStepperSpacing) { gEditor->RefreshPlayback(); }
-    if (pSender == mStepperCreationType) { gEditor->RefreshPlayback(); }
-    if (pSender == mStepperCreationDelay) { gEditor->RefreshPlayback(); }
-    */
+    
+    if (pSender == mButtonResetOffsetX) { mEditor->ResetOffsetX(); gEditor->RefreshPlayback(); }
+    if (pSender == mButtonResetOffsetY) { mEditor->ResetOffsetY(); gEditor->RefreshPlayback(); }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
 
 void EditorMenuPermanent::Update() {
     
     
+    if (mEditor == NULL) {
+        return;
+    }
+    
+    LevelSectionPermanentBlueprint *aPerm = gEditor->PermnGet();
+    
+    if (mLabelOffsetX != NULL) {
+        if (aPerm != NULL) {
+            int aNum = round(aPerm->mConstraint.mOffsetX);
+            mLabelOffsetX->SetText(FString("X: ") + FString(aNum));
+        } else {
+            mLabelOffsetX->SetText(FString("X: ???"));
+        }
+    }
+    
+    if (mLabelOffsetY != NULL) {
+        if (aPerm != NULL) {
+            int aNum = round(aPerm->mConstraint.mOffsetY);
+            mLabelOffsetY->SetText(FString("Y: ") + FString(aNum));
+        } else {
+            mLabelOffsetY->SetText(FString("Y: ???"));
+        }
+    }
+    
     /*
-    LevelWaveBlueprint *aWave = NULL;
-    if (gEditor) {
-        aWave = gEditor->mSection.mCurrentWave;
-    }
-    
-    if (mStepperSpawnCount != NULL) {
-        bool aUnlink = true;
-        if (aWave != NULL) {
-            aUnlink = false;
-            mStepperSpawnCount->SetTarget(&(aWave->mSpawnCount));
-        }
-        if (aUnlink) {
-            mStepperSpawnCount->SetTarget(NULL);
-        }
-    }
-    
-    if (mStepperSpacing != NULL) {
-        bool aUnlink = true;
-        if (aWave != NULL) {
-            aUnlink = false;
-            mStepperSpacing->SetTarget(&(aWave->mSpawnSpacing));
-        }
-        if (aUnlink) {
-            mStepperSpacing->SetTarget(NULL);
-        }
-    }
-    
-    
-    if (mStepperCreationType != NULL) {
-        bool aUnlink = true;
-        if (aWave != NULL) {
-            aUnlink = false;
-            mStepperCreationType->SetTarget(&(aWave->mCreationType));
-        }
-        if (aUnlink) {
-            mStepperCreationType->SetTarget(NULL);
-        }
-    }
-    
-    if (mStepperCreationDelay != NULL) {
-        bool aUnlink = true;
-        if (aWave != NULL) {
-            aUnlink = false;
-            mStepperCreationDelay->SetTarget(&(aWave->mCreationDelay));
-        }
-        if (aUnlink) {
-            mStepperCreationDelay->SetTarget(NULL);
-        }
-    }
-    */
+     LevelWaveBlueprint *aWave = NULL;
+     if (gEditor) {
+     aWave = gEditor->mSection.mCurrentWave;
+     }
+     
+     if (mStepperSpawnCount != NULL) {
+     bool aUnlink = true;
+     if (aWave != NULL) {
+     aUnlink = false;
+     mStepperSpawnCount->SetTarget(&(aWave->mSpawnCount));
+     }
+     if (aUnlink) {
+     mStepperSpawnCount->SetTarget(NULL);
+     }
+     }
+     
+     if (mStepperSpacing != NULL) {
+     bool aUnlink = true;
+     if (aWave != NULL) {
+     aUnlink = false;
+     mStepperSpacing->SetTarget(&(aWave->mSpawnSpacing));
+     }
+     if (aUnlink) {
+     mStepperSpacing->SetTarget(NULL);
+     }
+     }
+     
+     
+     if (mStepperCreationType != NULL) {
+     bool aUnlink = true;
+     if (aWave != NULL) {
+     aUnlink = false;
+     mStepperCreationType->SetTarget(&(aWave->mCreationType));
+     }
+     if (aUnlink) {
+     mStepperCreationType->SetTarget(NULL);
+     }
+     }
+     
+     if (mStepperCreationDelay != NULL) {
+     bool aUnlink = true;
+     if (aWave != NULL) {
+     aUnlink = false;
+     mStepperCreationDelay->SetTarget(&(aWave->mCreationDelay));
+     }
+     if (aUnlink) {
+     mStepperCreationDelay->SetTarget(NULL);
+     }
+     }
+     */
     
 }

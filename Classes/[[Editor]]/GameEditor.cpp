@@ -26,7 +26,7 @@ GameEditor::GameEditor(Game *pGame) {
     mEditorPlaybackFromOffScreen = false;
     mEditorPlaybackFromOffScreenType = 0; //left, right, or top... [probably left...]
     
-    
+    mRandomSeed = os_system_time() ^ gRand.Get(999999);
     
     mSpeedClassIndex = SPEED_CLASS_MEDIUM;
     mSpawnRotationSpeedClassIndex = SPEED_CLASS_MEDIUM;
@@ -313,7 +313,9 @@ void GameEditor::Draw() {
     
     Graphics::PipelineStateSetShape2DNoBlending();
     Graphics::SetColor();
-    mEditorWave.mPath.Draw();
+    if (mEditorWave.mPath.mNodeList.mCount > 0) {
+        mEditorWave.mPath.Draw();
+    }
     mEditorWave.Draw();
     
     Graphics::PipelineStateSetShape2DAlphaBlending();
@@ -477,6 +479,9 @@ void GameEditor::KeyDown(int pKey) {
     
     if (pKey == __KEY__P) {
         if (aShift == false && aCtrl == false && aAlt == false) {
+            OpenPermanentEditor();
+        }
+        if (aShift == false && aCtrl == true && aAlt == false) {
             mSection.WaveSelectPrev();
         }
     }
@@ -494,6 +499,9 @@ void GameEditor::KeyDown(int pKey) {
     
     if (pKey == __KEY__N) {
         if (aShift == false && aCtrl == false && aAlt == false) {
+            
+        }
+        if (aShift == false && aCtrl == true && aAlt == false) {
             mSection.WaveSelectNext();
         }
     }
@@ -636,7 +644,6 @@ int GameEditor::PrevYConstraint(int pConstraint) {
     return Y_CONSTRAINT_BOTTOM;
 }
 
-
 void GameEditor::SetOverlay(FCanvas *pCanvas) {
     if (mOverlay) {
         if (mOverlay == pCanvas) {
@@ -684,6 +691,8 @@ void GameEditor::RefreshPlayback() {
         printf("Niffing refreshing...\n");
         return;
     }
+    
+    gRand.Seed(mRandomSeed);
     
     mIsRefreshingPlayback = true;
     
@@ -921,6 +930,9 @@ LevelSectionPermanentBlueprint *GameEditor::PermnGet() {
     return mSection.mCurrentPerm;
 }
 
+void GameEditor::PermDelete() {
+    mSection.PermRemove();
+}
 
 void GameEditor::OpenPathEditorForWave() {
     if (mSection.mCurrentWave == NULL) { printf("Must have wave...\n"); return; }

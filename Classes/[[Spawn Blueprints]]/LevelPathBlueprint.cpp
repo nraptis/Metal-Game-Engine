@@ -147,6 +147,7 @@ LevelPathBlueprint::LevelPathBlueprint() {
     mPerm = NULL;
     mSpeedClass = SPEED_CLASS_MEDIUM;
     mSmooth = false;
+    mClosed = false;
     mMaxSpawnSize = 0;
 }
 
@@ -186,29 +187,73 @@ void LevelPathBlueprint::Reset() {
 }
 
 void LevelPathBlueprint::Draw(bool pSelected) {
-    for (int i=1;i<mNodeList.mCount;i++) {
-        LevelPathNodeBlueprint *aNode1 = (LevelPathNodeBlueprint *)mNodeList.mData[i - 1];
-        LevelPathNodeBlueprint *aNode2 = (LevelPathNodeBlueprint *)mNodeList.mData[i];
+    
+    int aStartIndex = 1;
+    if (mClosed) {
+        aStartIndex = 0;
+    }
+    
+    for (int i=aStartIndex;i<mNodeList.mCount;i++) {
+        LevelPathNodeBlueprint *aNode1 = (LevelPathNodeBlueprint *)mNodeList.FetchCircular(i - 1);
+        LevelPathNodeBlueprint *aNode2 = (LevelPathNodeBlueprint *)mNodeList.FetchCircular(i);
+        
+        float aX1 = aNode1->mEditorX;
+        if (aNode1->mConstraint.mTypeX != X_CONSTRAINT_NONE) { aX1 += aNode1->mConstraint.mOffsetX; }
+        
+        float aY1 = aNode1->mEditorY;
+        if (aNode1->mConstraint.mTypeY != Y_CONSTRAINT_NONE) { aY1 += aNode1->mConstraint.mOffsetY; }
+        
+        
+        float aX2 = aNode2->mEditorX;
+        if (aNode2->mConstraint.mTypeX != X_CONSTRAINT_NONE) { aX2 += aNode2->mConstraint.mOffsetX; }
+        
+        float aY2 = aNode2->mEditorY;
+        if (aNode2->mConstraint.mTypeY != Y_CONSTRAINT_NONE) { aY2 += aNode2->mConstraint.mOffsetY; }
+        
+        
         if (pSelected) {
             Graphics::SetColor(0.75f, 0.75f, 0.75f, 0.25f);
-            Graphics::DrawLine(aNode1->mEditorX, aNode1->mEditorY, aNode2->mEditorX, aNode2->mEditorY, 1.0f);
+            Graphics::DrawLine(aX1, aY1, aX2, aY2, 1.5f);
             
         } else {
             Graphics::SetColor(0.45f, 0.45f, 0.45f, 0.25f);
-            Graphics::DrawLine(aNode1->mEditorX, aNode1->mEditorY, aNode2->mEditorX, aNode2->mEditorY, 1.0f);
+            Graphics::DrawLine(aX1, aY1, aX2, aY2, 1.0f);
         }
     }
     
     for (int i=0;i<mNodeList.mCount;i++) {
         LevelPathNodeBlueprint *aNode = (LevelPathNodeBlueprint *)mNodeList.mData[i];
+        
+        float aX = aNode->mEditorX;
+        if (aNode->mConstraint.mTypeX != X_CONSTRAINT_NONE) { aX += aNode->mConstraint.mOffsetX; }
+        
+        float aY = aNode->mEditorY;
+        if (aNode->mConstraint.mTypeY != Y_CONSTRAINT_NONE) { aY += aNode->mConstraint.mOffsetY; }
+        
+        
+        if (pSelected) {
+            Graphics::SetColor(0.8f, 0.7f, 0.18f, 0.65f);
+            Graphics::DrawLine(aX, aY, aNode->mEditorX, aNode->mEditorY, 1.5f);
+        } else {
+            Graphics::SetColor(0.8f, 0.7f, 0.18f, 0.35f);
+            Graphics::DrawLine(aX, aY, aNode->mEditorX, aNode->mEditorY, 1.0f);
+        }
+        
+        
         if (pSelected) {
             if (i == mSelectedIndex) {
                 Graphics::SetColor(1.0f, 0.0f, 0.0f, 0.75f);
-                Graphics::DrawPoint(aNode->mEditorX, aNode->mEditorY, 12.0f);
+                Graphics::DrawPoint(aX, aY, 12.0f);
             } else {
                 Graphics::SetColor(1.0f, 0.0f, 0.0f, 0.75f);
-                Graphics::DrawPoint(aNode->mEditorX, aNode->mEditorY, 6.0f);
+                Graphics::DrawPoint(aX, aY, 6.0f);
             }
+        } else {
+            Graphics::SetColor(0.65f, 0.65f, 0.65f, 0.35f);
+            Graphics::DrawPoint(aX, aY, 4.0f);
+        }
+        
+        if (pSelected) {
             if (aNode->mConstraint.mTypeX == X_CONSTRAINT_TARGET) {
                 Graphics::SetColor(0.125f, 0.125f, 1.0f, 1.0f);
                 Graphics::DrawLine(aNode->mEditorX, aNode->mEditorY - 10.0f, aNode->mEditorX, aNode->mEditorY + 10.0f);
@@ -224,9 +269,22 @@ void LevelPathBlueprint::Draw(bool pSelected) {
                 Graphics::DrawLine(aNode->mEditorX - 10.0f, aNode->mEditorY, aNode->mEditorX + 10.0f, aNode->mEditorY);
             }
         } else {
-            Graphics::SetColor(0.65f, 0.65f, 0.65f, 0.35f);
-            Graphics::DrawPoint(aNode->mEditorX, aNode->mEditorY, 4.0f);
+            if (aNode->mConstraint.mTypeX == X_CONSTRAINT_TARGET) {
+                Graphics::SetColor(0.125f, 0.125f, 1.0f, 0.5f);
+                Graphics::DrawLine(aNode->mEditorX, aNode->mEditorY - 10.0f, aNode->mEditorX, aNode->mEditorY + 10.0f);
+            } else if (aNode->mConstraint.mTypeX != X_CONSTRAINT_NONE) {
+                Graphics::SetColor(1.0f, 0.0f, 0.0f, 0.5f);
+                Graphics::DrawLine(aNode->mEditorX, aNode->mEditorY - 10.0f, aNode->mEditorX, aNode->mEditorY + 10.0f);
+            }
+            if (aNode->mConstraint.mTypeY == Y_CONSTRAINT_TARGET) {
+                Graphics::SetColor(0.125f, 0.125f, 1.0f, 0.5f);
+                Graphics::DrawLine(aNode->mEditorX - 10.0f, aNode->mEditorY, aNode->mEditorX + 10.0f, aNode->mEditorY);
+            } else if (aNode->mConstraint.mTypeY != Y_CONSTRAINT_NONE) {
+                Graphics::SetColor(1.0f, 0.0f, 0.0f, 0.5f);
+                Graphics::DrawLine(aNode->mEditorX - 10.0f, aNode->mEditorY, aNode->mEditorX + 10.0f, aNode->mEditorY);
+            }
         }
+        
     }
 }
 
@@ -471,6 +529,7 @@ void LevelPathBlueprint::Build(LevelPath *pPath) {
     pPath->Reset();
     
     pPath->mSmooth = mSmooth;
+    pPath->mClosed = mClosed;
     pPath->SetSpeedClass(mSpeedClass);
     
     for (int i=0;i<mNodeList.mCount;i++) {
@@ -551,7 +610,10 @@ void LevelPathBlueprint::Build(LevelPath *pPath) {
         } else {
             aNode->mGameY = aNode->mBaseGameY;
         }
+        
+        printf("aNode->mGameX = %f aNode->mGameY = %f\n", aNode->mGameX, aNode->mGameY);
     }
+    printf("=======\n");
     
     for (int i=0;i<mNodeList.mCount;i++) {
         LevelPathNodeBlueprint *aNode = (LevelPathNodeBlueprint *)mNodeList.mData[i];
@@ -617,6 +679,10 @@ FJSONNode *LevelPathBlueprint::Save() {
         aExport->AddDictionaryBool("smooth", mSmooth);
     }
     
+    if (mClosed == true) {
+        aExport->AddDictionaryBool("closed", mClosed);
+    }
+    
     if (mSpeedClass != SPEED_CLASS_MEDIUM) {
         aExport->AddDictionaryInt("speed_class", mSpeedClass);
     }
@@ -639,6 +705,8 @@ void LevelPathBlueprint::Load(FJSONNode *pNode) {
     if (pNode == NULL) { return; }
     
     mSmooth = pNode->GetBool("smooth", false);
+    mClosed = pNode->GetBool("closed", false);
+    
     mSpeedClass = pNode->GetInt("speed_class", SPEED_CLASS_MEDIUM);
     
     FJSONNode *aNodeListNode = pNode->GetArray("node_list");

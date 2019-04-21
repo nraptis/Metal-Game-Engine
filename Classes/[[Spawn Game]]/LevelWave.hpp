@@ -27,7 +27,6 @@ public:
     void                                Reset();
     void                                Restart();
     
-    
     void                                Prepare();
     
     void                                Update();
@@ -68,7 +67,6 @@ private:
     FList                               mSpawnKillList;
     FList                               mSpawnDeleteList;
     
-    // Only used duting update cycle.
     FList                               mRecentlyCompletedList;
     
     void                                HandleSpawnComplete(LevelWaveSpawn *pSpawn);

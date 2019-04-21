@@ -105,6 +105,8 @@ public:
     void                                        PermSelect(int pIndex);
     int                                         PermIndex();
     LevelSectionPermanentBlueprint              *PermnGet();
+    void                                        PermDelete();
+    
     
     int                                         SpeedConvertSegmentToType(int pSegmentIndex);
     int                                         SpeedConvertTypeToSegment(int pType);
@@ -211,7 +213,7 @@ public:
     int                                         mAutosaveTimer;
     int                                         mEnqueueInitialLoad;
     
-    
+    int                                         mRandomSeed;
     
     
     

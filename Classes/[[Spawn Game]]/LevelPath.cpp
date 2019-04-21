@@ -36,7 +36,9 @@ LevelPath::LevelPath() {
     mDidFinalize = false;
     mDidFailFinalize = false;
     
-    mSmooth = true;
+    mSmooth = false;
+    mClosed = false;
+    
     mTempDist = 0.0f;
     
     
@@ -139,10 +141,19 @@ void LevelPath::Finalize() {
     
     mDidFinalize = true;
     
-    while (aIndex < mNodeList.mCount) {
-        LevelPathNode *aNode = ((LevelPathNode *)mNodeList.mData[aIndex]);
+    //mClosed
+    
+    //mClosed
+    
+    int aMax = mNodeList.mCount;
+    if (mClosed) {
+        aMax += 1;
+    }
+    
+    while (aIndex < aMax) {
+        LevelPathNode *aNode = ((LevelPathNode *)mNodeList.FetchCircular(aIndex));
         if (aIndex > 0) {
-            if ((aNode->mWaitTimer > 0) || (aIndex == (mNodeList.mCount - 1))) {
+            if ((aNode->mWaitTimer > 0) || (aIndex == (aMax - 1))) {
                 LevelPath::AddSegmentBacktrackingFrom(aIndex);
             }
         }
@@ -153,6 +164,7 @@ void LevelPath::Finalize() {
                 mDist.Add(mTempDist);
             }
         }
+        
         ++aIndex;
     }
 }
@@ -183,7 +195,7 @@ void LevelPath::AddSegmentBacktrackingFrom(int pIndex) {
     int aDecelDistance = 0;
     
     for (int i=aStartIndex+1;i<=pIndex;i++) {
-        LevelPathNode *aNode = ((LevelPathNode *)mNodeList.mData[i]);
+        LevelPathNode *aNode = ((LevelPathNode *)mNodeList.FetchCircular(i));
         
         float aDiffX = aNode->mX - aPrev->mX;
         float aDiffY = aNode->mY - aPrev->mY;
@@ -205,8 +217,6 @@ void LevelPath::AddSegmentBacktrackingFrom(int pIndex) {
         return;
     }
     
-    
-    
     cDumpList.Reset();
     
     float aX = 0.0f;
@@ -218,8 +228,17 @@ void LevelPath::AddSegmentBacktrackingFrom(int pIndex) {
         }
     } else {
         FSpline aSpline;
-        for (int i=0;i<cPointList.mCount;i++) {
-            aSpline.Add(cPointList.mX[i], cPointList.mY[i]);
+        
+        if (mClosed == true && aStartIndex == 0 && pIndex == mNodeList.mCount) {
+            for (int i=0;i<(cPointList.mCount-1);i++) {
+                aSpline.Add(cPointList.mX[i], cPointList.mY[i]);
+            }
+            aSpline.Solve(false, true);
+        } else {
+            for (int i=0;i<cPointList.mCount;i++) {
+                aSpline.Add(cPointList.mX[i], cPointList.mY[i]);
+            }
+            aSpline.Solve(false, false);
         }
         
         for (float aPos=0.0f;aPos<=aSpline.Max();aPos += 0.05f) {

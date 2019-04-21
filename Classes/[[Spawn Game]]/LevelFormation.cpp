@@ -93,8 +93,8 @@ void LevelFormation::Update() {
         aTracer->Update();
     }
     
-    mMotionController.Update();
-    ApplyMotionController();
+    //mMotionController.Update();
+    //ApplyMotionController();
     
     EnumList(LevelFormationNode, aNode, mNodeKillList) {
         aNode->mKillTimer--;
@@ -194,6 +194,7 @@ bool LevelFormation::IsClear() {
 
 void LevelFormation::ApplyMotionController() {
     
+    /*
     EnumList(LevelFormationTracer, aTracer, mTracerList) {
         EnumList(LevelFormationNode, aNode, aTracer->mSpawnNodeList) {
             mMotionController.Apply(mX, mY, aNode->mObject);
@@ -204,11 +205,10 @@ void LevelFormation::ApplyMotionController() {
     EnumList(LevelFormationNode, aNode, mSpawnNodeList) {
         mMotionController.Apply(mX, mY, aNode->mObject);
     }
+    */
     
     //float                                       mX;
     //float                                       mY;
-    
-    
 }
 
 //mMotionController

@@ -25,7 +25,7 @@ public:
     LevelPathBlueprint                          mPath;
     void                                        ApplyEditorConstraints();
     
-    
+    void                                        DeletePath();
     
     
     Constraint                                  mConstraint;

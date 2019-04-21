@@ -88,26 +88,15 @@ int kDeviceHeight = 760;
     NSRect aWindowFrame = NSMakeRect(14.0, screenSize.height / 2.0 - kDeviceHeight / 2.0 - 14, kDeviceWidth, kDeviceHeight);
     
     _window = [[NSWindow alloc] initWithContentRect: aWindowFrame styleMask: aWindowStyle backing: NSBackingStoreBuffered defer: NO];
-    [_window setTitle:@"Space Whores 6"];
+    [_window setTitle:@"Robot Reptile Motorcycle Gun"];
     [_window setOpaque: YES];
     [_window setHasShadow: YES];
     [_window setDelegate: self];
     _window.contentViewController = self.rootViewController;
     
-    
-    NSColor *aColor = [NSColor colorWithCalibratedRed: 0.0f
-                                                green: 0.0f
-                                                 blue: 0.0f
-                                                alpha: 1.0];
+    NSColor *aColor = [NSColor colorWithCalibratedRed: 0.0f green: 0.0f blue: 0.0f alpha: 1.0];
     [_window setBackgroundColor: aColor];
-    
-    
-    [_window makeKeyAndOrderFront:NSApp];
-    
-    
-    //[_window makeKeyAndVisible];
-    
-    //...
+    [_window makeKeyAndOrderFront: NSApp];
     
     if ([_rootViewController isViewLoaded] == false) {
         [_rootViewController loadView];

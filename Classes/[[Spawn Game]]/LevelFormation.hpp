@@ -54,8 +54,6 @@ public:
     //
     float                                       mX;
     float                                       mY;
-    
-    LevelMotionController                       mMotionController;
     //
     //
     //////////////////
