@@ -9,6 +9,7 @@
 #include "EditorMenuPermanentUtils.hpp"
 #include "LightConfigurationScene.hpp"
 #include "EditorMenuPermanentUtils.hpp"
+#include "GameEditor.hpp"
 #include "GamePermanentEditor.hpp"
 #include "FApp.hpp"
 
@@ -114,22 +115,30 @@ void EditorMenuPermanentUtils::Notify(void *pSender, const char *pNotification) 
 
 void EditorMenuPermanentUtils::Update() {
     
+    LevelSectionPermanentBlueprint *aPerm = NULL;
+    if (gEditor != NULL) {
+        aPerm = gEditor->PermnGet();
+    }
+    
+    if (mStepperSpawnCount != NULL) {
+        bool aUnlink = true;
+        if (aPerm != NULL) {
+            aUnlink = false;
+            mStepperSpawnCount->SetTarget(&(aPerm->mSpawnCount));
+        }
+        if (aUnlink) {
+            mStepperSpawnCount->SetTarget(NULL);
+        }
+    }
+    
+    
     /*
     LevelWaveBlueprint *aWave = NULL;
     if (gEditor) {
         aWave = gEditor->mSection.mCurrentWave;
     }
     
-    if (mStepperSpawnCount != NULL) {
-        bool aUnlink = true;
-        if (aWave != NULL) {
-            aUnlink = false;
-            mStepperSpawnCount->SetTarget(&(aWave->mSpawnCount));
-        }
-        if (aUnlink) {
-            mStepperSpawnCount->SetTarget(NULL);
-        }
-    }
+    
     
     if (mStepperSpacing != NULL) {
         bool aUnlink = true;

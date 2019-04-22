@@ -30,9 +30,22 @@ LevelSectionPermanent::LevelSectionPermanent(LevelSection *pSection) {
 
 LevelSectionPermanent::~LevelSectionPermanent() {
     
+    FreeList(LevelPermSpawn, mSpawnList);
+    FreeList(LevelPermSpawn, mSpawnKillList);
+    FreeList(LevelPermSpawn, mSpawnDeleteList);
+    
 }
 
 void LevelSectionPermanent::Reset() {
+    
+    
+    EnumList(LevelPermSpawn, aSpawn, mSpawnList) {
+        aSpawn->Reset();
+        mSpawnKillList.Add(aSpawn);
+    }
+    mSpawnList.RemoveAll();
+    
+    
     mPath.Reset();
     
     if (mObject != NULL) {
@@ -70,37 +83,92 @@ void LevelSectionPermanent::Spawn() {
         mObject = NULL;
     }
     
-    if (mObjectType == GAME_OBJECT_TYPE_BALLOON) {
-        mObject = new Balloon();
+    
+    //Either we are using the path or no...
+    
+    if (mPath.mNodeList.mCount > 0 &&
+        mPath.mDidFailFinalize == false &&
+        mPath.mDidFinalize == true &&
+        mSpawnList.mCount > 0 &&
+        mPath.mPath.mCount > 1) { //Are we super sure that we can do this?
         
-        //TODO: For auto-tech
-        //((Balloon *)mObject)->mSprite = &(gApp->mBalloonMap[3]);
+        //One case, we are evenly spawned..
         
-        gGame->mBalloonList.Add(mObject);
+        if (true) {
+            
+            for (int i=0;i<mSpawnList.mCount;i++) {
+                LevelPermSpawn *aSpawn = ((LevelPermSpawn *)mSpawnList.mData[i]);
+                float aPercent = ((float)i) / ((float)mSpawnList.mCount);
+                float aPathPos = aPercent * ((float)mPath.mPath.mCount);
+                aSpawn->mPathIndex = (int)(round(aPathPos));
+            }
+            
+            
+        }
+        
+        
+        EnumList(LevelPermSpawn, aSpawn, mSpawnList) {
+            aSpawn->Spawn();
+        }
+        
+        
+        
+    } else {
+        
+        //We are either an object or formation, free floating...
+        
+        if (mObjectType == GAME_OBJECT_TYPE_BALLOON) {
+            mObject = new Balloon();
+            
+            //TODO: For auto-tech
+            //((Balloon *)mObject)->mSprite = &(gApp->mBalloonMap[3]);
+            
+            gGame->mBalloonList.Add(mObject);
+        }
+        
+        if (mObjectType == GAME_OBJECT_TYPE_BRICKHEAD) {
+            mObject = new BrickHead();
+            gGame->mBrickHeadList.Add(mObject);
+        }
+        
+        if (mObject != NULL) {
+            mObject->mDidOriginateOnWave = false;
+            mObject->mDidOriginateAsPermanent = true;
+        }
+        
     }
     
-    if (mObjectType == GAME_OBJECT_TYPE_BRICKHEAD) {
-        mObject = new BrickHead();
-        gGame->mBrickHeadList.Add(mObject);
-    }
     
     
-    //mBaseX = 0.0f;
-    //mBaseY = 0.0f;
-    
-    if (mObject != NULL) {
-        mObject->mDidOriginateOnWave = false;
-        mObject->mDidOriginateAsPermanent = true;
-    }
     
     PositionObject();
 }
 
 void LevelSectionPermanent::Update() {
     
+    //////
+    //
+    EnumList(LevelPermSpawn, aSpawn, mSpawnKillList) {
+        aSpawn->mKillTimer--;
+        if (aSpawn->mKillTimer <= 0) { mSpawnDeleteList.Add(aSpawn); }
+    }
+    EnumList(LevelPermSpawn, aSpawn, mSpawnDeleteList) {
+        mSpawnKillList.Remove(aSpawn);
+        delete aSpawn;
+    }
+    mSpawnDeleteList.RemoveAll();
+    //
+    //////
+    
+    EnumList(LevelPermSpawn, aSpawn, mSpawnList) {
+        aSpawn->Update();
+    }
+    
+    
     if (mObject != NULL && mObject->mKill != 0) {
         mObject = NULL;
     }
+    
     
     mPath.Update();
     
@@ -120,6 +188,24 @@ void LevelSectionPermanent::Draw() {
 
 void LevelSectionPermanent::DisposeObject(GameObject *pObject) {
     
+}
+
+FVec2 LevelSectionPermanent::ConvertLocalPointToGame(FVec2 pPos) {
+    
+    FVec2 aResult;
+    
+    float aX = mX;
+    float aY = mY;
+    
+    if (mSection != NULL) {
+        //aX += mSection->mX;
+        //aY += mSection->mY;
+    }
+    
+    aResult.mX = pPos.mX + aX;
+    aResult.mY = pPos.mY + aY;
+    
+    return aResult;
 }
 
 

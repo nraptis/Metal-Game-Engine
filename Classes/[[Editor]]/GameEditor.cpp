@@ -1094,7 +1094,7 @@ void GameEditor::Clear() {
 }
 
 void GameEditor::LoadCleared() {
-    for (int i=0;i<2000;i++) {
+    for (int i=0;i<20;i++) {
         FString aRecoverPath = gDirDocuments + FString("clear_backup.json");
         Load(aRecoverPath.c());
     }

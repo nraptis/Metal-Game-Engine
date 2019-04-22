@@ -55,6 +55,9 @@ public:
     
     void                                AddMove(float pX, float pY, int pDecel = 0, int pWait = 0);
     
+    void                                Shift(float pShiftX, float pShiftY);
+    
+    
     bool                                mDidFinalize;
     bool                                mDidFailFinalize;
     
@@ -63,6 +66,10 @@ public:
     void                                Update();
     void                                Draw();
     void                                Finalize();
+    
+    float                               mDrawOffsetX;
+    float                               mDrawOffsetY;
+    
     
     bool                                mSmooth;
     bool                                mClosed;

@@ -106,6 +106,8 @@ void GamePermanentEditor::Draw() {
         
         LevelSectionPermanent *aPerm = (LevelSectionPermanent *)gEditor->mEditorSection.mPermList.Fetch(aIndex);
         if (aPerm != NULL) {
+            aPerm->mPath.mDrawOffsetX = aPerm->mX;
+            aPerm->mPath.mDrawOffsetY = aPerm->mY;
             aPerm->mPath.Draw();
         }
     }

@@ -3,40 +3,101 @@
 	"wave_list": [],
 	"perm_list": [
 		{
-			"x_con": 500,
-			"x_con_offset": -70.000000,
-			"y_con": 500,
-			"y_con_offset": -100.000000,
+			"x_con": 600,
+			"y_con": 400,
 			"path": {
 				"smooth": true,
 				"closed": true,
-				"speed_class": 256,
 				"node_list": [
 					{
-						"x_con": 400,
-						"x_con_offset": -50.000000,
+						"x_con": 300,
+						"y_con": 300
+					},
+					{
+						"x_con": 500,
+						"y_con": 300
+					},
+					{
+						"x_con": 700,
 						"y_con": 400
 					},
 					{
 						"x_con": 600,
-						"x_con_offset": 46.000000,
-						"y_con": 400,
-						"y_con_offset": 60.000000
+						"y_con": 500
+					}
+				]
+			},
+			"spawn": [
+				{},
+				{},
+				{}
+			]
+		},
+		{
+			"x_con": 500,
+			"y_con": 600,
+			"path": {
+				"smooth": true,
+				"node_list": [
+					{
+						"x_con": 400,
+						"y_con": 600
+					},
+					{
+						"x_con": 500,
+						"y_con": 500
 					},
 					{
 						"x_con": 600,
-						"x_con_offset": 20.000000,
-						"y_con": 600,
-						"y_con_offset": 30.000000
+						"y_con": 600
 					},
 					{
-						"x_con": 400,
-						"x_con_offset": -30.000000,
-						"y_con": 600,
-						"y_con_offset": -40.000000
+						"x_con": 500,
+						"y_con": 800
 					}
 				]
-			}
+			},
+			"spawn": [
+				{}
+			]
+		},
+		{
+			"x_con": 300,
+			"y_con": 500
+		},
+		{
+			"x_con": 400,
+			"y_con": 500
+		},
+		{
+			"x_con": 700,
+			"y_con": 500
+		},
+		{
+			"x_con": 500,
+			"y_con": 500,
+			"path": {
+				"closed": true,
+				"node_list": [
+					{
+						"x_con": 300,
+						"x_con_offset": 36.000000,
+						"y_con": 500,
+						"y_con_offset": -69.000000,
+						"wait": 100
+					},
+					{
+						"x_con": 700,
+						"x_con_offset": -20.000000,
+						"y_con": 500,
+						"y_con_offset": -70.000000,
+						"wait": 100
+					}
+				]
+			},
+			"spawn": [
+				{}
+			]
 		}
 	]
 }

@@ -49,6 +49,9 @@ LevelPath::LevelPath() {
     mEndConstraintTypeY = Y_CONSTRAINT_NONE;
     
     
+    mDrawOffsetX = 0.0f;
+    mDrawOffsetY = 0.0f;
+    
     /*
      #define X_CONSTRAINT_LEFT_EXIT 150
      #define X_CONSTRAINT_LEFT_SPAWN 200
@@ -101,6 +104,14 @@ void LevelPath::Add(int pType, float pX, float pY, int pDecel, int pWait) {
 
 void LevelPath::AddMove(float pX, float pY, int pDecel, int pWait) {
     Add(PATH_NODE_NORMAL, pX, pY, pDecel, pWait);
+}
+
+void LevelPath::Shift(float pShiftX, float pShiftY) {
+    for (int i=0;i<mNodeList.mCount;i++) {
+        LevelPathNode *aNode = ((LevelPathNode *)mNodeList.mData[i]);
+        aNode->mX += pShiftX;
+        aNode->mY += pShiftY;
+    }
 }
 
 void LevelPath::Reset() {
@@ -352,16 +363,20 @@ void LevelPath::Draw() {
     LevelPathNode *aPrev = NULL;
     LevelPathNode *aNode = NULL;
     
+    //mDrawOffsetX = 0.0f;
+    //mDrawOffsetY = 0.0f;
+    
+    
     Graphics::PipelineStateSetShape2DAlphaBlending();
     for (int i=0;i<mNodeList.mCount;i++) {
         aNode = ((LevelPathNode *)mNodeList.mData[i]);
         if (aPrev) {
             
             Graphics::SetColor(0.44f, 0.66f, 0.125f, 0.15f);
-            Graphics::DrawLine(aPrev->mX, aPrev->mY, aNode->mX, aNode->mY, 2.5f);
+            Graphics::DrawLine(aPrev->mX + mDrawOffsetX, aPrev->mY + mDrawOffsetY, aNode->mX + mDrawOffsetX, aNode->mY + mDrawOffsetY, 2.5f);
             
             Graphics::SetColor(0.66f, 0.66f, 0.66f, 0.15f);
-            Graphics::DrawLine(aPrev->mX, aPrev->mY, aNode->mX, aNode->mY, 1.5f);
+            Graphics::DrawLine(aPrev->mX + mDrawOffsetX, aPrev->mY + mDrawOffsetY, aNode->mX + mDrawOffsetX, aNode->mY + mDrawOffsetY, 1.5f);
         }
         
         aPrev = aNode;
@@ -372,18 +387,29 @@ void LevelPath::Draw() {
         
         if (aNode->mWaitTimer > 0) {
             Graphics::SetColor(0.125f, 0.25f, 0.88f, 0.5f);
-            Graphics::OutlineRect(aNode->mX - 25.0f, aNode->mY - 25.0f, 50.0f, 50.0f, 3.0f);
+            Graphics::OutlineRect(aNode->mX - 25.0f + mDrawOffsetX, aNode->mY - 25.0f + mDrawOffsetY, 50.0f, 50.0f, 3.0f);
         }
         
         if (aNode->mType == PATH_NODE_NORMAL) {
             Graphics::SetColor(0.125f, 0.88f, 0.125f, 0.6f);
-            Graphics::OutlineRect(aNode->mX - 8.0f, aNode->mY - 8.0f, 16.0f, 16.0f, 3.0f);
+            Graphics::OutlineRect(aNode->mX - 8.0f + mDrawOffsetX, aNode->mY - 8.0f + mDrawOffsetY, 16.0f, 16.0f, 3.0f);
         }
     }
     
     Graphics::SetColor(0.65f, 0.25f, 0.25f, 0.65f);
-    mPath.DrawEdgesOpen();
+    //mPath.DrawEdgesOpen();
     
+    if (mPath.mCount > 0) {
+        float aLastX = mPath.mX[0] + mDrawOffsetX, aLastY = mPath.mY[0] + mDrawOffsetY;
+        float aX = 0.0f, aY = 0.0f;
+        for (int i=1;i<mPath.mCount;i++) {
+            aX = mPath.mX[i] + mDrawOffsetX;
+            aY = mPath.mY[i] + mDrawOffsetY;
+            Graphics::DrawLine(aLastX, aLastY, aX, aY, 1.0f);
+            aLastX = aX;
+            aLastY = aY;
+        }
+    }
 }
 
 

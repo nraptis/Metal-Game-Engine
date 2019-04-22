@@ -27,10 +27,20 @@ LevelSectionPermanentBlueprint::~LevelSectionPermanentBlueprint() {
 
 void LevelSectionPermanentBlueprint::Reset() {
     mPath.Reset();
+    for (int i=0;i<PERM_MAX_SPAWN_COUNT;i++) {
+        mSpawn[i].Reset();
+    }
+    mSpawnCount = 1;
 }
 
 void LevelSectionPermanentBlueprint::Update() {
     mPath.Update();
+    
+    if (mSpawnCount < 1) mSpawnCount = 1;
+    if (mSpawnCount > PERM_MAX_SPAWN_COUNT) mSpawnCount = PERM_MAX_SPAWN_COUNT;
+    
+    if (mSelectedSpawnIndex < 0) { mSelectedSpawnIndex = 0; }
+    if (mSelectedSpawnIndex >= mSpawnCount) { mSelectedSpawnIndex = mSpawnCount - 1; }
 }
 
 void LevelSectionPermanentBlueprint::Draw(bool pSelected) {
@@ -140,7 +150,6 @@ void LevelSectionPermanentBlueprint::Build(LevelSectionPermanent *pPerm) {
     
     if (mConstraint.HasX()) {
         aPoint.mX = mConstraint.GameX(true);
-        
         pPerm->mBaseX = aPoint.mX;
     } else {
         pPerm->mBaseX = gGame->mGameAreaLeft + (gGame->mGameAreaRight - gGame->mGameAreaLeft) * aPoint.mX;
@@ -153,17 +162,27 @@ void LevelSectionPermanentBlueprint::Build(LevelSectionPermanent *pPerm) {
         pPerm->mBaseY = gGame->mGameAreaTop + (gGame->mGameAreaBottom - gGame->mGameAreaTop) * aPoint.mY;
     }
     
-    printf("Node Count: %d\n", pPerm->mPath.mNodeList.mCount);
+    pPerm->mPath.Shift(-pPerm->mBaseX, -pPerm->mBaseY);
+
     
+    //Only include spawns when we have a path...
     
-    /*
-    
-    
-    for (int i=0;i<mNodeList.mCount;i++) {
-     
+    if (pPerm->mPath.mNodeList.mCount > 0) {
+        
+        if (mSpawnCount < 1) mSpawnCount = 1;
+        if (mSpawnCount > WAVE_MAX_SPAWN_COUNT) mSpawnCount = WAVE_MAX_SPAWN_COUNT;
+        
+        
+        for (int i=0;i<mSpawnCount;i++) {
+            LevelPermSpawn *aSpawn = new LevelPermSpawn(pPerm, &pPerm->mPath);
+            
+            aSpawn->mFormationID = mSpawn[i].mFormationID.c();
+            aSpawn->mObjectType = mSpawn[i].mObjectType;
+            
+            pPerm->mSpawnList.Add(aSpawn);
+        }
+        
     }
-    
-    */
     
 }
 
@@ -213,6 +232,15 @@ FJSONNode *LevelSectionPermanentBlueprint::Save() {
     
     if (mPath.mNodeList.mCount > 0) {
         aExport->AddDictionary("path", mPath.Save());
+        
+        //We only save the spawn list when we have a
+        //path... The LIST follows the PATH...
+        FJSONNode *aSpawnList = new FJSONNode();
+        aSpawnList->mNodeType = JSON_NODE_TYPE_ARRAY;
+        for (int i=0;i<mSpawnCount;i++) {
+            aSpawnList->AddArray(mSpawn[i].Save());
+        }
+        aExport->AddDictionary("spawn", aSpawnList);
     }
     
     return aExport;
@@ -249,5 +277,19 @@ void LevelSectionPermanentBlueprint::Load(FJSONNode *pNode) {
     
     FJSONNode *aPathNode = pNode->GetDictionary("path");
     mPath.Load(aPathNode);
+    
+    mSpawnCount = 0;
+    if (mPath.mNodeList.mCount > 0) {
+        FJSONNode *aSpawnList = pNode->GetArray("spawn");
+        if (aSpawnList != NULL) {
+            EnumJSONArray(aSpawnList, aSpawnNode) {
+                mSpawn[mSpawnCount].Load(aSpawnNode);
+                ++mSpawnCount;
+            }
+        }
+    }
+    
+    if (mSpawnCount <= 0) { mSpawnCount = 1; }
+    if (mSpawnCount > WAVE_MAX_SPAWN_COUNT) { mSpawnCount = WAVE_MAX_SPAWN_COUNT; }
     
 }

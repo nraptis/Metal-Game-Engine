@@ -14,7 +14,7 @@
 LevelWaveBlueprint::LevelWaveBlueprint() {
     mPath.mWave = this;
     
-    for (int i=0;i<MAX_SPAWN_COUNT;i++) {
+    for (int i=0;i<WAVE_MAX_SPAWN_COUNT;i++) {
         mSpawn[i].Reset();
     }
     
@@ -45,7 +45,7 @@ LevelWaveBlueprint::~LevelWaveBlueprint() {
 
 void LevelWaveBlueprint::Reset() {
     mPath.Reset();
-    for (int i=0;i<MAX_SPAWN_COUNT;i++) {
+    for (int i=0;i<WAVE_MAX_SPAWN_COUNT;i++) {
         mSpawn[i].Reset();
     }
     mSpawnCount = 1;
@@ -57,19 +57,11 @@ void LevelWaveBlueprint::Update() {
     mPath.Update();
     
     if (mSpawnCount < 1) mSpawnCount = 1;
-    if (mSpawnCount > MAX_SPAWN_COUNT) mSpawnCount = MAX_SPAWN_COUNT;
+    if (mSpawnCount > WAVE_MAX_SPAWN_COUNT) mSpawnCount = WAVE_MAX_SPAWN_COUNT;
     
     if (mSelectedSpawnIndex < 0) { mSelectedSpawnIndex = 0; }
     if (mSelectedSpawnIndex >= mSpawnCount) { mSelectedSpawnIndex = mSpawnCount - 1; }
-    
-    
-    for (int i=0;i<mSpawnCount;i++) {
-        //mSpawn[i].mFormationID
-        
-    }
-    //LevelWaveSpawnBlueprint                     mSpawn[MAX_SPAWN_COUNT + 4];
-    //;
-    
+
     
     
 }
@@ -191,7 +183,7 @@ void LevelWaveBlueprint::Build(LevelWave *pWave) {
     pWave->mCreationDelay = mCreationDelay;
     
     if (mSpawnCount < 1) mSpawnCount = 1;
-    if (mSpawnCount > MAX_SPAWN_COUNT) mSpawnCount = MAX_SPAWN_COUNT;
+    if (mSpawnCount > WAVE_MAX_SPAWN_COUNT) mSpawnCount = WAVE_MAX_SPAWN_COUNT;
     
     
     pWave->mSpawnSpacing = (float)mSpawnSpacing;
@@ -293,7 +285,7 @@ void LevelWaveBlueprint::Load(FJSONNode *pNode) {
         }
     }
     if (mSpawnCount <= 0) { mSpawnCount = 1; }
-    if (mSpawnCount > MAX_SPAWN_COUNT) { mSpawnCount = MAX_SPAWN_COUNT; }
+    if (mSpawnCount > WAVE_MAX_SPAWN_COUNT) { mSpawnCount = WAVE_MAX_SPAWN_COUNT; }
     
     FJSONNode *aPathNode = pNode->GetDictionary("path");
     mPath.Load(aPathNode);

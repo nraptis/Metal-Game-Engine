@@ -244,18 +244,15 @@ void FPointList::DrawEdges(float pLineSize)
 }
 
 
-void FPointList::DrawEdgesOpen(float pLineSize)
-{
-    if(mCount > 0)
-    {
+void FPointList::DrawEdgesOpen(float pLineSize) {
+    if (mCount > 0) {
         float aLastX = mX[0];
         float aLastY = mY[0];
         
         float aX = 0.0f;
         float aY = 0.0f;
         
-        for(int i=1;i<mCount;i++)
-        {
+        for (int i=1;i<mCount;i++) {
             aX = mX[i];aY = mY[i];
             Graphics::DrawLine(aLastX, aLastY, aX, aY, pLineSize);
             aLastX = aX;aLastY = aY;

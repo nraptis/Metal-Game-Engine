@@ -1,20 +1,20 @@
 //
-//  LevelWaveSpawnBlueprint.hpp
+//  LevelPermSpawnBlueprint.hpp
 //  Crazy Darts 2 Mac
 //
-//  Created by Nicholas Raptis on 3/29/19.
+//  Created by Nicholas Raptis on 4/21/19.
 //  Copyright © 2019 Froggy Studios. All rights reserved.
 //
 
-#ifndef LevelWaveSpawnBlueprint_hpp
-#define LevelWaveSpawnBlueprint_hpp
+#ifndef LevelPermSpawnBlueprint_hpp
+#define LevelPermSpawnBlueprint_hpp
 
 #include "FJSON.hpp"
 
-class LevelWaveSpawnBlueprint {
+class LevelPermSpawnBlueprint {
 public:
-    LevelWaveSpawnBlueprint();
-    ~LevelWaveSpawnBlueprint();
+    LevelPermSpawnBlueprint();
+    ~LevelPermSpawnBlueprint();
     
     void                                        Reset();
     
@@ -30,4 +30,4 @@ public:
     int                                         mObjectType;
 };
 
-#endif /* LevelWaveSpawnBlueprint_hpp */
+#endif /* LevelPermSpawnBlueprint_hpp */

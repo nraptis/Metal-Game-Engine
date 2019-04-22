@@ -38,7 +38,7 @@ EditorMenuMotion::EditorMenuMotion(GameEditor *pEditor) : ToolMenu() {
     mStepperSpawnCount = new UIStepper();
     mStepperSpawnCount->SetText("Count");
     mStepperSpawnCount->mMin = 1;
-    mStepperSpawnCount->mMax = (MAX_SPAWN_COUNT);
+    mStepperSpawnCount->mMax = (WAVE_MAX_SPAWN_COUNT);
     mGenerationPanel->AddSection(mStepperSpawnCount);
     
     mStepperSpacing = new UIStepper();

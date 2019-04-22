@@ -10,6 +10,9 @@
 #define LevelSectionPermanentBlueprint_hpp
 
 #include "LevelPathBlueprint.hpp"
+#include "LevelPermSpawnBlueprint.hpp"
+
+#define PERM_MAX_SPAWN_COUNT 6
 
 class LevelSectionPermanent;
 class LevelSectionPermanentBlueprint {
@@ -24,7 +27,6 @@ public:
     
     LevelPathBlueprint                          mPath;
     void                                        ApplyEditorConstraints();
-    
     void                                        DeletePath();
     
     
@@ -44,6 +46,14 @@ public:
     
     void                                        ShiftX(float pShiftX);
     void                                        ShiftY(float pShiftY);
+    
+    
+    LevelPermSpawnBlueprint                     mSpawn[PERM_MAX_SPAWN_COUNT + 1];
+    
+    int                                         mSpawnCount;
+    int                                         mSelectedSpawnIndex;
+    
+    int                                         mSpawnSpacing;
     
     
     

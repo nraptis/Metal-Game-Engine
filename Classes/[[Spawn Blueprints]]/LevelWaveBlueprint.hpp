@@ -12,7 +12,7 @@
 #include "LevelPathBlueprint.hpp"
 #include "LevelWaveSpawnBlueprint.hpp"
 
-#define MAX_SPAWN_COUNT 32
+#define WAVE_MAX_SPAWN_COUNT 32
 
 class LevelWave;
 class LevelWaveBlueprint {
@@ -26,7 +26,7 @@ public:
     void                                        Draw(bool pSelected);
     
     LevelPathBlueprint                          mPath;
-    LevelWaveSpawnBlueprint                     mSpawn[MAX_SPAWN_COUNT];
+    LevelWaveSpawnBlueprint                     mSpawn[WAVE_MAX_SPAWN_COUNT + 1];
     
     int                                         mSpawnCount;
     int                                         mSelectedSpawnIndex;

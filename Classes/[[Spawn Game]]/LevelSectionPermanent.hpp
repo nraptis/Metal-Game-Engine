@@ -12,7 +12,7 @@
 #include "GameObject.hpp"
 #include "LevelFormation.hpp"
 #include "LevelPath.hpp"
-#include "LevelWaveSpawn.hpp"
+#include "LevelPermSpawn.hpp"
 
 class LevelSection;
 class LevelSectionPermanent {
@@ -35,6 +35,9 @@ public:
     
     int                                 mObjectType;
     
+    FVec2                               ConvertLocalPointToGame(FVec2 pPos);
+    
+    
     //Since the permanents will be positioned relative
     //to the "section" we need a base position and real
     float                               mBaseX;
@@ -50,7 +53,15 @@ public:
     
     LevelPath                           mPath;
     
+    
+    FList                               mSpawnList; //of LevelPermSpawn
+    
     int                                 mKillTimer;
+    
+private:
+    
+    FList                               mSpawnKillList;
+    FList                               mSpawnDeleteList;
 
 };
 

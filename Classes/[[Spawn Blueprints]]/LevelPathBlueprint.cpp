@@ -198,17 +198,17 @@ void LevelPathBlueprint::Draw(bool pSelected) {
         LevelPathNodeBlueprint *aNode2 = (LevelPathNodeBlueprint *)mNodeList.FetchCircular(i);
         
         float aX1 = aNode1->mEditorX;
-        if (aNode1->mConstraint.mTypeX != X_CONSTRAINT_NONE) { aX1 += aNode1->mConstraint.mOffsetX; }
+        //if (aNode1->mConstraint.mTypeX != X_CONSTRAINT_NONE) { aX1 += aNode1->mConstraint.mOffsetX; }
         
         float aY1 = aNode1->mEditorY;
-        if (aNode1->mConstraint.mTypeY != Y_CONSTRAINT_NONE) { aY1 += aNode1->mConstraint.mOffsetY; }
+        //if (aNode1->mConstraint.mTypeY != Y_CONSTRAINT_NONE) { aY1 += aNode1->mConstraint.mOffsetY; }
         
         
         float aX2 = aNode2->mEditorX;
-        if (aNode2->mConstraint.mTypeX != X_CONSTRAINT_NONE) { aX2 += aNode2->mConstraint.mOffsetX; }
+        //if (aNode2->mConstraint.mTypeX != X_CONSTRAINT_NONE) { aX2 += aNode2->mConstraint.mOffsetX; }
         
         float aY2 = aNode2->mEditorY;
-        if (aNode2->mConstraint.mTypeY != Y_CONSTRAINT_NONE) { aY2 += aNode2->mConstraint.mOffsetY; }
+        //if (aNode2->mConstraint.mTypeY != Y_CONSTRAINT_NONE) { aY2 += aNode2->mConstraint.mOffsetY; }
         
         
         if (pSelected) {
@@ -229,17 +229,7 @@ void LevelPathBlueprint::Draw(bool pSelected) {
         
         float aY = aNode->mEditorY;
         if (aNode->mConstraint.mTypeY != Y_CONSTRAINT_NONE) { aY += aNode->mConstraint.mOffsetY; }
-        
-        
-        if (pSelected) {
-            Graphics::SetColor(0.8f, 0.7f, 0.18f, 0.65f);
-            Graphics::DrawLine(aX, aY, aNode->mEditorX, aNode->mEditorY, 1.5f);
-        } else {
-            Graphics::SetColor(0.8f, 0.7f, 0.18f, 0.35f);
-            Graphics::DrawLine(aX, aY, aNode->mEditorX, aNode->mEditorY, 1.0f);
-        }
-        
-        
+
         if (pSelected) {
             if (i == mSelectedIndex) {
                 Graphics::SetColor(1.0f, 0.0f, 0.0f, 0.75f);

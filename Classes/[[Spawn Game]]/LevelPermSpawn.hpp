@@ -1,54 +1,52 @@
 //
-//  LevelWaveSpawnSpawn.hpp
+//  LevelPermSpawn.hpp
 //  Crazy Darts 2 Mac
 //
-//  Created by Nicholas Raptis on 3/23/19.
+//  Created by Nicholas Raptis on 4/21/19.
 //  Copyright © 2019 Froggy Studios. All rights reserved.
 //
 
-#ifndef LevelWaveSpawnSpawn_hpp
-#define LevelWaveSpawnSpawn_hpp
-
-//We are a "spawn" and we can either control
-//a single balloon, or a cluster of ANYTHING (Space Lords? Maybe?)
+#ifndef LevelPermSpawn_hpp
+#define LevelPermSpawn_hpp
 
 #include "GameObject.hpp"
 #include "LevelFormation.hpp"
 
-class LevelWave;
+class LevelSectionPermanent;
 class LevelPath;
-class LevelWaveSpawn {
+class LevelPermSpawn {
 public:
-    LevelWaveSpawn(LevelWave *pWave, LevelPath *pPath);
-    virtual ~LevelWaveSpawn();
+    
+    LevelPermSpawn(LevelSectionPermanent *pPerm, LevelPath *pPath);
+    virtual ~LevelPermSpawn();
     
     void                                Spawn();
     
     void                                Reset();
-    void                                Restart();
     
     void                                Update();
     void                                Draw();
     
     void                                DisposeObject(GameObject *pObject);
     
-    bool                                DidStart();
     bool                                IsClear(); //all of the objects are either null or "un-killable" types
     
-    LevelWave                           *mWave;
+    void                                RefreshPathPosition();
+    void                                SetObjectPosition();
+    
+    
+    LevelSectionPermanent               *mPerm;
     LevelPath                           *mPath;
     GameObject                          *mObject;
     LevelFormation                      *mFormation;
     
     int                                 mPathIndex;
-    bool                                mIsComplete;
+    
     bool                                mDidSpawn;
     bool                                mDidUpdateAfterSpawn;
     
-    float                               mBaseX;
-    float                               mBaseY;
-    float                               mDistanceTraveled;
-    
+    float                               mPathX;
+    float                               mPathY;
     
     //Possibility 1.) We have a formation...
     FString                             mFormationID;
@@ -56,13 +54,9 @@ public:
     //Possibility 2.) We have an object...
     int                                 mObjectType;
     
-    void                                HandOffAllGameObjects(FList *pList);
-    
-    float                               mOffsetSpawnDistance;
-    
     int                                 mKillTimer;
 };
 
 
-#endif
 
+#endif /* LevelPermSpawn_hpp */

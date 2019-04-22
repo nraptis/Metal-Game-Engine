@@ -840,6 +840,7 @@ void FCanvas::BaseTouchFlush() {
         aChild->BaseTouchFlush();
     }
 }
+
 void FCanvas::BaseKeyDown(int pKey) {
     KeyDown(pKey);
     mProcessChildren.RemoveAll();
@@ -848,6 +849,7 @@ void FCanvas::BaseKeyDown(int pKey) {
         aChild->BaseKeyDown(pKey);
     }
 }
+
 void FCanvas::BaseKeyUp(int pKey) {
     KeyUp(pKey);
     mProcessChildren.RemoveAll();

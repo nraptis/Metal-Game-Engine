@@ -1,16 +1,16 @@
 //
-//  LevelWaveSpawnBlueprint.cpp
+//  LevelPermSpawnBlueprint.cpp
 //  Crazy Darts 2 Mac
 //
-//  Created by Nicholas Raptis on 3/29/19.
+//  Created by Nicholas Raptis on 4/21/19.
 //  Copyright © 2019 Froggy Studios. All rights reserved.
 //
 
-#include "LevelWaveSpawnBlueprint.hpp"
+#include "LevelPermSpawnBlueprint.hpp"
 #include "GameObject.hpp"
 #include "core_includes.h"
 
-LevelWaveSpawnBlueprint::LevelWaveSpawnBlueprint() {
+LevelPermSpawnBlueprint::LevelPermSpawnBlueprint() {
     mSpawnSpacingOffset = 0;
     
     
@@ -19,17 +19,18 @@ LevelWaveSpawnBlueprint::LevelWaveSpawnBlueprint() {
     mObjectType = GAME_OBJECT_TYPE_BALLOON;
 }
 
-LevelWaveSpawnBlueprint::~LevelWaveSpawnBlueprint() {
+LevelPermSpawnBlueprint::~LevelPermSpawnBlueprint() {
     
 }
 
-void LevelWaveSpawnBlueprint::Reset() {
+void LevelPermSpawnBlueprint::Reset() {
     
 }
 
-FJSONNode *LevelWaveSpawnBlueprint::Save() {
+FJSONNode *LevelPermSpawnBlueprint::Save() {
     FJSONNode *aExport = new FJSONNode();
     aExport->mNodeType = JSON_NODE_TYPE_DICTIONARY;
+    
     
     if (mSpawnSpacingOffset != 0) {
         aExport->AddDictionaryInt("spacing_offset", mSpawnSpacingOffset);
@@ -44,12 +45,10 @@ FJSONNode *LevelWaveSpawnBlueprint::Save() {
             aExport->AddDictionaryInt("type", mObjectType);
         }
     }
-    
-    
     return aExport;
 }
 
-void LevelWaveSpawnBlueprint::Load(FJSONNode *pNode) {
+void LevelPermSpawnBlueprint::Load(FJSONNode *pNode) {
     Reset();
     if (pNode == NULL) { return; }
     

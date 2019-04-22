@@ -189,6 +189,8 @@
 		0DD9C4702256EF7500F53214 /* BrickHead.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DD9C46E2256EF7500F53214 /* BrickHead.cpp */; };
 		0DDFC6A0226AC50A0034FF58 /* LevelMotionControllerSlice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DDFC69E226AC50A0034FF58 /* LevelMotionControllerSlice.cpp */; };
 		0DFC55BA226BF80A00F61C1B /* LevelMotionControllerSliceBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DFC55B8226BF80A00F61C1B /* LevelMotionControllerSliceBlueprint.cpp */; };
+		0DFC55BD226D5D8F00F61C1B /* LevelPermSpawn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DFC55BB226D5D8F00F61C1B /* LevelPermSpawn.cpp */; };
+		0DFC55C0226D5D9E00F61C1B /* LevelPermSpawnBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DFC55BE226D5D9E00F61C1B /* LevelPermSpawnBlueprint.cpp */; };
 		E1705008222232CF000C5127 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1705007222232CF000C5127 /* Assets.xcassets */; };
 		E17054B0222236F9000C5127 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E17054AC222236F9000C5127 /* Cocoa.framework */; };
 		E17054B1222236F9000C5127 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E17054AD222236F9000C5127 /* AVFoundation.framework */; };
@@ -557,6 +559,10 @@
 		0DDFC69F226AC50A0034FF58 /* LevelMotionControllerSlice.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelMotionControllerSlice.hpp; sourceTree = "<group>"; };
 		0DFC55B8226BF80A00F61C1B /* LevelMotionControllerSliceBlueprint.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelMotionControllerSliceBlueprint.cpp; sourceTree = "<group>"; };
 		0DFC55B9226BF80A00F61C1B /* LevelMotionControllerSliceBlueprint.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelMotionControllerSliceBlueprint.hpp; sourceTree = "<group>"; };
+		0DFC55BB226D5D8F00F61C1B /* LevelPermSpawn.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelPermSpawn.cpp; sourceTree = "<group>"; };
+		0DFC55BC226D5D8F00F61C1B /* LevelPermSpawn.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelPermSpawn.hpp; sourceTree = "<group>"; };
+		0DFC55BE226D5D9E00F61C1B /* LevelPermSpawnBlueprint.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelPermSpawnBlueprint.cpp; sourceTree = "<group>"; };
+		0DFC55BF226D5D9E00F61C1B /* LevelPermSpawnBlueprint.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelPermSpawnBlueprint.hpp; sourceTree = "<group>"; };
 		E1705001222232CF000C5127 /* Crazy Darts 2 Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crazy Darts 2 Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1705007222232CF000C5127 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E170500C222232CF000C5127 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -925,6 +931,8 @@
 				0D7785232262D4D20049103A /* LevelMotionControllerBlueprint.hpp */,
 				0DFC55B8226BF80A00F61C1B /* LevelMotionControllerSliceBlueprint.cpp */,
 				0DFC55B9226BF80A00F61C1B /* LevelMotionControllerSliceBlueprint.hpp */,
+				0DFC55BE226D5D9E00F61C1B /* LevelPermSpawnBlueprint.cpp */,
+				0DFC55BF226D5D9E00F61C1B /* LevelPermSpawnBlueprint.hpp */,
 			);
 			path = "[[Spawn Blueprints]]";
 			sourceTree = "<group>";
@@ -1049,6 +1057,8 @@
 				0D7785202262D4BF0049103A /* LevelMotionController.hpp */,
 				0DDFC69E226AC50A0034FF58 /* LevelMotionControllerSlice.cpp */,
 				0DDFC69F226AC50A0034FF58 /* LevelMotionControllerSlice.hpp */,
+				0DFC55BB226D5D8F00F61C1B /* LevelPermSpawn.cpp */,
+				0DFC55BC226D5D8F00F61C1B /* LevelPermSpawn.hpp */,
 			);
 			path = "[[Spawn Game]]";
 			sourceTree = "<group>";
@@ -1226,6 +1236,7 @@
 				0D8FCF68225DA8ED00A74580 /* Util_ScreenFrame.cpp in Sources */,
 				0DB05E7B2255A365006AE702 /* EditorMenuFormationPickerCell.cpp in Sources */,
 				0D8FCF6E225DA8ED00A74580 /* FWindow.cpp in Sources */,
+				0DFC55BD226D5D8F00F61C1B /* LevelPermSpawn.cpp in Sources */,
 				0DB05E802255A365006AE702 /* EditorMenuSpawn.cpp in Sources */,
 				0D8FCF4B225DA8ED00A74580 /* FCanvas.cpp in Sources */,
 				0D8FCF78225DA8ED00A74580 /* core_app_shell.cpp in Sources */,
@@ -1259,6 +1270,7 @@
 				0D8FCF6A225DA8ED00A74580 /* ToolMenuPanelHeader.cpp in Sources */,
 				0D8FCF81225DA8ED00A74580 /* os_core_sound_mac.mm in Sources */,
 				0D8FCF84225DA8ED00A74580 /* os_core_web.cpp in Sources */,
+				0DFC55C0226D5D9E00F61C1B /* LevelPermSpawnBlueprint.cpp in Sources */,
 				0DB05E6D2255A365006AE702 /* LevelSelectorScreen.cpp in Sources */,
 				0D8FCF3B225DA8ED00A74580 /* FAnimation.cpp in Sources */,
 				0DB05E672255A365006AE702 /* PhongLightMenu.cpp in Sources */,
