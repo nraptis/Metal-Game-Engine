@@ -40,6 +40,7 @@ public:
     int                                         mWaitTimer;
     int                                         mChamferSize;
     int                                         mDecelDistance;
+    int                                         mAccelDistance;
     
     void                                        ShiftX(float pShiftX);
     void                                        ShiftY(float pShiftY);

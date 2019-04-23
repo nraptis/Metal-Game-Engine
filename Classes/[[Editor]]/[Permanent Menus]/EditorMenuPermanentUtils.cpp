@@ -96,9 +96,14 @@ void EditorMenuPermanentUtils::Layout() {
 void EditorMenuPermanentUtils::Notify(void *pSender, const char *pNotification) {
     
     if (mEditor == NULL) { return; }
+    if (gEditor == NULL) { return; }
     
     if (pSender == mButtonCloseEditor) { mEditor->Close(); }
     if (pSender == mButtonResetPerm) { mEditor->ResetSelected(); }
+    
+    
+    if (pSender == mStepperSpawnCount) { gEditor->RefreshPlayback(); }
+    
     
     /*
     if (pSender == mSegmentSpeed) {
@@ -117,7 +122,7 @@ void EditorMenuPermanentUtils::Update() {
     
     LevelSectionPermanentBlueprint *aPerm = NULL;
     if (gEditor != NULL) {
-        aPerm = gEditor->PermnGet();
+        aPerm = gEditor->PermGet();
     }
     
     if (mStepperSpawnCount != NULL) {

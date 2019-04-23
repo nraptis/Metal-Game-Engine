@@ -191,6 +191,8 @@
 		0DFC55BA226BF80A00F61C1B /* LevelMotionControllerSliceBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DFC55B8226BF80A00F61C1B /* LevelMotionControllerSliceBlueprint.cpp */; };
 		0DFC55BD226D5D8F00F61C1B /* LevelPermSpawn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DFC55BB226D5D8F00F61C1B /* LevelPermSpawn.cpp */; };
 		0DFC55C0226D5D9E00F61C1B /* LevelPermSpawnBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DFC55BE226D5D9E00F61C1B /* LevelPermSpawnBlueprint.cpp */; };
+		0DFC55C3226E045D00F61C1B /* EditorMenuPermPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DFC55C1226E045D00F61C1B /* EditorMenuPermPicker.cpp */; };
+		0DFC55C6226E046C00F61C1B /* EditorMenuPermSpawnPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DFC55C4226E046C00F61C1B /* EditorMenuPermSpawnPicker.cpp */; };
 		E1705008222232CF000C5127 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1705007222232CF000C5127 /* Assets.xcassets */; };
 		E17054B0222236F9000C5127 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E17054AC222236F9000C5127 /* Cocoa.framework */; };
 		E17054B1222236F9000C5127 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E17054AD222236F9000C5127 /* AVFoundation.framework */; };
@@ -563,6 +565,10 @@
 		0DFC55BC226D5D8F00F61C1B /* LevelPermSpawn.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelPermSpawn.hpp; sourceTree = "<group>"; };
 		0DFC55BE226D5D9E00F61C1B /* LevelPermSpawnBlueprint.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelPermSpawnBlueprint.cpp; sourceTree = "<group>"; };
 		0DFC55BF226D5D9E00F61C1B /* LevelPermSpawnBlueprint.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelPermSpawnBlueprint.hpp; sourceTree = "<group>"; };
+		0DFC55C1226E045D00F61C1B /* EditorMenuPermPicker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuPermPicker.cpp; sourceTree = "<group>"; };
+		0DFC55C2226E045D00F61C1B /* EditorMenuPermPicker.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuPermPicker.hpp; sourceTree = "<group>"; };
+		0DFC55C4226E046C00F61C1B /* EditorMenuPermSpawnPicker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuPermSpawnPicker.cpp; sourceTree = "<group>"; };
+		0DFC55C5226E046C00F61C1B /* EditorMenuPermSpawnPicker.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuPermSpawnPicker.hpp; sourceTree = "<group>"; };
 		E1705001222232CF000C5127 /* Crazy Darts 2 Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crazy Darts 2 Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1705007222232CF000C5127 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E170500C222232CF000C5127 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1070,6 +1076,10 @@
 				0DD15B4222591E71005C06D8 /* EditorMenuPermanent.hpp */,
 				0DD15B4422591E7B005C06D8 /* EditorMenuPermanentUtils.cpp */,
 				0DD15B4522591E7B005C06D8 /* EditorMenuPermanentUtils.hpp */,
+				0DFC55C1226E045D00F61C1B /* EditorMenuPermPicker.cpp */,
+				0DFC55C2226E045D00F61C1B /* EditorMenuPermPicker.hpp */,
+				0DFC55C4226E046C00F61C1B /* EditorMenuPermSpawnPicker.cpp */,
+				0DFC55C5226E046C00F61C1B /* EditorMenuPermSpawnPicker.hpp */,
 			);
 			path = "[Permanent Menus]";
 			sourceTree = "<group>";
@@ -1187,6 +1197,7 @@
 				0DD15B4622591E7B005C06D8 /* EditorMenuPermanentUtils.cpp in Sources */,
 				0D8FCF5F225DA8ED00A74580 /* UIAlignmentPicker.cpp in Sources */,
 				0D2A0F4D225D86310098B023 /* EllipseConfigMenu.cpp in Sources */,
+				0DFC55C6226E046C00F61C1B /* EditorMenuPermSpawnPicker.cpp in Sources */,
 				0DB05E832255A365006AE702 /* GameFormationEditor.cpp in Sources */,
 				0D8FCF30225DA8ED00A74580 /* FFloatBufferCache.cpp in Sources */,
 				0DB05E792255A365006AE702 /* EditorMenuFormationPicker.cpp in Sources */,
@@ -1284,6 +1295,7 @@
 				0DB05E6A2255A365006AE702 /* SoundConfigMenu.cpp in Sources */,
 				0DB05E862255A365006AE702 /* EditorMenuPathControl.cpp in Sources */,
 				0DB05E872255A365006AE702 /* Game.cpp in Sources */,
+				0DFC55C3226E045D00F61C1B /* EditorMenuPermPicker.cpp in Sources */,
 				0D509186225AB4650082ED8E /* EditorMenuFormationGrid.cpp in Sources */,
 				0DB05E5C2255A364006AE702 /* GameObject.cpp in Sources */,
 				0D8FCF69225DA8ED00A74580 /* UIStepper.cpp in Sources */,

@@ -69,8 +69,9 @@ EditorMenuPath::EditorMenuPath(GamePathEditor *pEditor) : ToolMenu() {
     mStepperDecel->SetText("Decel:");
     mPointsPanel->AddSection(mStepperDecel);
     
-    
-    
+    mStepperAccel = new UIStepper();
+    mStepperAccel->SetText("Accel:");
+    mPointsPanel->AddSection(mStepperAccel);
     
     
     mRowPointOptions = new ToolMenuSectionRow();
@@ -205,6 +206,22 @@ void EditorMenuPath::Update() {
             mStepperDecel->SetTarget(NULL);
         }
     }
+    
+    if (mStepperAccel != NULL) {
+        bool aUnlink = true;
+        if (mEditor->mPath != NULL) {
+            LevelPathNodeBlueprint *aNode = (LevelPathNodeBlueprint *)mEditor->mPath->mNodeList.Fetch(mEditor->mPath->mSelectedIndex);
+            if (aNode) {
+                aUnlink = false;
+                mStepperAccel->SetTarget(&(aNode->mAccelDistance));
+            }
+        }
+        if (aUnlink) {
+            mStepperAccel->SetTarget(NULL);
+        }
+    }
+    
+    
 }
 
 void EditorMenuPath::Notify(void *pSender, const char *pNotification) {
@@ -220,5 +237,12 @@ void EditorMenuPath::Notify(void *pSender, const char *pNotification) {
     if (pSender == mStepperChamfer) { mEditor->PathRefresh(); }
     if (pSender == mCheckBoxSmooth) { mEditor->PathRefresh(); }
     if (pSender == mCheckBoxClosed) { mEditor->PathRefresh(); }
+    
+    if (pSender == mStepperAccel) { mEditor->PathRefresh(); }
+    if (pSender == mStepperDecel) { mEditor->PathRefresh(); }
+    
+    
+    
+    
     
 }

@@ -57,6 +57,26 @@ GamePermanentEditor::GamePermanentEditor(GameEditor *pEditor) {
     mToolContainer->AddChild(mMenuUtils);
     mMenuUtils->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), gSafeAreaInsetTop + 20.0f, 400.0f, 736.0f);
     
+    
+    
+    mMenuSpawnPicker = new EditorMenuPermSpawnPicker(this);
+    mToolContainer->AddChild(mMenuSpawnPicker);
+    mMenuSpawnPicker->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), (gDeviceHeight - gSafeAreaInsetBottom - 2.0f) - (154.0f + 134.0f + 2.0f), 400.0f, 154.0f);
+    
+    
+    //                   *;
+    /*
+    void GameEditor::OpenSpawnPickerMenu() {
+        if (mMenuSpawnPicker == NULL) {
+            mMenuSpawnPicker = new EditorMenuSpawnPicker(this);
+            mToolContainer->AddChild(mMenuSpawnPicker);
+            mMenuSpawnPicker->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f),
+                                       (gDeviceHeight - gSafeAreaInsetBottom - 2.0f) - 134.0f, 400.0f, 154.0f);
+        }
+    }
+    */
+    
+    
     SetOverlay(mToolContainer);
     
 }
@@ -135,7 +155,7 @@ void GamePermanentEditor::TouchDown(float pX, float pY, void *pData) {
             float aDist = 50.0f * 50.0f;
             
             gEditor->mSection.PermSelectClosest(pX, pY);
-            LevelSectionPermanentBlueprint *aPerm = gEditor->PermnGet();
+            LevelSectionPermanentBlueprint *aPerm = gEditor->PermGet();
             if (aPerm != NULL) {
                 mSelectedTouch = pData;
                 mSelectNodeStartX = aPerm->mEditorX;
@@ -162,7 +182,7 @@ void GamePermanentEditor::TouchMove(float pX, float pY, void *pData) {
     float aY = mSelectNodeStartY + (pY - mSelectTouchStartY);
     
     if (mPermMode == PERMANENT_MODE_MOVE) {
-        LevelSectionPermanentBlueprint *aPerm = gEditor->PermnGet();
+        LevelSectionPermanentBlueprint *aPerm = gEditor->PermGet();
         if (mSelectedTouch == pData && aPerm != NULL) {
             if (mSnapsEnabled && gEditor != NULL) {
                 aPerm->mConstraint.mTypeX = gEditor->ClosestXConstraint(aX);
@@ -441,10 +461,33 @@ void GamePermanentEditor::DeletePermanent() {
     }
 }
 
+void GamePermanentEditor::PermSelect(int pIndex) {
+    if (gEditor != NULL) {
+        gEditor->PermSelect(pIndex);
+    }
+}
+
+void GamePermanentEditor::PermSpawnSelect(int pIndex) {
+    LevelSectionPermanentBlueprint *aPerm = GetPerm();
+    if (aPerm != NULL) {
+        aPerm->mSelectedSpawnIndex = pIndex;
+    }
+}
+
+int GamePermanentEditor::PermSpawnIndex() {
+    LevelSectionPermanentBlueprint *aPerm = GetPerm();
+    if (aPerm != NULL) {
+        if (aPerm->mSelectedSpawnIndex >= 0 && aPerm->mSelectedSpawnIndex < aPerm->mSpawnCount) {
+            return aPerm->mSelectedSpawnIndex;
+        }
+    }
+    return -1;
+}
+
 LevelSectionPermanentBlueprint *GamePermanentEditor::GetPerm() {
     
     if (gEditor != NULL) {
-        LevelSectionPermanentBlueprint *aPerm = gEditor->PermnGet();
+        LevelSectionPermanentBlueprint *aPerm = gEditor->PermGet();
         if (aPerm != NULL) {
             return aPerm;
         }

@@ -45,18 +45,9 @@ public:
     UICheckBox                              *mCheckBoxInvertFormationH;
     UICheckBox                              *mCheckBoxInvertFormationV;
     
-    
     ToolMenuPanel                           *mPanelBehavior;
     
     UIStepper                               *mStepperSpacingOffset;
-    
-    ToolMenuPanel                           *mPanelRotation;
-    UISegment                               *mSegmentRotationSpeed;
-    ToolMenuSectionRow                      *mRowRotation;
-    UICheckBox                              *mCheckBoxRotationNegateAlways;
-    UICheckBox                              *mCheckBoxRotationNegateRandom;
-    
-    
 };
 
 #endif /* EditorMenuAttachment_hpp */

@@ -13,6 +13,7 @@
 #include "Game.hpp"
 #include "EditorMenuPermanentUtils.hpp"
 #include "EditorMenuPermanent.hpp"
+#include "EditorMenuPermSpawnPicker.hpp"
 #include "LevelSectionPermanentBlueprint.hpp"
 #include "LevelSectionPermanent.hpp"
 #include "GamePathEditor.hpp"
@@ -47,6 +48,7 @@ public:
     GameEditor                                  *mEditor;
     EditorMenuPermanentUtils                    *mMenuUtils;
     EditorMenuPermanent                         *mMenuPerm;
+    EditorMenuPermSpawnPicker                   *mMenuSpawnPicker;
     
     void                                        SetOverlay(FCanvas *pCanvas);
     FCanvas                                     *mOverlay;
@@ -56,12 +58,15 @@ public:
     void                                        OpenPathEditor();
     void                                        ClosePathEditor();
     
-    
-    
-    
     void                                        AddPath();
     void                                        DeletePath();
     void                                        DeletePermanent();
+    
+    
+    void                                        PermSelect(int pIndex);
+    void                                        PermSpawnSelect(int pIndex);
+    
+    int                                         PermSpawnIndex();
     
     
     LevelSectionPermanentBlueprint              *GetPerm();

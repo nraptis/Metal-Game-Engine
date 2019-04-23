@@ -87,7 +87,7 @@ void LevelPath::Update() {
     mDeleteList.RemoveAll();
 }
 
-void LevelPath::Add(int pType, float pX, float pY, int pDecel, int pWait) {
+void LevelPath::Add(int pType, float pX, float pY, int pAccel, int pDecel, int pWait) {
     //
     //
     //
@@ -95,6 +95,7 @@ void LevelPath::Add(int pType, float pX, float pY, int pDecel, int pWait) {
     aNode->mX = pX;
     aNode->mY = pY;
     aNode->mType = pType;
+    aNode->mAccelDistance = pAccel;
     aNode->mDecelDistance = pDecel;
     aNode->mWaitTimer = pWait;
     mNodeList.Add(aNode);
@@ -102,8 +103,8 @@ void LevelPath::Add(int pType, float pX, float pY, int pDecel, int pWait) {
     mDidFinalize = false;
 }
 
-void LevelPath::AddMove(float pX, float pY, int pDecel, int pWait) {
-    Add(PATH_NODE_NORMAL, pX, pY, pDecel, pWait);
+void LevelPath::AddMove(float pX, float pY, int pAccel, int pDecel, int pWait) {
+    Add(PATH_NODE_NORMAL, pX, pY, pAccel, pDecel, pWait);
 }
 
 void LevelPath::Shift(float pShiftX, float pShiftY) {
@@ -152,10 +153,6 @@ void LevelPath::Finalize() {
     
     mDidFinalize = true;
     
-    //mClosed
-    
-    //mClosed
-    
     int aMax = mNodeList.mCount;
     if (mClosed) {
         aMax += 1;
@@ -193,6 +190,11 @@ void LevelPath::AddSegmentBacktrackingFrom(int pIndex) {
     }
     
     LevelPathNode *aPrev = ((LevelPathNode *)mNodeList.mData[aStartIndex]);
+    
+    int aAccelDistance = 0;
+    if (aPrev != NULL) {
+        aAccelDistance = aPrev->mAccelDistance;
+    }
     
     cPointList.Reset();
     
@@ -277,7 +279,7 @@ void LevelPath::AddSegmentBacktrackingFrom(int pIndex) {
     float aDeceleration = 0.0f;
     
     bool aAccelerationEnabled = true;
-    float aAccelerationDistance = 60.0f;
+    //float aAccelerationDistance = 60.0f;
     float aAccelerationSpeed = 0.0f;
     float aAcceleration = 0.0f;
     
@@ -291,10 +293,10 @@ void LevelPath::AddSegmentBacktrackingFrom(int pIndex) {
         aDeceleration = (aSpeed * aSpeed) / (2.0f * ((float)aDecelDistance));
     }
     
-    if (cPolyPath.mLength > aAccelerationDistance && aAccelerationEnabled == true) {
-        aAcceleration = (aSpeed * aSpeed) / (2.0f * ((float)aAccelerationDistance));
-    } else {
+    if (cPolyPath.mLength < aAccelDistance || aAccelDistance < 10) {
         aAccelerationEnabled = false;
+    } else {
+        aAcceleration = (aSpeed * aSpeed) / (2.0f * ((float)aAccelDistance));
     }
     
     cSegmentList.RemoveAll();
@@ -307,7 +309,7 @@ void LevelPath::AddSegmentBacktrackingFrom(int pIndex) {
         if (aDecelerationEnabled == true && aCurrentDist > aDecelerationCutoff) {
             aCurrentDist += aSpeed;
             aSpeed -= aDeceleration;
-        } else if (aAccelerationEnabled == true && aCurrentDist < aAccelerationDistance) {
+        } else if (aAccelerationEnabled == true && aCurrentDist < ((float)aAccelDistance)) {
             aAccelerationSpeed += aAcceleration;
             if (aAccelerationSpeed > aSpeed) {
                 aAccelerationSpeed = aSpeed;

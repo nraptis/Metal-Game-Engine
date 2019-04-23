@@ -104,7 +104,7 @@ public:
     
     void                                        PermSelect(int pIndex);
     int                                         PermIndex();
-    LevelSectionPermanentBlueprint              *PermnGet();
+    LevelSectionPermanentBlueprint              *PermGet();
     void                                        PermDelete();
     
     

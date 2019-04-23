@@ -29,6 +29,7 @@ public:
     void                                        ApplyEditorConstraints();
     void                                        DeletePath();
     
+    bool                                        IsPathPerm();
     
     Constraint                                  mConstraint;
     

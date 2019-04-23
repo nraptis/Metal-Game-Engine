@@ -3,15 +3,16 @@
 	"wave_list": [],
 	"perm_list": [
 		{
-			"x_con": 600,
+			"x_con": 500,
 			"y_con": 400,
 			"path": {
-				"smooth": true,
 				"closed": true,
 				"node_list": [
 					{
 						"x_con": 300,
-						"y_con": 300
+						"y_con": 300,
+						"decel": 1,
+						"wait": 12
 					},
 					{
 						"x_con": 500,
@@ -38,6 +39,7 @@
 			"y_con": 600,
 			"path": {
 				"smooth": true,
+				"closed": true,
 				"node_list": [
 					{
 						"x_con": 400,
@@ -45,11 +47,16 @@
 					},
 					{
 						"x_con": 500,
-						"y_con": 500
+						"y_con": 500,
+						"decel": 150,
+						"accel": 352
 					},
 					{
 						"x_con": 600,
-						"y_con": 600
+						"x_con_offset": 30.000000,
+						"y_con": 600,
+						"y_con_offset": 60.000000,
+						"accel": 2
 					},
 					{
 						"x_con": 500,
@@ -58,20 +65,21 @@
 				]
 			},
 			"spawn": [
+				{},
+				{},
+				{},
+				{},
+				{},
 				{}
 			]
 		},
 		{
 			"x_con": 300,
-			"y_con": 500
-		},
-		{
-			"x_con": 400,
-			"y_con": 500
+			"y_con": 800
 		},
 		{
 			"x_con": 700,
-			"y_con": 500
+			"y_con": 400
 		},
 		{
 			"x_con": 500,

@@ -137,6 +137,13 @@ void LevelSectionPermanentBlueprint::DeletePath() {
     mPath.Reset();
 }
 
+bool LevelSectionPermanentBlueprint::IsPathPerm() {
+    if (mPath.mNodeList.mCount > 0 && mSpawnCount > 0) {
+        return true;
+    }
+    return false;
+}
+
 void LevelSectionPermanentBlueprint::Build(LevelSectionPermanent *pPerm) {
     
     if (pPerm == NULL) { return; }

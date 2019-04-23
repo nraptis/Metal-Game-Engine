@@ -926,7 +926,7 @@ int GameEditor::PermIndex() {
     return mSection.mPermList.Find(mSection.mCurrentPerm);
 }
 
-LevelSectionPermanentBlueprint *GameEditor::PermnGet() {
+LevelSectionPermanentBlueprint *GameEditor::PermGet() {
     return mSection.mCurrentPerm;
 }
 

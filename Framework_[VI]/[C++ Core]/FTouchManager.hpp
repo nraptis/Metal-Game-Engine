@@ -86,7 +86,7 @@ public:
     void                                    Active();
     void                                    Inactive();
     
-    FTouch                                  *GetTouchDown(void *pData);
+    FTouch                                  *DequeueTouch(void *pData);
     FTouch                                  *GetTouch(void *pData);
 
     void                                    FinishedTouch(FTouch *pTouch);

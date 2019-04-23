@@ -87,37 +87,6 @@ EditorMenuAttachment::EditorMenuAttachment(GameEditor *pEditor) : ToolMenu() {
     mStepperSpacingOffset->mMax = 1000;
     //gNotify.Register(this, mStepperSpacingOffset, "stepper");
     mPanelBehavior->AddSection(mStepperSpacingOffset);
-    
-
-    
-    mPanelRotation = new ToolMenuPanel();
-    mPanelRotation->SetTitle("Rotation");
-    AddSection(mPanelRotation);
-    
-    
-    mSegmentRotationSpeed = new UISegment();
-    mSegmentRotationSpeed->SetSegmentCount(7);
-    mSegmentRotationSpeed->SetTitles("XS", "S", "MS", "M", "MF", "F", "XF");
-    //gNotify.Register(this, mSegmentRotationSpeed, "segment");
-    if (gGame) {
-        mSegmentRotationSpeed->SetTarget(&gEditor->mSpawnRotationSpeedClassIndex);
-    }
-    mPanelRotation->AddSection(mSegmentRotationSpeed);
-    
-    
-    mRowRotation = new ToolMenuSectionRow();
-    mPanelRotation->AddSection(mRowRotation);
-    
-
-    mCheckBoxRotationNegateAlways = new UICheckBox();
-    mCheckBoxRotationNegateAlways->SetText("Neg Always");
-    mRowRotation->AddCheckBox(mCheckBoxRotationNegateAlways);
-    
-    mCheckBoxRotationNegateRandom = new UICheckBox();
-    mCheckBoxRotationNegateRandom->SetText("Neg Random");
-    mRowRotation->AddCheckBox(mCheckBoxRotationNegateRandom);
-    
-    
 }
 
 EditorMenuAttachment::~EditorMenuAttachment() {
@@ -136,7 +105,6 @@ void EditorMenuAttachment::Notify(void *pSender, const char *pNotification) {
     
     if (gEditor == NULL) { return; }
     
-    if (pSender == mSegmentRotationSpeed) { gEditor->RefreshPlayback(); }
     if (pSender == mStepperSpacingOffset) { gEditor->RefreshPlayback(); }
     
     

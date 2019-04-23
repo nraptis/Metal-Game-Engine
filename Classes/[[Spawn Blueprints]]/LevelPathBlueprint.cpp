@@ -27,6 +27,7 @@ LevelPathNodeBlueprint::LevelPathNodeBlueprint() {
     mChamferSize = 0;
     
     mDecelDistance = 0;
+    mAccelDistance = 0;
     
     mKillTimer = 8;
 }
@@ -96,6 +97,10 @@ FJSONNode *LevelPathNodeBlueprint::Save() {
         aExport->AddDictionaryInt("decel", mDecelDistance);
     }
     
+    if (mAccelDistance > 0) {
+        aExport->AddDictionaryInt("accel", mAccelDistance);
+    }
+    
     if (mChamferSize > 0) {
         aExport->AddDictionaryInt("chamfer", mChamferSize);
     }
@@ -137,9 +142,11 @@ void LevelPathNodeBlueprint::Load(FJSONNode *pNode) {
     }
     
     
-    mChamferSize = pNode->GetInt("chamfer", mChamferSize);
-    mWaitTimer = pNode->GetInt("wait", mWaitTimer);
-    mDecelDistance = pNode->GetInt("decel", mDecelDistance);
+    mChamferSize = pNode->GetInt("chamfer", 0);
+    mWaitTimer = pNode->GetInt("wait", 0);
+    mDecelDistance = pNode->GetInt("decel", 0);
+    mAccelDistance = pNode->GetInt("accel", 0);
+    
 }
 
 LevelPathBlueprint::LevelPathBlueprint() {
@@ -647,6 +654,7 @@ void LevelPathBlueprint::Build(LevelPath *pPath) {
             
             pPath->AddMove(aNode->mGameX + aDiffBackX * aChamferSize,
                            aNode->mGameY + aDiffBackY * aChamferSize,
+                           aNode->mAccelDistance,
                            aNode->mDecelDistance,
                            aNode->mWaitTimer);
             pPath->AddMove(aNode->mGameX + aDiffNextX * aChamferSize,
@@ -654,7 +662,7 @@ void LevelPathBlueprint::Build(LevelPath *pPath) {
                            0,
                            aNode->mWaitTimer);
         } else {
-            pPath->AddMove(aNode->mGameX, aNode->mGameY, aNode->mDecelDistance, aNode->mWaitTimer);
+            pPath->AddMove(aNode->mGameX, aNode->mGameY, aNode->mAccelDistance, aNode->mDecelDistance, aNode->mWaitTimer);
         }
     }
     

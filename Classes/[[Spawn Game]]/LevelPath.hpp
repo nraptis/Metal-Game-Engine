@@ -40,6 +40,7 @@ public:
     int                                 mType;
     int                                 mWaitTimer;
     int                                 mDecelDistance;
+    int                                 mAccelDistance;
     
     
     int                                 mKillTimer;
@@ -53,7 +54,7 @@ public:
     
     void                                Reset();
     
-    void                                AddMove(float pX, float pY, int pDecel = 0, int pWait = 0);
+    void                                AddMove(float pX, float pY, int pAccel = 0, int pDecel = 0, int pWait = 0);
     
     void                                Shift(float pShiftX, float pShiftY);
     
@@ -92,7 +93,7 @@ public:
     
     
 private:
-    void                                Add(int pType, float pX, float pY, int pDecel, int pWait);
+    void                                Add(int pType, float pX, float pY, int pAccel, int pDecel, int pWait);
     
     float                               mTempX;
     float                               mTempY;

@@ -160,7 +160,7 @@ void EditorMenuPermanent::Update() {
         return;
     }
     
-    LevelSectionPermanentBlueprint *aPerm = gEditor->PermnGet();
+    LevelSectionPermanentBlueprint *aPerm = gEditor->PermGet();
     
     if (mLabelOffsetX != NULL) {
         if (aPerm != NULL) {
