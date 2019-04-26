@@ -123,17 +123,7 @@ void LevelFormationTracerBlueprint::Update() {
     
     
     RefreshSpawnNodeList();
-    
-    
-    
     RefreshNodePositions();
-    
-    
-    
-    
-    
-    
-    
     
     EnumList(LevelFormationTracerNodeBlueprint, aNode, mKillTracerNodeList) {
         aNode->mKillTimer--;

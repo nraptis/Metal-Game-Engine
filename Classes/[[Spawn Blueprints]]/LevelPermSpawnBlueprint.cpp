@@ -11,7 +11,9 @@
 #include "core_includes.h"
 
 LevelPermSpawnBlueprint::LevelPermSpawnBlueprint() {
+    
     mSpawnSpacingOffset = 0;
+    
     
     
     mFormationID = "";
@@ -24,17 +26,17 @@ LevelPermSpawnBlueprint::~LevelPermSpawnBlueprint() {
 }
 
 void LevelPermSpawnBlueprint::Reset() {
-    
+    mMotionController.Reset();
 }
 
 FJSONNode *LevelPermSpawnBlueprint::Save() {
     FJSONNode *aExport = new FJSONNode();
     aExport->mNodeType = JSON_NODE_TYPE_DICTIONARY;
     
-    
     if (mSpawnSpacingOffset != 0) {
         aExport->AddDictionaryInt("spacing_offset", mSpawnSpacingOffset);
     }
+    
     
     if (mFormationID.mLength > 0) {
         //Possibility 1.) We have a formation...
@@ -45,6 +47,11 @@ FJSONNode *LevelPermSpawnBlueprint::Save() {
             aExport->AddDictionaryInt("type", mObjectType);
         }
     }
+    
+    if (mMotionController.IsEmpty() == false) {
+        aExport->AddDictionary("motion", mMotionController.Save());
+    }
+    
     return aExport;
 }
 
@@ -55,21 +62,16 @@ void LevelPermSpawnBlueprint::Load(FJSONNode *pNode) {
     mSpawnSpacingOffset = pNode->GetInt("spacing_offset", 0);
     
     mFormationID = pNode->GetString("formation", mFormationID);
+    
+    
     if (mFormationID.mLength > 0) {
         //Possibility 1.) We have a formation...
     } else {
         //Possibility 2.) We have an object...
         mObjectType = pNode->GetInt("type", mObjectType);
     }
-    
-    //Possibility 1.) We have a formation...
-    //FString                                     mFormationID;
-    
-    //Possibility 2.) We have an object...
-    //int                                         mObjectType;
-    //
-    
-    
-    
+
+    FJSONNode *aMotionNode = pNode->GetDictionary("motion");
+    mMotionController.Load(aMotionNode);
     
 }

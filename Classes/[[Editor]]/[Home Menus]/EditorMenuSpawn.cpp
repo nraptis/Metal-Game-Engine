@@ -30,7 +30,7 @@ EditorMenuSpawn::EditorMenuSpawn(GameEditor *pEditor) : ToolMenu() {
     mSegmentSpeed = new UISegment();
     mSegmentSpeed->SetSegmentCount(7);
     mSegmentSpeed->SetTitles("XS", "S", "MS", "M", "MF", "F", "XF");
-    if (gGame) {
+    if (gEditor != NULL) {
         mSegmentSpeed->SetTarget(&gEditor->mSpeedClassIndex);
     }
     mGenerationPanel->AddSection(mSegmentSpeed);

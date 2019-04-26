@@ -10,101 +10,97 @@
 #include "LightConfigurationScene.hpp"
 #include "EditorMenuMotion.hpp"
 #include "GameEditor.hpp"
+#include "GamePermanentEditor.hpp"
 #include "FApp.hpp"
 
 EditorMenuMotion::EditorMenuMotion(GameEditor *pEditor) : ToolMenu() {
-    mName = "EditorMenuMotion";
-    
     mEditor = pEditor;
+    mPermEditor = NULL;
     
-    SetTitle("Spawn (Meta)");
+    Init();
+}
+
+EditorMenuMotion::EditorMenuMotion(GamePermanentEditor *pEditor) {
+    mEditor = NULL;
+    mPermEditor = pEditor;
     
-    SetScrollMode(false);
+    Init();
+}
+
+void EditorMenuMotion::Init() {
     
+    mName = "EditorMenuMotion";
+    SetTitle("Target Motion");
+    SetScrollMode(true);
     
-    mGenerationPanel = new ToolMenuPanel();
-    mGenerationPanel->SetTitle("Generation");
-    AddSection(mGenerationPanel);
+    mIsForPermSpawn = false;
+    mMotionController = NULL;
     
-    mSegmentSpeed = new UISegment();
-    mSegmentSpeed->SetSegmentCount(7);
-    mSegmentSpeed->SetTitles("XS", "S", "MS", "M", "MF", "F", "XF");
-    if (gGame) {
-        mSegmentSpeed->SetTarget(&gEditor->mSpeedClassIndex);
-    }
-    mGenerationPanel->AddSection(mSegmentSpeed);
-    
-    
-    mStepperSpawnCount = new UIStepper();
-    mStepperSpawnCount->SetText("Count");
-    mStepperSpawnCount->mMin = 1;
-    mStepperSpawnCount->mMax = (WAVE_MAX_SPAWN_COUNT);
-    mGenerationPanel->AddSection(mStepperSpawnCount);
-    
-    mStepperSpacing = new UIStepper();
-    mStepperSpacing->SetText("Spacing");
-    mStepperSpacing->mMin = -1000;
-    mStepperSpacing->mMax = 1000;
-    mGenerationPanel->AddSection(mStepperSpacing);
+    mPanelMainControls = new ToolMenuPanel();
+    mPanelMainControls->SetTitle("Main");
+    AddSection(mPanelMainControls);
     
     
+    mRowMain1 = new ToolMenuSectionRow();
+    mPanelMainControls->AddSection(mRowMain1);
     
-    mTimingPanel = new ToolMenuPanel();
-    mTimingPanel->SetTitle("Timing");
-    AddSection(mTimingPanel);
+    mRowMain2 = new ToolMenuSectionRow();
+    mPanelMainControls->AddSection(mRowMain2);
     
-    
-    
-    
-    
-    
-    //mStepperCreationType = new UISegment();
-    //mStepperCreationType->SetSegmentCount(4);
-    //mStepperCreationType->SetTitles("P-W-Sta", "P-W-End", "P-W-Clr", "S-Clr-NoP", "S-Cle-AndP");
-    //mTimingPanel->AddSection(mStepperCreationType);
+    mRowMain3 = new ToolMenuSectionRow();
+    mPanelMainControls->AddSection(mRowMain3);
     
     
+    mButtonAddRotate = new UIButton();
+    mButtonAddRotate->SetText("+ Rotate");
+    mRowMain1->AddButton(mButtonAddRotate);
     
-    mStepperCreationDelay = new UIStepper();
-    mStepperCreationDelay->SetText("Delay");
-    mStepperCreationDelay->mMin = 0;
-    mStepperCreationDelay->mMax = 2048;
-    mTimingPanel->AddSection(mStepperCreationDelay);
+    mButtonAddOscillateRotation = new UIButton();
+    mButtonAddOscillateRotation->SetText("+ OscRot");
+    mRowMain1->AddButton(mButtonAddOscillateRotation);
     
+    mButtonAddOscillateV = new UIButton();
+    mButtonAddOscillateV->SetText("+ OscV");
+    mRowMain2->AddButton(mButtonAddOscillateV);
     
-    mTimingRow1 = new ToolMenuSectionRow();
-    mTimingPanel->AddSection(mTimingRow1);
-    
-    mCheckBoxCreationRequiresPrevWaveStart = new UICheckBox();
-    mCheckBoxCreationRequiresPrevWaveStart->SetText("P-W-Start");
-    mTimingRow1->AddCheckBox(mCheckBoxCreationRequiresPrevWaveStart);
-    
-    mCheckBoxCreationRequiresPrevWaveComplete = new UICheckBox();
-    mCheckBoxCreationRequiresPrevWaveComplete->SetText("P-W-Compl");
-    mTimingRow1->AddCheckBox(mCheckBoxCreationRequiresPrevWaveComplete);
-    
-    
-    mTimingRow2 = new ToolMenuSectionRow();
-    mTimingPanel->AddSection(mTimingRow2);
-    
-    mCheckBoxCreationRequiresScreenWavesClear = new UICheckBox();
-    mCheckBoxCreationRequiresScreenWavesClear->SetText("Scr-Wav-Clr");
-    mTimingRow2->AddCheckBox(mCheckBoxCreationRequiresScreenWavesClear);
-    
-    mCheckBoxCreationRequiresScreenPermsClear = new UICheckBox();
-    mCheckBoxCreationRequiresScreenPermsClear->SetText("Scr-Prm-Clr");
-    mTimingRow2->AddCheckBox(mCheckBoxCreationRequiresScreenPermsClear);
+    mButtonAddOscillateH = new UIButton();
+    mButtonAddOscillateH->SetText("+ OscH");
+    mRowMain2->AddButton(mButtonAddOscillateH);
     
     
     
+    mButtonRemoveAll = new UIButton();
+    mButtonRemoveAll->SetText("Del All");
+    mRowMain3->AddButton(mButtonRemoveAll);
     
+    
+    mButtonRemoveFirst = new UIButton();
+    mButtonRemoveFirst->SetText("Del First");
+    mRowMain3->AddButton(mButtonRemoveFirst);
+    
+    
+    mButtonRemoveLast = new UIButton();
+    mButtonRemoveLast->SetText("Del Last");
+    mRowMain3->AddButton(mButtonRemoveLast);
+    
+    
+    mPanelTypes = new ToolMenuPanel();
+    mPanelTypes->SetTitle("Types");
+    AddSection(mPanelTypes);
     
     
 }
 
 EditorMenuMotion::~EditorMenuMotion() {
-    if (gEditor->mMenuMotion == this) {
-        gEditor->mMenuMotion = NULL;
+    if (gEditor != NULL) {
+        if (gEditor->mMenuMotion == this) {
+            gEditor->mMenuMotion = NULL;
+        }
+    }
+    if (gPermEditor != NULL) {
+        if (gPermEditor->mMenuMotion == this) {
+            gPermEditor->mMenuMotion = NULL;
+        }
     }
 }
 
@@ -117,106 +113,161 @@ void EditorMenuMotion::Layout() {
 void EditorMenuMotion::Notify(void *pSender, const char *pNotification) {
     
     if (gEditor == NULL) { return; }
-    if (pSender == mSegmentSpeed) {
-        gEditor->RefreshPlaybackSpeed();
-        gEditor->RefreshPlayback();
+    
+    if (mMotionController != NULL) {
+        if (pSender == mButtonAddRotate) {
+            mMotionController->AddSliceRotate();
+            gEditor->RefreshPlayback();
+        }
+        if (pSender == mButtonAddOscillateV) {
+            mMotionController->AddSliceOscillateRotation();
+            gEditor->RefreshPlayback();
+        }
+        if (pSender == mButtonAddOscillateH) {
+            mMotionController->AddSliceOscillateH();
+            gEditor->RefreshPlayback();
+        }
+        if (pSender == mButtonAddOscillateRotation) {
+            mMotionController->AddSliceOscillateV();
+            gEditor->RefreshPlayback();
+        }
+        if (pSender == mButtonRemoveAll) {
+            mMotionController->RemoveAllSlices();
+            gEditor->RefreshPlayback();
+        }
+        if (pSender == mButtonRemoveLast) {
+            mMotionController->RemoveLastSlice();
+            gEditor->RefreshPlayback();
+        }
+        if (pSender == mButtonRemoveFirst) {
+            mMotionController->RemoveFirstSlice();
+            gEditor->RefreshPlayback();
+        }
     }
-    if (pSender == mStepperSpawnCount) { gEditor->RefreshPlayback(); }
-    if (pSender == mStepperSpacing) { gEditor->RefreshPlayback(); }
-    
-    if (pSender == mStepperCreationDelay) { gEditor->RefreshPlayback(); }
-    
-    if (pSender == mCheckBoxCreationRequiresPrevWaveStart) { gEditor->RefreshPlayback(); }
-    if (pSender == mCheckBoxCreationRequiresPrevWaveComplete) { gEditor->RefreshPlayback(); }
-    if (pSender == mCheckBoxCreationRequiresScreenWavesClear) { gEditor->RefreshPlayback(); }
-    if (pSender == mCheckBoxCreationRequiresScreenPermsClear) { gEditor->RefreshPlayback(); }
-    
 }
 
 void EditorMenuMotion::Update() {
     
-    LevelWaveBlueprint *aWave = NULL;
-    if (gEditor) {
-        aWave = gEditor->mSection.mCurrentWave;
-    }
+    mMotionController = NULL;
+    if (gEditor == NULL) { return; }
     
-    if (mStepperSpawnCount != NULL) {
-        bool aUnlink = true;
-        if (aWave != NULL) {
-            aUnlink = false;
-            mStepperSpawnCount->SetTarget(&(aWave->mSpawnCount));
-        }
-        if (aUnlink) {
-            mStepperSpawnCount->SetTarget(NULL);
+    LevelPermSpawnBlueprint *aPermSpawn = gEditor->PermSpawnGet();
+    LevelSectionPermanentBlueprint *aPerm = gEditor->PermGet();
+    LevelWaveSpawnBlueprint *aSpawn = gEditor->SpawnGet();
+    
+    if (mEditor != NULL) {
+        if (aSpawn != NULL) {
+            mMotionController = &(aSpawn->mMotionController);
         }
     }
     
-    if (mStepperSpacing != NULL) {
-        bool aUnlink = true;
-        if (aWave != NULL) {
-            aUnlink = false;
-            mStepperSpacing->SetTarget(&(aWave->mSpawnSpacing));
-        }
-        if (aUnlink) {
-            mStepperSpacing->SetTarget(NULL);
-        }
-    }
-    
-    
-    
-    if (mCheckBoxCreationRequiresPrevWaveStart != NULL) {
-        bool aUnlink = true;
-        if (aWave != NULL) {
-            aUnlink = false;
-            mCheckBoxCreationRequiresPrevWaveStart->SetTarget(&(aWave->mCreationRequiresPrevWaveStart));
-        }
-        if (aUnlink) {
-            mCheckBoxCreationRequiresPrevWaveStart->SetTarget(NULL);
+    if (mPermEditor != NULL) {
+        if (mIsForPermSpawn) {
+            if (aPermSpawn != NULL) {
+                mMotionController = &(aPermSpawn->mMotionController);
+            }
+        } else {
+            if (aPerm != NULL) {
+                mMotionController = &(aPerm->mMotionController);
+            }
         }
     }
     
+    CheckSlicePanels();
     
-    if (mCheckBoxCreationRequiresPrevWaveComplete != NULL) {
-        bool aUnlink = true;
-        if (aWave != NULL) {
-            aUnlink = false;
-            mCheckBoxCreationRequiresPrevWaveComplete->SetTarget(&(aWave->mCreationRequiresPrevWaveComplete));
-        }
-        if (aUnlink) {
-            mCheckBoxCreationRequiresPrevWaveComplete->SetTarget(NULL);
-        }
+    for (int i=0;i<mTypePanelList.mCount;i++) {
+        EditorMenuMotionTypePanel *aPanel = (EditorMenuMotionTypePanel *)mTypePanelList.Fetch(i);
+        aPanel->mMotionSlice = (LevelMotionControllerSliceBlueprint *)mMotionController->mSliceList.Fetch(i);
     }
     
-    if (mCheckBoxCreationRequiresScreenWavesClear != NULL) {
-        bool aUnlink = true;
-        if (aWave != NULL) {
-            aUnlink = false;
-            mCheckBoxCreationRequiresScreenWavesClear->SetTarget(&(aWave->mCreationRequiresScreenWavesClear));
-        }
-        if (aUnlink) {
-            mCheckBoxCreationRequiresScreenWavesClear->SetTarget(NULL);
-        }
-    }
     
-    if (mCheckBoxCreationRequiresScreenPermsClear != NULL) {
-        bool aUnlink = true;
-        if (aWave != NULL) {
-            aUnlink = false;
-            mCheckBoxCreationRequiresScreenPermsClear->SetTarget(&(aWave->mCreationRequiresScreenPermsClear));
-        }
-        if (aUnlink) {
-            mCheckBoxCreationRequiresScreenPermsClear->SetTarget(NULL);
-        }
-    }
+    //mMotionBlueprint
     
-    if (mStepperCreationDelay != NULL) {
-        bool aUnlink = true;
-        if (aWave != NULL) {
-            aUnlink = false;
-            mStepperCreationDelay->SetTarget(&(aWave->mCreationDelay));
-        }
-        if (aUnlink) {
-            mStepperCreationDelay->SetTarget(NULL);
-        }
-    }
+    
+    
+    /*
+     
+     if (mCheckBoxCreationRequiresPrevWaveStart != NULL) {
+     bool aUnlink = true;
+     if (aWave != NULL) {
+     aUnlink = false;
+     mCheckBoxCreationRequiresPrevWaveStart->SetTarget(&(aWave->mCreationRequiresPrevWaveStart));
+     }
+     if (aUnlink) {
+     mCheckBoxCreationRequiresPrevWaveStart->SetTarget(NULL);
+     }
+     }
+     
+     if (mStepperCreationDelay != NULL) {
+     bool aUnlink = true;
+     if (aWave != NULL) {
+     aUnlink = false;
+     mStepperCreationDelay->SetTarget(&(aWave->mCreationDelay));
+     }
+     if (aUnlink) {
+     mStepperCreationDelay->SetTarget(NULL);
+     }
+     }
+     
+     */
 }
+
+void EditorMenuMotion::CheckSlicePanels() {
+    
+    if (mMotionController == NULL) {
+        
+        mPanelTypes->mSectionList.RemoveAll();
+        EnumList(EditorMenuMotionTypePanel, aPanel, mTypePanelList) {
+            aPanel->Kill();
+        }
+        mTypePanelList.RemoveAll();
+        
+        return;
+    }
+    
+    bool aAllMatch = true;
+    
+    if (mMotionController->mSliceList.mCount != mTypePanelList.mCount) {
+        aAllMatch = false;
+    } else {
+        
+        for (int i=0;i<mTypePanelList.mCount;i++) {
+            
+            LevelMotionControllerSliceBlueprint *aSlice = (LevelMotionControllerSliceBlueprint *)mMotionController->mSliceList.mData[i];
+            EditorMenuMotionTypePanel *aPanel = (EditorMenuMotionTypePanel *)mTypePanelList.mData[i];
+            
+            if (aSlice->mType != aPanel->mType) {
+                aAllMatch = false;
+            }
+        }
+    }
+    
+    if (aAllMatch == false) {
+        
+        printf("Mis-Match!!!\n");
+        mPanelTypes->mSectionList.RemoveAll();
+        EnumList(EditorMenuMotionTypePanel, aPanel, mTypePanelList) {
+            aPanel->Kill();
+        }
+        mTypePanelList.RemoveAll();
+        
+        for (int i=0;i<mMotionController->mSliceList.mCount;i++) {
+            LevelMotionControllerSliceBlueprint *aSlice = (LevelMotionControllerSliceBlueprint *)mMotionController->mSliceList.mData[i];
+            if (aSlice->mType == LEVEL_MOTION_SLICE_TYPE_NONE) {
+                EditorMenuMotionTypePanel *aPanel = new EditorMenuMotionTypePanel();
+                mPanelTypes->AddSection(aPanel);
+                mTypePanelList.Add(aPanel);
+            }
+            if (aSlice->mType == LEVEL_MOTION_SLICE_TYPE_ROTATE) {
+                EditorMenuMotionTypePanelRotate *aPanel = new EditorMenuMotionTypePanelRotate();
+                mPanelTypes->AddSection(aPanel);
+                mTypePanelList.Add(aPanel);
+            }
+        }
+    }
+    
+    
+}
+
+//
+

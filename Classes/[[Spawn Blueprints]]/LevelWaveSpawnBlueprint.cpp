@@ -24,7 +24,7 @@ LevelWaveSpawnBlueprint::~LevelWaveSpawnBlueprint() {
 }
 
 void LevelWaveSpawnBlueprint::Reset() {
-    
+    mMotionController.Reset();
 }
 
 FJSONNode *LevelWaveSpawnBlueprint::Save() {
@@ -45,6 +45,9 @@ FJSONNode *LevelWaveSpawnBlueprint::Save() {
         }
     }
     
+    if (mMotionController.IsEmpty() == false) {
+        aExport->AddDictionary("motion", mMotionController.Save());
+    }
     
     return aExport;
 }
@@ -54,23 +57,17 @@ void LevelWaveSpawnBlueprint::Load(FJSONNode *pNode) {
     if (pNode == NULL) { return; }
     
     mSpawnSpacingOffset = pNode->GetInt("spacing_offset", 0);
-    
     mFormationID = pNode->GetString("formation", mFormationID);
+    
     if (mFormationID.mLength > 0) {
         //Possibility 1.) We have a formation...
     } else {
         //Possibility 2.) We have an object...
         mObjectType = pNode->GetInt("type", mObjectType);
     }
+
     
-    //Possibility 1.) We have a formation...
-    //FString                                     mFormationID;
-    
-    //Possibility 2.) We have an object...
-    //int                                         mObjectType;
-    //
-    
-    
-    
+    FJSONNode *aMotionNode = pNode->GetDictionary("motion");
+    mMotionController.Load(aMotionNode);
     
 }

@@ -13,9 +13,17 @@
 #include "ToolMenu.hpp"
 
 class GameEditor;
+class GamePermanentEditor;
+
 class EditorMenuAttachment : public ToolMenu {
 public:
     EditorMenuAttachment(GameEditor *pEditor);
+    EditorMenuAttachment(GamePermanentEditor *pEditor);
+    
+    void                                    Init();
+    
+    
+    
     virtual ~EditorMenuAttachment();
     
     virtual void                            Layout() override;
@@ -23,6 +31,8 @@ public:
     virtual void                            Update() override;
     
     GameEditor                              *mEditor;
+    GamePermanentEditor                     *mPermEditor;
+    
     
     
     ToolMenuPanel                           *mPanelObjectTypes;

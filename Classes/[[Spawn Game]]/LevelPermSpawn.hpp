@@ -42,6 +42,8 @@ public:
     
     int                                 mPathIndex;
     
+    float                               mSpacingOffset;
+    
     bool                                mDidSpawn;
     bool                                mDidUpdateAfterSpawn;
     

@@ -36,12 +36,6 @@ EditorMenuPath::EditorMenuPath(GamePathEditor *pEditor) : ToolMenu() {
     mCheckBoxSmooth->SetText("Smooth");
     mRowVisuals->AddCheckBox(mCheckBoxSmooth);
     
-    mCheckBoxPreview = new UICheckBox();
-    mCheckBoxPreview->SetText("Refs");
-    if (gEditor != NULL) {
-        mCheckBoxPreview->SetTarget(&gEditor->mEditorShowReferenced);
-    }
-    mRowVisuals->AddCheckBox(mCheckBoxPreview);
     
     mCheckBoxClosed = new UICheckBox();
     mCheckBoxClosed->SetText("Closed");

@@ -1,0 +1,98 @@
+{
+	"section": true,
+	"wave_list": [
+		{
+			"path": {
+				"speed_class": -300,
+				"node_list": [
+					{
+						"x_con": 400,
+						"y_con": 400,
+						"wait": 1000
+					},
+					{
+						"x_con": 600,
+						"y_con": 400,
+						"wait": 900
+					}
+				]
+			},
+			"spawn": [
+				{
+					"motion": {
+						"slice_list": [
+							{
+								"type": 1,
+								"speed_class": 200,
+								"negate": true,
+								"negate_rand": true,
+								"pivot_offset_x": -10,
+								"pivot_offset_y": 20
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"spawn_spacing": 235,
+			"max_spawn_size": 199,
+			"path": {
+				"speed_class": -200,
+				"node_list": [
+					{
+						"x_con": 150,
+						"y_con": 600
+					},
+					{
+						"x_con": 850,
+						"y_con": 600
+					},
+					{
+						"x_con": 850,
+						"y_con": 800
+					},
+					{
+						"x_con": 300,
+						"y_con": 800
+					}
+				]
+			},
+			"spawn": [
+				{
+					"motion": {
+						"slice_list": [
+							{
+								"type": 1,
+								"speed_class": -300,
+								"negate_rand": true,
+								"pivot_offset_x": -10,
+								"pivot_offset_y": -11
+							},
+							{
+								"type": 1,
+								"speed_class": -200,
+								"negate": true,
+								"pivot_offset_x": 10,
+								"pivot_offset_y": 11
+							},
+							{
+								"speed_class": 200,
+								"negate": true,
+								"negate_rand": true
+							}
+						]
+					}
+				},
+				{
+					"spacing_offset": 100,
+					"formation": "f_grid_60rngs_1rngc_8radc_89ful__nodes_cfg8xb"
+				},
+				{
+					"spacing_offset": 100
+				},
+				{}
+			]
+		}
+	]
+}

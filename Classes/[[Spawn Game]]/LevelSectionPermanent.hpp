@@ -55,6 +55,11 @@ public:
     
     
     FList                               mSpawnList; //of LevelPermSpawn
+    bool                                mSpawnEqualSpacing;
+    
+    //Base spacing for spawns, if we are not using equal spacing...
+    int                                 mSpawnSpacing;
+    
     
     int                                 mKillTimer;
     

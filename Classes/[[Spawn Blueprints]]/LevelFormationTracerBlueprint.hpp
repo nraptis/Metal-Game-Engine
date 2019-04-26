@@ -73,7 +73,6 @@ public:
     
     bool                                                IsValid();
     
-    
     int                                                 mCount;
     int                                                 mSpeedClass;
     

@@ -35,6 +35,35 @@ EditorMenuPermanent::EditorMenuPermanent(GamePermanentEditor *pEditor) : ToolMen
     mPanelEditor->AddSection(mSegmentMode);
     
     
+    
+    
+    
+    mPathExtPanel = new ToolMenuPanel();
+    mPathExtPanel->SetTitle("Path Ext");
+    AddSection(mPathExtPanel);
+    
+    mSegmentPathSpeed = new UISegment();
+    mSegmentPathSpeed->SetSegmentCount(7);
+    mSegmentPathSpeed->SetTitles("XS", "S", "MS", "M", "MF", "F", "XF");
+    if (mEditor != NULL) {
+        mSegmentPathSpeed->SetTarget(&mEditor->mPathSpeedClassIndex);
+    }
+    mPathExtPanel->AddSection(mSegmentPathSpeed);
+    
+    mRowVisuals = new ToolMenuSectionRow();
+    mPathExtPanel->AddSection(mRowVisuals);
+    
+    mCheckBoxSmooth = new UICheckBox();
+    mCheckBoxSmooth->SetText("Smooth");
+    mRowVisuals->AddCheckBox(mCheckBoxSmooth);
+    
+    mCheckBoxClosed = new UICheckBox();
+    mCheckBoxClosed->SetText("Closed");
+    mRowVisuals->AddCheckBox(mCheckBoxClosed);
+    
+    
+    
+    
     mSnapsPanel = new ToolMenuPanel();
     mSnapsPanel->SetTitle("Snapping Constraint");
     AddSection(mSnapsPanel);
@@ -94,8 +123,6 @@ EditorMenuPermanent::EditorMenuPermanent(GamePermanentEditor *pEditor) : ToolMen
     mButtonEditPermanentPaths->SetText("Edit Paths");
     mRowPermanent1->AddButton(mButtonEditPermanentPaths);
     
-    
-    
     mRowPermanent2 = new ToolMenuSectionRow();
     mPermPanel->AddSection(mRowPermanent2);
     
@@ -108,6 +135,8 @@ EditorMenuPermanent::EditorMenuPermanent(GamePermanentEditor *pEditor) : ToolMen
     mRowPermanent2->AddButton(mButtonDeletePath);
     
     
+    
+    DeactivateCloseButton();
 }
 
 EditorMenuPermanent::~EditorMenuPermanent() {
@@ -143,10 +172,10 @@ void EditorMenuPermanent::Notify(void *pSender, const char *pNotification) {
     if (pSender == mButtonResetOffsetY) { mEditor->ResetOffsetY(); gEditor->RefreshPlayback(); }
     
     
+    if (pSender == mCheckBoxSmooth) {  gEditor->RefreshPlayback(); }
+    if (pSender == mCheckBoxClosed) {  gEditor->RefreshPlayback(); }
     
-    
-    
-    
+    if (pSender == mSegmentPathSpeed) { mEditor->RefreshSpeed(); gEditor->RefreshPlayback(); }
     
     
     
@@ -161,6 +190,31 @@ void EditorMenuPermanent::Update() {
     }
     
     LevelSectionPermanentBlueprint *aPerm = gEditor->PermGet();
+    
+    
+    
+    if (mCheckBoxSmooth != NULL) {
+        bool aUnlink = true;
+        if (aPerm != NULL) {
+            aUnlink = false;
+            
+            mCheckBoxSmooth->SetTarget(&(aPerm->mPath.mSmooth));
+        }
+        if (aUnlink) {
+            mCheckBoxSmooth->SetTarget(NULL);
+        }
+    }
+    
+    if (mCheckBoxClosed != NULL) {
+        bool aUnlink = true;
+        if (aPerm != NULL) {
+            aUnlink = false;
+            mCheckBoxClosed->SetTarget(&(aPerm->mPath.mClosed));
+        }
+        if (aUnlink) {
+            mCheckBoxClosed->SetTarget(NULL);
+        }
+    }
     
     if (mLabelOffsetX != NULL) {
         if (aPerm != NULL) {

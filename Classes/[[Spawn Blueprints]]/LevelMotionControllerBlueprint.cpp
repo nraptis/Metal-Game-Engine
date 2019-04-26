@@ -17,42 +17,87 @@ LevelMotionControllerBlueprint::LevelMotionControllerBlueprint() {
 }
 
 LevelMotionControllerBlueprint::~LevelMotionControllerBlueprint() {
-    //FreeList(LevelMotionControllerNodeBlueprint, mNodeList);
-    //FreeList(LevelMotionControllerNodeBlueprint, mKillList);
+    FreeList(LevelMotionControllerSliceBlueprint, mSliceList);
+    FreeList(LevelMotionControllerSliceBlueprint, mKillList);
     
 }
 
 void LevelMotionControllerBlueprint::Update() {
     
-    
-    /*
-    EnumList(LevelMotionControllerNodeBlueprint, aNode, mKillList) {
-        aNode->mKillTimer--;
-        if (aNode->mKillTimer <= 0) { mDeleteList.Add(aNode); }
+    EnumList(LevelMotionControllerSliceBlueprint, aSlice, mSliceList) {
+        
     }
-    EnumList(LevelMotionControllerNodeBlueprint, aNode, mDeleteList) {
-        mKillList.Remove(aNode);
-        delete aNode;
+    
+    
+    EnumList(LevelMotionControllerSliceBlueprint, aSlice, mKillList) {
+        aSlice->mKillTimer--;
+        if (aSlice->mKillTimer <= 0) { mDeleteList.Add(aSlice); }
+    }
+    EnumList(LevelMotionControllerSliceBlueprint, aSlice, mDeleteList) {
+        mKillList.Remove(aSlice);
+        delete aSlice;
     }
     mDeleteList.RemoveAll();
-    */
+    
 }
 
 void LevelMotionControllerBlueprint::Reset() {
-    
-    /*
-    EnumList(LevelMotionControllerNodeBlueprint, aNode, mNodeList) {
-        mKillList.Add(aNode);
-    }
-    mNodeList.RemoveAll();
-    */
-    
-    
+    RemoveAllSlices();
 }
 
 void LevelMotionControllerBlueprint::Draw() {
     
 }
+
+bool LevelMotionControllerBlueprint::IsEmpty() {
+    if (mSliceList.mCount <= 0) { return true; }
+    return false;
+}
+
+void LevelMotionControllerBlueprint::RemoveAllSlices() {
+    EnumList(LevelMotionControllerSliceBlueprint, aSlice, mSliceList) {
+        mKillList.Add(aSlice);
+    }
+    mSliceList.RemoveAll();
+}
+
+void LevelMotionControllerBlueprint::RemoveFirstSlice() {
+    if (mSliceList.mCount > 0) {
+        LevelMotionControllerSliceBlueprint *aSlice = (LevelMotionControllerSliceBlueprint *)mSliceList.PopFirst();
+        mKillList.Add(aSlice);
+    }
+}
+
+void LevelMotionControllerBlueprint::RemoveLastSlice() {
+    if (mSliceList.mCount > 0) {
+        LevelMotionControllerSliceBlueprint *aSlice = (LevelMotionControllerSliceBlueprint *)mSliceList.PopLast();
+        mKillList.Add(aSlice);
+    }
+}
+
+
+void LevelMotionControllerBlueprint::AddSliceRotate() {
+    
+    LevelMotionControllerSliceRotateBlueprint *aSlice = new LevelMotionControllerSliceRotateBlueprint();
+    mSliceList.Add(aSlice);
+}
+
+void LevelMotionControllerBlueprint::AddSliceOscillateRotation() {
+    
+    LevelMotionControllerSliceBlueprint *aSlice = new LevelMotionControllerSliceBlueprint();
+    mSliceList.Add(aSlice);
+}
+
+void LevelMotionControllerBlueprint::AddSliceOscillateV() {
+    
+}
+
+void LevelMotionControllerBlueprint::AddSliceOscillateH() {
+    
+}
+
+
+
 
 
 void LevelMotionControllerBlueprint::Build(LevelMotionController *pMotionController) {
@@ -60,6 +105,31 @@ void LevelMotionControllerBlueprint::Build(LevelMotionController *pMotionControl
     if (pMotionController == NULL) { return; }
     
     pMotionController->Reset();
+    
+    
+    EnumList(LevelMotionControllerSliceBlueprint, aSliceBlueprint, mSliceList) {
+    
+        if (aSliceBlueprint->mType == LEVEL_MOTION_SLICE_TYPE_NONE) {
+            LevelMotionControllerSlice *aSlice = new LevelMotionControllerSlice();
+            aSliceBlueprint->Build(aSlice);
+            pMotionController->mSliceList.Add(aSlice);
+        }
+        
+        if (aSliceBlueprint->mType == LEVEL_MOTION_SLICE_TYPE_ROTATE) {
+            LevelMotionControllerSliceRotateBlueprint *aBlueprint = (LevelMotionControllerSliceRotateBlueprint *)aSliceBlueprint;
+            LevelMotionControllerSliceRotate *aSlice = new LevelMotionControllerSliceRotate();
+            aBlueprint->Build(aSlice);
+            pMotionController->mSliceList.Add(aSlice);
+        }
+        
+        
+        //if (aType == LEVEL_MOTION_SLICE_TYPE_NONE) { aSlice = new LevelMotionControllerSliceBlueprint(); }
+        //if (aType == LEVEL_MOTION_SLICE_TYPE_ROTATE) { aSlice = new LevelMotionControllerSliceRotateBlueprint(); }
+        
+        //aSliceListNode->AddArray(aSlice->Save());
+    
+    
+    }
     
     
     
@@ -70,25 +140,15 @@ FJSONNode *LevelMotionControllerBlueprint::Save() {
     FJSONNode *aExport = new FJSONNode();
     aExport->mNodeType = JSON_NODE_TYPE_DICTIONARY;
     
-    /*
-    if (mSmooth == true) {
-        aExport->AddDictionaryBool("smooth", mSmooth);
+
+    FJSONNode *aSliceListNode = new FJSONNode();
+    aSliceListNode->mNodeType = JSON_NODE_TYPE_ARRAY;
+    
+    EnumList(LevelMotionControllerSliceBlueprint, aSlice, mSliceList) {
+        aSliceListNode->AddArray(aSlice->Save());
     }
+    aExport->AddDictionary("slice_list", aSliceListNode);
     
-    if (mSpeedClass != SPEED_CLASS_MEDIUM) {
-        aExport->AddDictionaryInt("speed_class", mSpeedClass);
-    }
-    
-    
-    FJSONNode *aNodeListNode = new FJSONNode();
-    aNodeListNode->mNodeType = JSON_NODE_TYPE_ARRAY;
-    
-    for (int i=0;i<mNodeList.mCount;i++) {
-        LevelMotionControllerNodeBlueprint *aNode = (LevelMotionControllerNodeBlueprint *)mNodeList.mData[i];
-        aNodeListNode->AddArray(aNode->Save());
-    }
-    aExport->AddDictionary("node_list", aNodeListNode);
-    */
     
     return aExport;
 }
@@ -97,19 +157,27 @@ void LevelMotionControllerBlueprint::Load(FJSONNode *pNode) {
     Reset();
     if (pNode == NULL) { return; }
     
-    /*
-    mSmooth = pNode->GetBool("smooth", false);
-    mSpeedClass = pNode->GetInt("speed_class", SPEED_CLASS_MEDIUM);
     
-    FJSONNode *aNodeListNode = pNode->GetArray("node_list");
+    FJSONNode *aSliceListNode = pNode->GetArray("slice_list");
     
-    if (aNodeListNode != NULL) {
-        EnumJSONArray(aNodeListNode, aPathLoadNode) {
-            LevelMotionControllerNodeBlueprint *aPathNode = new LevelMotionControllerNodeBlueprint();
-            aPathNode->Load(aPathLoadNode);
-            mNodeList.Add(aPathNode);
+    if (aSliceListNode != NULL) {
+        EnumJSONArray(aSliceListNode, aSliceLoadNode) {
+            
+            int aType = aSliceLoadNode->GetInt("type", LEVEL_MOTION_SLICE_TYPE_NONE);
+            
+            LevelMotionControllerSliceBlueprint *aSlice = NULL;
+            
+            if (aType == LEVEL_MOTION_SLICE_TYPE_NONE) { aSlice = new LevelMotionControllerSliceBlueprint(); }
+            if (aType == LEVEL_MOTION_SLICE_TYPE_ROTATE) { aSlice = new LevelMotionControllerSliceRotateBlueprint(); }
+            
+            if (aSlice != NULL) {
+                aSlice->Load(aSliceLoadNode);
+                mSliceList.Add(aSlice);
+            }
+            
+            //if (mType != ) { aExport->AddDictionaryInt("type", mType); }
+            
+            
         }
     }
-    */
-    
 }

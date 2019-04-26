@@ -10,6 +10,7 @@
 #define LevelMotionController_hpp
 
 #include "GameObject.hpp"
+#include "LevelMotionControllerSlice.hpp"
 
 class LevelMotionController {
 public:
@@ -17,7 +18,6 @@ public:
     ~LevelMotionController();
     
     void                                Reset();
-    void                                Restart();
     
     void                                Update();
     void                                Draw();
@@ -28,6 +28,15 @@ public:
     int                                 mKillTimer;
     
     float                               mTestRotation;
+    
+    
+    FList                               mSliceList;
+    
+    
+private:
+    FList                               mKillList;
+    FList                               mDeleteList;
+    
     
 };
 

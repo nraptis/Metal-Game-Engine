@@ -22,8 +22,6 @@
 #include "EditorMenuObjectClearing.hpp"
 #include "EditorMenuMotion.hpp"
 
-
-
 #include "GamePathEditor.hpp"
 #include "GameFormationEditor.hpp"
 #include "GamePermanentEditor.hpp"
@@ -99,12 +97,16 @@ public:
     int                                         SpawnIndex();
     LevelWaveSpawnBlueprint                     *SpawnGet();
     void                                        SpawnClearFormation();
+    
+    void                                        SpawnPickType(int pType);
     void                                        SpawnPickBalloon();
     void                                        SpawnPickBrickHead();
     
     void                                        PermSelect(int pIndex);
     int                                         PermIndex();
     LevelSectionPermanentBlueprint              *PermGet();
+    LevelPermSpawnBlueprint                     *PermSpawnGet();
+    
     void                                        PermDelete();
     
     
@@ -124,6 +126,8 @@ public:
     
     void                                        PickFormationForFormationEditor();
     void                                        PickFormationForSpawnNode();
+    void                                        PickFormationForPermSpawnNode();
+    
     void                                        PickFormation(int pReason);
     
     

@@ -13,6 +13,9 @@
 LevelSectionPermanentBlueprint::LevelSectionPermanentBlueprint() {
     mPath.mPerm = this;
     
+    mSpawnEqualSpacing = true;
+    mSpawnSpacing = 90;
+    
     mEditorX = 0.0f; mEditorY = 0.0f;
     mPercentX = 0.0f; mPercentY = 0.0f;
     mBaseGameX = 0.0f; mBaseGameY = 0.0f;
@@ -27,6 +30,7 @@ LevelSectionPermanentBlueprint::~LevelSectionPermanentBlueprint() {
 
 void LevelSectionPermanentBlueprint::Reset() {
     mPath.Reset();
+    mMotionController.Reset();
     for (int i=0;i<PERM_MAX_SPAWN_COUNT;i++) {
         mSpawn[i].Reset();
     }
@@ -151,6 +155,9 @@ void LevelSectionPermanentBlueprint::Build(LevelSectionPermanent *pPerm) {
     pPerm->Reset();
     mPath.Build(&pPerm->mPath);
     
+    pPerm->mSpawnEqualSpacing = mSpawnEqualSpacing;
+    pPerm->mSpawnSpacing = ((float)mSpawnSpacing);
+    
     FVec2 aPoint;
     aPoint.mX = mPercentX / 100.0f;
     aPoint.mY = mPercentY / 100.0f;
@@ -177,7 +184,7 @@ void LevelSectionPermanentBlueprint::Build(LevelSectionPermanent *pPerm) {
     if (pPerm->mPath.mNodeList.mCount > 0) {
         
         if (mSpawnCount < 1) mSpawnCount = 1;
-        if (mSpawnCount > WAVE_MAX_SPAWN_COUNT) mSpawnCount = WAVE_MAX_SPAWN_COUNT;
+        if (mSpawnCount > PERM_MAX_SPAWN_COUNT) mSpawnCount = PERM_MAX_SPAWN_COUNT;
         
         
         for (int i=0;i<mSpawnCount;i++) {
@@ -185,6 +192,7 @@ void LevelSectionPermanentBlueprint::Build(LevelSectionPermanent *pPerm) {
             
             aSpawn->mFormationID = mSpawn[i].mFormationID.c();
             aSpawn->mObjectType = mSpawn[i].mObjectType;
+            aSpawn->mSpacingOffset = mSpawn[i].mSpawnSpacingOffset;
             
             pPerm->mSpawnList.Add(aSpawn);
         }
@@ -198,6 +206,13 @@ void LevelSectionPermanentBlueprint::Build(LevelSectionPermanent *pPerm) {
 FJSONNode *LevelSectionPermanentBlueprint::Save() {
     FJSONNode *aExport = new FJSONNode();
     
+    if (mSpawnEqualSpacing != true) {
+        aExport->AddDictionaryBool("equal_spacing", mSpawnEqualSpacing);
+    }
+    
+    if (mSpawnSpacing != 90) {
+        aExport->AddDictionaryInt("spawn_spacing", mSpawnSpacing);
+    }
     
     if (mConstraint.mTypeX == X_CONSTRAINT_NONE) {
         
@@ -250,12 +265,19 @@ FJSONNode *LevelSectionPermanentBlueprint::Save() {
         aExport->AddDictionary("spawn", aSpawnList);
     }
     
+    if (mMotionController.IsEmpty() == false) {
+        aExport->AddDictionary("motion", mMotionController.Save());
+    }
+    
     return aExport;
 }
 
 void LevelSectionPermanentBlueprint::Load(FJSONNode *pNode) {
     Reset();
     if (pNode == NULL) { return; }
+    
+    mSpawnEqualSpacing = pNode->GetBool("equal_spacing", true);
+    mSpawnSpacing = pNode->GetInt("spawn_spacing", 90);
     
     mConstraint.mTypeX = pNode->GetInt("x_con", X_CONSTRAINT_NONE);
     mConstraint.mTargetX = pNode->GetInt("x_con_target", -1);
@@ -298,5 +320,8 @@ void LevelSectionPermanentBlueprint::Load(FJSONNode *pNode) {
     
     if (mSpawnCount <= 0) { mSpawnCount = 1; }
     if (mSpawnCount > WAVE_MAX_SPAWN_COUNT) { mSpawnCount = WAVE_MAX_SPAWN_COUNT; }
+    
+    FJSONNode *aMotionNode = pNode->GetDictionary("motion");
+    mMotionController.Load(aMotionNode);
     
 }

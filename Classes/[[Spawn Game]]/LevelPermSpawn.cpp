@@ -24,6 +24,8 @@ LevelPermSpawn::LevelPermSpawn(LevelSectionPermanent *pPerm, LevelPath *pPath) {
     mDidSpawn = false;
     mDidUpdateAfterSpawn = false;
     
+    mSpacingOffset = 0.0f;
+    
     mPathX = 0.0f;
     mPathY = 0.0f;
     

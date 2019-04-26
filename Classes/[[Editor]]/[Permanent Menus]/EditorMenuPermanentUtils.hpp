@@ -27,15 +27,27 @@ public:
     UIButton                                *mButtonCloseEditor;
     UIButton                                *mButtonResetPerm;
     
-    ToolMenuPanel                           *mGenerationPanel;
-    UISegment                               *mSegmentSpeed;
-    UIStepper                               *mStepperSpawnCount;
-    UIStepper                               *mStepperSpacing;
+    
+    ToolMenuPanel                           *mMenuPathSpawn;
+    UIStepper                               *mStepperPathSpawnCount;
+    UIStepper                               *mStepperPathSpawnSpacing;
+    
+    ToolMenuSectionRow                      *mRowPathSpawn1;
+    UICheckBox                              *mCheckBoxPathSpawnEqualSpacing;
     
     
-    ToolMenuPanel                           *mTimingPanel;
-    UISegment                               *mStepperCreationType;
-    UIStepper                               *mStepperCreationDelay;
+    
+    ToolMenuPanel                           *mMenusPanel;
+    ToolMenuSectionRow                      *mRowMenus1;
+    UIButton                                *mButtonMenuSpawnPicker;
+    UIButton                                *mButtonMenuPermPicker;
+    
+    ToolMenuSectionRow                      *mRowMenus2;
+    UIButton                                *mButtonMenuAttachment;
+    UIButton                                *mButtonMenuMotionPerm;
+    UIButton                                *mButtonMenuMotionSpawn;
+    
+    
 };
 
 #endif /* EditorMenuPermanentUtils_hpp */

@@ -9,6 +9,40 @@
 #ifndef EditorMenuPermPicker_hpp
 #define EditorMenuPermPicker_hpp
 
-#include <stdio.h>
+#include "ToolMenu.hpp"
+
+class GameEditor;
+class GamePermanentEditor;
+
+class EditorMenuPermPickerCell : public UIButton {
+public:
+    EditorMenuPermPickerCell();
+    virtual ~EditorMenuPermPickerCell();
+    virtual void                            Layout() override;
+    virtual void                            Update() override;
+    virtual void                            Draw() override;
+    int                                     mIndex;
+    bool                                    mSelected;
+    void                                    SetSelected(bool pSelected);
+    UIRoundedRect                           mCheckBackground;
+    UIRoundedRect                           mCheckOutline;
+    int                                     mNodeCount;
+};
+
+class EditorMenuPermPicker : public ToolMenu {
+public:
+    EditorMenuPermPicker(GamePermanentEditor *pEditor);
+    virtual ~EditorMenuPermPicker();
+    
+    virtual void                            Layout() override;
+    virtual void                            Notify(void *pSender, const char *pNotification) override;
+    virtual void                            Update() override;
+    
+    GamePermanentEditor                     *mEditor;
+    ToolMenuSection                         *mPickerSection;
+    
+    FList                                   mCells;
+    FList                                   mCellQueue;
+};
 
 #endif /* EditorMenuPermPicker_hpp */

@@ -1,65 +1,45 @@
 {
 	"section": true,
-	"wave_list": [],
-	"perm_list": [
+	"wave_list": [
 		{
-			"x_con": 500,
-			"y_con": 400,
 			"path": {
-				"closed": true,
+				"speed_class": -300,
 				"node_list": [
 					{
-						"x_con": 300,
-						"y_con": 300,
-						"decel": 1,
-						"wait": 12
-					},
-					{
-						"x_con": 500,
-						"y_con": 300
-					},
-					{
-						"x_con": 700,
-						"y_con": 400
+						"x_con": 400,
+						"y_con": 400,
+						"wait": 1000
 					},
 					{
 						"x_con": 600,
-						"y_con": 500
+						"y_con": 400,
+						"wait": 900
 					}
 				]
 			},
 			"spawn": [
-				{},
-				{},
 				{}
 			]
 		},
 		{
-			"x_con": 500,
-			"y_con": 600,
+			"spawn_spacing": 235,
 			"path": {
-				"smooth": true,
-				"closed": true,
+				"speed_class": -200,
 				"node_list": [
 					{
-						"x_con": 400,
+						"x_con": 150,
 						"y_con": 600
 					},
 					{
-						"x_con": 500,
-						"y_con": 500,
-						"decel": 150,
-						"accel": 352
+						"x_con": 850,
+						"y_con": 600
 					},
 					{
-						"x_con": 600,
-						"x_con_offset": 30.000000,
-						"y_con": 600,
-						"y_con_offset": 60.000000,
-						"accel": 2
+						"x_con": 850,
+						"y_con": 800
 					},
 					{
-						"x_con": 500,
+						"x_con": 300,
 						"y_con": 800
 					}
 				]
@@ -68,42 +48,6 @@
 				{},
 				{},
 				{},
-				{},
-				{},
-				{}
-			]
-		},
-		{
-			"x_con": 300,
-			"y_con": 800
-		},
-		{
-			"x_con": 700,
-			"y_con": 400
-		},
-		{
-			"x_con": 500,
-			"y_con": 500,
-			"path": {
-				"closed": true,
-				"node_list": [
-					{
-						"x_con": 300,
-						"x_con_offset": 36.000000,
-						"y_con": 500,
-						"y_con_offset": -69.000000,
-						"wait": 100
-					},
-					{
-						"x_con": 700,
-						"x_con_offset": -20.000000,
-						"y_con": 500,
-						"y_con_offset": -70.000000,
-						"wait": 100
-					}
-				]
-			},
-			"spawn": [
 				{}
 			]
 		}

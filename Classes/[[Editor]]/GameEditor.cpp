@@ -162,8 +162,6 @@ void GameEditor::Layout() {
     mGameAreaLeft = aGameArea1.mX;
     mGameAreaBottom = aGameArea2.mY;
     
-    
-    
     FVec2 aCenter = FVec2((gGame->mPlayAreaLeft + gGame->mPlayAreaRight) / 2.0f,
                             (gGame->mPlayAreaTop + gGame->mPlayAreaBottom) / 2.0f);
     aCenter = FCanvas::Convert(aCenter, gGame, this);
@@ -459,6 +457,16 @@ void GameEditor::KeyDown(int pKey) {
         }
     }
     
+    if (pKey == __KEY__M) {
+        if (aShift == false && aCtrl == false && aAlt == false) {
+            OpenMotionMenu();
+        }
+        
+        if (aShift == false && aCtrl == true && aAlt == false) {
+            
+        }
+    }
+    
     if (pKey == __KEY__A) {
         if (aShift == false && aCtrl == true && aAlt == false) {
             WaveAdd();
@@ -527,17 +535,26 @@ void GameEditor::Notify(void *pSender, const char *pNotification) {
         if (mPickFormationReason == 0) {
             OpenFormationEditor(gSelectedFormation);
         }
-        
         if (mPickFormationReason == 1) {
-            //OpenFormationEditor(gSelectedFormation);
-            
-            if (gSelectedFormation != NULL) {
-                LevelWaveSpawnBlueprint *aSpawn = SpawnGet();
-                if (aSpawn != NULL) {
-                    aSpawn->mFormationID = gSelectedFormation->mID.c();
-                    RefreshPlayback();
-                }
+            LevelWaveSpawnBlueprint *aSpawn = SpawnGet();
+            if (aSpawn != NULL) {
+                aSpawn->mFormationID = gSelectedFormation->mID.c();
+                RefreshPlayback();
             }
+        }
+        if (mPickFormationReason == 2) {
+            LevelPermSpawnBlueprint *aSpawn = PermSpawnGet();
+            if (aSpawn != NULL) {
+                aSpawn->mFormationID = gSelectedFormation->mID.c();
+                RefreshPlayback();
+            }
+            
+            if (mPermEditor != NULL) {
+                SetOverlay(mPermEditor);
+            }
+            
+            
+            
         }
     }
 }
@@ -702,6 +719,13 @@ void GameEditor::RefreshPlayback() {
     }
     
     
+    if (mPermEditor != NULL && mPermEditor == mOverlay) {
+        LevelSectionPermanentBlueprint *aPerm = PermGet();
+        if (aPerm != NULL) {
+            mPermEditor->mPathSpeedClassIndex = SpeedConvertTypeToSegment(aPerm->mPath.mSpeedClass);
+        }
+    }
+    
     if (mSection.mCurrentWave != NULL) {
         mSpeedClassIndex = SpeedConvertTypeToSegment(mSection.mCurrentWave->mPath.mSpeedClass);
     }
@@ -747,7 +771,6 @@ void GameEditor::RefreshPlayback() {
 
 void GameEditor::RefreshPlaybackSpeed() {
     if (mSection.mCurrentWave != NULL) {
-        
         mSection.mCurrentWave->mPath.mSpeedClass = SpeedConvertSegmentToType(mSpeedClassIndex);
     }
 }
@@ -902,20 +925,39 @@ void GameEditor::SpawnClearFormation() {
     RefreshPlayback();
 }
 
-void GameEditor::SpawnPickBalloon() {
-    LevelWaveSpawnBlueprint *aSpawn = SpawnGet();
-    if (aSpawn == NULL) { RefreshPlayback(); return; }
-    aSpawn->mFormationID.Clear();
-    aSpawn->mObjectType = GAME_OBJECT_TYPE_BALLOON;
+void GameEditor::SpawnPickType(int pType) {
+    
+    if (mOverlay == mPermEditor && mPermEditor != NULL) {
+        LevelPermSpawnBlueprint *aSpawn = PermSpawnGet();
+        if (aSpawn != NULL) {
+            aSpawn->mFormationID.Clear();
+            aSpawn->mObjectType = pType;
+        }
+    } else {
+        LevelWaveSpawnBlueprint *aSpawn = SpawnGet();
+        if (aSpawn != NULL) {
+            aSpawn->mFormationID.Clear();
+            aSpawn->mObjectType = pType;
+        }
+    }
     RefreshPlayback();
 }
 
+void GameEditor::SpawnPickBalloon() {
+    SpawnPickType(GAME_OBJECT_TYPE_BALLOON);
+}
+
 void GameEditor::SpawnPickBrickHead() {
+    
+    SpawnPickType(GAME_OBJECT_TYPE_BRICKHEAD);
+    
+    /*
     LevelWaveSpawnBlueprint *aSpawn = SpawnGet();
     if (aSpawn == NULL) { RefreshPlayback(); return; }
     aSpawn->mFormationID.Clear();
     aSpawn->mObjectType = GAME_OBJECT_TYPE_BRICKHEAD;
     RefreshPlayback();
+    */
 }
 
 void GameEditor::PermSelect(int pIndex) {
@@ -933,6 +975,17 @@ LevelSectionPermanentBlueprint *GameEditor::PermGet() {
 void GameEditor::PermDelete() {
     mSection.PermRemove();
 }
+
+LevelPermSpawnBlueprint *GameEditor::PermSpawnGet() {
+    LevelSectionPermanentBlueprint *aPerm = PermGet();
+    if (aPerm != NULL) {
+        if (aPerm->mSelectedSpawnIndex >= 0 && aPerm->mSelectedSpawnIndex < aPerm->mSpawnCount) {
+            return &aPerm->mSpawn[aPerm->mSelectedSpawnIndex];
+        }
+    }
+    return NULL;
+}
+
 
 void GameEditor::OpenPathEditorForWave() {
     if (mSection.mCurrentWave == NULL) { printf("Must have wave...\n"); return; }
@@ -1005,7 +1058,6 @@ void GameEditor::CloseFormationEditor() {
 }
 
 void GameEditor::PickFormationForFormationEditor() {
-    mPickFormationReason = 0;
     PickFormation(0);
 }
 
@@ -1016,10 +1068,26 @@ void GameEditor::PickFormationForSpawnNode() {
         return;
     }
     PickFormation(1);
-    
 }
 
+void GameEditor::PickFormationForPermSpawnNode() {
+    
+    
+    //PermGet()
+    
+    LevelPermSpawnBlueprint *aSpawn = PermSpawnGet();
+    if (aSpawn == NULL) {
+        printf("NO PERM SPAWN IS AVAILABLE... CANNOT PICK...\n\n");
+        return;
+    }
+    PickFormation(2);
+}
+
+
 void GameEditor::PickFormation(int pReason) {
+    
+    SetOverlay(mToolContainer);
+    
     mPickFormationReason = pReason;
     EditorMenuFormationPicker *aFormationPicker = new EditorMenuFormationPicker();
     mToolContainer->AddChild(aFormationPicker);
@@ -1077,7 +1145,7 @@ void GameEditor::OpenMotionMenu() {
     if (mMenuMotion == NULL) {
         mMenuMotion = new EditorMenuMotion(this);
         mToolContainer->AddChild(mMenuMotion);
-        mMenuMotion->SetFrame(gDeviceWidth2 / 2.0f - 420.0f / 2.0f, 250.0f, 420.0f, 400.0f);
+        mMenuMotion->SetFrame(gDeviceWidth2 / 2.0f - 420.0f / 2.0f, 130.0f, 420.0f, 600.0f);
     }
 }
 

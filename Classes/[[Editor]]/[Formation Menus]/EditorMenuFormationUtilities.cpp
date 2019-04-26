@@ -94,9 +94,10 @@ EditorMenuFormationUtilities::EditorMenuFormationUtilities(GameFormationEditor *
     AddSection(mPanelTracerSpecial);
     
     
-    mStepperTracerSpawnCount = new UIStepper();
-    mStepperTracerSpawnCount->SetText("Spawn Count: ");
-    mPanelTracerSpecial->AddSection(mStepperTracerSpawnCount);
+    //mStepperTracerSpawnCount = new UIStepper();
+    //mStepperTracerSpawnCount->SetText("Spawn Count: ");
+    //mPanelTracerSpecial->AddSection(mStepperTracerSpawnCount);
+    
     
     
     mSegmentTracerSpecialType = new UISegment();

@@ -14,8 +14,6 @@
 #include "FVec2.hpp"
 #include "FJSON.hpp"
 
-#define BLUEPRINT_MOTION_SLICE_COUNT 3
-
 class LevelWaveBlueprint;
 class LevelSectionPermanentBlueprint;
 
@@ -29,7 +27,21 @@ public:
     void                                        Reset();
     void                                        Draw();
     
-    LevelMotionControllerSliceBlueprint         mSlice[BLUEPRINT_MOTION_SLICE_COUNT];
+    //LevelMotionControllerSliceBlueprint         mSlice[BLUEPRINT_MOTION_SLICE_COUNT];
+    
+    bool                                        IsEmpty();
+    
+    void                                        RemoveAllSlices();
+    void                                        RemoveFirstSlice();
+    void                                        RemoveLastSlice();
+    
+    void                                        AddSliceRotate();
+    void                                        AddSliceOscillateRotation();
+    void                                        AddSliceOscillateV();
+    void                                        AddSliceOscillateH();
+    
+    FList                                       mSliceList;
+    //LevelMotionControllerSliceBlueprint
     
     //Note: BUILD should have NO TIE-IN TO EDITOR...
     //This HAS to work WITHOUT EDITOR for GAME......

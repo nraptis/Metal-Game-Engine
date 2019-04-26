@@ -39,8 +39,6 @@ public:
     virtual void                            Notify(void *pSender, const char *pNotification) override;
     virtual void                            Update() override;
     
-    
-    
     GamePermanentEditor                     *mEditor;
     ToolMenuSection                         *mPickerSection;
     

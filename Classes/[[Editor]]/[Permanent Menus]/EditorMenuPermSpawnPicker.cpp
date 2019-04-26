@@ -34,7 +34,6 @@ EditorMenuPermSpawnPickerCell::~EditorMenuPermSpawnPickerCell() {
 
 void EditorMenuPermSpawnPickerCell::Layout() {
     UIButton::Layout();
-    
     mCheckOutline.SetRect(mWidth2 - mWidth2 / 2.0f - 2.0f, mHeight2 - mHeight2 / 2.0f - 2.0f, mWidth2 + 4.0f, mHeight2 + 4.0f);
     mCheckBackground.SetRect(mWidth2 - mWidth2 / 2.0f, mHeight2 - mHeight2 / 2.0f, mWidth2, mHeight2);
     mCheckOutline.mRefresh = true;
@@ -83,7 +82,7 @@ EditorMenuPermSpawnPicker::EditorMenuPermSpawnPicker(GamePermanentEditor *pEdito
 EditorMenuPermSpawnPicker::~EditorMenuPermSpawnPicker() {
     if (mEditor != NULL ) {
         if (mEditor->mMenuSpawnPicker == this) {
-            gEditor->mMenuWavesPicker = NULL;
+            mEditor->mMenuSpawnPicker = NULL;
         }
     }
 }
@@ -150,8 +149,8 @@ void EditorMenuPermSpawnPicker::Notify(void *pSender, const char *pNotification)
         for (int i=0;i<mCells.mCount;i++) {
             EditorMenuPermSpawnPickerCell *aCell = (EditorMenuPermSpawnPickerCell *)mCells.mData[i];
             if (pSender == aCell) {
-                //gEditor->WaveSelect(i);
-                mEditor->PermSelect(i);
+                mEditor->PermSpawnSelect(i);
+                return;
             }
         }
     }
@@ -172,10 +171,6 @@ void EditorMenuPermSpawnPicker::Update() {
             aCount = aPerm->mSpawnCount;
         }
     }
-    
-    
-    
-   
     
     bool aNeedsLayout = false;
     while (mCells.mCount > aCount) {

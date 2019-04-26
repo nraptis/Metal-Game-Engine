@@ -132,8 +132,8 @@ void LevelPath::Finalize() {
     mDist.RemoveAll();
     mDidFailFinalize = false;
     
-    if (mSpeed < 1.0f) {
-        mSpeed = 1.0f;
+    if (mSpeed < 0.4f) {
+        mSpeed = 0.4f;
     }
     
     if (mNodeList.mCount < 2) {
@@ -285,7 +285,7 @@ void LevelPath::AddSegmentBacktrackingFrom(int pIndex) {
     
     float aSpeed = mSpeed;
     if (aSpeed > 100.0f) { aSpeed = 100.0f; }
-    if (aSpeed < 1.0f) { aSpeed = 1.0f; }
+    if (aSpeed < 0.4f) { aSpeed = 0.4f; }
     
     if (cPolyPath.mLength < ((float)aDecelDistance) || aDecelDistance < 10) {
         aDecelerationEnabled = false;
@@ -418,21 +418,21 @@ void LevelPath::Draw() {
 
 void LevelPath::SetSpeedClass(int pSpeedClass) {
     if (pSpeedClass == SPEED_CLASS_EXTRA_SLOW) {
-        mSpeed = 0.4f;
+        mSpeed = 0.62f;
     } else if (pSpeedClass == SPEED_CLASS_SLOW) {
-        mSpeed = 0.75f;
+        mSpeed = 0.76f;
     } else if (pSpeedClass == SPEED_CLASS_MEDIUM_SLOW) {
-        mSpeed = 1.125f;
+        mSpeed = 0.95f;
     } else if (pSpeedClass == SPEED_CLASS_MEDIUM_FAST) {
-        mSpeed = 1.85f;
+        mSpeed = 1.65f;
     } else if (pSpeedClass == SPEED_CLASS_FAST) {
-        mSpeed = 2.5f;
+        mSpeed = 2.38f;
     } else if (pSpeedClass == SPEED_CLASS_EXTRA_FAST) {
-        mSpeed = 3.40f;
+        mSpeed = 3.25f;
     } else if (pSpeedClass == SPEED_CLASS_INSANE) {
         mSpeed = 5.0f;
     } else { //"Default /
-        mSpeed = 1.45f;
+        mSpeed = 1.28f;
     }
 }
 

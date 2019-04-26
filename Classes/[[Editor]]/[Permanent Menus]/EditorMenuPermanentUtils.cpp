@@ -36,47 +36,71 @@ EditorMenuPermanentUtils::EditorMenuPermanentUtils(GamePermanentEditor *pEditor)
     mButtonResetPerm->SetText("Reset Path");
     mRowMain1->AddButton(mButtonResetPerm);
     
-    mGenerationPanel = new ToolMenuPanel();
-    mGenerationPanel->SetTitle("Generation");
-    AddSection(mGenerationPanel);
-    
-    mSegmentSpeed = new UISegment();
-    mSegmentSpeed->SetSegmentCount(7);
-    mSegmentSpeed->SetTitles("XS", "S", "MS", "M", "MF", "F", "XF");
-    mGenerationPanel->AddSection(mSegmentSpeed);
-    
-    
-    mStepperSpawnCount = new UIStepper();
-    mStepperSpawnCount->SetText("Count");
-    mStepperSpawnCount->mMin = 1;
-    mGenerationPanel->AddSection(mStepperSpawnCount);
-    
-    mStepperSpacing = new UIStepper();
-    mStepperSpacing->SetText("Spacing");
-    mStepperSpacing->mMin = -1000;
-    mStepperSpacing->mMax = 1000;
-    mGenerationPanel->AddSection(mStepperSpacing);
     
     
     
-    mTimingPanel = new ToolMenuPanel();
-    mTimingPanel->SetTitle("Timing");
-    AddSection(mTimingPanel);
+    mMenuPathSpawn = new ToolMenuPanel();
+    mMenuPathSpawn->SetTitle("Path Spawn");
+    AddSection(mMenuPathSpawn);
+    
+    mStepperPathSpawnCount = new UIStepper();
+    mStepperPathSpawnCount->SetText("Spawn Count");
+    mMenuPathSpawn->AddSection(mStepperPathSpawnCount);
     
     
-    mStepperCreationType = new UISegment();
-    mStepperCreationType->SetSegmentCount(4);
-    mStepperCreationType->SetTitles("P-W-Start", "P-W-End", "P-W-Clear", "Scr-Clear");
-    mTimingPanel->AddSection(mStepperCreationType);
+    mStepperPathSpawnSpacing = new UIStepper();
+    mStepperPathSpawnSpacing->SetText("Spawn Spacing");
+    mMenuPathSpawn->AddSection(mStepperPathSpawnSpacing);
     
     
-    mStepperCreationDelay = new UIStepper();
-    mStepperCreationDelay->SetText("Delay");
-    mStepperCreationDelay->mMin = 0;
-    mStepperCreationDelay->mMax = 2048;
-    mTimingPanel->AddSection(mStepperCreationDelay);
     
     
+    mRowPathSpawn1 = new ToolMenuSectionRow();
+    mMenuPathSpawn->AddSection(mRowPathSpawn1);
+    
+    mCheckBoxPathSpawnEqualSpacing = new UICheckBox();
+    mCheckBoxPathSpawnEqualSpacing->SetText("Space Evenly");
+    mRowPathSpawn1->AddCheckBox(mCheckBoxPathSpawnEqualSpacing);
+    
+
+    
+    
+    
+    mMenusPanel = new ToolMenuPanel();
+    mMenusPanel->SetTitle("Menus");
+    AddSection(mMenusPanel);
+
+    mRowMenus1 = new ToolMenuSectionRow();
+    mMenusPanel->AddSection(mRowMenus1);
+    
+    mButtonMenuSpawnPicker = new UIButton();
+    mButtonMenuSpawnPicker->SetText("Spawn Picker");
+    mRowMenus1->AddButton(mButtonMenuSpawnPicker);
+    
+    mButtonMenuPermPicker = new UIButton();
+    mButtonMenuPermPicker->SetText("Perm Picker");
+    mRowMenus1->AddButton(mButtonMenuPermPicker);
+    
+    
+    
+    mRowMenus2 = new ToolMenuSectionRow();
+    mMenusPanel->AddSection(mRowMenus2);
+    
+    mButtonMenuAttachment = new UIButton();
+    mButtonMenuAttachment->SetText("Attachments");
+    mRowMenus2->AddButton(mButtonMenuAttachment);
+    
+    
+    mButtonMenuMotionPerm = new UIButton();
+    mButtonMenuMotionPerm->SetText("Mot-Perm");
+    mRowMenus2->AddButton(mButtonMenuMotionPerm);
+    
+    
+    mButtonMenuMotionSpawn = new UIButton();
+    mButtonMenuMotionSpawn->SetText("Mot-Spawn");
+    mRowMenus2->AddButton(mButtonMenuMotionSpawn);
+    
+    DeactivateCloseButton();
 }
 
 EditorMenuPermanentUtils::~EditorMenuPermanentUtils() {
@@ -102,19 +126,16 @@ void EditorMenuPermanentUtils::Notify(void *pSender, const char *pNotification) 
     if (pSender == mButtonResetPerm) { mEditor->ResetSelected(); }
     
     
-    if (pSender == mStepperSpawnCount) { gEditor->RefreshPlayback(); }
+    if (pSender == mButtonMenuSpawnPicker) { mEditor->OpenMenuSpawnPicker(); }
+    if (pSender == mButtonMenuPermPicker) { mEditor->OpenMenuPermPicker(); }
+    if (pSender == mButtonMenuAttachment) { mEditor->OpenMenuAttachment(); }
     
+    if (pSender == mButtonMenuMotionPerm) { mEditor->OpenMenuMotionForPerm(); }
+    if (pSender == mButtonMenuMotionSpawn) { mEditor->OpenMenuMotionForSpawn(); }
     
-    /*
-    if (pSender == mSegmentSpeed) {
-        gEditor->RefreshPlaybackSpeed();
-        gEditor->RefreshPlayback();
-    }
-    if (pSender == mStepperSpawnCount) { gEditor->RefreshPlayback(); }
-    if (pSender == mStepperSpacing) { gEditor->RefreshPlayback(); }
-    if (pSender == mStepperCreationType) { gEditor->RefreshPlayback(); }
-    if (pSender == mStepperCreationDelay) { gEditor->RefreshPlayback(); }
-    */
+    if (pSender == mStepperPathSpawnCount) { gEditor->RefreshPlayback(); }
+    if (pSender == mCheckBoxPathSpawnEqualSpacing) { gEditor->RefreshPlayback(); }
+    if (pSender == mStepperPathSpawnSpacing) { gEditor->RefreshPlayback(); }
     
 }
 
@@ -125,17 +146,43 @@ void EditorMenuPermanentUtils::Update() {
         aPerm = gEditor->PermGet();
     }
     
-    if (mStepperSpawnCount != NULL) {
+    if (mStepperPathSpawnCount != NULL) {
         bool aUnlink = true;
         if (aPerm != NULL) {
             aUnlink = false;
-            mStepperSpawnCount->SetTarget(&(aPerm->mSpawnCount));
+            mStepperPathSpawnCount->SetTarget(&(aPerm->mSpawnCount));
         }
         if (aUnlink) {
-            mStepperSpawnCount->SetTarget(NULL);
+            mStepperPathSpawnCount->SetTarget(NULL);
         }
     }
     
+    
+    if (mStepperPathSpawnSpacing != NULL) {
+        bool aUnlink = true;
+        if (aPerm != NULL) {
+            aUnlink = false;
+            mStepperPathSpawnSpacing->SetTarget(&(aPerm->mSpawnSpacing));
+        }
+        if (aUnlink) {
+            mStepperPathSpawnSpacing->SetTarget(NULL);
+        }
+    }
+    
+    if (mCheckBoxPathSpawnEqualSpacing != NULL) {
+        bool aUnlink = true;
+        if (aPerm != NULL) {
+            aUnlink = false;
+            mCheckBoxPathSpawnEqualSpacing->SetTarget(&(aPerm->mSpawnEqualSpacing));
+        }
+        if (aUnlink) {
+            mCheckBoxPathSpawnEqualSpacing->SetTarget(NULL);
+        }
+    }
+    
+    /*
+    
+    */
     
     /*
     LevelWaveBlueprint *aWave = NULL;

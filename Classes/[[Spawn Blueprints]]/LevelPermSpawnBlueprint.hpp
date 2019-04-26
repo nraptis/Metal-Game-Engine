@@ -10,6 +10,7 @@
 #define LevelPermSpawnBlueprint_hpp
 
 #include "FJSON.hpp"
+#include "LevelMotionControllerBlueprint.hpp"
 
 class LevelPermSpawnBlueprint {
 public:
@@ -22,6 +23,8 @@ public:
     void                                        Load(FJSONNode *pNode);
     
     int                                         mSpawnSpacingOffset;
+    
+    LevelMotionControllerBlueprint              mMotionController;
     
     //Possibility 1.) We have a formation...
     FString                                     mFormationID;

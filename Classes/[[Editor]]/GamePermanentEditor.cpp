@@ -24,6 +24,12 @@ GamePermanentEditor::GamePermanentEditor(GameEditor *pEditor) {
     mGameAreaLeft = pEditor->mGameAreaLeft;
     
     mOverlay = NULL;
+    mMenuAttachment = NULL;
+    mMenuSpawnPicker = NULL;
+    mMenuPermPicker = NULL;
+    mMenuMotion = NULL;
+    
+    mPathSpeedClassIndex = -1;
     
     mSelectedTouch = NULL;
     mSnapsEnabled = true;
@@ -59,10 +65,7 @@ GamePermanentEditor::GamePermanentEditor(GameEditor *pEditor) {
     
     
     
-    mMenuSpawnPicker = new EditorMenuPermSpawnPicker(this);
-    mToolContainer->AddChild(mMenuSpawnPicker);
-    mMenuSpawnPicker->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), (gDeviceHeight - gSafeAreaInsetBottom - 2.0f) - (154.0f + 134.0f + 2.0f), 400.0f, 154.0f);
-    
+
     
     //                   *;
     /*
@@ -78,6 +81,11 @@ GamePermanentEditor::GamePermanentEditor(GameEditor *pEditor) {
     
     
     SetOverlay(mToolContainer);
+    
+    
+    OpenMenuSpawnPicker();
+    OpenMenuPermPicker();
+    
     
 }
 
@@ -107,7 +115,7 @@ void GamePermanentEditor::Update() {
 void GamePermanentEditor::Draw() {
     
     Graphics::PipelineStateSetShape2DAlphaBlending();
-    Graphics::SetColor(1.0f, 0.85f, 1.0f, 0.75f);
+    Graphics::SetColor(0.75f, 0.95f, 0.65f, 0.75f);
     Graphics::DrawRect(0.0f, 0.0f, mGameAreaLeft, gDeviceHeight);
     Graphics::DrawRect(mGameAreaLeft, 0.0f, mGameAreaRight - mGameAreaLeft, mGameAreaTop);
     Graphics::DrawRect(mGameAreaLeft, mGameAreaBottom, mGameAreaRight - mGameAreaLeft, gDeviceHeight - mGameAreaBottom);
@@ -122,7 +130,6 @@ void GamePermanentEditor::Draw() {
     if (gEditor != NULL) {
         
         int aIndex = gEditor->PermIndex();
-        
         
         LevelSectionPermanent *aPerm = (LevelSectionPermanent *)gEditor->mEditorSection.mPermList.Fetch(aIndex);
         if (aPerm != NULL) {
@@ -213,6 +220,8 @@ void GamePermanentEditor::KeyDown(int pKey) {
         return;
     }
     
+    LevelSectionPermanentBlueprint *aPerm = GetPerm();
+    
     bool aShift = gKeyDownShift;
     bool aCtrl = gKeyDownCtrl;
     bool aAlt = gKeyDownAlt;
@@ -232,6 +241,18 @@ void GamePermanentEditor::KeyDown(int pKey) {
     if (pKey == __KEY__E) {
         if (aShift == false && aCtrl == false && aAlt == false) {
             OpenPathEditor();
+        }
+    }
+    
+    if (pKey == __KEY__P) {
+        mSnapsEnabled = !mSnapsEnabled;
+    }
+    
+    if (pKey == __KEY__B) {
+        if (aPerm != NULL) {
+            aPerm->mConstraint.mTypeX = X_CONSTRAINT_NONE;
+            aPerm->mConstraint.mTypeY = Y_CONSTRAINT_NONE;
+            Refresh();
         }
     }
     
@@ -281,7 +302,7 @@ void GamePermanentEditor::KeyDown(int pKey) {
     }
     
     
-    LevelSectionPermanentBlueprint *aPerm = GetPerm();
+    
     
     if (aPerm != NULL) {
         if (pKey == __KEY__LEFT) {
@@ -371,29 +392,42 @@ void GamePermanentEditor::Refresh() {
     }
 }
 
+void GamePermanentEditor::RefreshSpeed() {
+
+    
+    if (gEditor != NULL) {
+        LevelSectionPermanentBlueprint *aPerm = GetPerm();
+        if (aPerm != NULL) {
+            aPerm->mPath.mSpeedClass = gEditor->SpeedConvertSegmentToType(mPathSpeedClassIndex);
+        }
+    }
+    
+    
+}
+
+
 
 void GamePermanentEditor::BreakConstraintX() {
     LevelSectionPermanentBlueprint *aPerm = GetPerm();
     if (aPerm != NULL) {
+        mSnapsEnabled = false;
         aPerm->mConstraint.mTypeX = X_CONSTRAINT_NONE;
         Refresh();
     }
 }
 
 void GamePermanentEditor::BreakConstraintY() {
-    
     LevelSectionPermanentBlueprint *aPerm = GetPerm();
     if (aPerm != NULL) {
+        mSnapsEnabled = false;
         aPerm->mConstraint.mTypeY = Y_CONSTRAINT_NONE;
         Refresh();
     }
 }
 
-
 void GamePermanentEditor::ResetOffsetX() {
     LevelSectionPermanentBlueprint *aPerm = GetPerm();
     if (aPerm != NULL) {
-        
         aPerm->mConstraint.mOffsetX = 0.0f;
         Refresh();
     }
@@ -444,6 +478,69 @@ void GamePermanentEditor::ClosePathEditor() {
     }
 }
 
+void GamePermanentEditor::OpenMenuPermPicker() {
+    //                   *;
+    /*
+     void GameEditor::OpenSpawnPickerMenu() {
+     if (mMenuSpawnPicker == NULL) {
+     mMenuSpawnPicker = new EditorMenuSpawnPicker(this);
+     mToolContainer->AddChild(mMenuSpawnPicker);
+     mMenuSpawnPicker->
+     }
+     }
+     */
+    
+    if (mMenuPermPicker == NULL) {
+        mMenuPermPicker = new EditorMenuPermPicker(this);
+        mToolContainer->AddChild(mMenuPermPicker);
+        mMenuPermPicker->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f),
+                                  (gDeviceHeight - gSafeAreaInsetBottom - 2.0f) - 134.0f, 400.0f, 154.0f);
+    }
+    
+    
+    
+    //
+    
+}
+
+void GamePermanentEditor::OpenMenuSpawnPicker() {
+    if (mMenuSpawnPicker == NULL) {
+        mMenuSpawnPicker = new EditorMenuPermSpawnPicker(this);
+        mToolContainer->AddChild(mMenuSpawnPicker);
+        mMenuSpawnPicker->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), (gDeviceHeight - gSafeAreaInsetBottom - 2.0f) - (154.0f + 134.0f + 2.0f), 400.0f, 154.0f);
+    }
+}
+
+void GamePermanentEditor::OpenMenuAttachment() {
+    
+    if (mMenuAttachment == NULL) {
+        mMenuAttachment = new EditorMenuAttachment(this);
+        mToolContainer->AddChild(mMenuAttachment);
+        mMenuAttachment->SetFrame(gDeviceWidth2 + 200.0f,
+                                  (gDeviceHeight - gSafeAreaInsetBottom) - 600.0f - 2.0f, 400.0f, 600.0f);
+    }
+}
+
+void GamePermanentEditor::OpenMenuMotionForPerm() {
+    if (mMenuMotion == NULL) {
+        mMenuMotion = new EditorMenuMotion(this);
+        mMenuMotion->mIsForPermSpawn = false;
+        mToolContainer->AddChild(mMenuMotion);
+        mMenuMotion->SetFrame(gDeviceWidth2 / 2.0f - 420.0f / 2.0f, 130.0f, 420.0f, 600.0f);
+    }
+}
+
+void GamePermanentEditor::OpenMenuMotionForSpawn() {
+    if (mMenuMotion == NULL) {
+        mMenuMotion = new EditorMenuMotion(this);
+        mMenuMotion->mIsForPermSpawn = true;
+        mToolContainer->AddChild(mMenuMotion);
+        mMenuMotion->SetFrame(gDeviceWidth2 / 2.0f - 420.0f / 2.0f, 130.0f, 420.0f, 600.0f);
+    }
+}
+
+
+
 void GamePermanentEditor::AddPath() {
     OpenPathEditor();
 }
@@ -485,7 +582,6 @@ int GamePermanentEditor::PermSpawnIndex() {
 }
 
 LevelSectionPermanentBlueprint *GamePermanentEditor::GetPerm() {
-    
     if (gEditor != NULL) {
         LevelSectionPermanentBlueprint *aPerm = gEditor->PermGet();
         if (aPerm != NULL) {

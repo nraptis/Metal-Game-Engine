@@ -11,6 +11,7 @@
 
 #include "LevelPathBlueprint.hpp"
 #include "LevelPermSpawnBlueprint.hpp"
+#include "LevelMotionControllerBlueprint.hpp"
 
 #define PERM_MAX_SPAWN_COUNT 6
 
@@ -49,11 +50,14 @@ public:
     void                                        ShiftY(float pShiftY);
     
     
+    LevelMotionControllerBlueprint              mMotionController;
+    
     LevelPermSpawnBlueprint                     mSpawn[PERM_MAX_SPAWN_COUNT + 1];
     
     int                                         mSpawnCount;
     int                                         mSelectedSpawnIndex;
     
+    bool                                        mSpawnEqualSpacing;
     int                                         mSpawnSpacing;
     
     

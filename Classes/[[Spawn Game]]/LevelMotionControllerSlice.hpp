@@ -11,17 +11,54 @@
 
 #define LEVEL_MOTION_SLICE_TYPE_NONE 0
 #define LEVEL_MOTION_SLICE_TYPE_ROTATE 1
-#define LEVEL_MOTION_SLICE_TYPE_OSCILLATE 2
+#define LEVEL_MOTION_SLICE_TYPE_OSCILLATE_VERTICAL 2
+#define LEVEL_MOTION_SLICE_TYPE_OSCILLATE_HORIZONTAL 3
+#define LEVEL_MOTION_SLICE_TYPE_OSCILLATE_ROTATION 4
+
+#include "GameObject.hpp"
 
 class LevelMotionControllerSlice {
 public:
     LevelMotionControllerSlice();
-    ~LevelMotionControllerSlice();
+    virtual ~LevelMotionControllerSlice();
+    
+    virtual void                        Apply(float pReferenceX, float pReferenceY, GameObject *pObject) { }
+    
+    virtual void                        Update() { }
+    
+    
     
     int                                 mType;
+    
+    //The "primary" speed class for this slice. For example, if we're
+    //a rotation movement slice, this will effect the rotation speed.
+    int                                 mSpeedClass;
+    
+    bool                                mSpeedNegateAlways;
+    bool                                mSpeedNegateRandomly;
+    
+    int                                 mKillTimer;
+};
+
+class LevelMotionControllerSliceRotate : public LevelMotionControllerSlice {
+public:
+    LevelMotionControllerSliceRotate();
+    virtual ~LevelMotionControllerSliceRotate();
+    
+    virtual void                        Apply(float pReferenceX, float pReferenceY, GameObject *pObject);
+    virtual void                        Update();
+    
+    
+    float                               mPivotOffsetX;
+    float                               mPivotOffsetY;
+    
+    
+    float                               mRotation;
+    
     
     
     
 };
+
 
 #endif /* LevelMotionControllerSlice_hpp */

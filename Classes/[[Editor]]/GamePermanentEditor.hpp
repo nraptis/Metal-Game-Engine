@@ -13,7 +13,11 @@
 #include "Game.hpp"
 #include "EditorMenuPermanentUtils.hpp"
 #include "EditorMenuPermanent.hpp"
+#include "EditorMenuAttachment.hpp"
 #include "EditorMenuPermSpawnPicker.hpp"
+#include "EditorMenuPermPicker.hpp"
+#include "EditorMenuMotion.hpp"
+
 #include "LevelSectionPermanentBlueprint.hpp"
 #include "LevelSectionPermanent.hpp"
 #include "GamePathEditor.hpp"
@@ -48,7 +52,10 @@ public:
     GameEditor                                  *mEditor;
     EditorMenuPermanentUtils                    *mMenuUtils;
     EditorMenuPermanent                         *mMenuPerm;
+    EditorMenuPermPicker                        *mMenuPermPicker;
     EditorMenuPermSpawnPicker                   *mMenuSpawnPicker;
+    EditorMenuAttachment                        *mMenuAttachment;
+    EditorMenuMotion                            *mMenuMotion;
     
     void                                        SetOverlay(FCanvas *pCanvas);
     FCanvas                                     *mOverlay;
@@ -58,10 +65,22 @@ public:
     void                                        OpenPathEditor();
     void                                        ClosePathEditor();
     
+    
+    void                                        OpenMenuPermPicker();
+    void                                        OpenMenuSpawnPicker();
+    void                                        OpenMenuAttachment();
+    void                                        OpenMenuMotionForPerm();
+    void                                        OpenMenuMotionForSpawn();
+    
+    
+    
+    
     void                                        AddPath();
     void                                        DeletePath();
     void                                        DeletePermanent();
     
+    
+    void                                        RefreshSpeed();
     
     void                                        PermSelect(int pIndex);
     void                                        PermSpawnSelect(int pIndex);
@@ -107,14 +126,7 @@ public:
     
     
     
-    
-    
-    //if (pSender == mButtonDeletePermanent) { mEditor->BreakConstraintY(); }
-    //if (pSender == mButtonEditPermanentPaths) { mEditor->BreakConstraintY(); }
-    //if (pSender == mButtonAddPath) { mEditor->BreakConstraintY(); }
-    //if (pSender == mButtonDeletePath) { mEditor->BreakConstraintY(); }
-    
-    
+    int                                         mPathSpeedClassIndex;
     
     
     

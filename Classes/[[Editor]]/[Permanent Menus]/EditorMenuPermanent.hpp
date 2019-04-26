@@ -44,6 +44,21 @@ public:
     
     
     
+    ToolMenuPanel                           *mPathExtPanel;
+    
+    UISegment                               *mSegmentPathSpeed;
+    
+    
+    ToolMenuSectionRow                      *mRowVisuals;
+    UICheckBox                              *mCheckBoxSmooth;
+    UICheckBox                              *mCheckBoxClosed;
+
+    
+    
+    
+    
+    
+    
     ToolMenuPanel                           *mPermPanel;
     ToolMenuSectionRow                      *mRowPermanent1;
     UIButton                                *mButtonDeletePermanent;

@@ -27,7 +27,6 @@ public:
     
     ToolMenuSectionRow                      *mRowVisuals;
     UICheckBox                              *mCheckBoxSmooth;
-    UICheckBox                              *mCheckBoxPreview;
     UICheckBox                              *mCheckBoxClosed;
     
     ToolMenuPanel                           *mPointsPanel;

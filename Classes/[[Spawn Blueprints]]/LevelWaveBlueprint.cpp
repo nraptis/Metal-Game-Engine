@@ -266,8 +266,6 @@ void LevelWaveBlueprint::Load(FJSONNode *pNode) {
     mSpawnSpacing = pNode->GetInt("spawn_spacing", 90);
     //mCreationType = pNode->GetInt("creation_type", WAVE_CREATION_TYPE_SCREEN_CLEAR_IGNORE_PERMS);
     
-    
-
     mCreationRequiresPrevWaveStart = pNode->GetBool("creation_prev_wave_start", false);
     mCreationRequiresPrevWaveComplete = pNode->GetBool("creation_prev_wave_complete", false);
     mCreationRequiresScreenWavesClear = pNode->GetBool("creation_screen_waves_clear", false);
@@ -284,6 +282,7 @@ void LevelWaveBlueprint::Load(FJSONNode *pNode) {
             ++mSpawnCount;
         }
     }
+    
     if (mSpawnCount <= 0) { mSpawnCount = 1; }
     if (mSpawnCount > WAVE_MAX_SPAWN_COUNT) { mSpawnCount = WAVE_MAX_SPAWN_COUNT; }
     
