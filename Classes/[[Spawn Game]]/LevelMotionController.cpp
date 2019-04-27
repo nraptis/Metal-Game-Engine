@@ -24,14 +24,9 @@
 
 LevelMotionController::LevelMotionController() {
     mKillTimer = 8;
-    
-    mTestRotation = 0.0f;
 }
 
 LevelMotionController::~LevelMotionController() {
-    
-    
-    
     FreeList(LevelMotionControllerSlice, mSliceList);
     FreeList(LevelMotionControllerSlice, mKillList);
 }
@@ -45,9 +40,8 @@ void LevelMotionController::Reset() {
 
 void LevelMotionController::Update() {
 
-    mTestRotation += 1.0f;
-    if (mTestRotation >= 360.0f) {
-        mTestRotation -= 360.0f;
+    EnumList(LevelMotionControllerSlice, aSlice, mSliceList) {
+        aSlice->Update();
     }
     
     EnumList(LevelMotionControllerSlice, aSlice, mKillList) {
@@ -66,11 +60,19 @@ void LevelMotionController::Draw() {
     
 }
 
+void LevelMotionController::Apply(float pReferenceX, float pReferenceY, float *pX, float *pY) {
+    
+    
+}
+
+
 void LevelMotionController::Apply(float pReferenceX, float pReferenceY, GameObject *pObject) {
     
     
+    if (pObject != NULL) {
     EnumList(LevelMotionControllerSlice, aSlice, mSliceList) {
-        aSlice->Apply(pReferenceX, pReferenceY, pObject);
+        aSlice->Apply(pReferenceX, pReferenceY, &pObject->mTransform.mX, &pObject->mTransform.mY);
+    }
     }
     
     

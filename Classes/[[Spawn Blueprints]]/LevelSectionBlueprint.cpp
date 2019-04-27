@@ -175,12 +175,17 @@ void LevelSectionBlueprint::PermAdd(float pX, float pY) {
         if (gPermEditor->mSnapsEnabled == true) {
             mCurrentPerm->mConstraint.mTypeX = gEditor->ClosestXConstraint(pX);
             mCurrentPerm->mConstraint.mTypeY = gEditor->ClosestYConstraint(pY);
-            mCurrentPerm->ApplyEditorConstraints();
+            //mCurrentPerm->ApplyEditorConstraints();
         }
     }
     
     mPermList.Add(mCurrentPerm);
-    if (gEditor != NULL) { gEditor->RefreshPlayback(); }
+    
+    if (gEditor != NULL) {
+        gEditor->RefreshPlayback();
+    }
+    
+    mCurrentPerm->ApplyEditorConstraints();
 }
 
 void LevelSectionBlueprint::PermRemove() {

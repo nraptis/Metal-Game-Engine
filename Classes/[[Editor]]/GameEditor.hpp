@@ -126,6 +126,7 @@ public:
     
     void                                        PickFormationForFormationEditor();
     void                                        PickFormationForSpawnNode();
+    void                                        PickFormationForPerm();
     void                                        PickFormationForPermSpawnNode();
     
     void                                        PickFormation(int pReason);

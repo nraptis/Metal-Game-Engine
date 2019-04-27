@@ -13,6 +13,7 @@
 #include "LevelFormation.hpp"
 #include "LevelPath.hpp"
 #include "LevelPermSpawn.hpp"
+#include "LevelMotionController.hpp"
 
 class LevelSection;
 class LevelSectionPermanent {
@@ -33,9 +34,14 @@ public:
     
     void                                DisposeObject(GameObject *pObject);
     
+    //Possibility 1.) We have a formation...
+    FString                             mFormationID;
+    
+    //Possibility 2.) We have an object...
     int                                 mObjectType;
     
     FVec2                               ConvertLocalPointToGame(FVec2 pPos);
+    
     
     
     //Since the permanents will be positioned relative
@@ -47,19 +53,23 @@ public:
     float                               mY;
     
     GameObject                          *mObject;
+    LevelFormation                      *mFormation;
+    
+    
+    
     
     //TODO: Remember to assign this when we BUILD...
     LevelSection                        *mSection;
     
     LevelPath                           mPath;
     
+    LevelMotionController               mMotionController;
     
     FList                               mSpawnList; //of LevelPermSpawn
     bool                                mSpawnEqualSpacing;
     
     //Base spacing for spawns, if we are not using equal spacing...
     int                                 mSpawnSpacing;
-    
     
     int                                 mKillTimer;
     

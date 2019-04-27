@@ -1,14 +1,14 @@
 {
-	"grid_type": 0,
+	"grid_type": 4,
 	"rect_width": 7,
 	"rect_height": 7,
 	"rect_spacing": 44,
 	"circle_ring_spacing": 47,
 	"circle_ring_count": 4,
 	"circle_radial_count": 8,
-	"ngon1_sides": 8,
-	"ngon1_ring_spacing": 38,
+	"ngon1_sides": 6,
+	"ngon1_ring_spacing": 44,
 	"ngon1_ring_count": 3,
-	"ngon1_point_spacing": 40,
+	"ngon1_point_spacing": 30,
 	"ngon1_start_rotation": 179
 }

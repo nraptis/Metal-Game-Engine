@@ -73,6 +73,9 @@ void LevelMotionControllerSliceRotateBlueprint::Build(LevelMotionControllerSlice
     
     LevelMotionControllerSliceBlueprint::Build(pSlice);
     
+    pSlice->mPivotOffsetX = ((float)mPivotOffsetX);
+    pSlice->mPivotOffsetY = ((float)mPivotOffsetY);
+    
 }
 
 FJSONNode *LevelMotionControllerSliceRotateBlueprint::Save() {

@@ -275,6 +275,34 @@ void GamePermanentEditor::KeyDown(int pKey) {
         }
     }
     
+    if (pKey == __KEY__M) {
+        if (aShift == false && aCtrl == false && aAlt == false) {
+            
+            LevelSectionPermanentBlueprint *aPerm = gEditor->PermGet();
+            if (aPerm != NULL) {
+                if (aPerm->IsPathPerm() && aPerm->mSelectedSpawnIndex >= 0 && aPerm->mSelectedSpawnIndex < aPerm->mSpawnCount) {
+                    OpenMenuMotionForSpawn();
+                } else {
+                    OpenMenuMotionForPerm();
+                }
+            }
+        }
+        
+        if (aShift == false && aCtrl == true && aAlt == false) {
+            
+        }
+    }
+    
+    if (pKey == __KEY__T) {
+        if (aShift == false && aCtrl == false && aAlt == false) {
+            OpenMenuAttachment();
+        }
+        
+        if (aShift == false && aCtrl == true && aAlt == false) {
+            
+        }
+    }
+    
     if (pKey == __KEY__L) {
         if (aShift == false && aCtrl == true && aAlt == false) {
             
@@ -393,7 +421,6 @@ void GamePermanentEditor::Refresh() {
 }
 
 void GamePermanentEditor::RefreshSpeed() {
-
     
     if (gEditor != NULL) {
         LevelSectionPermanentBlueprint *aPerm = GetPerm();
@@ -401,11 +428,7 @@ void GamePermanentEditor::RefreshSpeed() {
             aPerm->mPath.mSpeedClass = gEditor->SpeedConvertSegmentToType(mPathSpeedClassIndex);
         }
     }
-    
-    
 }
-
-
 
 void GamePermanentEditor::BreakConstraintX() {
     LevelSectionPermanentBlueprint *aPerm = GetPerm();
@@ -512,7 +535,6 @@ void GamePermanentEditor::OpenMenuSpawnPicker() {
 }
 
 void GamePermanentEditor::OpenMenuAttachment() {
-    
     if (mMenuAttachment == NULL) {
         mMenuAttachment = new EditorMenuAttachment(this);
         mToolContainer->AddChild(mMenuAttachment);
@@ -538,8 +560,6 @@ void GamePermanentEditor::OpenMenuMotionForSpawn() {
         mMenuMotion->SetFrame(gDeviceWidth2 / 2.0f - 420.0f / 2.0f, 130.0f, 420.0f, 600.0f);
     }
 }
-
-
 
 void GamePermanentEditor::AddPath() {
     OpenPathEditor();
@@ -590,5 +610,3 @@ LevelSectionPermanentBlueprint *GamePermanentEditor::GetPerm() {
     }
     return NULL;
 }
-
-

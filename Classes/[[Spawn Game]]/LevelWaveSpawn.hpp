@@ -14,6 +14,7 @@
 
 #include "GameObject.hpp"
 #include "LevelFormation.hpp"
+#include "LevelMotionController.hpp"
 
 class LevelWave;
 class LevelPath;
@@ -34,6 +35,8 @@ public:
     
     bool                                DidStart();
     bool                                IsClear(); //all of the objects are either null or "un-killable" types
+    
+    LevelMotionController               mMotionController;
     
     LevelWave                           *mWave;
     LevelPath                           *mPath;

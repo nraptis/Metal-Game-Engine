@@ -102,11 +102,6 @@ void LevelWave::Update() {
                 aComplete = true;
             }
             
-            
-            //if (aSpawn->mObject)
-            //if (aSpawn->mPathIndex > 0 && aSpawn->mObject == NULL)
-            
-            
             if (aComplete) {
                 aSpawn->mIsComplete = true;
                 
@@ -114,8 +109,6 @@ void LevelWave::Update() {
                 mRecentlyCompletedList.Add(aSpawn);
                 
             }
-            
-            
             
         }
         if (aSpawn != NULL) {

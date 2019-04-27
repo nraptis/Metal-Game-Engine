@@ -61,6 +61,9 @@ public:
     int                                         mSpawnSpacing;
     
     
+    FString                                     mFormationID;
+    
+    int                                         mObjectType;
     
     //Note: BUILD should have NO TIE-IN TO EDITOR...
     //This HAS to work WITHOUT EDITOR for GAME......

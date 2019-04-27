@@ -279,4 +279,8 @@ void EditorMenuMotionTypePanelRotate::Notify(void *pSender, const char *pNotific
             gEditor->RefreshPlayback();
         }
     }
+    
+    if (pSender == mStepperPivotOffsetX) { gEditor->RefreshPlayback(); }
+    if (pSender == mStepperPivotOffsetY) { gEditor->RefreshPlayback(); }
+    
 }

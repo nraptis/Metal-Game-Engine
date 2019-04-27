@@ -46,7 +46,6 @@ LevelWaveSpawn::~LevelWaveSpawn() {
         delete mFormation;
         mFormation = NULL;
     }
-    
 }
 
 void LevelWaveSpawn::Spawn() {
@@ -60,8 +59,6 @@ void LevelWaveSpawn::Spawn() {
         delete mFormation;
         mFormation = NULL;
     }
-    
-    
     
     mBaseX = 0.0f;
     mBaseY = 0.0f;
@@ -82,7 +79,7 @@ void LevelWaveSpawn::Spawn() {
             
             mFormation->mX = mBaseX;
             mFormation->mY = mBaseY;
-            mFormation->Spawn();
+            mFormation->Spawn(&mMotionController);
         }
     }
     
@@ -145,6 +142,8 @@ bool LevelWaveSpawn::IsClear() {
     if (mFormation != NULL) {
         if (mFormation->IsClear() == false) {
             return false;
+        } else {
+            printf("What?\n");
         }
     }
     
@@ -216,19 +215,24 @@ void LevelWaveSpawn::Update() {
             mDistanceTraveled = mPath->mDist.mData[mPath->mDist.mCount - 1];
         }
     }
+    
+    mMotionController.Update();
+    
     if (mObject != NULL) {
         mObject->mTransform.mX = mBaseX;
         mObject->mTransform.mY = mBaseY;
         
         if (mObject->mKill != 0) {
             mObject = NULL;
+        } else {
+            mMotionController.Apply(mBaseX, mBaseY, mObject);
         }
     }
     
     if (mFormation != NULL) {
         mFormation->mX = mBaseX;
         mFormation->mY = mBaseY;
-        mFormation->Update();
+        mFormation->Update(&mMotionController);
     }
     
 }

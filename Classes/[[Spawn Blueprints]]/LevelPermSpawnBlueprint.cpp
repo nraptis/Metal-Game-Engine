@@ -37,7 +37,6 @@ FJSONNode *LevelPermSpawnBlueprint::Save() {
         aExport->AddDictionaryInt("spacing_offset", mSpawnSpacingOffset);
     }
     
-    
     if (mFormationID.mLength > 0) {
         //Possibility 1.) We have a formation...
         aExport->AddDictionaryString("formation", mFormationID.c());

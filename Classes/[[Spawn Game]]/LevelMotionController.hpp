@@ -25,10 +25,12 @@ public:
     
     void                                Apply(float pReferenceX, float pReferenceY, GameObject *pObject);
     
+    void                                Apply(float pReferenceX, float pReferenceY, float *pX, float *pY);
+    
+    
+    
+    
     int                                 mKillTimer;
-    
-    float                               mTestRotation;
-    
     
     FList                               mSliceList;
     

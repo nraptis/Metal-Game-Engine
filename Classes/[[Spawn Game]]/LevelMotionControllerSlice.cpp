@@ -17,13 +17,14 @@ LevelMotionControllerSlice::LevelMotionControllerSlice() {
     mSpeedNegateAlways = false;
     mSpeedNegateRandomly = false;
     
+    mSpeedNegateRandomlyFlag = gRand.GetBool();
+    
     mKillTimer = 8;
 }
 
 LevelMotionControllerSlice::~LevelMotionControllerSlice() {
     
 }
-
 
 LevelMotionControllerSliceRotate::LevelMotionControllerSliceRotate() {
     mType = LEVEL_MOTION_SLICE_TYPE_ROTATE;
@@ -39,27 +40,53 @@ LevelMotionControllerSliceRotate::~LevelMotionControllerSliceRotate() {
     
 }
 
-void LevelMotionControllerSliceRotate::Apply(float pReferenceX, float pReferenceY, GameObject *pObject) {
+void LevelMotionControllerSliceRotate::Apply(float pReferenceX, float pReferenceY, float *pX, float *pY) {
     
-    
-    if (pObject != NULL && pObject->mKill == 0) {
+    if (pX != NULL && pY != NULL) {
         
-        
-        FVec2 aPos = FVec2(pObject->mTransform.mX, pObject->mTransform.mY);
-        FVec2 aCenter = FVec2(pReferenceX, pReferenceY);
+        FVec2 aPos = FVec2(*pX, *pY);
+        FVec2 aCenter = FVec2(pReferenceX + mPivotOffsetX, pReferenceY + mPivotOffsetY);
         
         aPos = PivotPoint(aPos, mRotation, aCenter);
         
-        pObject->mTransform.mX = aPos.mX;
-        pObject->mTransform.mY = aPos.mY;
+        *pX = aPos.mX;
+        *pY = aPos.mY;
     }
     
 }
 
 void LevelMotionControllerSliceRotate::Update() {
     
-    //mRotation
     
+    float aSpeed = 1.0f;
+    
+    if (mSpeedClass == SPEED_CLASS_EXTRA_SLOW) {
+        aSpeed = 0.25f;
+    } else if (mSpeedClass == SPEED_CLASS_SLOW) {
+        aSpeed = 0.35f;
+    } else if (mSpeedClass == SPEED_CLASS_MEDIUM_SLOW) {
+        aSpeed = 0.60f;
+    } else if (mSpeedClass == SPEED_CLASS_MEDIUM_FAST) {
+        aSpeed = 1.5f;
+    } else if (mSpeedClass == SPEED_CLASS_FAST) {
+        aSpeed = 2.25f;
+    } else if (mSpeedClass == SPEED_CLASS_EXTRA_FAST) {
+        aSpeed = 3.0f;
+    } else if (mSpeedClass == SPEED_CLASS_INSANE) {
+        aSpeed = 5.5f;
+    }
+    
+    if (mSpeedNegateAlways == true) {
+        aSpeed = -fabsf(aSpeed);
+    }
+    
+    if (mSpeedNegateRandomly == true && mSpeedNegateRandomlyFlag == true) {
+        aSpeed = -fabsf(aSpeed);
+    }
+    
+    mRotation += aSpeed;
+    if (mRotation >= 360.0f) { mRotation -= 360.0f; }
+    if (mRotation < 0.0f) { mRotation += 360.0f; }
     
 }
 

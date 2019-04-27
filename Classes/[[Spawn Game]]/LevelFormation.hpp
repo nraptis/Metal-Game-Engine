@@ -22,12 +22,13 @@ public:
     ~LevelFormation();
     
     void                                        Reset();
-    void                                        Spawn();
-    void                                        Update();
+    void                                        Spawn(LevelMotionController *pMotionController);
+    void                                        Update(LevelMotionController *pMotionController);
+    
     void                                        Draw(int pSelectedIndex);
     void                                        DisposeObject(GameObject *pObject);
     
-    void                                        ApplyMotionController();
+    void                                        ApplyMotionController(LevelMotionController *pMotionController);
     
     bool                                        IsClear();
     

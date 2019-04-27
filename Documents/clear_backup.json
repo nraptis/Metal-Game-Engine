@@ -1,86 +1,38 @@
 {
 	"section": true,
-	"wave_list": [
-		{
-			"path": {
-				"smooth": true,
-				"closed": true,
-				"node_list": [
-					{
-						"x_con": 300,
-						"y_con": 300
-					},
-					{
-						"x_con": 700,
-						"y_con": 300
-					},
-					{
-						"x_con": 700,
-						"y_con": 800
-					},
-					{
-						"x_con": 300,
-						"y_con": 800
-					}
-				]
-			},
-			"spawn": [
-				{}
-			]
-		}
-	],
+	"wave_list": [],
 	"perm_list": [
 		{
-			"spawn_spacing": 240,
-			"x_con": 500,
-			"y_con": 500,
-			"path": {
-				"smooth": true,
-				"closed": true,
-				"speed_class": -300,
-				"node_list": [
-					{
-						"x_con": 300,
-						"y_con": 500
-					},
-					{
-						"x_con": 400,
-						"y_con": 400
-					},
-					{
-						"x_con": 500,
-						"y_con": 400
-					},
-					{
-						"x_con": 600,
-						"y_con": 500
-					},
-					{
-						"x_con": 600,
-						"y_con": 600
-					},
-					{
-						"x_con": 500,
-						"x_con_offset": 20.000000,
-						"y_con": 600,
-						"y_con_offset": 60.000000
-					},
-					{
-						"x_con": 400,
-						"y_con": 600
-					}
-				]
-			},
-			"spawn": [
-				{},
-				{
-					"type": 1
-				},
-				{
-					"formation": "formation_square_2x2_filled_stationary"
-				},
-				{}
-			]
+			"x": 41.756222,
+			"y": 25.576082
+		},
+		{
+			"x": 62.953861,
+			"y": 30.252991
+		},
+		{
+			"x": 63.916321,
+			"y": 52.693485
+		},
+		{
+			"x": 35.477295,
+			"y": 50.320129
+		},
+		{
+			"x": 49.394779,
+			"y": 64.783821
+		},
+		{
+			"x": 80.178246,
+			"y": 15.040472
+		},
+		{
+			"x": 30.675570,
+			"y": 10.496111
+		},
+		{
+			"x": 20.983978,
+			"y": 30.207163
 		}
 	]
 }

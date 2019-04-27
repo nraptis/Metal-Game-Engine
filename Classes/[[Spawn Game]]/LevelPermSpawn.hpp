@@ -11,6 +11,7 @@
 
 #include "GameObject.hpp"
 #include "LevelFormation.hpp"
+#include "LevelMotionController.hpp"
 
 class LevelSectionPermanent;
 class LevelPath;
@@ -34,6 +35,7 @@ public:
     void                                RefreshPathPosition();
     void                                SetObjectPosition();
     
+    LevelMotionController               mMotionController;
     
     LevelSectionPermanent               *mPerm;
     LevelPath                           *mPath;

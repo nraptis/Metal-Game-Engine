@@ -11,11 +11,14 @@
 #include "GameLevelController.hpp"
 #include "Game.hpp"
 #include "Balloon.hpp"
+#include "FormationCollection.hpp"
+
 
 LevelSectionPermanent::LevelSectionPermanent(LevelSection *pSection) {
     mSection = pSection;
     
     mObject = NULL;
+    mFormation = NULL;
     
     mObjectType = GAME_OBJECT_TYPE_BALLOON;
     
@@ -34,6 +37,11 @@ LevelSectionPermanent::LevelSectionPermanent(LevelSection *pSection) {
 
 LevelSectionPermanent::~LevelSectionPermanent() {
     
+    if (mFormation != NULL) {
+        delete mFormation;
+        mFormation = NULL;
+    }
+    
     FreeList(LevelPermSpawn, mSpawnList);
     FreeList(LevelPermSpawn, mSpawnKillList);
     FreeList(LevelPermSpawn, mSpawnDeleteList);
@@ -42,6 +50,9 @@ LevelSectionPermanent::~LevelSectionPermanent() {
 
 void LevelSectionPermanent::Reset() {
     
+    
+    //mFormationID.Clear();
+    //mObjectType = GAME_OBJECT_TYPE_BALLOON;
     
     EnumList(LevelPermSpawn, aSpawn, mSpawnList) {
         aSpawn->Reset();
@@ -87,6 +98,12 @@ void LevelSectionPermanent::Spawn() {
         mObject = NULL;
     }
     
+    if (mFormation != NULL) {
+        delete mFormation;
+        mFormation = NULL;
+    }
+    
+
     
     //Either we are using the path or no...
     
@@ -136,40 +153,48 @@ void LevelSectionPermanent::Spawn() {
             }
         }
         
-        
         EnumList(LevelPermSpawn, aSpawn, mSpawnList) {
             aSpawn->Spawn();
         }
-        
-        
         
     } else {
         
         //We are either an object or formation, free floating...
         
-        if (mObjectType == GAME_OBJECT_TYPE_BALLOON) {
-            mObject = new Balloon();
+        
+        if (mFormationID.mLength > 0) {
             
-            //TODO: For auto-tech
-            //((Balloon *)mObject)->mSprite = &(gApp->mBalloonMap[3]);
+            mFormation = gFormationCollection.Get(mFormationID.c());
+            if (mFormation != NULL) {
+                
+                mFormation->mDidOriginateAsPermanent = false;
+                mFormation->mDidOriginateOnWave = true;
+                
+                mFormation->mX = mBaseX;
+                mFormation->mY = mBaseY;
+                mFormation->Spawn(&mMotionController);
+            }
+        }
+        
+        if (mFormation == NULL) {
             
-            gGame->mBalloonList.Add(mObject);
+            if (mObjectType == GAME_OBJECT_TYPE_BALLOON) {
+                mObject = new Balloon();
+                gGame->mBalloonList.Add(mObject);
+            }
+            
+            if (mObjectType == GAME_OBJECT_TYPE_BRICKHEAD) {
+                mObject = new BrickHead();
+                gGame->mBrickHeadList.Add(mObject);
+            }
+            
+            if (mObject != NULL) {
+                
+                mObject->mDidOriginateOnWave = false;
+                mObject->mDidOriginateAsPermanent = true;
+            }
         }
-        
-        if (mObjectType == GAME_OBJECT_TYPE_BRICKHEAD) {
-            mObject = new BrickHead();
-            gGame->mBrickHeadList.Add(mObject);
-        }
-        
-        if (mObject != NULL) {
-            mObject->mDidOriginateOnWave = false;
-            mObject->mDidOriginateAsPermanent = true;
-        }
-        
     }
-    
-    
-    
     
     PositionObject();
 }
@@ -190,6 +215,8 @@ void LevelSectionPermanent::Update() {
     //
     //////
     
+    mMotionController.Update();
+    
     EnumList(LevelPermSpawn, aSpawn, mSpawnList) {
         aSpawn->Update();
     }
@@ -208,6 +235,16 @@ void LevelSectionPermanent::Update() {
     
     
     PositionObject();
+    
+    
+    if (mFormation != NULL) {
+        mFormation->Update(&mMotionController);
+    }
+    
+    if (mObject != NULL) {
+        mMotionController.Apply(mX, mY, mObject);
+    }
+    
 }
 
 void LevelSectionPermanent::Draw() {
@@ -312,6 +349,12 @@ void LevelSectionPermanent::PositionObject() {
     if (mObject != NULL) {
         mObject->mTransform.mX = mX;
         mObject->mTransform.mY = mY;
+    }
+    
+    
+    if (mFormation != NULL) {
+        mFormation->mX = mX;
+        mFormation->mY = mY;
     }
     
 }

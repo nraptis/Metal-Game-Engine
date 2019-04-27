@@ -63,7 +63,7 @@ void LevelPermSpawn::Spawn() {
             mFormation->mDidOriginateAsPermanent = true;
             mFormation->mDidOriginateOnWave = false;
             SetObjectPosition();
-            mFormation->Spawn();
+            mFormation->Spawn(&mMotionController);
         }
     }
     
@@ -154,22 +154,24 @@ void LevelPermSpawn::Update() {
         }
     }
     
+    mMotionController.Update();
+    
     SetObjectPosition();
     
     if (mObject != NULL) {
         if (mObject->mKill != 0) {
             mObject = NULL;
+        } else {
+            mMotionController.Apply(mObject->mTransform.mX, mObject->mTransform.mY, mObject);
         }
     }
     
     if (mFormation != NULL) {
-        mFormation->Update();
+        mFormation->Update(&mMotionController);
     }
-    
 }
 
 void LevelPermSpawn::Draw() {
-    
     
     if (mPathIndex >= 0 && mPathIndex < mPath->mPath.mCount) {
         
@@ -189,7 +191,6 @@ void LevelPermSpawn::SetObjectPosition() {
     float aY = mPathY;
     
     if (mPerm != NULL) {
-        
         FVec2 aPos = FVec2(aX, aY);
         aPos = mPerm->ConvertLocalPointToGame(aPos);
         aX = aPos.mX;
@@ -209,7 +210,6 @@ void LevelPermSpawn::SetObjectPosition() {
     if (mFormation != NULL) {
         mFormation->mX = aX;
         mFormation->mY = aY;
-        mFormation->Update();
     }
 }
 

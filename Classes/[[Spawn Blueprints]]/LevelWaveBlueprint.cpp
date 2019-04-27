@@ -124,7 +124,7 @@ void LevelWaveBlueprint::FindLargestSpawnSize() {
         LevelFormation *aFormation = gFormationCollection.Get(mSpawn[i].mFormationID.c());
         if (aFormation != NULL) {
             
-            aFormation->Spawn();
+            aFormation->Spawn(NULL);
             
             float aTop, aRight, aBottom, aLeft;
 
@@ -185,17 +185,16 @@ void LevelWaveBlueprint::Build(LevelWave *pWave) {
     if (mSpawnCount < 1) mSpawnCount = 1;
     if (mSpawnCount > WAVE_MAX_SPAWN_COUNT) mSpawnCount = WAVE_MAX_SPAWN_COUNT;
     
-    
     pWave->mSpawnSpacing = (float)mSpawnSpacing;
-    
     
     for (int i=0;i<mSpawnCount;i++) {
         LevelWaveSpawn *aSpawn = new LevelWaveSpawn(pWave, &pWave->mPath);
         
         aSpawn->mOffsetSpawnDistance = mSpawn[i].mSpawnSpacingOffset;
-        
         aSpawn->mFormationID = mSpawn[i].mFormationID.c();
         aSpawn->mObjectType = mSpawn[i].mObjectType;
+        
+        mSpawn[i].mMotionController.Build(&(aSpawn->mMotionController));
         
         pWave->mSpawnList.Add(aSpawn);
     }

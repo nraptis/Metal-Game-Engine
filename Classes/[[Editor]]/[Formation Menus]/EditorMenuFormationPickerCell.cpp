@@ -20,7 +20,7 @@ EditorMenuFormationPickerCell::EditorMenuFormationPickerCell(LevelFormation *pFo
     mDisplayDelay = 4;
     
     if (mFormation) {
-        mFormation->Spawn();
+        mFormation->Spawn(NULL);
         mFormation->EditorKillAllObjects();
     }
     
@@ -57,7 +57,7 @@ void EditorMenuFormationPickerCell::Update() {
     UIButton::Update();
     
     if (mFormation) {
-        mFormation->Update();
+        mFormation->Update(NULL);
     }
     
 }

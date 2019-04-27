@@ -22,7 +22,7 @@ public:
     LevelMotionControllerSlice();
     virtual ~LevelMotionControllerSlice();
     
-    virtual void                        Apply(float pReferenceX, float pReferenceY, GameObject *pObject) { }
+    virtual void                        Apply(float pReferenceX, float pReferenceY, float *pX, float *pY) { }
     
     virtual void                        Update() { }
     
@@ -37,6 +37,8 @@ public:
     bool                                mSpeedNegateAlways;
     bool                                mSpeedNegateRandomly;
     
+    bool                                mSpeedNegateRandomlyFlag;
+    
     int                                 mKillTimer;
 };
 
@@ -45,7 +47,7 @@ public:
     LevelMotionControllerSliceRotate();
     virtual ~LevelMotionControllerSliceRotate();
     
-    virtual void                        Apply(float pReferenceX, float pReferenceY, GameObject *pObject);
+    virtual void                        Apply(float pReferenceX, float pReferenceY, float *pX, float *pY);
     virtual void                        Update();
     
     

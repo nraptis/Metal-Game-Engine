@@ -467,6 +467,16 @@ void GameEditor::KeyDown(int pKey) {
         }
     }
     
+    if (pKey == __KEY__T) {
+        if (aShift == false && aCtrl == false && aAlt == false) {
+            OpenAttachmentMenu();
+        }
+        
+        if (aShift == false && aCtrl == true && aAlt == false) {
+            
+        }
+    }
+    
     if (pKey == __KEY__A) {
         if (aShift == false && aCtrl == true && aAlt == false) {
             WaveAdd();
@@ -533,10 +543,12 @@ void GameEditor::Notify(void *pSender, const char *pNotification) {
             printf("SELECTED[%s]\n", gSelectedFormation->mID.c());
         }
         if (mPickFormationReason == 0) {
+            printf("Formation Selected for Formation Editor...\n");
             OpenFormationEditor(gSelectedFormation);
         }
         if (mPickFormationReason == 1) {
             LevelWaveSpawnBlueprint *aSpawn = SpawnGet();
+            printf("Formation Selected for WAVE SPAWN [%llx]\n", aSpawn);
             if (aSpawn != NULL) {
                 aSpawn->mFormationID = gSelectedFormation->mID.c();
                 RefreshPlayback();
@@ -544,18 +556,32 @@ void GameEditor::Notify(void *pSender, const char *pNotification) {
         }
         if (mPickFormationReason == 2) {
             LevelPermSpawnBlueprint *aSpawn = PermSpawnGet();
+            printf("Formation Selected for PERM SPAWN [%llx]\n", aSpawn);
             if (aSpawn != NULL) {
                 aSpawn->mFormationID = gSelectedFormation->mID.c();
                 RefreshPlayback();
             }
-            
             if (mPermEditor != NULL) {
                 SetOverlay(mPermEditor);
             }
-            
-            
-            
         }
+        
+        if (mPickFormationReason == 3) {
+            LevelSectionPermanentBlueprint *aPerm = PermGet();
+            printf("Formation Selected for PERM [%llx]\n", aPerm);
+            if (aPerm != NULL) {
+                aPerm->mFormationID = gSelectedFormation->mID.c();
+                RefreshPlayback();
+            }
+            if (mPermEditor != NULL) {
+                SetOverlay(mPermEditor);
+            }
+        }
+        
+        
+        
+        
+        
     }
 }
 
@@ -919,9 +945,22 @@ LevelWaveSpawnBlueprint *GameEditor::SpawnGet() {
 }
 
 void GameEditor::SpawnClearFormation() {
-    LevelWaveSpawnBlueprint *aSpawn = SpawnGet();
-    if (aSpawn == NULL) { RefreshPlayback(); return; }
-    aSpawn->mFormationID.Clear();
+    if (mOverlay == mPermEditor && mPermEditor != NULL) {
+        LevelPermSpawnBlueprint *aSpawn = PermSpawnGet();
+        if (aSpawn != NULL) {
+            aSpawn->mFormationID.Clear();
+        } else {
+            LevelSectionPermanentBlueprint *aPerm = PermGet();
+            if (aPerm != NULL) {
+                aPerm->mFormationID.Clear();
+            }
+        }
+    } else {
+        LevelWaveSpawnBlueprint *aSpawn = SpawnGet();
+        if (aSpawn != NULL) {
+            aSpawn->mFormationID.Clear();
+        }
+    }
     RefreshPlayback();
 }
 
@@ -932,6 +971,13 @@ void GameEditor::SpawnPickType(int pType) {
         if (aSpawn != NULL) {
             aSpawn->mFormationID.Clear();
             aSpawn->mObjectType = pType;
+        } else {
+            
+            LevelSectionPermanentBlueprint *aPerm = PermGet();
+            if (aPerm != NULL) {
+                aPerm->mFormationID.Clear();
+                aPerm->mObjectType = pType;
+            }
         }
     } else {
         LevelWaveSpawnBlueprint *aSpawn = SpawnGet();
@@ -979,7 +1025,7 @@ void GameEditor::PermDelete() {
 LevelPermSpawnBlueprint *GameEditor::PermSpawnGet() {
     LevelSectionPermanentBlueprint *aPerm = PermGet();
     if (aPerm != NULL) {
-        if (aPerm->mSelectedSpawnIndex >= 0 && aPerm->mSelectedSpawnIndex < aPerm->mSpawnCount) {
+        if (aPerm->IsPathPerm() && aPerm->mSelectedSpawnIndex >= 0 && aPerm->mSelectedSpawnIndex < aPerm->mSpawnCount) {
             return &aPerm->mSpawn[aPerm->mSelectedSpawnIndex];
         }
     }
@@ -1068,6 +1114,15 @@ void GameEditor::PickFormationForSpawnNode() {
         return;
     }
     PickFormation(1);
+}
+
+void GameEditor::PickFormationForPerm() {
+    LevelSectionPermanentBlueprint *aPerm = PermGet();
+    if (aPerm == NULL) {
+        printf("NO PERM PERM PERM IS AVAILABLE... CANNOT PICK...\n\n");
+        return;
+    }
+    PickFormation(3);
 }
 
 void GameEditor::PickFormationForPermSpawnNode() {

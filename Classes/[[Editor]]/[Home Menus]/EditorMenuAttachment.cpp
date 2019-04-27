@@ -136,7 +136,21 @@ void EditorMenuAttachment::Notify(void *pSender, const char *pNotification) {
             gEditor->PickFormationForSpawnNode();
         }
         if (mPermEditor != NULL) {
-            gEditor->PickFormationForPermSpawnNode();
+            
+            LevelPermSpawnBlueprint *aSpawn = gEditor->PermSpawnGet();
+            if (aSpawn != NULL) {
+                gEditor->PickFormationForPermSpawnNode();
+            } else {
+                
+                LevelSectionPermanentBlueprint *aPerm = gEditor->PermGet();
+                if (aPerm != NULL) {
+                    gEditor->PickFormationForPerm();
+                }
+                
+                
+            }
+            
+            
         }
     }
     if (pSender == mButtonClearFormation) { gEditor->SpawnClearFormation(); }

@@ -21,6 +21,8 @@ LevelSectionPermanentBlueprint::LevelSectionPermanentBlueprint() {
     mBaseGameX = 0.0f; mBaseGameY = 0.0f;
     mGameX = 0.0f; mGameY = 0.0f;
     
+    mObjectType = GAME_OBJECT_TYPE_BALLOON;
+    
     mKillTimer = 8;
 }
 
@@ -39,6 +41,11 @@ void LevelSectionPermanentBlueprint::Reset() {
 
 void LevelSectionPermanentBlueprint::Update() {
     mPath.Update();
+    
+    if (IsPathPerm()) {
+        //We don't support stacking these...
+        mMotionController.Reset();
+    }
     
     if (mSpawnCount < 1) mSpawnCount = 1;
     if (mSpawnCount > PERM_MAX_SPAWN_COUNT) mSpawnCount = PERM_MAX_SPAWN_COUNT;
@@ -155,6 +162,11 @@ void LevelSectionPermanentBlueprint::Build(LevelSectionPermanent *pPerm) {
     pPerm->Reset();
     mPath.Build(&pPerm->mPath);
     
+    if (mFormationID.mLength > 0) {
+        pPerm->mFormationID = mFormationID.c();
+    }
+    pPerm->mObjectType = mObjectType;
+    
     pPerm->mSpawnEqualSpacing = mSpawnEqualSpacing;
     pPerm->mSpawnSpacing = ((float)mSpawnSpacing);
     
@@ -186,7 +198,6 @@ void LevelSectionPermanentBlueprint::Build(LevelSectionPermanent *pPerm) {
         if (mSpawnCount < 1) mSpawnCount = 1;
         if (mSpawnCount > PERM_MAX_SPAWN_COUNT) mSpawnCount = PERM_MAX_SPAWN_COUNT;
         
-        
         for (int i=0;i<mSpawnCount;i++) {
             LevelPermSpawn *aSpawn = new LevelPermSpawn(pPerm, &pPerm->mPath);
             
@@ -194,10 +205,16 @@ void LevelSectionPermanentBlueprint::Build(LevelSectionPermanent *pPerm) {
             aSpawn->mObjectType = mSpawn[i].mObjectType;
             aSpawn->mSpacingOffset = mSpawn[i].mSpawnSpacingOffset;
             
+            mSpawn[i].mMotionController.Build(&(aSpawn->mMotionController));
+            
             pPerm->mSpawnList.Add(aSpawn);
         }
+    } else {
         
+        mMotionController.Build(&pPerm->mMotionController);
     }
+    
+    
     
 }
 
@@ -269,6 +286,17 @@ FJSONNode *LevelSectionPermanentBlueprint::Save() {
         aExport->AddDictionary("motion", mMotionController.Save());
     }
     
+    
+    if (mFormationID.mLength > 0) {
+        //Possibility 1.) We have a formation...
+        aExport->AddDictionaryString("formation", mFormationID.c());
+    } else {
+        //Possibility 2.) We have an object...
+        if (mObjectType != GAME_OBJECT_TYPE_BALLOON) {
+            aExport->AddDictionaryInt("type", mObjectType);
+        }
+    }
+    
     return aExport;
 }
 
@@ -323,5 +351,17 @@ void LevelSectionPermanentBlueprint::Load(FJSONNode *pNode) {
     
     FJSONNode *aMotionNode = pNode->GetDictionary("motion");
     mMotionController.Load(aMotionNode);
+    
+    
+    mFormationID = pNode->GetString("formation", mFormationID);
+    
+    if (mFormationID.mLength > 0) {
+        //Possibility 1.) We have a formation...
+    } else {
+        //Possibility 2.) We have an object...
+        mObjectType = pNode->GetInt("type", mObjectType);
+    }
+    
+    
     
 }

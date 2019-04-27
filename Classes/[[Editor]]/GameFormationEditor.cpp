@@ -147,7 +147,7 @@ void GameFormationEditor::Update() {
     }
     
     mFormation.Update();
-    mEditorFormation.Update();
+    mEditorFormation.Update(NULL);
     
     if (mGridEnabled) {
         //BuildGrid();
@@ -601,7 +601,7 @@ void GameFormationEditor::Refresh() {
     }
     
     mFormation.Build(&mEditorFormation);
-    mEditorFormation.Spawn();
+    mEditorFormation.Spawn(NULL);
 }
 
 void GameFormationEditor::Save() {
