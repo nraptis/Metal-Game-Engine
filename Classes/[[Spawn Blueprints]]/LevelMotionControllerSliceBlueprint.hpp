@@ -35,7 +35,6 @@ public:
 };
 
 
-
 class LevelMotionControllerSliceRotateBlueprint : public LevelMotionControllerSliceBlueprint {
 public:
     LevelMotionControllerSliceRotateBlueprint();
@@ -50,6 +49,44 @@ public:
     int                                         mPivotOffsetY;
     
     void                                        ResetPivot();
+};
+
+
+class LevelMotionControllerSliceOscillateRotationBlueprint : public LevelMotionControllerSliceBlueprint {
+public:
+    LevelMotionControllerSliceOscillateRotationBlueprint();
+    virtual ~LevelMotionControllerSliceOscillateRotationBlueprint();
+    
+    void                                        Build(LevelMotionControllerSliceOscillateRotation *pSlice);
+    
+    virtual FJSONNode                           *Save();
+    virtual void                                Load(FJSONNode *pNode);
+    
+    //int                                         mPivotOffsetX;
+    //int                                         mPivotOffsetY;
+};
+
+
+class LevelMotionControllerSliceOscillateVerticalBlueprint : public LevelMotionControllerSliceBlueprint {
+public:
+    LevelMotionControllerSliceOscillateVerticalBlueprint();
+    virtual ~LevelMotionControllerSliceOscillateVerticalBlueprint();
+    
+    void                                        Build(LevelMotionControllerSliceOscillateVertical *pSlice);
+    
+    virtual FJSONNode                           *Save();
+    virtual void                                Load(FJSONNode *pNode);
+    
+    
+    int                                         mRadius;
+    
+    bool                                        mLinear;
+    int                                         mLinearTimer;
+    int                                         mLinearTime;
+    
+    int                                         mPause1;
+    int                                         mPause2;
+    
     
     
 };

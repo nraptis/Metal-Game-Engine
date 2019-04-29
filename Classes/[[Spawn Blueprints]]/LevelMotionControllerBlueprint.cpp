@@ -77,27 +77,24 @@ void LevelMotionControllerBlueprint::RemoveLastSlice() {
 
 
 void LevelMotionControllerBlueprint::AddSliceRotate() {
-    
     LevelMotionControllerSliceRotateBlueprint *aSlice = new LevelMotionControllerSliceRotateBlueprint();
     mSliceList.Add(aSlice);
 }
 
 void LevelMotionControllerBlueprint::AddSliceOscillateRotation() {
-    
-    LevelMotionControllerSliceBlueprint *aSlice = new LevelMotionControllerSliceBlueprint();
+    LevelMotionControllerSliceOscillateRotationBlueprint *aSlice = new LevelMotionControllerSliceOscillateRotationBlueprint();
     mSliceList.Add(aSlice);
 }
 
 void LevelMotionControllerBlueprint::AddSliceOscillateV() {
-    
+    LevelMotionControllerSliceOscillateVerticalBlueprint *aSlice = new LevelMotionControllerSliceOscillateVerticalBlueprint();
+    mSliceList.Add(aSlice);
 }
 
 void LevelMotionControllerBlueprint::AddSliceOscillateH() {
-    
+    LevelMotionControllerSliceBlueprint *aSlice = new LevelMotionControllerSliceBlueprint();
+    mSliceList.Add(aSlice);
 }
-
-
-
 
 
 void LevelMotionControllerBlueprint::Build(LevelMotionController *pMotionController) {
@@ -121,6 +118,22 @@ void LevelMotionControllerBlueprint::Build(LevelMotionController *pMotionControl
             aBlueprint->Build(aSlice);
             pMotionController->mSliceList.Add(aSlice);
         }
+        
+        if (aSliceBlueprint->mType == LEVEL_MOTION_SLICE_TYPE_OSCILLATE_ROTATION) {
+            LevelMotionControllerSliceOscillateRotationBlueprint *aBlueprint = (LevelMotionControllerSliceOscillateRotationBlueprint *)aSliceBlueprint;
+            LevelMotionControllerSliceOscillateRotation *aSlice = new LevelMotionControllerSliceOscillateRotation();
+            aBlueprint->Build(aSlice);
+            pMotionController->mSliceList.Add(aSlice);
+        }
+        
+        if (aSliceBlueprint->mType == LEVEL_MOTION_SLICE_TYPE_OSCILLATE_VERTICAL) {
+            LevelMotionControllerSliceOscillateVerticalBlueprint *aBlueprint = (LevelMotionControllerSliceOscillateVerticalBlueprint *)aSliceBlueprint;
+            LevelMotionControllerSliceOscillateVertical *aSlice = new LevelMotionControllerSliceOscillateVertical();
+            aBlueprint->Build(aSlice);
+            pMotionController->mSliceList.Add(aSlice);
+        }
+        
+        
         
         
         //if (aType == LEVEL_MOTION_SLICE_TYPE_NONE) { aSlice = new LevelMotionControllerSliceBlueprint(); }
@@ -169,6 +182,8 @@ void LevelMotionControllerBlueprint::Load(FJSONNode *pNode) {
             
             if (aType == LEVEL_MOTION_SLICE_TYPE_NONE) { aSlice = new LevelMotionControllerSliceBlueprint(); }
             if (aType == LEVEL_MOTION_SLICE_TYPE_ROTATE) { aSlice = new LevelMotionControllerSliceRotateBlueprint(); }
+            if (aType == LEVEL_MOTION_SLICE_TYPE_OSCILLATE_ROTATION) { aSlice = new LevelMotionControllerSliceOscillateRotationBlueprint(); }
+            if (aType == LEVEL_MOTION_SLICE_TYPE_OSCILLATE_VERTICAL) { aSlice = new LevelMotionControllerSliceOscillateVerticalBlueprint(); }
             
             if (aSlice != NULL) {
                 aSlice->Load(aSliceLoadNode);

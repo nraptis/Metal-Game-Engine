@@ -120,7 +120,7 @@ void EditorMenuMotion::Notify(void *pSender, const char *pNotification) {
             gEditor->RefreshPlayback();
         }
         if (pSender == mButtonAddOscillateV) {
-            mMotionController->AddSliceOscillateRotation();
+            mMotionController->AddSliceOscillateV();
             gEditor->RefreshPlayback();
         }
         if (pSender == mButtonAddOscillateH) {
@@ -128,7 +128,7 @@ void EditorMenuMotion::Notify(void *pSender, const char *pNotification) {
             gEditor->RefreshPlayback();
         }
         if (pSender == mButtonAddOscillateRotation) {
-            mMotionController->AddSliceOscillateV();
+            mMotionController->AddSliceOscillateRotation();
             gEditor->RefreshPlayback();
         }
         if (pSender == mButtonRemoveAll) {
@@ -162,12 +162,13 @@ void EditorMenuMotion::Update() {
     }
     
     if (mPermEditor != NULL) {
-        if (mIsForPermSpawn) {
-            if (aPermSpawn != NULL) {
-                mMotionController = &(aPermSpawn->mMotionController);
-            }
-        } else {
-            if (aPerm != NULL) {
+        
+        if (aPerm != NULL) {
+            if (aPerm->IsPathPerm()) {
+                if (aPermSpawn != NULL) {
+                    mMotionController = &(aPermSpawn->mMotionController);
+                }
+            } else {
                 mMotionController = &(aPerm->mMotionController);
             }
         }
@@ -263,10 +264,21 @@ void EditorMenuMotion::CheckSlicePanels() {
                 mPanelTypes->AddSection(aPanel);
                 mTypePanelList.Add(aPanel);
             }
+            
+            
+            if (aSlice->mType == LEVEL_MOTION_SLICE_TYPE_OSCILLATE_ROTATION) {
+                EditorMenuMotionTypePanelOscillateRotation *aPanel = new EditorMenuMotionTypePanelOscillateRotation();
+                mPanelTypes->AddSection(aPanel);
+                mTypePanelList.Add(aPanel);
+            }
+            
+            if (aSlice->mType == LEVEL_MOTION_SLICE_TYPE_OSCILLATE_VERTICAL) {
+                EditorMenuMotionTypePanelOscillateVertical *aPanel = new EditorMenuMotionTypePanelOscillateVertical();
+                mPanelTypes->AddSection(aPanel);
+                mTypePanelList.Add(aPanel);
+            }
         }
     }
-    
-    
 }
 
 //

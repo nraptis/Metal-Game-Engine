@@ -11,9 +11,10 @@
 
 #define LEVEL_MOTION_SLICE_TYPE_NONE 0
 #define LEVEL_MOTION_SLICE_TYPE_ROTATE 1
-#define LEVEL_MOTION_SLICE_TYPE_OSCILLATE_VERTICAL 2
-#define LEVEL_MOTION_SLICE_TYPE_OSCILLATE_HORIZONTAL 3
-#define LEVEL_MOTION_SLICE_TYPE_OSCILLATE_ROTATION 4
+#define LEVEL_MOTION_SLICE_TYPE_OSCILLATE_ROTATION 2
+#define LEVEL_MOTION_SLICE_TYPE_OSCILLATE_VERTICAL 3
+#define LEVEL_MOTION_SLICE_TYPE_OSCILLATE_HORIZONTAL 4
+
 
 #include "GameObject.hpp"
 
@@ -50,15 +51,57 @@ public:
     virtual void                        Apply(float pReferenceX, float pReferenceY, float *pX, float *pY);
     virtual void                        Update();
     
-    
     float                               mPivotOffsetX;
     float                               mPivotOffsetY;
     
     
     float                               mRotation;
+};
+
+class LevelMotionControllerSliceOscillateGeneric : public LevelMotionControllerSlice {
+public:
+    LevelMotionControllerSliceOscillateGeneric();
+    virtual ~LevelMotionControllerSliceOscillateGeneric();
     
+    virtual void                        Update();
     
+    float                               GetPercent();
     
+    float                               mOscillateSin;
+    
+    int                                 mLinearTimer;
+    int                                 mLinearTime;
+    int                                 mLinearDir;
+    
+    bool                                mIsPaused;
+    int                                 mPauseSide;
+    int                                 mPauseTimer;
+    
+    bool                                mLinear;
+    
+    int                                 mPause1;
+    int                                 mPause2;
+};
+
+class LevelMotionControllerSliceOscillateRotation : public LevelMotionControllerSliceOscillateGeneric {
+public:
+    LevelMotionControllerSliceOscillateRotation();
+    virtual ~LevelMotionControllerSliceOscillateRotation();
+    
+    virtual void                        Apply(float pReferenceX, float pReferenceY, float *pX, float *pY);
+    virtual void                        Update();
+    
+};
+
+class LevelMotionControllerSliceOscillateVertical : public LevelMotionControllerSliceOscillateGeneric {
+public:
+    LevelMotionControllerSliceOscillateVertical();
+    virtual ~LevelMotionControllerSliceOscillateVertical();
+    
+    virtual void                        Apply(float pReferenceX, float pReferenceY, float *pX, float *pY);
+    virtual void                        Update();
+    
+    float                               mRadius;
     
 };
 

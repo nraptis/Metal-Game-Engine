@@ -58,8 +58,53 @@ public:
     
     UIStepper                               *mStepperPivotOffsetX;
     UIStepper                               *mStepperPivotOffsetY;
-    
 };
+
+class EditorMenuMotionTypePanelOscillateRotation : public EditorMenuMotionTypePanel {
+public:
+    
+    EditorMenuMotionTypePanelOscillateRotation();
+    virtual ~EditorMenuMotionTypePanelOscillateRotation();
+    
+    virtual void                            Notify(void *pSender, const char *pNotification) override;
+    virtual void                            Update() override;
+    
+    ToolMenuSectionRow                      *mRowOffsets1;
+    ToolMenuSectionRow                      *mRowOffsets2;
+    
+    UILabel                                 *mLabelPivotOffsetX;
+    UILabel                                 *mLabelPivotOffsetY;
+    
+    UIButton                                *mButtonResetPivotOffsetX;
+    UIButton                                *mButtonResetPivotOffsetY;
+    
+    UIStepper                               *mStepperPivotOffsetX;
+    UIStepper                               *mStepperPivotOffsetY;
+};
+
+
+class EditorMenuMotionTypePanelOscillateVertical : public EditorMenuMotionTypePanel {
+public:
+    
+    EditorMenuMotionTypePanelOscillateVertical();
+    virtual ~EditorMenuMotionTypePanelOscillateVertical();
+    
+    virtual void                            Notify(void *pSender, const char *pNotification) override;
+    virtual void                            Update() override;
+    
+    ToolMenuSectionRow                      *mRowOptions;
+    UICheckBox                              *mCheckBoxLinear;
+    
+    UIStepper                               *mStepperLinearTime;
+    UIStepper                               *mStepperLinearTimer;
+    
+    
+    UIStepper                               *mStepperPause1;
+    UIStepper                               *mStepperPause2;
+    
+    UIStepper                               *mStepperRadius;
+};
+
 
 
 #endif /* EditorMenuMotionTypePanel_hpp */
