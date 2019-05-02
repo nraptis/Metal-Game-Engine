@@ -89,13 +89,31 @@ void LevelWave::Update() {
     for (int i=0;i<mSpawnIndex;i++) {
         LevelWaveSpawn *aSpawn = (LevelWaveSpawn *)mSpawnList.Fetch(i);
         if (aSpawn != NULL && aSpawn->mIsComplete == false) {
-            aSpawn->mPathIndex += 1;
+            
+            if (aSpawn->mWaitTimer > 0) {
+                aSpawn->mWaitTimer--;
+                if (aSpawn->mWaitTimer <= 0) {
+                    if (aSpawn->mPathIndex < mPath.mPath.mCount) {
+                        aSpawn->mPathIndex += 1;
+                    }
+                }
+            } else {
+                if (aSpawn->mPathIndex < mPath.mPath.mCount) {
+                    aSpawn->mPathIndex += 1;
+                }
+            }
             
             bool aComplete = false;
             
             
             if (aSpawn->mPathIndex >= mPath.mPath.mCount) {
-                aComplete = true;
+                if (aSpawn->mWaitTimer <= 0) {
+                    aComplete = true;
+                }
+            } else {
+                if (mPath.mWait.mData[aSpawn->mPathIndex] > 0 && aSpawn->mWaitTimer == 0) {
+                    aSpawn->mWaitTimer = mPath.mWait.mData[aSpawn->mPathIndex];
+                }
             }
             
             if (aSpawn->DidStart() && aSpawn->IsClear()) {

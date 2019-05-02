@@ -286,71 +286,10 @@ void LevelSectionPermanent::PositionObject() {
         mY += mSection->mY;
     }
     
-    /*
-    if (gGame != NULL) {
-        
-        if (mTracer != NULL && mTracer->mPath.mCount > 2) {
-            
-            
-            int aPathIndex = mTracer->mPathIndex + mPathIndexOffset;
-            
-            int aCeil = (mTracer->mPath.mCount - 1);
-            aPathIndex = aPathIndex % aCeil;
-            
-            if (aPathIndex >= 0 && aPathIndex < mTracer->mPath.mCount) {
-                
-                mX = mTracer->mPath.mX[aPathIndex];
-                mY = mTracer->mPath.mY[aPathIndex];
-                
-                
-                if (mFormation->mRotation != 0.0f) {
-                    FVec2 aPoint;
-                    aPoint.mX = mX; aPoint.mY = mY;
-                    aPoint = PivotPoint(aPoint, mFormation->mRotation);
-                    mX = aPoint.mX; mY = aPoint.mY;
-                }
-                
-                mX += mFormation->mX;
-                mY += mFormation->mY;
-                
-            } else {
-                printf("Miss?\n");
-            }
-            
-            
-            
-            
-        } else if (mFormation != NULL) {
-            
-            float aLeft = gGame->mGameAreaLeft;
-            float aRight = gGame->mGameAreaRight;
-            float aTop = gGame->mGameAreaTop;
-            float aBottom = gGame->mGameAreaBottom;
-            
-            float aWidth = aRight - aLeft;
-            float aHeight = aBottom - aTop;
-            
-            mX = (mBaseX / 100.0f) * aWidth;
-            mY = (mBaseY / 100.0f) * aHeight;
-            
-            if (mFormation->mRotation != 0.0f) {
-                FVec2 aPoint;
-                aPoint.mX = mX; aPoint.mY = mY;
-                aPoint = PivotPoint(aPoint, mFormation->mRotation);
-                mX = aPoint.mX; mY = aPoint.mY;
-            }
-            
-            mX += mFormation->mX;
-            mY += mFormation->mY;
-        }
-    }
-    */
-    
     if (mObject != NULL) {
         mObject->mTransform.mX = mX;
         mObject->mTransform.mY = mY;
     }
-    
     
     if (mFormation != NULL) {
         mFormation->mX = mX;

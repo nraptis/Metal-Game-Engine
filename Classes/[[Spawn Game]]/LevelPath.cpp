@@ -125,11 +125,13 @@ void LevelPath::Reset() {
     mNodeList.RemoveAll();
     mPath.RemoveAll();
     mDist.RemoveAll();
+    mWait.RemoveAll();
 }
 
 void LevelPath::Finalize() {
     mPath.RemoveAll();
     mDist.RemoveAll();
+    mWait.RemoveAll();
     mDidFailFinalize = false;
     
     if (mSpeed < 0.4f) {
@@ -165,15 +167,23 @@ void LevelPath::Finalize() {
                 LevelPath::AddSegmentBacktrackingFrom(aIndex);
             }
         }
-        
         if (aNode->mWaitTimer > 0) {
-            for (int i=0;i<aNode->mWaitTimer && i < 80000;i++) {
-                mPath.Add(mTempX, mTempY);
-                mDist.Add(mTempDist);
+            if (mWait.mCount > 0) {
+                mWait.mData[mWait.mCount - 1] = aNode->mWaitTimer;
             }
         }
         
         ++aIndex;
+    }
+    
+    if (mWait.mCount > 0) {
+        if (aFirstNode->mWaitTimer > 0) {
+            mWait.mData[0] = aFirstNode->mWaitTimer;
+            if (mClosed) {
+                //We are already factoring in the wait for 0...
+                mWait.mData[mWait.mCount - 1] = 0;
+            }
+        }
     }
 }
 
@@ -221,7 +231,6 @@ void LevelPath::AddSegmentBacktrackingFrom(int pIndex) {
         }
         
         aDecelDistance = aNode->mDecelDistance;
-        
         aPrev = aNode;
     }
     
@@ -302,6 +311,7 @@ void LevelPath::AddSegmentBacktrackingFrom(int pIndex) {
     cSegmentList.RemoveAll();
     cSegmentList.Add(cDumpList.mX[0], cDumpList.mY[0]);
     mDist.Add(mTempDist);
+    mWait.Add(0);
     
     float aCurrentDist = 0.00f;
     while (aSpeed > 0.05f && aCurrentDist < cPolyPath.mLength) {
@@ -324,6 +334,7 @@ void LevelPath::AddSegmentBacktrackingFrom(int pIndex) {
         cPolyPath.GetWithDist(aCurrentDist, aInterpX, aInterpY);
         cSegmentList.Add(aInterpX, aInterpY);
         mDist.Add(mTempDist + aCurrentDist);
+        mWait.Add(0);
     }
     
     float aLastX = cDumpList.mX[cDumpList.mCount - 1];
@@ -340,11 +351,13 @@ void LevelPath::AddSegmentBacktrackingFrom(int pIndex) {
     if (aDistanceToEnd > 0.5f) {
         cSegmentList.Add(aLastX, aLastY);
         mDist.Add(aCurrentDist + cPolyPath.mLength);
+        mWait.Add(0);
     } else {
         cSegmentList.mX[cSegmentList.mCount - 1] = aLastX;
         cSegmentList.mY[cSegmentList.mCount - 1] = aLastY;
         mDist.mData[mDist.mCount - 1] = mTempDist + cPolyPath.mLength;
     }
+    
     mTempX = aLastX;
     mTempY = aLastY;
     

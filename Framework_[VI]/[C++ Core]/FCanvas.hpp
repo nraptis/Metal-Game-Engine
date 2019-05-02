@@ -141,6 +141,10 @@ public:
     
     FList                                       mChildren;
     
+    bool                                        mExclusiveKeyDownCaptureWhenSelected;
+    bool                                        mExclusiveKeyUpCaptureWhenSelected;
+    
+    
     bool                                        mClipEnabled;
     bool                                        mClipDisabled;;
 

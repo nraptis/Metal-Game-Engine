@@ -26,6 +26,8 @@ FCanvas::FCanvas() {
     mConsumesTouches = true;
     mRecievesOutsideTouches = false;
     mRecievesConsumedTouches = false;
+    mExclusiveKeyDownCaptureWhenSelected = false;
+    mExclusiveKeyUpCaptureWhenSelected = false;
     mEnabled = true;
     mHidden = false;
     mDrawManual = false;
@@ -843,6 +845,11 @@ void FCanvas::BaseTouchFlush() {
 
 void FCanvas::BaseKeyDown(int pKey) {
     KeyDown(pKey);
+    
+    if (mWindow != NULL && mWindow->mSelectedCanvas == this && mExclusiveKeyDownCaptureWhenSelected == true) {
+        return;
+    }
+    
     mProcessChildren.RemoveAll();
     mProcessChildren.Add(mChildren);
     EnumList(FCanvas, aChild, mProcessChildren) {
@@ -852,6 +859,11 @@ void FCanvas::BaseKeyDown(int pKey) {
 
 void FCanvas::BaseKeyUp(int pKey) {
     KeyUp(pKey);
+    
+    if (mWindow != NULL && mWindow->mSelectedCanvas == this && mExclusiveKeyUpCaptureWhenSelected == true) {
+        return;
+    }
+    
     mProcessChildren.RemoveAll();
     mProcessChildren.Add(mChildren);
     EnumList(FCanvas, aChild, mProcessChildren) {

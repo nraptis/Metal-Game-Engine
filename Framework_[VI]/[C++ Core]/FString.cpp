@@ -250,13 +250,9 @@ void FString::Set(const char *pString) {
     mData[mLength] = 0;
     mSize = mLength;
     */
-
     
-    
+    mLength = Length(pString);
 	if ((pString != NULL) && (pString != mData)) {
-        
-        mLength = Length(pString);
-        
         if (mLength > mSize) {
             
             mSize = mLength;

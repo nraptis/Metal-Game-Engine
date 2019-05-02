@@ -43,6 +43,7 @@ public:
     LevelFormation                      *mFormation;
     
     int                                 mPathIndex;
+    int                                 mWaitTimer;
     
     float                               mSpacingOffset;
     

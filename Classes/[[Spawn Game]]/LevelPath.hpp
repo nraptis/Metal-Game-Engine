@@ -82,6 +82,7 @@ public:
     
     FPointList                          mPath;
     FFloatList                          mDist;
+    FIntList                            mWait;
     
     
     int                                 mStartConstraintTypeX;

@@ -367,7 +367,7 @@ public:
 	inline bool                         EndsWithI(FString &pString){return EndsWithI(pString.mData);}
     
     
-    inline char                         *c(){if(mData==0){*this="";} return mData;}
+    inline char                         *c() { if (mData == 0) { *this = ""; } return mData; }
     
     
 

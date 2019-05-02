@@ -39,6 +39,8 @@ public:
     
     void                                        AddCell(EditorMenuFormationPickerCell *pCell);
     
+    void                                        ClearAll();
+    
     virtual void                                PanBegin(float pX, float pY);
     virtual void                                Pan(float pX, float pY);
     virtual void                                PanEnd(float pX, float pY, float pSpeedX, float pSpeedY);
@@ -85,6 +87,20 @@ public:
     
     virtual void                                Notify(void *pSender, const char *pNotification);
     
+    
+    ToolMenuSectionRow                          *mFilterRow1;
+    UIButton                                    *mButtonApplyFilter;
+    UITextBox                                   *mTextBoxFilter;
+    
+    ToolMenuSectionRow                          *mFilterRow2;
+    UICheckBox                                  *mCheckBoxBalloonsOnly;
+    UICheckBox                                  *mCheckBoxMixedOnly;
+    UICheckBox                                  *mCheckBoxTracersOnly;
+    UICheckBox                                  *mCheckBoxNoTracersOnly;
+    
+    void                                        ApplyFilter();
+    
+    
     EditorMenuFormationPickerScrollContent      *mScrollContent;
     ToolMenuSection                             *mSection;
     
@@ -93,6 +109,10 @@ public:
     
     void                                        AddAllFormations();
     void                                        AddFormation(LevelFormation *pFormation);
+    
+    FList                                       mFormationList;
+    FList                                       mFormationListFiltered;
+    
     
     bool                                        mDidSetUp;
 };

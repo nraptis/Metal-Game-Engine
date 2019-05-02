@@ -20,6 +20,7 @@ EditorMenuFormationPickerCell::EditorMenuFormationPickerCell(LevelFormation *pFo
     mDisplayDelay = 4;
     
     if (mFormation) {
+        mFormation->EditorKillAllObjects();
         mFormation->Spawn(NULL);
         mFormation->EditorKillAllObjects();
     }

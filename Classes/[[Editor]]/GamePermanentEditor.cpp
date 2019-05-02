@@ -406,8 +406,6 @@ void GamePermanentEditor::Close() {
 
 void GamePermanentEditor::ResetSelected() {
     printf("GamePermanentEditor::ResetSelected()\n");
-    
-    
 }
 
 void GamePermanentEditor::Refresh() {

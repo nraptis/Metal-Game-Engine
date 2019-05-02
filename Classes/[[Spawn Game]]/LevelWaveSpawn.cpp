@@ -29,6 +29,9 @@ LevelWaveSpawn::LevelWaveSpawn(LevelWave *pWave, LevelPath *pPath) {
     mBaseX = 0.0f;
     mBaseY = 0.0f;
     mDistanceTraveled = 0.0f;
+    
+    mWaitTimer = 0;
+    
     mObjectType = GAME_OBJECT_TYPE_BALLOON;
     mKillTimer = 8;
 }

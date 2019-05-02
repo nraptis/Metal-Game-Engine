@@ -2,38 +2,30 @@
 	"section": true,
 	"wave_list": [
 		{
-			"spawn_spacing": 240,
-			"max_spawn_size": 170,
 			"path": {
-				"smooth": true,
 				"node_list": [
 					{
 						"x_con": 200,
-						"y_con": 500
+						"y_con": 500,
+						"y_con_offset": -30.000000
 					},
 					{
 						"x_con": 500,
 						"y_con": 500,
-						"chamfer": 230
-					},
-					{
-						"x_con": 500,
-						"y_con": 150
+						"y_con_offset": -30.000000,
+						"decel": 225,
+						"wait": 9999
 					}
 				]
 			},
 			"spawn": [
 				{
-					"type": 1
-				},
-				{
-					"formation": "f_tr_circ_110sz_cfg6xb_spms",
 					"motion": {
 						"slice_list": [
 							{
 								"type": 3,
-								"speed_class": 200,
-								"radius": 60
+								"speed_class": -100,
+								"radius": 14
 							}
 						]
 					}

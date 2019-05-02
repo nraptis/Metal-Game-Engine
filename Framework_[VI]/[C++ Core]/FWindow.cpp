@@ -193,10 +193,18 @@ void FWindow::MouseWheel(int pDirection) {
 }
 
 void FWindow::KeyDown(int pKey) {
+    if (mSelectedCanvas != NULL && mSelectedCanvas->mExclusiveKeyDownCaptureWhenSelected == true) {
+        mSelectedCanvas->BaseKeyDown(pKey);
+        return;
+    }
     mRoot.BaseKeyDown(pKey);
 }
 
 void FWindow::KeyUp(int pKey) {
+    if (mSelectedCanvas != NULL && mSelectedCanvas->mExclusiveKeyUpCaptureWhenSelected == true) {
+        mSelectedCanvas->BaseKeyDown(pKey);
+        return;
+    }
     mRoot.BaseKeyUp(pKey);
 }
 

@@ -24,6 +24,8 @@ LevelPermSpawn::LevelPermSpawn(LevelSectionPermanent *pPerm, LevelPath *pPath) {
     mDidSpawn = false;
     mDidUpdateAfterSpawn = false;
     
+    mWaitTimer = 0;
+    
     mSpacingOffset = 0.0f;
     
     mPathX = 0.0f;
@@ -88,6 +90,14 @@ void LevelPermSpawn::Spawn() {
     
     mDidSpawn = true;
     mDidUpdateAfterSpawn = false;
+    
+    
+    if (mPath != NULL) {
+        if (mPath->mWait.mCount > 0) {
+            mWaitTimer = mPath->mWait.mData[0];
+        }
+    }
+    
 }
 
 void LevelPermSpawn::DisposeObject(GameObject *pObject) {
@@ -147,9 +157,39 @@ void LevelPermSpawn::Update() {
     
     if (mDidSpawn == true && mPath != NULL) {
         if (mPath->mPath.mCount > 0) {
-            mPathIndex += 1;
+            
+            
+            //mPathIndex += 1;
+            //if (mPathIndex >= mPath->mPath.mCount) {
+            //    mPathIndex = 0;
+            //}
+            
+            
+            if (mWaitTimer > 0) {
+                mWaitTimer--;
+                if (mWaitTimer <= 0) {
+                    if (mPathIndex < mPath->mPath.mCount) {
+                        mPathIndex += 1;
+                    } else {
+                        mPathIndex = 0;
+                        mWaitTimer = mPath->mWait.mData[0];
+                    }
+                }
+            } else {
+                if (mPathIndex < mPath->mPath.mCount) {
+                    mPathIndex += 1;
+                }
+            }
+            
             if (mPathIndex >= mPath->mPath.mCount) {
-                mPathIndex = 0;
+                if (mWaitTimer <= 0) {
+                    mPathIndex = 0;
+                    mWaitTimer = mPath->mWait.mData[0];
+                }
+            } else {
+                if (mPath->mWait.mData[mPathIndex] > 0 && mWaitTimer == 0) {
+                    mWaitTimer = mPath->mWait.mData[mPathIndex];
+                }
             }
         }
     }

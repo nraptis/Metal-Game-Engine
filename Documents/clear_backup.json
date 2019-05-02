@@ -1,12 +1,41 @@
 {
 	"section": true,
-	"wave_list": [],
+	"wave_list": [
+		{
+			"spawn_spacing": 150,
+			"path": {
+				"smooth": true,
+				"speed_class": 300,
+				"node_list": [
+					{
+						"x_con": 200,
+						"y_con": 200,
+						"wait": 50
+					},
+					{
+						"x_con": 500,
+						"y_con": 300,
+						"wait": 50
+					},
+					{
+						"x_con": 300,
+						"y_con": 300,
+						"wait": 50
+					}
+				]
+			},
+			"spawn": [
+				{},
+				{},
+				{},
+				{}
+			]
+		}
+	],
 	"perm_list": [
 		{
-			"equal_spacing": false,
-			"spawn_spacing": 540,
-			"x": 51.371407,
-			"y": 40.981785,
+			"x": 45.107815,
+			"y": 32.428905,
 			"path": {
 				"smooth": true,
 				"closed": true,
@@ -18,52 +47,16 @@
 					{
 						"x_con": 500,
 						"y_con": 300,
-						"y_con_offset": 30.000000
+						"y_con_offset": 70.000000
 					},
 					{
 						"x_con": 600,
 						"y_con": 400
-					},
-					{
-						"x_con": 600,
-						"y_con": 600
-					},
-					{
-						"x_con": 500,
-						"y_con": 800,
-						"y_con_offset": -90.000000
-					},
-					{
-						"x_con": 400,
-						"y_con": 600
 					}
 				]
 			},
 			"spawn": [
-				{
-					"formation": "formation_square_2x2_filled_stationary",
-					"motion": {
-						"slice_list": [
-							{
-								"type": 3,
-								"speed_class": 300,
-								"negate": true,
-								"radius": 20
-							},
-							{
-								"type": 1,
-								"speed_class": 200,
-								"negate": true
-							}
-						]
-					}
-				},
-				{
-					"formation": "f_grid_rect_1x1_44spc_solid__nodes_cfg1xb__tr_circ_130sz_cfg7xb_spms"
-				},
-				{
-					"formation": "f_grid_46rngs_1rngc_6radc_solid__nodes_cfg7xb"
-				}
+				{}
 			]
 		}
 	]

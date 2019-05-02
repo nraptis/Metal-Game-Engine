@@ -200,6 +200,19 @@ void GamePathEditor::TouchFlush() {
 
 void GamePathEditor::KeyDown(int pKey) {
     
+    if (gEditor == NULL) { return; }
+    
+    if (mPermanentEditor != NULL) {
+        if (mPermanentEditor->mOverlay != this) {
+            return;
+        }
+    }
+    if (mEditor != NULL) {
+        if (mEditor->mOverlay != this) {
+            return;
+        }
+    }
+    
     bool aShift = gKeyDownShift;
     bool aCtrl = gKeyDownCtrl;
     bool aAlt = gKeyDownAlt;

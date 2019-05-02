@@ -53,6 +53,8 @@ public:
     float                               mDistanceTraveled;
     
     
+    int                                 mWaitTimer;
+    
     //Possibility 1.) We have a formation...
     FString                             mFormationID;
     
