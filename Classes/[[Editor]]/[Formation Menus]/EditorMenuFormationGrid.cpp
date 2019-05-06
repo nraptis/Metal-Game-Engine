@@ -11,63 +11,54 @@
 #include "GameEditor.hpp"
 #include "FApp.hpp"
 
-EditorMenuFormationGrid::EditorMenuFormationGrid(GameFormationEditor *pEditor) : ToolMenu() {
+EditorMenuFormationGrid::EditorMenuFormationGrid(GameEditorGrid *pGrid) : ToolMenu() {
     mName = "EditorMenuFormationGrid";
     
-    mEditor = pEditor;
+    mGrid = pGrid;
     
-    SetTitle("Formation Builder");
+    SetTitle("Grid");
     SetScrollMode(true);
     
     mPanelGrid = new ToolMenuPanel();
-    mPanelGrid->SetTitle("The Grid");
+    mPanelGrid->SetTitle("My Grid");
     AddSection(mPanelGrid);
-    
     
     mRowGrid1 = new ToolMenuSectionRow();
     mPanelGrid->AddSection(mRowGrid1);
     
-    
     mCheckBoxGridEnabled = new UICheckBox();
     mCheckBoxGridEnabled->SetText("Grid");
-    mCheckBoxGridEnabled->SetTarget(&mEditor->mGridEnabled);
+    mCheckBoxGridEnabled->SetTarget(&mGrid->mGridEnabled);
     mRowGrid1->AddCheckBox(mCheckBoxGridEnabled);
     
     mCheckBoxGridDisplay = new UICheckBox();
     mCheckBoxGridDisplay->SetText("Markers");
-    mCheckBoxGridDisplay->SetTarget(&mEditor->mMarkersDisplay);
+    //mCheckBoxGridDisplay->SetTarget(&mGrid->mMarkersDisplay);
     mRowGrid1->AddCheckBox(mCheckBoxGridDisplay);
-    
-    
     
     mSegmentGridType = new UISegment();
     mSegmentGridType->SetSegmentCount(6);
     mSegmentGridType->SetTitles("RECT", "CIRC", "STAR", "TRI", "NGON1", "NGON2");
-    mSegmentGridType->SetTarget(&mEditor->mGridType);
+    mSegmentGridType->SetTarget(&mGrid->mGridType);
     mPanelGrid->AddSection(mSegmentGridType);
-    
-    
-    
-    
     
     mPanelRectGrid = new ToolMenuPanel();
     mPanelRectGrid->SetTitle("Rectangular");
     mPanelGrid->AddSection(mPanelRectGrid);
     
-    
     mStepperRectGridWidth = new UIStepper();
     mStepperRectGridWidth->SetText("Grid Width:");
-    mStepperRectGridWidth->SetTarget(&mEditor->mGridRectWidth);
+    mStepperRectGridWidth->SetTarget(&mGrid->mGridRectWidth);
     mPanelRectGrid->AddSection(mStepperRectGridWidth);
     
     mStepperRectGridHeight = new UIStepper();
     mStepperRectGridHeight->SetText("Grid Height:");
-    mStepperRectGridHeight->SetTarget(&mEditor->mGridRectHeight);
+    mStepperRectGridHeight->SetTarget(&mGrid->mGridRectHeight);
     mPanelRectGrid->AddSection(mStepperRectGridHeight);
     
     mStepperRectGridSpacing = new UIStepper();
     mStepperRectGridSpacing->SetText("Grid Height:");
-    mStepperRectGridSpacing->SetTarget(&mEditor->mGridRectSpacing);
+    mStepperRectGridSpacing->SetTarget(&mGrid->mGridRectSpacing);
     mPanelRectGrid->AddSection(mStepperRectGridSpacing);
     
     
@@ -79,20 +70,53 @@ EditorMenuFormationGrid::EditorMenuFormationGrid(GameFormationEditor *pEditor) :
     
     mStepperCircleRingCount = new UIStepper();
     mStepperCircleRingCount->SetText("Ring Count:");
-    mStepperCircleRingCount->SetTarget(&mEditor->mGridCircleRingCount);
+    mStepperCircleRingCount->SetTarget(&mGrid->mGridCircleRingCount);
     mPanelCircleGrid->AddSection(mStepperCircleRingCount);
     
     mStepperCircleRingSpacing = new UIStepper();
     mStepperCircleRingSpacing->SetText("Ring Spacing:");
-    mStepperCircleRingSpacing->SetTarget(&mEditor->mGridCircleRingSpacing);
+    mStepperCircleRingSpacing->SetTarget(&mGrid->mGridCircleRingSpacing);
     mPanelCircleGrid->AddSection(mStepperCircleRingSpacing);
     
     mStepperCircleRadialCount = new UIStepper();
     mStepperCircleRadialCount->SetText("Radial Count:");
-    mStepperCircleRadialCount->SetTarget(&mEditor->mGridCircleRadialCount);
+    mStepperCircleRadialCount->SetTarget(&mGrid->mGridCircleRadialCount);
     mPanelCircleGrid->AddSection(mStepperCircleRadialCount);
     
     
+    
+    
+    
+    
+    
+    mPanelStarGrid = new ToolMenuPanel();
+    mPanelStarGrid->SetTitle("Star");
+    mPanelGrid->AddSection(mPanelStarGrid);
+    
+    mStepperStarInnerRadius = new UIStepper();
+    mStepperStarInnerRadius->SetText("Inner Rad:");
+    mStepperStarInnerRadius->SetTarget(&mGrid->mGridStarInnerRadius);
+    mPanelStarGrid->AddSection(mStepperStarInnerRadius);
+    
+    mStepperStarOuterRadius = new UIStepper();
+    mStepperStarOuterRadius->SetText("Outer Rad:");
+    mStepperStarOuterRadius->SetTarget(&mGrid->mGridStarOuterRadius);
+    mPanelStarGrid->AddSection(mStepperStarOuterRadius);
+    
+    mStepperStarArmCount = new UIStepper();
+    mStepperStarArmCount->SetText("Arm Count:");
+    mStepperStarArmCount->SetTarget(&mGrid->mGridStarArmCount);
+    mPanelStarGrid->AddSection(mStepperStarArmCount);
+    
+    mStepperStarLinePointCount = new UIStepper();
+    mStepperStarLinePointCount->SetText("Point Count:");
+    mStepperStarLinePointCount->SetTarget(&mGrid->mGridStarLinePointCount);
+    mPanelStarGrid->AddSection(mStepperStarLinePointCount);
+    
+    mStepperStarStartRotation = new UIStepper();
+    mStepperStarStartRotation->SetText("Rot Offset:");
+    mStepperStarStartRotation->SetTarget(&mGrid->mGridStarStartRotation);
+    mPanelStarGrid->AddSection(mStepperStarStartRotation);
     
     
     
@@ -104,27 +128,27 @@ EditorMenuFormationGrid::EditorMenuFormationGrid(GameFormationEditor *pEditor) :
     
     mStepperNGON1Sides = new UIStepper();
     mStepperNGON1Sides->SetText("Sides:");
-    mStepperNGON1Sides->SetTarget(&mEditor->mGridNGON1Sides);
+    mStepperNGON1Sides->SetTarget(&mGrid->mGridNGON1Sides);
     mPanelNGON1Grid->AddSection(mStepperNGON1Sides);
     
     mStepperNGON1RingCount = new UIStepper();
     mStepperNGON1RingCount->SetText("Ring Count:");
-    mStepperNGON1RingCount->SetTarget(&mEditor->mGridNGON1RingCount);
+    mStepperNGON1RingCount->SetTarget(&mGrid->mGridNGON1RingCount);
     mPanelNGON1Grid->AddSection(mStepperNGON1RingCount);
     
     mStepperNGON1RingSpacing = new UIStepper();
     mStepperNGON1RingSpacing->SetText("Ring Spacing:");
-    mStepperNGON1RingSpacing->SetTarget(&mEditor->mGridNGON1RingSpacing);
+    mStepperNGON1RingSpacing->SetTarget(&mGrid->mGridNGON1RingSpacing);
     mPanelNGON1Grid->AddSection(mStepperNGON1RingSpacing);
     
     mStepperNGON1PointSpacing = new UIStepper();
     mStepperNGON1PointSpacing->SetText("Point Spacing:");
-    mStepperNGON1PointSpacing->SetTarget(&mEditor->mGridNGON1PointSpacing);
+    mStepperNGON1PointSpacing->SetTarget(&mGrid->mGridNGON1PointSpacing);
     mPanelNGON1Grid->AddSection(mStepperNGON1PointSpacing);
     
     mStepperNGON1StartRotation = new UIStepper();
     mStepperNGON1StartRotation->SetText("S-Rot:");
-    mStepperNGON1StartRotation->SetTarget(&mEditor->mGridNGON1StartRotation);
+    mStepperNGON1StartRotation->SetTarget(&mGrid->mGridNGON1StartRotation);
     mPanelNGON1Grid->AddSection(mStepperNGON1StartRotation);
     
     
@@ -149,9 +173,9 @@ void EditorMenuFormationGrid::Update() {
     /*
      if (mCheckBoxSmooth) {
      bool aUnlink = true;
-     if (mEditor->mWave != NULL) {
+     if (mGrid->mWave != NULL) {
      aUnlink = false;
-     mCheckBoxSmooth->SetTarget(&(mEditor->mWave->mPath.mSmooth));
+     mCheckBoxSmooth->SetTarget(&(mGrid->mWave->mPath.mSmooth));
      }
      if (aUnlink) {
      mCheckBoxSmooth->SetTarget(NULL);
@@ -164,34 +188,40 @@ void EditorMenuFormationGrid::Update() {
 
 void EditorMenuFormationGrid::Notify(void *pSender, const char *pNotification) {
     
-    if (mEditor == NULL) { return; }
+    if (mGrid == NULL) { return; }
     
-    if (pSender == mSegmentGridType) { RefreshGridPanels();mEditor->BuildGrid(); }
+    if (pSender == mSegmentGridType) { RefreshGridPanels();mGrid->BuildGrid(); }
     
-    if (pSender == mStepperRectGridWidth) { mEditor->BuildGrid(); }
-    if (pSender == mStepperRectGridHeight) { mEditor->BuildGrid(); }
-    if (pSender == mStepperRectGridSpacing) { mEditor->BuildGrid(); }
+    if (pSender == mStepperRectGridWidth) { mGrid->BuildGrid(); }
+    if (pSender == mStepperRectGridHeight) { mGrid->BuildGrid(); }
+    if (pSender == mStepperRectGridSpacing) { mGrid->BuildGrid(); }
     
-    if (pSender == mStepperCircleRingCount) { mEditor->BuildGrid(); }
-    if (pSender == mStepperCircleRingSpacing) { mEditor->BuildGrid(); }
-    if (pSender == mStepperCircleRadialCount) { mEditor->BuildGrid(); }
+    if (pSender == mStepperCircleRingCount) { mGrid->BuildGrid(); }
+    if (pSender == mStepperCircleRingSpacing) { mGrid->BuildGrid(); }
+    if (pSender == mStepperCircleRadialCount) { mGrid->BuildGrid(); }
     
-    if (pSender == mStepperNGON1Sides) { mEditor->BuildGrid(); }
-    if (pSender == mStepperNGON1RingCount) { mEditor->BuildGrid(); }
-    if (pSender == mStepperNGON1RingSpacing) { mEditor->BuildGrid(); }
-    if (pSender == mStepperNGON1PointSpacing) { mEditor->BuildGrid(); }
-    if (pSender == mStepperNGON1StartRotation) { mEditor->BuildGrid(); }
+    if (pSender == mStepperStarInnerRadius) { mGrid->BuildGrid(); }
+    if (pSender == mStepperStarOuterRadius) { mGrid->BuildGrid(); }
+    if (pSender == mStepperStarLinePointCount) { mGrid->BuildGrid(); }
+    if (pSender == mStepperStarArmCount) { mGrid->BuildGrid(); }
+    if (pSender == mStepperStarStartRotation) { mGrid->BuildGrid(); }
+    
+    if (pSender == mStepperNGON1Sides) { mGrid->BuildGrid(); }
+    if (pSender == mStepperNGON1RingCount) { mGrid->BuildGrid(); }
+    if (pSender == mStepperNGON1RingSpacing) { mGrid->BuildGrid(); }
+    if (pSender == mStepperNGON1PointSpacing) { mGrid->BuildGrid(); }
+    if (pSender == mStepperNGON1StartRotation) { mGrid->BuildGrid(); }
     
 }
 
 void EditorMenuFormationGrid::RefreshGridPanels() {
     
-    if (mEditor == NULL) { return; }
+    if (mGrid == NULL) { return; }
     
-    int aGridType = mEditor->mGridType;
+    int aGridType = mGrid->mGridType;
     
     if (mPanelRectGrid != NULL) {
-        if (aGridType == FORMATION_GRID_TYPE_RECT) {
+        if (aGridType == SNAP_GRID_TYPE_RECT) {
             
             mPanelRectGrid->Activate();
         } else {
@@ -200,27 +230,29 @@ void EditorMenuFormationGrid::RefreshGridPanels() {
     }
     
     if (mPanelCircleGrid != NULL) {
-        if (aGridType == FORMATION_GRID_TYPE_CIRCLE) {
+        if (aGridType == SNAP_GRID_TYPE_CIRCLE) {
             mPanelCircleGrid->Activate();
         } else {
             mPanelCircleGrid->Deactivate();
         }
     }
     
-    if (aGridType == FORMATION_GRID_TYPE_STAR) {
-        
-    } else {
-        
+    if (mPanelStarGrid != NULL) {
+        if (aGridType == SNAP_GRID_TYPE_STAR) {
+            mPanelStarGrid->Activate();
+        } else {
+            mPanelStarGrid->Deactivate();
+        }
     }
     
-    if (aGridType == FORMATION_GRID_TYPE_TRIANGLE) {
+    if (aGridType == SNAP_GRID_TYPE_TRIANGLE) {
         
     } else {
         
     }
     
     if (mPanelNGON1Grid != NULL) {
-        if (aGridType == FORMATION_GRID_TYPE_NGON1) {
+        if (aGridType == SNAP_GRID_TYPE_NGON1) {
             mPanelNGON1Grid->Activate();
         } else {
             mPanelNGON1Grid->Deactivate();

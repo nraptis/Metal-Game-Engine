@@ -15,6 +15,7 @@
 #include "EditorMenuFormation.hpp"
 #include "EditorMenuFormationSpawnPicker.hpp"
 #include "EditorMenuFormationGrid.hpp"
+#include "GameEditorGrid.hpp"
 
 #include "LevelFormationBlueprint.hpp"
 #include "LevelFormation.hpp"
@@ -23,15 +24,6 @@
 #define FORMATION_MODE_ADD_POINT 0
 #define FORMATION_MODE_MOVE_POINT 1
 #define FORMATION_MODE_SELECT_POINT 2
-
-
-#define FORMATION_GRID_TYPE_RECT 0
-#define FORMATION_GRID_TYPE_CIRCLE 1
-#define FORMATION_GRID_TYPE_STAR 2
-#define FORMATION_GRID_TYPE_TRIANGLE 3
-#define FORMATION_GRID_TYPE_NGON1 4
-#define FORMATION_GRID_TYPE_NGON2 5
-
 
 class GameEditor;
 class GameFormationEditor : public FCanvas {
@@ -63,6 +55,8 @@ public:
     EditorMenuFormationGrid                     *mMenuGrid;
     
     
+    GameEditorGrid                              mGrid;
+    
     //Speed Classes...
     int                                         mFormationRotationSpeedClassIndex;
     int                                         mTracerSpeedClassIndex;
@@ -73,27 +67,10 @@ public:
     bool                                        mTracerEnabled;
     int                                         mTracerMode;
     
-    
-    bool                                        mGridEnabled;
     bool                                        mMarkersDisplay;
     
-    int                                         mGridType;
     
-    int                                         mGridRectWidth;
-    int                                         mGridRectHeight;
-    int                                         mGridRectSpacing;
-    
-    int                                         mGridCircleRingSpacing;
-    int                                         mGridCircleRingCount;
-    int                                         mGridCircleRadialCount;
-    
-    int                                         mGridNGON1Sides;
-    int                                         mGridNGON1RingSpacing;
-    int                                         mGridNGON1RingCount;
-    int                                         mGridNGON1PointSpacing;
-    int                                         mGridNGON1StartRotation;
-    
-    FPointList                                  mGridList;
+   
     
     void                                        *mSelectedTouch;
     
@@ -117,13 +94,7 @@ public:
     void                                        Print();
     void                                        PickDefaultModes();
     
-    void                                        BuildGrid();
     
-    void                                        BuildRectGrid();
-    void                                        BuildCircleGrid();
-    void                                        BuildStarGrid();
-    void                                        BuildNGON1Grid();
-    void                                        BuildNGON2Grid();
     
     
     void                                        SetUp(LevelFormationBlueprint *pFormation);
@@ -145,7 +116,7 @@ public:
     LevelFormationTracerBlueprint               *TracerGet();
     
     
-    void                                        GridSnap(float *pX, float *pY);
+    
     
     float                                       mGameAreaTop;
     float                                       mGameAreaRight;
@@ -156,12 +127,6 @@ public:
     float                                       mCenterY;
     
     LevelFormation                              mEditorFormation;
-    
-    void                                        SaveGridState();
-    void                                        LoadGridState();
-    int                                         mSaveGridTimer;
-    
-    
     
     FString                                     GetShortNameForGameObjectType(int pGameObjectType);
     FString                                     GetPathSpeedName(int pSpeedClass);

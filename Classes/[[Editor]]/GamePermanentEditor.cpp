@@ -29,6 +29,7 @@ GamePermanentEditor::GamePermanentEditor(GameEditor *pEditor) {
     mMenuPermPicker = NULL;
     mMenuMotion = NULL;
     
+    
     mPathSpeedClassIndex = -1;
     
     mSelectedTouch = NULL;
@@ -558,6 +559,7 @@ void GamePermanentEditor::OpenMenuMotionForSpawn() {
         mMenuMotion->SetFrame(gDeviceWidth2 / 2.0f - 420.0f / 2.0f, 130.0f, 420.0f, 600.0f);
     }
 }
+
 
 void GamePermanentEditor::AddPath() {
     OpenPathEditor();

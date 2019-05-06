@@ -42,7 +42,70 @@ void FormationCollection::Load() {
     mMap.RemoveAll();
     
     
+    //Rect Grid Types...
+    mNameList.Add(new FString("f_grid_rect_1x4_46spc_solid__nodes_cfg4xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_1x5_46spc_solid__nodes_cfg5xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_1x6_46spc_solid__nodes_cfg6xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_2x2_44spc_solid__nodes_cfg4xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_3x3_34spc_33ful__nodes_cfg3xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_3x3_34spc_56ful__nodes_cfg5xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_3x3_44spc_33ful__nodes_cfg3xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_3x3_44spc_56ful__nodes_cfg5xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_3x3_44spc_89ful__nodes_cfg8xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_3x3_44spc_solid__nodes_cfg9xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_4x1_46spc_solid__nodes_cfg4xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_4x4_34spc_25ful__nodes_cfg4xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_4x4_46spc_50ful__nodes_cfg8xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_4x4_46spc_75ful__nodes_cfg12xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_4x4_46spc_solid__nodes_cfg16xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_5x1_46spc_solid__nodes_cfg5xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_5x5_34spc_20ful__nodes_cfg5xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_5x5_34spc_36ful__nodes_cfg9xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_5x5_46spc_52ful__nodes_cfg13xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_5x5_46spc_64ful__nodes_cfg16xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_5x5_46spc_84ful__nodes_cfg21xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_5x5_46spc_96ful__nodes_cfg24xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_5x5_46spc_solid__nodes_cfg25xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_6x1_46spc_solid__nodes_cfg6xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_6x6_34spc_17ful__nodes_cfg6xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_6x6_46spc_89ful__nodes_cfg32xb_allg.json"));
+    mNameList.Add(new FString("f_grid_rect_6x6_46spc_solid__nodes_cfg36xb_allg.json"));
     
+    
+    mNameList.Add(new FString("f_grid_circ_40rngs_1rngc_5radc_83ful__nodes_cfg5xb_allg.json"));
+    mNameList.Add(new FString("f_grid_circ_46rngs_1rngc_6radc_86ful__nodes_cfg6xb_allg.json"));
+    mNameList.Add(new FString("f_grid_circ_46rngs_1rngc_6radc_solid__nodes_cfg7xb_allg.json"));
+    mNameList.Add(new FString("f_grid_circ_56rngs_1rngc_7radc_88ful__nodes_cfg7xb_allg.json"));
+    mNameList.Add(new FString("f_grid_circ_56rngs_1rngc_7radc_solid__nodes_cfg8xb_allg.json"));
+    mNameList.Add(new FString("f_grid_circ_60rngs_1rngc_8radc_89ful__nodes_cfg8xb_allg.json"));
+    mNameList.Add(new FString("f_grid_circ_60rngs_1rngc_8radc_solid__nodes_cfg9xb_allg.json"));
+    mNameList.Add(new FString("f_grid_circ_70rngs_1rngc_9radc_solid__nodes_cfg10xb_allg.json"));
+    mNameList.Add(new FString("f_grid_circ_70rngs_1rngc_9radc_90ful__nodes_cfg9xb_allg.json"));
+    mNameList.Add(new FString("f_grid_circ_75rngs_1rngc_10radc_91ful__nodes_cfg10xb_allg.json"));
+    mNameList.Add(new FString("f_grid_circ_75rngs_1rngc_10radc_solid__nodes_cfg11xb_allg.json"));
+    mNameList.Add(new FString("f_grid_circ_82rngs_1rngc_11radc_92ful__nodes_cfg11xb_allg.json"));
+    mNameList.Add(new FString("f_grid_circ_82rngs_1rngc_11radc_solid__nodes_cfg12xb_allg.json"));
+    mNameList.Add(new FString("f_grid_circ_88rngs_1rngc_12radc_92ful__nodes_cfg12xb_allg.json"));
+    mNameList.Add(new FString("f_grid_circ_88rngs_1rngc_12radc_solid__nodes_cfg13xb_allg.json"));
+    mNameList.Add(new FString("f_grid_circ_92rngs_1rngc_12radc_92ful__nodes_cfg18xb12on6off.json"));
+    mNameList.Add(new FString("f_grid_circ_120rngs_1rngc_16radc_94ful__nodes_cfg16xb_allg.json"));
+    mNameList.Add(new FString("f_grid_circ_74rngs_1rngc_10radc_91ful__nodes_cfg26xb10on16off.json"));
+    mNameList.Add(new FString("f_grid_circ_4x4_44spc_75ful__nodes_cfg28xb12on16off.json"));
+    
+    
+    //Triangles...
+    mNameList.Add(new FString("f_grid_tri_ngon1_3sid_91rngs_1rngc_42pnts_180roff_90ful__nodes_cfg9xb_allg.json"));
+    mNameList.Add(new FString("f_grid_tri_ngon1_3sid_54rngs_1rngc_30pnts_86ful__nodes_cfg6xb_allg.json"));
+    mNameList.Add(new FString("f_grid_tri_ngon1_3sid_54rngs_1rngc_30pnts_180roff_86ful__nodes_cfg6xb_allg.json"));
+    mNameList.Add(new FString("f_grid_tri_ngon1_3sid_54rngs_1rngc_130pnts_180roff_solid__nodes_cfg4xb_allg.json"));
+    mNameList.Add(new FString("f_grid_tri_ngon1_3sid_54rngs_1rngc_130pnts_solid__nodes_cfg4xb_allg.json"));
+    mNameList.Add(new FString("f_grid_tri_ngon1_3sid_71rngs_2rngc_44pnts_68ful__nodes_cfg15xb_allg.json"));
+    mNameList.Add(new FString("f_grid_tri_ngon1_3sid_71rngs_2rngc_44pnts_180roff_68ful__nodes_cfg15xb_allg.json"));
+    mNameList.Add(new FString("f_grid_tri_ngon1_3sid_91rngs_1rngc_42pnts_90ful__nodes_cfg9xb_allg.json"));
+    
+    
+    
+    /*
     mNameList.Add(new FString("f_grid_rect_2x2_44spc_solid__nodes_cfg4xb"));
     mNameList.Add(new FString("f_grid_rect_3x3_44spc_solid__nodes_cfg9xb"));
     mNameList.Add(new FString("f_grid_rect_4x4_44spc_solid__nodes_cfg16xb"));
@@ -87,10 +150,9 @@ void FormationCollection::Load() {
     mNameList.Add(new FString("formation_tracer_rr_250r_60cr_stationary"));
     mNameList.Add(new FString("formation_tracer_rr_250r_60cr_point_1x1_stationary"));
     
-    
     mNameList.Add(new FString("f_tr_14ct_rrct_400rd_100cr_spxs"));
     mNameList.Add(new FString("f_tr_brbrbrbrbr_circ_250rd_spxs~tr_8ct_circ_140rd_spxs.json"));
-    
+    */
                   
                   
     

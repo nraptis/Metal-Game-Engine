@@ -10,17 +10,19 @@
 #define EditorMenuFormationGridGrid_hpp
 
 #include "ToolMenu.hpp"
+#include "GameEditorGrid.hpp"
 
 class GameFormationEditor;
 class EditorMenuFormationGrid : public ToolMenu {
 public:
-    EditorMenuFormationGrid(GameFormationEditor *pEditor);
+    EditorMenuFormationGrid(GameEditorGrid *pGrid);
     virtual ~EditorMenuFormationGrid();
     
     virtual void                            Layout() override;
     virtual void                            Notify(void *pSender, const char *pNotification) override;
     virtual void                            Update() override;
     
+    GameEditorGrid                          *mGrid;
     
     
     ToolMenuPanel                           *mPanelGrid;
@@ -42,6 +44,14 @@ public:
     UIStepper                               *mStepperCircleRadialCount;
     
     
+    ToolMenuPanel                           *mPanelStarGrid;
+    UIStepper                               *mStepperStarInnerRadius;
+    UIStepper                               *mStepperStarOuterRadius;
+    UIStepper                               *mStepperStarLinePointCount;
+    UIStepper                               *mStepperStarArmCount;
+    UIStepper                               *mStepperStarStartRotation;
+    
+    
     ToolMenuPanel                           *mPanelNGON1Grid;
     UIStepper                               *mStepperNGON1Sides;
     UIStepper                               *mStepperNGON1RingCount;
@@ -50,7 +60,7 @@ public:
     UIStepper                               *mStepperNGON1StartRotation;
     
     
-    GameFormationEditor                     *mEditor;
+    
     
     void                                    RefreshGridPanels();
     

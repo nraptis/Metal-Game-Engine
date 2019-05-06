@@ -128,6 +128,7 @@
 		0D8FCF86225DA8ED00A74580 /* os_core_app_shell_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCE8F225DA8ED00A74580 /* os_core_app_shell_mac.mm */; };
 		0D8FCF87225DA8ED00A74580 /* OSMusicPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCE96225DA8ED00A74580 /* OSMusicPlayer.mm */; };
 		0D8FCF88225DA8ED00A74580 /* os_core_outlets_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCE97225DA8ED00A74580 /* os_core_outlets_mac.mm */; };
+		0DA3911C227FE8BB00FC167D /* GameEditorGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DA3911A227FE8BB00FC167D /* GameEditorGrid.cpp */; };
 		0DB05E552255A364006AE702 /* GameContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DB05DE62255A364006AE702 /* GameContainer.cpp */; };
 		0DB05E562255A364006AE702 /* FloatingCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DB05DE82255A364006AE702 /* FloatingCamera.cpp */; };
 		0DB05E572255A364006AE702 /* PhongConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DB05DE92255A364006AE702 /* PhongConfiguration.cpp */; };
@@ -440,6 +441,8 @@
 		0D8FCE95225DA8ED00A74580 /* os_core_sound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os_core_sound.h; sourceTree = "<group>"; };
 		0D8FCE96225DA8ED00A74580 /* OSMusicPlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OSMusicPlayer.mm; sourceTree = "<group>"; };
 		0D8FCE97225DA8ED00A74580 /* os_core_outlets_mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = os_core_outlets_mac.mm; sourceTree = "<group>"; };
+		0DA3911A227FE8BB00FC167D /* GameEditorGrid.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameEditorGrid.cpp; sourceTree = "<group>"; };
+		0DA3911B227FE8BB00FC167D /* GameEditorGrid.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameEditorGrid.hpp; sourceTree = "<group>"; };
 		0DB05DE62255A364006AE702 /* GameContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameContainer.cpp; sourceTree = "<group>"; };
 		0DB05DE72255A364006AE702 /* LightConfigurationScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LightConfigurationScene.hpp; sourceTree = "<group>"; };
 		0DB05DE82255A364006AE702 /* FloatingCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FloatingCamera.cpp; sourceTree = "<group>"; };
@@ -615,17 +618,17 @@
 		0D8FCDB7225DA8EC00A74580 /* [Metal] */ = {
 			isa = PBXGroup;
 			children = (
-				0D8FCDB8225DA8EC00A74580 /* BufferBindingWrapper.mm */,
-				0D8FCDB9225DA8EC00A74580 /* os_core_graphics.mm */,
-				0D8FCDBA225DA8EC00A74580 /* TextureBindingWrapper.h */,
-				0D8FCDBB225DA8EC00A74580 /* MetalPipeline.h */,
-				0D8FCDBC225DA8EC00A74580 /* Shaders */,
 				0D8FCDC5225DA8EC00A74580 /* BufferBindingWrapper.h */,
-				0D8FCDC6225DA8EC00A74580 /* TextureBindingWrapper.mm */,
+				0D8FCDB8225DA8EC00A74580 /* BufferBindingWrapper.mm */,
 				0D8FCDC7225DA8EC00A74580 /* MetalEngine.h */,
-				0D8FCDC8225DA8EC00A74580 /* os_core_graphics.h */,
 				0D8FCDC9225DA8EC00A74580 /* MetalEngine.mm */,
+				0D8FCDBB225DA8EC00A74580 /* MetalPipeline.h */,
 				0D8FCDCA225DA8EC00A74580 /* MetalPipeline.mm */,
+				0D8FCDC8225DA8EC00A74580 /* os_core_graphics.h */,
+				0D8FCDB9225DA8EC00A74580 /* os_core_graphics.mm */,
+				0D8FCDBC225DA8EC00A74580 /* Shaders */,
+				0D8FCDBA225DA8EC00A74580 /* TextureBindingWrapper.h */,
+				0D8FCDC6225DA8EC00A74580 /* TextureBindingWrapper.mm */,
 			);
 			path = "[Metal]";
 			sourceTree = "<group>";
@@ -984,6 +987,8 @@
 				0DB05E482255A364006AE702 /* GamePathEditor.hpp */,
 				0DD15B3D225917AA005C06D8 /* GamePermanentEditor.cpp */,
 				0DD15B3E225917AA005C06D8 /* GamePermanentEditor.hpp */,
+				0DA3911A227FE8BB00FC167D /* GameEditorGrid.cpp */,
+				0DA3911B227FE8BB00FC167D /* GameEditorGrid.hpp */,
 			);
 			path = "[[Editor]]";
 			sourceTree = "<group>";
@@ -1245,6 +1250,7 @@
 				0D8FCF82225DA8ED00A74580 /* PlatformGraphicsInterface.mm in Sources */,
 				0D8FCF2A225DA8ED00A74580 /* FFont.cpp in Sources */,
 				0D8FCF52225DA8ED00A74580 /* FImage.cpp in Sources */,
+				0DA3911C227FE8BB00FC167D /* GameEditorGrid.cpp in Sources */,
 				0D8FCF48225DA8ED00A74580 /* FJSON.cpp in Sources */,
 				0D8FCF24225DA8ED00A74580 /* FHashMap.cpp in Sources */,
 				0D8FCF1F225DA8ED00A74580 /* SpriteShaders.metal in Sources */,

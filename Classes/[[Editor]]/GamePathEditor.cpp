@@ -30,6 +30,10 @@ void GamePathEditor::Init() {
     
     mName = "[GamePathEditor]";
     
+    
+    
+    mMenuGrid = NULL;
+    
     SetWidth(gDeviceWidth);
     SetHeight(gDeviceHeight);
     
@@ -55,6 +59,11 @@ void GamePathEditor::Init() {
     mMenuControls = new EditorMenuPathControl(this);
     AddChild(mMenuControls);
     mMenuControls->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), gSafeAreaInsetTop + 20.0f, 400.0f, 480.0f);
+    
+    
+    mMenuGrid = new EditorMenuFormationGrid(&mGrid);
+    AddChild(mMenuGrid);
+    mMenuGrid->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f + 60.0f), gSafeAreaInsetTop + 20.0f + 200.0f, 400.0f, 736.0f - 200.0f);
     
 }
 
@@ -84,6 +93,9 @@ void GamePathEditor::Layout() {
 
 void GamePathEditor::Update() {
     
+    mGrid.Update();
+    
+    
     if (mConstrainXToPoint && mConstrainYToPoint) {
         mConstrainXToPoint = false;
         mConstrainYToPoint = false;
@@ -99,6 +111,10 @@ void GamePathEditor::Update() {
 }
 
 void GamePathEditor::Draw() {
+    
+    if (mGrid.mGridEnabled) {
+        mGrid.Draw();
+    }
     
 }
 
@@ -134,8 +150,22 @@ void GamePathEditor::TouchDown(float pX, float pY, void *pData) {
             
             LevelPathNodeBlueprint *aNode = mPath->GetNode();
             if (aNode) {
-                aNode->mConstraint.mTypeX = gEditor->ClosestXConstraint(pX);
-                aNode->mConstraint.mTypeY = gEditor->ClosestYConstraint(pY);
+                
+                if (mGrid.mGridEnabled) {
+                    float aX = pX;
+                    float aY = pY;
+                    mGrid.GridSnap(&aX, &aY);
+                    aNode->mEditorX = aX;
+                    aNode->mEditorY = aY;
+                    aNode->mConstraint.mTypeX = X_CONSTRAINT_NONE;
+                    aNode->mConstraint.mTypeY = Y_CONSTRAINT_NONE;
+                } else {
+                    aNode->mConstraint.mTypeX = gEditor->ClosestXConstraint(pX);
+                    aNode->mConstraint.mTypeY = gEditor->ClosestYConstraint(pY);
+                }
+                
+                
+                
                 
                 if (mWave != NULL) {
                     mWave->ApplyEditorConstraints();
@@ -180,9 +210,25 @@ void GamePathEditor::TouchDown(float pX, float pY, void *pData) {
 void GamePathEditor::TouchMove(float pX, float pY, void *pData) {
     if (mPathMode == PATH_MODE_EDIT) {
         if (mSelectedTouch == pData && mPath != NULL) {
-            mPath->Set(mPath->mSelectedIndex, mSelectPathStartX + (pX - mSelectTouchStartX), mSelectPathStartY + (pY - mSelectTouchStartY));
-            if (gEditor) {
-                gEditor->RefreshPlayback();
+            
+            float aX = mSelectPathStartX + (pX - mSelectTouchStartX);
+            float aY = mSelectPathStartY + (pY - mSelectTouchStartY);
+           
+            LevelPathNodeBlueprint *aNode = mPath->GetNode();
+            
+            if (aNode != NULL) {
+                if (mGrid.mGridEnabled) {
+                    mGrid.GridSnap(&aX, &aY);
+                    aNode->mEditorX = aX;
+                    aNode->mEditorY = aY;
+                    aNode->mConstraint.mTypeX = X_CONSTRAINT_NONE;
+                    aNode->mConstraint.mTypeY = Y_CONSTRAINT_NONE;
+                } else {
+                    mPath->Set(mPath->mSelectedIndex, aX, aY);
+                    //aNode->mConstraint.mTypeX = gEditor->ClosestXConstraint(pX);
+                    //aNode->mConstraint.mTypeY = gEditor->ClosestYConstraint(pY);
+                    
+                }
             }
         }
     }
@@ -233,6 +279,10 @@ void GamePathEditor::KeyDown(int pKey) {
     if (pKey == __KEY__A) {
         if (aShift == false && aCtrl == false && aAlt == false) { mPathMode = PATH_MODE_CREATE; }
         
+    }
+    
+    if (pKey == __KEY__G) {
+        if (aShift == false && aCtrl == false && aAlt == false) { mGrid.mGridEnabled = !mGrid.mGridEnabled; }
     }
     
     if (pKey == __KEY__ESCAPE) {
@@ -471,6 +521,11 @@ void GamePathEditor::SetUp(LevelWaveBlueprint *pWave) {
     }
     mWave = pWave;
     SetUpPath(&(pWave->mPath));
+    
+    
+    mGrid.mCenterX = gEditor->mCenterH;
+    mGrid.mCenterY = gEditor->mCenterV;
+    mGrid.BuildGrid();
 }
 
 void GamePathEditor::SetUp(LevelSectionPermanentBlueprint *pPerm) {
@@ -482,6 +537,19 @@ void GamePathEditor::SetUp(LevelSectionPermanentBlueprint *pPerm) {
     }
     mPerm = pPerm;
     SetUpPath(&(mPerm->mPath));
+    
+    mGrid.mCenterX = mPerm->mEditorX;
+    if (mPerm->mConstraint.mTypeX != X_CONSTRAINT_NONE) {
+        float aFactorX = (gEditor->mGameAreaRight - gEditor->mGameAreaLeft) / (gGame->mGameAreaRight - gGame->mGameAreaLeft);
+        mGrid.mCenterX += mPerm->mConstraint.mOffsetX * aFactorX;
+    }
+    
+    mGrid.mCenterY = mPerm->mEditorY;
+    if (mPerm->mConstraint.mTypeY != Y_CONSTRAINT_NONE) {
+        float aFactorY = (gEditor->mGameAreaBottom - gEditor->mGameAreaTop) / (gGame->mGameAreaBottom - gGame->mGameAreaTop);
+        mGrid.mCenterY += mPerm->mConstraint.mOffsetY * aFactorY;
+    }
+    mGrid.BuildGrid();
 }
 
 void GamePathEditor::SetUpPath(LevelPathBlueprint *pPath) {

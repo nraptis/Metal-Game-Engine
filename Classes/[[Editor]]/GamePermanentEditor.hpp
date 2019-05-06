@@ -17,10 +17,10 @@
 #include "EditorMenuPermSpawnPicker.hpp"
 #include "EditorMenuPermPicker.hpp"
 #include "EditorMenuMotion.hpp"
-
 #include "LevelSectionPermanentBlueprint.hpp"
 #include "LevelSectionPermanent.hpp"
 #include "GamePathEditor.hpp"
+
 
 #define PERMANENT_MODE_ADD 0
 #define PERMANENT_MODE_MOVE 1
@@ -71,6 +71,7 @@ public:
     void                                        OpenMenuAttachment();
     void                                        OpenMenuMotionForPerm();
     void                                        OpenMenuMotionForSpawn();
+    
     
     
     

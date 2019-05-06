@@ -194,12 +194,9 @@ void EditorMenuFormationPicker::ApplyFilter() {
         if (aUse == true) {
             mFormationListFiltered.Add(aFormation->Clone());
         }
-        
-        
     }
     
     EnumList(LevelFormation, aFormation, mFormationListFiltered) {
-        
         EditorMenuFormationPickerCell *aCell = new EditorMenuFormationPickerCell(aFormation);
         aCell->SetFrame(0.0f, 0.0f, mScrollContent->mCellWidth, mScrollContent->mCellHeight);
         gNotify.Register(this, aCell, "button_click");

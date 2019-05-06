@@ -18,6 +18,8 @@
 #include "LevelWaveBlueprint.hpp"
 #include "LevelSectionBlueprint.hpp"
 #include "LevelSectionPermanentBlueprint.hpp"
+#include "EditorMenuFormationGrid.hpp"
+#include "GameEditorGrid.hpp"
 
 #define PATH_MODE_CREATE 0
 #define PATH_MODE_EDIT 1
@@ -31,9 +33,6 @@ public:
     GamePathEditor(GamePermanentEditor *pEditor);
     
     void                                        Init();
-    
-    
-    
     
     virtual ~GamePathEditor();
     
@@ -55,6 +54,8 @@ public:
     virtual void                                Notify(void *pSender, const char *pNotification) override;
     
     void                                        Load();
+    
+    GameEditorGrid                              mGrid;
     
     int                                         mPathMode;
     void                                        *mSelectedTouch;
@@ -92,6 +93,8 @@ public:
     
     EditorMenuPathControl                       *mMenuControls;
     EditorMenuPath                              *mMenuPaths;
+    EditorMenuFormationGrid                     *mMenuGrid;
+    
     
     void                                        Close();
     
