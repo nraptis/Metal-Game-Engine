@@ -9,12 +9,18 @@
 #include "GameObject.hpp"
 #include "Game.hpp"
 #include "LevelWave.hpp"
+#include "LevelWaveSpawn.hpp"
+#include "LevelPermSpawn.hpp"
 
 GameObject::GameObject() {
     mWave = NULL;
     mUniform = NULL;
     mModel = NULL;
     mSprite = NULL;
+    
+    mWaveSpawn = NULL;
+    mPermSpawn = NULL;
+    
     
     mDidOriginateOnWave = false;
     mDidOriginateAsPermanent = false;
@@ -31,6 +37,14 @@ GameObject::GameObject() {
 
 GameObject::~GameObject() {
     
+    if (mWaveSpawn != NULL) {
+        mWaveSpawn->DisposeObject(this);
+        mWaveSpawn = NULL;
+    }
+    
+    if (mPermSpawn != NULL) {
+        mPermSpawn->DisposeObject(this);
+    }
 }
 
 void GameObject::Update() {

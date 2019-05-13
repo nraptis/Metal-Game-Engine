@@ -44,6 +44,7 @@ public:
     ToolMenuSectionRow                      *mRowMain2;
     ToolMenuSectionRow                      *mRowMain3;
     
+    UIButton                                *mButtonAddNegate;
     UIButton                                *mButtonAddRotate;
     UIButton                                *mButtonAddOscillateV;
     UIButton                                *mButtonAddOscillateH;

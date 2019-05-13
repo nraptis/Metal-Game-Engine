@@ -64,6 +64,13 @@ public:
     
 #ifdef EDITOR_MODE
     GameEditor                              *mEditor;
+    
+    void                                    EditorTestSwitchToGame();
+    void                                    EditorTestSwitchToEditor();
+    
+    int                                     mEditorSwitchType;
+    int                                     mEditorSwitchTimer;
+    
 #endif
     
     void                                    Draw3D();

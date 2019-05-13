@@ -35,6 +35,7 @@ public:
     void                                        RemoveFirstSlice();
     void                                        RemoveLastSlice();
     
+    void                                        AddSliceNegate();
     void                                        AddSliceRotate();
     void                                        AddSliceOscillateRotation();
     void                                        AddSliceOscillateV();

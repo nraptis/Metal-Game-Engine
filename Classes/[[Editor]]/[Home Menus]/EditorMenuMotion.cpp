@@ -51,6 +51,12 @@ void EditorMenuMotion::Init() {
     mPanelMainControls->AddSection(mRowMain3);
     
     
+    
+    mButtonAddNegate = new UIButton();
+    mButtonAddNegate->SetText("+ Negate");
+    mRowMain1->AddButton(mButtonAddNegate);
+    
+    
     mButtonAddRotate = new UIButton();
     mButtonAddRotate->SetText("+ Rotate");
     mRowMain1->AddButton(mButtonAddRotate);
@@ -115,6 +121,12 @@ void EditorMenuMotion::Notify(void *pSender, const char *pNotification) {
     if (gEditor == NULL) { return; }
     
     if (mMotionController != NULL) {
+        
+        
+        if (pSender == mButtonAddNegate) {
+            mMotionController->AddSliceNegate();
+            gEditor->RefreshPlayback();
+        }
         if (pSender == mButtonAddRotate) {
             mMotionController->AddSliceRotate();
             gEditor->RefreshPlayback();
@@ -259,12 +271,18 @@ void EditorMenuMotion::CheckSlicePanels() {
                 mPanelTypes->AddSection(aPanel);
                 mTypePanelList.Add(aPanel);
             }
+            
+            if (aSlice->mType == LEVEL_MOTION_SLICE_TYPE_NEGATE) {
+                EditorMenuMotionTypePanelNegate *aPanel = new EditorMenuMotionTypePanelNegate();
+                mPanelTypes->AddSection(aPanel);
+                mTypePanelList.Add(aPanel);
+            }
+            
             if (aSlice->mType == LEVEL_MOTION_SLICE_TYPE_ROTATE) {
                 EditorMenuMotionTypePanelRotate *aPanel = new EditorMenuMotionTypePanelRotate();
                 mPanelTypes->AddSection(aPanel);
                 mTypePanelList.Add(aPanel);
             }
-            
             
             if (aSlice->mType == LEVEL_MOTION_SLICE_TYPE_OSCILLATE_ROTATION) {
                 EditorMenuMotionTypePanelOscillateRotation *aPanel = new EditorMenuMotionTypePanelOscillateRotation();
@@ -274,6 +292,12 @@ void EditorMenuMotion::CheckSlicePanels() {
             
             if (aSlice->mType == LEVEL_MOTION_SLICE_TYPE_OSCILLATE_VERTICAL) {
                 EditorMenuMotionTypePanelOscillateVertical *aPanel = new EditorMenuMotionTypePanelOscillateVertical();
+                mPanelTypes->AddSection(aPanel);
+                mTypePanelList.Add(aPanel);
+            }
+            
+            if (aSlice->mType == LEVEL_MOTION_SLICE_TYPE_OSCILLATE_HORIZONTAL) {
+                EditorMenuMotionTypePanelOscillateHorizontal *aPanel = new EditorMenuMotionTypePanelOscillateHorizontal();
                 mPanelTypes->AddSection(aPanel);
                 mTypePanelList.Add(aPanel);
             }

@@ -15,6 +15,9 @@
 #include "LevelFormationNode.hpp"
 #include "LevelMotionController.hpp"
 
+class LevelWaveSpawn;
+class LevelPermSpawn;
+
 class LevelFormationTracer;
 class LevelFormation {
 public:
@@ -63,6 +66,9 @@ public:
     float                                       mRotation;
     
     void                                        GetExtremeties(float &pTop, float &pRight, float &pBottom, float &pLeft);
+    
+    void                                        SetWaveSpawn(LevelWaveSpawn *pSpawn);
+    void                                        SetPermSpawn(LevelPermSpawn *pSpawn);
     
     LevelFormation                              *Clone();
     

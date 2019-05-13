@@ -8,6 +8,8 @@
 
 #include "LevelFormation.hpp"
 #include "LevelFormationTracer.hpp"
+#include "LevelWaveSpawn.hpp"
+#include "LevelPermSpawn.hpp"
 
 LevelFormation::LevelFormation() {
     
@@ -224,6 +226,36 @@ void LevelFormation::HandOffAllGameObjects(FList *pList) {
             pList->Add(aNode->mObject);
         }
         aNode->mObject = NULL;
+    }
+}
+
+void LevelFormation::SetWaveSpawn(LevelWaveSpawn *pSpawn) {
+    EnumList(LevelFormationNode, aNode, mSpawnNodeList) {
+        if (aNode->mObject != NULL && aNode->mObject->mKill == 0) {
+            aNode->mObject->mWaveSpawn = pSpawn;
+        }
+    }
+    EnumList(LevelFormationTracer, aTracer, mTracerList) {
+        EnumList(LevelFormationNode, aNode, aTracer->mSpawnNodeList) {
+            if (aNode->mObject != NULL && aNode->mObject->mKill == 0) {
+                aNode->mObject->mWaveSpawn = pSpawn;
+            }
+        }
+    }
+}
+
+void LevelFormation::SetPermSpawn(LevelPermSpawn *pSpawn) {
+    EnumList(LevelFormationNode, aNode, mSpawnNodeList) {
+        if (aNode->mObject != NULL && aNode->mObject->mKill == 0) {
+            aNode->mObject->mPermSpawn = pSpawn;
+        }
+    }
+    EnumList(LevelFormationTracer, aTracer, mTracerList) {
+        EnumList(LevelFormationNode, aNode, aTracer->mSpawnNodeList) {
+            if (aNode->mObject != NULL && aNode->mObject->mKill == 0) {
+                aNode->mObject->mPermSpawn = pSpawn;
+            }
+        }
     }
 }
 

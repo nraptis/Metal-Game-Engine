@@ -34,6 +34,24 @@ public:
     int                                         mKillTimer;
 };
 
+//Negate
+class LevelMotionControllerSliceNegateBlueprint : public LevelMotionControllerSliceBlueprint {
+public:
+    LevelMotionControllerSliceNegateBlueprint();
+    virtual ~LevelMotionControllerSliceNegateBlueprint();
+    
+    void                                        Build(LevelMotionControllerSliceNegate *pSlice);
+    
+    virtual FJSONNode                           *Save();
+    virtual void                                Load(FJSONNode *pNode);
+
+    bool                                        mNegateHAlways;
+    bool                                        mNegateHRandomly;
+    
+    bool                                        mNegateVAlways;
+    bool                                        mNegateVRandomly;
+    
+};
 
 class LevelMotionControllerSliceRotateBlueprint : public LevelMotionControllerSliceBlueprint {
 public:
@@ -52,6 +70,7 @@ public:
 };
 
 
+//class  : public LevelMotionControllerSliceBlueprint {
 class LevelMotionControllerSliceOscillateRotationBlueprint : public LevelMotionControllerSliceBlueprint {
 public:
     LevelMotionControllerSliceOscillateRotationBlueprint();
@@ -62,8 +81,16 @@ public:
     virtual FJSONNode                           *Save();
     virtual void                                Load(FJSONNode *pNode);
     
-    //int                                         mPivotOffsetX;
-    //int                                         mPivotOffsetY;
+    int                                         mAngleSpan;
+    int                                         mAngleSpanOffsetStart;
+    int                                         mAngleSpanOffsetEnd;
+    
+    bool                                        mLinear;
+    int                                         mLinearTimer;
+    int                                         mLinearTime;
+    
+    int                                         mPause1;
+    int                                         mPause2;
 };
 
 
@@ -77,6 +104,25 @@ public:
     virtual FJSONNode                           *Save();
     virtual void                                Load(FJSONNode *pNode);
     
+    int                                         mRadius;
+    
+    bool                                        mLinear;
+    int                                         mLinearTimer;
+    int                                         mLinearTime;
+    
+    int                                         mPause1;
+    int                                         mPause2;
+};
+
+class LevelMotionControllerSliceOscillateHorizontalBlueprint : public LevelMotionControllerSliceBlueprint {
+public:
+    LevelMotionControllerSliceOscillateHorizontalBlueprint();
+    virtual ~LevelMotionControllerSliceOscillateHorizontalBlueprint();
+    
+    void                                        Build(LevelMotionControllerSliceOscillateHorizontal *pSlice);
+    
+    virtual FJSONNode                           *Save();
+    virtual void                                Load(FJSONNode *pNode);
     
     int                                         mRadius;
     
@@ -86,10 +132,8 @@ public:
     
     int                                         mPause1;
     int                                         mPause2;
-    
-    
-    
 };
+
 
 
 

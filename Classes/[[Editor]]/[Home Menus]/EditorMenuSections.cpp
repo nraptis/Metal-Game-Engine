@@ -41,6 +41,10 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     mRowMain2 = new ToolMenuSectionRow();
     AddSection(mRowMain2);
     
+    mButtonTest = new UIButton();
+    mButtonTest->SetText("Test");
+    mRowMain2->AddButton(mButtonTest);
+    
     
     mButtonClear = new UIButton();
     mButtonClear->SetText("Clear");
@@ -235,6 +239,7 @@ void EditorMenuSections::Notify(void *pSender, const char *pNotification) {
     if (pSender == mButtonMoveWaveUp) { mEditor->WaveMoveUp(); }
     if (pSender == mButtonMoveWaveDown) { mEditor->WaveMoveDown(); }
     
+    if (pSender == mButtonTest) { mEditor->Test(); }
     if (pSender == mButtonClear) { mEditor->Clear(); }
     if (pSender == mButtonLoadCleared) { mEditor->LoadCleared(); }
     

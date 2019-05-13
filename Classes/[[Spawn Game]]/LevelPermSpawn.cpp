@@ -98,6 +98,9 @@ void LevelPermSpawn::Spawn() {
         }
     }
     
+    if (mObject != NULL) { mObject->mPermSpawn = this; }
+    if (mFormation != NULL) { mFormation->SetPermSpawn(this); }
+    
 }
 
 void LevelPermSpawn::DisposeObject(GameObject *pObject) {
@@ -110,11 +113,9 @@ void LevelPermSpawn::DisposeObject(GameObject *pObject) {
 }
 
 bool LevelPermSpawn::IsClear() {
-    
     if (mDidSpawn == false) {
         return false;
     }
-    
     if (mObject != NULL) {
         if (mObject->mKill == 0) {
             return false;

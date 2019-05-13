@@ -168,7 +168,7 @@ public:
     bool                                        IsGameObjectOutsideKillZone(GameObject *pObject);
     
     void                                        Load();
-    
+    void                                        LoadEditorTest();
     
     
     LevelSection                                mTestSection;

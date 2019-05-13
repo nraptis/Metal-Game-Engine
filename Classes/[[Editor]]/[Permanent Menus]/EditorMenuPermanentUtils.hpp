@@ -27,7 +27,6 @@ public:
     UIButton                                *mButtonCloseEditor;
     UIButton                                *mButtonResetPerm;
     
-    
     ToolMenuPanel                           *mMenuPathSpawn;
     UIStepper                               *mStepperPathSpawnCount;
     UIStepper                               *mStepperPathSpawnSpacing;

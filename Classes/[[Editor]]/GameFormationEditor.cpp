@@ -27,8 +27,6 @@ GameFormationEditor::GameFormationEditor(GameEditor *pEditor) {
     mFormationRotationSpeedClassIndex = 3;
     mTracerSpeedClassIndex = 3;
     
-    
-    
     mCenterX = (float)((int)(mGameAreaLeft + (mGameAreaRight - mGameAreaLeft) / 2.0f + 0.5f));
     mCenterY = (float)((int)(mGameAreaTop + (mGameAreaBottom - mGameAreaTop) / 2.0f + 0.5f));
     

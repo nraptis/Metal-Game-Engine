@@ -10,9 +10,12 @@
 #define GameContainerContainer_hpp
 
 #include "GFXApp.hpp"
-#include "FloatingCamera.hpp"
-#include "Dart.hpp"
-#include "Balloon.hpp"
+//#include "FloatingCamera.hpp"
+//#include "Dart.hpp"
+//#include "Balloon.hpp"
+
+#include "EditorMenuGameTestUtils.hpp"
+#include "EditorMenuGameTest.hpp"
 
 class Game;
 class GameContainer : public FCanvas {
@@ -39,12 +42,19 @@ public:
     Game                                        *mGame;
     FCanvas                                     *mContainer;
     
+    EditorMenuGameTest                          *mEditorMenu;
+    EditorMenuGameTestUtils                     *mEditorMenuUtils;
+    
     //Including Safe Area...
     float                                       mInterfaceLeftWidth;
     float                                       mInterfaceRightWidth;
     float                                       mInterfaceTopHeight;
     float                                       mInterfaceBottomHeight;
     
+    void                                        OpenEditorTestMenus();
+    
 };
+
+extern GameContainer *gGameContainer;
 
 #endif

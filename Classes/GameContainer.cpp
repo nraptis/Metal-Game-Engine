@@ -14,7 +14,14 @@ GameContainer *gGameContainer = NULL;
 
 GameContainer::GameContainer() {
     
+    gGameContainer = this;
+    
     mName = "{{Game Container}}";
+    
+    
+    mEditorMenu = NULL;
+    mEditorMenuUtils = NULL;
+    
     
     SetWidth(1000.0f);
     SetHeight(1000.0f);
@@ -42,9 +49,14 @@ GameContainer::~GameContainer() {
         gGameContainer = NULL;
     }
     
-    if (mGame) {
-        delete mGame;
-        mGame = NULL;
+    if (mEditorMenu != NULL) {
+        mEditorMenu->Kill();
+        mEditorMenu = NULL;
+    }
+    
+    if (mEditorMenuUtils != NULL) {
+        mEditorMenuUtils->Kill();
+        mEditorMenuUtils = NULL;
     }
     
 }
@@ -137,6 +149,18 @@ void GameContainer::TouchFlush() {
 
 void GameContainer::KeyDown(int pKey) {
     
+    bool aShift = gKeyDownShift;
+    bool aCtrl = gKeyDownCtrl;
+    bool aAlt = gKeyDownAlt;
+    
+    if (pKey == __KEY__E) {
+        if (aShift == false && aCtrl == true && aAlt == false) {
+            if (mEditorMenu != NULL) {
+                gApp->EditorTestSwitchToEditor();
+            }
+        }
+    }
+    
 }
 
 void GameContainer::KeyUp(int pKey) {
@@ -145,5 +169,16 @@ void GameContainer::KeyUp(int pKey) {
 
 void GameContainer::Notify(void *pSender, const char *pNotification) {
     
+}
+
+void GameContainer::OpenEditorTestMenus() {
+    mEditorMenu = new EditorMenuGameTest();
+    gApp->mWindowTools.AddChild(mEditorMenu);
+    mEditorMenu->SetFrame(gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 20.0f, 400.0f, 680.0f);
+    
+    
+    mEditorMenuUtils = new EditorMenuGameTestUtils();
+    gApp->mWindowTools.AddChild(mEditorMenuUtils);
+    mEditorMenuUtils->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), gSafeAreaInsetTop + 20.0f, 400.0f, 480.0f);
 }
 

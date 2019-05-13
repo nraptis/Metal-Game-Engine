@@ -72,8 +72,19 @@ void FWindow::Update() {
         EnumList(FCanvas, aCanvas, mTemp) {
             gNotify.Unregister(aCanvas);
         }
-
+        
+        EnumList(FCanvas, aCanvas, mTemp) {
+            if (aCanvas == mSelectedCanvas) {
+                mSelectedCanvas = NULL;
+            }
+        }
+        
+        int aIdnex = 0;
         EnumListReverse(FCanvas, aCanvas, mTemp) {
+            
+            printf("Deleting C [%s|%d]\n", aCanvas->mName.c(), aIdnex);
+                   aIdnex++;
+            
             mRealizeBucket.Remove(aCanvas);
             mLayoutBucket.Remove(aCanvas);
             mTransformUpdateBucket.Remove(aCanvas);

@@ -143,7 +143,7 @@ public:
     void                                        OpenMotionMenu();
     
     
-    
+    void                                        Test();
     void                                        Clear();
     void                                        LoadCleared();
     void                                        Autosave();

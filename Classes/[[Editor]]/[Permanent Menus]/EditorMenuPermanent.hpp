@@ -40,10 +40,6 @@ public:
     UIButton                                *mButtonResetOffsetX;
     UIButton                                *mButtonResetOffsetY;
     
-    
-    
-    
-    
     ToolMenuPanel                           *mPathExtPanel;
     
     UISegment                               *mSegmentPathSpeed;
@@ -53,12 +49,6 @@ public:
     UICheckBox                              *mCheckBoxSmooth;
     UICheckBox                              *mCheckBoxClosed;
 
-    
-    
-    
-    
-    
-    
     ToolMenuPanel                           *mPermPanel;
     ToolMenuSectionRow                      *mRowPermanent1;
     UIButton                                *mButtonDeletePermanent;

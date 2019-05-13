@@ -73,7 +73,6 @@ void LevelWaveSpawn::Spawn() {
     }
     
     if (mFormationID.mLength > 0) {
-        
         mFormation = gFormationCollection.Get(mFormationID.c());
         if (mFormation != NULL) {
             
@@ -110,6 +109,9 @@ void LevelWaveSpawn::Spawn() {
     
     mDidSpawn = true;
     mDidUpdateAfterSpawn = false;
+    
+    if (mObject != NULL) { mObject->mWaveSpawn = this; }
+    if (mFormation != NULL) { mFormation->SetWaveSpawn(this); }
 }
 
 void LevelWaveSpawn::DisposeObject(GameObject *pObject) {

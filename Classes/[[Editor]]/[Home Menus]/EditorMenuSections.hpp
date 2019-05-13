@@ -27,6 +27,7 @@ public:
     UIButton                                *mButtonSaveSection;
     UIButton                                *mButtonLoadSection;
     ToolMenuSectionRow                      *mRowMain2;
+    UIButton                                *mButtonTest;
     UIButton                                *mButtonClear;
     UIButton                                *mButtonLoadCleared;
     

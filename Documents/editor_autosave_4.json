@@ -1,192 +1,74 @@
 {
 	"section": true,
-	"wave_list": [
-		{
-			"spawn_spacing": 300,
-			"max_spawn_size": 365,
-			"path": {
-				"speed_class": 200,
-				"node_list": [
-					{
-						"x_con": 200,
-						"y_con": 300
-					},
-					{
-						"x_con": 500,
-						"y_con": 200
-					},
-					{
-						"x_con": 850,
-						"y_con": 300
-					},
-					{
-						"x_con": 850,
-						"y_con": 800
-					},
-					{
-						"x_con": 150,
-						"y_con": 800
-					},
-					{
-						"x_con": 150,
-						"y_con": 400
-					}
-				]
-			},
-			"spawn": [
-				{
-					"formation": "formation_2count_tracer_3x5_rect_s_stationary",
-					"motion": {
-						"slice_list": [
-							{
-								"type": 1,
-								"speed_class": -300
-							}
-						]
-					}
-				},
-				{
-					"spacing_offset": 100,
-					"type": 1,
-					"motion": {
-						"slice_list": [
-							{
-								"type": 1,
-								"speed_class": 300,
-								"pivot_offset_x": 40,
-								"pivot_offset_y": -20
-							}
-						]
-					}
-				},
-				{
-					"spacing_offset": 61,
-					"formation": "f_tr_brbrbrbrbr_circ_250rd_spxs~tr_8ct_circ_140rd_spxs.json",
-					"motion": {
-						"slice_list": [
-							{
-								"type": 1,
-								"speed_class": 200,
-								"negate": true,
-								"pivot_offset_x": -20,
-								"pivot_offset_y": 30
-							}
-						]
-					}
-				}
-			]
-		}
-	],
+	"wave_list": [],
 	"perm_list": [
 		{
-			"x": 29.638117,
-			"y": 30.889597,
-			"type": 1
-		},
-		{
-			"x": 87.153122,
-			"y": 13.154290,
+			"x": 68.082275,
+			"y": 66.035118,
 			"motion": {
 				"slice_list": [
 					{
-						"type": 1,
-						"speed_class": 300,
-						"negate": true,
-						"pivot_offset_x": 10,
-						"pivot_offset_y": 30
-					}
-				]
-			}
-		},
-		{
-			"x": 41.455563,
-			"y": 30.819166,
-			"motion": {
-				"slice_list": [
-					{
-						"type": 1,
-						"speed_class": -200,
+						"type": 3,
 						"negate": true,
 						"negate_rand": true,
-						"pivot_offset_x": -32,
-						"pivot_offset_y": 32
+						"linear_tick": 0,
+						"linear_time": 60
 					}
 				]
 			},
-			"formation": "formation_tracer_circle_250r_stationary"
+			"formation": "f_grid_penta_ngon1_5sid_45rngs_1rngc_31pnts_solid__nodes_cfg6xb_allg.json"
 		},
 		{
-			"x": 65.141151,
-			"y": 77.557251,
-			"path": {
-				"speed_class": -300,
-				"node_list": [
+			"x": 17.129932,
+			"y": 6.826207,
+			"motion": {
+				"slice_list": [
 					{
-						"x_con": 700,
-						"y_con": 500
+						"type": 4,
+						"linear": true,
+						"linear_time": 80,
+						"radius": 182,
+						"pause_1": 50,
+						"pause_2": 20
 					},
 					{
-						"x_con": 700,
-						"y_con": 800
-					},
-					{
-						"x_con": 500,
-						"y_con": 800
+						"type": 1,
+						"speed_class": -300,
+						"negate_h": true,
+						"negate_h_rand": false,
+						"negate_v": true,
+						"negate_v_rand": false
 					}
 				]
 			},
-			"spawn": [
-				{
-					"motion": {
-						"slice_list": [
-							{
-								"type": 1,
-								"negate_rand": true,
-								"pivot_offset_x": 20,
-								"pivot_offset_y": 20
-							},
-							{
-								"type": 1,
-								"speed_class": 300,
-								"pivot_offset_x": -20,
-								"pivot_offset_y": -20
-							}
-						]
-					}
-				},
-				{
-					"formation": "formation_square_2x2_filled_stationary",
-					"motion": {
-						"slice_list": [
-							{
-								"type": 1,
-								"speed_class": 300,
-								"negate": true
-							}
-						]
-					}
-				}
-			]
+			"formation": "f_grid_circ_56rngs_1rngc_7radc_88ful__nodes_cfg7xb_allg.json"
 		},
 		{
-			"x": 17.768963,
-			"y": 77.307701,
+			"x": 80.911102,
+			"y": 11.785876,
+			"motion": {
+				"slice_list": [
+					{
+						"type": 2
+					}
+				]
+			},
+			"formation": "f_grid_rect_3x3_34spc_56ful__nodes_cfg5xb_allg.json"
+		},
+		{
+			"x": 21.407059,
+			"y": 75.628250,
 			"motion": {
 				"slice_list": [
 					{
 						"type": 1,
-						"speed_class": -100,
-						"negate": true,
-						"pivot_offset_x": 15,
-						"pivot_offset_y": 5
+						"negate_h": true,
+						"negate_h_rand": false,
+						"negate_v_rand": false
 					}
 				]
 			},
-			"formation": "f_grid_rect_5x5_44spc_64ful__nodes_cfg16xb"
-		},
-		{
-			"x": 59.168648,
-			"y": 62.272221
+			"formation": "f_tr_rrct_140sz_42cr_cfg3xb_spms.json"
 		}
 	]
 }

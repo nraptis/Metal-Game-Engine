@@ -27,13 +27,11 @@ GameEditorGrid::GameEditorGrid() {
     mGridCircleRingCount = 8;
     mGridCircleRadialCount = 24;
     
-    
     mGridStarInnerRadius = 72;
     mGridStarOuterRadius = 160;
     mGridStarLinePointCount = 3;
     mGridStarArmCount = 5;
     mGridStarStartRotation = 9;
-    
     
     mGridNGON1Sides = 5;
     mGridNGON1RingSpacing = 52;

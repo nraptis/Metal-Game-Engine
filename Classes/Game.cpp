@@ -900,6 +900,20 @@ void Game::Load() {
     mLevelController->Setup(mLevelData);
 }
 
+void Game::LoadEditorTest() {
+    
+    LevelSection *aSection = NULL;
+    LevelData *aLevel = new LevelData();
+    
+    aSection = new LevelSection();
+    aSection->Load("editor_test_section.json");
+    aLevel->AddSection(aSection);
+    
+    aSection->mDelay = 0;
+    
+    mLevelData = aLevel;
+    mLevelController->Setup(mLevelData);
+}
 
 
 

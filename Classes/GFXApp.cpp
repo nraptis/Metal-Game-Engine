@@ -36,7 +36,12 @@ GFXApp::GFXApp() {
     
 #ifdef EDITOR_MODE
     mEditor = NULL;
+    
+    mEditorSwitchType = 0;
+    mEditorSwitchTimer = 0;
+    
 #endif
+    
     mGameContainer = NULL;
     mLevelSelect = NULL;
     mLightScene = NULL;
@@ -65,15 +70,15 @@ GFXApp::GFXApp() {
     
     
     /*
-    mCamera.mFOV = 0.987429;
-    mCamera.mTarget = FVec3(0.0f, 0.0f, 0.0f);
-    mCamera.mDirection = FVec3(0.000000, 0.000000, 1.000000);
-    mCamera.mDistance = 6.337314;
-    mCamera.mRotationPrimary = 0.0f;
-    mCamera.mRotationSecondary = 0.0f;
-    */
+     mCamera.mFOV = 0.987429;
+     mCamera.mTarget = FVec3(0.0f, 0.0f, 0.0f);
+     mCamera.mDirection = FVec3(0.000000, 0.000000, 1.000000);
+     mCamera.mDistance = 6.337314;
+     mCamera.mRotationPrimary = 0.0f;
+     mCamera.mRotationSecondary = 0.0f;
+     */
     
-    mLoadGame = 20;
+    mLoadGame = 12;
 }
 
 GFXApp::~GFXApp() {
@@ -135,50 +140,50 @@ void GFXApp::Load() {
     mBalloonMap[2].Load("balloon_skin_03");
     mBalloonMap[3].Load("balloon_skin_04");
     mBalloonMap[4].Load("balloon_skin_05");
-
+    
     /*
-    //We need to have differently named files OR clean
-    //out the texture cache when we CHANGE resolution.
-    //As long as we START with the RIGHT resolution,
-    //then we will be fine...
-    
-    
+     //We need to have differently named files OR clean
+     //out the texture cache when we CHANGE resolution.
+     //As long as we START with the RIGHT resolution,
+     //then we will be fine...
      
-    AppShellSetImageFileScale(1);
-    mChaosEgg1X.Load("gi_chaos_egg_mockup_1");
-    mRay[0].Load("effect_ray_wide_1_0");
-    
-    
-    AppShellSetImageFileScale(2);
-    mChaosEgg2X.Load("gi_chaos_egg_mockup_2");
-    mRay[1].Load("effect_ray_wide_2_0");
-    
-    
-    AppShellSetImageFileScale(3);
-    mChaosEgg3X.Load("gi_chaos_egg_mockup_3");
-    mRay[2].Load("effect_ray_wide_3_0");
-    
-    
-    AppShellSetImageFileScale(4);
-    mChaosEgg4X.Load("gi_chaos_egg_mockup_4");
-    mRay[3].Load("effect_ray_wide_4_0");
-    
-    
-    mSoundOne[0].Load("burn_stinger.caf", 1);
-    mSoundOne[1].Load("drilling.caf", 1);
-    mSoundOne[2].Load("magic_woosh.caf", 1);
-    mSoundOne[3].Load("powerup_shuffle.caf", 1);
-    mSoundOne[4].Load("rock_thud_1.caf", 1);
-    mSoundOne[5].Load("relic_discover.caf", 1);
-    
-    
-    mSoundMulti[0].Load("charge_up_laser_flanger.caf", 5);
-    mSoundMulti[1].Load("charge_up_laser_cancel.caf", 5);
-    mSoundMulti[2].Load("rock_break_1.caf", 5);
-    mSoundMulti[3].Load("burn_stinger.caf", 5);
-    mSoundMulti[4].Load("timer_tick.caf", 5);
-    mSoundMulti[5].Load("timer_tock.caf", 5);
-    */
+     
+     
+     AppShellSetImageFileScale(1);
+     mChaosEgg1X.Load("gi_chaos_egg_mockup_1");
+     mRay[0].Load("effect_ray_wide_1_0");
+     
+     
+     AppShellSetImageFileScale(2);
+     mChaosEgg2X.Load("gi_chaos_egg_mockup_2");
+     mRay[1].Load("effect_ray_wide_2_0");
+     
+     
+     AppShellSetImageFileScale(3);
+     mChaosEgg3X.Load("gi_chaos_egg_mockup_3");
+     mRay[2].Load("effect_ray_wide_3_0");
+     
+     
+     AppShellSetImageFileScale(4);
+     mChaosEgg4X.Load("gi_chaos_egg_mockup_4");
+     mRay[3].Load("effect_ray_wide_4_0");
+     
+     
+     mSoundOne[0].Load("burn_stinger.caf", 1);
+     mSoundOne[1].Load("drilling.caf", 1);
+     mSoundOne[2].Load("magic_woosh.caf", 1);
+     mSoundOne[3].Load("powerup_shuffle.caf", 1);
+     mSoundOne[4].Load("rock_thud_1.caf", 1);
+     mSoundOne[5].Load("relic_discover.caf", 1);
+     
+     
+     mSoundMulti[0].Load("charge_up_laser_flanger.caf", 5);
+     mSoundMulti[1].Load("charge_up_laser_cancel.caf", 5);
+     mSoundMulti[2].Load("rock_break_1.caf", 5);
+     mSoundMulti[3].Load("burn_stinger.caf", 5);
+     mSoundMulti[4].Load("timer_tick.caf", 5);
+     mSoundMulti[5].Load("timer_tock.caf", 5);
+     */
     
     
     gFormationCollection.Load();
@@ -198,32 +203,32 @@ void GFXApp::LoadComplete() {
     //music_play("song2.mp3", true);
     
     /*
-    if (mWorldScene == NULL) {
-        mWorldScene = new WorldConfigScene();
-        mWindowTools.AddChild(mWorldScene);
-        mWorldScene->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
-    }
-    */
+     if (mWorldScene == NULL) {
+     mWorldScene = new WorldConfigScene();
+     mWindowTools.AddChild(mWorldScene);
+     mWorldScene->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+     }
+     */
     
     
     /*
-    if (mCameraMenu == NULL) {
-        mCameraMenu = new CameraMenu(&mCamera);
-        mWindowTools.AddChild(mCameraMenu);
-        mCameraMenu->SetFrame(30.0f, gDeviceHeight - 90.0f, 260.0f, 240.0f);
-        mCameraMenu->Collapse();
-    }
-    */
+     if (mCameraMenu == NULL) {
+     mCameraMenu = new CameraMenu(&mCamera);
+     mWindowTools.AddChild(mCameraMenu);
+     mCameraMenu->SetFrame(30.0f, gDeviceHeight - 90.0f, 260.0f, 240.0f);
+     mCameraMenu->Collapse();
+     }
+     */
     
     
     
     /*
-    if (mLevelSelect == NULL) {
-        mLevelSelect = new LevelSelectorScreen();
-        mLevelSelect->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
-        mWindowMain.AddChild(mLevelSelect);
-    }
-    */
+     if (mLevelSelect == NULL) {
+     mLevelSelect = new LevelSelectorScreen();
+     mLevelSelect->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+     mWindowMain.AddChild(mLevelSelect);
+     }
+     */
     
     //
     //
@@ -233,55 +238,55 @@ void GFXApp::LoadComplete() {
     
     
     if (mGameContainer == NULL) {
-        mGameContainer = new GameContainer();
-        mWindowMain.AddChild(mGameContainer);
         
 #ifdef EDITOR_MODE
-        mEditor = new GameEditor(mGameContainer->mGame);
-        mWindowTools.AddChild(mEditor);
+        EditorTestSwitchToEditor();
+#else
+        mGameContainer = new GameContainer();
+        mWindowMain.AddChild(mGameContainer);
 #endif
         
     }
     
     /*
-    if (mSoundMenu == NULL) {
-        mSoundMenu = new SoundConfigMenu();
-        mSoundMenu->SetFrame(gSafeAreaInsetLeft + 20.0f, gSafeAreaInsetTop + 20.0f, 450.0f, gDeviceHeight * 0.8f);
-        mWindowTools.AddChild(mSoundMenu);
-    }
-    */
+     if (mSoundMenu == NULL) {
+     mSoundMenu = new SoundConfigMenu();
+     mSoundMenu->SetFrame(gSafeAreaInsetLeft + 20.0f, gSafeAreaInsetTop + 20.0f, 450.0f, gDeviceHeight * 0.8f);
+     mWindowTools.AddChild(mSoundMenu);
+     }
+     */
     
     
     /*
-    if (mScreenTool == NULL) {
-        mScreenTool = new Util_ScreenFrame();
-        mScreenTool->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
-        mWindowTools.AddChild(mScreenTool);
-    }
-    */
+     if (mScreenTool == NULL) {
+     mScreenTool = new Util_ScreenFrame();
+     mScreenTool->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+     mWindowTools.AddChild(mScreenTool);
+     }
+     */
     
     
     //
     /*
-    if (mLightScene == NULL) {
-        mLightScene = new LightConfigurationScene();
-        mWindowTools.AddChild(mLightScene);
-    }
-    */
+     if (mLightScene == NULL) {
+     mLightScene = new LightConfigurationScene();
+     mWindowTools.AddChild(mLightScene);
+     }
+     */
     
     
     /*
-    float aAngle = 0.0f;
-    for (float aX=0; aX < gDeviceWidth;aX += 40.0f){
-        for (float aY=0; aY < gDeviceHeight;aY += 40.0f){
-            SpamDart *aDart = new SpamDart();
-            aDart->mX = aX;
-            aDart->mY = aY;
-            aDart->mScale = 10.0f;
-            mDartList.Add(aDart);
-        }
-    }
-    */
+     float aAngle = 0.0f;
+     for (float aX=0; aX < gDeviceWidth;aX += 40.0f){
+     for (float aY=0; aY < gDeviceHeight;aY += 40.0f){
+     SpamDart *aDart = new SpamDart();
+     aDart->mX = aX;
+     aDart->mY = aY;
+     aDart->mScale = 10.0f;
+     mDartList.Add(aDart);
+     }
+     }
+     */
 }
 
 void GFXApp::Update() {
@@ -291,7 +296,24 @@ void GFXApp::Update() {
             if (mLoadGame == 0 && mGameContainer != NULL) {
                 
 #ifdef EDITOR_MODE
+                
+                
+                //mEditorSwitchType = 0;
+                //mEditorSwitchTimer = 0;
+                
+                if (mEditorSwitchType == 0) {
+                    mEditor = new GameEditor(mGameContainer->mGame);
+                    mWindowTools.AddChild(mEditor);
+                    mEditor->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+                } else {
+                    mGameContainer->mGame->LoadEditorTest();
+                    
+                    mGameContainer->OpenEditorTestMenus();
+                    
+                }
+                
                 printf("Preventing Load, Editor Mode...\n");
+                
 #else
                 Log("Loading Game...\n");
                 mGameContainer->mGame->Load();
@@ -300,6 +322,10 @@ void GFXApp::Update() {
             }
         }
     }
+    
+    
+    
+    
     
     
     mCamera.mRotationPrimary += 0.05f;
@@ -413,12 +439,12 @@ void GFXApp::Draw3D() {
     Graphics::PipelineStateSetSimpleModelIndexedNoBlending();
     
     if (mRocket.mBuffer != NULL && mRocket.mBuffer->mBindIndex != -1) {
-    Graphics::ArrayBufferData(mRocket.mBuffer, 0);
-    Graphics::ArrayBufferPositions(NULL, 0);
-    Graphics::ArrayBufferTextureCoords(NULL, sizeof(float) * 3);
-    Graphics::TextureBind(mRocketMap.mTexture);
-    Graphics::UniformBind();
-    Graphics::DrawTrianglesIndexed(mRocket.mIndex, mRocket.mIndexCount);
+        Graphics::ArrayBufferData(mRocket.mBuffer, 0);
+        Graphics::ArrayBufferPositions(NULL, 0);
+        Graphics::ArrayBufferTextureCoords(NULL, sizeof(float) * 3);
+        Graphics::TextureBind(mRocketMap.mTexture);
+        Graphics::UniformBind();
+        Graphics::DrawTrianglesIndexed(mRocket.mIndex, mRocket.mIndexCount);
     }
     
     //Graphics::DrawModelIndexed(mRocket.mXYZ, mRocket.mXYZCount, mRocket.mUVW, mRocket.mUVWCount, 0, 0, mRocket.mIndex, mRocket.mIndexCount, mRocketMap.mTexture);
@@ -431,19 +457,19 @@ void GFXApp::Draw3D() {
     
     
     /*
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mRocket.mBufferIndex);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, mRocket.mIndexCount * sizeof(GFX_MODEL_INDEX_GL_TYPE), &(mRocket.mIndex), GL_STATIC_DRAW);
-    
-    Graphics::ArrayBufferData(mRocket.mBufferVertex, mRocket.mBufferVertexOffset);
-    Graphics::ArrayBufferPositions(-1, 0);
-    Graphics::ArrayBufferTextureCoords(-1, sizeof(float) * 3);
-    Graphics::TextureBind(mRocketMap.mTexture);
-    Graphics::UniformBind();
-    
-    
-    glDrawElements(GL_TRIANGLES, 00, GFX_MODEL_INDEX_GL_TYPE, 0);
+     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mRocket.mBufferIndex);
+     glBufferData(GL_ELEMENT_ARRAY_BUFFER, mRocket.mIndexCount * sizeof(GFX_MODEL_INDEX_GL_TYPE), &(mRocket.mIndex), GL_STATIC_DRAW);
      
-    */
+     Graphics::ArrayBufferData(mRocket.mBufferVertex, mRocket.mBufferVertexOffset);
+     Graphics::ArrayBufferPositions(-1, 0);
+     Graphics::ArrayBufferTextureCoords(-1, sizeof(float) * 3);
+     Graphics::TextureBind(mRocketMap.mTexture);
+     Graphics::UniformBind();
+     
+     
+     glDrawElements(GL_TRIANGLES, 00, GFX_MODEL_INDEX_GL_TYPE, 0);
+     
+     */
     
     //mBufferSlotIndex
     
@@ -475,12 +501,12 @@ void GFXApp::Draw3D() {
     Graphics::MatrixModelViewSet(aModelView);
     
     if (mPalmTrunk.mBuffer != NULL && mPalmTrunk.mBuffer->mBindIndex != -1) {
-    Graphics::ArrayBufferData(mPalmTrunk.mBuffer, 0);
-    Graphics::ArrayBufferPositions(NULL, 0);
-    Graphics::ArrayBufferTextureCoords(NULL, sizeof(float) * 3);
-    Graphics::TextureBind(mPalmTrunkMap.mTexture);
-    Graphics::UniformBind();
-    Graphics::DrawTrianglesIndexed(mPalmTrunk.mIndex, mPalmTrunk.mIndexCount);
+        Graphics::ArrayBufferData(mPalmTrunk.mBuffer, 0);
+        Graphics::ArrayBufferPositions(NULL, 0);
+        Graphics::ArrayBufferTextureCoords(NULL, sizeof(float) * 3);
+        Graphics::TextureBind(mPalmTrunkMap.mTexture);
+        Graphics::UniformBind();
+        Graphics::DrawTrianglesIndexed(mPalmTrunk.mIndex, mPalmTrunk.mIndexCount);
     }
     
     
@@ -488,41 +514,41 @@ void GFXApp::Draw3D() {
     
     Graphics::PipelineStateSetModelIndexedLightedAmbientNoBlending();
     //Graphics::PipelineStateSetModelIndexedAlphaBlending();
-        
-        if (mMonolith.mBuffer != NULL && mMonolith.mBuffer->mBindIndex != -1) {
-    Graphics::ArrayBufferData(mMonolith.mBuffer, 0);
-    Graphics::ArrayBufferPositions(NULL, 0);
-    Graphics::ArrayBufferTextureCoords(NULL, sizeof(float) * 3);
-    Graphics::ArrayBufferNormals(NULL, sizeof(float) * 6);
-    Graphics::TextureBind(mMonolithMap.mTexture);
-    Graphics::UniformBind(&mUniAmb);
-    Graphics::DrawTrianglesIndexed(mMonolith.mIndex, mMonolith.mIndexCount);
-        }
     
-    
-
     if (mMonolith.mBuffer != NULL && mMonolith.mBuffer->mBindIndex != -1) {
-    Graphics::PipelineStateSetModelIndexedLightedDiffuseAlphaBlending();
-    Graphics::ArrayBufferData(mMonolith.mBuffer, 0);
-    Graphics::ArrayBufferPositions(NULL, 0);
-    Graphics::ArrayBufferTextureCoords(NULL, sizeof(float) * 3);
-    Graphics::ArrayBufferNormals(NULL, sizeof(float) * 6);
-    Graphics::TextureBind(mMonolithMap.mTexture);
-    Graphics::UniformBind(&mUniDiff);
-    Graphics::DrawTrianglesIndexed(mMonolith.mIndex, mMonolith.mIndexCount);
+        Graphics::ArrayBufferData(mMonolith.mBuffer, 0);
+        Graphics::ArrayBufferPositions(NULL, 0);
+        Graphics::ArrayBufferTextureCoords(NULL, sizeof(float) * 3);
+        Graphics::ArrayBufferNormals(NULL, sizeof(float) * 6);
+        Graphics::TextureBind(mMonolithMap.mTexture);
+        Graphics::UniformBind(&mUniAmb);
+        Graphics::DrawTrianglesIndexed(mMonolith.mIndex, mMonolith.mIndexCount);
     }
     
     
     
     if (mMonolith.mBuffer != NULL && mMonolith.mBuffer->mBindIndex != -1) {
-    Graphics::PipelineStateSetModelIndexedLightedPhongAlphaBlending();
-    Graphics::ArrayBufferData(mMonolith.mBuffer, 0);
-    Graphics::ArrayBufferPositions(NULL, 0);
-    Graphics::ArrayBufferTextureCoords(NULL, sizeof(float) * 3);
-    Graphics::ArrayBufferNormals(NULL, sizeof(float) * 6);
-    Graphics::TextureBind(mMonolithMap.mTexture);
-    Graphics::UniformBind(&mUniPhong);
-    Graphics::DrawTrianglesIndexed(mMonolith.mIndex, mMonolith.mIndexCount);
+        Graphics::PipelineStateSetModelIndexedLightedDiffuseAlphaBlending();
+        Graphics::ArrayBufferData(mMonolith.mBuffer, 0);
+        Graphics::ArrayBufferPositions(NULL, 0);
+        Graphics::ArrayBufferTextureCoords(NULL, sizeof(float) * 3);
+        Graphics::ArrayBufferNormals(NULL, sizeof(float) * 6);
+        Graphics::TextureBind(mMonolithMap.mTexture);
+        Graphics::UniformBind(&mUniDiff);
+        Graphics::DrawTrianglesIndexed(mMonolith.mIndex, mMonolith.mIndexCount);
+    }
+    
+    
+    
+    if (mMonolith.mBuffer != NULL && mMonolith.mBuffer->mBindIndex != -1) {
+        Graphics::PipelineStateSetModelIndexedLightedPhongAlphaBlending();
+        Graphics::ArrayBufferData(mMonolith.mBuffer, 0);
+        Graphics::ArrayBufferPositions(NULL, 0);
+        Graphics::ArrayBufferTextureCoords(NULL, sizeof(float) * 3);
+        Graphics::ArrayBufferNormals(NULL, sizeof(float) * 6);
+        Graphics::TextureBind(mMonolithMap.mTexture);
+        Graphics::UniformBind(&mUniPhong);
+        Graphics::DrawTrianglesIndexed(mMonolith.mIndex, mMonolith.mIndexCount);
     }
     
     
@@ -624,7 +650,7 @@ void GFXApp::Draw2D() {
 
 void GFXApp::Draw() {
     
-
+    
     if (mIsLoadingComplete) {
         Graphics::RenderPassBegin(GFX_RENDER_PASS_3D_MAIN,
                                   true, //Clear Color
@@ -637,13 +663,13 @@ void GFXApp::Draw() {
         if (mWorldScene != NULL) { mWorldScene->Draw3D(); }
         
         /*
-        Draw3D();
-        if (gRand.Get(14) == 10) {
-            for (int i=0;i<60;i++) {
-                Draw3D();
-            }
-        }
-        */
+         Draw3D();
+         if (gRand.Get(14) == 10) {
+         for (int i=0;i<60;i++) {
+         Draw3D();
+         }
+         }
+         */
         
         
         Graphics::RenderPassBegin(GFX_RENDER_PASS_2D_MAIN,
@@ -651,15 +677,15 @@ void GFXApp::Draw() {
                                   false); //Clear Depth
         
         /*
-        
-        Draw2D();
-        if (gRand.Get(14) == 10) {
-            for (int i=0;i<60;i++) {
-                Draw2D();
-            }
-        }
-        
-        */
+         
+         Draw2D();
+         if (gRand.Get(14) == 10) {
+         for (int i=0;i<60;i++) {
+         Draw2D();
+         }
+         }
+         
+         */
         
         
         Graphics::PipelineStateSetSpriteAlphaBlending();
@@ -672,7 +698,9 @@ void GFXApp::SetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
         mGameContainer->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
         
 #ifdef EDITOR_MODE
-        mEditor->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+        if (mEditor != NULL) {
+            mEditor->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+        }
 #endif
         
         
@@ -798,7 +826,9 @@ void GFXApp::SetDeviceSize(int pWidth, int pHeight) {
     if (mGameContainer != NULL) {
         mGameContainer->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
 #ifdef EDITOR_MODE
-        mEditor->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+        if (mEditor != NULL) {
+            mEditor->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+        }
 #endif
     }
     
@@ -817,3 +847,80 @@ void GFXApp::SetDeviceSize(int pWidth, int pHeight) {
     
     
 }
+
+
+#ifdef EDITOR_MODE
+
+void GFXApp::EditorTestSwitchToGame() {
+    
+    float aAspectRatio = 768.0f / 1024.0f;
+    float aPadding = 5.0f;
+    float aVirtualHeight = round(gDeviceHeight - (aPadding * 2.0f));
+    float aVirtualWidth = round(gDeviceHeight * aAspectRatio);
+    float aVirtualX = round(gDeviceWidth / 2.0f - (aVirtualWidth / 2.0f));
+    float aVirtualY = aPadding;
+    
+    //TODO:
+    AppShellSetVirtualFrame(aVirtualX, aVirtualY, aVirtualWidth, aVirtualHeight);
+    
+    
+    mEditorSwitchType = 1;
+    
+    if (mEditor != NULL) {
+        mEditor->Kill();
+        mEditor = NULL;
+    }
+    if (mGameContainer != NULL) {
+        mGameContainer->Kill();
+        mGameContainer = NULL;
+    }
+    
+    
+    mGameContainer = new GameContainer();
+    mGameContainer->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
+    mWindowMain.AddChild(mGameContainer);
+    
+    mLoadGame = 4;
+    
+}
+
+void GFXApp::EditorTestSwitchToEditor() {
+    
+    
+    float aAspectRatio = 768.0f / 1024.0f;
+    float aVirtualHeight = round(gDeviceHeight * 0.75f);
+    float aVirtualWidth = round(aVirtualHeight * aAspectRatio);
+    float aVirtualX = round(gDeviceWidth / 2.0f - (aVirtualWidth / 2.0f));
+    float aVirtualY = gDeviceHeight - (5.0f + aVirtualHeight);
+    
+    
+    
+    //TODO:
+    AppShellSetVirtualFrame(aVirtualX, aVirtualY, aVirtualWidth, aVirtualHeight);
+    
+    
+    
+    
+    mEditorSwitchType = 0;
+    
+    if (mEditor != NULL) {
+        mEditor->Kill();
+        mEditor = NULL;
+    }
+    if (mGameContainer != NULL) {
+        mGameContainer->Kill();
+        mGameContainer = NULL;
+    }
+    
+    
+    mGameContainer = new GameContainer();
+    mGameContainer->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
+    mWindowMain.AddChild(mGameContainer);
+    
+    
+    mLoadGame = 4;
+    
+}
+
+#endif
+

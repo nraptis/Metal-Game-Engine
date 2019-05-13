@@ -104,6 +104,12 @@ GameEditor::~GameEditor() {
     if (gEditor == this) {
         gEditor = NULL;
     }
+    
+    //LevelSection                                mEditorSection;
+    
+    //LevelWave                                   mEditorWave;
+    
+    
 }
 
 void GameEditor::Layout() {
@@ -429,6 +435,13 @@ void GameEditor::KeyDown(int pKey) {
     if (pKey == __KEY__7) { mExportIndex = 7; SaveConfig(); }
     if (pKey == __KEY__8) { mExportIndex = 8; SaveConfig(); }
     if (pKey == __KEY__9) { mExportIndex = 9; SaveConfig(); }
+    
+    
+    if (pKey == __KEY__ENTER) {
+        if (aShift == false && aCtrl == true && aAlt == false) {
+            Test();
+        }
+    }
     
     if (pKey == __KEY__E) {
         if (aShift == false && aCtrl == false && aAlt == false) {
@@ -1204,6 +1217,21 @@ void GameEditor::OpenMotionMenu() {
     }
 }
 
+void GameEditor::Test() {
+    Autosave();
+    
+    FString aTestPath = gDirDocuments + FString("editor_test_section.json");
+    Save(aTestPath.c());
+    
+    
+#ifdef EDITOR_MODE
+    gApp->EditorTestSwitchToGame();
+    
+#endif
+
+    
+    
+}
 
 void GameEditor::Clear() {
     FString aRecoverPath = gDirDocuments + FString("clear_backup.json");

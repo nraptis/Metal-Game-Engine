@@ -18,17 +18,15 @@
 #include "Transform2D.hpp"
 #include "Transform3D.hpp"
 
-
 #define GAME_OBJECT_TYPE_UNKNOWN -1
 #define GAME_OBJECT_TYPE_BALLOON 0
 #define GAME_OBJECT_TYPE_BRICKHEAD 1
 
 #define GAME_OBJECT_TYPE_DART 1000
 
-
-
-
 class LevelWave;
+class LevelWaveSpawn;
+class LevelPermSpawn;
 class GameObject : public FObject {
 public:
     GameObject();
@@ -92,6 +90,11 @@ public:
     Transform3D                             mTransform3D;
     
     int                                     mGameObjectType;
+    
+    
+    LevelWaveSpawn                          *mWaveSpawn;
+    LevelPermSpawn                          *mPermSpawn;
+    
     
 };
 
