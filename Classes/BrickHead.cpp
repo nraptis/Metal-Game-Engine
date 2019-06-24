@@ -17,13 +17,16 @@ BrickHead::BrickHead() {
     mSpinSpeed = gRand.GetFloat(0.25f, 0.45f);
     if (gRand.GetBool()) mSpinSpeed = -mSpinSpeed;
     
-    mModel = &gApp->mMonolith;
-    mSprite = &gApp->mMonolithMap;
+    mModel = &gApp->mBrickhead;
+    mSprite = &gApp->mBrickheadMap;
     
-    mTransform.mScaleZ = 0.5f;
-    mTransform.mOffsetY = 33.0f;
+    mAccessoryModel = &gApp->mBrickheadCage;
+    mAccessorySprite = &gApp->mBrickheadCageMap;
     
-    mUniform = &(gGame->mRenderer->mUniformPhong);
+    //mTransform.mScaleZ = 0.5f;
+    //mTransform.mOffsetY = 33.0f;
+    
+    mUniform = &(gGame->mRenderer->mUniformPhongBalloon);
     
     mVelX = 0.0f;
     mVelY = 0.0f;
@@ -58,6 +61,88 @@ void BrickHead::Draw3D() {
     //((FUniformsLightPhong *)mUniform)->mLight.mSpecularIntensity = 1.0f;
     
     GameObject::Draw3D();
+    
+    
+    //mModel = &gApp->mBrickhead;
+    //mSprite = &gApp->mBrickheadMap;
+    
+    // = &gApp->mBrickheadCage;
+    // = &gApp->mBrickheadCageMap;
+    
+    if (mAccessoryModel != NULL && mAccessorySprite != NULL) {
+        
+        if (mUniform != NULL) {
+            /*
+            gGame->Convert2DTransformTo3D(&mTransform, &mTransform3D);
+            
+            mModelView.Reset();
+            
+            //We start by translation...?
+            
+            mModelView.Translate(mTransform3D.mX, mTransform3D.mY, mTransform3D.mZ);
+            
+            //All of our models are exported with X 90 degrees wrong...
+            mModelView.RotateX(90.0f);
+            
+            if (mTransform3D.mRotationX != 0.0f) {
+                mModelView.RotateX(mTransform3D.mRotationX);
+            }
+            
+            if (mTransform3D.mRotationZ != 0.0f) {
+                mModelView.RotateZ(mTransform3D.mRotationZ);
+            }
+            
+            //Now we do a 2-D rotation...
+            if (mTransform3D.mRotation2D != 0.0f) {
+                mModelView.RotateY(mTransform3D.mRotation2D);
+            }
+            
+            //Now we spin around the Y axis...
+            if (mTransform3D.mSpin != 0.0f) {
+                mModelView.RotateZ(mTransform3D.mSpin);
+            }
+            
+            //Now we scale down...
+            mModelView.Scale(mTransform3D.mScaleX * mTransform3D.mScale, mTransform3D.mScaleY * mTransform3D.mScale, mTransform3D.mScaleZ * mTransform3D.mScale);
+            
+            mNormal.SetNormalMatrix(mModelView);
+            */
+            
+            //Assign the model view to the uniform...
+            mUniform->mModelView.Set(mModelView);
+            
+            if (mUniform->GetType() == UNIFORM_TYPE_LIGHT_DIFFUSE) {
+                FUniformsLightDiffuse *aUniform = (FUniformsLightDiffuse *)(mUniform);
+                aUniform->mNormal.Set(mNormal);
+            }
+            
+            if (mUniform->GetType() == UNIFORM_TYPE_LIGHT_PHONG) {
+                FUniformsLightPhong *aUniform = (FUniformsLightPhong *)(mUniform);
+                aUniform->mNormal.Set(mNormal);
+            }
+            
+            if (mUniform->GetType() == UNIFORM_TYPE_LIGHT_SIMPLE_SPOTLIGHT) {
+                FUniformsLightSimpleSpotlight *aUniform = (FUniformsLightSimpleSpotlight *)(mUniform);
+                aUniform->mNormal.Set(mNormal);
+            }
+            
+            
+            //aNormal.SetNormalMatrix(aModelView);
+            
+            
+            mUniform->mColor.mRed = mColor.mRed;
+            mUniform->mColor.mGreen = mColor.mGreen;
+            mUniform->mColor.mBlue = mColor.mBlue;
+            mUniform->mColor.mAlpha = mColor.mAlpha;
+            
+            //Then bind the uniform...
+            Graphics::UniformBind(mUniform);
+        }
+        
+        Graphics::DrawTrianglesIndexedWithPackedBuffers(mAccessoryModel->mBuffer, 0, mAccessoryModel->mIndex, mAccessoryModel->mIndexCount, mAccessorySprite->mTexture);
+        
+    }
+    
 }
 
 

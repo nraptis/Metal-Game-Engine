@@ -9,6 +9,7 @@
 #include "GameContainer.hpp"
 #include "FAnimation.hpp"
 #include "Game.hpp"
+#include "GameEditor.hpp"
 
 GameContainer *gGameContainer = NULL;
 
@@ -18,6 +19,8 @@ GameContainer::GameContainer() {
     
     mName = "{{Game Container}}";
     
+    
+    mGameTestOverlay = NULL;
     
     mEditorMenu = NULL;
     mEditorMenuUtils = NULL;
@@ -41,6 +44,12 @@ GameContainer::GameContainer() {
     
     mGame = new Game();
     mContainer->AddChild(mGame);
+    
+    
+    
+    
+    
+    
     
 }
 
@@ -89,12 +98,21 @@ void GameContainer::Layout() {
         float aGameY = round(mContainer->mHeight2 - mGame->mHeight2);
         mGame->SetX(aGameX);
         mGame->SetY(aGameY);
-        
-        
-        
-        
-        
     }
+    
+    
+    //TODO: When to show this..?
+    
+
+    
+    
+    if (mGameTestOverlay != NULL) {
+        
+        if (mGame != NULL) {
+            mGameTestOverlay->SetFrame(0.0f, 0.0f, mGame->mWidth, mGame->mHeight);
+        }
+    }
+    
 }
 
 void GameContainer::Update() {
@@ -171,11 +189,23 @@ void GameContainer::Notify(void *pSender, const char *pNotification) {
     
 }
 
+//After the game + editor are ready to go.
+void GameContainer::Realize() {
+#ifdef EDITOR_MODE
+    if (mGameTestOverlay == NULL && gEditor == NULL) {
+        mGameTestOverlay = new GameTestOverlay();
+        mGameTestOverlay->mConsumesTouches = false;
+        mGame->AddChild(mGameTestOverlay);
+        mWindow->RegisterFrameDidUpdate(this);
+    }
+#endif
+    
+}
+
 void GameContainer::OpenEditorTestMenus() {
     mEditorMenu = new EditorMenuGameTest();
     gApp->mWindowTools.AddChild(mEditorMenu);
     mEditorMenu->SetFrame(gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 20.0f, 400.0f, 680.0f);
-    
     
     mEditorMenuUtils = new EditorMenuGameTestUtils();
     gApp->mWindowTools.AddChild(mEditorMenuUtils);

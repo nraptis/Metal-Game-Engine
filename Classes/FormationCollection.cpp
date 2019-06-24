@@ -41,7 +41,13 @@ void FormationCollection::Load() {
     FreeList(LevelFormation, mFormationList);
     mMap.RemoveAll();
     
-    //Rect Grid Types...
+    //Dummies
+    
+    mNameList.Add(new FString("f_grid_rect_7x7_44spc_solid__nodes_cfgrbrrrbrbrrrrrbrrrrrrrrrrrrrrrrrrrrrbrrrrrbrbbrbbr_allg.json"));
+    
+    
+    
+    //[All Balloon] Rect Grid Types...
     mNameList.Add(new FString("f_grid_rect_1x4_46spc_solid__nodes_cfg4xb_allg.json"));
     mNameList.Add(new FString("f_grid_rect_1x5_46spc_solid__nodes_cfg5xb_allg.json"));
     mNameList.Add(new FString("f_grid_rect_1x6_46spc_solid__nodes_cfg6xb_allg.json"));
@@ -90,7 +96,7 @@ void FormationCollection::Load() {
     mNameList.Add(new FString("f_grid_circ_74rngs_1rngc_10radc_91ful__nodes_cfg26xb10on16off.json"));
     mNameList.Add(new FString("f_grid_circ_4x4_44spc_75ful__nodes_cfg28xb12on16off.json"));
     
-    //Triangles...
+    //[All Balloon] Triangles...
     mNameList.Add(new FString("f_grid_tri_ngon1_3sid_91rngs_1rngc_42pnts_180roff_90ful__nodes_cfg9xb_allg.json"));
     mNameList.Add(new FString("f_grid_tri_ngon1_3sid_54rngs_1rngc_30pnts_86ful__nodes_cfg6xb_allg.json"));
     mNameList.Add(new FString("f_grid_tri_ngon1_3sid_54rngs_1rngc_30pnts_180roff_86ful__nodes_cfg6xb_allg.json"));
@@ -100,18 +106,18 @@ void FormationCollection::Load() {
     mNameList.Add(new FString("f_grid_tri_ngon1_3sid_71rngs_2rngc_44pnts_180roff_68ful__nodes_cfg15xb_allg.json"));
     mNameList.Add(new FString("f_grid_tri_ngon1_3sid_91rngs_1rngc_42pnts_90ful__nodes_cfg9xb_allg.json"));
     
-    //Large Stars
+    //[All Balloon] Large Stars
     mNameList.Add(new FString("f_grid_large_star_01.json"));
     mNameList.Add(new FString("f_grid_large_star_02.json"));
     mNameList.Add(new FString("f_grid_large_star_03.json"));
     
-    //Oddball Stars
+    //[All Balloon] Oddball Stars
     mNameList.Add(new FString("f_grid_star_72radi_34rado_0pntc_4armc_89ful__nodes_cfg8xb_allg.json"));
     mNameList.Add(new FString("f_grid_star_80radi_40rado_0pntc_5armc_35roff_91ful__nodes_cfg10xb_allg.json"));
     mNameList.Add(new FString("f_grid_star_80radi_40rado_0pntc_5armc_91ful__nodes_cfg10xb_allg.json"));
     mNameList.Add(new FString("f_grid_star_120radi_60rado_1pntc_5armc_23roff_29ful__nodes_cfg16xb6on10off.json"));
     
-    //Pentagons
+    //[All Balloon] Pentagons
     mNameList.Add(new FString("f_grid_penta_ngon1_5sid_45rngs_1rngc_31pnts_35roff_83ful__nodes_cfg5xb_allg.json"));
     mNameList.Add(new FString("f_grid_penta_ngon1_5sid_45rngs_1rngc_31pnts_solid__nodes_cfg6xb_allg.json"));
     mNameList.Add(new FString("f_grid_penta_ngon1_5sid_45rngs_2rngc_31pnts_35roff_94ful__nodes_cfg15xb_allg.json"));
@@ -120,7 +126,7 @@ void FormationCollection::Load() {
     mNameList.Add(new FString("f_grid_penta_ngon1_5sid_48rngs_3rngc_39pnts_35roff_solid__nodes_cfg31xb_allg.json"));
     mNameList.Add(new FString("f_grid_penta_ngon1_5sid_48rngs_3rngc_39pnts_solid__nodes_cfg31xb_allg.json"));
     
-    //Hexagons
+    //[All Balloon] Hexagons
     mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_1rngc_30pnts_86ful__nodes_cfg6xb_allg.json"));
     mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_1rngc_30pnts_solid__nodes_cfg7xb_allg.json"));
     mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_1rngc_36pnts_30roff_86ful__nodes_cfg6xb_allg.json"));
@@ -145,7 +151,7 @@ void FormationCollection::Load() {
     mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_3rngc_66pnts_95ful__nodes_cfg18xb_allg.json"));
     mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_3rngc_66pnts_solid__nodes_cfg19xb_allg.json"));
     
-    //Circle tracers...
+    //[All Balloon] Circle tracers...
     mNameList.Add(new FString("f_tr_circ_80sz_cfg4xb_spm.json"));
     mNameList.Add(new FString("f_tr_circ_80sz_cfg4xb_spmf.json"));
     mNameList.Add(new FString("f_tr_circ_80sz_cfg4xb_spms.json"));
@@ -181,7 +187,7 @@ void FormationCollection::Load() {
     mNameList.Add(new FString("f_tr_circ_200sz_cfg10xb_sps.json"));
     mNameList.Add(new FString("f_tr_circ_200sz_cfg10xb_spxs.json"));
     
-    //RR Tracers...
+    //[All Balloon] RR Tracers...
     mNameList.Add(new FString("f_tr_rrct_160sz_42cr_cfg2xb_spxs.json"));
     mNameList.Add(new FString("f_tr_rrct_140sz_42cr_cfg2xb_spm.json"));
     mNameList.Add(new FString("f_tr_rrct_140sz_42cr_cfg2xb_spmf.json"));
@@ -237,6 +243,10 @@ void FormationCollection::Load() {
     mNameList.Add(new FString("f_tr_rrct_320sz_90cr_cfg10xb_spms.json"));
     mNameList.Add(new FString("f_tr_rrct_320sz_90cr_cfg10xb_sps.json"));
     mNameList.Add(new FString("f_tr_rrct_320sz_90cr_cfg10xb_spxs.json"));
+    
+    
+    //[Mixed] Circle Tracers
+    mNameList.Add(new FString("f_tr_circ_80sz_cfgrbrb_spm.json"));
     
     EnumList(FString, aString, mNameList) {
         if (Load(aString->c())) {

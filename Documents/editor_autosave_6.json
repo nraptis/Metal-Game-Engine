@@ -24,8 +24,7 @@
 						"slice_list": [
 							{
 								"type": 3,
-								"speed_class": -100,
-								"radius": 14
+								"speed_class": -100
 							}
 						]
 					}

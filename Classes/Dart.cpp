@@ -25,7 +25,10 @@ Dart::Dart() {
     
     mModel = &gApp->mDart;
     mSprite = &gApp->mDartMap;
-    mUniform = &(gGame->mRenderer->mUniformPhong);
+    //mUniform = &(gGame->mRenderer->mUniformPhong);
+    
+    mUniform = &(gGame->mRenderer->mUniformPhongBalloon);
+    
     
     mVelX = 0.0f;
     mVelY = 0.0f;

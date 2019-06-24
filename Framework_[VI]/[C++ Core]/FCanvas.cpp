@@ -905,7 +905,9 @@ FCanvasBucket::~FCanvasBucket() {
     mTableCount = 0;
     mTableSize = 0;
 
-    FreeList(FCanvas, mQueue);
+    // We will assume that something outside
+    // is deleting the canvases for real.
+    mQueue.RemoveAll();
 
     mListHead = 0;
     mListTail = 0;

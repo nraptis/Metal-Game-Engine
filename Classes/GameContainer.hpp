@@ -14,8 +14,12 @@
 //#include "Dart.hpp"
 //#include "Balloon.hpp"
 
+#include "GameTestOverlay.hpp"
+
 #include "EditorMenuGameTestUtils.hpp"
 #include "EditorMenuGameTest.hpp"
+
+
 
 class Game;
 class GameContainer : public FCanvas {
@@ -39,8 +43,12 @@ public:
     
     virtual void                                Notify(void *pSender, const char *pNotification) override;
     
+    //After the game + editor are ready to go.
+    void                                        Realize();
+    
     Game                                        *mGame;
     FCanvas                                     *mContainer;
+    GameTestOverlay                             *mGameTestOverlay;
     
     EditorMenuGameTest                          *mEditorMenu;
     EditorMenuGameTestUtils                     *mEditorMenuUtils;

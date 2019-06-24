@@ -22,12 +22,17 @@ GamePermanentEditor::GamePermanentEditor(GameEditor *pEditor) {
     mGameAreaRight = pEditor->mGameAreaRight;
     mGameAreaBottom = pEditor->mGameAreaBottom;
     mGameAreaLeft = pEditor->mGameAreaLeft;
+    mCenterX = (float)((int)(mGameAreaLeft + (mGameAreaRight - mGameAreaLeft) / 2.0f + 0.5f));
+    mCenterY = (float)((int)(mGameAreaTop + (mGameAreaBottom - mGameAreaTop) / 2.0f + 0.5f));
+    
+    
     
     mOverlay = NULL;
     mMenuAttachment = NULL;
     mMenuSpawnPicker = NULL;
     mMenuPermPicker = NULL;
     mMenuMotion = NULL;
+    mMenuGrid = NULL;
     
     
     mPathSpeedClassIndex = -1;
@@ -65,8 +70,9 @@ GamePermanentEditor::GamePermanentEditor(GameEditor *pEditor) {
     mMenuUtils->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), gSafeAreaInsetTop + 20.0f, 400.0f, 736.0f);
     
     
-    
-
+    mMenuGrid = new EditorMenuFormationGrid(&mGrid);
+    mToolContainer->AddChild(mMenuGrid);
+    mMenuGrid->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f + 60.0f), gSafeAreaInsetTop + 20.0f + 200.0f, 400.0f, 736.0f - 200.0f);
     
     //                   *;
     /*
@@ -87,6 +93,17 @@ GamePermanentEditor::GamePermanentEditor(GameEditor *pEditor) {
     OpenMenuSpawnPicker();
     OpenMenuPermPicker();
     
+
+    mGrid.mCenterX = mCenterX;
+    mGrid.mCenterY = mCenterY;
+    
+    if (gEditor != NULL) {
+        mGrid.mCenterX = gEditor->mCenterH;
+        mGrid.mCenterY = gEditor->mCenterV;
+    }
+    
+    mGrid.BuildGrid();
+    mGrid.mGridEnabled = false;
     
 }
 
@@ -111,6 +128,8 @@ void GamePermanentEditor::Layout() {
 
 void GamePermanentEditor::Update() {
     
+    mGrid.Update();
+    
 }
 
 void GamePermanentEditor::Draw() {
@@ -121,6 +140,10 @@ void GamePermanentEditor::Draw() {
     Graphics::DrawRect(mGameAreaLeft, 0.0f, mGameAreaRight - mGameAreaLeft, mGameAreaTop);
     Graphics::DrawRect(mGameAreaLeft, mGameAreaBottom, mGameAreaRight - mGameAreaLeft, gDeviceHeight - mGameAreaBottom);
     Graphics::DrawRect(mGameAreaLeft + (mGameAreaRight - mGameAreaLeft), 0.0f, gDeviceWidth - (mGameAreaLeft + (mGameAreaRight - mGameAreaLeft)), gDeviceHeight);
+    
+    if (mGrid.mGridEnabled) {
+        mGrid.Draw();
+    }
     
     if (mMarkersDisplay == true) {
         if (gGame) {
@@ -192,13 +215,28 @@ void GamePermanentEditor::TouchMove(float pX, float pY, void *pData) {
     if (mPermMode == PERMANENT_MODE_MOVE) {
         LevelSectionPermanentBlueprint *aPerm = gEditor->PermGet();
         if (mSelectedTouch == pData && aPerm != NULL) {
-            if (mSnapsEnabled && gEditor != NULL) {
-                aPerm->mConstraint.mTypeX = gEditor->ClosestXConstraint(aX);
-                aPerm->mConstraint.mTypeY = gEditor->ClosestYConstraint(aY);
-            } else {
-                aPerm->mEditorX = aX;
-                aPerm->mEditorY = aY;
-            }
+            
+                if (mGrid.mGridEnabled) {
+                    mGrid.GridSnap(&aX, &aY);
+                    aPerm->mEditorX = aX;
+                    aPerm->mEditorY = aY;
+                    aPerm->mConstraint.mTypeX = X_CONSTRAINT_NONE;
+                    aPerm->mConstraint.mTypeY = Y_CONSTRAINT_NONE;
+                } else {
+                    
+                    if (mSnapsEnabled && gEditor != NULL) {
+                        aPerm->mConstraint.mTypeX = gEditor->ClosestXConstraint(aX);
+                        aPerm->mConstraint.mTypeY = gEditor->ClosestYConstraint(aY);
+                    } else {
+                        aPerm->mEditorX = aX;
+                        aPerm->mEditorY = aY;
+                    }
+                    
+                }
+            
+            
+            
+            
             aPerm->ApplyEditorConstraints();
         }
     }
@@ -274,6 +312,10 @@ void GamePermanentEditor::KeyDown(int pKey) {
         if (aShift == false && aCtrl == true && aAlt == false) {
             
         }
+    }
+    
+    if (pKey == __KEY__G) {
+        if (aShift == false && aCtrl == false && aAlt == false) { mGrid.mGridEnabled = !mGrid.mGridEnabled; }
     }
     
     if (pKey == __KEY__M) {

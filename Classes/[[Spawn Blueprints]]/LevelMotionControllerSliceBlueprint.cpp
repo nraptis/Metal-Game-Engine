@@ -23,32 +23,23 @@ LevelMotionControllerSliceBlueprint::~LevelMotionControllerSliceBlueprint() {
 }
 
 void LevelMotionControllerSliceBlueprint::Build(LevelMotionControllerSlice *pSlice) {
-    
     if (pSlice == NULL) { return; }
-    
     pSlice->mSpeedClass = mSpeedClass;
     pSlice->mSpeedNegateAlways = mSpeedNegateAlways;
     pSlice->mSpeedNegateRandomly = mSpeedNegateRandomly;
-    
 }
 
 FJSONNode *LevelMotionControllerSliceBlueprint::Save() {
     FJSONNode *aExport = new FJSONNode();
-    
-    
     if (mType != LEVEL_MOTION_SLICE_TYPE_NONE) { aExport->AddDictionaryInt("type", mType); }
-    
     if (mSpeedClass != SPEED_CLASS_MEDIUM) { aExport->AddDictionaryInt("speed_class", mSpeedClass); }
     if (mSpeedNegateAlways == true) { aExport->AddDictionaryBool("negate", mSpeedNegateAlways); }
     if (mSpeedNegateRandomly == true) { aExport->AddDictionaryBool("negate_rand", mSpeedNegateRandomly); }
-    
     return aExport;
 }
 
 void LevelMotionControllerSliceBlueprint::Load(FJSONNode *pNode) {
-    
     if (pNode == NULL) { return; }
-    
     mSpeedClass = pNode->GetInt("speed_class", SPEED_CLASS_MEDIUM);
     mSpeedNegateAlways = pNode->GetBool("negate", false);
     mSpeedNegateRandomly = pNode->GetBool("negate_rand", false);
@@ -58,10 +49,10 @@ void LevelMotionControllerSliceBlueprint::Load(FJSONNode *pNode) {
 
 LevelMotionControllerSliceNegateBlueprint::LevelMotionControllerSliceNegateBlueprint() {
     mType = LEVEL_MOTION_SLICE_TYPE_NEGATE;
-    mNegateHAlways = false;
-    mNegateHRandomly = true;
+    mNegateHAlways = true;
+    mNegateHRandomly = false;
     mNegateVAlways = false;
-    mNegateVRandomly = true;
+    mNegateVRandomly = false;
 }
 
 LevelMotionControllerSliceNegateBlueprint::~LevelMotionControllerSliceNegateBlueprint() {
@@ -71,7 +62,6 @@ LevelMotionControllerSliceNegateBlueprint::~LevelMotionControllerSliceNegateBlue
 void LevelMotionControllerSliceNegateBlueprint::Build(LevelMotionControllerSliceNegate *pSlice) {
     if (pSlice == NULL) { return; }
     LevelMotionControllerSliceBlueprint::Build(pSlice);
-    
     pSlice->mNegateHAlways = mNegateHAlways;
     pSlice->mNegateHRandomly = mNegateHRandomly;
     pSlice->mNegateVAlways = mNegateVAlways;
@@ -80,25 +70,20 @@ void LevelMotionControllerSliceNegateBlueprint::Build(LevelMotionControllerSlice
 
 FJSONNode *LevelMotionControllerSliceNegateBlueprint::Save() {
     FJSONNode *aExport = LevelMotionControllerSliceBlueprint::Save();
-
-    if (mNegateHAlways == true) { aExport->AddDictionaryBool("negate_h", mNegateHAlways); }
-    if (mNegateHRandomly == false) { aExport->AddDictionaryBool("negate_h_rand", mNegateHRandomly); }
-    
+    if (mNegateHAlways == false) { aExport->AddDictionaryBool("negate_h", mNegateHAlways); }
+    if (mNegateHRandomly == true) { aExport->AddDictionaryBool("negate_h_rand", mNegateHRandomly); }
     if (mNegateVAlways == true) { aExport->AddDictionaryBool("negate_v", mNegateVAlways); }
-    if (mNegateVRandomly == false) { aExport->AddDictionaryBool("negate_v_rand", mNegateVRandomly); }
-    
+    if (mNegateVRandomly == true) { aExport->AddDictionaryBool("negate_v_rand", mNegateVRandomly); }
     return aExport;
 }
 
 void LevelMotionControllerSliceNegateBlueprint::Load(FJSONNode *pNode) {
     if (pNode == NULL) { return; }
     LevelMotionControllerSliceBlueprint::Load(pNode);
-    
-    mNegateHAlways = pNode->GetBool("negate_h", false);
-    mNegateHRandomly = pNode->GetBool("negate_h_rand", true);
-    
+    mNegateHAlways = pNode->GetBool("negate_h", true);
+    mNegateHRandomly = pNode->GetBool("negate_h_rand", false);
     mNegateVAlways = pNode->GetBool("negate_v", false);
-    mNegateVRandomly = pNode->GetBool("negate_v_rand", true);
+    mNegateVRandomly = pNode->GetBool("negate_v_rand", false);
 }
 
 LevelMotionControllerSliceRotateBlueprint::LevelMotionControllerSliceRotateBlueprint() {
@@ -146,11 +131,9 @@ void LevelMotionControllerSliceRotateBlueprint::ResetPivot() {
 
 LevelMotionControllerSliceOscillateRotationBlueprint::LevelMotionControllerSliceOscillateRotationBlueprint() {
     mType = LEVEL_MOTION_SLICE_TYPE_OSCILLATE_ROTATION;
-    
-    mAngleSpan = 60;
+    mAngleSpan = 90;
     mAngleSpanOffsetStart = 0;
     mAngleSpanOffsetEnd = 0;
-    
     mLinear = false;
     mLinearTimer = 90;
     mLinearTime = 180;
@@ -180,11 +163,9 @@ FJSONNode *LevelMotionControllerSliceOscillateRotationBlueprint::Save() {
     if (mLinear == true) { aExport->AddDictionaryBool("linear", mLinear); }
     if (mLinearTimer != 90) { aExport->AddDictionaryInt("linear_tick", mLinearTimer); }
     if (mLinearTime != 180) { aExport->AddDictionaryInt("linear_time", mLinearTime); }
-    
-    if (mAngleSpan != 60) { aExport->AddDictionaryInt("angle_span", mAngleSpan); }
+    if (mAngleSpan != 90) { aExport->AddDictionaryInt("angle_span", mAngleSpan); }
     if (mAngleSpanOffsetStart != 0) { aExport->AddDictionaryInt("angle_offset_start", mAngleSpanOffsetStart); }
     if (mAngleSpanOffsetEnd != 0) { aExport->AddDictionaryInt("angle_offset_end", mAngleSpanOffsetEnd); }
-    
     if (mPause1 != 0) { aExport->AddDictionaryInt("pause_1", mPause1); }
     if (mPause2 != 0) { aExport->AddDictionaryInt("pause_2", mPause2); }
     return aExport;
@@ -196,11 +177,9 @@ void LevelMotionControllerSliceOscillateRotationBlueprint::Load(FJSONNode *pNode
     mLinear = pNode->GetBool("linear", false);
     mLinearTimer = pNode->GetInt("linear_tick", 90);
     mLinearTime  = pNode->GetInt("linear_time", 180);
-    
-    mAngleSpan = pNode->GetInt("angle_span", 60);
+    mAngleSpan = pNode->GetInt("angle_span", 90);
     mAngleSpanOffsetStart = pNode->GetInt("angle_offset_start", 0);
     mAngleSpanOffsetEnd = pNode->GetInt("angle_offset_end", 0);
-    
     mPause1 = pNode->GetInt("pause_1", 0);
     mPause2 = pNode->GetInt("pause_2", 0);
 }
@@ -312,6 +291,3 @@ void LevelMotionControllerSliceOscillateHorizontalBlueprint::Load(FJSONNode *pNo
     mPause1 = pNode->GetInt("pause_1", 0);
     mPause2 = pNode->GetInt("pause_2", 0);
 }
-
-
-

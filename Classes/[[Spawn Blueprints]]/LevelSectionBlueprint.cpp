@@ -116,9 +116,7 @@ void LevelSectionBlueprint::WaveSelectNext() {
     } else {
         mCurrentWave = (LevelWaveBlueprint *)mWaveList.First();
     }
-    if (mCurrentWave != NULL) {
-        mCurrentWave->Build();
-    }
+    if (mCurrentWave != NULL) { mCurrentWave->Build(); }
 }
 
 void LevelSectionBlueprint::WaveSelectPrev() {
@@ -129,9 +127,7 @@ void LevelSectionBlueprint::WaveSelectPrev() {
     } else {
         mCurrentWave = (LevelWaveBlueprint *)mWaveList.Last();
     }
-    if (mCurrentWave != NULL) {
-        mCurrentWave->Build();
-    }
+    if (mCurrentWave != NULL) { mCurrentWave->Build(); }
 }
 
 void LevelSectionBlueprint::WaveDeselect() {
@@ -151,40 +147,39 @@ void LevelSectionBlueprint::WaveMoveDown() {
 
 void LevelSectionBlueprint::WaveSelect(int pIndex) {
     mCurrentWave = (LevelWaveBlueprint *)mWaveList.Fetch(pIndex);
-    if (mCurrentWave != NULL) {
-        mCurrentWave->Build();
-    }
+    if (mCurrentWave != NULL) { mCurrentWave->Build(); }
 }
 
 int LevelSectionBlueprint::WaveCount(int pIndex) {
     LevelWaveBlueprint *aWave = (LevelWaveBlueprint *)mWaveList.Fetch(pIndex);
-    if (aWave != NULL) {
-        return aWave->mPath.mNodeList.mCount;
-    }
+    if (aWave != NULL) { return aWave->mPath.mNodeList.mCount; }
     return 0;
 }
 
 
 void LevelSectionBlueprint::PermAdd(float pX, float pY) {
     mCurrentPerm = new LevelSectionPermanentBlueprint();
-    
     mCurrentPerm->mEditorX = pX;
     mCurrentPerm->mEditorY = pY;
-    
     if (gPermEditor != NULL) {
-        if (gPermEditor->mSnapsEnabled == true) {
-            mCurrentPerm->mConstraint.mTypeX = gEditor->ClosestXConstraint(pX);
-            mCurrentPerm->mConstraint.mTypeY = gEditor->ClosestYConstraint(pY);
-            //mCurrentPerm->ApplyEditorConstraints();
+        
+        if (gPermEditor->mGrid.mGridEnabled) {
+            float aX = pX;
+            float aY = pY;
+            gPermEditor->mGrid.GridSnap(&aX, &aY);
+            mCurrentPerm->mEditorX = aX;
+            mCurrentPerm->mEditorY = aY;
+            mCurrentPerm->mConstraint.mTypeX = X_CONSTRAINT_NONE;
+            mCurrentPerm->mConstraint.mTypeY = Y_CONSTRAINT_NONE;
+        } else {
+            if (gPermEditor->mSnapsEnabled == true) {
+                mCurrentPerm->mConstraint.mTypeX = gEditor->ClosestXConstraint(pX);
+                mCurrentPerm->mConstraint.mTypeY = gEditor->ClosestYConstraint(pY);
+            }
         }
     }
-    
     mPermList.Add(mCurrentPerm);
-    
-    if (gEditor != NULL) {
-        gEditor->RefreshPlayback();
-    }
-    
+    if (gEditor != NULL) { gEditor->RefreshPlayback(); }
     mCurrentPerm->ApplyEditorConstraints();
 }
 
@@ -301,16 +296,12 @@ void LevelSectionBlueprint::Build(LevelSection *pSection) {
         pSection->AddWave(aWave);
     }
     
-    //TODO:
-    
     for (int i=0;i<mPermList.mCount;i++) {
         LevelSectionPermanentBlueprint *aPermBlueprint = (LevelSectionPermanentBlueprint *)mPermList.mData[i];
         LevelSectionPermanent *aPerm = new LevelSectionPermanent(pSection);
         aPermBlueprint->Build(aPerm);
         pSection->AddPerm(aPerm);
     }
-    
-    
 }
 
 FJSONNode *LevelSectionBlueprint::Save() {

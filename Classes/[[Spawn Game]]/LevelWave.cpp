@@ -28,7 +28,7 @@ LevelWave::LevelWave() {
     
     mSpawnIndex = 0;
     
-    mSpawnSpacing = 90.0f;
+    mSpawnSpacing = 120.0f;
     
     mKillTimer = 8;
 }

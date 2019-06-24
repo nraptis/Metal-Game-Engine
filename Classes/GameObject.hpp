@@ -91,11 +91,8 @@ public:
     
     int                                     mGameObjectType;
     
-    
     LevelWaveSpawn                          *mWaveSpawn;
     LevelPermSpawn                          *mPermSpawn;
-    
-    
 };
 
 #endif /* GameObject_hpp */

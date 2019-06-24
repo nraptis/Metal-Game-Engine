@@ -2,153 +2,49 @@
 	"section": true,
 	"wave_list": [
 		{
-			"spawn_spacing": 300,
+			"spawn_spacing": 320,
+			"max_spawn_size": 164,
 			"path": {
-				"speed_class": 200,
 				"node_list": [
 					{
-						"x_con": 150,
-						"y_con": 300
+						"x_con": 200,
+						"y_con": 800
 					},
 					{
 						"x_con": 500,
-						"y_con": 200
-					},
-					{
-						"x_con": 850,
-						"y_con": 300
-					},
-					{
-						"x_con": 850,
 						"y_con": 800
 					},
 					{
 						"x_con": 150,
 						"y_con": 800
-					},
-					{
-						"x_con": 150,
-						"y_con": 400
 					}
 				]
 			},
 			"spawn": [
 				{
-					"formation": "formation_2count_tracer_3x5_rect_s_stationary"
+					"formation": "f_grid_penta_ngon1_5sid_45rngs_1rngc_31pnts_solid__nodes_cfg6xb_allg.json"
 				},
 				{
-					"formation": "formation_square_4x4_outline_stationary"
+					"formation": "f_grid_penta_ngon1_5sid_45rngs_1rngc_31pnts_solid__nodes_cfg6xb_allg.json"
 				},
-				{}
+				{
+					"formation": "f_grid_penta_ngon1_5sid_45rngs_1rngc_31pnts_solid__nodes_cfg6xb_allg.json"
+				},
+				{
+					"formation": "f_grid_penta_ngon1_5sid_45rngs_1rngc_31pnts_solid__nodes_cfg6xb_allg.json"
+				},
+				{
+					"formation": "f_grid_penta_ngon1_5sid_45rngs_1rngc_31pnts_solid__nodes_cfg6xb_allg.json"
+				}
 			]
 		}
 	],
 	"perm_list": [
 		{
-			"x": 29.638037,
-			"y": 30.889612,
-			"type": 1
-		},
-		{
-			"x": 87.153038,
-			"y": 13.154298,
-			"motion": {
-				"slice_list": [
-					{
-						"type": 1,
-						"speed_class": 300,
-						"negate": true,
-						"pivot_offset_x": 10,
-						"pivot_offset_y": 30
-					}
-				]
-			}
-		},
-		{
-			"x": 41.568336,
-			"y": 30.987698,
-			"motion": {
-				"slice_list": [
-					{
-						"type": 1,
-						"speed_class": -200,
-						"negate": true,
-						"negate_rand": true,
-						"pivot_offset_x": -32,
-						"pivot_offset_y": 32
-					}
-				]
-			},
-			"formation": "formation_tracer_circle_250r_stationary"
-		},
-		{
-			"x": 74.736298,
-			"y": 64.904984,
-			"path": {
-				"speed_class": -300,
-				"node_list": [
-					{
-						"x_con": 700,
-						"y_con": 500
-					},
-					{
-						"x_con": 700,
-						"y_con": 800
-					},
-					{
-						"x_con": 500,
-						"y_con": 800
-					}
-				]
-			},
-			"spawn": [
-				{
-					"motion": {
-						"slice_list": [
-							{
-								"type": 1,
-								"negate_rand": true,
-								"pivot_offset_x": 20,
-								"pivot_offset_y": 20
-							},
-							{
-								"type": 1,
-								"speed_class": 300,
-								"pivot_offset_x": -20,
-								"pivot_offset_y": -20
-							}
-						]
-					}
-				},
-				{
-					"formation": "formation_square_2x2_filled_stationary",
-					"motion": {
-						"slice_list": [
-							{
-								"type": 1,
-								"speed_class": 300,
-								"negate": true
-							}
-						]
-					}
-				}
-			]
-		},
-		{
-			"x": 6.050155,
-			"y": 79.490723,
-			"motion": {
-				"slice_list": [
-					{
-						"type": 1,
-						"speed_class": -100,
-						"negate": true,
-						"pivot_offset_x": 15,
-						"pivot_offset_y": 5
-					}
-				]
-			},
-			"formation": "f_grid_rect_5x5_44spc_64ful__nodes_cfg16xb"
+			"x_con": 500,
+			"y_con": 500,
+			"y_con_offset": -90.000000,
+			"formation": "f_grid_rect_7x7_44spc_solid__nodes_cfgrbrrrbrbrrrrrbrrrrrrrrrrrrrrrrrrrrrbrrrrrbrbbrbbr_allg.json"
 		}
 	]
 }

@@ -23,9 +23,7 @@ public:
     void                            DisposeObject(GameObject *pObject);
     void                            DisposeSection(LevelSection *pLevelSection);
     
-    
     void                            Print(const char *pName);
-    
     
     void                            AddSection(LevelSection *pLevelSection);
     FList                           mSectionList;

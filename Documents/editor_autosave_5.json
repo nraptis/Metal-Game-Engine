@@ -1,38 +1,48 @@
 {
 	"section": true,
-	"wave_list": [],
-	"perm_list": [
+	"wave_list": [
 		{
-			"x": 28.322887,
-			"y": 35.238049,
-			"motion": {
-				"slice_list": [
+			"spawn_spacing": 90,
+			"max_spawn_size": 268,
+			"path": {
+				"node_list": [
 					{
-						"type": 3
+						"x_con": 200,
+						"y_con": 400
+					},
+					{
+						"x_con": 500,
+						"y_con": 400,
+						"decel": 150,
+						"accel": 50,
+						"wait": 300
+					},
+					{
+						"x_con": 500,
+						"y_con": 500,
+						"decel": 50,
+						"accel": 40,
+						"wait": 300
+					},
+					{
+						"x_con": 850,
+						"y_con": 500
 					}
 				]
 			},
-			"formation": "formation_square_2x2_filled_stationary"
-		},
-		{
-			"x": 68.564079,
-			"y": 55.267090,
-			"formation": "f_grid_46rngs_1rngc_6radc_86ful__nodes_cfg6xb"
-		},
-		{
-			"x": 74.424629,
-			"y": 20.069954,
-			"motion": {
-				"slice_list": [
-					{
-						"type": 1,
-						"negate_rand": true,
-						"pivot_offset_x": 20,
-						"pivot_offset_y": 20
+			"spawn": [
+				{
+					"formation": "f_grid_penta_ngon1_5sid_45rngs_2rngc_31pnts_solid__nodes_cfg16xb_allg.json",
+					"motion": {
+						"slice_list": [
+							{
+								"type": 3,
+								"angle_span": 40
+							}
+						]
 					}
-				]
-			},
-			"formation": "formation_square_3x3_outline_stationary"
+				}
+			]
 		}
 	]
 }

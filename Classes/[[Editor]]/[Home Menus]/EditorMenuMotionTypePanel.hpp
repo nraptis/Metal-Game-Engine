@@ -21,19 +21,21 @@ public:
     virtual void                            Notify(void *pSender, const char *pNotification) override;
     virtual void                            Update() override;
     
+    void                                    AddSpeedSegment();
+    void                                    AddSpeedNegation();
+    
+    
     int                                     mType;
     
     LevelMotionControllerSliceBlueprint     *mMotionSlice;
     int                                     mSpeedIndex;
     
-    
-    ToolMenuPanel                           *mPanelGeneric;
     UISegment                               *mSegmentSpeed;
     
     ToolMenuSectionRow                      *mRowGeneric1;
     
-    UICheckBox                              *mCheckBoxNegate;
-    UICheckBox                              *mCheckBoxNegateRandomly;
+    UICheckBox                              *mCheckBoxNegateSpeed;
+    UICheckBox                              *mCheckBoxNegateSpeedRandomly;
     
     
 };
@@ -50,11 +52,11 @@ public:
     ToolMenuSectionRow                      *mRowNegs1;
     ToolMenuSectionRow                      *mRowNegs2;
     
-    UICheckBox                              *mCheckBoxNegateH;
-    UICheckBox                              *mCheckBoxNegateHRandomly;
+    UICheckBox                              *mCheckBoxNegateSpeedH;
+    UICheckBox                              *mCheckBoxNegateSpeedHRandomly;
     
-    UICheckBox                              *mCheckBoxNegateV;
-    UICheckBox                              *mCheckBoxNegateVRandomly;
+    UICheckBox                              *mCheckBoxNegateSpeedV;
+    UICheckBox                              *mCheckBoxNegateSpeedVRandomly;
 };
 
 class EditorMenuMotionTypePanelRotate : public EditorMenuMotionTypePanel {

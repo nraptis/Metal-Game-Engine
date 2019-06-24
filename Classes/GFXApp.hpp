@@ -104,8 +104,17 @@ public:
     FModelDataPacked                        mBalloon;
     FSprite                                 mBalloonMap[5];
     
+    FModelDataPacked                        mBrickhead;
+    FSprite                                 mBrickheadMap;
+    
+    FModelDataPacked                        mBrickheadCage;
+    FSprite                                 mBrickheadCageMap;
+    
+    
+    
     FModelDataPacked                        mSpiralPineStump;
     FSprite                                 mSpiralPineStumpMap;
+    
     
     FModelDataPacked                        mSpiralPineTree;
     FSprite                                 mSpiralPineTreeMap;

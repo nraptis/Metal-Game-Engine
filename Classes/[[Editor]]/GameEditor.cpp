@@ -501,7 +501,10 @@ void GameEditor::KeyDown(int pKey) {
     }
     
     if (pKey == __KEY__S) {
-        if (aShift == false && aCtrl == true && aAlt == false) { SaveAt(mExportIndex); }
+        printf("Hit S Shift[%d] Ctrl[%d] Alt[%d]\n", aShift, aCtrl, aAlt);
+        if (aShift == false && aCtrl == true && aAlt == false) {
+            SaveAt(mExportIndex);
+        }
     }
     
     if (pKey == __KEY__L) {
@@ -752,11 +755,14 @@ void GameEditor::RefreshPlayback() {
     
     mIsRefreshingPlayback = true;
     
+    KillAll();
     
     if (gGame != NULL) {
         gGame->DisposeAllObjects();
     }
     
+    mEditorSection.Reset();
+    mEditorWave.Reset();
     
     if (mPermEditor != NULL && mPermEditor == mOverlay) {
         LevelSectionPermanentBlueprint *aPerm = PermGet();
@@ -769,11 +775,13 @@ void GameEditor::RefreshPlayback() {
         mSpeedClassIndex = SpeedConvertTypeToSegment(mSection.mCurrentWave->mPath.mSpeedClass);
     }
     
-    if (mSection.mCurrentWave != NULL) {
-        mSection.mCurrentWave->Build();
-    }
+    
     
     if (mEditorPlaybackWaveOnly) {
+        
+        if (mSection.mCurrentWave != NULL) {
+            mSection.mCurrentWave->Build();
+        }
         
     } else {
         
@@ -789,9 +797,7 @@ void GameEditor::RefreshPlayback() {
         mSection.Build();
     }
     
-    
     if (mEditorPlaybackFromOffScreen == true) {
-        
         if (mEditorPlaybackFromOffScreenType == 1) {
             mEditorSection.FlyInReset(SECTION_FLY_IN_TOP);
         } else if (mEditorPlaybackFromOffScreenType == 2) {
@@ -1242,6 +1248,10 @@ void GameEditor::Clear() {
     
     mEditorWave.Reset();
     mEditorSection.Reset();
+    
+    KillAll();
+    
+    RefreshPlayback();
 }
 
 void GameEditor::LoadCleared() {

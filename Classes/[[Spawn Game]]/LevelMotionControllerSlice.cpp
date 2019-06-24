@@ -45,11 +45,9 @@ LevelMotionControllerSliceNegate::~LevelMotionControllerSliceNegate() {
 
 void LevelMotionControllerSliceNegate::Apply(float pReferenceX, float pReferenceY, float *pX, float *pY) {
     if (pX != NULL && pY != NULL) {
-        
         if ((mNegateHAlways == true) || (mNegateHRandomly == true && mNegateHRandomlyFlag == true)) {
             *pX = pReferenceX + (pReferenceX - *pX);
         }
-        
         if ((mNegateVAlways == true) || (mNegateVRandomly == true && mNegateVRandomlyFlag == true)) {
             *pY = pReferenceY + (pReferenceY - *pY);
         }
@@ -185,8 +183,7 @@ float LevelMotionControllerSliceOscillateGeneric::GetPercent() {
 
 LevelMotionControllerSliceOscillateRotation::LevelMotionControllerSliceOscillateRotation() {
     mType = LEVEL_MOTION_SLICE_TYPE_OSCILLATE_ROTATION;
-    
-    mAngleSpan = 60.0f;
+    mAngleSpan = 90.0f;
     mAngleSpanOffsetStart = 0.0f;
     mAngleSpanOffsetEnd = 0.0f;
 }
@@ -197,22 +194,19 @@ LevelMotionControllerSliceOscillateRotation::~LevelMotionControllerSliceOscillat
 
 void LevelMotionControllerSliceOscillateRotation::Apply(float pReferenceX, float pReferenceY, float *pX, float *pY) {
     if (pX != NULL && pY != NULL) {
-        *pX = *pX + GetPercent() * mAngleSpan;
-        *pY = *pY + GetPercent() * mAngleSpan;
-        
-        /*
+        float aRotationStart = -(mAngleSpan * 0.5f) - mAngleSpanOffsetStart;
+        float aRotationEnd = (mAngleSpan * 0.5f) + mAngleSpanOffsetEnd;
+        float aRotation = (GetPercent() + 1.0f) * 0.5f * (aRotationEnd - aRotationStart) + aRotationStart;
         FVec2 aPos = FVec2(*pX, *pY);
-        FVec2 aCenter = FVec2(pReferenceX + mPivotOffsetX, pReferenceY + mPivotOffsetY);
-        aPos = PivotPoint(aPos, mRotation, aCenter);
+        FVec2 aCenter = FVec2(pReferenceX, pReferenceY);
+        aPos = PivotPoint(aPos, aRotation, aCenter);
         *pX = aPos.mX;
         *pY = aPos.mY;
-        */
     }
 }
 
 void LevelMotionControllerSliceOscillateRotation::Update() {
     LevelMotionControllerSliceOscillateGeneric::Update();
-    
 }
 
 LevelMotionControllerSliceOscillateVertical::LevelMotionControllerSliceOscillateVertical() {

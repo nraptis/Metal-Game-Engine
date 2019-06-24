@@ -17,19 +17,23 @@ GamePathEditor::GamePathEditor(GameEditor *pEditor) {
     mEditor = pEditor;
     mPermanentEditor = NULL;
     Init();
+    
+    mGrid.mGridEnabled = false;
+    
 }
 
 GamePathEditor::GamePathEditor(GamePermanentEditor *pEditor) {
     mEditor = NULL;
     mPermanentEditor = pEditor;
     Init();
+    
+    mGrid.mGridEnabled = mPermanentEditor->mGrid.mGridEnabled;
 }
 
 void GamePathEditor::Init() {
     mPathMode = PATH_MODE_CREATE;
     
     mName = "[GamePathEditor]";
-    
     
     
     mMenuGrid = NULL;
@@ -597,10 +601,15 @@ void GamePathEditor::PathPrint() {
 }
 
 void GamePathEditor::PathDeletePoint() {
-    if (mWave == NULL || mPath == NULL) { return; }
+    if (mPath == NULL) { return; }
     if (mPath->mSelectedIndex == -1) { return; }
     mPath->Remove(mPath->mSelectedIndex);
-    mWave->ApplyEditorConstraints();
+    if (mWave != NULL) {
+        mWave->ApplyEditorConstraints();
+    }
+    if (mPerm != NULL) {
+        mPerm->ApplyEditorConstraints();
+    }
 }
 
 void GamePathEditor::ConstrainXToPoint() {

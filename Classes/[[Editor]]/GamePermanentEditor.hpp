@@ -20,6 +20,7 @@
 #include "LevelSectionPermanentBlueprint.hpp"
 #include "LevelSectionPermanent.hpp"
 #include "GamePathEditor.hpp"
+#include "GameEditorGrid.hpp"
 
 
 #define PERMANENT_MODE_ADD 0
@@ -56,15 +57,17 @@ public:
     EditorMenuPermSpawnPicker                   *mMenuSpawnPicker;
     EditorMenuAttachment                        *mMenuAttachment;
     EditorMenuMotion                            *mMenuMotion;
+    EditorMenuFormationGrid                     *mMenuGrid;
     
     void                                        SetOverlay(FCanvas *pCanvas);
     FCanvas                                     *mOverlay;
     FCanvas                                     *mToolContainer;
     GamePathEditor                              *mPathEditor;
     
+    GameEditorGrid                              mGrid;
+    
     void                                        OpenPathEditor();
     void                                        ClosePathEditor();
-    
     
     void                                        OpenMenuPermPicker();
     void                                        OpenMenuSpawnPicker();
@@ -129,13 +132,15 @@ public:
     
     int                                         mPathSpeedClassIndex;
     
-    
-    
-    
     float                                       mGameAreaTop;
     float                                       mGameAreaRight;
     float                                       mGameAreaBottom;
     float                                       mGameAreaLeft;
+    
+    float                                       mCenterX;
+    float                                       mCenterY;
+    
+    
 };
 
 extern GamePermanentEditor *gPermEditor;

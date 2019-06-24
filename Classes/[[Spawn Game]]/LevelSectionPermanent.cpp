@@ -23,7 +23,7 @@ LevelSectionPermanent::LevelSectionPermanent(LevelSection *pSection) {
     mObjectType = GAME_OBJECT_TYPE_BALLOON;
     
     mSpawnEqualSpacing = true;
-    mSpawnSpacing = 90;
+    mSpawnSpacing = 120;
     
     
     mBaseX = 0.0f;
@@ -115,11 +115,7 @@ void LevelSectionPermanent::Spawn() {
         
         //One case, we are evenly spawned..
         
-        // = true;
-        //mSpawnSpacing = 90;
-        
         if (mSpawnEqualSpacing) {
-            
             for (int i=0;i<mSpawnList.mCount;i++) {
                 LevelPermSpawn *aSpawn = ((LevelPermSpawn *)mSpawnList.mData[i]);
                 float aPercent = ((float)i) / ((float)mSpawnList.mCount);
@@ -132,11 +128,7 @@ void LevelSectionPermanent::Spawn() {
             float aSpawnDist = 0.0f;
             for (int i=0;i<mSpawnList.mCount;i++) {
                 LevelPermSpawn *aSpawn = ((LevelPermSpawn *)mSpawnList.mData[i]);
-                
-                
-                
                 aSpawnDist += (mSpawnSpacing + aSpawn->mSpacingOffset);
-                
                 while (aSpawnLoc < mPath.mDist.mCount) {
                     if (mPath.mDist.mData[aSpawnLoc] >= aSpawnDist) {
                         aSpawnLoc -= 1;

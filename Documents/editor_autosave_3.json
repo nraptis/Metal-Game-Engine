@@ -1,4 +1,23 @@
 {
 	"section": true,
-	"wave_list": []
+	"wave_list": [],
+	"perm_list": [
+		{
+			"x_con": 500,
+			"y_con": 500,
+			"motion": {
+				"slice_list": [
+					{
+						"type": 2,
+						"speed_class": -200
+					},
+					{
+						"type": 1,
+						"speed_class": -300
+					}
+				]
+			},
+			"formation": "f_grid_large_star_03.json"
+		}
+	]
 }

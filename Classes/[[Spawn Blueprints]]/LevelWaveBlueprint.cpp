@@ -21,7 +21,7 @@ LevelWaveBlueprint::LevelWaveBlueprint() {
     mSelectedSpawnIndex = 0;
     
     mSpawnCount = 1;
-    mSpawnSpacing = 90;
+    mSpawnSpacing = 120;
     
     mMaxSpawnSize = 60;
     
@@ -208,43 +208,16 @@ FJSONNode *LevelWaveBlueprint::Save() {
     
     FJSONNode *aExport = new FJSONNode();
     
-    if (mSpawnSpacing != 90) {
-        aExport->AddDictionaryInt("spawn_spacing", mSpawnSpacing);
-    }
+    if (mSpawnSpacing != 120) { aExport->AddDictionaryInt("spawn_spacing", mSpawnSpacing); }
     
-    //aExport->AddDictionaryInt("creation_type", mCreationType);
+    if (mCreationRequiresPrevWaveStart == true) { aExport->AddDictionaryBool("creation_prev_wave_start", true); }
+    if (mCreationRequiresPrevWaveComplete == true) { aExport->AddDictionaryBool("creation_prev_wave_complete", true); }
+    if (mCreationRequiresScreenWavesClear == true) { aExport->AddDictionaryBool("creation_screen_waves_clear", true); }
+    if (mCreationRequiresScreenPermsClear == true) { aExport->AddDictionaryBool("creation_screen_perms_clear", true); }
     
-    if (mCreationRequiresPrevWaveStart == true) {
-        aExport->AddDictionaryBool("creation_prev_wave_start", true);
-    }
-    if (mCreationRequiresPrevWaveComplete == true) {
-        aExport->AddDictionaryBool("creation_prev_wave_complete", true);
-    }
-    if (mCreationRequiresScreenWavesClear == true) {
-        aExport->AddDictionaryBool("creation_screen_waves_clear", true);
-    }
-    if (mCreationRequiresScreenPermsClear == true) {
-        aExport->AddDictionaryBool("creation_screen_perms_clear", true);
-    }
-    
-    
-    //mCreationRequiresPrevWaveStart
-    //mCreationRequiresPrevWaveComplete
-    //mCreationRequiresScreenWavesClear
-    //mCreationRequiresScreenPermsClear
-    
-    
-    if (mCreationDelay != 0) {
-        aExport->AddDictionaryInt("creation_delay", mCreationDelay);
-    }
-    
-    if (mMaxSpawnSize != 60) {
-        aExport->AddDictionaryInt("max_spawn_size", mMaxSpawnSize);
-    }
-    
-    if (mPath.mNodeList.mCount > 0) {
-        aExport->AddDictionary("path", mPath.Save());
-    }
+    if (mCreationDelay != 0) { aExport->AddDictionaryInt("creation_delay", mCreationDelay); }
+    if (mMaxSpawnSize != 60) { aExport->AddDictionaryInt("max_spawn_size", mMaxSpawnSize); }
+    if (mPath.mNodeList.mCount > 0) { aExport->AddDictionary("path", mPath.Save()); }
     
     //
     //

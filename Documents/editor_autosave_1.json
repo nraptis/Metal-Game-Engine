@@ -2,8 +2,9 @@
 	"section": true,
 	"wave_list": [
 		{
+			"spawn_spacing": 90,
+			"creation_screen_waves_clear": true,
 			"path": {
-				"speed_class": -100,
 				"node_list": [
 					{
 						"x_con": 200,
@@ -12,144 +13,116 @@
 					{
 						"x_con": 500,
 						"y_con": 500,
-						"decel": 300,
-						"chamfer": 100,
-						"wait": 40
-					}
-				]
-			},
-			"spawn": []
-		},
-		{
-			"creation_screen_waves_clear": true,
-			"creation_delay": 50,
-			"path": {
-				"speed_class": -100,
-				"node_list": [
-					{
-						"x_con": 200,
-						"y_con": 500,
-						"y_con_offset": -70.000000
-					},
-					{
-						"x_con": 400,
-						"x_con_offset": 60.000000,
-						"y_con": 500,
-						"y_con_offset": -70.000000,
-						"decel": 150,
-						"wait": 1500
-					}
-				]
-			},
-			"spawn": []
-		},
-		{
-			"creation_delay": 50,
-			"path": {
-				"speed_class": -100,
-				"node_list": [
-					{
-						"x_con": 800,
-						"y_con": 500,
-						"y_con_offset": 100.000000
-					},
-					{
-						"x_con": 600,
-						"x_con_offset": -50.000000,
-						"y_con": 500,
-						"y_con_offset": 100.000000,
-						"decel": 150,
-						"wait": 1400
-					}
-				]
-			},
-			"spawn": []
-		},
-		{
-			"creation_delay": 50,
-			"path": {
-				"speed_class": -100,
-				"node_list": [
-					{
-						"x_con": 800,
-						"y_con": 400,
-						"y_con_offset": 100.000000
-					},
-					{
-						"x_con": 500,
-						"y_con": 400,
-						"y_con_offset": 100.000000,
-						"decel": 150,
-						"wait": 1300
-					}
-				]
-			},
-			"spawn": []
-		},
-		{
-			"creation_screen_waves_clear": true,
-			"creation_delay": 100,
-			"max_spawn_size": 212,
-			"path": {
-				"node_list": [
-					{
-						"x_con": 500,
-						"y_con": 200,
-						"decel": 400
-					},
-					{
-						"x_con": 500,
-						"y_con": 500,
-						"decel": 350,
-						"wait": 10
-					},
-					{
-						"x_con": 800,
-						"y_con": 500,
-						"decel": 150,
-						"wait": 20
-					},
-					{
-						"x_con": 150,
-						"y_con": 500
+						"wait": 300
 					}
 				]
 			},
 			"spawn": [
-				{
-					"formation": "f_grid_rect_4x4_44spc_solid__nodes_cfg16xb"
-				}
+				{},
+				{},
+				{},
+				{}
+			]
+		},
+		{
+			"spawn_spacing": 100,
+			"creation_prev_wave_start": true,
+			"creation_prev_wave_complete": true,
+			"path": {
+				"node_list": [
+					{
+						"x_con": 800,
+						"y_con": 500
+					},
+					{
+						"x_con": 500,
+						"y_con": 500,
+						"wait": 400
+					}
+				]
+			},
+			"spawn": [
+				{},
+				{},
+				{},
+				{}
 			]
 		}
 	],
 	"perm_list": [
 		{
-			"x_con": 500,
-			"y_con": 400,
-			"path": {
-				"node_list": [
+			"x_con": 300,
+			"x_con_offset": 100.000000,
+			"y_con": 600,
+			"y_con_offset": -60.000000,
+			"motion": {
+				"slice_list": [
 					{
-						"x_con": 500,
-						"y_con": 300
-					},
-					{
-						"x_con": 700,
-						"y_con": 400
-					},
-					{
-						"x_con": 500,
-						"y_con": 500
-					},
-					{
-						"x_con": 300,
-						"y_con": 400
+						"type": 2,
+						"speed_class": 300,
+						"negate": true
 					}
 				]
-			}
+			},
+			"formation": "f_tr_rrct_160sz_42cr_cfg2xb_sps.json"
 		},
 		{
-			"x_con": 200,
-			"y_con": 800
+			"x_con": 700,
+			"x_con_offset": -100.000000,
+			"y_con": 600,
+			"y_con_offset": -60.000000,
+			"motion": {
+				"slice_list": [
+					{
+						"type": 2,
+						"speed_class": 300,
+						"negate": true
+					},
+					{
+						"type": 1
+					}
+				]
+			},
+			"formation": "f_tr_rrct_160sz_42cr_cfg2xb_sps.json"
+		},
+		{
+			"x_con": 300,
+			"x_con_offset": 120.000000,
+			"y_con": 300,
+			"y_con_offset": 100.000000,
+			"motion": {
+				"slice_list": [
+					{
+						"type": 5,
+						"linear_tick": 50,
+						"linear_time": 100,
+						"radius": 20,
+						"pause_2": 50
+					}
+				]
+			},
+			"formation": "f_grid_penta_ngon1_5sid_45rngs_1rngc_31pnts_solid__nodes_cfg6xb_allg.json"
+		},
+		{
+			"x_con": 700,
+			"x_con_offset": -120.000000,
+			"y_con": 300,
+			"y_con_offset": 100.000000,
+			"motion": {
+				"slice_list": [
+					{
+						"type": 5,
+						"linear_tick": 50,
+						"linear_time": 100,
+						"radius": 20,
+						"pause_2": 50
+					},
+					{
+						"type": 1
+					}
+				]
+			},
+			"formation": "f_grid_penta_ngon1_5sid_45rngs_1rngc_31pnts_solid__nodes_cfg6xb_allg.json"
 		}
 	]
 }

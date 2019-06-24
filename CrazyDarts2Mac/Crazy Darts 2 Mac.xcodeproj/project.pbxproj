@@ -11,6 +11,7 @@
 		0D2A0F50225D86540098B023 /* SceneryConfigMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D2A0F4E225D86540098B023 /* SceneryConfigMenu.cpp */; };
 		0D2A0F53225D866C0098B023 /* SceneryConfigUtilsMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D2A0F51225D866C0098B023 /* SceneryConfigUtilsMenu.cpp */; };
 		0D2A0F56225D87380098B023 /* WorldConfigScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D2A0F54225D87380098B023 /* WorldConfigScene.cpp */; };
+		0D2B31C9228FE98F00780BC7 /* GameTestOverlay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D2B31C7228FE98F00780BC7 /* GameTestOverlay.cpp */; };
 		0D509186225AB4650082ED8E /* EditorMenuFormationGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D509184225AB4650082ED8E /* EditorMenuFormationGrid.cpp */; };
 		0D77851B2262CF040049103A /* EditorMenuMotion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D7785192262CF040049103A /* EditorMenuMotion.cpp */; };
 		0D77851E2262D1860049103A /* EditorMenuObjectClearing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D77851C2262D1860049103A /* EditorMenuObjectClearing.cpp */; };
@@ -215,6 +216,8 @@
 		0D2A0F52225D866C0098B023 /* SceneryConfigUtilsMenu.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SceneryConfigUtilsMenu.hpp; sourceTree = "<group>"; };
 		0D2A0F54225D87380098B023 /* WorldConfigScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WorldConfigScene.cpp; sourceTree = "<group>"; };
 		0D2A0F55225D87380098B023 /* WorldConfigScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WorldConfigScene.hpp; sourceTree = "<group>"; };
+		0D2B31C7228FE98F00780BC7 /* GameTestOverlay.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameTestOverlay.cpp; sourceTree = "<group>"; };
+		0D2B31C8228FE98F00780BC7 /* GameTestOverlay.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameTestOverlay.hpp; sourceTree = "<group>"; };
 		0D509184225AB4650082ED8E /* EditorMenuFormationGrid.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuFormationGrid.cpp; sourceTree = "<group>"; };
 		0D509185225AB4650082ED8E /* EditorMenuFormationGrid.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuFormationGrid.hpp; sourceTree = "<group>"; };
 		0D7785192262CF040049103A /* EditorMenuMotion.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuMotion.cpp; sourceTree = "<group>"; };
@@ -899,6 +902,8 @@
 				0DB05E042255A364006AE702 /* FormationCollection.hpp */,
 				0DB05E532255A364006AE702 /* Game.cpp */,
 				0DB05DEB2255A364006AE702 /* Game.hpp */,
+				0D2B31C7228FE98F00780BC7 /* GameTestOverlay.cpp */,
+				0D2B31C8228FE98F00780BC7 /* GameTestOverlay.hpp */,
 				0DB05DE62255A364006AE702 /* GameContainer.cpp */,
 				0DB05E2C2255A364006AE702 /* GameContainer.hpp */,
 				0DB05E022255A364006AE702 /* GameLevelController.cpp */,
@@ -1381,6 +1386,7 @@
 				0DD15B3622582C09005C06D8 /* LevelFormationTracerNode.cpp in Sources */,
 				0D8FCF41225DA8ED00A74580 /* FSize.cpp in Sources */,
 				0D8FCF23225DA8ED00A74580 /* MetalPipeline.mm in Sources */,
+				0D2B31C9228FE98F00780BC7 /* GameTestOverlay.cpp in Sources */,
 				0DB05E852255A365006AE702 /* EditorMenuPath.cpp in Sources */,
 				0D2A0F50225D86540098B023 /* SceneryConfigMenu.cpp in Sources */,
 				0D8FCF71225DA8ED00A74580 /* FRect.cpp in Sources */,

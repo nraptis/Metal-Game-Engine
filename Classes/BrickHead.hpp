@@ -24,6 +24,9 @@ public:
     
     float                                   mSpinSpeed;
     
+    FModelDataPacked                        *mAccessoryModel;
+    FSprite                                 *mAccessorySprite;
+    
     float                                   mVelX;
     float                                   mVelY;
 };

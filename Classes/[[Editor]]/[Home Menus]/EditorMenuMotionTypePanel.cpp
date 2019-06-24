@@ -17,31 +17,10 @@ EditorMenuMotionTypePanel::EditorMenuMotionTypePanel() {
     mType = LEVEL_MOTION_SLICE_TYPE_NONE;
     mSpeedIndex = 0;
     
-    mPanelGeneric = new ToolMenuPanel();
-    mPanelGeneric->SetTitle("Generic");
-    AddSection(mPanelGeneric);
-    
-    mSegmentSpeed = new UISegment();
-    mSegmentSpeed->SetSegmentCount(7);
-    mSegmentSpeed->SetTitles("XS", "S", "MS", "M", "MF", "F", "XF");
-    mSegmentSpeed->SetTarget(&mSpeedIndex);
-    mPanelGeneric->AddSection(mSegmentSpeed);
-    gNotify.Register(this, mSegmentSpeed, "segment");
-    
-    
-    mRowGeneric1 = new ToolMenuSectionRow();
-    mPanelGeneric->AddSection(mRowGeneric1);
-    
-    
-    mCheckBoxNegate = new UICheckBox();
-    mCheckBoxNegate->SetText("Negate");
-    mRowGeneric1->AddCheckBox(mCheckBoxNegate);
-    gNotify.Register(this, mCheckBoxNegate, "checkbox");
-    
-    mCheckBoxNegateRandomly = new UICheckBox();
-    mCheckBoxNegateRandomly->SetText("Rand Negate");
-    mRowGeneric1->AddCheckBox(mCheckBoxNegateRandomly);
-    gNotify.Register(this, mCheckBoxNegateRandomly, "checkbox");
+    mSegmentSpeed = NULL;
+    mRowGeneric1 = NULL;
+    mCheckBoxNegateSpeed = NULL;
+    mCheckBoxNegateSpeedRandomly = NULL;
 }
 
 EditorMenuMotionTypePanel::~EditorMenuMotionTypePanel() {
@@ -59,22 +38,22 @@ void EditorMenuMotionTypePanel::Update() {
     }
     
     
-    if (mCheckBoxNegate != NULL) {
+    if (mCheckBoxNegateSpeed != NULL) {
         bool aUnlink = true;
         if (mMotionSlice != NULL) {
             aUnlink = false;
-            mCheckBoxNegate->SetTarget(&(mMotionSlice->mSpeedNegateAlways));
+            mCheckBoxNegateSpeed->SetTarget(&(mMotionSlice->mSpeedNegateAlways));
         }
-        if (aUnlink) { mCheckBoxNegate->SetTarget(NULL); }
+        if (aUnlink) { mCheckBoxNegateSpeed->SetTarget(NULL); }
     }
     
-    if (mCheckBoxNegateRandomly != NULL) {
+    if (mCheckBoxNegateSpeedRandomly != NULL) {
         bool aUnlink = true;
         if (mMotionSlice != NULL) {
             aUnlink = false;
-            mCheckBoxNegateRandomly->SetTarget(&(mMotionSlice->mSpeedNegateRandomly));
+            mCheckBoxNegateSpeedRandomly->SetTarget(&(mMotionSlice->mSpeedNegateRandomly));
         }
-        if (aUnlink) { mCheckBoxNegateRandomly->SetTarget(NULL); }
+        if (aUnlink) { mCheckBoxNegateSpeedRandomly->SetTarget(NULL); }
     }
 }
 
@@ -87,11 +66,37 @@ void EditorMenuMotionTypePanel::Notify(void *pSender, const char *pNotification)
             gEditor->RefreshPlayback();
         }
     }
-    if (pSender == mCheckBoxNegate) { gEditor->RefreshPlayback(); }
-    if (pSender == mCheckBoxNegateRandomly) { gEditor->RefreshPlayback(); }
+    if (pSender == mCheckBoxNegateSpeed) { gEditor->RefreshPlayback(); }
+    if (pSender == mCheckBoxNegateSpeedRandomly) { gEditor->RefreshPlayback(); }
 }
 
 
+void EditorMenuMotionTypePanel::AddSpeedSegment() {
+    mSegmentSpeed = new UISegment();
+    mSegmentSpeed->SetSegmentCount(7);
+    mSegmentSpeed->SetTitles("XS", "S", "MS", "M", "MF", "F", "XF");
+    mSegmentSpeed->SetTarget(&mSpeedIndex);
+    AddSection(mSegmentSpeed);
+    gNotify.Register(this, mSegmentSpeed, "segment");
+    
+    
+    
+}
+
+void EditorMenuMotionTypePanel::AddSpeedNegation() {
+    mRowGeneric1 = new ToolMenuSectionRow();
+    AddSection(mRowGeneric1);
+    
+    mCheckBoxNegateSpeed = new UICheckBox();
+    mCheckBoxNegateSpeed->SetText("Negate");
+    mRowGeneric1->AddCheckBox(mCheckBoxNegateSpeed);
+    gNotify.Register(this, mCheckBoxNegateSpeed, "checkbox");
+    
+    mCheckBoxNegateSpeedRandomly = new UICheckBox();
+    mCheckBoxNegateSpeedRandomly->SetText("Rand Negate");
+    mRowGeneric1->AddCheckBox(mCheckBoxNegateSpeedRandomly);
+    gNotify.Register(this, mCheckBoxNegateSpeedRandomly, "checkbox");
+}
 
 
 
@@ -112,26 +117,26 @@ EditorMenuMotionTypePanelNegate::EditorMenuMotionTypePanelNegate() {
     mRowNegs2 = new ToolMenuSectionRow();
     AddSection(mRowNegs2);
     
-    mCheckBoxNegateH = new UICheckBox();
-    mCheckBoxNegateH->SetText("Neg-H");
-    mRowNegs1->AddCheckBox(mCheckBoxNegateH);
-    gNotify.Register(this, mCheckBoxNegateH, "checkbox");
+    mCheckBoxNegateSpeedH = new UICheckBox();
+    mCheckBoxNegateSpeedH->SetText("Neg-H");
+    mRowNegs1->AddCheckBox(mCheckBoxNegateSpeedH);
+    gNotify.Register(this, mCheckBoxNegateSpeedH, "checkbox");
     
-    mCheckBoxNegateHRandomly = new UICheckBox();
-    mCheckBoxNegateHRandomly->SetText("Neg-H-Rand");
-    mRowNegs1->AddCheckBox(mCheckBoxNegateHRandomly);
-    gNotify.Register(this, mCheckBoxNegateHRandomly, "checkbox");
+    mCheckBoxNegateSpeedHRandomly = new UICheckBox();
+    mCheckBoxNegateSpeedHRandomly->SetText("Neg-H-Rand");
+    mRowNegs1->AddCheckBox(mCheckBoxNegateSpeedHRandomly);
+    gNotify.Register(this, mCheckBoxNegateSpeedHRandomly, "checkbox");
     
     
-    mCheckBoxNegateV = new UICheckBox();
-    mCheckBoxNegateV->SetText("Neg-V");
-    mRowNegs2->AddCheckBox(mCheckBoxNegateV);
-    gNotify.Register(this, mCheckBoxNegateV, "checkbox");
+    mCheckBoxNegateSpeedV = new UICheckBox();
+    mCheckBoxNegateSpeedV->SetText("Neg-V");
+    mRowNegs2->AddCheckBox(mCheckBoxNegateSpeedV);
+    gNotify.Register(this, mCheckBoxNegateSpeedV, "checkbox");
     
-    mCheckBoxNegateVRandomly = new UICheckBox();
-    mCheckBoxNegateVRandomly->SetText("Neg-V-Rand");
-    mRowNegs2->AddCheckBox(mCheckBoxNegateVRandomly);
-    gNotify.Register(this, mCheckBoxNegateVRandomly, "checkbox");
+    mCheckBoxNegateSpeedVRandomly = new UICheckBox();
+    mCheckBoxNegateSpeedVRandomly->SetText("Neg-V-Rand");
+    mRowNegs2->AddCheckBox(mCheckBoxNegateSpeedVRandomly);
+    gNotify.Register(this, mCheckBoxNegateSpeedVRandomly, "checkbox");
 }
 
 
@@ -147,59 +152,50 @@ void EditorMenuMotionTypePanelNegate::Update() {
     
     LevelMotionControllerSliceNegateBlueprint *aSlice = (LevelMotionControllerSliceNegateBlueprint *)mMotionSlice;
     
-    if (mCheckBoxNegateH != NULL) {
+    if (mCheckBoxNegateSpeedH != NULL) {
         bool aUnlink = true;
         if (aSlice != NULL) {
             aUnlink = false;
-            mCheckBoxNegateH->SetTarget(&(aSlice->mNegateHAlways));
+            mCheckBoxNegateSpeedH->SetTarget(&(aSlice->mNegateHAlways));
         }
-        if (aUnlink) { mCheckBoxNegateH->SetTarget(NULL); }
+        if (aUnlink) { mCheckBoxNegateSpeedH->SetTarget(NULL); }
     }
     
-    if (mCheckBoxNegateHRandomly != NULL) {
+    if (mCheckBoxNegateSpeedHRandomly != NULL) {
         bool aUnlink = true;
         if (aSlice != NULL) {
             aUnlink = false;
-            mCheckBoxNegateHRandomly->SetTarget(&(aSlice->mNegateHRandomly));
+            mCheckBoxNegateSpeedHRandomly->SetTarget(&(aSlice->mNegateHRandomly));
         }
-        if (aUnlink) { mCheckBoxNegateHRandomly->SetTarget(NULL); }
+        if (aUnlink) { mCheckBoxNegateSpeedHRandomly->SetTarget(NULL); }
     }
     
-    if (mCheckBoxNegateV != NULL) {
+    if (mCheckBoxNegateSpeedV != NULL) {
         bool aUnlink = true;
         if (aSlice != NULL) {
             aUnlink = false;
-            mCheckBoxNegateV->SetTarget(&(aSlice->mNegateVAlways));
+            mCheckBoxNegateSpeedV->SetTarget(&(aSlice->mNegateVAlways));
         }
-        if (aUnlink) { mCheckBoxNegateV->SetTarget(NULL); }
+        if (aUnlink) { mCheckBoxNegateSpeedV->SetTarget(NULL); }
     }
     
-    if (mCheckBoxNegateVRandomly != NULL) {
+    if (mCheckBoxNegateSpeedVRandomly != NULL) {
         bool aUnlink = true;
         if (aSlice != NULL) {
             aUnlink = false;
-            mCheckBoxNegateVRandomly->SetTarget(&(aSlice->mNegateVRandomly));
+            mCheckBoxNegateSpeedVRandomly->SetTarget(&(aSlice->mNegateVRandomly));
         }
-        if (aUnlink) { mCheckBoxNegateVRandomly->SetTarget(NULL); }
+        if (aUnlink) { mCheckBoxNegateSpeedVRandomly->SetTarget(NULL); }
     }
-
-    
-    
 }
 
 void EditorMenuMotionTypePanelNegate::Notify(void *pSender, const char *pNotification) {
-    
     if (gEditor == NULL) { return; }
-    
-    LevelMotionControllerSliceNegateBlueprint *aSlice = (LevelMotionControllerSliceNegateBlueprint *)mMotionSlice;
-    
     EditorMenuMotionTypePanel::Notify(pSender, pNotification);
-    
-    if (pSender == mCheckBoxNegateH) { gEditor->RefreshPlayback(); }
-    if (pSender == mCheckBoxNegateHRandomly) { gEditor->RefreshPlayback(); }
-    
-    if (pSender == mCheckBoxNegateV) { gEditor->RefreshPlayback(); }
-    if (pSender == mCheckBoxNegateVRandomly) { gEditor->RefreshPlayback(); }
+    if (pSender == mCheckBoxNegateSpeedH) { gEditor->RefreshPlayback(); }
+    if (pSender == mCheckBoxNegateSpeedHRandomly) { gEditor->RefreshPlayback(); }
+    if (pSender == mCheckBoxNegateSpeedV) { gEditor->RefreshPlayback(); }
+    if (pSender == mCheckBoxNegateSpeedVRandomly) { gEditor->RefreshPlayback(); }
 }
 
 
@@ -212,6 +208,9 @@ EditorMenuMotionTypePanelRotate::EditorMenuMotionTypePanelRotate() {
     mType = LEVEL_MOTION_SLICE_TYPE_ROTATE;
     
     SetTitle("Rotate");
+    
+    AddSpeedSegment();
+    AddSpeedNegation();
     
     mRowOffsets1 = new ToolMenuSectionRow();
     AddSection(mRowOffsets1);

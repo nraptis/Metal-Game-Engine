@@ -14,7 +14,7 @@ LevelSectionPermanentBlueprint::LevelSectionPermanentBlueprint() {
     mPath.mPerm = this;
     
     mSpawnEqualSpacing = true;
-    mSpawnSpacing = 90;
+    mSpawnSpacing = 120;
     
     mEditorX = 0.0f; mEditorY = 0.0f;
     mPercentX = 0.0f; mPercentY = 0.0f;
@@ -223,13 +223,9 @@ void LevelSectionPermanentBlueprint::Build(LevelSectionPermanent *pPerm) {
 FJSONNode *LevelSectionPermanentBlueprint::Save() {
     FJSONNode *aExport = new FJSONNode();
     
-    if (mSpawnEqualSpacing != true) {
-        aExport->AddDictionaryBool("equal_spacing", mSpawnEqualSpacing);
-    }
+    if (mSpawnEqualSpacing != true) { aExport->AddDictionaryBool("equal_spacing", mSpawnEqualSpacing); }
     
-    if (mSpawnSpacing != 90) {
-        aExport->AddDictionaryInt("spawn_spacing", mSpawnSpacing);
-    }
+    if (mSpawnSpacing != 120) { aExport->AddDictionaryInt("spawn_spacing", mSpawnSpacing); }
     
     if (mConstraint.mTypeX == X_CONSTRAINT_NONE) {
         
@@ -305,7 +301,7 @@ void LevelSectionPermanentBlueprint::Load(FJSONNode *pNode) {
     if (pNode == NULL) { return; }
     
     mSpawnEqualSpacing = pNode->GetBool("equal_spacing", true);
-    mSpawnSpacing = pNode->GetInt("spawn_spacing", 90);
+    mSpawnSpacing = pNode->GetInt("spawn_spacing", 120);
     
     mConstraint.mTypeX = pNode->GetInt("x_con", X_CONSTRAINT_NONE);
     mConstraint.mTargetX = pNode->GetInt("x_con_target", -1);

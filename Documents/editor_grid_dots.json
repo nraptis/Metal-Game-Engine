@@ -1,7 +1,7 @@
 {
 	"grid_type": 0,
-	"rect_width": 1,
-	"rect_height": 1,
+	"rect_width": 7,
+	"rect_height": 7,
 	"rect_spacing": 44,
 	"circle_ring_spacing": 36,
 	"circle_ring_count": 2,
@@ -11,9 +11,9 @@
 	"star_line_point_count": 1,
 	"star_arm_count": 5,
 	"star_start_rot": 35,
-	"ngon1_sides": 5,
+	"ngon1_sides": 6,
 	"ngon1_ring_spacing": 38,
-	"ngon1_ring_count": 3,
+	"ngon1_ring_count": 4,
 	"ngon1_point_spacing": 36,
-	"ngon1_start_rotation": 35
+	"ngon1_start_rotation": 0
 }

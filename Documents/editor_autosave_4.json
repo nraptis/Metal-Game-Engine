@@ -3,68 +3,54 @@
 	"wave_list": [],
 	"perm_list": [
 		{
-			"x": 68.082275,
-			"y": 66.035118,
+			"x": 65.049194,
+			"y": 62.640762,
 			"motion": {
 				"slice_list": [
 					{
-						"type": 3,
-						"negate": true,
-						"negate_rand": true,
-						"linear_tick": 0,
-						"linear_time": 60
+						"type": 1,
+						"negate_v": true
 					}
 				]
 			},
 			"formation": "f_grid_penta_ngon1_5sid_45rngs_1rngc_31pnts_solid__nodes_cfg6xb_allg.json"
 		},
 		{
-			"x": 17.129932,
-			"y": 6.826207,
+			"x": 17.055912,
+			"y": 6.869928,
 			"motion": {
 				"slice_list": [
 					{
-						"type": 4,
-						"linear": true,
-						"linear_time": 80,
-						"radius": 182,
-						"pause_1": 50,
-						"pause_2": 20
-					},
-					{
 						"type": 1,
 						"speed_class": -300,
-						"negate_h": true,
-						"negate_h_rand": false,
-						"negate_v": true,
-						"negate_v_rand": false
+						"negate_v": true
+					},
+					{
+						"type": 1
 					}
 				]
 			},
 			"formation": "f_grid_circ_56rngs_1rngc_7radc_88ful__nodes_cfg7xb_allg.json"
 		},
 		{
-			"x": 80.911102,
-			"y": 11.785876,
+			"x": 80.981636,
+			"y": 11.829569,
 			"motion": {
 				"slice_list": [
 					{
-						"type": 2
+						"type": 1
 					}
 				]
 			},
 			"formation": "f_grid_rect_3x3_34spc_56ful__nodes_cfg5xb_allg.json"
 		},
 		{
-			"x": 21.407059,
-			"y": 75.628250,
+			"x": 23.516495,
+			"y": 72.985497,
 			"motion": {
 				"slice_list": [
 					{
-						"type": 1,
-						"negate_h": true,
-						"negate_h_rand": false,
-						"negate_v_rand": false
+						"type": 1
 					}
 				]
 			},
