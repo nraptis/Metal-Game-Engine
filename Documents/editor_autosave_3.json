@@ -3,21 +3,23 @@
 	"wave_list": [],
 	"perm_list": [
 		{
-			"x_con": 500,
+			"x_con": 400,
+			"y_con": 400,
+			"formation": "f_grid_hexa_ngon1_6sid_46rngs_1rngc_36pnts_30roff_solid__nodes_cfg7xb_allg.json"
+		},
+		{
+			"x_con": 600,
+			"y_con": 400
+		},
+		{
+			"x_con": 400,
 			"y_con": 500,
-			"motion": {
-				"slice_list": [
-					{
-						"type": 2,
-						"speed_class": -200
-					},
-					{
-						"type": 1,
-						"speed_class": -300
-					}
-				]
-			},
-			"formation": "f_grid_large_star_03.json"
+			"y_con_offset": 60.000000
+		},
+		{
+			"x_con": 600,
+			"y_con": 500,
+			"y_con_offset": 60.000000
 		}
 	]
 }

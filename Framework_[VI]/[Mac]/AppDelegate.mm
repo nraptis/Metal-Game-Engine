@@ -43,6 +43,25 @@ int kDeviceHeight = 760;
     //kDeviceWidth = [UIScreen mainScreen].bounds.size.width + 0.5f;
     //kDeviceHeight = [UIScreen mainScreen].bounds.size.height + 0.5f;
     
+    char aBundlePath[2048];
+    
+    getcwd(aBundlePath, sizeof(aBundlePath));
+    strcat(aBundlePath, "/Assets/");
+    
+    NSLog(@"Read Bundle Directory: %s", aBundlePath);
+    AppShellSetDirectoryBundle(aBundlePath);
+    
+    char aDocPath[2048];
+    getcwd(aDocPath, sizeof(aDocPath));
+    strcat(aDocPath, "/Documents/");
+    AppShellSetDirectoryDocuments(aDocPath);
+    
+    NSLog(@"Read Docs Directory: %s", aBundlePath);
+    
+    
+    
+    
+    
     AppShellInitialize(ENV_MAC);
     
     AppShellSetDeviceSize(kDeviceWidth, kDeviceHeight);
@@ -51,33 +70,7 @@ int kDeviceHeight = 760;
     
     
     AppShellSetImageFileScale(1);
-    
-    char aBundlePath[2048];
-    memset(aBundlePath, 0, sizeof(aBundlePath));
-    CFURLRef aResourceURL = CFBundleCopyBundleURL(CFBundleGetMainBundle());
-    CFStringRef aStringRef = CFURLCopyFileSystemPath(aResourceURL, kCFURLPOSIXPathStyle);
-    CFRelease(aResourceURL);
-    CFStringGetCString(aStringRef, aBundlePath, 2048, kCFStringEncodingASCII);
-    CFRelease(aStringRef);
-    strcat(aBundlePath, "/");
-    //NSLog(@"Read Bundle Directory: %s", aBundlePath);
-    //AppShellSetDirectoryBundle(aBundlePath);
-    
-    //FString aPathDocuments;
-    NSArray *aPathArray = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
-    NSString *aDocumentDirectory = [aPathArray objectAtIndex:0];
-    char aDocPath[2048];
-    memset(aDocPath, 0, sizeof(aDocPath));
-    const char *aDocPtr = [aDocumentDirectory UTF8String];
-    int i=0;
-    while (*aDocPtr != 0) {
-        aDocPath[i] = *aDocPtr;
-        ++aDocPtr;
-        i++;
-    }
-    aDocPath[i] = '/';
-    //NSLog(@"Read Document Directory: %s", aDocPath);
-    //AppShellSetDirectoryDocuments(aDocPath);
+
     
     
     _rootViewController = [[RootViewController alloc] init];

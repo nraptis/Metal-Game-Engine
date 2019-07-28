@@ -20,7 +20,6 @@
 #define EDITOR_MODE 1
 //#undef EDITOR_MODE
 
-
 #ifdef EDITOR_MODE
 class GameEditor;
 #endif
@@ -33,9 +32,6 @@ class CameraMenu;
 class SoundConfigMenu;
 class GameContainer;
 class WorldConfigScene;
-
-
-
 
 class GFXApp : public FApp {
 public:
@@ -110,11 +106,8 @@ public:
     FModelDataPacked                        mBrickheadCage;
     FSprite                                 mBrickheadCageMap;
     
-    
-    
     FModelDataPacked                        mSpiralPineStump;
     FSprite                                 mSpiralPineStumpMap;
-    
     
     FModelDataPacked                        mSpiralPineTree;
     FSprite                                 mSpiralPineTreeMap;
@@ -122,12 +115,8 @@ public:
     FModelDataPacked                        mMonolith;
     FSprite                                 mMonolithMap;
     
-    
-    
     FSprite                                 mCircle256;
     FSprite                                 mCircle512;
-    
-    
     
     FSprite                                 mChaosEgg1X;
     FSprite                                 mChaosEgg2X;

@@ -79,11 +79,7 @@ void FWindow::Update() {
             }
         }
         
-        int aIdnex = 0;
         EnumListReverse(FCanvas, aCanvas, mTemp) {
-            
-            printf("Deleting C [%s|%d]\n", aCanvas->mName.c(), aIdnex);
-                   aIdnex++;
             
             mRealizeBucket.Remove(aCanvas);
             mLayoutBucket.Remove(aCanvas);

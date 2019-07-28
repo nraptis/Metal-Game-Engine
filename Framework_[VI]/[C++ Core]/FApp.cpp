@@ -58,8 +58,7 @@ FApp::FApp() {
     RecoverTime();
 }
 
-FApp::~FApp()
-{
+FApp::~FApp() {
     
 }
 
@@ -67,18 +66,18 @@ void FApp::BaseInitialize() {
     if (mDidInitialize == false) {
         mDidInitialize = true;
         mImageLoadDirectoryList += new FString("");
+        
         if (gDirBundle.mLength > 0) mImageLoadDirectoryList += new FString(gDirBundle.c());
         if (gDirDocuments.mLength > 0) mImageLoadDirectoryList += new FString(gDirDocuments.c());
         
         mImageLoadExtensionList += new FString("jpg");
         mImageLoadExtensionList += new FString("png");
-
         mImageLoadMutableSuffixList += new FString("");
         mImageLoadSuffixList += new FString("");
         
         while (gGraphicsInterface->IsReady() == false) {
             printf("BaseInitialize:: Waiting for GFX...\n");
-            os_sleep(10);
+            os_sleep(100);
         }
         
         Graphics::SetDeviceSize(gDeviceWidth, gDeviceHeight);

@@ -150,7 +150,6 @@ vertex PhongModelColorInOut indexed_model_lighted_phong_overlay_vertex(constant 
     float4 normal = float4(verts[vid].normal, 1.0);
     //
     
-    
     out.position = uniforms.projectionMatrix * uniforms.modelViewMatrix * position;
     out.textureCoord = verts[vid].textureCoord;
     out.normal = float3(uniforms.normalMatrix * normal);

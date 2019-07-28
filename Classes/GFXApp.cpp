@@ -32,35 +32,6 @@ class GameEditor;
 GFXApp *gApp = 0;
 GFXApp::GFXApp() {
     
-    
-    int x1 = 10;
-    int &y1 = x1;
-    
-    y1 = 15; //Changes value of X.
-    
-    printf("x = %d, y = %d\n", x1, y1);
-    
-    
-    //
-    
-    char s1[] = "string";
-    char s2[] = {'s', 't', 'r', 0 };
-    
-    printf("s1 = %s\n", s1);
-    printf("s2 = %s\n", s2);
-    
-    for (char *cp = s1; *cp != 0; ++cp) {
-        printf("cp = %c\n", *cp);
-    }
-    
-    int  a[] = {4, 3, 2};
-    
-    printf("a[%d %d %d]\n", a[0], a[1], a[2]);
-     
-    
-    //
-    
-    
     gApp = this;
     
 #ifdef EDITOR_MODE
@@ -75,7 +46,6 @@ GFXApp::GFXApp() {
     mLevelSelect = NULL;
     mLightScene = NULL;
     mWorldScene = NULL;
-    
     
     mScreenTool = NULL;
     mCameraMenu = NULL;
@@ -92,7 +62,6 @@ GFXApp::GFXApp() {
     
     mTestSin1 = 0.0f;
     mTestSin2 = 180.0f;
-    
     
     mAmbientRoll1 = 0.0f;
     mAmbientRoll2 = 0.0f;

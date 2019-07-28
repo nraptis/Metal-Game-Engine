@@ -2,49 +2,33 @@
 	"section": true,
 	"wave_list": [
 		{
-			"spawn_spacing": 320,
-			"max_spawn_size": 164,
+			"spawn_spacing": 90,
+			"max_spawn_size": 393,
 			"path": {
+				"speed_class": 100,
 				"node_list": [
 					{
 						"x_con": 200,
-						"y_con": 800
+						"y_con": 500
 					},
 					{
 						"x_con": 500,
-						"y_con": 800
+						"y_con": 500,
+						"decel": 150,
+						"accel": 150,
+						"wait": 150
 					},
 					{
-						"x_con": 150,
-						"y_con": 800
+						"x_con": 500,
+						"y_con": 150
 					}
 				]
 			},
 			"spawn": [
 				{
-					"formation": "f_grid_penta_ngon1_5sid_45rngs_1rngc_31pnts_solid__nodes_cfg6xb_allg.json"
-				},
-				{
-					"formation": "f_grid_penta_ngon1_5sid_45rngs_1rngc_31pnts_solid__nodes_cfg6xb_allg.json"
-				},
-				{
-					"formation": "f_grid_penta_ngon1_5sid_45rngs_1rngc_31pnts_solid__nodes_cfg6xb_allg.json"
-				},
-				{
-					"formation": "f_grid_penta_ngon1_5sid_45rngs_1rngc_31pnts_solid__nodes_cfg6xb_allg.json"
-				},
-				{
-					"formation": "f_grid_penta_ngon1_5sid_45rngs_1rngc_31pnts_solid__nodes_cfg6xb_allg.json"
+					"formation": "f_grid_penta_ngon1_5sid_48rngs_3rngc_39pnts_35roff_solid__nodes_cfg31xb_allg.json"
 				}
 			]
-		}
-	],
-	"perm_list": [
-		{
-			"x_con": 500,
-			"y_con": 500,
-			"y_con_offset": -90.000000,
-			"formation": "f_grid_rect_7x7_44spc_solid__nodes_cfgrbrrrbrbrrrrrbrrrrrrrrrrrrrrrrrrrrrbrrrrrbrbbrbbr_allg.json"
 		}
 	]
 }

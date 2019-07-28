@@ -13,12 +13,12 @@
 
 int main(int argc, const char * argv[]) {
     
-    gDirBundle = "/Users/nraptis/Desktop/Orbital/Assets/";
-    gDirDocuments = "/Users/nraptis/Desktop/Orbital/Documents/";
-    gDirExport = "/Users/nraptis/Desktop/[[Exports]]/";
+    //gDirBundle = "/Users/nraptis/Desktop/Orbital/Assets/";
+    //gDirDocuments = "/Users/nraptis/Desktop/Orbital/Documents/";
+    //gDirExport = "/Users/nraptis/Desktop/[[Exports]]/";
     
     gApp = new GFXApp();
-    AppShellInitialize(ENV_MAC);
+    //AppShellInitialize(ENV_MAC);
     
     [NSApplication sharedApplication];
     AppDelegate *appDelegate = [[AppDelegate alloc] init];

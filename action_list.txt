@@ -1,0 +1,19 @@
+
+1.) Sections need timer. When all waves have passed and only "perms" are left, sections need timer for
+    when all sections fly away...
+
+2.) Multiple sections per level... We need to come up with a scheme to get this fully working.
+
+3.) Win condition? We need to capture the win condition.
+
+4.) Losing lives when balloons fly offscreen.
+
+5.) Sections transitions with and without "perms" required to have work.
+
+6.) 
+
+
+
+
+
+
