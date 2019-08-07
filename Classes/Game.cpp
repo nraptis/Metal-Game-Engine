@@ -884,6 +884,19 @@ void Game::Load() {
     
     Log("Game::Load()\n");
     
+    
+    Level aLevel;
+    aLevel.AddSection("test_section_01");
+    aLevel.AddSection("test_section_02");
+    aLevel.AddSection("test_section_03");
+    //aLevel.AddSection("test_section_04");
+    LevelData *aData = aLevel.Build();
+    
+    mLevelData = aData;
+    mLevelController->Setup(mLevelData);
+    
+    
+    /*
     LevelSection *aSection = NULL;
     LevelWave *aWave = NULL;
     
@@ -896,8 +909,9 @@ void Game::Load() {
     
     aSection->mDelay = 0;
     
-    mLevelData = aLevel;
-    mLevelController->Setup(mLevelData);
+     mLevelData = aLevel;
+     mLevelController->Setup(mLevelData);
+    */
 }
 
 void Game::LoadEditorTest() {

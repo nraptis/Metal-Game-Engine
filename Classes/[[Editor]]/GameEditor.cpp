@@ -40,6 +40,8 @@ GameEditor::GameEditor(Game *pGame) {
     mMenuMotion = NULL;
     
     
+    mTestIndex = 0;
+    mTestMode = false;
     
     mPickFormationReason = 0;
     
@@ -424,6 +426,21 @@ void GameEditor::KeyDown(int pKey) {
     bool aShift = gKeyDownShift;
     bool aCtrl = gKeyDownCtrl;
     bool aAlt = gKeyDownAlt;
+    
+    if (aCtrl) {
+        if (pKey == __KEY__0) { mTestIndex = 0; LoadTest(); return; }
+        if (pKey == __KEY__1) { mTestIndex = 1; LoadTest(); return; }
+        if (pKey == __KEY__2) { mTestIndex = 2; LoadTest(); return; }
+        if (pKey == __KEY__3) { mTestIndex = 3; LoadTest(); return; }
+        if (pKey == __KEY__4) { mTestIndex = 4; LoadTest(); return; }
+        if (pKey == __KEY__5) { mTestIndex = 5; LoadTest(); return; }
+        if (pKey == __KEY__6) { mTestIndex = 6; LoadTest(); return; }
+        if (pKey == __KEY__7) { mTestIndex = 7; LoadTest(); return; }
+        if (pKey == __KEY__8) { mTestIndex = 8; LoadTest(); return; }
+        if (pKey == __KEY__9) { mTestIndex = 9; LoadTest(); return; }
+    }
+    
+    
     
     if (pKey == __KEY__0) { mExportIndex = 0; SaveConfig(); }
     if (pKey == __KEY__1) { mExportIndex = 1; SaveConfig(); }
@@ -921,6 +938,11 @@ void GameEditor::WaveMoveDown() {
 
 void GameEditor::WaveSelect(int pIndex) {
     mSection.WaveSelect(pIndex);
+    
+    if (mEditorPlaybackEnabled) {
+        RefreshPlayback();
+    }
+    
 }
 
 int GameEditor::WaveCount(int pIndex) {
@@ -940,6 +962,11 @@ int GameEditor::WaveIndex() {
 void GameEditor::SpawnSelect(int pIndex) {
     if (mSection.mCurrentWave != NULL) {
         mSection.mCurrentWave->mSelectedSpawnIndex = pIndex;
+        
+        //TODO: For some reason we weren't doing this. Do we remember why?
+        //if (mEditorPlaybackEnabled == true) {
+        //    RefreshPlayback();
+        //}
     }
 }
 
@@ -1262,8 +1289,10 @@ void GameEditor::LoadCleared() {
 }
 
 void GameEditor::Autosave() {
-    FString aAutosavePath = gDirDocuments + FString("editor_autosave_") + FString(mExportIndex) + FString(".json");
-    Save(aAutosavePath.c());
+    if (mTestMode == false) {
+        FString aAutosavePath = gDirDocuments + FString("editor_autosave_") + FString(mExportIndex) + FString(".json");
+        Save(aAutosavePath.c());
+    }
 }
 
 void GameEditor::Autoload() {
@@ -1308,14 +1337,33 @@ void GameEditor::SelectClosestObject(float pX, float pY) {
 }
 
 void GameEditor::SaveAt(int pIndex) {
-    FString aPath = gDirExport + FString("export_section_") + FString(pIndex) + FString(".json");
+    mTestMode = false;
+    FString aPath = gDirDocuments + FString("export_section_") + FString(pIndex) + FString(".json");
     Save(aPath.c());
 }
 
 void GameEditor::LoadAt(int pIndex) {
-    FString aPath = gDirExport + FString("export_section_") + FString(pIndex) + FString(".json");
+    mTestMode = false;
+    FString aPath = gDirDocuments + FString("export_section_") + FString(pIndex) + FString(".json");
     Load(aPath.c());
 }
+
+void GameEditor::LoadTest() {
+    mTestMode = true;
+    
+    FString aNumberString = FString(mTestIndex);
+    
+    while (aNumberString.mLength < 2) {
+        aNumberString = FString("0") + aNumberString;
+    }
+    
+    FString aPath = FString("test_section_") + aNumberString;
+    printf("Loading Test: %s\n", aPath.c());
+    
+    Load(aPath.c());
+}
+
+
 
 void GameEditor::Save(const char *pFile) {
     FJSON aJSON;
@@ -1344,7 +1392,6 @@ void GameEditor::Load(const char *pFile) {
     }
     
     RefreshPlayback();
-    
 }
 
 
@@ -1365,6 +1412,7 @@ void GameEditor::LoadConfig() {
     if (aConfigNode == NULL) return;
     mExportIndex = aConfigNode->GetInt("export_index", mExportIndex);
 }
+
 
 
 

@@ -1,4 +1,8 @@
 
+A.) Require a scrolling text bubble marquee of level sections as they are loaded up... So we can see which sections spawn when...
+
+B.) Need to be able to quickly load test_section_x so we can look at them. Perhaps Ctrl + Shift + 1, 2, 3, etc?
+
 1.) Sections need timer. When all waves have passed and only "perms" are left, sections need timer for
     when all sections fly away...
 

@@ -115,7 +115,11 @@ void EditorMenuGameTestUtils::Notify(void *pSender, const char *pNotification) {
     if (gGameContainer == NULL) { return; }
     
     
-    if (pSender == mButtonCloseEditor) { gApp->EditorTestSwitchToEditor(); }
+    if (pSender == mButtonCloseEditor) {
+#ifdef EDITOR_MODE
+        gApp->EditorTestSwitchToEditor();
+#endif
+    }
     
     
     

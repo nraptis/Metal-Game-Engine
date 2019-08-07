@@ -573,7 +573,7 @@ void GameFormationEditor::Save() {
     
     if (gEditor == NULL) { return; }
     
-    FString aPath = gDirExport + FString("formation_export_") + FString(gEditor->mExportIndex) + FString(".json");
+    FString aPath = gDirDocuments + FString("formation_export_") + FString(gEditor->mExportIndex) + FString(".json");
     
     FJSON aJSON;
     aJSON.mRoot = mFormation.Save();
@@ -589,7 +589,7 @@ void GameFormationEditor::Load() {
     
     if (gEditor == NULL) { return; }
     
-    FString aPath = gDirExport + FString("formation_export_") + FString(gEditor->mExportIndex) + FString(".json");
+    FString aPath = gDirDocuments + FString("formation_export_") + FString(gEditor->mExportIndex) + FString(".json");
     
     FJSON aJSON;
     aJSON.Load(aPath.c());

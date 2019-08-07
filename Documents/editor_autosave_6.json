@@ -1,35 +1,4 @@
 {
 	"section": true,
-	"wave_list": [
-		{
-			"path": {
-				"node_list": [
-					{
-						"x_con": 200,
-						"y_con": 500,
-						"y_con_offset": -30.000000
-					},
-					{
-						"x_con": 500,
-						"y_con": 500,
-						"y_con_offset": -30.000000,
-						"decel": 225,
-						"wait": 9999
-					}
-				]
-			},
-			"spawn": [
-				{
-					"motion": {
-						"slice_list": [
-							{
-								"type": 3,
-								"speed_class": -100
-							}
-						]
-					}
-				}
-			]
-		}
-	]
+	"wave_list": []
 }

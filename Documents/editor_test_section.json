@@ -2,33 +2,160 @@
 	"section": true,
 	"wave_list": [
 		{
-			"spawn_spacing": 90,
-			"max_spawn_size": 393,
+			"spawn_spacing": 180,
 			"path": {
-				"speed_class": 100,
+				"smooth": true,
+				"speed_class": 300,
 				"node_list": [
 					{
 						"x_con": 200,
 						"y_con": 500
 					},
 					{
-						"x_con": 500,
-						"y_con": 500,
-						"decel": 150,
-						"accel": 150,
-						"wait": 150
+						"x_con": 300,
+						"x_con_offset": 20.000000,
+						"y_con": 500
+					},
+					{
+						"x_con": 300,
+						"x_con_offset": 30.000000,
+						"y_con": 300,
+						"y_con_offset": 30.000000
+					},
+					{
+						"x_con": 700,
+						"x_con_offset": -30.000000,
+						"y_con": 300,
+						"y_con_offset": 30.000000
+					},
+					{
+						"x_con": 700,
+						"x_con_offset": -20.000000,
+						"y_con": 500
+					},
+					{
+						"x_con": 850,
+						"y_con": 500
+					}
+				]
+			},
+			"spawn": [
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{}
+			]
+		},
+		{
+			"spawn_spacing": 250,
+			"creation_prev_wave_complete": true,
+			"max_spawn_size": 164,
+			"path": {
+				"smooth": true,
+				"speed_class": 300,
+				"node_list": [
+					{
+						"x_con": 800,
+						"y_con": 500
+					},
+					{
+						"x_con": 700,
+						"x_con_offset": 30.000000,
+						"y_con": 500
+					},
+					{
+						"x_con": 700,
+						"x_con_offset": -50.000000,
+						"y_con": 600
 					},
 					{
 						"x_con": 500,
-						"y_con": 150
+						"y_con": 800,
+						"y_con_offset": -70.000000,
+						"decel": 100,
+						"accel": 80,
+						"wait": 30
+					},
+					{
+						"x_con": 300,
+						"x_con_offset": 50.000000,
+						"y_con": 600
+					},
+					{
+						"x_con": 300,
+						"x_con_offset": -30.000000,
+						"y_con": 500
+					},
+					{
+						"x_con": 150,
+						"y_con": 500
 					}
 				]
 			},
 			"spawn": [
 				{
-					"formation": "f_grid_penta_ngon1_5sid_48rngs_3rngc_39pnts_35roff_solid__nodes_cfg31xb_allg.json"
+					"formation": "f_grid_penta_ngon1_5sid_45rngs_1rngc_31pnts_solid__nodes_cfg6xb_allg.json"
+				},
+				{
+					"spacing_offset": 300,
+					"formation": "f_grid_rect_3x3_44spc_89ful__nodes_cfg8xb_allg.json"
 				}
 			]
+		},
+		{
+			"spawn_spacing": 180,
+			"path": {
+				"smooth": true,
+				"speed_class": 200,
+				"node_list": [
+					{
+						"x_con": 200,
+						"y_con": 300
+					},
+					{
+						"x_con": 500,
+						"y_con": 400,
+						"y_con_offset": -40.000000
+					},
+					{
+						"x_con": 850,
+						"y_con": 300
+					}
+				]
+			},
+			"spawn": [
+				{},
+				{},
+				{}
+			]
+		}
+	],
+	"perm_list": [
+		{
+			"x": 49.999992,
+			"y": 40.613720,
+			"motion": {
+				"slice_list": [
+					{
+						"type": 3,
+						"linear_tick": 70,
+						"linear_time": 140,
+						"angle_span": 50
+					},
+					{
+						"type": 4,
+						"linear_tick": 60,
+						"linear_time": 120,
+						"radius": 50,
+						"pause_1": 20,
+						"pause_2": 20
+					}
+				]
+			},
+			"formation": "f_grid_rect_3x3_44spc_56ful__nodes_cfg5xb_allg.json"
 		}
 	]
 }

@@ -33,7 +33,6 @@ void LevelData::Update() {
         if (mCurrentSectionIndex < mSectionList.mCount) {
             mCurrentSection = (LevelSection *)(mSectionList[mCurrentSectionIndex++]);
             mCurrentSection->Spawn();
-            
         }
     }
     
@@ -43,8 +42,6 @@ void LevelData::Update() {
             DisposeSection(mCurrentSection);
         }
     }
-    
-    
 }
 
 

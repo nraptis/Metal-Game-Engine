@@ -68,6 +68,7 @@ public:
     //We ourselves are killed by external controller.
     int                                 mKillTimer;
     
+    bool                                mLoadError;
     void                                Load(const char *pFile);
     
 private:

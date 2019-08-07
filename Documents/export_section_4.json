@@ -2,7 +2,6 @@
 	"section": true,
 	"wave_list": [
 		{
-			"spawn_spacing": 90,
 			"max_spawn_size": 260,
 			"path": {
 				"node_list": [
@@ -28,7 +27,6 @@
 			]
 		},
 		{
-			"spawn_spacing": 90,
 			"creation_prev_wave_complete": true,
 			"max_spawn_size": 379,
 			"path": {
@@ -57,7 +55,6 @@
 			]
 		},
 		{
-			"spawn_spacing": 90,
 			"creation_prev_wave_complete": true,
 			"max_spawn_size": 164,
 			"path": {
@@ -86,7 +83,6 @@
 			]
 		},
 		{
-			"spawn_spacing": 90,
 			"creation_prev_wave_start": true,
 			"max_spawn_size": 164,
 			"path": {
@@ -115,7 +111,6 @@
 			]
 		},
 		{
-			"spawn_spacing": 90,
 			"creation_prev_wave_complete": true,
 			"max_spawn_size": 337,
 			"path": {

@@ -16,6 +16,7 @@
 #include "Dart.hpp"
 #include "Balloon.hpp"
 #include "BrickHead.hpp"
+#include "Level.hpp"
 #include "LevelData.hpp"
 #include "LevelPath.hpp"
 #include "Transform2D.hpp"

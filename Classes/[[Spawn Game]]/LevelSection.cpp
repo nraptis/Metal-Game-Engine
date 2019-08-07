@@ -16,6 +16,8 @@ LevelSection::LevelSection() {
     mCandidateWaveDelay = 0;
     mCandidateWaveIndex = 0;
     
+    mLoadError = false;
+    
     mIsComplete = false;
     mDelay = 100;
     mKillTimer = 8;
@@ -284,9 +286,18 @@ void LevelSection::FlyInReset(int pType) {
 }
 
 void LevelSection::Load(const char *pFile) {
+    
+    mLoadError = false;
+    
     LevelSectionBlueprint aBlueprint;
     FJSON aJSON;
     aJSON.Load(pFile);
+    
+    if (aJSON.mRoot == NULL) {
+        mLoadError = true;
+        return;
+    }
+    
     aBlueprint.Load(aJSON.mRoot);
     aBlueprint.Build(this);
 }

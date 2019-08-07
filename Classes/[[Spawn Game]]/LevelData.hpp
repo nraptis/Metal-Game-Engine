@@ -13,6 +13,12 @@
 #include "LevelWave.hpp"
 #include "LevelSection.hpp"
 
+//test_section_01.json
+//test_section_02.json
+//test_section_03.json
+//test_section_04.json
+
+
 class LevelData {
 public:
     LevelData();
@@ -30,11 +36,7 @@ public:
     LevelSection                    *mCurrentSection;
     int                             mCurrentSectionIndex;
     
-    
     int                             mInitialDelay;
-    
-    
-    
 };
 
 #endif /* LevelData_hpp */

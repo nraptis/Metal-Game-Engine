@@ -1,107 +1,102 @@
 {
 	"section": true,
-	"wave_list": [
+	"wave_list": [],
+	"perm_list": [
 		{
-			"blueprint": true,
-			"smooth": true,
-			"speed_class": 0,
-			"spawn_spacing": 92,
-			"creation_type": 0,
-			"creation_delay": 200,
-			"path": [
-				{
-					"x_con": 150,
-					"y_con": 500
-				},
-				{
-					"x_con": 500,
-					"y_con": 500,
-					"wait": 350
-				}
-			],
+			"x_con": 500,
+			"y_con": 300,
+			"path": {
+				"closed": true,
+				"node_list": [
+					{
+						"x_con": 300,
+						"y_con": 300
+					},
+					{
+						"x_con": 700,
+						"y_con": 300
+					},
+					{
+						"x_con": 700,
+						"y_con": 400,
+						"y_con_offset": 70.000000
+					},
+					{
+						"x_con": 300,
+						"y_con": 400,
+						"y_con_offset": 70.000000
+					}
+				]
+			},
 			"spawn": [
 				{
-					"spacing_offset": 0
+					"formation": "f_grid_rect_2x2_44spc_solid__nodes_cfg4xb_allg.json",
+					"motion": {
+						"slice_list": [
+							{
+								"type": 3,
+								"linear_tick": 50,
+								"linear_time": 100,
+								"angle_span": 50
+							}
+						]
+					}
+				},
+				{
+					"type": 1
+				},
+				{
+					"formation": "f_tr_circ_80sz_cfg4xb_spm.json"
+				},
+				{
+					"type": 1
 				}
 			]
 		},
 		{
-			"blueprint": true,
-			"smooth": true,
-			"speed_class": 0,
-			"spawn_spacing": 92,
-			"creation_type": 1,
-			"creation_delay": 200,
-			"path": [
-				{
-					"x_con": 150,
-					"y_con": 400
-				},
-				{
-					"x_con": 400,
-					"y_con": 400,
-					"wait": 300
-				}
-			],
+			"x_con": 500,
+			"y_con": 500,
+			"path": {
+				"closed": true,
+				"node_list": [
+					{
+						"x_con": 300,
+						"y_con": 500,
+						"y_con_offset": 60.000000
+					},
+					{
+						"x_con": 700,
+						"y_con": 500,
+						"y_con_offset": 60.000000
+					},
+					{
+						"x_con": 700,
+						"y_con": 600,
+						"y_con_offset": 100.000000
+					},
+					{
+						"x_con": 300,
+						"y_con": 600,
+						"y_con_offset": 100.000000
+					}
+				]
+			},
 			"spawn": [
 				{
-					"spacing_offset": 0,
-					"formation": "formation_tracer_rr_250r_60cr_point_1x1_stationary"
-				}
-			]
-		},
-		{
-			"blueprint": true,
-			"smooth": true,
-			"speed_class": 0,
-			"spawn_spacing": 92,
-			"creation_type": 0,
-			"creation_delay": 0,
-			"path": [
-				{
-					"x_con": 850,
-					"y_con": 500
+					"formation": "f_grid_rect_2x2_44spc_solid__nodes_cfg4xb_allg.json"
 				},
 				{
-					"x_con": 500,
-					"x_con_offset": 120.000000,
-					"y_con": 500,
-					"wait": 600
-				}
-			],
-			"spawn": [
+					"type": 1
+				},
+				{},
 				{
-					"spacing_offset": 0,
-					"formation": "formation_tracer_rr_250r_60cr_stationary"
-				}
-			]
-		},
-		{
-			"blueprint": true,
-			"smooth": false,
-			"speed_class": -300,
-			"spawn_spacing": 92,
-			"creation_type": 1,
-			"creation_delay": 0,
-			"path": [
-				{
-					"x_con": 500,
-					"y_con": 150
+					"type": 1
 				},
 				{
-					"x_con": 500,
-					"y_con": 500,
-					"wait": 400
+					"formation": "f_tr_circ_80sz_cfgrbrb_spm.json"
 				},
 				{
-					"x_con": 150,
-					"y_con": 500
-				}
-			],
-			"spawn": [
-				{
-					"spacing_offset": 0,
-					"formation": "f_tr_brbrbrbrbr_circ_250rd_spxs~tr_8ct_circ_140rd_spxs.json"
+					"type": 1
 				}
 			]
 		}

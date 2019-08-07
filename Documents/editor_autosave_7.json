@@ -1,42 +1,4 @@
 {
 	"section": true,
-	"wave_list": [
-		{
-			"spawn_spacing": 90,
-			"max_spawn_size": 185,
-			"path": {
-				"node_list": [
-					{
-						"x_con": 200,
-						"y_con": 500,
-						"y_con_offset": -30.000000
-					},
-					{
-						"x_con": 500,
-						"y_con": 500,
-						"y_con_offset": -30.000000,
-						"decel": 195,
-						"wait": 300
-					}
-				]
-			},
-			"spawn": [
-				{
-					"formation": "f_grid_tri_ngon1_3sid_54rngs_1rngc_130pnts_solid__nodes_cfg4xb_allg.json",
-					"motion": {
-						"slice_list": [
-							{
-								"type": 4,
-								"linear_tick": 35,
-								"linear_time": 70,
-								"radius": 40,
-								"pause_1": 20,
-								"pause_2": 20
-							}
-						]
-					}
-				}
-			]
-		}
-	]
+	"wave_list": []
 }

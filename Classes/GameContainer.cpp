@@ -172,11 +172,13 @@ void GameContainer::KeyDown(int pKey) {
     bool aAlt = gKeyDownAlt;
     
     if (pKey == __KEY__E) {
+#ifdef EDITOR_MODE
         if (aShift == false && aCtrl == true && aAlt == false) {
             if (mEditorMenu != NULL) {
                 gApp->EditorTestSwitchToEditor();
             }
         }
+#endif
     }
     
 }

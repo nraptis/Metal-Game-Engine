@@ -215,6 +215,11 @@ public:
     void                                        SaveConfig();
     void                                        LoadConfig();
     
+    //To load test sections...
+    bool                                        mTestMode;
+    int                                         mTestIndex;
+    void                                        LoadTest();
+    
     int                                         mAutosaveTimer;
     int                                         mEnqueueInitialLoad;
     

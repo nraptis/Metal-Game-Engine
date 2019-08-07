@@ -34,7 +34,7 @@ void FList::Size(int pSize) {
 
 void FList::Add(void *pItem) {
     if (pItem == NULL) { return; }
-	if (mCount>=mSize) {
+	if (mCount >= mSize) {
 		Size(mCount + mCount / 2 + 1);
 	}
 	mData[mCount]=pItem;
@@ -43,22 +43,22 @@ void FList::Add(void *pItem) {
 
 void FList::Insert(void *pItem, int pSlot) {
 	if (!pItem) return;
-	if (mCount==mSize) {
-		mSize=mCount+mCount/2+1;
-		void **aData=new void*[mSize];
-		void **aCopy=mData;
-		void **aPaste=aData;
-		void **aShelf=mData+mCount;
-		while (aCopy<aShelf) {
-			*aPaste=*aCopy;
+	if (mCount == mSize) {
+		mSize = mCount + mCount / 2 + 1;
+		void **aData = new void*[mSize];
+		void **aCopy = mData;
+		void **aPaste = aData;
+		void **aShelf = mData + mCount;
+		while (aCopy < aShelf) {
+			*aPaste = *aCopy;
 			aCopy++;
 			aPaste++;
 		}
 		delete[]mData;
-		mData=aData;
+		mData = aData;
 	}
-	if (pSlot<0) pSlot = 0;
-	if (pSlot>mCount) pSlot=mCount;
+	if (pSlot < 0) pSlot = 0;
+	if (pSlot > mCount) pSlot = mCount;
 	void **aSlot=&mData[pSlot-1];
 	void **aPaste=&mData[mCount];
 	void **aCopy=&mData[mCount-1];
@@ -125,7 +125,7 @@ void FList::Remove(void *pItem) {
 
 void *FList::FetchClosest(int pIndex) {
     if (pIndex <= 0) pIndex = 0;
-    if (pIndex>=mCount) pIndex = mCount - 1;
+    if (pIndex >= mCount) pIndex = mCount - 1;
     return Fetch(pIndex);
 }
 

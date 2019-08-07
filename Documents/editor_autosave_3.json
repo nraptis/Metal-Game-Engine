@@ -1,25 +1,136 @@
 {
 	"section": true,
-	"wave_list": [],
+	"wave_list": [
+		{
+			"path": {
+				"speed_class": 300,
+				"node_list": [
+					{
+						"x_con": 300,
+						"y_con": 300
+					},
+					{
+						"x_con": 700,
+						"y_con": 300
+					},
+					{
+						"x_con": 700,
+						"y_con": 400
+					},
+					{
+						"x_con": 300,
+						"y_con": 400
+					}
+				]
+			},
+			"spawn": [
+				{},
+				{
+					"spacing_offset": 20
+				},
+				{},
+				{
+					"spacing_offset": 10
+				},
+				{
+					"spacing_offset": 10
+				},
+				{},
+				{
+					"spacing_offset": 20
+				},
+				{},
+				{
+					"spacing_offset": -10
+				},
+				{
+					"spacing_offset": 10
+				}
+			]
+		},
+		{
+			"spawn_spacing": 130,
+			"creation_prev_wave_start": true,
+			"creation_prev_wave_complete": true,
+			"creation_screen_waves_clear": true,
+			"path": {
+				"speed_class": 200,
+				"node_list": [
+					{
+						"x_con": 700,
+						"y_con": 300
+					},
+					{
+						"x_con": 300,
+						"y_con": 300
+					},
+					{
+						"x_con": 300,
+						"y_con": 400
+					},
+					{
+						"x_con": 700,
+						"y_con": 400
+					}
+				]
+			},
+			"spawn": [
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{}
+			]
+		}
+	],
 	"perm_list": [
 		{
 			"x_con": 400,
-			"y_con": 400,
-			"formation": "f_grid_hexa_ngon1_6sid_46rngs_1rngc_36pnts_30roff_solid__nodes_cfg7xb_allg.json"
+			"y_con": 600,
+			"motion": {
+				"slice_list": [
+					{
+						"type": 2,
+						"speed_class": 100
+					},
+					{
+						"type": 4
+					},
+					{
+						"type": 5
+					}
+				]
+			},
+			"formation": "f_grid_hexa_ngon1_6sid_46rngs_1rngc_30pnts_86ful__nodes_cfg6xb_allg.json"
 		},
 		{
 			"x_con": 600,
-			"y_con": 400
-		},
-		{
-			"x_con": 400,
-			"y_con": 500,
-			"y_con_offset": 60.000000
-		},
-		{
-			"x_con": 600,
-			"y_con": 500,
-			"y_con_offset": 60.000000
+			"y_con": 600,
+			"motion": {
+				"slice_list": [
+					{
+						"type": 4,
+						"linear_tick": 50,
+						"linear_time": 100,
+						"radius": 42,
+						"pause_1": 20,
+						"pause_2": 20
+					},
+					{
+						"type": 5,
+						"linear_tick": 30,
+						"linear_time": 60,
+						"pause_1": 20,
+						"pause_2": 20
+					}
+				]
+			},
+			"formation": "f_grid_rect_3x3_44spc_89ful__nodes_cfg8xb_allg.json"
 		}
 	]
 }

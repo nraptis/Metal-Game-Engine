@@ -18,7 +18,7 @@
 #include "FJSON.hpp"
 
 #define EDITOR_MODE 1
-//#undef EDITOR_MODE
+#undef EDITOR_MODE
 
 #ifdef EDITOR_MODE
 class GameEditor;
@@ -125,7 +125,6 @@ public:
     
     FSprite                                 mRay[4];
     
-    
     FSprite                                 mGameAreaMarker;
     
     
@@ -165,11 +164,8 @@ public:
     float                                   mTestSin1;
     float                                   mTestSin2;
     
-    
     float                                   mAmbientRoll1;
     float                                   mAmbientRoll2;
-    
-    
     
 };
 
