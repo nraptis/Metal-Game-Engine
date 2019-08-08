@@ -10,6 +10,7 @@
 #include "LevelFormationTracer.hpp"
 #include "LevelWaveSpawn.hpp"
 #include "LevelPermSpawn.hpp"
+#include "core_includes.h"
 
 LevelFormation::LevelFormation() {
     
@@ -338,3 +339,48 @@ bool LevelFormation::HasAnyObjects() {
     return false;
 }
 
+bool LevelFormation::EditorHasAnyTracers() {
+    if (mTracerList.mCount > 0) { return true; }
+    return false;
+}
+
+bool LevelFormation::EditorHasNonTracers() {
+    if (mSpawnNodeList.mCount > 0) { return true; }
+    return false;
+}
+
+bool LevelFormation::EditorHasMixedTypes() {
+    
+    unordered_set<int> aTypeSet;
+    EnumList(LevelFormationNode, aNode, mSpawnNodeList) {
+        aTypeSet.insert(aNode->mObjectType);
+    }
+    
+    EnumList(LevelFormationTracer, aTracer, mTracerList) {
+        EnumList(LevelFormationNode, aNode, aTracer->mSpawnNodeList) {
+            aTypeSet.insert(aNode->mObjectType);
+        }
+    }
+    return (aTypeSet.size() > 1);
+}
+
+bool LevelFormation::EditorHasBalloonsOnly() {
+    unordered_set<int> aTypeSet;
+    EnumList(LevelFormationNode, aNode, mSpawnNodeList) {
+        aTypeSet.insert(aNode->mObjectType);
+    }
+    
+    EnumList(LevelFormationTracer, aTracer, mTracerList) {
+        EnumList(LevelFormationNode, aNode, aTracer->mSpawnNodeList) {
+            aTypeSet.insert(aNode->mObjectType);
+        }
+    }
+    
+    if (aTypeSet.find(GAME_OBJECT_TYPE_BALLOON) != aTypeSet.end()) {
+        if (aTypeSet.size() == 1) {
+            return true;
+        }
+    }
+    
+    return false;
+}

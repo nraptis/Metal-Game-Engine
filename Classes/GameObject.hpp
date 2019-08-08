@@ -37,6 +37,8 @@ public:
     virtual void                            Draw3D();
     virtual void                            Kill();
     
+    FString                                 TypeString();
+    
     //Basically, an object / dart moves from (startX, startY) to (endX, endY)
     virtual bool                            WillCollide(float pStartX, float pStartY, float pEndX, float pEndY);
     float                                   mEllipseRadiusH;

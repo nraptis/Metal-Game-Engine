@@ -25,9 +25,6 @@ void LevelData::Update() {
     
     if (mInitialDelay > 0) {
         --mInitialDelay;
-        if (mInitialDelay <= 0) {
-            Log("About to spawn First SECTION...\n");
-        }
         return;
     }
     
@@ -36,9 +33,6 @@ void LevelData::Update() {
     //They can be force-timed. They MUST remain for X ticks...
     //If they run out of kill-ables, and they have no forced time, they go away.
     //If they just run out of time, then they go away... (you lose lives for balloons in this case)
-    
-    //mPreviousSection
-    
     
     if (mCurrentSection == NULL) {
         if (mCurrentSectionIndex < mSectionList.mCount) {
@@ -55,21 +49,15 @@ void LevelData::Update() {
     if (mPreviousSection != NULL) {
         mPreviousSection->Update();
         if (mPreviousSection->mFlyOutType == SECTION_FLY_NONE) {
-            printf("KILL SECTION: %s\n", mPreviousSection->mName.c());
-            
             DisposeSection(mPreviousSection);
         }
-        
     }
     
     if (mCurrentSection != NULL) {
         mCurrentSection->Update();
         if (mCurrentSection->mIsComplete) {
-            
             if (mCurrentSection->HasAnyObjects()) {
-                
                 if (mPreviousSection != NULL) {
-                    printf("*** WARNING *** Section Overlap ***\n\n");
                     DisposeSection(mPreviousSection);
                 }
                 
@@ -83,17 +71,27 @@ void LevelData::Update() {
     }
 }
 
-
 void LevelData::DisposeObject(GameObject *pObject) {
     
 }
 
 void LevelData::DisposeSection(LevelSection *pLevelSection) {
     
-    printf("DISPOSE SECTION: %s\n", pLevelSection->mName.c());
-    
     if (pLevelSection == mCurrentSection) { mCurrentSection = NULL; }
     if (pLevelSection == mPreviousSection) { mPreviousSection = NULL; }
+    
+    if (pLevelSection != NULL) {
+        
+        FList aList;
+        pLevelSection->HandOffAllPermanentGameObjects(&aList);
+        for (int i=0;i<aList.mCount;i++) {
+            GameObject *aObject = ((GameObject *)aList.mData[i]);
+            if (gGame != NULL) {
+                gGame->FlyOffMiss(aObject);
+            }
+        }
+    }
+    
     
     if (gGame->mTestOverlay != NULL) {
         gGame->mTestOverlay->RemoveBubble(pLevelSection->mName.c());
@@ -101,7 +99,6 @@ void LevelData::DisposeSection(LevelSection *pLevelSection) {
         gGame->mTestOverlay->SetBubbleStatusAllComplete(pLevelSection->mName.c(), false);
         gGame->mTestOverlay->SetBubbleStatusPermsComplete(pLevelSection->mName.c(), false);
         gGame->mTestOverlay->SetBubbleStatusWavesComplete(pLevelSection->mName.c(), false);
-        
     }
     
     if (pLevelSection != NULL) {

@@ -298,6 +298,17 @@ bool LevelPermSpawn::HasAnyObjects() {
     return false;
 }
 
+void LevelPermSpawn::HandOffAllGameObjects(FList *pList) {
+    if (mObject != NULL && pList != NULL) {
+        pList->Add(mObject);
+    }
+    mObject = NULL;
+    
+    if (mFormation != NULL) {
+        mFormation->HandOffAllGameObjects(pList);
+    }
+}
+
 
 
 

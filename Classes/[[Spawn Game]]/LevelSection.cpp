@@ -69,6 +69,7 @@ void LevelSection::Reset() {
     mCandidateWaveDelay = 0;
 }
 
+/*
 void LevelSection::Restart() {
     mRemoveActiveWaveList.RemoveAll();
     mActiveWaveList.RemoveAll();
@@ -77,6 +78,7 @@ void LevelSection::Restart() {
     mIsComplete = false;
     mCandidateWaveDelay = 0;
 }
+*/
 
 void LevelSection::Spawn() {
     Log("LevelSection::Spawn()\n");
@@ -187,17 +189,17 @@ void LevelSection::Update() {
         }
     }
     
-    if (mCandidateWaveIndex >= mWaveList.mCount) {
-        if (mActiveWaveList.mCount <= 0) {
-            aAllWavesComplete = true;
-        }
+    if (mCandidateWaveIndex < mWaveList.mCount) {
+        aAllWavesComplete = false;
     }
     
-    EnumList(LevelWave, aWave, mActiveWaveList) {
-        if (aWave->mIsComplete == false) {
-            aAllWavesComplete = false;
-        }
-    }
+    //if (mCandidateWaveIndex >= mWaveList.mCount) {
+    //    if (mActiveWaveList.mCount <= 0) {
+    //        aAllWavesComplete = true;
+    //    }
+    //}
+    
+    
     
     EnumList(LevelSectionPermanent, aPerm, mPermList) {
         aPerm->Update();
@@ -311,13 +313,19 @@ void LevelSection::Update() {
         }
     }
     
-    //bool aAllWavesComplete = true;
-    //bool aAllPermsComplete = true;
+    EnumList(LevelWave, aWave, mActiveWaveList) {
+        if (aWave->mIsComplete == false) {
+            aAllWavesComplete = false;
+        }
+    }
+    
+    if (mCandidateWave != NULL) {
+        aAllWavesComplete = false;
+    }
     
     if (aAllWavesComplete == true && aAllPermsComplete == true) {
         mIsComplete = true;
     }
-    
     
     if (gGame->mTestOverlay != NULL) {
         gGame->mTestOverlay->SetBubbleStatusWavesComplete(mName.c(), aAllWavesComplete);
@@ -325,11 +333,6 @@ void LevelSection::Update() {
         gGame->mTestOverlay->SetBubbleStatusAllComplete(mName.c(), mIsComplete);
         gGame->mTestOverlay->SetBubbleStatusHasObjects(mName.c(), HasAnyObjects());
     }
-    
-    
-    
-    
-    
     
     EnumList(LevelWave, aWave, mActiveWaveList) {
         aWave->Update();
@@ -398,6 +401,18 @@ bool LevelSection::HasAnyObjects() {
     return false;
 }
 
+void LevelSection::HandOffAllPermanentGameObjects(FList *pList) {
+    
+    EnumList(LevelSectionPermanent, aPerm, mPermList) {
+        aPerm->HandOffAllGameObjects(pList);
+    }
+    
+    printf("Handing off all game objects, count = %d\n", pList->mCount);
+    
+    
+}
+
+
 void LevelSection::Load(const char *pFile) {
     
     mName = pFile;
@@ -418,7 +433,3 @@ void LevelSection::Load(const char *pFile) {
     aBlueprint.Load(aJSON.mRoot);
     aBlueprint.Build(this);
 }
-
-
-
-

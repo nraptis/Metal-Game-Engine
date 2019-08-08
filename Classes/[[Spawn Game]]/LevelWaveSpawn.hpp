@@ -26,7 +26,7 @@ public:
     void                                Spawn();
     
     void                                Reset();
-    void                                Restart();
+    //void                                Restart();
     
     void                                Update();
     void                                Draw();

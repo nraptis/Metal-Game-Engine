@@ -754,13 +754,10 @@ void Game::DisposeAllObjects() {
 
 //...
 void Game::FlyOffMiss(GameObject *pObject) {
-    
     if (pObject != NULL) {
-        printf("Miss Object...\n");
+        printf("Miss Object... [%s][%x]\n", pObject->TypeString().c(), pObject);
         pObject->Kill();
     }
-    
-    
 }
 
 void Game::ReleaseDart() {
@@ -922,8 +919,31 @@ void Game::Load() {
     Level aLevel;
     //aLevel.AddSection("test_section_01");
     
-    aLevel.AddSection("test_section_03");
-    aLevel.AddSection("test_section_02");
+    //aLevel.AddSection("test_section_03");
+    //aLevel.AddSection("test_section_02");
+    
+    
+    aLevel.AddSection("test_section_three_simple_waves_simultaneous");
+    aLevel.AddSection("test_section_perm_only_all_balloons");
+    
+    //test_section_three_complex_waves_staggered_only_tracers.json
+    //test_section_one_complex_wave.json
+    //test_section_one_simple_wave.json
+    //test_section_perm_only_all_balloons_all_tracers.json
+    //test_section_perm_only_all_balloons.json
+    //test_section_perm_only_all_brickheads.json
+    //test_section_three_simple_waves_simultaneous.json
+    //test_section_three_simple_waves_staggered.json
+    
+    
+    //test_section_one_complex_wave
+    //test_section_one_simple_wave
+    //test_section_perm_only_all_balloons
+    //test_section_perm_only_all_brickheads
+    //test_section_three_simple_waves_simultaneous
+    //test_section_three_simple_waves_staggered
+    //test_section_perm_only_all_balloons_all_tracers
+    //test_section_three_complex_waves_staggered_only_tracers
     
     //aLevel.AddSection("test_section_04");
     LevelData *aData = aLevel.Build();

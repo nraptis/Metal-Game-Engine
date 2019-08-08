@@ -24,7 +24,7 @@ public:
     ~LevelSection();
     
     void                                Reset();
-    void                                Restart();
+    //void                                Restart();
     
     void                                Spawn();
     void                                Update();
@@ -38,6 +38,8 @@ public:
     //Do we have any objects sitting on the board?
     //Note: This assumes mIsComplete = true (everything is finished spawning)
     bool                                HasAnyObjects();
+    
+    void                                HandOffAllPermanentGameObjects(FList *pList);
     
     
     void                                FlyInReset(int pType);

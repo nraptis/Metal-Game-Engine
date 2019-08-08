@@ -19,7 +19,10 @@ public:
     
     FString                             mSectionName; //"section_1.json" or "section_1"
     
-    int                                 mTime; //Once time counts down to 0, remove the section...
+    int                                 mAliveTimer;
+    
+    int                                 mKillTimer;
+    
     
     //Fly-in-speed?
     //Mirror-able?

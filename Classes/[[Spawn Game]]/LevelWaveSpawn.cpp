@@ -181,6 +181,7 @@ void LevelWaveSpawn::Reset() {
     mDidUpdateAfterSpawn = false;
 }
 
+/*
 void LevelWaveSpawn::Restart() {
     if (mObject) {
         mObject->Kill();
@@ -202,6 +203,7 @@ void LevelWaveSpawn::Restart() {
     mDistanceTraveled = 0.0f;
     mKillTimer = 8;
 }
+*/
 
 void LevelWaveSpawn::Update() {
     

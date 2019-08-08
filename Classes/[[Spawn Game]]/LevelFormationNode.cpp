@@ -88,6 +88,7 @@ void LevelFormationNode::Reset() {
     mBaseY = 0.0f;
 }
 
+/*
 void LevelFormationNode::Restart() {
     if (mObject) {
         mObject->Kill();
@@ -97,6 +98,7 @@ void LevelFormationNode::Restart() {
     mBaseY = 0.0f;
     mKillTimer = 8;
 }
+*/
 
 void LevelFormationNode::Update() {
     PositionObject();

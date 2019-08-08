@@ -1,48 +1,4 @@
 {
 	"section": true,
-	"wave_list": [
-		{
-			"spawn_spacing": 90,
-			"max_spawn_size": 268,
-			"path": {
-				"node_list": [
-					{
-						"x_con": 200,
-						"y_con": 400
-					},
-					{
-						"x_con": 500,
-						"y_con": 400,
-						"decel": 150,
-						"accel": 50,
-						"wait": 300
-					},
-					{
-						"x_con": 500,
-						"y_con": 500,
-						"decel": 50,
-						"accel": 40,
-						"wait": 300
-					},
-					{
-						"x_con": 850,
-						"y_con": 500
-					}
-				]
-			},
-			"spawn": [
-				{
-					"formation": "f_grid_penta_ngon1_5sid_45rngs_2rngc_31pnts_solid__nodes_cfg16xb_allg.json",
-					"motion": {
-						"slice_list": [
-							{
-								"type": 3,
-								"angle_span": 40
-							}
-						]
-					}
-				}
-			]
-		}
-	]
+	"wave_list": []
 }

@@ -189,6 +189,15 @@ void GameObject::Kill() {
     FObject::Kill();
 }
 
+FString GameObject::TypeString() {
+    
+    if (mGameObjectType == GAME_OBJECT_TYPE_BALLOON) { return FString("balloob"); }
+    if (mGameObjectType == GAME_OBJECT_TYPE_BRICKHEAD) { return FString("brickhead"); }
+    
+    return FString("unknown");
+    
+}
+
 bool GameObject::IsRequiredToClearForSectionCompletion() {
     if (mGameObjectType == GAME_OBJECT_TYPE_BALLOON) { return true; }
     

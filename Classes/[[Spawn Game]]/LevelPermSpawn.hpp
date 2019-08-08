@@ -24,7 +24,7 @@ public:
     void                                Spawn();
     bool                                IsClearForSectionCompletion();
     bool                                HasAnyObjects();
-    
+    void                                HandOffAllGameObjects(FList *pList);
     
     void                                Reset();
     

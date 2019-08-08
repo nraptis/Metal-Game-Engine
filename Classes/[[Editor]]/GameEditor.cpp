@@ -274,7 +274,8 @@ void GameEditor::Update() {
                 mEditorWave.Update();
                 if (mEditorWave.mIsComplete) {
                     if (mEditorWaveLoop) {
-                        mEditorWave.Restart();
+                        //mEditorWave.Restart();
+                        RefreshPlayback();
                     }
                 }
                 
@@ -287,7 +288,8 @@ void GameEditor::Update() {
                 mEditorSection.Update();
                 if (mEditorSection.mIsComplete) {
                     if (mEditorSectionLoop) {
-                        mEditorSection.Restart();
+                        //mEditorSection.Restart();
+                        RefreshPlayback();
                     }
                 }
                 

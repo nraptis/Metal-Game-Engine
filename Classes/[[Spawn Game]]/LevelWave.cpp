@@ -39,6 +39,7 @@ LevelWave::~LevelWave() {
     FreeList(LevelWaveSpawn, mSpawnDeleteList);
 }
 
+
 void LevelWave::Reset() {
     mIsComplete = false;
     mPath.Reset();
@@ -50,6 +51,7 @@ void LevelWave::Reset() {
     mSpawnIndex = 0;
 }
 
+/*
 void LevelWave::Restart() {
     mIsComplete = false;
     EnumList(LevelWaveSpawn, aSpawn, mSpawnList) {
@@ -57,6 +59,7 @@ void LevelWave::Restart() {
     }
     mSpawnIndex = 0;
 }
+*/
 
 void LevelWave::Prepare() {
     mPath.Finalize();
@@ -163,8 +166,6 @@ void LevelWave::Update() {
         }
     }
     
-    
-    
     EnumList(LevelWaveSpawn, aSpawn, mRecentlyCompletedList) {
         HandleSpawnComplete(aSpawn);
     }
@@ -174,19 +175,20 @@ void LevelWave::Update() {
     
     
     if (mSpawnIndex >= mSpawnList.mCount) {
+        
         bool aComplete = true;
+        
         EnumList(LevelWaveSpawn, aSpawn, mSpawnList) {
             if (aSpawn->mIsComplete == false) {
                 aComplete = false;
             }
         }
+        
         if (aComplete == true) {
             mIsComplete = true;
         }
         
     }
-    
-    
 }
 
 void LevelWave::Draw() {

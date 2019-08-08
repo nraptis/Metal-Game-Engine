@@ -22,7 +22,7 @@ public:
     ~LevelSectionPermanent();
     
     void                                Reset();
-    void                                Restart();
+    //void                                Restart();
     
     void                                Prepare();
     void                                Spawn();
@@ -30,6 +30,7 @@ public:
     bool                                mDidSpawn;
     bool                                IsClearForSectionCompletion();
     bool                                HasAnyObjects();
+    void                                HandOffAllGameObjects(FList *pList);
     
     
     void                                Update();

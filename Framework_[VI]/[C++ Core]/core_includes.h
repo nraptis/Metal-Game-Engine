@@ -38,6 +38,11 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include <unordered_set>
+#include <unordered_map>
+#include <set>
+
+
 #ifndef WIN_32_ENV
 #include <strings.h>
 #endif

@@ -174,6 +174,38 @@ void EditorMenuFormationPicker::ApplyFilter() {
     FString aText = mTextBoxFilter->mText.c();
     
     
+    //mCheckBoxTracersOnly
+    
+    
+    //UICheckBox                                  *mCheckBoxBalloonsOnly;
+    //UICheckBox                                  *;
+    //UICheckBox                                  *;
+    //UICheckBox                                  *;
+    
+    bool aMixedOnly = false;
+    bool aBalloonOnly = false;
+    bool aTracersOnly = false;
+    bool aNoTracersOnly = false;
+    
+    if (mCheckBoxBalloonsOnly != NULL) {
+        aBalloonOnly = mCheckBoxBalloonsOnly->mIsChecked;
+    }
+    
+    if (mCheckBoxMixedOnly != NULL) {
+        aMixedOnly = mCheckBoxMixedOnly->mIsChecked;
+    }
+    
+    if (mCheckBoxTracersOnly != NULL) {
+        aTracersOnly = mCheckBoxTracersOnly->mIsChecked;
+    }
+    
+    if (mCheckBoxNoTracersOnly != NULL) {
+        aNoTracersOnly = mCheckBoxNoTracersOnly->mIsChecked;
+    }
+    
+    
+   
+    
     mScrollContent->ClearAll();
     
     FreeList(LevelFormation, mFormationListFiltered);
@@ -183,13 +215,24 @@ void EditorMenuFormationPicker::ApplyFilter() {
         bool aUse = true;
         
         if (aText.mLength > 0) {
-            
-            if (aFormation->mID.FindI(aText) == -1) {
-                aUse = false;
-            }
-            
+            if (aFormation->mID.FindI(aText) == -1) { aUse = false; }
         }
         
+        if (aTracersOnly) {
+            if (aFormation->EditorHasAnyTracers() == false) { aUse = false; }
+        }
+        
+        if (aNoTracersOnly) {
+            if (aFormation->EditorHasAnyTracers() == true) { aUse = false; }
+        }
+        
+        if (aMixedOnly) {
+            if (aFormation->EditorHasMixedTypes() == false) { aUse = false; }
+        }
+        
+        if (aBalloonOnly) {
+            if (aFormation->EditorHasBalloonsOnly() == false) { aUse = false; }
+        }
         
         if (aUse == true) {
             mFormationListFiltered.Add(aFormation->Clone());
@@ -206,7 +249,6 @@ void EditorMenuFormationPicker::ApplyFilter() {
     FrameDidUpdate();
     
     mDidSetUp = false;
-    
 }
 
 

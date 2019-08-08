@@ -9,6 +9,8 @@
 #include "Level.hpp"
 
 Level::Level() {
+    ResetAll();
+    
     
 }
 
@@ -19,7 +21,9 @@ Level::~Level() {
 void Level::AddSection(const char *pSectionName) {
     
     LevelNode *aNode = new LevelNode(pSectionName);
-    //TODO: Plug in whichever necessary configuration values...
+    
+    aNode->mAliveTimer = mAliveTimer;
+    aNode->mKillTimer = mKillTimer;
     
     LevelGroup *aCurrentGroup = GetCurrentGroup();
     aCurrentGroup->AddNode(aNode);
@@ -87,4 +91,14 @@ void Level::GroupSetCount(int pCount) {
     aCurrentGroup->mCount = pCount;
 }
 
+void Level::SetAliveTimer(int pTicks) {
+    mAliveTimer = pTicks;
+}
 
+void Level::SetKillTimer(int pTicks) {
+    mKillTimer = pTicks;
+    
+    
+    //mAliveTimer = 0;
+    //mKillTimer = 0;
+}

@@ -28,8 +28,6 @@ public:
     bool                                        IsClearForSectionCompletion(); //For perms
     bool                                        HasAnyObjects();
     
-    
-    
     void                                        Reset();
     void                                        Spawn(LevelMotionController *pMotionController);
     void                                        Update(LevelMotionController *pMotionController);
@@ -80,6 +78,11 @@ public:
     
     //For Editor
     void                                        EditorKillAllObjects();
+    
+    bool                                        EditorHasAnyTracers();
+    bool                                        EditorHasNonTracers();
+    bool                                        EditorHasMixedTypes();
+    bool                                        EditorHasBalloonsOnly();
     
 private:
     

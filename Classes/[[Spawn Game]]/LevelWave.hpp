@@ -25,7 +25,7 @@ public:
     ~LevelWave();
     
     void                                Reset();
-    void                                Restart();
+    //void                                Restart();
     
     void                                Prepare();
     

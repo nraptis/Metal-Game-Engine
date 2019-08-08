@@ -73,10 +73,6 @@ void LevelSectionPermanent::Reset() {
     }
 }
 
-void LevelSectionPermanent::Restart() {
-    
-}
-
 void LevelSectionPermanent::Prepare() {
     
     for (int i=0;i<mPath.mNodeList.mCount;i++) {
@@ -331,3 +327,18 @@ bool LevelSectionPermanent::HasAnyObjects() {
     return false;
 }
 
+void LevelSectionPermanent::HandOffAllGameObjects(FList *pList) {
+    
+    if (mObject != NULL && pList != NULL) {
+        pList->Add(mObject);
+    }
+    mObject = NULL;
+    
+    if (mFormation != NULL) {
+        mFormation->HandOffAllGameObjects(pList);
+    }
+    
+    EnumList(LevelPermSpawn, aSpawn, mSpawnList) {
+        aSpawn->HandOffAllGameObjects(pList);
+    }
+}

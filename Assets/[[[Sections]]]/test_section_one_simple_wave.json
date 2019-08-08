@@ -2,8 +2,6 @@
 	"section": true,
 	"wave_list": [
 		{
-			"spawn_spacing": 340,
-			"max_spawn_size": 268,
 			"path": {
 				"node_list": [
 					{
@@ -21,10 +19,6 @@
 				]
 			},
 			"spawn": [
-				{},
-				{
-					"formation": "f_grid_penta_ngon1_5sid_45rngs_2rngc_31pnts_solid__nodes_cfg16xb_allg.json"
-				},
 				{}
 			]
 		}

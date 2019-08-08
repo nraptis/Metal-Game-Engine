@@ -35,9 +35,19 @@ public:
     
     LevelGroup                              *GetCurrentGroup(); //Always returns a group, if there is no group, makes one...
     
-    
     void                                    GroupBegin();
     void                                    GroupSetCount(int pCount);
+    
+    
+    //What this means, we keep the section on the screen for "ticks" no matter what...
+    void                                    SetAliveTimer(int pTicks);
+    int                                     mAliveTimer;
+    
+    //What this means, after ticks counts down, we evacuate the section no matter what...
+    void                                    SetKillTimer(int pTicks);
+    int                                     mKillTimer;
+    
+    void                                    ResetAll();
     
     
 private:
