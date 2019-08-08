@@ -816,14 +816,14 @@ void GameEditor::RefreshPlayback() {
     
     if (mEditorPlaybackFromOffScreen == true) {
         if (mEditorPlaybackFromOffScreenType == 1) {
-            mEditorSection.FlyInReset(SECTION_FLY_IN_TOP);
+            mEditorSection.FlyInReset(SECTION_FLY_TOP);
         } else if (mEditorPlaybackFromOffScreenType == 2) {
-            mEditorSection.FlyInReset(SECTION_FLY_IN_RIGHT);
+            mEditorSection.FlyInReset(SECTION_FLY_RIGHT);
         } else {
-            mEditorSection.FlyInReset(SECTION_FLY_IN_LEFT);
+            mEditorSection.FlyInReset(SECTION_FLY_LEFT);
         }
     } else {
-        mEditorSection.FlyInReset(SECTION_FLY_IN_NONE);
+        mEditorSection.FlyInReset(SECTION_FLY_NONE);
     }
     
     mEditorSection.Spawn();

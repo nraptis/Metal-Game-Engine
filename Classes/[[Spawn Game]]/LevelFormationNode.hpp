@@ -44,7 +44,7 @@ public:
     float                               mBaseX;
     float                               mBaseY;
     
-    LevelFormationNode         *Clone(LevelFormation *pFormation);
+    LevelFormationNode                  *Clone(LevelFormation *pFormation);
     
     
     

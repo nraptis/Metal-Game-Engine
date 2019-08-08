@@ -9,7 +9,7 @@
 #ifndef ShaderProgram_hpp
 #define ShaderProgram_hpp
 
-#include "FString.h"
+#include "FString.hpp"
 #include "FUniforms.hpp"
 #include "FBuffer.hpp"
 

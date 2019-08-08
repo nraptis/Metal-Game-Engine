@@ -175,7 +175,6 @@ void FTouchManager::Update() {
                 aTouch->Move(aAction->mX, aAction->mY);
             }
         } else if(aAction->mTouchState == TOUCH_STATE_DOWN) {
-            gAppBase->ProcessTouchDown(aAction->mX, aAction->mY, aAction->mData);
             FTouch *aTouch = DequeueTouch(aAction->mData);
             if(aTouch) {
                 aTouch->mRenderIndex = mRenderIndex;
@@ -183,6 +182,9 @@ void FTouchManager::Update() {
                 mRenderIndex++;
                 if(mRenderIndex > 5)mRenderIndex = 0;
             }
+            
+            gAppBase->ProcessTouchDown(aAction->mX, aAction->mY, aAction->mData);
+            
         } else { //if((aAction->mTouchState == TOUCH_STATE_RELEASED) || (aAction->mTouchState == TOUCH_STATE_CANCELED))
             gAppBase->ProcessTouchUp(aAction->mX, aAction->mY, aAction->mData);
             FinishedTouch(GetTouch(aAction->mData));

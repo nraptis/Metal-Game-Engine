@@ -47,6 +47,7 @@ public:
     bool                                    mDidOriginateOnWave;
     bool                                    mDidOriginateAsPermanent;
     
+    bool                                    IsRequiredToClearForSectionCompletion();
     
     //Essentially, the objects will "disperse" as a cluster, and pMagnitude will be 1.0 for
     //the furthest object away from the centroid of all the objects in the cluster.........

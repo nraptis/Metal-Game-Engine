@@ -34,9 +34,13 @@ public:
     void                            AddSection(LevelSection *pLevelSection);
     FList                           mSectionList;
     LevelSection                    *mCurrentSection;
+    LevelSection                    *mPreviousSection;
     int                             mCurrentSectionIndex;
     
     int                             mInitialDelay;
+    
+    bool                            mSectionDir;
+    
 };
 
 #endif /* LevelData_hpp */

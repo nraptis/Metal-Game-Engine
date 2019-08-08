@@ -21,7 +21,7 @@
 #include "LevelPath.hpp"
 #include "Transform2D.hpp"
 #include "Transform3D.hpp"
-
+#include "GameInfoOverlay.hpp"
 
 #define GAME_WIDTH 768
 #define GAME_HEIGHT 1280
@@ -69,9 +69,10 @@ public:
     //...
     void                                        FlyOffMiss(GameObject *pObject);
     
-    
     //Mainly used by editor to "flush" screen before re-spawn...
     void                                        DisposeAllObjects();
+    
+    GameInfoOverlay                             *mTestOverlay;
     
     
     float                                       mRenderShiftX;

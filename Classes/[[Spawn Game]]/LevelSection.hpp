@@ -9,10 +9,10 @@
 #ifndef LevelSection_hpp
 #define LevelSection_hpp
 
-#define SECTION_FLY_IN_NONE 0
-#define SECTION_FLY_IN_LEFT 1
-#define SECTION_FLY_IN_TOP 2
-#define SECTION_FLY_IN_RIGHT 3
+#define SECTION_FLY_NONE 0
+#define SECTION_FLY_LEFT 1
+#define SECTION_FLY_TOP 2
+#define SECTION_FLY_RIGHT 3
 
 #include "GameObject.hpp"
 #include "LevelWave.hpp"
@@ -33,10 +33,24 @@ public:
     float                               mX;
     float                               mY;
     
+    bool                                mDidSpawn;
+    
+    //Do we have any objects sitting on the board?
+    //Note: This assumes mIsComplete = true (everything is finished spawning)
+    bool                                HasAnyObjects();
+    
+    
     void                                FlyInReset(int pType);
     int                                 mFlyInType;
     int                                 mFlyInTimer;
     int                                 mFlyInTime;
+    
+    void                                FlyOut(int pType);
+    int                                 mFlyOutType;
+    int                                 mFlyOutTimer;
+    int                                 mFlyOutTime;
+    
+    
     
     
     void                                DisposeObject(GameObject *pObject);
@@ -44,11 +58,8 @@ public:
     void                                AddWave(LevelWave *pLevelWave);
     FList                               mWaveList;
     
-    
     void                                AddPerm(LevelSectionPermanent *pPerm);
     FList                               mPermList;
-    
-    
     
     int                                 mCandidateWaveIndex;
     
@@ -71,17 +82,15 @@ public:
     bool                                mLoadError;
     void                                Load(const char *pFile);
     
+    FString                             mName;
+    
 private:
     
     FList                               mKillWaveList;
     FList                               mDeleteWaveList;
     
-    
     FList                               mKillPermList;
     FList                               mDeletePermList;
-    
-    
-    
 };
 
 #endif /* LevelSection_hpp */

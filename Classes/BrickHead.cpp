@@ -62,13 +62,6 @@ void BrickHead::Draw3D() {
     
     GameObject::Draw3D();
     
-    
-    //mModel = &gApp->mBrickhead;
-    //mSprite = &gApp->mBrickheadMap;
-    
-    // = &gApp->mBrickheadCage;
-    // = &gApp->mBrickheadCageMap;
-    
     if (mAccessoryModel != NULL && mAccessorySprite != NULL) {
         
         if (mUniform != NULL) {

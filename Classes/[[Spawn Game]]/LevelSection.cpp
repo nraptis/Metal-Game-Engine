@@ -19,6 +19,9 @@ LevelSection::LevelSection() {
     mLoadError = false;
     
     mIsComplete = false;
+    
+    mDidSpawn = false;
+    
     mDelay = 100;
     mKillTimer = 8;
     
@@ -27,9 +30,15 @@ LevelSection::LevelSection() {
     mX = 0.0f;
     mY = 0.0f;
     
-    mFlyInType = SECTION_FLY_IN_NONE;
+    mFlyInType = SECTION_FLY_NONE;
     mFlyInTimer = 0;
     mFlyInTime = 200;
+    
+    mFlyOutType = SECTION_FLY_NONE;
+    mFlyOutTimer = 0;
+    mFlyOutTime = 200;
+    
+    mName = "???";
 }
 
 LevelSection::~LevelSection() {
@@ -53,9 +62,10 @@ void LevelSection::Reset() {
     }
     mPermList.RemoveAll();
     
-    
     mCandidateWaveIndex = mStartWaveIndex;
     mCandidateWave = NULL;
+    mIsComplete = false;
+    mDidSpawn = false;
     mCandidateWaveDelay = 0;
 }
 
@@ -64,6 +74,7 @@ void LevelSection::Restart() {
     mActiveWaveList.RemoveAll();
     mCandidateWaveIndex = mStartWaveIndex;
     mCandidateWave = NULL;
+    mIsComplete = false;
     mCandidateWaveDelay = 0;
 }
 
@@ -77,20 +88,30 @@ void LevelSection::Spawn() {
     EnumList(LevelSectionPermanent, aPerm, mPermList) {
         aPerm->Spawn();
     }
+    
+    mDidSpawn = true;
 }
 
 void LevelSection::Update() {
     
+    bool aAllWavesComplete = true;
+    bool aAllPermsComplete = true;
+    
+    if (mDidSpawn == false) {
+        aAllWavesComplete = false;
+        aAllPermsComplete = false;
+        mIsComplete = false;
+    }
+    
     
     bool aBlockWaves = false;
     
-    
-    if (mFlyInType != SECTION_FLY_IN_NONE) {
+    if (mFlyInType != SECTION_FLY_NONE) {
         
         mFlyInTimer += 1;
         
         if (mFlyInTimer >= mFlyInTime) {
-            mFlyInType = SECTION_FLY_IN_NONE;
+            mFlyInType = SECTION_FLY_NONE;
             mFlyInTimer = mFlyInTime;
             mX = 0.0f;
             mY = 0.0f;
@@ -102,16 +123,16 @@ void LevelSection::Update() {
             float aEndX = 0.0f;
             float aEndY = 0.0f;
             
-            if (mFlyInType == SECTION_FLY_IN_LEFT) {
-                aStartX = -GAME_WIDTH;
+            if (mFlyInType == SECTION_FLY_LEFT) {
+                aStartX = -(GAME_WIDTH + GAME_WIDTH / 2);
                 aStartY = 0;
             }
-            if (mFlyInType == SECTION_FLY_IN_TOP) {
+            if (mFlyInType == SECTION_FLY_TOP) {
                 aStartX = 0;
-                aStartY = -GAME_HEIGHT;
+                aStartY = -(GAME_HEIGHT + GAME_HEIGHT / 2);
             }
-            if (mFlyInType == SECTION_FLY_IN_RIGHT) {
-                aStartX = GAME_WIDTH;
+            if (mFlyInType == SECTION_FLY_RIGHT) {
+                aStartX = GAME_WIDTH + GAME_WIDTH / 2;
                 aStartY = 0;
             }
             
@@ -126,11 +147,64 @@ void LevelSection::Update() {
         }
     }
     
-    EnumList(LevelSectionPermanent, aPerm, mPermList) {
-        aPerm->Update();
+    
+    if (mFlyOutType != SECTION_FLY_NONE) {
+        
+        mFlyOutTimer += 1;
+        
+        if (mFlyOutTimer >=  mFlyOutTime) {
+            mFlyOutType = SECTION_FLY_NONE;
+            mFlyOutTimer = mFlyOutTime;
+            mX = 0.0f;
+            mY = 0.0f;
+        } else {
+            
+            float aStartX = 0.0f;
+            float aStartY = 0.0f;
+            
+            float aEndX = 0.0f;
+            float aEndY = 0.0f;
+            
+            if (mFlyOutType == SECTION_FLY_LEFT) {
+                aEndX = -(GAME_WIDTH + GAME_WIDTH / 2);
+                aEndY = 0;
+            }
+            if (mFlyOutType == SECTION_FLY_TOP) {
+                aEndX = 0;
+                aEndY = -(GAME_HEIGHT + GAME_HEIGHT / 2);
+            }
+            if (mFlyOutType == SECTION_FLY_RIGHT) {
+                aEndX = GAME_WIDTH + GAME_WIDTH / 2;
+                aEndY = 0;
+            }
+            
+            float aPercent = ((float)mFlyOutTimer) / ((float)mFlyOutTime);
+            if (aPercent <= 0.0f) { aPercent = 0.0f; }
+            if (aPercent >= 1.0f) { aPercent = 1.0f; }
+            
+            mX = aStartX + (aEndX - aStartX) * aPercent;
+            mY = aStartY + (aEndY - aStartY) * aPercent;
+        }
     }
     
+    if (mCandidateWaveIndex >= mWaveList.mCount) {
+        if (mActiveWaveList.mCount <= 0) {
+            aAllWavesComplete = true;
+        }
+    }
     
+    EnumList(LevelWave, aWave, mActiveWaveList) {
+        if (aWave->mIsComplete == false) {
+            aAllWavesComplete = false;
+        }
+    }
+    
+    EnumList(LevelSectionPermanent, aPerm, mPermList) {
+        aPerm->Update();
+        if (aPerm->IsClearForSectionCompletion() == false) {
+            aAllPermsComplete = false;
+        }
+    }
     
     if (mDelay > 0) {
         --mDelay;
@@ -156,8 +230,6 @@ void LevelSection::Update() {
         }
     }
     
-    
-    
     if (mCandidateWave != NULL) {
         
         bool aCanSpawnWave = true;
@@ -172,6 +244,7 @@ void LevelSection::Update() {
                 aAllComplete = false;
             }
         }
+        
         
         if (mCandidateWave->mCreationRequiresPrevWaveComplete == true) {
             if (aAllComplete == false) {
@@ -227,7 +300,6 @@ void LevelSection::Update() {
                             && aCheckWave->mCreationRequiresScreenWavesClear == false
                             && aCheckWave->mCreationRequiresScreenPermsClear == false) {
                             
-                            printf("Spawn Subsequent Wave... [%d]\n", mCandidateWaveIndex);
                             mActiveWaveList.Add(aCheckWave);
                             aCheckWave->Prepare();
                             aCheckAhead = true;
@@ -238,6 +310,26 @@ void LevelSection::Update() {
             }
         }
     }
+    
+    //bool aAllWavesComplete = true;
+    //bool aAllPermsComplete = true;
+    
+    if (aAllWavesComplete == true && aAllPermsComplete == true) {
+        mIsComplete = true;
+    }
+    
+    
+    if (gGame->mTestOverlay != NULL) {
+        gGame->mTestOverlay->SetBubbleStatusWavesComplete(mName.c(), aAllWavesComplete);
+        gGame->mTestOverlay->SetBubbleStatusPermsComplete(mName.c(), aAllPermsComplete);
+        gGame->mTestOverlay->SetBubbleStatusAllComplete(mName.c(), mIsComplete);
+        gGame->mTestOverlay->SetBubbleStatusHasObjects(mName.c(), HasAnyObjects());
+    }
+    
+    
+    
+    
+    
     
     EnumList(LevelWave, aWave, mActiveWaveList) {
         aWave->Update();
@@ -283,9 +375,34 @@ void LevelSection::AddPerm(LevelSectionPermanent *pPerm) {
 void LevelSection::FlyInReset(int pType) {
     mFlyInType = pType;
     mFlyInTimer = 0;
+    Update();
+}
+
+void LevelSection::FlyOut(int pType) {
+    mFlyOutType = pType;
+    mFlyOutTimer = 0;
+    Update();
+}
+
+//Do we have any objects sitting on the board?
+//Note: Be careful, this will assume that all spawning has taken place...
+bool LevelSection::HasAnyObjects() {
+    if (mIsComplete == false) { return true; }
+    
+    EnumList(LevelSectionPermanent, aPerm, mPermList) {
+        if (aPerm->HasAnyObjects() == true) {
+            return true;
+        }
+    }
+    
+    return false;
 }
 
 void LevelSection::Load(const char *pFile) {
+    
+    mName = pFile;
+    mName.RemovePath();
+    mName.RemoveExtension();
     
     mLoadError = false;
     

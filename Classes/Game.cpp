@@ -10,6 +10,11 @@
 #include "Game.hpp"
 #include "FAnimation.hpp"
 
+#ifdef EDITOR_MODE
+#include "GameEditor.hpp"
+#endif
+
+
 Game *gGame = NULL;
 
 Game::Game() {
@@ -17,6 +22,9 @@ Game::Game() {
     mName = "[Game]";
     
     gGame = this;
+    
+    
+    mTestOverlay = NULL;
     
     mRenderShiftX = 0.0f;
     mRenderShiftY = 0.0f;
@@ -258,9 +266,35 @@ void Game::LayoutTransform() {
 
 void Game::Layout() {
     
+    //TODO: This is only for build mode.
+    
+    
+    
 }
 
 void Game::Update() {
+    
+    bool aShowOverlay = true;
+#ifdef EDITOR_MODE
+    if (gEditor == NULL) {
+        aShowOverlay = false;
+    }
+#endif
+    
+    if (aShowOverlay) {
+        if (mTestOverlay == NULL) {
+            
+            mTestOverlay = new GameInfoOverlay();
+            AddChild(mTestOverlay);
+            
+        }
+        
+    }
+    
+    if (mTestOverlay != NULL) {
+        mTestOverlay->SetFrame(0.0f, 0.0f, mWidth, mHeight);
+    }
+    
     
     if (mSlowMo == true) {
         
@@ -511,12 +545,16 @@ void Game::Draw3D() {
 }
 
 void Game::TouchDown(float pX, float pY, void *pData) {
-    
-    if (gRand.GetBool()) {
-        gApp->mSound1.Play();
-    } else {
-        gApp->mSound2.Play();
+
+    if (gTouch.mTouchCount >= 3) {
+        printf("Hack: Killing all balloons..!");
+        
+        EnumList(GameObject, aObject, gGame->mBalloonList.mObjectList) {
+            aObject->Kill();
+        }
     }
+    
+    
     
     if (mDartTouch) {
         ResetDartTouch();
@@ -736,7 +774,6 @@ void Game::ReleaseDart() {
         float aDiffY = -mDartPullY;
         
         float aPullLength = aDiffX * aDiffX + aDiffY * aDiffY;
-        
         if (aPullLength > SQRT_EPSILON) {
             
             mDartList.Add(mCurrentDart);
@@ -754,9 +791,6 @@ void Game::ReleaseDart() {
             aReleaseFactor = FAnimation::EaseInCirc(aReleaseFactor) * 0.5f + aReleaseFactor * 0.5f;
             
             float aReleaseVelocity = mDartReleaseVelocityMin + (mDartReleaseVelocityMax - mDartReleaseVelocityMin) * aReleaseFactor;
-            
-            
-            //aReleaseVelocity *= 50.0f;
             
             mCurrentDart->Fling(aDiffX * aReleaseVelocity, aDiffY * aReleaseVelocity);
             
@@ -886,9 +920,11 @@ void Game::Load() {
     
     
     Level aLevel;
-    aLevel.AddSection("test_section_01");
-    aLevel.AddSection("test_section_02");
+    //aLevel.AddSection("test_section_01");
+    
     aLevel.AddSection("test_section_03");
+    aLevel.AddSection("test_section_02");
+    
     //aLevel.AddSection("test_section_04");
     LevelData *aData = aLevel.Build();
     

@@ -10,7 +10,7 @@
 #define FRAMEWORK_OS_sound_H
 
 
-#include "FSound.h"
+#include "FSound.hpp"
 
 class FSoundInstanceMac : public FSoundInstance
 {

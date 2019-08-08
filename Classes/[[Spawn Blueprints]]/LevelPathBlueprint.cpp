@@ -607,10 +607,7 @@ void LevelPathBlueprint::Build(LevelPath *pPath) {
         } else {
             aNode->mGameY = aNode->mBaseGameY;
         }
-        
-        printf("aNode->mGameX = %f aNode->mGameY = %f\n", aNode->mGameX, aNode->mGameY);
     }
-    printf("=======\n");
     
     for (int i=0;i<mNodeList.mCount;i++) {
         LevelPathNodeBlueprint *aNode = (LevelPathNodeBlueprint *)mNodeList.mData[i];

@@ -24,6 +24,12 @@ public:
     LevelFormation();
     ~LevelFormation();
     
+    bool                                        mDidSpawn;
+    bool                                        IsClearForSectionCompletion(); //For perms
+    bool                                        HasAnyObjects();
+    
+    
+    
     void                                        Reset();
     void                                        Spawn(LevelMotionController *pMotionController);
     void                                        Update(LevelMotionController *pMotionController);
@@ -40,7 +46,6 @@ public:
     bool                                        mDidOriginateOnWave;
     bool                                        mDidOriginateAsPermanent;
     
-    bool                                        mDidSpawn;
     
     FString                                     mID;
     

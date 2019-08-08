@@ -189,6 +189,12 @@ void GameObject::Kill() {
     FObject::Kill();
 }
 
+bool GameObject::IsRequiredToClearForSectionCompletion() {
+    if (mGameObjectType == GAME_OBJECT_TYPE_BALLOON) { return true; }
+    
+    return false;
+}
+
 bool GameObject::WillCollide(float pStartX, float pStartY, float pEndX, float pEndY) {
     float aDirX = pEndX - pStartX;
     float aDirY = pEndY - pStartY;

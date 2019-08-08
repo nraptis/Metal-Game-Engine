@@ -37,8 +37,7 @@
 
 using namespace std;
 
-pthread_mutex_t gThreadMutex = PTHREAD_MUTEX_INITIALIZER;
-NSMutableSet *gLockStrongReferenceSet = [[NSMutableSet alloc] init];
+//pthread_mutex_t gThreadMutex = PTHREAD_MUTEX_INITIALIZER;
 FList gThreadLockList;
 
 void os_initialize_outlets() {
@@ -68,38 +67,7 @@ bool os_draws_in_background() {
 }
 
 
-
-/*
-pthread_mutex_t gFrameMutex = PTHREAD_MUTEX_INITIALIZER;
-
-void os_frame_mutex_enter() {
-    Log("os_frame_mutex_enter()\n");
-    pthread_mutex_lock( &gFrameMutex );
-}
-
-void os_frame_mutex_leave() {
-    Log("os_frame_mutex_leave()\n");
-    pthread_mutex_unlock( &gFrameMutex );
-}
-
-
-pthread_mutex_t gInterfaceMutex = PTHREAD_MUTEX_INITIALIZER;
-void os_interface_mutex_enter() {
-    pthread_mutex_lock( &gInterfaceMutex );
-}
-
-void os_interface_mutex_leave() {
-    pthread_mutex_unlock( &gInterfaceMutex );
-}
-*/
-
-
-
-
-//Since having a collision when creating locks can cause a potential
-//freeze-up, we need to make sure only one lock uperation occurs at
-//any one time... Mutexes lock up, so we do it the old fashioned way.
-//volatile static bool gLockActionActive = false;
+NSMutableSet *gLockStrongReferenceSet = [[NSMutableSet alloc] init];
 
 int os_create_thread_lock() {
     RecursiveLockWrapper *aContainer = [[RecursiveLockWrapper alloc] init];
@@ -175,8 +143,12 @@ void os_log(const char *pMessage)
 }
 
 unsigned int os_system_time() {
+    //unsigned long aMili = chrono::system_clock::now().time_since_epoch() / chrono::milliseconds(1);
+    //return (unsigned int)aMili;
+    
     unsigned long aMili = chrono::system_clock::now().time_since_epoch() / chrono::milliseconds(1);
     return (unsigned int)aMili;
+    
 }
 
 unsigned char *os_read_file(const char *pFileName, unsigned int &pLength) {

@@ -269,7 +269,34 @@ void LevelPermSpawn::RefreshPathPosition() {
     }
 }
 
+bool LevelPermSpawn::IsClearForSectionCompletion() {
+    
+    if (mDidSpawn == false) { return false; }
+    
+    if (mObject != NULL) {
+        if (mObject->IsRequiredToClearForSectionCompletion() == true) {
+            return false;
+        }
+    }
+    
+    if (mFormation != NULL) {
+        if (mFormation->IsClearForSectionCompletion() == false) {
+            return false;
+        }
+    }
+    
+    return true;
+}
 
+bool LevelPermSpawn::HasAnyObjects() {
+    if (mObject != NULL) { return true; }
+    if (mFormation != NULL) {
+        if (mFormation->HasAnyObjects() == true) {
+            return true;
+        }
+    }
+    return false;
+}
 
 
 

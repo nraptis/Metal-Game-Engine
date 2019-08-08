@@ -27,6 +27,11 @@ public:
     void                                Prepare();
     void                                Spawn();
     
+    bool                                mDidSpawn;
+    bool                                IsClearForSectionCompletion();
+    bool                                HasAnyObjects();
+    
+    
     void                                Update();
     void                                Draw();
     

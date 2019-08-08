@@ -22,6 +22,9 @@ public:
     virtual ~LevelPermSpawn();
     
     void                                Spawn();
+    bool                                IsClearForSectionCompletion();
+    bool                                HasAnyObjects();
+    
     
     void                                Reset();
     

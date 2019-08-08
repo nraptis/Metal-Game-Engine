@@ -7,12 +7,12 @@
 //
 
 #import "core_includes.h"
-#import "core_app_shell.h"
+#import "core_app_shell.hpp"
 #import "AppDelegate.h"
 #import "RootViewController.h"
 #import "OpenGLViewController.h"
 #import "OpenGLView.h"
-#import "FMatrix.h"
+#import "FMatrix.hpp"
 #import "FImage.hpp"
 #import "FApp.hpp"
 

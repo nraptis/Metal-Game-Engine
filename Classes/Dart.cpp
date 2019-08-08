@@ -124,16 +124,16 @@ void Dart::Update() {
     
     mTipX = aTip.mX;
     mTipY = aTip.mY;
-    
 }
 
 void Dart::Draw() {
     
     GameObject::Draw();
     
-    FVec2 aTipPoint = GetTipPoint();
-    Graphics::SetColor(0.25f, 0.25f, 1.0f, 0.75f);
-    Graphics::DrawLine(mTransform.mX, mTransform.mY, aTipPoint.mX, aTipPoint.mY);
+    //FVec2 aTipPoint = GetTipPoint();
+    //Graphics::SetColor(0.25f, 0.25f, 1.0f, 0.75f);
+    //Graphics::DrawLine(mTransform.mX, mTransform.mY, aTipPoint.mX, aTipPoint.mY);
+    
 }
 
 void Dart::Draw3D() {

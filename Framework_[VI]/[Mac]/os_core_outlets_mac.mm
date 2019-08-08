@@ -66,6 +66,7 @@ void os_detach_thread(void (*pFunction)(void *pArg), void *pArg) {
     pthread_create(&aThread, &aAttr, (void*(*)(void*))pFunction, pArg);
 }
 
+/*
 void os_execute_on_main_thread(void (*pFunc)()) {
     printf("os_execute_on_main_thread - BANNED\n");
     if ([NSThread isMainThread]) {
@@ -76,6 +77,7 @@ void os_execute_on_main_thread(void (*pFunc)()) {
         });
     }
 }
+*/
 
 void os_message_box(const char *pTitle, const char *pBody) {
     NSString * tmpTitle = (pTitle) ? [NSString stringWithUTF8String : pTitle] : nil;

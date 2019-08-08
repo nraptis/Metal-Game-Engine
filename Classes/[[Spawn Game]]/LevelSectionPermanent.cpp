@@ -17,6 +17,8 @@
 LevelSectionPermanent::LevelSectionPermanent(LevelSection *pSection) {
     mSection = pSection;
     
+    mDidSpawn = false;
+    
     mObject = NULL;
     mFormation = NULL;
     
@@ -54,6 +56,8 @@ void LevelSectionPermanent::Reset() {
     //mFormationID.Clear();
     //mObjectType = GAME_OBJECT_TYPE_BALLOON;
     
+    mDidSpawn = false;
+    
     EnumList(LevelPermSpawn, aSpawn, mSpawnList) {
         aSpawn->Reset();
         mSpawnKillList.Add(aSpawn);
@@ -75,20 +79,12 @@ void LevelSectionPermanent::Restart() {
 
 void LevelSectionPermanent::Prepare() {
     
-    
-    
     for (int i=0;i<mPath.mNodeList.mCount;i++) {
-        LevelPathNode *aNode = ((LevelPathNode *)mPath.mNodeList.Fetch(i));
-        
-        
-        printf("Node[%d] (%f x %f) \n", i, aNode->mX, aNode->mY);
-        
+        //LevelPathNode *aNode = ((LevelPathNode *)mPath.mNodeList.Fetch(i));
+        //TODO: We do what here?
     }
     
     mPath.Finalize();
-    
-    
-    
 }
 
 void LevelSectionPermanent::Spawn() {
@@ -102,8 +98,6 @@ void LevelSectionPermanent::Spawn() {
         delete mFormation;
         mFormation = NULL;
     }
-    
-
     
     //Either we are using the path or no...
     
@@ -187,6 +181,8 @@ void LevelSectionPermanent::Spawn() {
             }
         }
     }
+    
+    mDidSpawn = true;
     
     PositionObject();
 }
@@ -289,3 +285,49 @@ void LevelSectionPermanent::PositionObject() {
     }
     
 }
+
+bool LevelSectionPermanent::IsClearForSectionCompletion() {
+    if (mDidSpawn == false) { return false; }
+    
+    if (mObject != NULL) {
+        if (mObject->IsRequiredToClearForSectionCompletion() == true) {
+            return false;
+        }
+    }
+    
+    if (mFormation != NULL) {
+        if (mFormation->IsClearForSectionCompletion() == false) {
+            return false;
+        }
+    }
+    
+    EnumList(LevelPermSpawn, aSpawn, mSpawnList) {
+        if (aSpawn->IsClearForSectionCompletion() == false) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+bool LevelSectionPermanent::HasAnyObjects() {
+    
+    if (mObject != NULL) {
+        return true;
+    }
+    
+    if (mFormation != NULL) {
+        if (mFormation->HasAnyObjects() == true) {
+            return true;
+        }
+    }
+    
+    EnumList(LevelPermSpawn, aSpawn, mSpawnList) {
+        if (aSpawn->HasAnyObjects() == true) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+

@@ -294,7 +294,47 @@ void LevelFormation::EditorKillAllObjects() {
     
 }
 
+bool LevelFormation::IsClearForSectionCompletion() {
+    
+    if (mDidSpawn == false) { return false; }
+    
+    EnumList(LevelFormationNode, aNode, mSpawnNodeList) {
+        if (aNode->mObject != NULL) {
+            if (aNode->mObject->IsRequiredToClearForSectionCompletion() == true) {
+                return false;
+            }
+        }
+    }
+    
+    EnumList(LevelFormationTracer, aTracer, mTracerList) {
+        EnumList(LevelFormationNode, aNode, aTracer->mSpawnNodeList) {
+            if (aNode->mObject != NULL) {
+                if (aNode->mObject->IsRequiredToClearForSectionCompletion() == true) {
+                    return false;
+                }
+            }
+        }
+    }
+    
+    return true;
+}
 
-
-
+bool LevelFormation::HasAnyObjects() {
+    
+    EnumList(LevelFormationNode, aNode, mSpawnNodeList) {
+        if (aNode->mObject != NULL) {
+            return true;
+        }
+    }
+    
+    EnumList(LevelFormationTracer, aTracer, mTracerList) {
+        EnumList(LevelFormationNode, aNode, aTracer->mSpawnNodeList) {
+            if (aNode->mObject != NULL) {
+                return true;
+            }
+        }
+    }
+    
+    return false;
+}
 
