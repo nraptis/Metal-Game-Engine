@@ -922,9 +922,52 @@ void Game::Load() {
     //aLevel.AddSection("test_section_03");
     //aLevel.AddSection("test_section_02");
     
+    //aLevel.SetAliveTimer(100);
     
-    aLevel.AddSection("test_section_three_simple_waves_simultaneous");
+    aLevel.AddSection("test_section_perm_only_all_brickheads");
+    
     aLevel.AddSection("test_section_perm_only_all_balloons");
+    
+    //aLevel.SetKillTimer(100);
+    //aLevel.AddSection("test_section_perm_only_all_balloons");
+    
+    //aLevel.SetKillTimer(100);
+    //aLevel.AddSection("test_section_perm_only_all_balloons_all_tracers");
+    
+    //aLevel.SetAliveTimer(100);
+    //aLevel.AddSection("test_section_perm_only_all_balloons");
+    
+    //aLevel.SetKillTimer(100);
+    //aLevel.AddSection("test_section_perm_only_all_brickheads");
+    
+    //aLevel.SetKillTimer(100);
+    //aLevel.AddSection("test_section_perm_only_all_balloons_all_tracers");
+    
+    //test_section_three_complex_waves_staggered_only_tracers.json
+    //
+    //
+    //test_section_perm_only_all_balloons_all_tracers.json
+    //test_section_perm_only_all_balloons.json
+    //test_section_perm_only_all_brickheads.json
+    //
+    //
+    
+    /*
+    aLevel.SetAliveTimer(500);
+    aLevel.AddSection("test_section_perm_only_all_brickheads");
+    
+    aLevel.SetKillTimer(500);
+    aLevel.AddSection("test_section_perm_only_all_balloons");
+    
+    
+    aLevel.SetKillTimer(400);
+    aLevel.AddSection("test_section_perm_only_all_balloons_all_tracers");
+    
+    aLevel.ResetAll();
+    aLevel.AddSection("test_section_three_complex_waves_staggered_only_tracers");
+    
+    aLevel.AddSection("test_section_perm_only_all_balloons");
+    */
     
     //test_section_three_complex_waves_staggered_only_tracers.json
     //test_section_one_complex_wave.json
@@ -934,7 +977,6 @@ void Game::Load() {
     //test_section_perm_only_all_brickheads.json
     //test_section_three_simple_waves_simultaneous.json
     //test_section_three_simple_waves_staggered.json
-    
     
     //test_section_one_complex_wave
     //test_section_one_simple_wave
@@ -984,6 +1026,3 @@ void Game::LoadEditorTest() {
     mLevelData = aLevel;
     mLevelController->Setup(mLevelData);
 }
-
-
-

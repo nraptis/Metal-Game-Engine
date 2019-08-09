@@ -11,7 +11,6 @@
 Level::Level() {
     ResetAll();
     
-    
 }
 
 Level::~Level() {
@@ -49,6 +48,9 @@ LevelData *Level::Build() {
         
         LevelSection *aSection = new LevelSection();
         aSection->Load(aNode->mSectionName.c());
+        aSection->mAliveTimer = aNode->mAliveTimer;
+        aSection->mKillTimer = aNode->mKillTimer;
+        
         if (aSection->mLoadError) {
             printf("** Failed To Load Section: [%s]\n", aNode->mSectionName.c());
             delete aSection;
@@ -93,12 +95,15 @@ void Level::GroupSetCount(int pCount) {
 
 void Level::SetAliveTimer(int pTicks) {
     mAliveTimer = pTicks;
+    if (mAliveTimer != 0) { mKillTimer = 0; }
 }
 
 void Level::SetKillTimer(int pTicks) {
     mKillTimer = pTicks;
-    
-    
-    //mAliveTimer = 0;
-    //mKillTimer = 0;
+    if (mKillTimer != 0) { mAliveTimer = 0; }
+}
+
+void Level::ResetAll() {
+    SetAliveTimer(0);
+    SetKillTimer(0);
 }

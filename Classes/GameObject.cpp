@@ -191,7 +191,7 @@ void GameObject::Kill() {
 
 FString GameObject::TypeString() {
     
-    if (mGameObjectType == GAME_OBJECT_TYPE_BALLOON) { return FString("balloob"); }
+    if (mGameObjectType == GAME_OBJECT_TYPE_BALLOON) { return FString("balloon"); }
     if (mGameObjectType == GAME_OBJECT_TYPE_BRICKHEAD) { return FString("brickhead"); }
     
     return FString("unknown");

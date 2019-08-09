@@ -1,19 +1,34 @@
-1.) Sections need timer. When all waves have passed and only "perms" are left, sections need timer for
+
+
+1.) Spawning mode for "waves only" does not need to animate in..
+
+2.) Section enter / leave condition for previous / current section is not synchronized.
+
+3.) Section enter / leave should randomly pick between right and left.
+
+4.) First section should enter from the TOP, unless it contains no permanents.
+
+
+A.) Win condition? We need to capture the win condition.
+
+B.) Losing lives when balloons fly offscreen.
+
+
+
+
+
+
+
+DONE.) Sections need timer. When all waves have passed and only "perms" are left, sections need timer for
     when all sections fly away...
 
-2.) Need way to prevent fly-in and fly-out from happening simultaneously.
+DONE.) Need way to synchronize the fly-out direction and fly-in direction.
 
-A.) Need way to synchronize the fly-out direction and fly-in direction.
+DONE.) Need way to wait for fly-out when "all waves" section spawns, so we don't need to fly in? Alternatively we can just always fly in and not notice the fly-in?
 
-B.) Need way to wait for fly-out when "all waves" section spawns, so we don't need to fly in? Alternatively we can just always fly in and not notice the fly-in?
+DONE.) Sections transitions with and without "perms" required to have work.
 
-3.) Win condition? We need to capture the win condition.
-
-4.) Losing lives when balloons fly offscreen.
-
-5.) Sections transitions with and without "perms" required to have work.
-
-
+DONE.) Need way to prevent fly-in and fly-out from happening simultaneously.
 
 DONE.) Multiple sections per level... We need to come up with a scheme to get this fully working.
 

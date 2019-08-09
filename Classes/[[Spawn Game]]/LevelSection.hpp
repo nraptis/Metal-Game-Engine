@@ -24,7 +24,6 @@ public:
     ~LevelSection();
     
     void                                Reset();
-    //void                                Restart();
     
     void                                Spawn();
     void                                Update();
@@ -39,6 +38,11 @@ public:
     //Note: This assumes mIsComplete = true (everything is finished spawning)
     bool                                HasAnyObjects();
     
+    bool                                HasAnyPermanents();
+    bool                                HasAllPermanents();
+    bool                                HasAnyWaves();
+    bool                                HasAllWaves();
+    
     void                                HandOffAllPermanentGameObjects(FList *pList);
     
     
@@ -52,6 +56,16 @@ public:
     int                                 mFlyOutTimer;
     int                                 mFlyOutTime;
     
+    
+    ////////////////////////////////////////////////////////////////////////////
+    //
+    //                    Externally controlled...
+    //
+    int                                 mAliveTimer;
+    int                                 mKillTimer;
+    //
+    //
+    ////////////////////////////////////////////////////////////////////////////
     
     
     
@@ -78,8 +92,10 @@ public:
     
     bool                                mIsComplete;
     
-    //We ourselves are killed by external controller.
-    int                                 mKillTimer;
+    bool                                mAllWavesComplete;
+    bool                                mAllPermsComplete;
+    
+    
     
     bool                                mLoadError;
     void                                Load(const char *pFile);

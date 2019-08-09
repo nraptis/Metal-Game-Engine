@@ -15,6 +15,7 @@ LevelData::LevelData() {
     mInitialDelay = 60;
     mCurrentSection = NULL;
     mPreviousSection = NULL;
+    mFlyInFromRight = false;
 }
 
 LevelData::~LevelData() {
@@ -34,11 +35,43 @@ void LevelData::Update() {
     //If they run out of kill-ables, and they have no forced time, they go away.
     //If they just run out of time, then they go away... (you lose lives for balloons in this case)
     
+    bool aIsFirstSection = false;
+    
     if (mCurrentSection == NULL) {
         if (mCurrentSectionIndex < mSectionList.mCount) {
+            
+            if (mCurrentSectionIndex == 0) {
+                aIsFirstSection = true;
+            }
+            
             mCurrentSection = (LevelSection *)(mSectionList[mCurrentSectionIndex++]);
             mCurrentSection->Spawn();
-            mCurrentSection->FlyInReset(SECTION_FLY_TOP);
+            
+            if (mPreviousSection != NULL) {
+                //We always fly in - if it's all waves, we still need the delay...
+                if (mFlyInFromRight) {
+                    mCurrentSection->FlyInReset(SECTION_FLY_RIGHT);
+                } else {
+                    mCurrentSection->FlyInReset(SECTION_FLY_LEFT);
+                }
+            } else {
+                
+                //We have no previous section...
+                //Do we have any perms?
+                if (mCurrentSection->HasAnyPermanents()) {
+                    if (aIsFirstSection) {
+                        mCurrentSection->FlyInReset(SECTION_FLY_TOP);
+                    } else {
+                        
+                        mFlyInFromRight = gRand.GetBool();
+                        if (mFlyInFromRight) {
+                            mCurrentSection->FlyInReset(SECTION_FLY_RIGHT);
+                        } else {
+                            mCurrentSection->FlyInReset(SECTION_FLY_LEFT);
+                        }
+                    }
+                }
+            }
             
             if (gGame->mTestOverlay != NULL) {
                 gGame->mTestOverlay->AddBubble(mCurrentSection->mName.c());
@@ -55,15 +88,55 @@ void LevelData::Update() {
     
     if (mCurrentSection != NULL) {
         mCurrentSection->Update();
-        if (mCurrentSection->mIsComplete) {
-            if (mCurrentSection->HasAnyObjects()) {
-                if (mPreviousSection != NULL) {
-                    DisposeSection(mPreviousSection);
+        
+        bool aKeepAlive = false;
+        bool aForceKill = false;
+        
+        if (mCurrentSection->mFlyInType == SECTION_FLY_NONE &&
+            mCurrentSection->mFlyOutType == SECTION_FLY_NONE &&
+            mCurrentSection->mAllWavesComplete == true) {
+            
+            if (mCurrentSection->mKillTimer > 0) {
+                mCurrentSection->mKillTimer--;
+                if (mCurrentSection->mKillTimer <= 0) {
+                    aForceKill = true;
                 }
+            }
+            
+            if (mCurrentSection->mAliveTimer > 0) {
+                mCurrentSection->mAliveTimer--;
+                if (mCurrentSection->mAliveTimer > 0) {
+                    aKeepAlive = true;
+                }
+            }
+        } else {
+            if (mCurrentSection->mAliveTimer > 0) {
+                aKeepAlive = true;
+            }
+        }
+        
+        if (mCurrentSection->mFlyInType != SECTION_FLY_NONE ||
+            mCurrentSection->mFlyOutType != SECTION_FLY_NONE) {
+            aKeepAlive = true;
+        }
+        
+        if (((mCurrentSection->mIsComplete == true) || (aForceKill == true))
+            && (aKeepAlive == false)) {
+            
+            if (mCurrentSection->HasAnyObjects()) {
+                
+                if (mPreviousSection != NULL) { DisposeSection(mPreviousSection); }
                 
                 mPreviousSection = mCurrentSection;
-                mPreviousSection->FlyOut(SECTION_FLY_LEFT);
                 mCurrentSection = NULL;
+                
+                mFlyInFromRight = gRand.GetBool();
+                if (mFlyInFromRight) {
+                    mPreviousSection->FlyOut(SECTION_FLY_LEFT);
+                } else {
+                    mPreviousSection->FlyOut(SECTION_FLY_RIGHT);
+                }
+                
             } else {
                 DisposeSection(mCurrentSection);
             }
@@ -81,7 +154,6 @@ void LevelData::DisposeSection(LevelSection *pLevelSection) {
     if (pLevelSection == mPreviousSection) { mPreviousSection = NULL; }
     
     if (pLevelSection != NULL) {
-        
         FList aList;
         pLevelSection->HandOffAllPermanentGameObjects(&aList);
         for (int i=0;i<aList.mCount;i++) {
@@ -91,7 +163,6 @@ void LevelData::DisposeSection(LevelSection *pLevelSection) {
             }
         }
     }
-    
     
     if (gGame->mTestOverlay != NULL) {
         gGame->mTestOverlay->RemoveBubble(pLevelSection->mName.c());

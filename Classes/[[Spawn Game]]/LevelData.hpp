@@ -39,7 +39,9 @@ public:
     
     int                             mInitialDelay;
     
-    bool                            mSectionDir;
+    bool                            mFlyInFromRight;
+    
+    
     
 };
 
