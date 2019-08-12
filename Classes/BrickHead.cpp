@@ -21,7 +21,7 @@ BrickHead::BrickHead() {
     mSprite = &gApp->mBrickheadMap;
     
     mAccessoryModel = &gApp->mBrickheadCage;
-    mAccessorySprite = &gApp->mBrickheadCageMap;
+    mAccessorySprite = &gApp->mBrickheadMap;
     
     //mTransform.mScaleZ = 0.5f;
     //mTransform.mOffsetY = 33.0f;
