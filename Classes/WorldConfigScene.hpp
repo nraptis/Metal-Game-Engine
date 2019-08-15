@@ -20,7 +20,6 @@
 #include "PhongConfiguration.hpp"
 #include "DiffuseConfiguration.hpp"
 #include "SpotLightSimpleConfiguration.hpp"
-#include "EllipseConfigMenu.hpp"
 
 
 class WorldConfigScene : public FCanvas {
@@ -64,7 +63,8 @@ public:
     PhongLightMenu                              *mPhongLightMenu;
     DiffuseLightMenu                            *mDiffuseLightMenu;
     SimpleSpotLightMenu                         *mSpotlightMenu;
-    EllipseConfigMenu                           *mEllipseMenu;
+    
+    
     
     CameraMenu                                  *mCameraMenu;
     

@@ -111,6 +111,9 @@ public:
     //int                                         mSelectedTracerSpawnIndex; // Not on tracer...
     void                                        SpawnPickBalloon();
     void                                        SpawnPickBrickHead();
+    void                                        SpawnPickBomb();
+    void                                        SpawnPickTurtle();
+    
     
     
     LevelFormationTracerBlueprint               *TracerGet();

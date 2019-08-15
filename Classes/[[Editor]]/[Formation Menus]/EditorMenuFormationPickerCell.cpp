@@ -186,6 +186,16 @@ void EditorMenuFormationPickerCell::DrawFormationNode(LevelFormationNode *pNode,
         Graphics::DrawRect(pX - 2.0f, pY - 2.0f, 5.0f, 5.0f);
     }
     
+    if (pNode->mObjectType == GAME_OBJECT_TYPE_BOMB) {
+        Graphics::SetColor(0.36f, 0.36f, 0.54f, 0.90f);
+        Graphics::DrawRect(pX - 2.0f, pY - 2.0f, 5.0f, 5.0f);
+    }
+    
+    if (pNode->mObjectType == GAME_OBJECT_TYPE_TURTLE) {
+        Graphics::SetColor(0.25f, 0.85f, 0.25f, 0.90f);
+        Graphics::DrawRect(pX - 2.0f, pY - 2.0f, 5.0f, 5.0f);
+    }
+    
 }
 
 

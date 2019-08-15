@@ -21,6 +21,8 @@
 #define GAME_OBJECT_TYPE_UNKNOWN -1
 #define GAME_OBJECT_TYPE_BALLOON 0
 #define GAME_OBJECT_TYPE_BRICKHEAD 1
+#define GAME_OBJECT_TYPE_BOMB 2
+#define GAME_OBJECT_TYPE_TURTLE 3
 
 #define GAME_OBJECT_TYPE_DART 1000
 
@@ -44,7 +46,6 @@ public:
     float                                   mEllipseRadiusH;
     float                                   mEllipseRadiusV;
     
-    
     //Where did we come from?
     bool                                    mDidOriginateOnWave;
     bool                                    mDidOriginateAsPermanent;
@@ -57,7 +58,6 @@ public:
     virtual void                            Disperse(float pDirX, float pDirY, float pMagnitude);
     
     virtual void                            FloatAway(float pDirX, float pDirY, float pMagnitude);
-    
     
     bool                                    mFloatAway;
     float                                   mFloatAwaySpeedX;

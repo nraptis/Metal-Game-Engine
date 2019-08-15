@@ -19,16 +19,20 @@ Dart::Dart() {
     //While we are "idle" we have not yet been released
     //and are sitting at the lower center of the screen...
     mIdle = true;
+    mStuck = false;
     
     mDeathTimer = 5000;
     mTimer = 0;
     
+    mHitCount = 0;
+    
     mModel = &gApp->mDart;
-    mSprite = &gApp->mDartMap;
-    //mUniform = &(gGame->mRenderer->mUniformPhong);
     
-    mUniform = &(gGame->mRenderer->mUniformPhongBalloon);
+    mStyleIndex = gRand.Get(4);
+    mSprite = &gApp->mDartMap[mStyleIndex];
     
+    mUniform = &(gGame->mRenderer->mUniformPhong);
+    //mUniform = &(gGame->mRenderer->mUniformPhongBalloon);
     
     mVelX = 0.0f;
     mVelY = 0.0f;
@@ -37,7 +41,6 @@ Dart::Dart() {
     mSpawnAnimationTime = 38;
     mSpawnAnimationTimer = 0;
     mSpawnAnimationDelay = 0;
-    
     
     mPrevTipX = 0.0f;
     mPrevTipY = 0.0f;
@@ -48,6 +51,15 @@ Dart::Dart() {
     mEllipseRadiusH = 0.0f;
     mEllipseRadiusV = 0.0f;
     
+    
+    mUpdateInterpStartX = 0.0f;
+    mUpdateInterpStartY = 0.0f;
+    mUpdateInterpStartRotation = 0.0f;
+    
+    mUpdateInterpEndX = 0.0f;
+    mUpdateInterpEndY = 0.0f;
+    mUpdateInterpEndRotation = 0.0f;
+    
 }
 
 Dart::~Dart() {
@@ -55,14 +67,11 @@ Dart::~Dart() {
 }
 
 void Dart::Update() {
-    mTransform3D.mSpin += mSpinSpeed;
+    //mTransform3D.mSpin += mSpinSpeed;
+    mTransform3D.mSpin = 0.0f;
     
-
     mPrevTipX = mTipX;
     mPrevTipY = mTipY;
-
-    
-    
     
     if (mSpawnAnimation) {
         
@@ -96,32 +105,43 @@ void Dart::Update() {
         
         //We are flying through space...
         
-        mTransform.mX += mVelX;
-        mTransform.mY += mVelY;
+        mUpdateInterpStartX = mTransform.mX;
+        mUpdateInterpStartY = mTransform.mY;
+        mUpdateInterpStartRotation = mTransform.mRotation;
         
-        mVelY += gGame->mGravity;
-        //
+        //mTransform.mX += mVelX;
+        //mTransform.mY += mVelY;
+        
+        if (mStuck == false && mKill == 0 && mIdle == false) {
+            mVelY += gGame->mGravity;
+        }
+        
         if (fabsf(mVelX) > 0.001f || fabsf(mVelY) > 0.001f) {
             mTargetRotation = FaceTarget(-mVelX, -mVelY);
         }
-        //
+        
         float aAngleDiff = DistanceBetweenAngles(mTransform.mRotation, mTargetRotation);
         if (aAngleDiff > 2.0f) { mTransform.mRotation += 1.0f; }
         if (aAngleDiff < -2.0f) { mTransform.mRotation -= 1.0f; }
         aAngleDiff = DistanceBetweenAngles(mTransform.mRotation, mTargetRotation);
-        mTransform.mRotation += aAngleDiff * 0.035f;
+        //mTransform.mRotation += aAngleDiff * 0.035f;
+        
+        mUpdateInterpEndX = mTransform.mX + mVelX;
+        mUpdateInterpEndY = mTransform.mY + mVelY;
+        mUpdateInterpEndRotation = mTransform.mRotation + aAngleDiff * 0.035f;
         
         --mDeathTimer;
-        if (mDeathTimer <= 0) { Kill(); }
+        if (mDeathTimer <= 0) {
+            gGame->DartFlyOffScreen(this);
+        }
         
         if (gGame->IsGameObjectOutsideKillZone(this)) {
             printf("Kill Dart[ %f %f ]\n\n", mTransform.mX, mTransform.mY);
-            Kill();
+            gGame->DartFlyOffScreen(this);
         }
     }
     
     FVec2 aTip = GetTipPoint();
-    
     mTipX = aTip.mX;
     mTipY = aTip.mY;
 }
@@ -133,6 +153,14 @@ void Dart::Draw() {
     //FVec2 aTipPoint = GetTipPoint();
     //Graphics::SetColor(0.25f, 0.25f, 1.0f, 0.75f);
     //Graphics::DrawLine(mTransform.mX, mTransform.mY, aTipPoint.mX, aTipPoint.mY);
+    
+    if (mStuck) {
+        
+        Graphics::PipelineStateSetShape2DAlphaBlending();
+        Graphics::SetColor(0.25f, 0.25f, 1.0f, 0.75f);
+        Graphics::DrawLine(mStoredTipX, mStoredTipY, mStoredPrevTipX, mStoredPrevTipY);
+        
+    }
     
 }
 

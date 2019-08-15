@@ -159,7 +159,7 @@ void LevelData::DisposeSection(LevelSection *pLevelSection) {
         for (int i=0;i<aList.mCount;i++) {
             GameObject *aObject = ((GameObject *)aList.mData[i]);
             if (gGame != NULL) {
-                gGame->FlyOffMiss(aObject);
+                gGame->FlyOffEscape(aObject);
             }
         }
     }

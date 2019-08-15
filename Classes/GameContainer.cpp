@@ -20,7 +20,9 @@ GameContainer::GameContainer() {
     mName = "{{Game Container}}";
     
     
-    mGameTestOverlay = NULL;
+    mGameTestEditorOverlay = NULL;
+    mGameTestRunningOverlay = NULL;
+    
     
     mEditorMenu = NULL;
     mEditorMenuUtils = NULL;
@@ -106,10 +108,10 @@ void GameContainer::Layout() {
 
     
     
-    if (mGameTestOverlay != NULL) {
+    if (mGameTestEditorOverlay != NULL) {
         
         if (mGame != NULL) {
-            mGameTestOverlay->SetFrame(0.0f, 0.0f, mGame->mWidth, mGame->mHeight);
+            mGameTestEditorOverlay->SetFrame(0.0f, 0.0f, mGame->mWidth, mGame->mHeight);
         }
     }
     
@@ -194,13 +196,23 @@ void GameContainer::Notify(void *pSender, const char *pNotification) {
 //After the game + editor are ready to go.
 void GameContainer::Realize() {
 #ifdef EDITOR_MODE
-    if (mGameTestOverlay == NULL && gEditor == NULL) {
-        mGameTestOverlay = new GameTestOverlay();
-        mGameTestOverlay->mConsumesTouches = false;
-        mGame->AddChild(mGameTestOverlay);
+    if (mGameTestEditorOverlay == NULL && gEditor == NULL) {
+        mGameTestEditorOverlay = new GameTestEditorOverlay();
+        mGameTestEditorOverlay->mConsumesTouches = false;
+        mGame->AddChild(mGameTestEditorOverlay);
         mWindow->RegisterFrameDidUpdate(this);
     }
 #endif
+    
+    if (mGameTestRunningOverlay == NULL) {
+        mGameTestRunningOverlay = new GameTestRunningOverlay();
+        mGameTestRunningOverlay->mConsumesTouches = false;
+        mGame->AddChild(mGameTestRunningOverlay);
+        mWindow->RegisterFrameDidUpdate(this);
+    }
+    
+    
+    
     
 }
 

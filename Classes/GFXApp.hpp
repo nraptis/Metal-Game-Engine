@@ -95,7 +95,8 @@ public:
     FSprite                                 mPalmLeavesMap;
     
     FModelDataPacked                        mDart;
-    FSprite                                 mDartMap;
+    FSprite                                 mDartMap[4];
+    
     
     FModelDataPacked                        mBalloon;
     FSprite                                 mBalloonMap[5];

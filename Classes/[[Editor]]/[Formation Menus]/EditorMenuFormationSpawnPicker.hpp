@@ -47,6 +47,9 @@ public:
     
     UIButton                                *mButtonPickBalloon;
     UIButton                                *mButtonPickBrickHead;
+    UIButton                                *mButtonPickBomb;
+    UIButton                                *mButtonPickTurtle;
+    
     
     
     bool                                    mTracerEnabled;

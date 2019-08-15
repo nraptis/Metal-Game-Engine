@@ -36,36 +36,28 @@ GameObject::GameObject() {
 }
 
 GameObject::~GameObject() {
-    
     if (mWaveSpawn != NULL) {
         mWaveSpawn->DisposeObject(this);
         mWaveSpawn = NULL;
     }
-    
     if (mPermSpawn != NULL) {
         mPermSpawn->DisposeObject(this);
     }
 }
 
 void GameObject::Update() {
-    
     if (mFloatAway == true) {
-        
         mTransform.mX += mFloatAwaySpeedX;
         mTransform.mY += mFloatAwaySpeedY;
-        
         mFloatAwaySpeedX *= 0.972f;
-        
         mFloatAwaySpeedY -= 0.042f;
         mFloatAwaySpeedY *= 0.987f;
-        
         if (gGame != NULL) {
             if (mTransform.mY <= gGame->mSpawnZoneTop) {
                 gGame->DisposeObject(this);
             }
         }
     }
-    
 }
 
 void GameObject::Draw() {
@@ -119,28 +111,30 @@ void GameObject::Draw3D() {
             mModelView.Reset();
             
             //We start by translation...?
-            
             mModelView.Translate(mTransform3D.mX, mTransform3D.mY, mTransform3D.mZ);
             
             //All of our models are exported with X 90 degrees wrong...
-            mModelView.RotateX(90.0f);
+            mModelView.RotateX(-90.0f);
+            mModelView.RotateY(180.0f);
+            
+            //mModelView.RotateZ(180.0f);
             
             if (mTransform3D.mRotationX != 0.0f) {
-                mModelView.RotateX(mTransform3D.mRotationX);
+                //mModelView.RotateX(mTransform3D.mRotationX);
             }
             
             if (mTransform3D.mRotationZ != 0.0f) {
-                mModelView.RotateZ(mTransform3D.mRotationZ);
+                //mModelView.RotateZ(mTransform3D.mRotationZ);
             }
             
             //Now we do a 2-D rotation...
             if (mTransform3D.mRotation2D != 0.0f) {
-                mModelView.RotateY(mTransform3D.mRotation2D);
+                mModelView.RotateY(-mTransform3D.mRotation2D);
             }
             
             //Now we spin around the Y axis...
             if (mTransform3D.mSpin != 0.0f) {
-                mModelView.RotateZ(mTransform3D.mSpin);
+                //mModelView.RotateZ(mTransform3D.mSpin);
             }
             
             //Now we scale down...
@@ -193,13 +187,18 @@ FString GameObject::TypeString() {
     
     if (mGameObjectType == GAME_OBJECT_TYPE_BALLOON) { return FString("balloon"); }
     if (mGameObjectType == GAME_OBJECT_TYPE_BRICKHEAD) { return FString("brickhead"); }
+    if (mGameObjectType == GAME_OBJECT_TYPE_BOMB) { return FString("bomb"); }
+    if (mGameObjectType == GAME_OBJECT_TYPE_TURTLE) { return FString("turtle"); }
+    
+    if (mGameObjectType == GAME_OBJECT_TYPE_DART) { return FString("dart"); }
     
     return FString("unknown");
-    
 }
 
 bool GameObject::IsRequiredToClearForSectionCompletion() {
+    
     if (mGameObjectType == GAME_OBJECT_TYPE_BALLOON) { return true; }
+    if (mGameObjectType == GAME_OBJECT_TYPE_TURTLE) { return true; }
     
     return false;
 }

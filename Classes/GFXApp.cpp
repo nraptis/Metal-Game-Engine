@@ -128,8 +128,13 @@ void GFXApp::Load() {
     mMonolith.LoadOBJ("monolith.obj");
     mMonolithMap.Load("monolith_map");
     
+    
     mDart.LoadOBJ("dart.obj");
-    mDartMap.Load("dart_color");
+    mDartMap[0].Load("dart_color_01");
+    mDartMap[1].Load("dart_color_02");
+    mDartMap[2].Load("dart_color_03");
+    mDartMap[3].Load("dart_color_04");
+    
     
     
     mBalloon.LoadOBJ("balloon.obj");

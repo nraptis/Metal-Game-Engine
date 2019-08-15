@@ -248,6 +248,7 @@ void FormationCollection::Load() {
     //[Mixed] Circle Tracers
     mNameList.Add(new FString("f_tr_circ_80sz_cfgrbrb_spm.json"));
     
+    //
     EnumList(FString, aString, mNameList) {
         if (Load(aString->c())) {
             
@@ -255,7 +256,6 @@ void FormationCollection::Load() {
             printf("FAILED to Load Formation [%s]\n", aString->c());
         }
     }
-    
     
     
 }

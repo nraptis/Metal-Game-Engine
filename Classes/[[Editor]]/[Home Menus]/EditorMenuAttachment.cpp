@@ -45,7 +45,7 @@ void EditorMenuAttachment::Init() {
     
     
     mButtonPickBalloon = new UIButton();
-    mButtonPickBalloon->SetText("Bloon");
+    mButtonPickBalloon->SetText("Balloon");
     mRowObjectTypes1->AddButton(mButtonPickBalloon);
     
     mButtonPickBrickHead = new UIButton();
@@ -56,6 +56,13 @@ void EditorMenuAttachment::Init() {
     mRowObjectTypes2 = new ToolMenuSectionRow();
     mPanelObjectTypes->AddSection(mRowObjectTypes2);
     
+    mButtonPickBomb = new UIButton();
+    mButtonPickBomb->SetText("Bomb");
+    mRowObjectTypes2->AddButton(mButtonPickBomb);
+    
+    mButtonPickTurtle = new UIButton();
+    mButtonPickTurtle->SetText("Turtle");
+    mRowObjectTypes2->AddButton(mButtonPickTurtle);
     
     
     mPanelFormations = new ToolMenuPanel();
@@ -127,36 +134,34 @@ void EditorMenuAttachment::Layout() {
 
 void EditorMenuAttachment::Notify(void *pSender, const char *pNotification) {
     
-    
-    
     if (pSender == mStepperSpacingOffset) { gEditor->RefreshPlayback(); }
     
     if (pSender == mButtonPickFormation)  {
+        
         if (mEditor != NULL) {
             gEditor->PickFormationForSpawnNode();
         }
+        
         if (mPermEditor != NULL) {
             
             LevelPermSpawnBlueprint *aSpawn = gEditor->PermSpawnGet();
             if (aSpawn != NULL) {
                 gEditor->PickFormationForPermSpawnNode();
             } else {
-                
                 LevelSectionPermanentBlueprint *aPerm = gEditor->PermGet();
                 if (aPerm != NULL) {
                     gEditor->PickFormationForPerm();
                 }
-                
-                
             }
-            
-            
         }
     }
+    
     if (pSender == mButtonClearFormation) { gEditor->SpawnClearFormation(); }
     
-    if (pSender == mButtonPickBalloon)   { gEditor->SpawnPickBalloon(); }
+    if (pSender == mButtonPickBalloon) { gEditor->SpawnPickBalloon(); }
     if (pSender == mButtonPickBrickHead) { gEditor->SpawnPickBrickHead(); }
+    if (pSender == mButtonPickBomb) { gEditor->SpawnPickBomb(); }
+    if (pSender == mButtonPickTurtle) { gEditor->SpawnPickTurtle(); }
     
 }
 

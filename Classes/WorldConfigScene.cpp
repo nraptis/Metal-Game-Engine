@@ -51,12 +51,6 @@ WorldConfigScene::WorldConfigScene() {
     mCameraMenu->mSliderDummyRot2->SetTarget(&mDummyRot2);
     AddChild(mCameraMenu);
     
-    
-    mEllipseMenu = new EllipseConfigMenu(this);
-    mEllipseMenu->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 320.0f), gSafeAreaInsetTop + 20.0f, 320.0f, 300.0f);
-    AddChild(mEllipseMenu);
-    
-    
     mPhongLightMenu = NULL;
     
     

@@ -15,6 +15,8 @@
 #include "FloatingCamera.hpp"
 #include "Dart.hpp"
 #include "Balloon.hpp"
+#include "Bomb.hpp"
+#include "Turtle.hpp"
 #include "BrickHead.hpp"
 #include "Level.hpp"
 #include "LevelData.hpp"
@@ -65,9 +67,10 @@ public:
     
     void                                        DisposeObject(GameObject *pObject);
     
-    
-    //...
-    void                                        FlyOffMiss(GameObject *pObject);
+    void                                        FlyOffEscape(GameObject *pObject);
+    void                                        DartFlyOffScreen(Dart *pDart);
+    void                                        DartCollideWithBrickhead(Dart *pDart, BrickHead *pBrickHead);
+    void                                        DartMovingInterpolation(Dart *pDart, float pPercent, bool pEnd);
     
     //Mainly used by editor to "flush" screen before re-spawn...
     void                                        DisposeAllObjects();
@@ -89,6 +92,8 @@ public:
     FObjectList                                 mDartList;
     FObjectList                                 mBalloonList;
     FObjectList                                 mBrickHeadList;
+    FObjectList                                 mBombList;
+    FObjectList                                 mTurtleList;
     
     Dart                                        *mCurrentDart;
     int                                         mCurrentDartRespawnTimer;
@@ -172,12 +177,21 @@ public:
     void                                        Load();
     void                                        LoadEditorTest();
     
-    
     LevelSection                                mTestSection;
-    
     
     bool                                        mSlowMo;
     int                                         mSlowMoTimer;
+    
+    
+    int                                         mLives;
+    int                                         mLivesMax;
+    
+    int                                         mPoppedCount;
+    int                                         mThrownCount;
+    int                                         mThrownHitCount;
+    int                                         mThrownMissedCount;
+    
+    int                                         mEscapedCount;
     
     
     

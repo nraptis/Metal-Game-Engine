@@ -90,6 +90,21 @@ EditorMenuFormationSpawnPicker::EditorMenuFormationSpawnPicker(GameFormationEdit
     mButtonPickBrickHead->SetText("Brick");
     mRowObjectTypes1->AddButton(mButtonPickBrickHead);
     
+    
+    mRowObjectTypes2 = new ToolMenuSectionRow();
+    mPanelObjectTypes->AddSection(mRowObjectTypes2);
+    
+    
+    mButtonPickBomb = new UIButton();
+    mButtonPickBomb->SetText("Bomb");
+    mRowObjectTypes2->AddButton(mButtonPickBomb);
+    
+    mButtonPickTurtle = new UIButton();
+    mButtonPickTurtle->SetText("Turtle");
+    mRowObjectTypes2->AddButton(mButtonPickTurtle);
+    
+    
+    
     //mRowObjectTypes2 = new ToolMenuSectionRow();
     //mPanelObjectTypes->AddSection(mRowObjectTypes2);
     
@@ -186,7 +201,8 @@ void EditorMenuFormationSpawnPicker::Notify(void *pSender, const char *pNotifica
     
     if (pSender == mButtonPickBalloon)   { mEditor->SpawnPickBalloon(); }
     if (pSender == mButtonPickBrickHead) { mEditor->SpawnPickBrickHead(); }
-    
+    if (pSender == mButtonPickBomb) { mEditor->SpawnPickBomb(); }
+    if (pSender == mButtonPickTurtle) { mEditor->SpawnPickTurtle(); }
     
 }
 

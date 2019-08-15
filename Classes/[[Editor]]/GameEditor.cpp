@@ -1042,16 +1042,15 @@ void GameEditor::SpawnPickBalloon() {
 }
 
 void GameEditor::SpawnPickBrickHead() {
-    
     SpawnPickType(GAME_OBJECT_TYPE_BRICKHEAD);
-    
-    /*
-    LevelWaveSpawnBlueprint *aSpawn = SpawnGet();
-    if (aSpawn == NULL) { RefreshPlayback(); return; }
-    aSpawn->mFormationID.Clear();
-    aSpawn->mObjectType = GAME_OBJECT_TYPE_BRICKHEAD;
-    RefreshPlayback();
-    */
+}
+
+void GameEditor::SpawnPickBomb() {
+    SpawnPickType(GAME_OBJECT_TYPE_BOMB);
+}
+
+void GameEditor::SpawnPickTurtle() {
+    SpawnPickType(GAME_OBJECT_TYPE_TURTLE);
 }
 
 void GameEditor::PermSelect(int pIndex) {

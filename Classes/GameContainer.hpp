@@ -14,7 +14,8 @@
 //#include "Dart.hpp"
 //#include "Balloon.hpp"
 
-#include "GameTestOverlay.hpp"
+#include "GameTestEditorOverlay.hpp"
+#include "GameTestRunningOverlay.hpp"
 
 #include "EditorMenuGameTestUtils.hpp"
 #include "EditorMenuGameTest.hpp"
@@ -48,7 +49,11 @@ public:
     
     Game                                        *mGame;
     FCanvas                                     *mContainer;
-    GameTestOverlay                             *mGameTestOverlay;
+    GameTestEditorOverlay                       *mGameTestEditorOverlay;
+    GameTestRunningOverlay                      *mGameTestRunningOverlay;
+    
+    
+    
     
     EditorMenuGameTest                          *mEditorMenu;
     EditorMenuGameTestUtils                     *mEditorMenuUtils;

@@ -137,35 +137,37 @@ void GameRenderer::Draw3D() {
         }
     }
     
+    EnumList (Bomb, aBomb, mGame->mBombList.mObjectList) {
+        if (aBomb->mKill == 0) {
+            aBomb->Draw3D();
+        }
+    }
     
-    
+    EnumList (Turtle, aTurtle, mGame->mTurtleList.mObjectList) {
+        if (aTurtle->mKill == 0) {
+            aTurtle->Draw3D();
+        }
+    }
     
     if (mGame->mCurrentDart) {
         mGame->mCurrentDart->Draw3D();
     }
     
-    
-    
-    
 #ifdef EDITOR_MODE
     if (gEditor != NULL) {
-    if (gEditor->mEditorShowReferenced) {
-        for (int i=0;i<gEditor->mEditorWave.mPath.mNodeList.mCount;i++) {
-            GameObject *aObject = (GameObject *)gEditor->mEditorObjectList.Fetch(i);
-            if (aObject != NULL) {
-                aObject->Draw3D();
+        if (gEditor->mEditorShowReferenced) {
+            for (int i=0;i<gEditor->mEditorWave.mPath.mNodeList.mCount;i++) {
+                GameObject *aObject = (GameObject *)gEditor->mEditorObjectList.Fetch(i);
+                if (aObject != NULL) {
+                    aObject->Draw3D();
+                }
             }
         }
     }
-    }
 #endif
-    
-    
-    
     
     Graphics::DepthDisable();
     Graphics::CullFacesSetBack();
-    
 }
 
 
@@ -204,7 +206,6 @@ void GameRenderer::DumpLightsToUniforms() {
     mUniformPhong.mColor = FColor(1.0f, 1.0f, 1.0f, 1.0f);
     mUniformPhong.mProjection.Set(aProjection);
     
-    
     mUniformPhongBalloon.mLight.mRed = aLightRed;
     mUniformPhongBalloon.mLight.mGreen = aLightGreen;
     mUniformPhongBalloon.mLight.mBlue = aLightBlue;
@@ -217,9 +218,6 @@ void GameRenderer::DumpLightsToUniforms() {
     mUniformPhongBalloon.mLight.mShininess = 70.0f;
     mUniformPhongBalloon.mColor = FColor(1.0f, 1.0f, 1.0f, 1.0f);
     mUniformPhongBalloon.mProjection.Set(aProjection);
-    
-    
-    
     
     mUniformDiffuse.mLight.mRed = aLightRed;
     mUniformDiffuse.mLight.mGreen = aLightGreen;

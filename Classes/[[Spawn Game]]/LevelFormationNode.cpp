@@ -17,6 +17,8 @@
 #include "Game.hpp"
 #include "Balloon.hpp"
 #include "BrickHead.hpp"
+#include "Bomb.hpp"
+#include "Turtle.hpp"
 
 LevelFormationNode::LevelFormationNode() {
     
@@ -53,16 +55,22 @@ void LevelFormationNode::Spawn() {
     
     if (mObjectType == GAME_OBJECT_TYPE_BALLOON) {
         mObject = new Balloon();
-        
-        //TODO: For auto-tech
-        //((Balloon *)mObject)->mSprite = &(gApp->mBalloonMap[3]);
-        
         gGame->mBalloonList.Add(mObject);
     }
     
     if (mObjectType == GAME_OBJECT_TYPE_BRICKHEAD) {
         mObject = new BrickHead();
         gGame->mBrickHeadList.Add(mObject);
+    }
+    
+    if (mObjectType == GAME_OBJECT_TYPE_BOMB) {
+        mObject = new Bomb();
+        gGame->mBombList.Add(mObject);
+    }
+    
+    if (mObjectType == GAME_OBJECT_TYPE_TURTLE) {
+        mObject = new Turtle();
+        gGame->mTurtleList.Add(mObject);
     }
     
     if (mObject != NULL) {
@@ -72,6 +80,7 @@ void LevelFormationNode::Spawn() {
         
         mObject->mTransform.mX = mBaseX;
         mObject->mTransform.mY = mBaseY;
+        
         PositionObject();
     }
     

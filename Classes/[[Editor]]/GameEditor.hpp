@@ -101,6 +101,9 @@ public:
     void                                        SpawnPickType(int pType);
     void                                        SpawnPickBalloon();
     void                                        SpawnPickBrickHead();
+    void                                        SpawnPickBomb();
+    void                                        SpawnPickTurtle();
+    
     
     void                                        PermSelect(int pIndex);
     int                                         PermIndex();

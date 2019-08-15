@@ -230,7 +230,7 @@ void LevelWave::HandleSpawnComplete(LevelWaveSpawn *pSpawn) {
             
             GameObject *aObject = ((GameObject *)aList.mData[i]);
             if (gGame != NULL) {
-                gGame->FlyOffMiss(aObject);
+                gGame->FlyOffEscape(aObject);
             }
         }
         

@@ -13,6 +13,7 @@
 #include "FModelDataPacked.hpp"
 #include "GameObject.hpp"
 
+class Dart;
 class BrickHead : public GameObject {
 public:
     BrickHead();
@@ -22,13 +23,43 @@ public:
     virtual void                            Draw();
     virtual void                            Draw3D();
     
+    virtual bool                            WillCollide(float pStartX, float pStartY, float pEndX, float pEndY);
+    
+    
     float                                   mSpinSpeed;
+    
+    
+    float                                   mSwivel;
+    float                                   mSwivelSpeed;
+    
+    bool                                    mStuck;
+    
+    Dart                                    *mStuckDart;
+    float                                   mStuckDartStartDartRotation;
+    float                                   mStuckDartStartBrickHeadRotation;
+    float                                   mStuckDartStartXDiff;
+    float                                   mStuckDartStartYDiff;
     
     FModelDataPacked                        *mAccessoryModel;
     FSprite                                 *mAccessorySprite;
     
     float                                   mVelX;
     float                                   mVelY;
+    
+    FVec2                                   mCornerPoint1;
+    FVec2                                   mCornerPoint2;
+    FVec2                                   mCornerPoint3;
+    FVec2                                   mCornerPoint4;
+    
+    
+    float                                   mHitOscSin;
+    float                                   mHitOscSpinRot;
+    float                                   mHitStartX;
+    float                                   mHitStartY;
+    int                                     mHitDelay;
+    
+    
+    
 };
 
 #endif /* BrickHead_hpp */

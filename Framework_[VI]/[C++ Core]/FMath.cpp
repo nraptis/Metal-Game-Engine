@@ -178,6 +178,52 @@ FVec2 PivotPoint(FVec2 pPoint, float pDegrees) {
     return PivotPoint(pPoint, pDegrees, aOrigin, 1.0f);
 }
 
+
+
+
+
+FVec3 PivotPoint(FVec3 pPoint, float pDegrees, FVec3 pCenter, float pScaleX, float pScaleY) {
+    FVec3 aResult;
+    float aDiffX = pCenter.mX - pPoint.mX;
+    float aDiffY = pCenter.mY - pPoint.mY;
+    float aDist = aDiffX * aDiffX + aDiffY * aDiffY;
+    if (aDist > SQRT_EPSILON) {
+        aDist = sqrtf(aDist);
+        float aRotation = FaceTarget(aDiffX, aDiffY);
+        aRotation = pDegrees + aRotation;
+        aResult.mX = pCenter.mX + Sin(180.0f -aRotation) * pScaleX * aDist;
+        aResult.mY = pCenter.mY + Cos(180.0f -aRotation) * pScaleY * aDist;
+    } else {
+        aResult = pPoint;
+    }
+    aResult.mZ = pPoint.mZ;
+    return aResult;
+}
+
+
+FVec3 PivotPoint(FVec3 pPoint, float pDegrees, FVec3 pCenter, float pScale) {
+    FVec3 aResult;
+    float aDiffX = pCenter.mX - pPoint.mX;
+    float aDiffY = pCenter.mY - pPoint.mY;
+    float aDist = aDiffX * aDiffX + aDiffY * aDiffY;
+    if (aDist > SQRT_EPSILON) {
+        aDist = sqrtf(aDist);
+        float aRotation = FaceTarget(aDiffX, aDiffY);
+        aRotation = pDegrees + aRotation;
+        aResult.mX = pCenter.mX + Sin(180.0f - aRotation) * pScale * aDist;
+        aResult.mY = pCenter.mY + Cos(180.0f - aRotation) * pScale * aDist;
+    } else {
+        aResult = pPoint;
+    }
+    aResult.mZ = pPoint.mZ;
+    return aResult;
+}
+
+FVec3 PivotPoint(FVec3 pPoint, float pDegrees) {
+    FVec3 aOrigin;
+    return PivotPoint(pPoint, pDegrees, aOrigin, 1.0f);
+}
+
 FVec3 Rotate3D(FVec3 pPoint, FVec3 pAxis, float pDegrees) {
     FVec3 aDir = FVec3(pAxis.mX, pAxis.mY, pAxis.mZ);
     float aLength = aDir.Length();
@@ -216,18 +262,6 @@ FVec3 Rotate3DNormalized(FVec3 pPoint, FVec3 pAxis, float pDegrees) {
     return aResult;
 }
 
-
-
-
-
-
-//float aTargetRot=FaceTarget(mPos, mRobot->mPos);
-//Log("Rotating From (%f,%f) To (%f,%f) = %f Vector(%f, %f)\n", mPos.mX, mPos.mY, mRobot->mPos.mX, mRobot->mPos.mY, FaceTarget(mPos, mRobot->mPos), AngleToVector(FaceTarget(mPos, mRobot->mPos)).mX, AngleToVector(FaceTarget(mPos, mRobot->mPos)).mY);
-//mGunRotation=atan2(mRobot->mPos.mX-mPos.mX,mRobot->mPos.mY-mPos.mY)*R_D;
-
-
-
-
 float TriangleArea(float x1, float y1, float x2, float y2, float x3, float y3) {
     return (x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1);
 }
@@ -238,6 +272,15 @@ bool Between(float x1, float y1, float x2, float y2, float x3, float y3) {
 }
 
 bool SegmentsIntersect(FVec2 theStart1, FVec2 theEnd1, FVec2 theStart2, FVec2 theEnd2) {
+    
+    if (fabsf(theStart1.mX - theEnd1.mX) <= 0.1f && fabsf(theStart1.mY - theEnd1.mY) <= 0.1f) {
+        return false;
+    }
+    
+    if (fabsf(theStart2.mX - theEnd2.mX) <= 0.1f && fabsf(theStart2.mY - theEnd2.mY) <= 0.1f) {
+        return false;
+    }
+        
     float aArea1, aArea2, aArea3, aArea4;
     if ((aArea1 = TriangleArea(theStart1.mX, theStart1.mY, theEnd1.mX, theEnd1.mY, theStart2.mX, theStart2.mY)) == 0) {
         if (Between(theStart1.mX, theStart1.mY, theEnd1.mX, theEnd1.mY, theStart2.mX, theStart2.mY)) {

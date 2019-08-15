@@ -1,23 +1,31 @@
 
 
-1.) Spawning mode for "waves only" does not need to animate in..
 
-2.) Section enter / leave condition for previous / current section is not synchronized.
-
-3.) Section enter / leave should randomly pick between right and left.
-
-4.) First section should enter from the TOP, unless it contains no permanents.
 
 
 A.) Win condition? We need to capture the win condition.
 
 B.) Losing lives when balloons fly offscreen.
 
+C.) Collisions with "brick head" - the dart should get stuck inside of it.
+
+D.) Mock model for "Turtle"
+
+E.) Mock model for "Bomb"
+
+F.) Logic for bomb collisions (Spherical).
 
 
 
 
 
+DONE.) Spawning mode for "waves only" does not need to animate in..
+
+DONE.) Section enter / leave condition for previous / current section is not synchronized.
+
+DONE.) Section enter / leave should randomly pick between right and left.
+
+DONE.) First section should enter from the TOP, unless it contains no permanents.
 
 DONE.) Sections need timer. When all waves have passed and only "perms" are left, sections need timer for
     when all sections fly away...

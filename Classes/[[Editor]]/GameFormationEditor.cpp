@@ -659,6 +659,20 @@ void GameFormationEditor::SpawnPickBrickHead() {
     Refresh();
 }
 
+void GameFormationEditor::SpawnPickBomb() {
+    LevelFormationNodeBlueprint *aSpawn = SpawnGet();
+    if (aSpawn == NULL) { Refresh(); return; }
+    aSpawn->mObjectType = GAME_OBJECT_TYPE_BOMB;
+    Refresh();
+}
+
+void GameFormationEditor::SpawnPickTurtle() {
+    LevelFormationNodeBlueprint *aSpawn = SpawnGet();
+    if (aSpawn == NULL) { Refresh(); return; }
+    aSpawn->mObjectType = GAME_OBJECT_TYPE_TURTLE;
+    Refresh();
+}
+
 LevelFormationNodeBlueprint *GameFormationEditor::SpawnGet() {
     LevelFormationNodeBlueprint *aResult = NULL;
     if (mTracerEnabled == true) {
