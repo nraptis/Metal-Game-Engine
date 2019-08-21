@@ -9,6 +9,7 @@
 #include "core_includes.h"
 #include "Game.hpp"
 #include "FAnimation.hpp"
+#include "StuckDart.hpp"
 
 #ifdef EDITOR_MODE
 #include "GameEditor.hpp"
@@ -23,6 +24,7 @@ Game::Game() {
     
     gGame = this;
     
+    mTestThread.Setup();
     
     mTestOverlay = NULL;
     
@@ -285,6 +287,12 @@ void Game::Layout() {
 
 void Game::Update() {
     
+    
+    mTestThread.Update();
+    
+    
+    
+    
     bool aShowOverlay = true;
 #ifdef EDITOR_MODE
     if (gEditor == NULL) {
@@ -501,6 +509,7 @@ void Game::Draw() {
     Graphics::SetColor();
     //
     
+    mTestThread.Draw();
     
     /*
      FSprite *aDart = &(gApp->mRay[3]);
@@ -595,7 +604,7 @@ void Game::DartMovingInterpolation(Dart *pDart, float pPercent, bool pEnd) {
     
     for (int n=0;n<mBrickHeadList.mObjectList.mCount;n++) {
         BrickHead *aBrickHead = (BrickHead *)mBrickHeadList.mObjectList.mData[n];
-        if (aBrickHead->mKill == 0 && aBrickHead->mStuck == false) {
+        if (aBrickHead->mKill == 0) {
             if (aBrickHead->WillCollide(pDart->mPrevTipX, pDart->mPrevTipY, pDart->mTipX, pDart->mTipY)) {
                 //aDart->mHitCount++;
                 //aBalloon->Kill();
@@ -615,12 +624,24 @@ void Game::Draw3D() {
         mRenderer->Draw3D();
     }
     
+    FMatrix aProjection = mRenderer->mCamera->GetProjection();
+    Graphics::MatrixProjectionSet(aProjection);
+    Graphics::MatrixModelViewReset();
+    
+    Graphics::DepthEnable();
+    Graphics::CullFacesSetFront();
+    mTestThread.Draw3D();
+    Graphics::DepthDisable();
+    Graphics::CullFacesSetBack();
+    
     Graphics::ClipDisable();
     Graphics::DepthDisable();
 }
 
 void Game::TouchDown(float pX, float pY, void *pData) {
-
+    
+    mTestThread.Setup();
+    
     if (gTouch.mTouchCount >= 3) {
         printf("Hack: Killing all balloons..!");
         
@@ -805,9 +826,10 @@ void Game::DisposeObject(GameObject *pObject) {
     
     if (pObject->mGameObjectType == GAME_OBJECT_TYPE_DART) {
         EnumList (BrickHead, aBrickHead, mBrickHeadList.mObjectList) {
-        
-            if (aBrickHead->mStuckDart == pObject) {
-                aBrickHead->mStuckDart = NULL;
+            EnumList(StuckDart, aStuck, aBrickHead->mStuckDartList) {
+                if (aStuck->mDart == pObject) {
+                    aStuck->mDart = NULL;
+                }
             }
         }
     }
@@ -817,6 +839,13 @@ void Game::DisposeObject(GameObject *pObject) {
         mLevelData->DisposeObject(pObject);
     }
 }
+
+void Game::DisposeObjectFromLevelData(GameObject *pObject) {
+    if (mLevelData != NULL) {
+        mLevelData->DisposeObject(pObject);
+    }
+}
+
 
 void Game::DisposeAllObjects() {
     EnumList (Dart, aDart, mDartList.mObjectList) {
@@ -862,28 +891,27 @@ void Game::DartCollideWithBrickhead(Dart *pDart, BrickHead *pBrickHead) {
         
         pDart->mStuck = true;
         
-        pDart->mStoredTipX = pDart->mTipX;
-        pDart->mStoredTipY = pDart->mTipY;
-        
-        pDart->mStoredPrevTipX = pDart->mPrevTipX;
-        pDart->mStoredPrevTipY = pDart->mPrevTipY;
-        
-        printf("Hit Brickhead... [%s][%x]  [%x]\n", pDart->TypeString().c(), pDart, pBrickHead);
-        
         if (pBrickHead != NULL) {
-            pBrickHead->mStuck = true;
-            pBrickHead->mStuckDart = pDart;
             
-            pBrickHead->mStuckDartStartDartRotation = pDart->mTransform.mRotation;
+            StuckDart *aStuck = new StuckDart();
+            aStuck->mDart = pDart;
+            aStuck->mStartDartRotation = pDart->mTransform.mRotation;
+            aStuck->mStartReferenceRotation = (pBrickHead->mTransform.mRotation + pBrickHead->mTransform.mOffsetRotation);
             
-            pBrickHead->mStuckDartStartBrickHeadRotation = pBrickHead->mTransform.mRotation;
+            //
+            //We don't factor in the dart's offset because that is independent of
+            //the collider object. The dart's new position will be dependent on the collider...
+            //
             
-            pBrickHead->mStuckDartStartXDiff = pDart->mTransform.mX - pBrickHead->mTransform.mX;
-            pBrickHead->mStuckDartStartYDiff = pDart->mTransform.mY - pBrickHead->mTransform.mY;
+            float aDeltaX = (pDart->mTransform.mX) - (pBrickHead->mTransform.mX + pBrickHead->mTransform.mOffsetX);
+            float aDeltaY = (pDart->mTransform.mY) - (pBrickHead->mTransform.mY + pBrickHead->mTransform.mOffsetY);
             
-            pBrickHead->mHitStartX = pBrickHead->mTransform.mX;
-            pBrickHead->mHitStartY = pBrickHead->mTransform.mY;
+            aStuck->mStartXDiff = aDeltaX;
+            aStuck->mStartYDiff = aDeltaY;
             
+            pBrickHead->mStuckDartList.Add(aStuck);
+            
+            pBrickHead->Rumble(pDart->mTransform.mRotation);
         }
     }
 }
@@ -1038,6 +1066,8 @@ void Game::Load() {
     
     Log("Game::Load()\n");
     
+    //TODO: Remove...
+    return;
     
     Level aLevel;
     //aLevel.AddSection("test_section_01");
@@ -1045,14 +1075,22 @@ void Game::Load() {
     //aLevel.AddSection("test_section_03");
     //aLevel.AddSection("test_section_02");
     
-    aLevel.SetAliveTimer(60000);
+    aLevel.SetAliveTimer(6500);
+    aLevel.AddSection("test_section_perm_only_all_brickheads_landings");
+    aLevel.AddSection("test_section_perm_only_all_brickheads_landings");
     aLevel.AddSection("test_section_perm_only_all_brickheads");
+    aLevel.AddSection("test_section_perm_only_all_brickheads");
+    aLevel.AddSection("test_section_perm_only_all_brickheads");
+    
     
     aLevel.SetKillTimer(800);
     aLevel.AddSection("test_section_perm_only_all_balloons");
     
     aLevel.SetKillTimer(800);
     aLevel.AddSection("test_section_perm_only_all_balloons_all_tracers");
+    
+    //aLevel.SetKillTimer(100);
+    //aLevel.AddSection("test_section_perm_only_all_brickheads_landings");
     
     //aLevel.SetKillTimer(100);
     //aLevel.AddSection("test_section_perm_only_all_balloons_all_tracers");

@@ -412,9 +412,11 @@ void Graphics::DrawBox(float x1, float y1, float z1, float x2, float y2, float z
     
     
     
-    FVec3 aReference = FVec3(aDirX, aDirY, aDirZ);
+    FVec3 aReference = FVec3(aDirX, aDirY, aDirZ).GetPerp();
+    
     FVec3 aAxis = FVec3(aDirX, aDirY, aDirZ);
     
+    /*
     //Pick the "optimal" orthogonal...
     float aFactorX = fabsf(aReference.mX);
     float aFactorY = fabsf(aReference.mY);
@@ -424,20 +426,13 @@ void Graphics::DrawBox(float x1, float y1, float z1, float x2, float y2, float z
     //   Ortho (-1, 1, 1)
     
     if (aFactorX < 0.00025f) {
-        
         if (aFactorY < 0.00025f) {
-            
             //Z only, go straight up or left...
             aReference = FVec3(0.0f, 1.0f, 0.0f);
-            
         } else {
             //Y and Z only, flip them...
             aReference = FVec3(0.0f, -aReference.mZ, aReference.mY);
         }
-        
-        //aReference = FVec3(1.0f, 0.0f, 0.0f);
-        
-        
     } else if (aFactorY < 0.00025f) {
         
         if (aFactorZ < 0.00025f) {
@@ -453,6 +448,8 @@ void Graphics::DrawBox(float x1, float y1, float z1, float x2, float y2, float z
     } else {
         aReference = FVec3(1.0f, 1.0f, -((aAxis.mX + aAxis.mY) / aAxis.mZ));
     }
+    */
+    
     
     /*
     if v.x == 0:
@@ -486,7 +483,7 @@ void Graphics::DrawBox(float x1, float y1, float z1, float x2, float y2, float z
     }
     */
     
-    aReference.Normalize();
+    //aReference.Normalize();
     
     FVec3 aPerp1 = Rotate3DNormalized(aReference, aAxis, 0.0f + pRotation);
     FVec3 aPerp2 = Rotate3DNormalized(aReference, aAxis, 90.0f + pRotation);

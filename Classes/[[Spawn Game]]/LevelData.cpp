@@ -146,6 +146,13 @@ void LevelData::Update() {
 
 void LevelData::DisposeObject(GameObject *pObject) {
     
+    if (mPreviousSection) {
+        mPreviousSection->DisposeObject(pObject);
+    }
+    
+    if (mCurrentSection) {
+        mCurrentSection->DisposeObject(pObject);
+    }
 }
 
 void LevelData::DisposeSection(LevelSection *pLevelSection) {

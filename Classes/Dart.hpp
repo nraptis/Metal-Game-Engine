@@ -68,14 +68,6 @@ public:
     float                                   mUpdateInterpEndX;
     float                                   mUpdateInterpEndY;
     float                                   mUpdateInterpEndRotation;
-    
-    float                                   mStoredTipX;
-    float                                   mStoredTipY;
-    
-    float                                   mStoredPrevTipX;
-    float                                   mStoredPrevTipY;
-    
-    
 };
 
 #endif

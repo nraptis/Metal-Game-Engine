@@ -181,7 +181,7 @@ public:
 	//file contents as argument! (must be null terminated)
 	void					ImportData(char *theData);
 
-    void					Reset();
+    void                    Reset();
     
 	//Destroy the spline and free up memory.
 	void					Clear();
@@ -359,7 +359,7 @@ public:
     void					Size(int size);
     
     
-    
+    void                    Reset();
     
     //Destroy the spline and free up memory.
     void					Clear();

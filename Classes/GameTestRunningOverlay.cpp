@@ -28,16 +28,36 @@ GameTestRunningOverlay::GameTestRunningOverlay() {
     gGameTestRunningOverlay = this;
     mConsumesTouches = false;
     
+    mTestRunningMenu = NULL;
+    mCameraMenu = NULL;
+    
     mName = "{{Game Running Test Overlay}}";
     
-    mTestRunningMenu = new GameTestRunningMainMenu(gGame);
-    mTestRunningMenu->SetFrame(14.0f, 80.0f, 320.0f, 240.0f);
-    AddChild(mTestRunningMenu);
+    
+    //mTestRunningMenu = new GameTestRunningMainMenu(gGame);
+    //mTestRunningMenu->SetFrame(14.0f, 80.0f, 220.0f, 130.0f);
+    //gApp->mWindowTools.AddChild(mTestRunningMenu);
+    
+    
+    
+    mCameraMenu = new CameraMenu(gGame->mRenderer->mCamera);
+    mCameraMenu->SetFrame(14.0f, 130.0f, 220.0f, 160.0f);
+    gApp->mWindowTools.AddChild(mCameraMenu);
+    
+    
     
 }
 
 GameTestRunningOverlay::~GameTestRunningOverlay() {
+    if (mTestRunningMenu != NULL) {
+        mTestRunningMenu->Kill();
+        mTestRunningMenu = NULL;
+    }
     
+    if (mCameraMenu != NULL) {
+        mCameraMenu->Kill();
+        mCameraMenu = NULL;
+    }
 }
 
 void GameTestRunningOverlay::Layout() {

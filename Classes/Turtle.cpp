@@ -17,8 +17,11 @@ Turtle::Turtle() {
     mSpinSpeed = gRand.GetFloat(0.25f, 0.45f);
     if (gRand.GetBool()) mSpinSpeed = -mSpinSpeed;
     
-    //mModel = &gApp->mTurtle;
-    //mSprite = &gApp->mTurtleMap;
+    mModel = &(gApp->mMonolith);
+    mSprite = &(gApp->mMonolithMap);
+    
+    mAccessoryModel = NULL;
+    mAccessorySprite = NULL;
     
     //mAccessoryModel = &gApp->mTurtleCage;
     //mAccessorySprite = &gApp->mTurtleMap;
@@ -27,6 +30,9 @@ Turtle::Turtle() {
     
     mVelX = 0.0f;
     mVelY = 0.0f;
+    
+    mTransform.mOffsetY = 1.0f;
+    mTransform.mOffsetScale = 0.65f;
 }
 
 Turtle::~Turtle() {

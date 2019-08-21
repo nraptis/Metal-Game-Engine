@@ -11,13 +11,9 @@
 
 BrickHead::BrickHead() {
     
-    
     mGameObjectType = GAME_OBJECT_TYPE_BRICKHEAD;
     
     mSpinSpeed = 0.0f;
-    
-    mSwivel = gRand.GetFloat(360.0f);
-    mSwivelSpeed = gRand.GetFloat(0.25, 0.65, true);
     
     mModel = &gApp->mBrickhead;
     mSprite = &gApp->mBrickheadMap;
@@ -30,15 +26,13 @@ BrickHead::BrickHead() {
     
     mUniform = &(gGame->mRenderer->mUniformPhongBalloon);
     
-    mStuck = false;
-    mStuckDart = NULL;
+    //mStuck = false;
+    //mStuckDart = NULL;
+    //mStuckDartStartDartRotation = 0.0f;
+    //mStuckDartStartBrickHeadRotation = 0.0f;
+    //mStuckDartStartXDiff = 0.0f;
+    //mStuckDartStartYDiff = 0.0f;
     
-    mStuckDartStartDartRotation = 0.0f;
-    mStuckDartStartBrickHeadRotation = 0.0f;
-    mStuckDartStartXDiff = 0.0f;
-    mStuckDartStartYDiff = 0.0f;
-    
-    mHitDelay = 200;
     
     mVelX = 0.0f;
     mVelY = 0.0f;
@@ -48,101 +42,210 @@ BrickHead::BrickHead() {
     mCornerPoint3 = FVec2(12.0f ,  12.0f);
     mCornerPoint4 = FVec2(-12.0f,  12.0f);
     
-    mHitOscSin = 0.0f;
-    mHitOscSpinRot = 0.0f;
+    
+    mWanderingSinX = gRand.GetFloat(360.0f);
+    mWanderingSinY = gRand.GetFloat(360.0f);
+    mWanderingOsc = gRand.GetFloat(360.0f);
+    
+    mWanderingMagX = gRand.GetFloat(3.0f, 40.0f, true);
+    mWanderingMagY = gRand.GetFloat(3.0f, 40.0f, true);
+    
+    
+    mIsRumbling = false;
+    mRumbleTime = 200;
+    mRumbleDampenTime = mRumbleTime - 100;
+    
+    mRumbleTimer = 0;
+    
+    mRumbleColorSin = 0.0f;
+    
+    mRumbleDirX = 0.0f;
+    mRumbleDirY = -1.0f;
+    
+    mRumbleBounceMagnitude = 5.0f;
+    mRumbleBounceSin = 0.0f;
+    
+    
     
 }
 
 BrickHead::~BrickHead() {
-    //Log("BrickHead has died [%LX]\n", this);
+    FreeList(StuckDart, mStuckDartList);
 }
 
 void BrickHead::Update() {
     mTransform3D.mSpin += mSpinSpeed;
     
-    if (mStuck == false) {
-        mSwivel += mSwivelSpeed;
-        if (mSwivel >= 360.0f) { mSwivel -= 360.0f; }
-        if (mSwivel <= 360.0f) { mSwivel += 360.0f; }
-    } else {
+    mTransform.mX += mVelX;
+    mTransform.mY += mVelY;
+    
+    
+    //
+    
+    
+    
+    if (mIsRumbling) {
         
-        if (mHitDelay > 0) {
-            mHitDelay--;
-        } else {
-            mSwivel -= mSwivelSpeed / 2.0;
-            if (mSwivel >= 360.0f) { mSwivel -= 360.0f; }
-            if (mSwivel <= 360.0f) { mSwivel += 360.0f; }
+        
+        
+        mRumbleTimer++;
+        if (mRumbleTimer >= mRumbleTime) {
+            mIsRumbling = false;
             
-            mHitOscSin += 0.75f;
-            if (mHitOscSin >= 360.0f) { mHitOscSin -= 360.0f; }
-            
-            mHitOscSpinRot += 0.25f;
-            if (mHitOscSpinRot >= 360.0f) { mHitOscSpinRot -= 360.0f; }
-            
-            float aOscAmount = Sin(mHitOscSin) * 36.0f;
-            
-            FVec2 aOscDir = AngleToVector(mHitOscSpinRot);
-            
-            mTransform.mX = mHitStartX + aOscDir.mX * aOscAmount;
-            mTransform.mY = mHitStartY + aOscDir.mY * aOscAmount;
         }
-    }
         
-    mTransform.mRotation = mSwivel;
-    
-    if (mStuck == false) {
-        mTransform.mX += mVelX;
-        mTransform.mY += mVelY;
+        float aDampenPercent = 0.0f;
+        if (mRumbleTimer > mRumbleDampenTime) {
+            
+            int aAdjustedTimer = mRumbleTimer - mRumbleDampenTime;
+            int aDampenSpan = mRumbleTime - mRumbleDampenTime;
+            
+            aDampenPercent = ((float)aAdjustedTimer) / ((float)aDampenSpan);
+        }
+        
+        mRumbleColorSin += 11.0f;
+        if (mRumbleColorSin >= 360.0f) {
+            mRumbleColorSin -= 360.0f;
+        }
+        
+        mRumbleBounceSin += 9.0f;
+        if (mRumbleBounceSin >= 360.0f) {
+            mRumbleBounceSin -= 360.0f;
+        }
+        
+        float aColorSin = Sin(mRumbleColorSin);
+        float aColorPercent = (aColorSin + 1.0f) * 0.5f; //Goes from 0 to 1...
+        
+        //aDampenPercent
+        mColor.mRed = 1.0f - (aColorPercent * 0.55f) * (1.0f - aDampenPercent);
+        mColor.mGreen = 1.0f - (aColorPercent * 0.8f) * (1.0f - aDampenPercent);
+        mColor.mBlue = 1.0f - (aColorPercent * 0.8f) * (1.0f - aDampenPercent);
+        
+        
+        mRumbleBounceMagnitude = 7.0f * (1.0f - aDampenPercent);
+        
+        float aMag = Cos(mRumbleBounceSin) * mRumbleBounceMagnitude;
+        
+        mTransform.mOffsetX = mRumbleDirX * aMag;
+        mTransform.mOffsetY = mRumbleDirY * aMag;
+        
+        
+    } else {
+        mColor.mRed = 1.0f;
+        mColor.mGreen = 1.0f;
+        mColor.mBlue = 1.0f;
+        
+        mTransform.mOffsetX = 0.0f;
+        mTransform.mOffsetY = 0.0f;
     }
     
-    float aSize = 1.4f;
+    
+    
+    
+    /*
+    float aMultiplier = 0.5f;
+    
+    
+    mWanderingSinX += 3.0f * aMultiplier;
+    if (mWanderingSinX >= 360.0f) { mWanderingSinX -= 360.0f; }
+    
+    mWanderingSinY -= 0.75f * aMultiplier;
+    if (mWanderingSinY <= 0.0f) { mWanderingSinY += 360.0f; }
+    
+    mWanderingOsc += 1.5f * aMultiplier;
+    if (mWanderingOsc >= 360.0f) { mWanderingOsc -= 360.0f; }
+    
+    
+    float aSin1 = Sin(mWanderingSinX);
+    float aSin2 = Sin(mWanderingSinY);
+    
+    float aSinOsc = Sin(mWanderingOsc);
+    
+    float aShiftX = aSin1 * mWanderingMagX;
+    float aShiftY = aSin1 * mWanderingMagY;
+    
+    float aRot = aSinOsc;
+    
+    mTransform.mOffsetX = aShiftX;
+    mTransform.mOffsetY = aShiftY;
+    
+    mTransform.mOffsetRotation = aRot * 30.0f;
+    
+    */
+    
+    
+    
+    float aSize = 1.46f;
     
     gGame->Convert2DTransformTo3D(&mTransform, &mTransform3D);
     
     mCornerPoint1 = FVec2(-aSize, -aSize);
-    mCornerPoint2 = FVec2(aSize, -aSize);
-    mCornerPoint3 = FVec2(aSize, aSize);
-    mCornerPoint4 = FVec2(-aSize, aSize);
+    mCornerPoint2 = FVec2( aSize, -aSize);
+    mCornerPoint3 = FVec2( aSize,  aSize);
+    mCornerPoint4 = FVec2(-aSize,  aSize);
     
     mCornerPoint1 = PivotPoint(mCornerPoint1, mTransform.mRotation + mTransform.mOffsetRotation);
     mCornerPoint2 = PivotPoint(mCornerPoint2, mTransform.mRotation + mTransform.mOffsetRotation);
     mCornerPoint3 = PivotPoint(mCornerPoint3, mTransform.mRotation + mTransform.mOffsetRotation);
     mCornerPoint4 = PivotPoint(mCornerPoint4, mTransform.mRotation + mTransform.mOffsetRotation);
     
-    mCornerPoint1.mX += mTransform3D.mX;
-    mCornerPoint1.mY += mTransform3D.mY;
-    
-    mCornerPoint2.mX += mTransform3D.mX;
-    mCornerPoint2.mY += mTransform3D.mY;
-    
-    mCornerPoint3.mX += mTransform3D.mX;
-    mCornerPoint3.mY += mTransform3D.mY;
-    
-    mCornerPoint4.mX += mTransform3D.mX;
-    mCornerPoint4.mY += mTransform3D.mY;
+    mCornerPoint1.mX += mTransform3D.mX; mCornerPoint1.mY += mTransform3D.mY;
+    mCornerPoint2.mX += mTransform3D.mX; mCornerPoint2.mY += mTransform3D.mY;
+    mCornerPoint3.mX += mTransform3D.mX; mCornerPoint3.mY += mTransform3D.mY;
+    mCornerPoint4.mX += mTransform3D.mX; mCornerPoint4.mY += mTransform3D.mY;
     
     mCornerPoint1 = gGame->Convert3DCoordsTo2D(mCornerPoint1.mX, mCornerPoint1.mY);
     mCornerPoint2 = gGame->Convert3DCoordsTo2D(mCornerPoint2.mX, mCornerPoint2.mY);
     mCornerPoint3 = gGame->Convert3DCoordsTo2D(mCornerPoint3.mX, mCornerPoint3.mY);
     mCornerPoint4 = gGame->Convert3DCoordsTo2D(mCornerPoint4.mX, mCornerPoint4.mY);
     
-    if (mStuckDart != NULL) {
+    
+    ////
+    
+    
+    
+    
+    
+    
+    ////
+    
+    
+    EnumList(StuckDart, aStuck, mStuckDartList) {
         
-        float aRotationDiff = mTransform.mRotation - mStuckDartStartBrickHeadRotation;
-        mStuckDart->mTransform.mRotation = mStuckDartStartDartRotation + aRotationDiff;
+        aStuck->Update();
+        if (aStuck->mDelete) {
+            mStuckDartDeleteList.Add(aStuck);
+        }
         
-        FVec2 aDartOffset = FVec2(mStuckDartStartXDiff, mStuckDartStartYDiff);
-        aDartOffset = PivotPoint(aDartOffset, aRotationDiff);
         
-        mStuckDart->mTransform.mX = mTransform.mX + aDartOffset.mX;
-        mStuckDart->mTransform.mY = mTransform.mY + aDartOffset.mY;
+        Dart *aDart = aStuck->mDart;
+        if (aDart != NULL) {
+            float aRotationDiff = (mTransform.mRotation + mTransform.mOffsetRotation) - aStuck->mStartReferenceRotation;
+            
+            aDart->mTransform.mRotation = aStuck->mStartDartRotation + aRotationDiff;
+            
+            FVec2 aDartOffset = FVec2(aStuck->mStartXDiff, aStuck->mStartYDiff);
+            aDartOffset = PivotPoint(aDartOffset, aRotationDiff);
+            
+            aDart->mTransform.mX = (mTransform.mX + mTransform.mOffsetX) + aDartOffset.mX;
+            aDart->mTransform.mY = (mTransform.mY + mTransform.mOffsetY) + aDartOffset.mY;
+        }
     }
+    
+    EnumList(StuckDart, aStuck, mStuckDartDeleteList) {
+        mStuckDartList.Remove(aStuck);
+        delete aStuck;
+    }
+    mStuckDartDeleteList.RemoveAll();
     
 }
 
 void BrickHead::Draw() {
     
+    
     GameObject::Draw();
+    
+    /*
     
     Graphics::SetColor(1.0f, 0.15f, 0.15f, 0.75f);
     Graphics::PipelineStateSetShape2DAlphaBlending();
@@ -151,6 +254,10 @@ void BrickHead::Draw() {
     Graphics::DrawLine(mCornerPoint2.mX, mCornerPoint2.mY, mCornerPoint3.mX, mCornerPoint3.mY);
     Graphics::DrawLine(mCornerPoint3.mX, mCornerPoint3.mY, mCornerPoint4.mX, mCornerPoint4.mY);
     Graphics::DrawLine(mCornerPoint4.mX, mCornerPoint4.mY, mCornerPoint1.mX, mCornerPoint1.mY);
+    
+    */
+    
+    
     
 }
 
@@ -232,6 +339,28 @@ void BrickHead::Draw3D() {
         }
     }
 }
+
+void BrickHead::Rumble(float pRotation) {
+    
+    mIsRumbling = true;
+    
+    mRumbleTimer = 0;
+    
+    mRumbleColorSin = 0.0f;
+    
+    
+    mRumbleDirX = Sin(pRotation);
+    mRumbleDirY = -Cos(pRotation);
+    
+    mRumbleBounceMagnitude = 12.0f;
+    mRumbleBounceSin = 0.0f;
+    
+    
+    
+    
+    
+}
+
 
 
 bool BrickHead::WillCollide(float pStartX, float pStartY, float pEndX, float pEndY) {

@@ -24,6 +24,7 @@
 #include "Transform2D.hpp"
 #include "Transform3D.hpp"
 #include "GameInfoOverlay.hpp"
+#include "HangingThread.hpp"
 
 #define GAME_WIDTH 768
 #define GAME_HEIGHT 1280
@@ -67,8 +68,12 @@ public:
     
     void                                        DisposeObject(GameObject *pObject);
     
+    void                                        DisposeObjectFromLevelData(GameObject *pObject);
+    
+    
     void                                        FlyOffEscape(GameObject *pObject);
     void                                        DartFlyOffScreen(Dart *pDart);
+    
     void                                        DartCollideWithBrickhead(Dart *pDart, BrickHead *pBrickHead);
     void                                        DartMovingInterpolation(Dart *pDart, float pPercent, bool pEnd);
     
@@ -193,6 +198,7 @@ public:
     
     int                                         mEscapedCount;
     
+    HangingThread                               mTestThread;
     
     
 };

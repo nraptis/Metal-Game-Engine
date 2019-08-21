@@ -26,6 +26,7 @@ FApp::FApp() {
     mIsGraphicsSetUpEnqueued = false;
     mGraphicsSetUpEnqueuedTimer = 0;
     
+    mDarkMode = false;
     
     mDidInitialize = false;
     mDidDetachFrameController = false;
@@ -328,6 +329,17 @@ void FApp::BaseDraw() {
         Graphics::DrawLine(gVirtualDevX, gVirtualDevY + gVirtualDevHeight - gSafeAreaInsetBottom, gVirtualDevX + gVirtualDevWidth, gVirtualDevY + gVirtualDevHeight - gSafeAreaInsetBottom, 1.0f);
         */
     }
+   
+    
+    if (mDarkMode) {
+    Graphics::PipelineStateSetShape2DAlphaBlending();
+    Graphics::SetColor(0.0075f, 0.0075f, 0.0085f, 0.8f);
+    Graphics::DrawRect(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+    Graphics::SetColor();
+    }
+    
+    
+    
 }
 
 void FApp::BaseLoad() {

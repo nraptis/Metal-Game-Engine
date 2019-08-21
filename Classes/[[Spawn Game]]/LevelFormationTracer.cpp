@@ -70,10 +70,12 @@ void LevelFormationTracer::Reset() {
 }
 
 void LevelFormationTracer::DisposeObject(GameObject *pObject) {
+    
     for (int i=0;i<mSpawnNodeList.mCount;i++) {
         LevelFormationNode *aNode = ((LevelFormationNode *)mSpawnNodeList.mData[i]);
         aNode->DisposeObject(pObject);
     }
+    
 }
 
 

@@ -56,6 +56,12 @@ public:
     void                                RotateY(float pDegrees);
     void                                RotateZ(float pDegrees);
     
+    void                                ResetRotationX(float pDegrees);
+    void                                ResetRotationY(float pDegrees);
+    void                                ResetRotationZ(float pDegrees);
+    
+    
+    
     void                                Translate(float pX, float pY);
     void                                Translate(float pX, float pY, float pZ);
     

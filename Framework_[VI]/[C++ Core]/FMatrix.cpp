@@ -36,13 +36,6 @@ void FMatrix::Reset() {
     m[4] = 0.0f;m[5] = 1.0f;m[6] = 0.0f;m[7] = 0.0f;
     m[8] = 0.0f;m[9] = 0.0f;m[10]= 1.0f;m[11]= 0.0f;
     m[12]= 0.0f;m[13]= 0.0f;m[14]= 0.0f;m[15]= 1.0f;
-    
-    /*
-     m[0]=1.0f;m[1]=0.0f;m[2]=0.0f;m[3]=0.0f;
-     m[4]=0.0f;m[5]=1.0f;m[6]=0.0f;m[7]=0.0f;
-     m[8]=0.0f;m[9]=0.0f;m[10]=1.0f;m[11]=0.0f;
-     m[12]=0.0f;m[13]=0.0f;m[14]=0.0f;m[15]=1.0f;
-     */
 }
 
 void FMatrix::Set(FMatrix &pMatrix) {
@@ -54,25 +47,14 @@ void FMatrix::Set(FMatrix &pMatrix) {
 }
 
 void FMatrix::SetNormalMatrix(FMatrix &pModelView) {
-    FMatrix aMatrix;
-    aMatrix.Set(pModelView);
     
-    //aMatrix.m[3] = 0.0f;
-    //aMatrix.m[3 + 4] = 0.0f;
-    //aMatrix.m[3 + 8] = 0.0f;
-    //aMatrix.m[3 + 12] = 1.0f;
+    Set(pModelView);
+    InvertAndTranspose();
     
-    //if (gRand.GetBool()) {
-    //    aMatrix.Transpose();
-    //aMatrix.Invert();
-    //aMatrix.Transpose();
-    //} else {
-    //
-    aMatrix.InvertAndTranspose();
-    //}
-    
-    
-    Set(aMatrix);
+    //FMatrix aMatrix;
+    //aMatrix.Set(pModelView);
+    //aMatrix.InvertAndTranspose();
+    //Set(aMatrix);
 }
 
 
@@ -117,6 +99,86 @@ void FMatrix::RotateZ(float pDegrees) {
     }
 }
 
+void FMatrix::ResetRotationX(float pDegrees) {
+    
+    float aRads = DEGREES_TO_RADIANS(pDegrees);
+    float aCos = cosf(aRads);
+    float aSin = sinf(aRads);
+    
+    
+    m[0 ] = 1.0f;
+    m[1 ] = 0.0f;
+    m[2 ] = 0.0f;
+    m[3 ] = 0.0f;
+    
+    m[4 ] = 0.0f;
+    m[5 ] = aCos;
+    m[6 ] = aSin;
+    m[7 ] = 0.0f;
+    
+    m[8 ] = 0.0f;
+    m[9 ] = -aSin;
+    m[10] = aCos;
+    m[11] = 0.0f;
+    
+    m[12] = 0.0f;
+    m[13] = 0.0f;
+    m[14] = 0.0f;
+    m[15] = 1.0f;
+    
+}
+
+void FMatrix::ResetRotationY(float pDegrees) {
+    float aRads = DEGREES_TO_RADIANS(pDegrees);
+    float aCos = cosf(aRads);
+    float aSin = sinf(aRads);
+    m[0 ] = aCos;
+    m[1 ] = 0.0f;
+    m[2 ] = -aSin;
+    m[3 ] = 0.0f;
+    
+    m[4 ] = 0.0f;
+    m[5 ] = 1.0f;
+    m[6 ] = 0.0f;
+    m[7 ] = 0.0f;
+    
+    m[8 ] = aSin;
+    m[9 ] = 0.0f;
+    m[10] = aCos;
+    m[11] = 0.0f;
+    
+    m[12] = 0.0f;
+    m[13] = 0.0f;
+    m[14] = 0.0f;
+    m[15] = 1.0f;
+}
+
+void FMatrix::ResetRotationZ(float pDegrees) {
+    float aRads = DEGREES_TO_RADIANS(pDegrees);
+    float aCos = cosf(aRads);
+    float aSin = sinf(aRads);
+    
+    m[0 ] = aCos;
+    m[1 ] = aSin;
+    m[2 ] = 0.0f;
+    m[3 ] = 0.0f;
+    
+    m[4 ] = -aSin;
+    m[5 ] = aCos;
+    m[6 ] = 0.0f;
+    m[7 ] = 0.0f;
+    
+    m[8 ] = 0.0f;
+    m[9 ] = 0.0f;
+    m[10] = 1.0f;
+    m[11] = 0.0f;
+    
+    m[12] = 0.0f;
+    m[13] = 0.0f;
+    m[14] = 0.0f;
+    m[15] = 1.0f;
+}
+
 void FMatrix::Translate(float pX, float pY) {
     if ((pX != 0.0f) || (pY != 0.0f)) {
         *this = FMatrixTranslate(*this, pX, pY, 0.0f);
@@ -153,17 +215,19 @@ FVec3 FMatrix::ProcessVec3(FVec3 pVec) {
     //float aZ = m[2] * pVec.mX + m[6] * pVec.mY + m[10] * pVec.mZ;
     //float aW = m[3] * pVec.mX + m[7] * pVec.mY + m[11] * pVec.mZ;
     
-    float aX = m[0] * pVec.mX + m[4] * pVec.mY + m[8] * pVec.mZ + m[12];
-    float aY = m[1] * pVec.mX + m[5] * pVec.mY + m[9] * pVec.mZ + m[13];
+    float aX = m[0] * pVec.mX + m[4] * pVec.mY + m[8 ] * pVec.mZ + m[12];
+    float aY = m[1] * pVec.mX + m[5] * pVec.mY + m[9 ] * pVec.mZ + m[13];
     float aZ = m[2] * pVec.mX + m[6] * pVec.mY + m[10] * pVec.mZ + m[14];
     float aW = m[3] * pVec.mX + m[7] * pVec.mY + m[11] * pVec.mZ + m[15];
     
     Log("TX[%f] TY[%f] TZ[%f] TW[%f]\n", aX, aY, aZ, aW);
     
-    float aScale = 1 / aW;
+    if (fabsf(aW) > SQRT_EPSILON) {
+        float aScale = 1.0 / aW;
+        return FVec3(aX * aScale, aY * aScale, aZ * aScale);
+    }
     
-    return FVec3(aX * aScale, aY * aScale, aZ * aScale);
-    //return FVec3(aX, aY, aZ);
+    return FVec3(aX, aY, aZ);
 }
 
 /*
@@ -887,44 +951,45 @@ FMatrix FMatrixCreateRotation(float pRadians, float x, float y, float z)
     return m;
 }
 
-FMatrix FMatrixCreateXRotation(float pRadians)
-{
-    float cos = cosf(pRadians);
-    float sin = sinf(pRadians);
+FMatrix FMatrixCreateXRotation(float pRadians) {
     
-    FMatrix m = FMatrixCreate(1.0f, 0.0f, 0.0f, 0.0f,
-                              0.0f, cos, sin, 0.0f,
-                              0.0f, -sin, cos, 0.0f,
+    float aCos = cosf(pRadians);
+    float aSin = sinf(pRadians);
+    
+    
+    
+    FMatrix aResult = FMatrixCreate(1.0f, 0.0f, 0.0f, 0.0f,
+                              0.0f, aCos, aSin, 0.0f,
+                              0.0f, -aSin, aCos, 0.0f,
                               0.0f, 0.0f, 0.0f, 1.0f );
     
-    return m;
+    return aResult;
 }
 
-FMatrix FMatrixCreateYRotation(float pRadians)
-{
-    float cos = cosf(pRadians);
-    float sin = sinf(pRadians);
+FMatrix FMatrixCreateYRotation(float pRadians) {
     
-    FMatrix m = FMatrixCreate(cos, 0.0f, -sin, 0.0f,
+    float aCos = cosf(pRadians);
+    float aSin = sinf(pRadians);
+    
+    FMatrix aResult = FMatrixCreate(aCos, 0.0f, -aSin, 0.0f,
                               0.0f, 1.0f, 0.0f, 0.0f,
-                              sin, 0.0f, cos, 0.0f,
+                              aSin, 0.0f, aCos, 0.0f,
                               0.0f, 0.0f, 0.0f, 1.0f );
     
-    return m;
+    return aResult;
 }
 
-FMatrix FMatrixCreateZRotation(float pRadians)
-{
-    float cos = cosf(pRadians);
-    float sin = sinf(pRadians);
+FMatrix FMatrixCreateZRotation(float pRadians) {
     
+    float aCos = cosf(pRadians);
+    float aSin = sinf(pRadians);
     
-    FMatrix m = FMatrixCreate(cos, sin, 0.0f, 0.0f,
-                              -sin, cos, 0.0f, 0.0f,
+    FMatrix aResult = FMatrixCreate(aCos, aSin, 0.0f, 0.0f,
+                              -aSin, aCos, 0.0f, 0.0f,
                               0.0f, 0.0f, 1.0f, 0.0f,
                               0.0f, 0.0f, 0.0f, 1.0f);
     
-    return m;
+    return aResult;
 }
 
 FMatrix FMatrixCreatePerspective(float fovyRadians, float aspect, float nearZ, float farZ)
@@ -1289,28 +1354,24 @@ FMatrix FMatrixScale(FMatrix pMatrix, float sx, float sy, float sz)
     return m;
 }
 
-FMatrix FMatrixRotate(FMatrix pMatrix, float pRadians, float x, float y, float z)
-{
-    FMatrix rm = FMatrixCreateRotation(pRadians, x, y, z);
-    return FMatrixMultiply(pMatrix, rm);
+FMatrix FMatrixRotate(FMatrix pMatrix, float pRadians, float x, float y, float z) {
+    FMatrix aRotationMatrix = FMatrixCreateRotation(pRadians, x, y, z);
+    return FMatrixMultiply(pMatrix, aRotationMatrix);
 }
 
-FMatrix FMatrixRotateX(FMatrix pMatrix, float pRadians)
-{
-    FMatrix rm = FMatrixCreateXRotation(pRadians);
-    return FMatrixMultiply(pMatrix, rm);
+FMatrix FMatrixRotateX(FMatrix pMatrix, float pRadians) {
+    FMatrix aRotationMatrix = FMatrixCreateXRotation(pRadians);
+    return FMatrixMultiply(pMatrix, aRotationMatrix);
 }
 
-FMatrix FMatrixRotateY(FMatrix pMatrix, float pRadians)
-{
-    FMatrix rm = FMatrixCreateYRotation(pRadians);
-    return FMatrixMultiply(pMatrix, rm);
+FMatrix FMatrixRotateY(FMatrix pMatrix, float pRadians) {
+    FMatrix aRotationMatrix = FMatrixCreateYRotation(pRadians);
+    return FMatrixMultiply(pMatrix, aRotationMatrix);
 }
 
-FMatrix FMatrixRotateZ(FMatrix pMatrix, float pRadians)
-{
-    FMatrix rm = FMatrixCreateZRotation(pRadians);
-    return FMatrixMultiply(pMatrix, rm);
+FMatrix FMatrixRotateZ(FMatrix pMatrix, float pRadians) {
+    FMatrix aRotationMatrix = FMatrixCreateZRotation(pRadians);
+    return FMatrixMultiply(pMatrix, aRotationMatrix);
 }
 
 

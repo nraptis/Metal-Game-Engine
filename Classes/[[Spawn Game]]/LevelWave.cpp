@@ -203,6 +203,10 @@ void LevelWave::Draw() {
 
 void LevelWave::DisposeObject(GameObject *pObject) {
     
+    for (int i=0;i<mSpawnIndex;i++) {
+        LevelWaveSpawn *aSpawn = (LevelWaveSpawn *)mSpawnList.Fetch(i);
+        aSpawn->DisposeObject(pObject);
+    }
 }
 
 

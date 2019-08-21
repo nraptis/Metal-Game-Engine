@@ -12,6 +12,7 @@
 #include "FSprite.hpp"
 #include "FModelDataPacked.hpp"
 #include "GameObject.hpp"
+#include "StuckDart.hpp"
 
 class Dart;
 class BrickHead : public GameObject {
@@ -28,17 +29,41 @@ public:
     
     float                                   mSpinSpeed;
     
+    //bool                                    mStuck;
     
-    float                                   mSwivel;
-    float                                   mSwivelSpeed;
+    //List of StuckDart objects...
+    FList                                   mStuckDartList;
+    FList                                   mStuckDartDeleteList;
     
-    bool                                    mStuck;
     
-    Dart                                    *mStuckDart;
-    float                                   mStuckDartStartDartRotation;
-    float                                   mStuckDartStartBrickHeadRotation;
-    float                                   mStuckDartStartXDiff;
-    float                                   mStuckDartStartYDiff;
+    
+    void                                    Rumble(float pRotation);
+    
+    
+    bool                                    mIsRumbling;
+    int                                     mRumbleTime;
+    int                                     mRumbleTimer;
+    int                                     mRumbleDampenTime;
+    
+    float                                   mRumbleDirX;
+    float                                   mRumbleDirY;
+    
+    float                                   mRumbleBounceMagnitude;
+    float                                   mRumbleBounceSin;
+    
+    
+    float                                   mRumbleColorSin;
+    
+    
+    
+    //Dart                                    *mStuckDart;
+    //float                                   mStuckDartStartDartRotation;
+    //float                                   mStuckDartStartBrickHeadRotation;
+    //float                                   mStuckDartStartXDiff;
+    //float                                   mStuckDartStartYDiff;
+    
+    
+    
     
     FModelDataPacked                        *mAccessoryModel;
     FSprite                                 *mAccessorySprite;
@@ -52,11 +77,14 @@ public:
     FVec2                                   mCornerPoint4;
     
     
-    float                                   mHitOscSin;
-    float                                   mHitOscSpinRot;
-    float                                   mHitStartX;
-    float                                   mHitStartY;
-    int                                     mHitDelay;
+    float                                   mWanderingSinX;
+    float                                   mWanderingSinY;
+    
+    
+    float                                   mWanderingOsc;
+    
+    float                                   mWanderingMagX;
+    float                                   mWanderingMagY;
     
     
     

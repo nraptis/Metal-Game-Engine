@@ -63,18 +63,18 @@ public:
 	float                               mY;
     float                               mZ;
     
-    /*
-	inline float Dot(FVec3 &pVector){return mX*pVector.mX+mY*pVector.mY+mZ*pVector.mZ;}
-	FVec3 Cross(FVec3 &pVector)
-    {
-        FVec3 aResult;
-        aResult.mX = (mY*pVector.mZ)-(pVector.mY*mZ);
-        aResult.mY = -(mX*pVector.mZ)+(pVector.mX*mZ);
-        aResult.mZ = (mX*pVector.mY)-(mY*pVector.mX);
-        return aResult;
-    }
+    float                               Dot(FVec3 &pVector);
+    FVec3                               Cross(FVec3 &pVector);
     
-	
+    FVec3                               RotateX(float pDegrees);
+    FVec3                               RotateY(float pDegrees);
+    FVec3                               RotateZ(float pDegrees);
+    
+    
+    FVec3                               GetPerp();
+    
+    
+	/*
 	inline float LengthSquared(){return mX*mX+mY*mY+mZ*mZ;}
 	inline float Length(){return sqrtf(mX*mX+mY*mY+mZ*mZ);}
 	inline void SetLength(float pLength){Normalize();mX*=pLength;mY*=pLength;mZ*=pLength;}

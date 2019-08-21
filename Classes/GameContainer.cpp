@@ -195,6 +195,10 @@ void GameContainer::Notify(void *pSender, const char *pNotification) {
 
 //After the game + editor are ready to go.
 void GameContainer::Realize() {
+    
+    
+    bool aHasEditor = false;
+    
 #ifdef EDITOR_MODE
     if (mGameTestEditorOverlay == NULL && gEditor == NULL) {
         mGameTestEditorOverlay = new GameTestEditorOverlay();
@@ -202,21 +206,25 @@ void GameContainer::Realize() {
         mGame->AddChild(mGameTestEditorOverlay);
         mWindow->RegisterFrameDidUpdate(this);
     }
+    
+    if (gEditor != NULL) {
+        aHasEditor = true;
+    }
+    
 #endif
     
-    if (mGameTestRunningOverlay == NULL) {
+    // This is what we show when we are running, not from the editor...
+    if (mGameTestRunningOverlay == NULL && aHasEditor == false && mGameTestEditorOverlay == NULL) {
         mGameTestRunningOverlay = new GameTestRunningOverlay();
         mGameTestRunningOverlay->mConsumesTouches = false;
         mGame->AddChild(mGameTestRunningOverlay);
         mWindow->RegisterFrameDidUpdate(this);
     }
     
-    
-    
-    
 }
 
 void GameContainer::OpenEditorTestMenus() {
+    
     mEditorMenu = new EditorMenuGameTest();
     gApp->mWindowTools.AddChild(mEditorMenu);
     mEditorMenu->SetFrame(gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 20.0f, 400.0f, 680.0f);
@@ -224,5 +232,6 @@ void GameContainer::OpenEditorTestMenus() {
     mEditorMenuUtils = new EditorMenuGameTestUtils();
     gApp->mWindowTools.AddChild(mEditorMenuUtils);
     mEditorMenuUtils->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), gSafeAreaInsetTop + 20.0f, 400.0f, 480.0f);
+    
 }
 

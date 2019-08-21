@@ -239,6 +239,20 @@ void LevelSectionPermanent::Draw() {
 
 void LevelSectionPermanent::DisposeObject(GameObject *pObject) {
     
+    
+    
+    if (mObject == pObject) {
+        mObject = NULL;
+    }
+    
+    if (mFormation != NULL) {
+        mFormation->DisposeObject(pObject);
+    }
+    
+    EnumList(LevelPermSpawn, aSpawn, mSpawnList) {
+        aSpawn->DisposeObject(pObject);
+    }
+    
 }
 
 FVec2 LevelSectionPermanent::ConvertLocalPointToGame(FVec2 pPos) {

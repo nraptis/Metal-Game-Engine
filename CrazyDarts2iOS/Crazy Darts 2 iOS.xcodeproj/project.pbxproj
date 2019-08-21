@@ -575,6 +575,11 @@
 		0D735543223337F900F975B6 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D735542223337F900F975B6 /* OpenGLES.framework */; };
 		0DA8CC152303728B0077F2C0 /* Bomb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DA8CC132303728B0077F2C0 /* Bomb.cpp */; };
 		0DA8CC182303733B0077F2C0 /* Turtle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DA8CC162303733B0077F2C0 /* Turtle.cpp */; };
+		0DC9C0F4230C918E00D48065 /* HangingThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC9C0F2230C918E00D48065 /* HangingThread.cpp */; };
+		0DC9C0F7230C91B300D48065 /* HangingThreadEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC9C0F5230C91B300D48065 /* HangingThreadEditor.cpp */; };
+		0DC9C0FA230C91C700D48065 /* HangingThreadTestMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC9C0F8230C91C700D48065 /* HangingThreadTestMenu.cpp */; };
+		0DC9C0FD230C921B00D48065 /* HangingThreadKnot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DC9C0FB230C921B00D48065 /* HangingThreadKnot.cpp */; };
+		0DD818A7230B1EE300B184D1 /* StuckDart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DD818A5230B1EE300B184D1 /* StuckDart.cpp */; };
 		0DDF3A872302221700DD83C6 /* pullback.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0DDF3A842302221600DD83C6 /* pullback.caf */; };
 		0DDF3A882302221700DD83C6 /* pop_02.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0DDF3A852302221600DD83C6 /* pop_02.caf */; };
 		0DDF3A892302221700DD83C6 /* pop_01.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0DDF3A862302221600DD83C6 /* pop_01.caf */; };
@@ -1349,6 +1354,16 @@
 		0DA8CC142303728B0077F2C0 /* Bomb.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Bomb.hpp; sourceTree = "<group>"; };
 		0DA8CC162303733B0077F2C0 /* Turtle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Turtle.cpp; sourceTree = "<group>"; };
 		0DA8CC172303733B0077F2C0 /* Turtle.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Turtle.hpp; sourceTree = "<group>"; };
+		0DC9C0F2230C918E00D48065 /* HangingThread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HangingThread.cpp; sourceTree = "<group>"; };
+		0DC9C0F3230C918E00D48065 /* HangingThread.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HangingThread.hpp; sourceTree = "<group>"; };
+		0DC9C0F5230C91B300D48065 /* HangingThreadEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HangingThreadEditor.cpp; sourceTree = "<group>"; };
+		0DC9C0F6230C91B300D48065 /* HangingThreadEditor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HangingThreadEditor.hpp; sourceTree = "<group>"; };
+		0DC9C0F8230C91C700D48065 /* HangingThreadTestMenu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HangingThreadTestMenu.cpp; sourceTree = "<group>"; };
+		0DC9C0F9230C91C700D48065 /* HangingThreadTestMenu.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HangingThreadTestMenu.hpp; sourceTree = "<group>"; };
+		0DC9C0FB230C921B00D48065 /* HangingThreadKnot.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HangingThreadKnot.cpp; sourceTree = "<group>"; };
+		0DC9C0FC230C921B00D48065 /* HangingThreadKnot.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HangingThreadKnot.hpp; sourceTree = "<group>"; };
+		0DD818A5230B1EE300B184D1 /* StuckDart.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StuckDart.cpp; sourceTree = "<group>"; };
+		0DD818A6230B1EE300B184D1 /* StuckDart.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StuckDart.hpp; sourceTree = "<group>"; };
 		0DDF3A842302221600DD83C6 /* pullback.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pullback.caf; sourceTree = "<group>"; };
 		0DDF3A852302221600DD83C6 /* pop_02.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pop_02.caf; sourceTree = "<group>"; };
 		0DDF3A862302221600DD83C6 /* pop_01.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pop_01.caf; sourceTree = "<group>"; };
@@ -1390,6 +1405,14 @@
 		0D358DA422FB4C8B0032E8FC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0DC9C0F8230C91C700D48065 /* HangingThreadTestMenu.cpp */,
+				0DC9C0F9230C91C700D48065 /* HangingThreadTestMenu.hpp */,
+				0DC9C0F5230C91B300D48065 /* HangingThreadEditor.cpp */,
+				0DC9C0F6230C91B300D48065 /* HangingThreadEditor.hpp */,
+				0DC9C0FB230C921B00D48065 /* HangingThreadKnot.cpp */,
+				0DC9C0FC230C921B00D48065 /* HangingThreadKnot.hpp */,
+				0DC9C0F2230C918E00D48065 /* HangingThread.cpp */,
+				0DC9C0F3230C918E00D48065 /* HangingThread.hpp */,
 				0D35945522FB781B0032E8FC /* GameInfoTextBubble.cpp */,
 				0D35945622FB781B0032E8FC /* GameInfoTextBubble.hpp */,
 				0D3593C322FB6D3E0032E8FC /* GameInfoOverlay.cpp */,
@@ -1405,6 +1428,8 @@
 				0DA8CC142303728B0077F2C0 /* Bomb.hpp */,
 				0DA8CC162303733B0077F2C0 /* Turtle.cpp */,
 				0DA8CC172303733B0077F2C0 /* Turtle.hpp */,
+				0DD818A5230B1EE300B184D1 /* StuckDart.cpp */,
+				0DD818A6230B1EE300B184D1 /* StuckDart.hpp */,
 				0D358DEF22FB4C8B0032E8FC /* BrickHead.cpp */,
 				0D358DD122FB4C8B0032E8FC /* BrickHead.hpp */,
 				0D358DB522FB4C8B0032E8FC /* Constraint.cpp */,
@@ -3120,7 +3145,9 @@
 				0D35931B22FB4DE50032E8FC /* FImageBundler.cpp in Sources */,
 				0D35935022FB4DE50032E8FC /* UIAlignmentPicker.cpp in Sources */,
 				0D358E7722FB4C8B0032E8FC /* BrickHead.cpp in Sources */,
+				0DC9C0FA230C91C700D48065 /* HangingThreadTestMenu.cpp in Sources */,
 				0D35945422FB71C00032E8FC /* MetalView.mm in Sources */,
+				0DD818A7230B1EE300B184D1 /* StuckDart.cpp in Sources */,
 				0D35944A22FB71B90032E8FC /* MetalPipeline.mm in Sources */,
 				0D358E8622FB4C8B0032E8FC /* LevelPermSpawn.cpp in Sources */,
 				0D35939622FB4DE50032E8FC /* main.mm in Sources */,
@@ -3130,6 +3157,7 @@
 				0D35934E22FB4DE50032E8FC /* UISegmentButton.cpp in Sources */,
 				0D358E7D22FB4C8B0032E8FC /* LevelFormationNode.cpp in Sources */,
 				0D358E5E22FB4C8B0032E8FC /* Balloon.cpp in Sources */,
+				0DC9C0FD230C921B00D48065 /* HangingThreadKnot.cpp in Sources */,
 				0D35935722FB4DE50032E8FC /* UIRoundedRect.cpp in Sources */,
 				0DA8CC152303728B0077F2C0 /* Bomb.cpp in Sources */,
 				0D35932A22FB4DE50032E8FC /* core_web.cpp in Sources */,
@@ -3168,6 +3196,7 @@
 				0D358E5F22FB4C8B0032E8FC /* DiffuseConfiguration.cpp in Sources */,
 				0D35933322FB4DE50032E8FC /* FRandomizer.cpp in Sources */,
 				0D358E8022FB4C8B0032E8FC /* LevelWave.cpp in Sources */,
+				0DC9C0F7230C91B300D48065 /* HangingThreadEditor.cpp in Sources */,
 				0D35943F22FB71B90032E8FC /* BufferBindingWrapper.mm in Sources */,
 				0D358E6F22FB4C8B0032E8FC /* SimpleSpotLightMenu.cpp in Sources */,
 				0D35939022FB4DE50032E8FC /* os_core_social.mm in Sources */,
@@ -3224,6 +3253,7 @@
 				0D35944322FB71B90032E8FC /* PhongShaders.metal in Sources */,
 				0D35934422FB4DE50032E8FC /* FModelDataSequence.cpp in Sources */,
 				0D35935222FB4DE50032E8FC /* ToolMenuHeader.cpp in Sources */,
+				0DC9C0F4230C918E00D48065 /* HangingThread.cpp in Sources */,
 				0D35935F22FB4DE50032E8FC /* FWindow.cpp in Sources */,
 				0D358E6122FB4C8B0032E8FC /* LevelFormationBlueprint.cpp in Sources */,
 				0D35933422FB4DE50032E8FC /* FResource.cpp in Sources */,

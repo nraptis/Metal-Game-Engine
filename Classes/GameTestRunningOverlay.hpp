@@ -11,6 +11,7 @@
 
 #include "GFXApp.hpp"
 #include "GameTestRunningMainMenu.hpp"
+#include "CameraMenu.hpp"
 
 class Game;
 class GameTestRunningOverlay : public FCanvas {
@@ -32,9 +33,8 @@ public:
     
     virtual void                                Notify(void *pSender, const char *pNotification) override;
     
-    
     GameTestRunningMainMenu                     *mTestRunningMenu;
-    
+    CameraMenu                                  *mCameraMenu;
     
 };
 

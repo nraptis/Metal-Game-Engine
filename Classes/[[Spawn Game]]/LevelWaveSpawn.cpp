@@ -125,6 +125,7 @@ void LevelWaveSpawn::Spawn() {
 }
 
 void LevelWaveSpawn::DisposeObject(GameObject *pObject) {
+    
     if (mObject != NULL && mObject == pObject) {
         mObject = NULL;
     }

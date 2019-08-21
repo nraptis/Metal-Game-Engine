@@ -1,4 +1,12 @@
 
+3.) When brick is hit, it should rumble. The dart should be stuck for ~2 secs and then dissappear...
+
+1.) Show lives indicators at top-right of screen.
+
+2.) Show pause button at the top-left of screen.
+
+
+
 
 
 

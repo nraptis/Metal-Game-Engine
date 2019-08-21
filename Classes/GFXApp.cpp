@@ -34,6 +34,11 @@ GFXApp::GFXApp() {
     
     gApp = this;
     
+#ifndef EDITOR_MODE
+    mDarkMode = true;
+#endif
+    
+    
 #ifdef EDITOR_MODE
     mEditor = NULL;
     
@@ -99,15 +104,10 @@ void GFXApp::Load() {
     mSnailMap.Load("snail_uvw");
     
     
-    
-    
-    
-    
     mSound1.Load("land.caf");
     mSound2.Load("match.caf");
     
     mGameAreaMarker.Load("game_area_marker");
-    
     
     mPalmTrunk.LoadOBJ("palm_tree_trunk_01.obj");
     mPalmTrunkMap.Load("palm_tree_trunk_01_map_1024");

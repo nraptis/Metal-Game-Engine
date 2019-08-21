@@ -147,21 +147,7 @@ void Dart::Update() {
 }
 
 void Dart::Draw() {
-    
     GameObject::Draw();
-    
-    //FVec2 aTipPoint = GetTipPoint();
-    //Graphics::SetColor(0.25f, 0.25f, 1.0f, 0.75f);
-    //Graphics::DrawLine(mTransform.mX, mTransform.mY, aTipPoint.mX, aTipPoint.mY);
-    
-    if (mStuck) {
-        
-        Graphics::PipelineStateSetShape2DAlphaBlending();
-        Graphics::SetColor(0.25f, 0.25f, 1.0f, 0.75f);
-        Graphics::DrawLine(mStoredTipX, mStoredTipY, mStoredPrevTipX, mStoredPrevTipY);
-        
-    }
-    
 }
 
 void Dart::Draw3D() {
@@ -190,10 +176,8 @@ void Dart::SpawnAnimationForceComplete() {
         mTransform.mOffsetZ = 0.0f;
         
         mTransform.mOffsetRotation = 0.0f;
-        
         mTransform3D.mRotationX = 0.0f;
         mTransform3D.mRotationZ = 0.0f;
-        
         mTransform.mOffsetScale = 1.0f;
         
         mColor.mRed = 1.0f;

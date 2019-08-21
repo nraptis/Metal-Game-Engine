@@ -9,35 +9,129 @@
 #include "FVec3.hpp"
 #include "core_includes.h"
 
-float FVec3::Length()
-{
+float FVec3::Length() {
     float aLength = mX * mX + mY * mY + mZ * mZ;
-    if(aLength > SQRT_EPSILON)aLength = sqrtf(aLength);
+    if (aLength > SQRT_EPSILON) { aLength = sqrtf(aLength); }
     return aLength;
 }
 
-float FVec3::LengthSquared()
-{
+float FVec3::LengthSquared() {
     return mX * mX + mY * mY;
 }
 
-void FVec3::Normalize()
-{
+void FVec3::Normalize() {
     float aLength = mX * mX + mY * mY + mZ * mZ;
-    if(aLength > SQRT_EPSILON)
-    {
+    if (aLength > SQRT_EPSILON) {
         aLength = sqrtf(aLength);
         mX /= aLength;
         mY /= aLength;
         mZ /= aLength;
-    }
-    else
-    {
+    } else {
         mX = 0.0f;
         mY = -1.0f;
         mZ = 0.0f;
     }
 }
+
+float FVec3::Dot(FVec3 &pVector) {
+    return mX * pVector.mX + mY * pVector.mY + mZ * pVector.mZ;
+}
+
+FVec3 FVec3::Cross(FVec3 &pVector) {
+    FVec3 aResult;
+    aResult.mX = (mY * pVector.mZ) - (pVector.mY * mZ);
+    aResult.mY = -(mX * pVector.mZ) + (pVector.mX * mZ);
+    aResult.mZ = (mX * pVector.mY) - (mY * pVector.mX);
+    return aResult;
+}
+
+FMatrix cVectorRotationMatrix;
+FVec3 FVec3::RotateX(float pDegrees) {
+    cVectorRotationMatrix.ResetRotationX(pDegrees);
+    return cVectorRotationMatrix.ProcessVec3(*this);
+}
+
+FVec3 FVec3::RotateY(float pDegrees) {
+    cVectorRotationMatrix.ResetRotationY(pDegrees);
+    return cVectorRotationMatrix.ProcessVec3(*this);
+}
+
+FVec3 FVec3::RotateZ(float pDegrees) {
+    cVectorRotationMatrix.ResetRotationZ(pDegrees);
+    return cVectorRotationMatrix.ProcessVec3(*this);
+}
+
+
+FVec3 FVec3::GetPerp() {
+    
+    //FVec3 aReference = FVec3(aDirX, aDirY, aDirZ);
+    //FVec3 aAxis = FVec3(aDirX, aDirY, aDirZ);
+    
+    
+    //Pick the "optimal" orthogonal...
+    float aFactorX = fabsf(mX);
+    float aFactorY = fabsf(mY);
+    float aFactorZ = fabsf(mZ);
+    
+    // (1, 1, 1)
+    //   Ortho (-1, 1, 1)
+    
+    FVec3 aResult;
+    
+    if (aFactorX < 0.00025f) {
+        if (aFactorY < 0.00025f) {
+            //Z only, go straight up or left...
+            aResult.mX = 0.0f;
+            aResult.mY = 1.0f;
+            aResult.mZ = 0.0f;
+            
+            
+            
+            //aReference = FVec3(0.0f, 1.0f, 0.0f);
+            
+        } else {
+            //Y and Z only, flip them...
+            aResult.mX = 0.0f;
+            aResult.mY = -mZ;
+            aResult.mZ = mY;
+            
+        }
+    } else if (aFactorY < 0.00025f) {
+        
+        if (aFactorZ < 0.00025f) {
+            //X only, go straight up or in...
+            aResult.mX = 0.0f;
+            aResult.mY = -1.0f;
+            aResult.mZ = 0.0f;
+            
+            
+        } else {
+            //X and Z only, flip them...
+            aResult.mX = -mZ;
+            aResult.mY = 0.0f;
+            aResult.mZ = mX;
+            
+        }
+    } else if (aFactorZ < 0.00025f) {
+        //X and Y only, flip them...
+        aResult.mX = -mY;
+        aResult.mY = mX;
+        aResult.mZ = 0.0f;
+        
+        
+    } else {
+        aResult.mX = 1.0f;
+        aResult.mY = 1.0f;
+        aResult.mZ = -((mX + mY) / mZ);
+    }
+    
+    aResult.Normalize();
+    
+    return aResult;
+}
+
+
+
 
 
 /*

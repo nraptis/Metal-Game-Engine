@@ -362,6 +362,11 @@ void LevelSection::DisposeObject(GameObject *pObject) {
     EnumList(LevelWave, aWave, mWaveList) {
         aWave->DisposeObject(pObject);
     }
+    
+    EnumList(LevelSectionPermanent, aPerm, mPermList) {
+        aPerm->DisposeObject(pObject);
+    }
+    
 }
 
 void LevelSection::AddWave(LevelWave *pLevelWave) {
