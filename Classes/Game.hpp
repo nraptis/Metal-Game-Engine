@@ -200,6 +200,14 @@ public:
     
     HangingThread                               mTestThread;
     
+    float                                       mHangingThreatTestAxisStartX;
+    float                                       mHangingThreatTestAxisStartY;
+    float                                       mHangingThreatTestAxisStartZ;
+    
+    float                                       mHangingThreatTestAxisEndOffsetX;
+    float                                       mHangingThreatTestAxisEndOffsetY;
+    float                                       mHangingThreatTestAxisEndOffsetZ;
+    
     
 };
 

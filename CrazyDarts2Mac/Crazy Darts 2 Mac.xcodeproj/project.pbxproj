@@ -764,18 +764,18 @@
 		0D181752230DBAF70055019D /* [Menus] */ = {
 			isa = PBXGroup;
 			children = (
-				0D181753230DBAF70055019D /* PhongLightMenu.cpp */,
-				0D181754230DBAF70055019D /* GameTestRunningMainMenu.cpp */,
-				0D181755230DBAF70055019D /* DiffuseLightMenu.cpp */,
-				0D181756230DBAF70055019D /* SimpleSpotLightMenu.cpp */,
-				0D181757230DBAF70055019D /* SoundConfigMenu.cpp */,
-				0D181758230DBAF70055019D /* CameraMenu.hpp */,
-				0D181759230DBAF70055019D /* GameTestRunningMainMenu.hpp */,
-				0D18175A230DBAF70055019D /* DiffuseLightMenu.hpp */,
-				0D18175B230DBAF70055019D /* SimpleSpotLightMenu.hpp */,
-				0D18175C230DBAF70055019D /* SoundConfigMenu.hpp */,
 				0D18175D230DBAF70055019D /* CameraMenu.cpp */,
+				0D181758230DBAF70055019D /* CameraMenu.hpp */,
+				0D181755230DBAF70055019D /* DiffuseLightMenu.cpp */,
+				0D18175A230DBAF70055019D /* DiffuseLightMenu.hpp */,
+				0D181754230DBAF70055019D /* GameTestRunningMainMenu.cpp */,
+				0D181759230DBAF70055019D /* GameTestRunningMainMenu.hpp */,
+				0D181753230DBAF70055019D /* PhongLightMenu.cpp */,
 				0D18175E230DBAF70055019D /* PhongLightMenu.hpp */,
+				0D181756230DBAF70055019D /* SimpleSpotLightMenu.cpp */,
+				0D18175B230DBAF70055019D /* SimpleSpotLightMenu.hpp */,
+				0D181757230DBAF70055019D /* SoundConfigMenu.cpp */,
+				0D18175C230DBAF70055019D /* SoundConfigMenu.hpp */,
 			);
 			path = "[Menus]";
 			sourceTree = "<group>";

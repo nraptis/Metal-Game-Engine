@@ -127,6 +127,18 @@ Game::Game() {
     mSlowMo = false;
     mSlowMoTimer = 0;
     
+    
+    
+    mHangingThreatTestAxisStartX = 0.0f;
+    mHangingThreatTestAxisStartY = 0.0f;
+    mHangingThreatTestAxisStartZ = 0.0f;
+    
+    mHangingThreatTestAxisEndOffsetX = -5.0f;
+    mHangingThreatTestAxisEndOffsetY = -12.0f;
+    mHangingThreatTestAxisEndOffsetZ = 4.0f;
+    
+    
+    
 }
 
 Game::~Game() {
@@ -631,6 +643,54 @@ void Game::Draw3D() {
     Graphics::DepthEnable();
     Graphics::CullFacesSetFront();
     mTestThread.Draw3D();
+    
+    
+    FVec3 aAxisStart = FVec3(mHangingThreatTestAxisStartX, mHangingThreatTestAxisStartY, mHangingThreatTestAxisStartZ);
+    FVec3 aAxisEnd = FVec3(mHangingThreatTestAxisStartX + mHangingThreatTestAxisEndOffsetX,
+                           mHangingThreatTestAxisStartY + mHangingThreatTestAxisEndOffsetY,
+                           mHangingThreatTestAxisStartZ + mHangingThreatTestAxisEndOffsetZ);
+    
+    
+    FVec3 aNorm = FVec3(aAxisEnd.mX - aAxisStart.mX,
+                        aAxisEnd.mY - aAxisStart.mY,
+                        aAxisEnd.mZ - aAxisStart.mZ);
+    aNorm.Normalize();
+    
+
+    Graphics::SetColor(0.88f, 0.25f, 0.125f, 0.85f);
+    Graphics::DrawBox(aAxisStart.mX, aAxisStart.mY, aAxisStart.mZ, aAxisEnd.mX, aAxisEnd.mY, aAxisEnd.mZ, 0.6f);
+    
+    FVec3 aFacing = FVec3(0.0f, -1.0f, 0.0f);
+    
+    aFacing = aFacing.GetProjected(aAxisStart, aAxisEnd) * 12.0f;
+    
+    aFacing = aNorm.GetPerp();
+    
+    
+    Graphics::SetColor(0.88f, 0.88f, 0.88f, 0.85f);
+    Graphics::DrawBox(aAxisStart.mX, aAxisStart.mY, aAxisStart.mZ,
+                      aAxisStart.mX + aFacing.mX * 20.0f, aAxisStart.mY + aFacing.mY * 20.0f, aAxisStart.mZ + aFacing.mZ * 20.0f, 0.6f);
+    
+    float aLen = 4.0f;
+    
+    for (float p=0.0f;p<1.0f;p+=0.025f) {
+        
+        float aRot = p * 360.0f;
+        
+        Graphics::SetColor(p, 1.0f - p, 0.125f, 0.35f);
+        
+        
+        FVec3 aPerp = Rotate3D(aFacing, -aNorm, aRot);
+        
+        
+        Graphics::DrawBox(aAxisStart.mX, aAxisStart.mY, aAxisStart.mZ, aAxisStart.mX + aPerp.mX * aLen, aAxisStart.mY + aPerp.mY * aLen, aAxisStart.mZ + aPerp.mZ * aLen, 0.6f);
+        
+        
+        
+    }
+    
+    
+    
     Graphics::DepthDisable();
     Graphics::CullFacesSetBack();
     

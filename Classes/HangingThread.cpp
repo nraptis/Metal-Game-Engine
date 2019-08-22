@@ -123,7 +123,6 @@ void HangingThread::Draw3D() {
                           0.25f);
         
         
-        
     }
     
     

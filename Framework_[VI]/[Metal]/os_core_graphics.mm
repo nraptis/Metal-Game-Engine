@@ -410,80 +410,8 @@ void Graphics::DrawBox(float x1, float y1, float z1, float x2, float y2, float z
     
     Graphics::CullFacesSetDisabled();
     
-    
-    
     FVec3 aReference = FVec3(aDirX, aDirY, aDirZ).GetPerp();
-    
     FVec3 aAxis = FVec3(aDirX, aDirY, aDirZ);
-    
-    /*
-    //Pick the "optimal" orthogonal...
-    float aFactorX = fabsf(aReference.mX);
-    float aFactorY = fabsf(aReference.mY);
-    float aFactorZ = fabsf(aReference.mZ);
-    
-    // (1, 1, 1)
-    //   Ortho (-1, 1, 1)
-    
-    if (aFactorX < 0.00025f) {
-        if (aFactorY < 0.00025f) {
-            //Z only, go straight up or left...
-            aReference = FVec3(0.0f, 1.0f, 0.0f);
-        } else {
-            //Y and Z only, flip them...
-            aReference = FVec3(0.0f, -aReference.mZ, aReference.mY);
-        }
-    } else if (aFactorY < 0.00025f) {
-        
-        if (aFactorZ < 0.00025f) {
-            //X only, go straight up or in...
-            aReference = FVec3(0.0f, -1.0f, 0.0f);
-        } else {
-            //X and Z only, flip them...
-            aReference = FVec3(-aReference.mZ, 0.0f, aReference.mX);
-        }
-    } else if (aFactorZ < 0.00025f) {
-        //X and Y only, flip them...
-        aReference = FVec3(-aReference.mY, aReference.mX, 0.0f);
-    } else {
-        aReference = FVec3(1.0f, 1.0f, -((aAxis.mX + aAxis.mY) / aAxis.mZ));
-    }
-    */
-    
-    
-    /*
-    if v.x == 0:
-        return Vector(1, 0, 0)
-        if v.y == 0:
-            return Vector(0, 1, 0)
-            if v.z == 0:
-                return Vector(0, 0, 1)
-                
-# arbitrarily set a = b = 1
-# then the equation simplifies to
-#     c = -(x + y)/z
-                return Vector(1, 1, -1.0 * (v.x + v.y) / v.z)
-    */
-    
-    /*
-    if (aFactorX > aFactorZ && aFactorY > aFactorZ) {
-        //Z is the smallest...
-        aReference = FVec3(-aReference.mY, aReference.mX, 0.0f);
-        
-        
-    } else if (aFactorX > aFactorY && aFactorZ > aFactorY) {
-        //Y is the smallest...
-        
-        aReference = FVec3(-aReference.mZ, 0.0f, aReference.mX);
-        
-        
-    } else {
-        //X is the smallest...
-        aReference = FVec3(0.0f, aReference.mZ, -aReference.mY);
-    }
-    */
-    
-    //aReference.Normalize();
     
     FVec3 aPerp1 = Rotate3DNormalized(aReference, aAxis, 0.0f + pRotation);
     FVec3 aPerp2 = Rotate3DNormalized(aReference, aAxis, 90.0f + pRotation);

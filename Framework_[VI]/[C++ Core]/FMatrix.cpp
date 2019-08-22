@@ -99,6 +99,52 @@ void FMatrix::RotateZ(float pDegrees) {
     }
 }
 
+void FMatrix::ResetRotation(float pDegrees, float pX, float pY, float pZ) {
+    float aDist = pX * pX + pY * pY + pZ * pZ;
+    if (aDist > SQRT_EPSILON) {
+        aDist = sqrtf(aDist);
+        pX /= aDist;
+        pY /= aDist;
+        pZ /= aDist;
+    }
+    ResetRotationNormalized(pDegrees, pX, pY, pZ);
+}
+
+void FMatrix::ResetRotationNormalized(float pDegrees, float pX, float pY, float pZ) {
+    float aRads = DEGREES_TO_RADIANS(pDegrees);
+    float aCos = cosf(aRads);
+    float aCosInv = 1.0f - aCos;
+    float aSin = sinf(aRads);
+    float aCosInvX = aCosInv * pX;
+    float aCosInvY = aCosInv * pY;
+    float aCosInvXY = aCosInvX * pY;
+    float aCosInvXZ = aCosInvX * pZ;
+    float aCosInvYZ = aCosInvY * pZ;
+    float aSinX = pX * aSin;
+    float aSinY = pY * aSin;
+    float aSinZ = pZ * aSin;
+    
+    m[0 ] = aCos + aCosInvX * pX;
+    m[1 ] = aCosInvXY + aSinZ;
+    m[2 ] = aCosInvXZ - aSinY;
+    m[3 ] = 0.0f;
+    
+    m[4 ] = aCosInvXY - aSinZ;
+    m[5 ] = aCos + aCosInvY * pY;
+    m[6 ] = aCosInvYZ + aSinX;
+    m[7 ] = 0.0f;
+    
+    m[8 ] = aCosInvXZ + aSinY;
+    m[9 ] = aCosInvYZ - aSinX;
+    m[10] = aCos + aCosInv * pZ * pZ;
+    m[11] = 0.0f;
+    
+    m[12] = 0.0f;
+    m[13] = 0.0f;
+    m[14] = 0.0f;
+    m[15] = 1.0f;
+}
+
 void FMatrix::ResetRotationX(float pDegrees) {
     
     float aRads = DEGREES_TO_RADIANS(pDegrees);
@@ -207,26 +253,29 @@ FVec2 FMatrix::ProcessVec2(FVec2 pVec) {
     return FVec2(aResult.mX, aResult.mY);
 }
 
+FVec2 FMatrix::ProcessVec2RotationOnly(FVec2 pVec) {
+    FVec3 aResult = ProcessVec3RotationOnly(FVec3(pVec.mX, pVec.mY, 0.0f));
+    return FVec2(aResult.mX, aResult.mY);
+}
+
 FVec3 FMatrix::ProcessVec3(FVec3 pVec) {
-    Log("VecIn[%f %f %f]\n", pVec.mX, pVec.mY, pVec.mZ);
-    
-    //float aX = m[0] * pVec.mX + m[4] * pVec.mY + m[8] * pVec.mZ;
-    //float aY = m[1] * pVec.mX + m[5] * pVec.mY + m[9] * pVec.mZ;
-    //float aZ = m[2] * pVec.mX + m[6] * pVec.mY + m[10] * pVec.mZ;
-    //float aW = m[3] * pVec.mX + m[7] * pVec.mY + m[11] * pVec.mZ;
-    
     float aX = m[0] * pVec.mX + m[4] * pVec.mY + m[8 ] * pVec.mZ + m[12];
     float aY = m[1] * pVec.mX + m[5] * pVec.mY + m[9 ] * pVec.mZ + m[13];
     float aZ = m[2] * pVec.mX + m[6] * pVec.mY + m[10] * pVec.mZ + m[14];
     float aW = m[3] * pVec.mX + m[7] * pVec.mY + m[11] * pVec.mZ + m[15];
-    
-    Log("TX[%f] TY[%f] TZ[%f] TW[%f]\n", aX, aY, aZ, aW);
     
     if (fabsf(aW) > SQRT_EPSILON) {
         float aScale = 1.0 / aW;
         return FVec3(aX * aScale, aY * aScale, aZ * aScale);
     }
     
+    return FVec3(aX, aY, aZ);
+}
+
+FVec3 FMatrix::ProcessVec3RotationOnly(FVec3 pVec) {
+    float aX = m[0] * pVec.mX + m[4] * pVec.mY + m[8 ] * pVec.mZ;
+    float aY = m[1] * pVec.mX + m[5] * pVec.mY + m[9 ] * pVec.mZ;
+    float aZ = m[2] * pVec.mX + m[6] * pVec.mY + m[10] * pVec.mZ;
     return FVec3(aX, aY, aZ);
 }
 
@@ -915,38 +964,46 @@ FMatrix FMatrixCreateScale(float sx, float sy, float sz)
     return m;
 }
 
-FMatrix FMatrixCreateRotation(float pRadians, float x, float y, float z)
-{
-    float cos = cosf(pRadians);
-    float cosp = 1.0f - cos;
-    float sin = sinf(pRadians);
+FMatrix FMatrixCreateRotation(float pRadians, float pX, float pY, float pZ) {
+    float aCos = cosf(pRadians);
+    float aCosInv = 1.0f - aCos;
+    float aSin = sinf(pRadians);
     
-    float aDist = x * x + y * y + z * z;
+    float aDist = pX * pX + pY * pY + pZ * pZ;
     
     if(aDist > 0.01f)
     {
         aDist = sqrtf(aDist);
-        x /= aDist;
-        y /= aDist;
-        z /= aDist;
+        pX /= aDist;
+        pY /= aDist;
+        pZ /= aDist;
     }
     
-    FMatrix m = FMatrixCreate(cos + cosp * x * x,
-                              cosp * x * y + z * sin,
-                              cosp * x * z - y * sin,
-                              0.0f,
-                              cosp * x * y - z * sin,
-                              cos + cosp * y * y,
-                              cosp * y * z + x * sin,
-                              0.0f,
-                              cosp * x * z + y * sin,
-                              cosp * y * z - x * sin,
-                              cos + cosp * z * z,
-                              0.0f,
-                              0.0f,
-                              0.0f,
-                              0.0f,
-                              1.0f );
+    float aCosInvX = aCosInv * pX;
+    float aCosInvY = aCosInv * pY;
+    float aCosInvXY = aCosInvX * pY;
+    float aCosInvXZ = aCosInvX * pZ;
+    float aCosInvYZ = aCosInvY * pZ;
+    float aSinX = pX * aSin;
+    float aSinY = pY * aSin;
+    float aSinZ = pZ * aSin;
+    
+    FMatrix m = FMatrixCreate(aCos + aCosInvX * pX,
+                                aCosInvXY + aSinZ,
+                                aCosInvXZ - aSinY,
+                                0.0f,
+                                aCosInvXY - aSinZ,
+                                aCos + aCosInvY * pY,
+                                aCosInvYZ + aSinX,
+                                0.0f,
+                                aCosInvXZ + aSinY,
+                                aCosInvYZ - aSinX,
+                                aCos + aCosInv * pZ * pZ,
+                                0.0f,
+                                0.0f,
+                                0.0f,
+                                0.0f,
+                                1.0f );
     
     return m;
 }
@@ -955,8 +1012,6 @@ FMatrix FMatrixCreateXRotation(float pRadians) {
     
     float aCos = cosf(pRadians);
     float aSin = sinf(pRadians);
-    
-    
     
     FMatrix aResult = FMatrixCreate(1.0f, 0.0f, 0.0f, 0.0f,
                               0.0f, aCos, aSin, 0.0f,

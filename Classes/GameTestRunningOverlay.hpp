@@ -12,6 +12,7 @@
 #include "GFXApp.hpp"
 #include "GameTestRunningMainMenu.hpp"
 #include "CameraMenu.hpp"
+#include "HangingThreadTestMenu.hpp"
 
 class Game;
 class GameTestRunningOverlay : public FCanvas {
@@ -35,6 +36,8 @@ public:
     
     GameTestRunningMainMenu                     *mTestRunningMenu;
     CameraMenu                                  *mCameraMenu;
+    HangingThreadTestMenu                       *mHangingThreadMenu;
+    
     
 };
 

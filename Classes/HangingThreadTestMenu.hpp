@@ -9,6 +9,27 @@
 #ifndef HangingThreadTestMenu_hpp
 #define HangingThreadTestMenu_hpp
 
-#include <stdio.h>
+#include "ToolMenu.hpp"
+#include "FloatingCamera.hpp"
+#include "FVec2.hpp"
 
+class Game;
+class HangingThreadTestMenu : public ToolMenu {
+public:
+    HangingThreadTestMenu(Game *pGame);
+    virtual ~HangingThreadTestMenu();
+    
+    virtual void                            Layout();
+    virtual void                            Notify(void *pSender, const char *pNotification);
+    
+    void                                    RefreshTestMode();
+    
+    ToolMenuPanel                           *mPanelTestAxis;
+    UISlider                                *mSliderTestAxisX;
+    UISlider                                *mSliderTestAxisY;
+    UISlider                                *mSliderTestAxisZ;
+    
+    
+    
+};
 #endif /* HangingThreadTestMenu_hpp */

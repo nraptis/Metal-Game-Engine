@@ -72,6 +72,7 @@ public:
     
     
     FVec3                               GetPerp();
+    FVec3                               GetProjected(FVec3 pPlaneOrigin, FVec3 pPlaneNormal);
     
     
 	/*

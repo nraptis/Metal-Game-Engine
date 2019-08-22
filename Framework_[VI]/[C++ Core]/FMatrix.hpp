@@ -52,9 +52,14 @@ public:
     
     void                                Rotate(float pDegrees) { RotateZ(pDegrees); }
     void                                Rotate(float pDegrees, float pAxisX, float pAxisY, float pAxisZ);
+    
     void                                RotateX(float pDegrees);
     void                                RotateY(float pDegrees);
     void                                RotateZ(float pDegrees);
+    
+    
+    void                                ResetRotation(float pDegrees, float pAxisX, float pAxisY, float pAxisZ);
+    void                                ResetRotationNormalized(float pDegrees, float pAxisX, float pAxisY, float pAxisZ);
     
     void                                ResetRotationX(float pDegrees);
     void                                ResetRotationY(float pDegrees);
@@ -73,7 +78,12 @@ public:
     void                                Print();
     
     FVec2                               ProcessVec2(FVec2 pVec);
+    FVec2                               ProcessVec2RotationOnly(FVec2 pVec);
+    
     FVec3                               ProcessVec3(FVec3 pVec);
+    FVec3                               ProcessVec3RotationOnly(FVec3 pVec);
+    
+    
 };
 
 /*
@@ -109,7 +119,7 @@ FMatrix FMatrixCreateAndTranspose(float m00, float m01, float m02, float m03, fl
 FMatrix FMatrixCreateWithArray(float values[16]);
 FMatrix FMatrixCreateTranslation(float tx, float ty, float tz);
 FMatrix FMatrixCreateScale(float sx, float sy, float sz);
-FMatrix FMatrixCreateRotation(float pRadians, float x, float y, float z);
+FMatrix FMatrixCreateRotation(float pRadians, float pX, float pY, float pZ);
 FMatrix FMatrixCreateXRotation(float pRadians);
 FMatrix FMatrixCreateYRotation(float pRadians);
 FMatrix FMatrixCreateZRotation(float pRadians);
