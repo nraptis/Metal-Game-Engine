@@ -123,19 +123,14 @@ Game::Game() {
     mThrownCount = 0;
     mEscapedCount = 0;
     
-    
     mSlowMo = false;
     mSlowMoTimer = 0;
     
     
     
-    mHangingThreatTestAxisStartX = 0.0f;
-    mHangingThreatTestAxisStartY = 0.0f;
-    mHangingThreatTestAxisStartZ = 0.0f;
-    
-    mHangingThreatTestAxisEndOffsetX = -5.0f;
-    mHangingThreatTestAxisEndOffsetY = -12.0f;
-    mHangingThreatTestAxisEndOffsetZ = 4.0f;
+    mTestBalloonRotX = 0.0f;
+    mTestBalloonRotY = 0.0f;
+    mTestBalloonRotZ = 0.0f;
     
     
     
@@ -370,12 +365,31 @@ void Game::Update() {
         }
     }
     
+    
+    //TODO: Remove
+    for (int i=0;i<mBalloonList.mObjectList.mCount;i++) {
+        Balloon *aBalloon = (Balloon *)mBalloonList.mObjectList.mData[i];
+        
+        aBalloon->mTransform.mRotation = mTestBalloonRotZ;
+        aBalloon->mTilt = mTestBalloonRotX;
+        
+        
+        
+        //mTestBalloonRotX = 0.0f;
+        //mTestBalloonRotY = 0.0f;
+        //mTestBalloonRotZ = 0.0f;
+        
+        
+        
+    }
+    
     mBalloonList.Update();
     mDartList.Update();
     mBrickHeadList.Update();
     mBombList.Update();
     mTurtleList.Update();
     
+
     
     //New thing, the dart now moves small increments and tries to collide.
     
@@ -521,8 +535,6 @@ void Game::Draw() {
     Graphics::SetColor();
     //
     
-    mTestThread.Draw();
-    
     /*
      FSprite *aDart = &(gApp->mRay[3]);
      if (mIsDartBeingPulled) Graphics::SetColor(1.0f, 0.5f, 0.5f, 1.0f);
@@ -642,57 +654,16 @@ void Game::Draw3D() {
     
     Graphics::DepthEnable();
     Graphics::CullFacesSetFront();
+    Graphics::PipelineStateSetShapeNodeNoBlending();
+    //Graphics::PipelineStateSetShape3DAlphaBlending();
+    
+    
     mTestThread.Draw3D();
     
+    Graphics::PipelineStateSetShape3DAlphaBlending();
+    Graphics::SetColor(1.0f, 0.015f, 0.015f, 1.0f);
+    Graphics::DrawBox(0.0f, 0.0f, 0.0f, 0.0f, 4.0f, 0.0f, 0.6f);
     
-    FVec3 aAxisStart = FVec3(mHangingThreatTestAxisStartX, mHangingThreatTestAxisStartY, mHangingThreatTestAxisStartZ);
-    FVec3 aAxisEnd = FVec3(mHangingThreatTestAxisStartX + mHangingThreatTestAxisEndOffsetX,
-                           mHangingThreatTestAxisStartY + mHangingThreatTestAxisEndOffsetY,
-                           mHangingThreatTestAxisStartZ + mHangingThreatTestAxisEndOffsetZ);
-    
-    
-    FVec3 aNorm = FVec3(aAxisEnd.mX - aAxisStart.mX,
-                        aAxisEnd.mY - aAxisStart.mY,
-                        aAxisEnd.mZ - aAxisStart.mZ);
-    aNorm.Normalize();
-    
-
-    Graphics::SetColor(0.88f, 0.25f, 0.125f, 0.85f);
-    Graphics::DrawBox(aAxisStart.mX, aAxisStart.mY, aAxisStart.mZ, aAxisEnd.mX, aAxisEnd.mY, aAxisEnd.mZ, 0.6f);
-    
-    FVec3 aFacing = FVec3(0.0f, -1.0f, 0.0f);
-    
-    aFacing = aFacing.GetProjected(aAxisStart, aAxisEnd) * 12.0f;
-    
-    aFacing = aNorm.GetPerp();
-    
-    
-    Graphics::SetColor(0.88f, 0.88f, 0.88f, 0.85f);
-    Graphics::DrawBox(aAxisStart.mX, aAxisStart.mY, aAxisStart.mZ,
-                      aAxisStart.mX + aFacing.mX * 20.0f, aAxisStart.mY + aFacing.mY * 20.0f, aAxisStart.mZ + aFacing.mZ * 20.0f, 0.6f);
-    
-    float aLen = 4.0f;
-    
-    for (float p=0.0f;p<1.0f;p+=0.025f) {
-        
-        float aRot = p * 360.0f;
-        
-        Graphics::SetColor(p, 1.0f - p, 0.125f, 0.35f);
-        
-        
-        FVec3 aPerp = Rotate3D(aFacing, -aNorm, aRot);
-        
-        
-        Graphics::DrawBox(aAxisStart.mX, aAxisStart.mY, aAxisStart.mZ, aAxisStart.mX + aPerp.mX * aLen, aAxisStart.mY + aPerp.mY * aLen, aAxisStart.mZ + aPerp.mZ * aLen, 0.6f);
-        
-        
-        
-    }
-    
-    
-    
-    Graphics::DepthDisable();
-    Graphics::CullFacesSetBack();
     
     Graphics::ClipDisable();
     Graphics::DepthDisable();
@@ -1127,7 +1098,7 @@ void Game::Load() {
     Log("Game::Load()\n");
     
     //TODO: Remove...
-    return;
+    //return;
     
     Level aLevel;
     //aLevel.AddSection("test_section_01");
@@ -1135,19 +1106,20 @@ void Game::Load() {
     //aLevel.AddSection("test_section_03");
     //aLevel.AddSection("test_section_02");
     
+    /*
     aLevel.SetAliveTimer(6500);
     aLevel.AddSection("test_section_perm_only_all_brickheads_landings");
     aLevel.AddSection("test_section_perm_only_all_brickheads_landings");
     aLevel.AddSection("test_section_perm_only_all_brickheads");
     aLevel.AddSection("test_section_perm_only_all_brickheads");
     aLevel.AddSection("test_section_perm_only_all_brickheads");
+    */
     
-    
-    aLevel.SetKillTimer(800);
+    aLevel.SetKillTimer(40000);
     aLevel.AddSection("test_section_perm_only_all_balloons");
     
-    aLevel.SetKillTimer(800);
-    aLevel.AddSection("test_section_perm_only_all_balloons_all_tracers");
+    //aLevel.SetKillTimer(800);
+    //aLevel.AddSection("test_section_perm_only_all_balloons_all_tracers");
     
     //aLevel.SetKillTimer(100);
     //aLevel.AddSection("test_section_perm_only_all_brickheads_landings");

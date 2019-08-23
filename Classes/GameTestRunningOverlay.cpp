@@ -39,9 +39,17 @@ GameTestRunningOverlay::GameTestRunningOverlay() {
     //mTestRunningMenu->SetFrame(14.0f, 80.0f, 220.0f, 130.0f);
     //gApp->mWindowTools.AddChild(mTestRunningMenu);
     
+    
     mCameraMenu = new CameraMenu(gGame->mRenderer->mCamera);
-    mCameraMenu->SetFrame(1040.0f, 130.0f, 340.0f, 360.0f);
+    
+    if (gDeviceWidth > 800.0f) {
+        mCameraMenu->SetFrame(1090.0f, 150.0f, 340.0f, 360.0f);
+    } else {
+        mCameraMenu->SetFrame(60.0f, 150.0f, 340.0f, 360.0f);
+    }
+    
     gApp->mWindowTools.AddChild(mCameraMenu);
+    
     
     mHangingThreadMenu = new HangingThreadTestMenu(gGame);
     mHangingThreadMenu->SetFrame(60.0f, 150.0f, 340.0f, 360.0f);

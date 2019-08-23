@@ -14,14 +14,9 @@ public:
     HangingThreadKnot();
     ~HangingThreadKnot();
     
-    float                   mBaseX;
-    float                   mBaseY;
-    float                   mBaseZ;
-    
-    
-    
-    
-    
+    float                   mX;
+    float                   mY;
+    float                   mZ;
 };
 
 #endif /* HangingThreadKnot_hpp */

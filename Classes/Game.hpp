@@ -199,14 +199,10 @@ public:
     int                                         mEscapedCount;
     
     HangingThread                               mTestThread;
+    float                                       mTestBalloonRotX;
+    float                                       mTestBalloonRotY;
+    float                                       mTestBalloonRotZ;
     
-    float                                       mHangingThreatTestAxisStartX;
-    float                                       mHangingThreatTestAxisStartY;
-    float                                       mHangingThreatTestAxisStartZ;
-    
-    float                                       mHangingThreatTestAxisEndOffsetX;
-    float                                       mHangingThreatTestAxisEndOffsetY;
-    float                                       mHangingThreatTestAxisEndOffsetZ;
     
     
 };

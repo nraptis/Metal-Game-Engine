@@ -12,6 +12,7 @@
 #include "FSprite.hpp"
 #include "FModelDataPacked.hpp"
 #include "GameObject.hpp"
+#include "HangingThread.hpp"
 
 class Balloon : public GameObject {
 public:
@@ -22,12 +23,25 @@ public:
     virtual void                            Draw();
     virtual void                            Draw3D();
     
+    void                                    Draw3DThread();
+    
+    
+    
     float                                   mSpinSpeed;
     
     float                                   mVelX;
     float                                   mVelY;
     
     bool                                    mTagged;
+    
+    
+    float                                   mTilt;
+    
+    bool                                    mIsThreadVisible;
+    HangingThread                           mThread;
+    
+    
+    
 };
 
 

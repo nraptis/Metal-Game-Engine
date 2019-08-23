@@ -10,9 +10,12 @@
 #define HangingThread_hpp
 
 #include "HangingThreadKnot.hpp"
+#include "HangingThreadSegment.hpp"
 #include "FSpline.hpp"
+#include "FList.hpp"
+#include "FPrimitive.hpp"
 
-#define MIN_KNOT_COUNT 6
+#define MIN_KNOT_COUNT 7
 #define MAX_KNOT_COUNT 9
 
 //So, here is our plan after toying for some time with the thing.
@@ -26,24 +29,37 @@ public:
     HangingThread();
     ~HangingThread();
     
-    float                               mSpawnOffsetX;
-    float                               mSpawnOffsetY;
-    float                               mSpawnOffsetZ;
-    
     void                                Update();
-    void                                Draw();
     void                                Draw3D();
     
     void                                Setup();
-    
     void                                Generate();
     
-    
+    FDrawNodeList                       mNodeList;
     
     HangingThreadKnot                   *mKnot[MAX_KNOT_COUNT];
     int                                 mKnotCount;
     
     FSpline3D                           mSpline;
+    
+    FList                               mSegmentList;
+    FList                               mSegmentQueue; //Segments which may be used...
+    
+    
+    float                               mSegmentColorRed[HANGING_THREAD_SEGMENT_RING_POINT_COUNT];
+    float                               mSegmentColorGreen[HANGING_THREAD_SEGMENT_RING_POINT_COUNT];
+    float                               mSegmentColorBlue[HANGING_THREAD_SEGMENT_RING_POINT_COUNT];
+    float                               mSegmentColorAlpha[HANGING_THREAD_SEGMENT_RING_POINT_COUNT];
+    
+    
+    float                               mOffsetX;
+    float                               mOffsetY;
+    float                               mOffsetZ;
+    
+    
+    //HangingThreadSegment
+    
+    
     
 };
 

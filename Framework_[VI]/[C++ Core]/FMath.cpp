@@ -178,10 +178,6 @@ FVec2 PivotPoint(FVec2 pPoint, float pDegrees) {
     return PivotPoint(pPoint, pDegrees, aOrigin, 1.0f);
 }
 
-
-
-
-
 FVec3 PivotPoint(FVec3 pPoint, float pDegrees, FVec3 pCenter, float pScaleX, float pScaleY) {
     FVec3 aResult;
     float aDiffX = pCenter.mX - pPoint.mX;
@@ -199,7 +195,6 @@ FVec3 PivotPoint(FVec3 pPoint, float pDegrees, FVec3 pCenter, float pScaleX, flo
     aResult.mZ = pPoint.mZ;
     return aResult;
 }
-
 
 FVec3 PivotPoint(FVec3 pPoint, float pDegrees, FVec3 pCenter, float pScale) {
     FVec3 aResult;

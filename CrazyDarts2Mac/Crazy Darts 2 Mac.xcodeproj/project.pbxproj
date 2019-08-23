@@ -18,7 +18,6 @@
 		0D1817DE230DBAF70055019D /* LevelGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D181727230DBAF70055019D /* LevelGroup.cpp */; };
 		0D1817DF230DBAF70055019D /* GFXApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D181729230DBAF70055019D /* GFXApp.cpp */; };
 		0D1817E0230DBAF70055019D /* Dart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D18172A230DBAF70055019D /* Dart.cpp */; };
-		0D1817E1230DBAF70055019D /* HangingThreadEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D18172B230DBAF70055019D /* HangingThreadEditor.cpp */; };
 		0D1817E2230DBAF70055019D /* GameObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D18172C230DBAF70055019D /* GameObject.cpp */; };
 		0D1817E3230DBAF70055019D /* Constraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D18172D230DBAF70055019D /* Constraint.cpp */; };
 		0D1817E4230DBAF70055019D /* Balloon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D18172E230DBAF70055019D /* Balloon.cpp */; };
@@ -97,6 +96,7 @@
 		0D18182D230DBAF70055019D /* EditorMenuPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D1817CC230DBAF70055019D /* EditorMenuPath.cpp */; };
 		0D18182E230DBAF70055019D /* EditorMenuPathControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D1817CD230DBAF70055019D /* EditorMenuPathControl.cpp */; };
 		0D18182F230DBAF70055019D /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D1817D4230DBAF70055019D /* Game.cpp */; };
+		0D3C2A51230F0BED0072E012 /* HangingThreadSegment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3C2A4F230F0BED0072E012 /* HangingThreadSegment.cpp */; };
 		0D8FCF18225DA8ED00A74580 /* BufferBindingWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDB8225DA8EC00A74580 /* BufferBindingWrapper.mm */; };
 		0D8FCF19225DA8ED00A74580 /* os_core_graphics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDB9225DA8EC00A74580 /* os_core_graphics.mm */; };
 		0D8FCF1A225DA8ED00A74580 /* Shape3DShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDBD225DA8EC00A74580 /* Shape3DShaders.metal */; };
@@ -237,7 +237,6 @@
 		0D181728230DBAF70055019D /* Game.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Game.hpp; sourceTree = "<group>"; };
 		0D181729230DBAF70055019D /* GFXApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GFXApp.cpp; sourceTree = "<group>"; };
 		0D18172A230DBAF70055019D /* Dart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dart.cpp; sourceTree = "<group>"; };
-		0D18172B230DBAF70055019D /* HangingThreadEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HangingThreadEditor.cpp; sourceTree = "<group>"; };
 		0D18172C230DBAF70055019D /* GameObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameObject.cpp; sourceTree = "<group>"; };
 		0D18172D230DBAF70055019D /* Constraint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Constraint.cpp; sourceTree = "<group>"; };
 		0D18172E230DBAF70055019D /* Balloon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Balloon.cpp; sourceTree = "<group>"; };
@@ -398,7 +397,8 @@
 		0D1817D2230DBAF70055019D /* Dart.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dart.hpp; sourceTree = "<group>"; };
 		0D1817D3230DBAF70055019D /* GFXApp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GFXApp.hpp; sourceTree = "<group>"; };
 		0D1817D4230DBAF70055019D /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
-		0D1817D5230DBAF70055019D /* HangingThreadEditor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HangingThreadEditor.hpp; sourceTree = "<group>"; };
+		0D3C2A4F230F0BED0072E012 /* HangingThreadSegment.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = HangingThreadSegment.cpp; sourceTree = "<group>"; };
+		0D3C2A50230F0BED0072E012 /* HangingThreadSegment.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = HangingThreadSegment.hpp; sourceTree = "<group>"; };
 		0D8FCDB8225DA8EC00A74580 /* BufferBindingWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BufferBindingWrapper.mm; sourceTree = "<group>"; };
 		0D8FCDB9225DA8EC00A74580 /* os_core_graphics.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = os_core_graphics.mm; sourceTree = "<group>"; };
 		0D8FCDBA225DA8EC00A74580 /* TextureBindingWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureBindingWrapper.h; sourceTree = "<group>"; };
@@ -656,8 +656,8 @@
 				0D181752230DBAF70055019D /* [Menus] */,
 				0D18171C230DBAF70055019D /* HangingThread.cpp */,
 				0D181790230DBAF70055019D /* HangingThread.hpp */,
-				0D18172B230DBAF70055019D /* HangingThreadEditor.cpp */,
-				0D1817D5230DBAF70055019D /* HangingThreadEditor.hpp */,
+				0D3C2A4F230F0BED0072E012 /* HangingThreadSegment.cpp */,
+				0D3C2A50230F0BED0072E012 /* HangingThreadSegment.hpp */,
 				0D181765230DBAF70055019D /* HangingThreadKnot.cpp */,
 				0D181732230DBAF70055019D /* HangingThreadKnot.hpp */,
 				0D18172F230DBAF70055019D /* HangingThreadTestMenu.cpp */,
@@ -1353,7 +1353,6 @@
 				0D1817DE230DBAF70055019D /* LevelGroup.cpp in Sources */,
 				0D8FCF65225DA8ED00A74580 /* ToolMenu.cpp in Sources */,
 				0D8FCF51225DA8ED00A74580 /* FSpriteSequence.cpp in Sources */,
-				0D1817E1230DBAF70055019D /* HangingThreadEditor.cpp in Sources */,
 				0D18181E230DBAF70055019D /* EditorMenuPermanentUtils.cpp in Sources */,
 				0D8FCF5B225DA8ED00A74580 /* UITextBox.cpp in Sources */,
 				0D8FCF31225DA8ED00A74580 /* FMatrix.cpp in Sources */,
@@ -1490,6 +1489,7 @@
 				0D181814230DBAF70055019D /* EditorMenuFormationPicker.cpp in Sources */,
 				0D181828230DBAF70055019D /* GameFormationEditor.cpp in Sources */,
 				0D8FCF80225DA8ED00A74580 /* main.mm in Sources */,
+				0D3C2A51230F0BED0072E012 /* HangingThreadSegment.cpp in Sources */,
 				0D8FCF6C225DA8ED00A74580 /* UIImagePickerCell.cpp in Sources */,
 				0D8FCF20225DA8ED00A74580 /* SimpleModelShaders.metal in Sources */,
 			);

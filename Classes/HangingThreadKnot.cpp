@@ -9,11 +9,9 @@
 #include "HangingThreadKnot.hpp"
 
 HangingThreadKnot::HangingThreadKnot() {
-    
-    mBaseX = 0.0f;
-    mBaseY = 0.0f;
-    mBaseZ = 0.0f;
-    
+    mX = 0.0f;
+    mY = 0.0f;
+    mZ = 0.0f;
 }
 
 HangingThreadKnot::~HangingThreadKnot() {

@@ -63,10 +63,6 @@ FVec3 FVec3::RotateZ(float pDegrees) {
 
 FVec3 FVec3::GetPerp() {
     
-    //FVec3 aReference = FVec3(aDirX, aDirY, aDirZ);
-    //FVec3 aAxis = FVec3(aDirX, aDirY, aDirZ);
-    
-    
     //Pick the "optimal" orthogonal...
     float aFactorX = fabsf(mX);
     float aFactorY = fabsf(mY);
@@ -83,17 +79,11 @@ FVec3 FVec3::GetPerp() {
             aResult.mX = 0.0f;
             aResult.mY = 1.0f;
             aResult.mZ = 0.0f;
-            
-            
-            
-            //aReference = FVec3(0.0f, 1.0f, 0.0f);
-            
         } else {
             //Y and Z only, flip them...
             aResult.mX = 0.0f;
             aResult.mY = -mZ;
             aResult.mZ = mY;
-            
         }
     } else if (aFactorY < 0.00025f) {
         
@@ -102,22 +92,17 @@ FVec3 FVec3::GetPerp() {
             aResult.mX = 0.0f;
             aResult.mY = -1.0f;
             aResult.mZ = 0.0f;
-            
-            
         } else {
             //X and Z only, flip them...
             aResult.mX = -mZ;
             aResult.mY = 0.0f;
             aResult.mZ = mX;
-            
         }
     } else if (aFactorZ < 0.00025f) {
         //X and Y only, flip them...
         aResult.mX = -mY;
         aResult.mY = mX;
         aResult.mZ = 0.0f;
-        
-        
     } else {
         aResult.mX = 1.0f;
         aResult.mY = 1.0f;

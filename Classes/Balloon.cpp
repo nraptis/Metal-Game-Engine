@@ -13,8 +13,11 @@ Balloon::Balloon() {
     
     mGameObjectType = GAME_OBJECT_TYPE_BALLOON;
     
-    mSpinSpeed = gRand.GetFloat(0.25f, 0.45f);
-    if (gRand.GetBool()) mSpinSpeed = -mSpinSpeed;
+    mSpinSpeed = gRand.GetFloat(0.25f, 0.45f, true);
+    mSpinSpeed = gRand.GetFloat(0.65f, 1.5f, true);
+    
+    //if (gRand.GetBool()) mSpinSpeed = -mSpinSpeed;
+    
     
     mModel = &gApp->mBalloon;
     mSprite = &gApp->mBalloonMap[gRand.Get(5)];
@@ -24,6 +27,13 @@ Balloon::Balloon() {
     mVelY = 0.0f;
     
     mTagged = false;
+    
+    mTilt = 0.0f;
+    
+    mThread.Setup();
+    mIsThreadVisible = true;
+    
+    mThread.Setup();
 }
 
 Balloon::~Balloon() {
@@ -35,12 +45,12 @@ void Balloon::Update() {
     GameObject::Update();
     
     mTransform3D.mSpin += mSpinSpeed;
+    mTransform3D.mRotationX = mTilt;
     
     if (mFloatAway == false) {
         mTransform.mX += mVelX;
         mTransform.mY += mVelY;
     }
-    
     
     
 }
@@ -69,4 +79,29 @@ void Balloon::Draw3D() {
     //((FUniformsLightPhong *)mUniform)->mLight.mSpecularIntensity = 1.0f;
     
     GameObject::Draw3D();
+}
+
+void Balloon::Draw3DThread() {
+    
+    
+    
+    gGame->Convert2DTransformTo3D(&mTransform, &mTransform3D);
+    
+    FVec3 aCenter = FVec3(mTransform3D.mX, mTransform3D.mY, mTransform3D.mZ);
+    FVec3 aPos = aCenter;
+    aPos.mY += 10.0f;
+    
+    PivotPoint(aPos, mTransform.mRotation, aCenter);
+    
+
+    
+    
+    mThread.mOffsetX = aPos.mX;
+    mThread.mOffsetY = aPos.mY;
+    mThread.mOffsetZ = 0.0f;
+    
+    mThread.Generate();
+    
+    mThread.Draw3D();
+    
 }

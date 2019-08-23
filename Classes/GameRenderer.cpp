@@ -116,8 +116,27 @@ void GameRenderer::Draw3D() {
     //Graphics::UniformBind(&mUniformPhong);
     
     
-    Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending();
+    //Graphics::PipelineStateSetShape3DAlphaBlending();
     
+    
+    FMatrix aProjection = mCamera->GetProjection();
+    Graphics::MatrixProjectionSet(aProjection);
+    Graphics::MatrixModelViewReset();
+    
+    Graphics::DepthDisable();
+    //Graphics::CullFacesSetFront();
+    Graphics::PipelineStateSetShapeNodeNoBlending();
+    Graphics::SetColor();
+    
+    EnumList (Balloon, aBalloon, mGame->mBalloonList.mObjectList) {
+        if (aBalloon->mKill == 0) {
+            aBalloon->Draw3DThread();
+        }
+    }
+    
+    Graphics::DepthEnable();
+    
+    Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending();
     EnumList (Dart, aDart, mGame->mDartList.mObjectList) {
         if (aDart->mKill == 0) {
             aDart->Draw3D();
@@ -229,6 +248,5 @@ void GameRenderer::DumpLightsToUniforms() {
     mUniformDiffuse.mLight.mDiffuseIntensity = aLightDiffuse;
     mUniformDiffuse.mColor = FColor(1.0f, 1.0f, 1.0f, 1.0f);
     mUniformDiffuse.mProjection.Set(aProjection);
-    
     
 }

@@ -40,25 +40,18 @@ HangingThreadTestMenu::HangingThreadTestMenu(Game *pGame) : ToolMenu() {
     //
     //
     mSliderTestAxisX = new UISlider();
-    mSliderTestAxisX->SetText("E-X");
-    mSliderTestAxisX->SetTarget(&pGame->mHangingThreatTestAxisEndOffsetX);
+    mSliderTestAxisX->SetText("R-X");
+    mSliderTestAxisX->SetTarget(&pGame->mTestBalloonRotX);
     //mSliderViewRotationPrimary->SetRange(-180.0f, 360.0f);
-    mSliderTestAxisX->SetRange(-20.0f, 20.0f);
+    mSliderTestAxisX->SetRange(-60.0f, 60.0f);
     mPanelTestAxis->AddSection(mSliderTestAxisX);
     
     mSliderTestAxisY = new UISlider();
-    mSliderTestAxisY->SetText("E-Y");
-    mSliderTestAxisY->SetTarget(&pGame->mHangingThreatTestAxisEndOffsetY);
-    mSliderTestAxisY->SetRange(-50.0f, 0.0f);
+    mSliderTestAxisY->SetText("R-Z");
+    mSliderTestAxisY->SetTarget(&pGame->mTestBalloonRotZ);
+    //mSliderTestAxisY->SetTarget(&pGame->mHangingThreatTestAxisEndOffsetY);
+    mSliderTestAxisY->SetRange(-60.0f, 60.0f);
     mPanelTestAxis->AddSection(mSliderTestAxisY);
-    
-    mSliderTestAxisZ = new UISlider();
-    mSliderTestAxisZ->SetText("E-Z");
-    mSliderTestAxisZ->SetTarget(&pGame->mHangingThreatTestAxisEndOffsetZ);
-    mSliderTestAxisZ->SetRange(-20.0f, 20.0f);
-    mPanelTestAxis->AddSection(mSliderTestAxisZ);
-    
-    
     
     
     

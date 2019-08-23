@@ -70,40 +70,9 @@ public:
     FVec3                               RotateY(float pDegrees);
     FVec3                               RotateZ(float pDegrees);
     
-    
     FVec3                               GetPerp();
     FVec3                               GetProjected(FVec3 pPlaneOrigin, FVec3 pPlaneNormal);
     
-    
-	/*
-	inline float LengthSquared(){return mX*mX+mY*mY+mZ*mZ;}
-	inline float Length(){return sqrtf(mX*mX+mY*mY+mZ*mZ);}
-	inline void SetLength(float pLength){Normalize();mX*=pLength;mY*=pLength;mZ*=pLength;}
-	inline void Normalize(){float aLen=Length();if(aLen>0){mX/=aLen;mY/=aLen;mZ/=aLen;}}
-    */
 };
-
-/*
-FVec3 FVec3Make(float x, float y, float z);
-FVec3 FVec3MakeWithArray(float values[3]);
-FVec3 FVec3Negate(FVec3 vector);
-FVec3 FVec3Add(FVec3 vectorLeft, FVec3 vectorRight);
-FVec3 FVec3Subtract(FVec3 vectorLeft, FVec3 vectorRight);
-FVec3 FVec3Multiply(FVec3 vectorLeft, FVec3 vectorRight);
-FVec3 FVec3Divide(FVec3 vectorLeft, FVec3 vectorRight);
-FVec3 FVec3AddScalar(FVec3 vector, float value);
-FVec3 FVec3SubtractScalar(FVec3 vector, float value);
-FVec3 FVec3MultiplyScalar(FVec3 vector, float value);
-FVec3 FVec3DivideScalar(FVec3 vector, float value);
-FVec3 FVec3Maximum(FVec3 vectorLeft, FVec3 vectorRight);
-FVec3 FVec3Minimum(FVec3 vectorLeft, FVec3 vectorRight);
-FVec3 FVec3Normalize(FVec3 vector);
-float FVec3DotProduct(FVec3 vectorLeft, FVec3 vectorRight);
-float FVec3Length(FVec3 vector);
-float FVec3Distance(FVec3 vectorStart, FVec3 vectorEnd);
-FVec3 FVec3Lerp(FVec3 vectorStart, FVec3 vectorEnd, float t);
-FVec3 FVec3CrossProduct(FVec3 vectorLeft, FVec3 vectorRight);
-FVec3 FVec3Project(FVec3 vectorToProject, FVec3 projectionVector);
-*/
 
 #endif
