@@ -11,10 +11,10 @@
 #define MODEL_DATA_H
 
 #include "os_core_graphics.h"
-#include "FString.h"
+#include "FString.hpp"
 #include "FFile.hpp"
 #include "FImage.hpp"
-#include "FSprite.h"
+#include "FSprite.hpp"
 
 extern bool gModelDiscardNormals;
 extern bool gModelDiscardUVW;

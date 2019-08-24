@@ -6,135 +6,135 @@
 //  Copyright (c) 2014 Nick Raptis. All rights reserved.
 //
 
-#include "FPrimitive.h"
-#include "FSprite.h"
+#include "FPrimitive.hpp"
+#include "FSprite.hpp"
 #include "FFile.hpp"
 #include "core_includes.h"
 
 /*
-bool PolyPath::ContainsPoint(float pX, float pY)
-{
-    bool aResult = false;
-    
-    if(mPointCount > 1)
-    {
-        for(int aStart=0,aEnd=mPointCount-1;aStart<mPointCount;aEnd=aStart++)
-        {
-            float aStartX = mX[aStart] + mCenterX;
-            float aStartY = mY[aStart] + mCenterY;
-            float aEndX = mX[aEnd] + mCenterX;
-            float aEndY = mY[aEnd] + mCenterY;
-            
-            if((((aStartY<=pY) && (pY<aEndY))||
-                ((aEndY<=pY) && (pY<aStartY)))&&
-               (pX < (aEndX - aStartX)*(pY - aStartY)
-                /(aEndY - aStartY) + aStartX))
-            {
-                aResult=!aResult;
-            }
-        }
-    }
-    
-    return aResult;
-}
-
-float PolygonPath::Get(float pPercent, float *pArray)
-{
-    if(mChanged==true)Finalize();
-    
-    float aResult=0;
-    
-    if(mCount==1)
-    {
-        aResult=pArray[0];
-    }
-    if(mCount>1)
-    {
-        if(pPercent<0||pPercent>1)
-        {
-            pPercent=fmodf(pPercent,1);
-            if(pPercent<0)pPercent+=1;
-        }
-        
-        if(pPercent<0)
-        {
-            aResult=pArray[0];
-        }
-        else if(pPercent>1)
-        {
-            aResult=pArray[mCount-1];
-        }
-        else
-        {
-            int i=0;
-            for(i=0;i<mCount;i++)
-            {
-                if(mPercent[i]>=pPercent)break;
-            }
-            
-            
-            
-            //if(i<1)i++;
-            if(i==mCount)i--;
-            
-            int aStartIndex;
-            int aEndIndex;
-            
-            float aStartPercent=0;
-            float aEndPercent=0;
-            
-            if(i<1)
-            {
-                aStartIndex=mCount-1;
-                aEndIndex=0;
-                
-                aStartPercent=0;
-                aEndPercent=mPercent[0];
-            }
-            else
-            {
-                aStartIndex=i-1;
-                aEndIndex=i;
-                
-                aStartPercent=mPercent[aStartIndex];
-                aEndPercent=mPercent[aEndIndex];
-            }
-            
-            
-            
-            //Log("Input P: %f (%d - %d) (%f - %f)   \n", pPercent, aStartIndex, aEndIndex, aStartPercent, aEndPercent);
-            
-            if(pPercent<aStartPercent)
-            {
-                aResult=pArray[aStartIndex];
-            }
-            else if(pPercent>aEndPercent)
-            {
-                aResult=pArray[aEndIndex];
-            }
-            else
-            {
-                float aLength=aEndPercent-aStartPercent;
-                if(aLength>0.001f)
-                {
-                    float aPercent = (pPercent-aStartPercent) / (aLength);
-                    
-                    if(aPercent>1)aPercent=1;
-                    if(aPercent<0)aPercent=0;
-                    
-                    aResult=pArray[aStartIndex]+(pArray[aEndIndex]-pArray[aStartIndex])*aPercent;
-                }
-                else
-                {
-                    aResult=pArray[aStartIndex];
-                }
-            }
-        }
-        
-    }
-    return aResult;
-}
-*/
+ bool PolyPath::ContainsPoint(float pX, float pY)
+ {
+ bool aResult = false;
+ 
+ if(mPointCount > 1)
+ {
+ for(int aStart=0,aEnd=mPointCount-1;aStart<mPointCount;aEnd=aStart++)
+ {
+ float aStartX = mX[aStart] + mCenterX;
+ float aStartY = mY[aStart] + mCenterY;
+ float aEndX = mX[aEnd] + mCenterX;
+ float aEndY = mY[aEnd] + mCenterY;
+ 
+ if((((aStartY<=pY) && (pY<aEndY))||
+ ((aEndY<=pY) && (pY<aStartY)))&&
+ (pX < (aEndX - aStartX)*(pY - aStartY)
+ /(aEndY - aStartY) + aStartX))
+ {
+ aResult=!aResult;
+ }
+ }
+ }
+ 
+ return aResult;
+ }
+ 
+ float PolygonPath::Get(float pPercent, float *pArray)
+ {
+ if(mChanged==true)Finalize();
+ 
+ float aResult=0;
+ 
+ if(mCount==1)
+ {
+ aResult=pArray[0];
+ }
+ if(mCount>1)
+ {
+ if(pPercent<0||pPercent>1)
+ {
+ pPercent=fmodf(pPercent,1);
+ if(pPercent<0)pPercent+=1;
+ }
+ 
+ if(pPercent<0)
+ {
+ aResult=pArray[0];
+ }
+ else if(pPercent>1)
+ {
+ aResult=pArray[mCount-1];
+ }
+ else
+ {
+ int i=0;
+ for(i=0;i<mCount;i++)
+ {
+ if(mPercent[i]>=pPercent)break;
+ }
+ 
+ 
+ 
+ //if(i<1)i++;
+ if(i==mCount)i--;
+ 
+ int aStartIndex;
+ int aEndIndex;
+ 
+ float aStartPercent=0;
+ float aEndPercent=0;
+ 
+ if(i<1)
+ {
+ aStartIndex=mCount-1;
+ aEndIndex=0;
+ 
+ aStartPercent=0;
+ aEndPercent=mPercent[0];
+ }
+ else
+ {
+ aStartIndex=i-1;
+ aEndIndex=i;
+ 
+ aStartPercent=mPercent[aStartIndex];
+ aEndPercent=mPercent[aEndIndex];
+ }
+ 
+ 
+ 
+ //Log("Input P: %f (%d - %d) (%f - %f)   \n", pPercent, aStartIndex, aEndIndex, aStartPercent, aEndPercent);
+ 
+ if(pPercent<aStartPercent)
+ {
+ aResult=pArray[aStartIndex];
+ }
+ else if(pPercent>aEndPercent)
+ {
+ aResult=pArray[aEndIndex];
+ }
+ else
+ {
+ float aLength=aEndPercent-aStartPercent;
+ if(aLength>0.001f)
+ {
+ float aPercent = (pPercent-aStartPercent) / (aLength);
+ 
+ if(aPercent>1)aPercent=1;
+ if(aPercent<0)aPercent=0;
+ 
+ aResult=pArray[aStartIndex]+(pArray[aEndIndex]-pArray[aStartIndex])*aPercent;
+ }
+ else
+ {
+ aResult=pArray[aStartIndex];
+ }
+ }
+ }
+ 
+ }
+ return aResult;
+ }
+ */
 
 
 FDrawNodeList::FDrawNodeList() {
@@ -422,17 +422,17 @@ void FDrawNodeList::SetXYZ(int pIndex, float pX, float pY, float pZ)
 {
     if(pIndex >= 0)
     {
-    if(pIndex >= mNodeSize)
-    {
-        int aSize = (pIndex + (pIndex / 2) + 2);
-        Size(aSize);
-    }
-    
-    mData[pIndex].mX = pX;
-    mData[pIndex].mY = pY;
-    mData[pIndex].mZ = pZ;
-    
-    if(pIndex >= mCountNodes)mCountNodes = pIndex + 1;
+        if(pIndex >= mNodeSize)
+        {
+            int aSize = (pIndex + (pIndex / 2) + 2);
+            Size(aSize);
+        }
+        
+        mData[pIndex].mX = pX;
+        mData[pIndex].mY = pY;
+        mData[pIndex].mZ = pZ;
+        
+        if(pIndex >= mCountNodes)mCountNodes = pIndex + 1;
     }
 }
 
@@ -482,50 +482,50 @@ void FDrawNodeList::SetRGBA(int pIndex, float pRed, float pGreen, float pBlue, f
 void FDrawNodeList::DrawSetup(FSprite *pSprite)
 {
     /*
-    //if(mCountNodes <= 0)return;
-    
-    float *aPtr = (float *)(&(mData[0]));
-    
-    Graphics::EnableVertexArray();
-    Graphics::ArrayVertices(aPtr, sizeof(FDrawNode), 3);
-    
-    bool aUseTexture = false;
-    
-    if((mEnabledTexture == true) && (pSprite != 0))
-    {
-        if(pSprite->mTexture != 0)
-        {
-            aUseTexture = true;
-        }
-    }
-    
-    
-    
-    if(aUseTexture)
-    {
-        Graphics::EnableTextureCoordinateArray();
-        Graphics::ArrayCoords(aPtr + 3, sizeof(FDrawNode), 3);
-        
-        Graphics::TextureEnable();
-        Graphics::TextureBind(pSprite->mTexture);
-        
-        if(pStrips)Graphics::DrawTriangleStrips(mCountNodes);
-        else Graphics::DrawTriangles(mCountNodes);
-        
-        //Graphics::DisableColorArray();
-        
-    }
-    else
-    {
-        Graphics::DisableTextureCoordinateArray();
-        Graphics::TextureDisable();
-        
-        if(pStrips)Graphics::DrawTriangleStrips(mCountNodes);
-        else Graphics::DrawTriangles(mCountNodes);
-        
-        
-    }
-    */
+     //if(mCountNodes <= 0)return;
+     
+     float *aPtr = (float *)(&(mData[0]));
+     
+     Graphics::EnableVertexArray();
+     Graphics::ArrayVertices(aPtr, sizeof(FDrawNode), 3);
+     
+     bool aUseTexture = false;
+     
+     if((mEnabledTexture == true) && (pSprite != 0))
+     {
+     if(pSprite->mTexture != 0)
+     {
+     aUseTexture = true;
+     }
+     }
+     
+     
+     
+     if(aUseTexture)
+     {
+     Graphics::EnableTextureCoordinateArray();
+     Graphics::ArrayCoords(aPtr + 3, sizeof(FDrawNode), 3);
+     
+     Graphics::TextureEnable();
+     Graphics::TextureBind(pSprite->mTexture);
+     
+     if(pStrips)Graphics::DrawTriangleStrips(mCountNodes);
+     else Graphics::DrawTriangles(mCountNodes);
+     
+     //Graphics::DisableColorArray();
+     
+     }
+     else
+     {
+     Graphics::DisableTextureCoordinateArray();
+     Graphics::TextureDisable();
+     
+     if(pStrips)Graphics::DrawTriangleStrips(mCountNodes);
+     else Graphics::DrawTriangles(mCountNodes);
+     
+     
+     }
+     */
     
     
     
@@ -549,19 +549,15 @@ void FDrawNodeList::Draw(FSprite *pSprite, bool pStrips)
         }
     }
     
-    
-    
-    
     //FString aStr = mIndexList.GetPrintString("asdf");
     //Log("%s\n\n", aStr.c());
-    
     
     if (Graphics::ArrayWriteData(aPtr, mCountNodes * sizeof(FDrawNode))) {
         
         if (aUseTexture) {
             Graphics::TextureBind(pSprite->mTexture);
         }
-    
+        
         Graphics::ArrayBufferPositions(NULL, 0);
         Graphics::ArrayBufferTextureCoords(NULL, sizeof(float) * 3);
         Graphics::ArrayBufferColors(NULL, sizeof(float) * 6);
@@ -570,8 +566,12 @@ void FDrawNodeList::Draw(FSprite *pSprite, bool pStrips)
         
         //TODO: Smurf?
         //Graphics::DrawTriangleStripsIndexed(mIndexList.mIndex, mCountNodes);
-        Graphics::DrawTriangleStripsIndexed(mIndexList.mIndex, mCountNodes);
-
+        if (pStrips) {
+            Graphics::DrawTriangleStripsIndexed(mIndexList.mIndex, mCountNodes);
+        } else {
+            Graphics::DrawTrianglesIndexed(mIndexList.mIndex, mCountNodes);
+        }
+        
     }
 }
 
@@ -585,13 +585,10 @@ void FDrawNodeList::DrawNodes(int pHighlightIndex)
         float aWidth = 8.0f;
         float aHeight = 8.0f;
         
-        if(i != pHighlightIndex)
-        {
+        if (i != pHighlightIndex) {
             Graphics::SetColor(0.7f, 0.9f, 0.7f);
             Graphics::OutlineRect(aX - (aWidth / 2.0f), aY - (aHeight / 2.0f), aWidth, aHeight, 3.0f);
-        }
-        else
-        {
+        } else {
             aWidth = 14.0f;
             aHeight = 14.0f;
             
@@ -628,42 +625,39 @@ void FDrawNodeList::DrawNodes(int pHighlightIndex)
         
         
         
-        for(int i=0;i<mCountNodes;i++)
-        {
+        for (int i=0;i<mCountNodes;i++) {
             
-            if(i == pHighlightIndex)
-            {
-            float aX = mData[i].mX;
-            float aY = mData[i].mY;
-            
-            float aP[4];
-            aP[0] = mData[i].mR;
-            aP[1] = mData[i].mG;
-            aP[2] = mData[i].mB;
-            aP[3] = mData[i].mA;
-            
-            
-            for(int c=0;c<4;c++)
-            {
-                Graphics::SetColor(0.25f, 0.45f, 0.25f);
-                Graphics::OutlineRect(aX + aRect[c].mX, aRect[c].mY, aRect[c].mWidth, aRect[c].mHeight, 4.0f);
+            if (i == pHighlightIndex) {
+                float aX = mData[i].mX;
+                float aY = mData[i].mY;
                 
-                Graphics::SetColor(0.25f, 0.45f, 0.25f);
-                Graphics::OutlineRect(aX + aRect[c].mX, aRect[c].mY, aRect[c].mWidth, aRect[c].mHeight, 2.0f);
+                float aP[4];
+                aP[0] = mData[i].mR;
+                aP[1] = mData[i].mG;
+                aP[2] = mData[i].mB;
+                aP[3] = mData[i].mA;
                 
                 
-                Graphics::SetColor(0.4f, 0.4f, 0.4f);
-                Graphics::DrawRect(aX + aRect[c].mX, aY + aRect[c].mY, aRect[c].mWidth, aRect[c].mHeight);
+                for (int c=0;c<4;c++) {
+                    Graphics::SetColor(0.25f, 0.45f, 0.25f);
+                    Graphics::OutlineRect(aX + aRect[c].mX, aRect[c].mY, aRect[c].mWidth, aRect[c].mHeight, 4.0f);
+                    
+                    Graphics::SetColor(0.25f, 0.45f, 0.25f);
+                    Graphics::OutlineRect(aX + aRect[c].mX, aRect[c].mY, aRect[c].mWidth, aRect[c].mHeight, 2.0f);
+                    
+                    
+                    Graphics::SetColor(0.4f, 0.4f, 0.4f);
+                    Graphics::DrawRect(aX + aRect[c].mX, aY + aRect[c].mY, aRect[c].mWidth, aRect[c].mHeight);
+                    
+                    
+                    
+                    Graphics::SetColor(aColor[c]);
+                    Graphics::DrawRect(aX + aRect[c].mX, aY + aRect[c].mY, aRect[c].mWidth * aP[c], aRect[c].mHeight);
+                    
+                }
                 
                 
                 
-                Graphics::SetColor(aColor[c]);
-                Graphics::DrawRect(aX + aRect[c].mX, aY + aRect[c].mY, aRect[c].mWidth * aP[c], aRect[c].mHeight);
-                
-            }
-            
-            
-            
             }
             
         }
@@ -930,7 +924,7 @@ void FDrawNodeMesh::Generate()
     
     int *aConCount = new int[mCountNodes];
     int **aCon = new int*[mCountNodes];
-
+    
     for(int i=0;i<mCountNodes;i++)
     {
         

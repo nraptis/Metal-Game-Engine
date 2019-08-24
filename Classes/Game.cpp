@@ -24,8 +24,6 @@ Game::Game() {
     
     gGame = this;
     
-    mTestThread.Setup();
-    
     mTestOverlay = NULL;
     
     mRenderShiftX = 0.0f;
@@ -126,6 +124,8 @@ Game::Game() {
     mSlowMo = false;
     mSlowMoTimer = 0;
     
+    mWind = 0.0f;
+    mWindSin = 0.0f;
     
     
     mTestBalloonRotX = 0.0f;
@@ -293,12 +293,6 @@ void Game::Layout() {
 }
 
 void Game::Update() {
-    
-    
-    mTestThread.Update();
-    
-    
-    
     
     bool aShowOverlay = true;
 #ifdef EDITOR_MODE
@@ -477,6 +471,14 @@ void Game::Update() {
          */
     }
     
+    
+    mWindSin += 2.0f;
+    if (mWindSin >= 360.0f) { mWindSin -= 360.0f; }
+    
+    mWind = Sin(mWindSin);
+    
+    
+    
 }
 
 void Game::Draw() {
@@ -643,35 +645,12 @@ void Game::DartMovingInterpolation(Dart *pDart, float pPercent, bool pEnd) {
 
 
 void Game::Draw3D() {
-    
     if (mRenderer) {
         mRenderer->Draw3D();
     }
-    
-    FMatrix aProjection = mRenderer->mCamera->GetProjection();
-    Graphics::MatrixProjectionSet(aProjection);
-    Graphics::MatrixModelViewReset();
-    
-    Graphics::DepthEnable();
-    Graphics::CullFacesSetFront();
-    Graphics::PipelineStateSetShapeNodeNoBlending();
-    //Graphics::PipelineStateSetShape3DAlphaBlending();
-    
-    
-    mTestThread.Draw3D();
-    
-    Graphics::PipelineStateSetShape3DAlphaBlending();
-    Graphics::SetColor(1.0f, 0.015f, 0.015f, 1.0f);
-    Graphics::DrawBox(0.0f, 0.0f, 0.0f, 0.0f, 4.0f, 0.0f, 0.6f);
-    
-    
-    Graphics::ClipDisable();
-    Graphics::DepthDisable();
 }
 
 void Game::TouchDown(float pX, float pY, void *pData) {
-    
-    mTestThread.Setup();
     
     if (gTouch.mTouchCount >= 3) {
         printf("Hack: Killing all balloons..!");
@@ -1114,12 +1093,19 @@ void Game::Load() {
     aLevel.AddSection("test_section_perm_only_all_brickheads");
     aLevel.AddSection("test_section_perm_only_all_brickheads");
     */
+
     
-    aLevel.SetKillTimer(40000);
+    aLevel.SetKillTimer(1200);
+    aLevel.AddSection("test_section_perm_only_all_balloons_all_tracers");
+    
+    aLevel.SetKillTimer(1200);
+    aLevel.AddSection("test_section_perm_only_all_brickheads");
+    
+    aLevel.SetAliveTimer(800);
     aLevel.AddSection("test_section_perm_only_all_balloons");
     
-    //aLevel.SetKillTimer(800);
-    //aLevel.AddSection("test_section_perm_only_all_balloons_all_tracers");
+    aLevel.AddSection("test_section_perm_only_all_balloons");
+    
     
     //aLevel.SetKillTimer(100);
     //aLevel.AddSection("test_section_perm_only_all_brickheads_landings");
@@ -1142,6 +1128,9 @@ void Game::Load() {
     //test_section_perm_only_all_balloons_all_tracers.json
     //test_section_perm_only_all_balloons.json
     //test_section_perm_only_all_brickheads.json
+    //test_section_perm_only_one_balloon.json
+    //test_section_perm_only_3_scattered_balloons.json
+    //test_section_perm_only_all_balloons_path_tracer_and_formation.json
     //
     //
     

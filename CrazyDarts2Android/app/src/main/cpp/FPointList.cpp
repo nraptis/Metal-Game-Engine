@@ -1,7 +1,7 @@
-#include "FString.h"
-#include "FPointList.h"
+#include "FString.hpp"
+#include "FPointList.hpp"
 #include "core_includes.h"
-#include "FLine.h"
+#include "FLine.hpp"
 #include "FFile.hpp"
 
 FPointList::FPointList() {
@@ -195,20 +195,34 @@ void FPointList::Size(int pSize) {
     }
 }
 
-void FPointList::DrawPoints(float pSize)
-{
+void FPointList::DrawPoints(float pSize) {
     float aX = 0.0f;
     float aY = 0.0f;
     
     float aSize2 = pSize * 0.5f;
     
-    for(int i=0;i<mCount;i++)
-    {
+    Graphics::PipelineStateSetShape2DAlphaBlending();
+    for (int i=0;i<mCount;i++) {
         aX = mX[i];
         aY = mY[i];
         Graphics::DrawRect(aX - aSize2, aY - aSize2, pSize, pSize);
     }
 }
+
+void FPointList::OutlinePoints(float pSize, float pBorderWidth) {
+    float aX = 0.0f;
+    float aY = 0.0f;
+    
+    float aSize2 = pSize * 0.5f;
+    
+    Graphics::PipelineStateSetShape2DAlphaBlending();
+    for (int i=0;i<mCount;i++) {
+        aX = mX[i];
+        aY = mY[i];
+        Graphics::OutlineRect(aX - aSize2, aY - aSize2, pSize, pSize, pBorderWidth);
+    }
+}
+
 
 void FPointList::DrawEdges(float pLineSize)
 {
@@ -230,18 +244,15 @@ void FPointList::DrawEdges(float pLineSize)
 }
 
 
-void FPointList::DrawEdgesOpen(float pLineSize)
-{
-    if(mCount > 0)
-    {
+void FPointList::DrawEdgesOpen(float pLineSize) {
+    if (mCount > 0) {
         float aLastX = mX[0];
         float aLastY = mY[0];
         
         float aX = 0.0f;
         float aY = 0.0f;
         
-        for(int i=1;i<mCount;i++)
-        {
+        for (int i=1;i<mCount;i++) {
             aX = mX[i];aY = mY[i];
             Graphics::DrawLine(aLastX, aLastY, aX, aY, pLineSize);
             aLastX = aX;aLastY = aY;

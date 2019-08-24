@@ -72,8 +72,15 @@ void FWindow::Update() {
         EnumList(FCanvas, aCanvas, mTemp) {
             gNotify.Unregister(aCanvas);
         }
-
+        
+        EnumList(FCanvas, aCanvas, mTemp) {
+            if (aCanvas == mSelectedCanvas) {
+                mSelectedCanvas = NULL;
+            }
+        }
+        
         EnumListReverse(FCanvas, aCanvas, mTemp) {
+            
             mRealizeBucket.Remove(aCanvas);
             mLayoutBucket.Remove(aCanvas);
             mTransformUpdateBucket.Remove(aCanvas);
@@ -193,10 +200,18 @@ void FWindow::MouseWheel(int pDirection) {
 }
 
 void FWindow::KeyDown(int pKey) {
+    if (mSelectedCanvas != NULL && mSelectedCanvas->mExclusiveKeyDownCaptureWhenSelected == true) {
+        mSelectedCanvas->BaseKeyDown(pKey);
+        return;
+    }
     mRoot.BaseKeyDown(pKey);
 }
 
 void FWindow::KeyUp(int pKey) {
+    if (mSelectedCanvas != NULL && mSelectedCanvas->mExclusiveKeyUpCaptureWhenSelected == true) {
+        mSelectedCanvas->BaseKeyDown(pKey);
+        return;
+    }
     mRoot.BaseKeyUp(pKey);
 }
 

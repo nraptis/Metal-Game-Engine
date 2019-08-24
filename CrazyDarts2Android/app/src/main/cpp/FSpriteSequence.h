@@ -9,8 +9,8 @@
 #ifndef __CoreDemo__FSpriteSequence__
 #define __CoreDemo__FSpriteSequence__
 
-#include "FString.h"
-#include "FSprite.h"
+#include "FString.hpp"
+#include "FSprite.hpp"
 #include "FList.hpp"
 
 class FSpriteSequenceSearchNode

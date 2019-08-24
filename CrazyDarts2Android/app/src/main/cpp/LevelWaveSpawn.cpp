@@ -7,22 +7,32 @@
 //
 
 #include "LevelWaveSpawn.hpp"
-#include "LevelWavePath.hpp"
+#include "LevelPath.hpp"
 #include "LevelWave.hpp"
 #include "GameLevelController.hpp"
 #include "Game.hpp"
 #include "Balloon.hpp"
+#include "FormationCollection.hpp"
 
-LevelWaveSpawn::LevelWaveSpawn(LevelWave *pWave, LevelWavePath *pPath) {
+LevelWaveSpawn::LevelWaveSpawn(LevelWave *pWave, LevelPath *pPath) {
     mWave = pWave;
     mPath = pPath;
     mPathIndex = 0;
     mObject = NULL;
+    mFormation = NULL;
     mIsComplete = false;
+    
+    mDidSpawn = false;
+    mDidUpdateAfterSpawn = false;
+    
     mOffsetSpawnDistance = 0.0f;
     mBaseX = 0.0f;
     mBaseY = 0.0f;
     mDistanceTraveled = 0.0f;
+    
+    mWaitTimer = 0;
+    
+    mObjectType = GAME_OBJECT_TYPE_BALLOON;
     mKillTimer = 8;
 }
 
@@ -30,13 +40,29 @@ LevelWaveSpawn::~LevelWaveSpawn() {
     
     //printf("Dealloc[LevelWaveSpawn:%X] Obj[%d]\n", this, mObject);
     
-    if (mObject) {
+    if (mObject != NULL) {
         mObject->Kill();
         mObject = NULL;
+    }
+    
+    if (mFormation != NULL) {
+        delete mFormation;
+        mFormation = NULL;
     }
 }
 
 void LevelWaveSpawn::Spawn() {
+    
+    if (mObject != NULL) {
+        mObject->Kill();
+        mObject = NULL;
+    }
+    
+    if (mFormation != NULL) {
+        delete mFormation;
+        mFormation = NULL;
+    }
+    
     mBaseX = 0.0f;
     mBaseY = 0.0f;
     mDistanceTraveled = 0.0f;
@@ -46,40 +72,156 @@ void LevelWaveSpawn::Spawn() {
         mBaseY = mPath->mPath.mY[0];
     }
     
-    mObject = new Balloon();
-    mObject->mTransform.mX = mBaseX;
-    mObject->mTransform.mY = mBaseY;
-    gGame->mBalloonList.Add(mObject);
+    if (mFormationID.mLength > 0) {
+        mFormation = gFormationCollection.Get(mFormationID.c());
+        if (mFormation != NULL) {
+            
+            mFormation->mDidOriginateAsPermanent = false;
+            mFormation->mDidOriginateOnWave = true;
+            
+            mFormation->mX = mBaseX;
+            mFormation->mY = mBaseY;
+            mFormation->Spawn(&mMotionController);
+        }
+    }
+    
+    if (mFormation == NULL) {
+        
+        if (mObjectType == GAME_OBJECT_TYPE_BALLOON) {
+            mObject = new Balloon();
+            gGame->mBalloonList.Add(mObject);
+        }
+        
+        if (mObjectType == GAME_OBJECT_TYPE_BRICKHEAD) {
+            mObject = new BrickHead();
+            gGame->mBrickHeadList.Add(mObject);
+        }
+        
+        if (mObjectType == GAME_OBJECT_TYPE_BOMB) {
+            mObject = new Bomb();
+            gGame->mBombList.Add(mObject);
+        }
+        
+        if (mObjectType == GAME_OBJECT_TYPE_TURTLE) {
+            mObject = new Turtle();
+            gGame->mTurtleList.Add(mObject);
+        }
+        
+        if (mObject != NULL) {
+            
+            mObject->mDidOriginateAsPermanent = false;
+            mObject->mDidOriginateOnWave = true;
+            
+            mObject->mTransform.mX = mBaseX;
+            mObject->mTransform.mY = mBaseY;
+        }
+    }
+    
+    mDidSpawn = true;
+    mDidUpdateAfterSpawn = false;
+    
+    if (mObject != NULL) { mObject->mWaveSpawn = this; }
+    if (mFormation != NULL) { mFormation->SetWaveSpawn(this); }
 }
+
+void LevelWaveSpawn::DisposeObject(GameObject *pObject) {
+    
+    if (mObject != NULL && mObject == pObject) {
+        mObject = NULL;
+    }
+    if (mFormation != NULL) {
+        mFormation->DisposeObject(pObject);
+    }
+}
+
+bool LevelWaveSpawn::DidStart() {
+    if (mDidSpawn == true) {
+        if (mDidUpdateAfterSpawn == true) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool LevelWaveSpawn::IsClear() {
+    
+    if (mDidSpawn == false) {
+        return false;
+    }
+    
+    if (mObject != NULL) {
+        if (mObject->mKill == 0) {
+            return false;
+        }
+    }
+    
+    if (mFormation != NULL) {
+        if (mFormation->IsClear() == false) {
+            return false;
+        } else {
+            printf("What?\n");
+        }
+    }
+    
+    return true;
+}
+
+
+
+
+
+
 
 void LevelWaveSpawn::Reset() {
     
-    if (mObject) {
+    if (mObject != NULL) {
         mObject->Kill();
         mObject = NULL;
+    }
+    if (mFormation != NULL) {
+        delete mFormation;
+        mFormation = NULL;
     }
     
     mPathIndex = 0;
     mBaseX = 0.0f;
     mBaseY = 0.0f;
     mDistanceTraveled = 0.0f;
+    
+    mDidSpawn = false;
+    mDidUpdateAfterSpawn = false;
 }
 
+/*
 void LevelWaveSpawn::Restart() {
     if (mObject) {
         mObject->Kill();
         mObject = NULL;
+    }
+    if (mFormation != NULL) {
+        delete mFormation;
+        mFormation = NULL;
     }
     mPathIndex = 0;
     mIsComplete = false;
     mOffsetSpawnDistance = 0.0f;
     mBaseX = 0.0f;
     mBaseY = 0.0f;
+    
+    mDidSpawn = false;
+    mDidUpdateAfterSpawn = false;
+    
     mDistanceTraveled = 0.0f;
     mKillTimer = 8;
 }
+*/
 
 void LevelWaveSpawn::Update() {
+    
+    if (mDidSpawn == true) {
+        mDidUpdateAfterSpawn = true;
+    }
+    
     if (mPathIndex >= 0 && mPathIndex < mPath->mPath.mCount) {
         mBaseX = mPath->mPath.mX[mPathIndex];
         mBaseY = mPath->mPath.mY[mPathIndex];
@@ -91,10 +233,26 @@ void LevelWaveSpawn::Update() {
             mDistanceTraveled = mPath->mDist.mData[mPath->mDist.mCount - 1];
         }
     }
+    
+    mMotionController.Update();
+    
     if (mObject != NULL) {
         mObject->mTransform.mX = mBaseX;
         mObject->mTransform.mY = mBaseY;
+        
+        if (mObject->mKill != 0) {
+            mObject = NULL;
+        } else {
+            mMotionController.Apply(mBaseX, mBaseY, mObject);
+        }
     }
+    
+    if (mFormation != NULL) {
+        mFormation->mX = mBaseX;
+        mFormation->mY = mBaseY;
+        mFormation->Update(&mMotionController);
+    }
+    
 }
 
 void LevelWaveSpawn::Draw() {
@@ -110,10 +268,20 @@ void LevelWaveSpawn::Draw() {
     }
 }
 
-
-void LevelWaveSpawn::DisposeObject(GameObject *pObject) {
+void LevelWaveSpawn::HandOffAllGameObjects(FList *pList) {
     
+    if (mObject != NULL && pList != NULL) {
+        pList->Add(mObject);
+    }
+    mObject = NULL;
+    
+    if (mFormation != NULL) {
+        mFormation->HandOffAllGameObjects(pList);
+    }
 }
+
+
+
 
 
 

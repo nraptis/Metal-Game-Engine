@@ -10,15 +10,25 @@
 #define GameObject_hpp
 
 #include "GFXApp.hpp"
-#include "FObject.h"
+#include "FObject.hpp"
 #include "FModelDataPacked.hpp"
-#include "FSprite.h"
+#include "FSprite.hpp"
 #include "FUniforms.hpp"
-#include "FAnimation.h"
+#include "FAnimation.hpp"
 #include "Transform2D.hpp"
 #include "Transform3D.hpp"
 
+#define GAME_OBJECT_TYPE_UNKNOWN -1
+#define GAME_OBJECT_TYPE_BALLOON 0
+#define GAME_OBJECT_TYPE_BRICKHEAD 1
+#define GAME_OBJECT_TYPE_BOMB 2
+#define GAME_OBJECT_TYPE_TURTLE 3
+
+#define GAME_OBJECT_TYPE_DART 1000
+
 class LevelWave;
+class LevelWaveSpawn;
+class LevelPermSpawn;
 class GameObject : public FObject {
 public:
     GameObject();
@@ -28,6 +38,30 @@ public:
     virtual void                            Draw();
     virtual void                            Draw3D();
     virtual void                            Kill();
+    
+    FString                                 TypeString();
+    
+    //Basically, an object / dart moves from (startX, startY) to (endX, endY)
+    virtual bool                            WillCollide(float pStartX, float pStartY, float pEndX, float pEndY);
+    float                                   mEllipseRadiusH;
+    float                                   mEllipseRadiusV;
+    
+    //Where did we come from?
+    bool                                    mDidOriginateOnWave;
+    bool                                    mDidOriginateAsPermanent;
+    
+    bool                                    IsRequiredToClearForSectionCompletion();
+    
+    //Essentially, the objects will "disperse" as a cluster, and pMagnitude will be 1.0 for
+    //the furthest object away from the centroid of all the objects in the cluster.........
+    
+    virtual void                            Disperse(float pDirX, float pDirY, float pMagnitude);
+    
+    virtual void                            FloatAway(float pDirX, float pDirY, float pMagnitude);
+    
+    bool                                    mFloatAway;
+    float                                   mFloatAwaySpeedX;
+    float                                   mFloatAwaySpeedY;
     
     
     LevelWave                               *mWave;
@@ -58,6 +92,10 @@ public:
     Transform2D                             mTransform;
     Transform3D                             mTransform3D;
     
+    int                                     mGameObjectType;
+    
+    LevelWaveSpawn                          *mWaveSpawn;
+    LevelPermSpawn                          *mPermSpawn;
 };
 
 #endif /* GameObject_hpp */

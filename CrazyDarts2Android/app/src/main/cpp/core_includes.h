@@ -38,6 +38,11 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include <unordered_set>
+#include <unordered_map>
+#include <set>
+
+
 #ifndef WIN_32_ENV
 #include <strings.h>
 #endif
@@ -46,32 +51,32 @@
 #include <math.h>
 #include <unistd.h>
 
-#include "FTouchManager.h"
+#include "FTouchManager.hpp"
 #include "FRandomizer.hpp"
 #include "FImage.hpp"
-#include "FRect.h"
-#include "FSprite.h"
+#include "FRect.hpp"
+#include "FSprite.hpp"
 #include "FSpriteSequence.h"
-#include "FString.h"
+#include "FString.hpp"
 #include "FVec2.hpp"
-#include "FVec3.h"
-#include "FPoint.h"
+#include "FVec3.hpp"
+#include "FVec2.hpp"
 #include "FCanvas.hpp"
 #include "FWindow.hpp"
 #include "FTexture.hpp"
-#include "FTextureCache.h"
+#include "FTextureCache.hpp"
 #include "FBufferCache.hpp"
 
-#include "FButton.h"
-#include "FMatrix.h"
-#include "FMath.h"
+#include "FButton.hpp"
+#include "FMatrix.hpp"
+#include "FMath.hpp"
 #include "FColor.hpp"
 #include "FList.hpp"
 #include "FFile.hpp"
-#include "FObject.h"
+#include "FObject.hpp"
 #include "FUniforms.hpp"
-#include "FSound.h"
-#include "FResource.h"
+#include "FSound.hpp"
+#include "FResource.hpp"
 #include "FHashMap.hpp"
 #include "FNotificationCenter.hpp"
 

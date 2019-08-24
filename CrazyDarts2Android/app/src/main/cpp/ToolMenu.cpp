@@ -9,10 +9,16 @@
 #include "ToolMenu.hpp"
 #include "FApp.hpp"
 
+
+
+
+
 ToolMenu::ToolMenu() {
     mName = "ToolMenu";
     mClipEnabled = false;
     mClipDisabled = true;
+    mRecievesConsumedTouches = false;
+    
     mScrollMode = true;
     mExpanded = true;
     mExpandedHeight = 340.0f;
@@ -32,8 +38,11 @@ ToolMenu::ToolMenu() {
 
     mScrollContent.mScrollHorizontalEnabled = false;
     mScrollContent.mRecievesConsumedTouches = false;
+    mScrollContent.mMenu = this;
     AddChild(mScrollContent);
 
+    mContent.mMenu = this;
+    mContent.mClipEnabled = true;
     AddChild(mContent);
 
     mHeader.mMenu = this;
@@ -188,8 +197,36 @@ void ToolMenu::Collapse() {
 
 
 
+ToolMenuScrollCanvas::ToolMenuScrollCanvas() {
+    mMenu = NULL;
+}
+
+ToolMenuScrollCanvas::~ToolMenuScrollCanvas() {
+    
+}
+
+void ToolMenuScrollCanvas::TouchDown(float pX, float pY, void *pData) {
+    if (mMenu != NULL) {
+        if (mMenu->mParent != NULL) {
+            mMenu->mParent->BringChildToFront(mMenu);
+        }
+    }
+}
 
 
 
+ToolMenuCanvas::ToolMenuCanvas() {
+    mMenu = NULL;
+}
 
+ToolMenuCanvas::~ToolMenuCanvas() {
+    
+}
 
+void ToolMenuCanvas::TouchDown(float pX, float pY, void *pData) {
+    if (mMenu != NULL) {
+        if (mMenu->mParent != NULL) {
+            mMenu->mParent->BringChildToFront(mMenu);
+        }
+    }
+}

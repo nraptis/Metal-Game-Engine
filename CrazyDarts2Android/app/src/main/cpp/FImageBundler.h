@@ -11,7 +11,7 @@
 #define IMAGE_BUNDLER_H
 
 #include "FImage.hpp"
-#include "FString.h"
+#include "FString.hpp"
 #include "FList.hpp"
 
 class FImageBundlerSaveNode {

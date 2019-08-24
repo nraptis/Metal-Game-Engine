@@ -13,6 +13,12 @@
 #include "LevelWave.hpp"
 #include "LevelSection.hpp"
 
+//test_section_01.json
+//test_section_02.json
+//test_section_03.json
+//test_section_04.json
+
+
 class LevelData {
 public:
     LevelData();
@@ -20,21 +26,20 @@ public:
     
     void                            Update();
     
-    void                            Dispose();
     void                            DisposeObject(GameObject *pObject);
     void                            DisposeSection(LevelSection *pLevelSection);
     
-    
     void                            Print(const char *pName);
-    
     
     void                            AddSection(LevelSection *pLevelSection);
     FList                           mSectionList;
     LevelSection                    *mCurrentSection;
+    LevelSection                    *mPreviousSection;
     int                             mCurrentSectionIndex;
     
-    
     int                             mInitialDelay;
+    
+    bool                            mFlyInFromRight;
     
     
     

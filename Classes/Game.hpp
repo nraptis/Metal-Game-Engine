@@ -198,11 +198,13 @@ public:
     
     int                                         mEscapedCount;
     
-    HangingThread                               mTestThread;
     float                                       mTestBalloonRotX;
     float                                       mTestBalloonRotY;
     float                                       mTestBalloonRotZ;
     
+    
+    float                                       mWind;
+    float                                       mWindSin;
     
     
 };

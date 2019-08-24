@@ -354,6 +354,7 @@ class GL2JNIView extends GLSurfaceView {
                 mDidFlagGraphicsReady = true;
                 GL2JNILib.NativeAppShellGraphicsReady();
             }
+            System.out.println("Frame...");
             GL2JNILib.NativeAppShellFrame();
         }
 

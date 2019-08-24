@@ -12,12 +12,12 @@
 #define CANVAS_TRACKED_TOUCH_COUNT 6
 
 #include "FList.hpp"
-#include "FRect.h"
+#include "FRect.hpp"
 #include "FColor.hpp"
-#include "FString.h"
-#include "FSprite.h"
-#include "FPoint.h"
-#include "FObject.h"
+#include "FString.hpp"
+#include "FSprite.hpp"
+#include "FVec2.hpp"
+#include "FObject.hpp"
 
 class FCanvasTransform {
 public:
@@ -141,6 +141,10 @@ public:
     
     FList                                       mChildren;
     
+    bool                                        mExclusiveKeyDownCaptureWhenSelected;
+    bool                                        mExclusiveKeyUpCaptureWhenSelected;
+    
+    
     bool                                        mClipEnabled;
     bool                                        mClipDisabled;;
 
@@ -232,15 +236,15 @@ public:
     static void                                 ConvertPoint(float &pX, float &pY, FCanvas *pFromCanvas, FCanvas &pToCanvas) { ConvertPoint(pX, pY, pFromCanvas, &pToCanvas); }
     static void                                 ConvertPoint(float &pX, float &pY, FCanvas &pFromCanvas, FCanvas *pToCanvas) { ConvertPoint(pX, pY, &pFromCanvas, pToCanvas); }
     
-    static FPoint                               Convert(float pX, float pY, FCanvas *pFromCanvas, FCanvas *pToCanvas);
-    static FPoint                               Convert(float pX, float pY, FCanvas &pFromCanvas, FCanvas &pToCanvas) { return Convert(pX, pY, &pFromCanvas, &pToCanvas); }
-    static FPoint                               Convert(float pX, float pY, FCanvas *pFromCanvas, FCanvas &pToCanvas) { return Convert(pX, pY, pFromCanvas, &pToCanvas); }
-    static FPoint                               Convert(float pX, float pY, FCanvas &pFromCanvas, FCanvas *pToCanvas) { return Convert(pX, pY, &pFromCanvas, pToCanvas); }
+    static FVec2                               Convert(float pX, float pY, FCanvas *pFromCanvas, FCanvas *pToCanvas);
+    static FVec2                               Convert(float pX, float pY, FCanvas &pFromCanvas, FCanvas &pToCanvas) { return Convert(pX, pY, &pFromCanvas, &pToCanvas); }
+    static FVec2                               Convert(float pX, float pY, FCanvas *pFromCanvas, FCanvas &pToCanvas) { return Convert(pX, pY, pFromCanvas, &pToCanvas); }
+    static FVec2                               Convert(float pX, float pY, FCanvas &pFromCanvas, FCanvas *pToCanvas) { return Convert(pX, pY, &pFromCanvas, pToCanvas); }
     
-    static FPoint                               Convert(FPoint pPos, FCanvas *pFromCanvas, FCanvas *pToCanvas) { return Convert(pPos.mX, pPos.mY, pFromCanvas, pToCanvas); }
-    static FPoint                               Convert(FPoint pPos, FCanvas &pFromCanvas, FCanvas &pToCanvas) { return Convert(pPos, &pFromCanvas, &pToCanvas); }
-    static FPoint                               Convert(FPoint pPos, FCanvas *pFromCanvas, FCanvas &pToCanvas) { return Convert(pPos.mX, pPos.mY, pFromCanvas, &pToCanvas); }
-    static FPoint                               Convert(FPoint pPos, FCanvas &pFromCanvas, FCanvas *pToCanvas) { return Convert(pPos.mX, pPos.mY, &pFromCanvas, pToCanvas); }
+    static FVec2                               Convert(FVec2 pPos, FCanvas *pFromCanvas, FCanvas *pToCanvas) { return Convert(pPos.mX, pPos.mY, pFromCanvas, pToCanvas); }
+    static FVec2                               Convert(FVec2 pPos, FCanvas &pFromCanvas, FCanvas &pToCanvas) { return Convert(pPos, &pFromCanvas, &pToCanvas); }
+    static FVec2                               Convert(FVec2 pPos, FCanvas *pFromCanvas, FCanvas &pToCanvas) { return Convert(pPos.mX, pPos.mY, pFromCanvas, &pToCanvas); }
+    static FVec2                               Convert(FVec2 pPos, FCanvas &pFromCanvas, FCanvas *pToCanvas) { return Convert(pPos.mX, pPos.mY, &pFromCanvas, pToCanvas); }
     
     static float                                ConvertScale(float pScale, FCanvas *pFromCanvas, FCanvas *pToCanvas);
     static float                                ConvertScale(float pScale, FCanvas &pFromCanvas, FCanvas &pToCanvas) { return ConvertScale(pScale, &pFromCanvas, &pToCanvas); }

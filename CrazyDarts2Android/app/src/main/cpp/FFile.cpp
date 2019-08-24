@@ -9,7 +9,7 @@
 #include "FFile.hpp"
 #include "core_includes.h"
 #include "os_core_outlets.h"
-#include "FResource.h"
+#include "FResource.hpp"
 
 FFile::FFile()
 {

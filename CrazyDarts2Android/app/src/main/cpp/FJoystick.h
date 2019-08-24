@@ -9,7 +9,7 @@
 #ifndef FRAMEWORK_JOYSTICK_H
 #define FRAMEWORK_JOYSTICK_H
 
-#include "FSprite.h"
+#include "FSprite.hpp"
 #include "FCanvas.hpp"
 
 #define FJoystick_CANCEL_TIME 1000

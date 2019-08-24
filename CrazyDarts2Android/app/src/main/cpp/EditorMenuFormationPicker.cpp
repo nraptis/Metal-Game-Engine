@@ -16,9 +16,12 @@
 #include "core_includes.h"
 
 
-LevelWaveSpawnFormation *gSelectedFormation = NULL;
+LevelFormation *gSelectedFormation = NULL;
 
 EditorMenuFormationPicker::EditorMenuFormationPicker() {
+    
+    mName = "Formation Picker";
+    
     float aX = gDeviceWidth2 / 3.0f;
     float aY = gDeviceHeight2 / 3.0f;
     float aWidth = gDeviceWidth2 + gDeviceWidth2 / 2.0f;
@@ -41,9 +44,44 @@ EditorMenuFormationPicker::EditorMenuFormationPicker() {
     mManualSectionLayout = true;
     mResizeDragAllowedV = false;
     
+    
+    mFilterRow1 = new ToolMenuSectionRow();
+    AddSection(mFilterRow1);
+    
+    mButtonApplyFilter = new UIButton();
+    mButtonApplyFilter->SetText("Apply...");
+    mFilterRow1->AddButton(mButtonApplyFilter);
+    
+    mTextBoxFilter = new UITextBox();
+    mFilterRow1->AddTextBox(mTextBoxFilter);
+    
+    
+    mFilterRow2 = new ToolMenuSectionRow();
+    AddSection(mFilterRow2);
+    
+    
+    mCheckBoxBalloonsOnly = new UICheckBox();
+    mCheckBoxBalloonsOnly->SetText("Bal Only");
+    mFilterRow2->AddCheckBox(mCheckBoxBalloonsOnly);
+    
+    mCheckBoxMixedOnly = new UICheckBox();
+    mCheckBoxMixedOnly->SetText("Mixed Only");
+    mFilterRow2->AddCheckBox(mCheckBoxMixedOnly);
+    
+    mCheckBoxTracersOnly = new UICheckBox();
+    mCheckBoxTracersOnly->SetText("Only Tracers");
+    mFilterRow2->AddCheckBox(mCheckBoxTracersOnly);
+    
+    mCheckBoxNoTracersOnly = new UICheckBox();
+    mCheckBoxNoTracersOnly->SetText("Ignore Tracers");
+    mFilterRow2->AddCheckBox(mCheckBoxNoTracersOnly);
+    
+    
+    
     mSection = new ToolMenuSection();
     AddSection(mSection);
-    mName = "Formation Picker";
+    
+    
     mDidSetUp = false;
     mScrollContent = new EditorMenuFormationPickerScrollContent();
     mSection->AddChild(mScrollContent);
@@ -52,6 +90,10 @@ EditorMenuFormationPicker::EditorMenuFormationPicker() {
 }
 
 EditorMenuFormationPicker::~EditorMenuFormationPicker() {
+    
+    FreeList(LevelFormation, mFormationListFiltered);
+    FreeList(LevelFormation, mFormationList);
+    
     gSelectedFormation = NULL;
 }
 
@@ -79,28 +121,137 @@ void EditorMenuFormationPicker::Notify(void *pSender, const char *pNotification)
             }
         }
     }
+    
+    if (pSender == mButtonApplyFilter) { ApplyFilter(); }
+    if (pSender == mCheckBoxBalloonsOnly) { ApplyFilter(); }
+    if (pSender == mCheckBoxMixedOnly) { ApplyFilter(); }
+    if (pSender == mCheckBoxTracersOnly) { ApplyFilter(); }
+    if (pSender == mCheckBoxNoTracersOnly) { ApplyFilter(); }
+    
 }
 
 void EditorMenuFormationPicker::AddAllFormations() {
-    for (int i=0;i<12;i++) {
-        EnumList(LevelWaveSpawnFormation, aFormation, gFormationCollection.mFormationList) {
-            AddFormation(aFormation->Clone());
-        }
+    EnumList(LevelFormation, aFormation, gFormationCollection.mFormationList) {
+        
+        LevelFormation *aClone = aFormation->Clone();
+        
+        AddFormation(aClone);
     }
+    
+    ApplyFilter();
+    
 }
 
-void EditorMenuFormationPicker::AddFormation(LevelWaveSpawnFormation *pFormation) {
+void EditorMenuFormationPicker::AddFormation(LevelFormation *pFormation) {
+    
+    if (pFormation == NULL) { return; }
+    
+    mFormationList.Add(pFormation);
+    
+    /*
     EditorMenuFormationPickerCell *aCell = new EditorMenuFormationPickerCell(pFormation);
     aCell->SetFrame(0.0f, 0.0f, mScrollContent->mCellWidth, mScrollContent->mCellHeight);
     gNotify.Register(this, aCell, "button_click");
     mScrollContent->AddCell(aCell);
     FrameDidUpdate();
+    */
 }
 
 void EditorMenuFormationPicker::Layout() {
     ToolMenu::Layout();
-    mSection->SetSize(mContent.GetWidth(), mContent.GetHeight());
+    
+    mFilterRow1->SetFrame(0.0f, 0.0f, mContent.GetWidth(), mFilterRow1->GetHeight());
+    mFilterRow2->SetFrame(0.0f, mFilterRow1->GetHeight(), mContent.GetWidth(), mFilterRow1->GetHeight());
+    
+    float aOffset = mFilterRow1->GetHeight() + mFilterRow2->GetHeight();
+    mSection->SetFrame(0.0f, aOffset, mContent.GetWidth(), mContent.GetHeight() - aOffset);
 }
+
+void EditorMenuFormationPicker::ApplyFilter() {
+    
+    if (mScrollContent == NULL) { return; }
+    
+    FString aText = mTextBoxFilter->mText.c();
+    
+    
+    //mCheckBoxTracersOnly
+    
+    
+    //UICheckBox                                  *mCheckBoxBalloonsOnly;
+    //UICheckBox                                  *;
+    //UICheckBox                                  *;
+    //UICheckBox                                  *;
+    
+    bool aMixedOnly = false;
+    bool aBalloonOnly = false;
+    bool aTracersOnly = false;
+    bool aNoTracersOnly = false;
+    
+    if (mCheckBoxBalloonsOnly != NULL) {
+        aBalloonOnly = mCheckBoxBalloonsOnly->mIsChecked;
+    }
+    
+    if (mCheckBoxMixedOnly != NULL) {
+        aMixedOnly = mCheckBoxMixedOnly->mIsChecked;
+    }
+    
+    if (mCheckBoxTracersOnly != NULL) {
+        aTracersOnly = mCheckBoxTracersOnly->mIsChecked;
+    }
+    
+    if (mCheckBoxNoTracersOnly != NULL) {
+        aNoTracersOnly = mCheckBoxNoTracersOnly->mIsChecked;
+    }
+    
+    
+   
+    
+    mScrollContent->ClearAll();
+    
+    FreeList(LevelFormation, mFormationListFiltered);
+    
+    EnumList(LevelFormation, aFormation, mFormationList) {
+        
+        bool aUse = true;
+        
+        if (aText.mLength > 0) {
+            if (aFormation->mID.FindI(aText) == -1) { aUse = false; }
+        }
+        
+        if (aTracersOnly) {
+            if (aFormation->EditorHasAnyTracers() == false) { aUse = false; }
+        }
+        
+        if (aNoTracersOnly) {
+            if (aFormation->EditorHasAnyTracers() == true) { aUse = false; }
+        }
+        
+        if (aMixedOnly) {
+            if (aFormation->EditorHasMixedTypes() == false) { aUse = false; }
+        }
+        
+        if (aBalloonOnly) {
+            if (aFormation->EditorHasBalloonsOnly() == false) { aUse = false; }
+        }
+        
+        if (aUse == true) {
+            mFormationListFiltered.Add(aFormation->Clone());
+        }
+    }
+    
+    EnumList(LevelFormation, aFormation, mFormationListFiltered) {
+        EditorMenuFormationPickerCell *aCell = new EditorMenuFormationPickerCell(aFormation);
+        aCell->SetFrame(0.0f, 0.0f, mScrollContent->mCellWidth, mScrollContent->mCellHeight);
+        gNotify.Register(this, aCell, "button_click");
+        mScrollContent->AddCell(aCell);
+        
+    }
+    FrameDidUpdate();
+    
+    mDidSetUp = false;
+}
+
+
 
 EditorMenuFormationPickerScrollContent::EditorMenuFormationPickerScrollContent() {
     mClipEnabled = true;
@@ -122,7 +273,6 @@ EditorMenuFormationPickerScrollContent::EditorMenuFormationPickerScrollContent()
     mColCount = 0;
     mRowCount = 0;
     float aWidth = gAppWidth;
-    
     float aProbeX = mCellSpacingH;
     int aScreenColCount = 0;
     while (aProbeX < aWidth) {
@@ -306,6 +456,22 @@ void EditorMenuFormationPickerScrollContent::AddCell(EditorMenuFormationPickerCe
         AddChild(pCell);
         pCell->mConsumesTouches = false;
     }
+}
+
+void EditorMenuFormationPickerScrollContent::ClearAll() {
+    
+    for (int aRow = 0; aRow < mRowCount; aRow++) {
+        for (int aCol = 0; aCol < mColCount; aCol++) {
+            mCellGrid[aCol][aRow] = NULL;
+        }
+    }
+    
+    EnumList(EditorMenuFormationPickerCell, aCell, mCellList) {
+        aCell->Kill();
+    }
+    
+    mCellList.RemoveAll();
+    
 }
 
 void EditorMenuFormationPickerScrollContent::TouchDown(float pX, float pY, void *pData) {

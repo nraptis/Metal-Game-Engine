@@ -28,13 +28,18 @@ public:
     UIStepper                               *mStepperSpawnCount;
     UIStepper                               *mStepperSpacing;
     
-    
-    ToolMenuPanel                           *mTimingPanelPanel;
-    UISegment                               *mStepperCreationType;
+    ToolMenuPanel                           *mTimingPanel;
+    //UISegment                               *mStepperCreationType;
     UIStepper                               *mStepperCreationDelay;
     
+    ToolMenuSectionRow                      *mTimingRow1;
+    UICheckBox                              *mCheckBoxCreationRequiresPrevWaveStart;
+    UICheckBox                              *mCheckBoxCreationRequiresPrevWaveComplete;
     
     
+    ToolMenuSectionRow                      *mTimingRow2;
+    UICheckBox                              *mCheckBoxCreationRequiresScreenWavesClear;
+    UICheckBox                              *mCheckBoxCreationRequiresScreenPermsClear;
 };
 
 #endif

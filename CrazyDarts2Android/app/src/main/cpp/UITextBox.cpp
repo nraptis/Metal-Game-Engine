@@ -12,6 +12,9 @@
 
 UITextBox::UITextBox() {
     mConsumesTouches = true;
+    mExclusiveKeyDownCaptureWhenSelected = true;
+    mExclusiveKeyUpCaptureWhenSelected = false;
+    
     mName = "UITextBox";
     mBold = false;
     mShrink = true;
@@ -203,34 +206,128 @@ void UITextBox::KeyDown(int pKey)  {
 
 void UITextBox::KeyUp(int pKey)  {
     
-    
 }
 
 char UITextBox::CharForKey(int pKey) {
     
-    if (pKey == __KEY__0) { return '0'; }
-    if (pKey == __KEY__1) { return '1'; }
-    if (pKey == __KEY__2) { return '2'; }
-    if (pKey == __KEY__3) { return '3'; }
-    if (pKey == __KEY__4) { return '4'; }
-    if (pKey == __KEY__5) { return '5'; }
-    if (pKey == __KEY__6) { return '6'; }
-    if (pKey == __KEY__7) { return '7'; }
-    if (pKey == __KEY__8) { return '8'; }
-    if (pKey == __KEY__9) { return '9'; }
+    bool aShift = gKeyDownShift;
+    bool aCtrl = gKeyDownCtrl;
+    bool aAlt = gKeyDownAlt;
     
-    if (pKey == __KEY__MINUS) { return '-'; }
+    if (aShift == false && aCtrl == false && aAlt == false) {
+        if (pKey == __KEY__0) { return '0'; }
+        if (pKey == __KEY__1) { return '1'; }
+        if (pKey == __KEY__2) { return '2'; }
+        if (pKey == __KEY__3) { return '3'; }
+        if (pKey == __KEY__4) { return '4'; }
+        if (pKey == __KEY__5) { return '5'; }
+        if (pKey == __KEY__6) { return '6'; }
+        if (pKey == __KEY__7) { return '7'; }
+        if (pKey == __KEY__8) { return '8'; }
+        if (pKey == __KEY__9) { return '9'; }
+        
+        if (pKey == __KEY__MINUS) { return '-'; }
+        if (pKey == __KEY__EQUALS) { return '='; }
+        if (pKey == __KEY__SEMICOLON) { return ';'; }
+        
+        if (pKey == __KEY__APOSTROPHE) { return '\''; }
+        
+        if (pKey == __KEY__GRAVE) { return '`'; }
+        
+        if (pKey == __KEY__BACKSLASH) { return '\\'; }
+        if (pKey == __KEY__SLASH) { return '/'; }
+        
+        if (pKey == __KEY__LBRACKET) { return '['; }
+        if (pKey == __KEY__RBRACKET) { return ']'; }
+        
+        if (pKey == __KEY__SPACE) { return ' '; }
+        if (pKey == __KEY__PERIOD) { return '.'; }
+        if (pKey == __KEY__COMMA) { return ','; }
+        
+        if (pKey == __KEY__A) { return 'a'; }
+        if (pKey == __KEY__B) { return 'b'; }
+        if (pKey == __KEY__C) { return 'c'; }
+        if (pKey == __KEY__D) { return 'd'; }
+        if (pKey == __KEY__E) { return 'e'; }
+        if (pKey == __KEY__F) { return 'f'; }
+        if (pKey == __KEY__G) { return 'g'; }
+        if (pKey == __KEY__H) { return 'h'; }
+        if (pKey == __KEY__I) { return 'i'; }
+        if (pKey == __KEY__J) { return 'j'; }
+        if (pKey == __KEY__K) { return 'k'; }
+        if (pKey == __KEY__L) { return 'l'; }
+        if (pKey == __KEY__M) { return 'm'; }
+        if (pKey == __KEY__N) { return 'n'; }
+        if (pKey == __KEY__O) { return 'o'; }
+        if (pKey == __KEY__P) { return 'p'; }
+        if (pKey == __KEY__Q) { return 'q'; }
+        if (pKey == __KEY__R) { return 'r'; }
+        if (pKey == __KEY__S) { return 's'; }
+        if (pKey == __KEY__T) { return 't'; }
+        if (pKey == __KEY__U) { return 'u'; }
+        if (pKey == __KEY__V) { return 'v'; }
+        if (pKey == __KEY__W) { return 'w'; }
+        if (pKey == __KEY__X) { return 'x'; }
+        if (pKey == __KEY__Y) { return 'y'; }
+        if (pKey == __KEY__Z) { return 'z'; }
+    }
     
-    if (pKey == __KEY__SPACE) { return ' '; }
-    
-    if (pKey == __KEY__PERIOD) { return '.'; }
-    
-    if (pKey == __KEY__A) { return 'a'; }
-    
-    
-    
-    
-    
+    if (aShift == true && aCtrl == false && aAlt == false) {
+        if (pKey == __KEY__0) { return ')'; }
+        if (pKey == __KEY__1) { return '!'; }
+        if (pKey == __KEY__2) { return '@'; }
+        if (pKey == __KEY__3) { return '#'; }
+        if (pKey == __KEY__4) { return '$'; }
+        if (pKey == __KEY__5) { return '%'; }
+        if (pKey == __KEY__6) { return '^'; }
+        if (pKey == __KEY__7) { return '&'; }
+        if (pKey == __KEY__8) { return '*'; }
+        if (pKey == __KEY__9) { return '('; }
+        
+        if (pKey == __KEY__MINUS) { return '_'; }
+        if (pKey == __KEY__EQUALS) { return '+'; }
+        if (pKey == __KEY__SEMICOLON) { return ':'; }
+        
+        if (pKey == __KEY__APOSTROPHE) { return '\"'; }
+        
+        if (pKey == __KEY__GRAVE) { return '~'; }
+        
+        if (pKey == __KEY__BACKSLASH) { return '|'; }
+        if (pKey == __KEY__SLASH) { return '?'; }
+        
+        if (pKey == __KEY__LBRACKET) { return '{'; }
+        if (pKey == __KEY__RBRACKET) { return '}'; }
+        
+        if (pKey == __KEY__PERIOD) { return '>'; }
+        if (pKey == __KEY__COMMA) { return '<'; }
+        
+        if (pKey == __KEY__A) { return 'A'; }
+        if (pKey == __KEY__B) { return 'B'; }
+        if (pKey == __KEY__C) { return 'C'; }
+        if (pKey == __KEY__D) { return 'D'; }
+        if (pKey == __KEY__E) { return 'E'; }
+        if (pKey == __KEY__F) { return 'F'; }
+        if (pKey == __KEY__G) { return 'G'; }
+        if (pKey == __KEY__H) { return 'H'; }
+        if (pKey == __KEY__I) { return 'I'; }
+        if (pKey == __KEY__J) { return 'J'; }
+        if (pKey == __KEY__K) { return 'K'; }
+        if (pKey == __KEY__L) { return 'L'; }
+        if (pKey == __KEY__M) { return 'M'; }
+        if (pKey == __KEY__N) { return 'N'; }
+        if (pKey == __KEY__O) { return 'O'; }
+        if (pKey == __KEY__P) { return 'P'; }
+        if (pKey == __KEY__Q) { return 'Q'; }
+        if (pKey == __KEY__R) { return 'R'; }
+        if (pKey == __KEY__S) { return 'S'; }
+        if (pKey == __KEY__T) { return 'T'; }
+        if (pKey == __KEY__U) { return 'U'; }
+        if (pKey == __KEY__V) { return 'V'; }
+        if (pKey == __KEY__W) { return 'W'; }
+        if (pKey == __KEY__X) { return 'X'; }
+        if (pKey == __KEY__Y) { return 'Y'; }
+        if (pKey == __KEY__Z) { return 'Z'; }
+    }
     
     return 0;
 }

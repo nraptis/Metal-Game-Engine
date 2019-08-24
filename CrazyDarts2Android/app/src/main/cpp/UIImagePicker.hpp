@@ -13,7 +13,7 @@
 #include "ToolMenu.hpp"
 #include "FDrawQuad.hpp"
 #include "ToolMenuSection.hpp"
-#include "FSprite.h"
+#include "FSprite.hpp"
 #include "FSpriteSequence.h"
 
 class UIImagePickerCell;

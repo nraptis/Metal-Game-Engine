@@ -10,19 +10,60 @@
 #include "LightConfigurationScene.hpp"
 #include "EditorMenuAttachment.hpp"
 #include "GameEditor.hpp"
-#include "FApp.hpp"
+#include "GamePermanentEditor.hpp"
+//#include "FApp.hpp"
 
 EditorMenuAttachment::EditorMenuAttachment(GameEditor *pEditor) : ToolMenu() {
     mName = "EditorMenuAttachment";
     
     mEditor = pEditor;
+    mPermEditor = NULL;
+    
+    Init();
+}
+
+EditorMenuAttachment::EditorMenuAttachment(GamePermanentEditor *pEditor) {
+    mEditor = NULL;
+    mPermEditor = pEditor;
+    
+    Init();
+}
+
+void EditorMenuAttachment::Init() {
+    
+    mStepperSpacingOffset = NULL;
     
     SetTitle("Spawn Attach");
     SetScrollMode(true);
     
+    mPanelObjectTypes = new ToolMenuPanel();
+    mPanelObjectTypes->SetTitle("Object");
+    AddSection(mPanelObjectTypes);
+    
+    mRowObjectTypes1 = new ToolMenuSectionRow();
+    mPanelObjectTypes->AddSection(mRowObjectTypes1);
     
     
-
+    mButtonPickBalloon = new UIButton();
+    mButtonPickBalloon->SetText("Balloon");
+    mRowObjectTypes1->AddButton(mButtonPickBalloon);
+    
+    mButtonPickBrickHead = new UIButton();
+    mButtonPickBrickHead->SetText("Brick");
+    mRowObjectTypes1->AddButton(mButtonPickBrickHead);
+    
+    
+    mRowObjectTypes2 = new ToolMenuSectionRow();
+    mPanelObjectTypes->AddSection(mRowObjectTypes2);
+    
+    mButtonPickBomb = new UIButton();
+    mButtonPickBomb->SetText("Bomb");
+    mRowObjectTypes2->AddButton(mButtonPickBomb);
+    
+    mButtonPickTurtle = new UIButton();
+    mButtonPickTurtle->SetText("Turtle");
+    mRowObjectTypes2->AddButton(mButtonPickTurtle);
+    
     
     mPanelFormations = new ToolMenuPanel();
     mPanelFormations->SetTitle("Formations");
@@ -32,16 +73,12 @@ EditorMenuAttachment::EditorMenuAttachment(GameEditor *pEditor) : ToolMenu() {
     mPanelFormations->AddSection(mRowFormations1);
     
     
-    mButtonPickFormation1 = new UIButton();
-    mButtonPickFormation1->SetText("Form 1");
-    mRowFormations1->AddButton(mButtonPickFormation1);
-    
-    mButtonPickFormation2 = new UIButton();
-    mButtonPickFormation2->SetText("Form 2");
-    mRowFormations1->AddButton(mButtonPickFormation2);
+    mButtonPickFormation = new UIButton();
+    mButtonPickFormation->SetText("Pick Form");
+    mRowFormations1->AddButton(mButtonPickFormation);
     
     mButtonClearFormation = new UIButton();
-    mButtonClearFormation->SetText("1 Balloon");
+    mButtonClearFormation->SetText("Clear Form");
     mRowFormations1->AddButton(mButtonClearFormation);
     
     
@@ -57,56 +94,35 @@ EditorMenuAttachment::EditorMenuAttachment(GameEditor *pEditor) : ToolMenu() {
     mCheckBoxInvertFormationV->SetText("R-Flip H");
     mRowFormations2->AddCheckBox(mCheckBoxInvertFormationV);
     
-   
+    
+    
+    
+    //if (mEditor != NULL) {
+        
+        mPanelBehavior = new ToolMenuPanel();
+        mPanelBehavior->SetTitle("Behaviors");
+        AddSection(mPanelBehavior);
+        
+        mStepperSpacingOffset = new UIStepper();
+        mStepperSpacingOffset->SetText("Spacing Offset");
+        mStepperSpacingOffset->mMin = -1000;
+        mStepperSpacingOffset->mMax = 1000;
+        mPanelBehavior->AddSection(mStepperSpacingOffset);
+    //}
 
-    
-    mPanelBehavior = new ToolMenuPanel();
-    mPanelBehavior->SetTitle("Behaviors");
-    AddSection(mPanelBehavior);
-    
-    
-    mStepperSpacingOffset = new UIStepper();
-    mStepperSpacingOffset->SetText("Spacing Offset");
-    mStepperSpacingOffset->mMin = -1000;
-    mStepperSpacingOffset->mMax = 1000;
-    //gNotify.Register(this, mStepperSpacingOffset, "stepper");
-    mPanelBehavior->AddSection(mStepperSpacingOffset);
-    
-
-    
-    mPanelRotation = new ToolMenuPanel();
-    mPanelRotation->SetTitle("Rotation");
-    AddSection(mPanelRotation);
-    
-    
-    mSegmentRotationSpeed = new UISegment();
-    mSegmentRotationSpeed->SetSegmentCount(7);
-    mSegmentRotationSpeed->SetTitles("XS", "S", "MS", "M", "MF", "F", "XF");
-    //gNotify.Register(this, mSegmentRotationSpeed, "segment");
-    if (gGame) {
-        mSegmentRotationSpeed->SetTarget(&gEditor->mSpawnRotationSpeedClassIndex);
-    }
-    mPanelRotation->AddSection(mSegmentRotationSpeed);
-    
-    
-    mRowRotation = new ToolMenuSectionRow();
-    mPanelRotation->AddSection(mRowRotation);
-    
-
-    mCheckBoxRotationNegateAlways = new UICheckBox();
-    mCheckBoxRotationNegateAlways->SetText("Neg Always");
-    mRowRotation->AddCheckBox(mCheckBoxRotationNegateAlways);
-    
-    mCheckBoxRotationNegateRandom = new UICheckBox();
-    mCheckBoxRotationNegateRandom->SetText("Neg Random");
-    mRowRotation->AddCheckBox(mCheckBoxRotationNegateRandom);
-    
-    
 }
 
 EditorMenuAttachment::~EditorMenuAttachment() {
-    if (gEditor->mMenuAttachment == this) {
-        gEditor->mMenuAttachment = NULL;
+    
+    if (gEditor != NULL) {
+        if (gEditor->mMenuAttachment == this) {
+            gEditor->mMenuAttachment = NULL;
+        }
+    }
+    if (mPermEditor != NULL) {
+        if (mPermEditor->mMenuAttachment == this) {
+            mPermEditor->mMenuAttachment = NULL;
+        }
     }
 }
 
@@ -117,12 +133,35 @@ void EditorMenuAttachment::Layout() {
 
 
 void EditorMenuAttachment::Notify(void *pSender, const char *pNotification) {
-    if (pSender == mSegmentRotationSpeed) {
-        if (gEditor) { gEditor->RefreshSpawn(); }
+    
+    if (pSender == mStepperSpacingOffset) { gEditor->RefreshPlayback(); }
+    
+    if (pSender == mButtonPickFormation)  {
+        
+        if (mEditor != NULL) {
+            gEditor->PickFormationForSpawnNode();
+        }
+        
+        if (mPermEditor != NULL) {
+            
+            LevelPermSpawnBlueprint *aSpawn = gEditor->PermSpawnGet();
+            if (aSpawn != NULL) {
+                gEditor->PickFormationForPermSpawnNode();
+            } else {
+                LevelSectionPermanentBlueprint *aPerm = gEditor->PermGet();
+                if (aPerm != NULL) {
+                    gEditor->PickFormationForPerm();
+                }
+            }
+        }
     }
-    if (pSender == mStepperSpacingOffset) {
-        if (gEditor) { gEditor->RefreshSpawn(); }
-    }
+    
+    if (pSender == mButtonClearFormation) { gEditor->SpawnClearFormation(); }
+    
+    if (pSender == mButtonPickBalloon) { gEditor->SpawnPickBalloon(); }
+    if (pSender == mButtonPickBrickHead) { gEditor->SpawnPickBrickHead(); }
+    if (pSender == mButtonPickBomb) { gEditor->SpawnPickBomb(); }
+    if (pSender == mButtonPickTurtle) { gEditor->SpawnPickTurtle(); }
     
 }
 
@@ -141,6 +180,4 @@ void EditorMenuAttachment::Update() {
             mStepperSpacingOffset->SetTarget(NULL);
         }
     }
-    
-    
 }

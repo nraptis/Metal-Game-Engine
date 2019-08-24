@@ -18,7 +18,10 @@ EditorMenuSpawn::EditorMenuSpawn(GameEditor *pEditor) : ToolMenu() {
     mEditor = pEditor;
     
     SetTitle("Spawn (Meta)");
-    SetScrollMode(true);
+    
+    //TODO: set TRUE
+    SetScrollMode(false);
+    
     
     mGenerationPanel = new ToolMenuPanel();
     mGenerationPanel->SetTitle("Generation");
@@ -27,7 +30,7 @@ EditorMenuSpawn::EditorMenuSpawn(GameEditor *pEditor) : ToolMenu() {
     mSegmentSpeed = new UISegment();
     mSegmentSpeed->SetSegmentCount(7);
     mSegmentSpeed->SetTitles("XS", "S", "MS", "M", "MF", "F", "XF");
-    if (gGame) {
+    if (gEditor != NULL) {
         mSegmentSpeed->SetTarget(&gEditor->mSpeedClassIndex);
     }
     mGenerationPanel->AddSection(mSegmentSpeed);
@@ -36,7 +39,7 @@ EditorMenuSpawn::EditorMenuSpawn(GameEditor *pEditor) : ToolMenu() {
     mStepperSpawnCount = new UIStepper();
     mStepperSpawnCount->SetText("Count");
     mStepperSpawnCount->mMin = 1;
-    mStepperSpawnCount->mMax = (MAX_SPAWN_COUNT);
+    mStepperSpawnCount->mMax = (WAVE_MAX_SPAWN_COUNT);
     mGenerationPanel->AddSection(mStepperSpawnCount);
     
     mStepperSpacing = new UIStepper();
@@ -47,22 +50,55 @@ EditorMenuSpawn::EditorMenuSpawn(GameEditor *pEditor) : ToolMenu() {
     
     
     
-    mTimingPanelPanel = new ToolMenuPanel();
-    mTimingPanelPanel->SetTitle("Timing");
-    AddSection(mTimingPanelPanel);
+    mTimingPanel = new ToolMenuPanel();
+    mTimingPanel->SetTitle("Timing");
+    AddSection(mTimingPanel);
     
     
-    mStepperCreationType = new UISegment();
-    mStepperCreationType->SetSegmentCount(4);
-    mStepperCreationType->SetTitles("P-W-Start", "P-W-End", "P-W-Clear", "Scr-Clear");
-    mTimingPanelPanel->AddSection(mStepperCreationType);
+    
+    
+    
+    
+    //mStepperCreationType = new UISegment();
+    //mStepperCreationType->SetSegmentCount(4);
+    //mStepperCreationType->SetTitles("P-W-Sta", "P-W-End", "P-W-Clr", "S-Clr-NoP", "S-Cle-AndP");
+    //mTimingPanel->AddSection(mStepperCreationType);
+
     
     
     mStepperCreationDelay = new UIStepper();
     mStepperCreationDelay->SetText("Delay");
     mStepperCreationDelay->mMin = 0;
     mStepperCreationDelay->mMax = 2048;
-    mTimingPanelPanel->AddSection(mStepperCreationDelay);
+    mTimingPanel->AddSection(mStepperCreationDelay);
+    
+    
+    mTimingRow1 = new ToolMenuSectionRow();
+    mTimingPanel->AddSection(mTimingRow1);
+    
+    mCheckBoxCreationRequiresPrevWaveStart = new UICheckBox();
+    mCheckBoxCreationRequiresPrevWaveStart->SetText("P-W-Start");
+    mTimingRow1->AddCheckBox(mCheckBoxCreationRequiresPrevWaveStart);
+    
+    mCheckBoxCreationRequiresPrevWaveComplete = new UICheckBox();
+    mCheckBoxCreationRequiresPrevWaveComplete->SetText("P-W-Compl");
+    mTimingRow1->AddCheckBox(mCheckBoxCreationRequiresPrevWaveComplete);
+    
+    
+    mTimingRow2 = new ToolMenuSectionRow();
+    mTimingPanel->AddSection(mTimingRow2);
+    
+    mCheckBoxCreationRequiresScreenWavesClear = new UICheckBox();
+    mCheckBoxCreationRequiresScreenWavesClear->SetText("Scr-Wav-Clr");
+    mTimingRow2->AddCheckBox(mCheckBoxCreationRequiresScreenWavesClear);
+    
+    mCheckBoxCreationRequiresScreenPermsClear = new UICheckBox();
+    mCheckBoxCreationRequiresScreenPermsClear->SetText("Scr-Prm-Clr");
+    mTimingRow2->AddCheckBox(mCheckBoxCreationRequiresScreenPermsClear);
+
+    
+    
+    
     
     
 }
@@ -88,8 +124,14 @@ void EditorMenuSpawn::Notify(void *pSender, const char *pNotification) {
     }
     if (pSender == mStepperSpawnCount) { gEditor->RefreshPlayback(); }
     if (pSender == mStepperSpacing) { gEditor->RefreshPlayback(); }
-    if (pSender == mStepperCreationType) { gEditor->RefreshPlayback(); }
+    
     if (pSender == mStepperCreationDelay) { gEditor->RefreshPlayback(); }
+    
+    if (pSender == mCheckBoxCreationRequiresPrevWaveStart) { gEditor->RefreshPlayback(); }
+    if (pSender == mCheckBoxCreationRequiresPrevWaveComplete) { gEditor->RefreshPlayback(); }
+    if (pSender == mCheckBoxCreationRequiresScreenWavesClear) { gEditor->RefreshPlayback(); }
+    if (pSender == mCheckBoxCreationRequiresScreenPermsClear) { gEditor->RefreshPlayback(); }
+    
 }
 
 void EditorMenuSpawn::Update() {
@@ -122,14 +164,49 @@ void EditorMenuSpawn::Update() {
     }
     
     
-    if (mStepperCreationType != NULL) {
+    
+    if (mCheckBoxCreationRequiresPrevWaveStart != NULL) {
         bool aUnlink = true;
         if (aWave != NULL) {
             aUnlink = false;
-            mStepperCreationType->SetTarget(&(aWave->mCreationType));
+            mCheckBoxCreationRequiresPrevWaveStart->SetTarget(&(aWave->mCreationRequiresPrevWaveStart));
         }
         if (aUnlink) {
-            mStepperCreationType->SetTarget(NULL);
+            mCheckBoxCreationRequiresPrevWaveStart->SetTarget(NULL);
+        }
+    }
+    
+    
+    if (mCheckBoxCreationRequiresPrevWaveComplete != NULL) {
+        bool aUnlink = true;
+        if (aWave != NULL) {
+            aUnlink = false;
+            mCheckBoxCreationRequiresPrevWaveComplete->SetTarget(&(aWave->mCreationRequiresPrevWaveComplete));
+        }
+        if (aUnlink) {
+            mCheckBoxCreationRequiresPrevWaveComplete->SetTarget(NULL);
+        }
+    }
+    
+    if (mCheckBoxCreationRequiresScreenWavesClear != NULL) {
+        bool aUnlink = true;
+        if (aWave != NULL) {
+            aUnlink = false;
+            mCheckBoxCreationRequiresScreenWavesClear->SetTarget(&(aWave->mCreationRequiresScreenWavesClear));
+        }
+        if (aUnlink) {
+            mCheckBoxCreationRequiresScreenWavesClear->SetTarget(NULL);
+        }
+    }
+    
+    if (mCheckBoxCreationRequiresScreenPermsClear != NULL) {
+        bool aUnlink = true;
+        if (aWave != NULL) {
+            aUnlink = false;
+            mCheckBoxCreationRequiresScreenPermsClear->SetTarget(&(aWave->mCreationRequiresScreenPermsClear));
+        }
+        if (aUnlink) {
+            mCheckBoxCreationRequiresScreenPermsClear->SetTarget(NULL);
         }
     }
     
@@ -143,6 +220,4 @@ void EditorMenuSpawn::Update() {
             mStepperCreationDelay->SetTarget(NULL);
         }
     }
-    \
-    
 }

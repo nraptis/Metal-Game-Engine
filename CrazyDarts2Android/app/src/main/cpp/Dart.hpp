@@ -23,6 +23,8 @@ public:
     void                                    SpawnAnimation();
     void                                    SpawnAnimationForceComplete();
     
+    int                                     mStyleIndex;
+    
     
     bool                                    mSpawnAnimation;
     
@@ -32,6 +34,12 @@ public:
     int                                     mSpawnAnimationTimer;
     
     FVec2                                   GetTipPoint();
+    
+    float                                   mPrevTipX;
+    float                                   mPrevTipY;
+    
+    float                                   mTipX;
+    float                                   mTipY;
     
     float                                   mSpinSpeed;
     
@@ -43,11 +51,23 @@ public:
     float                                   mVelX;
     float                                   mVelY;
     
+    int                                     mHitCount;
+    
     //While we are "idle" we have not yet been released
     //and are sitting at the lower center of the screen...
     bool                                    mIdle;
     
+    bool                                    mStuck;
+    
     virtual void                            Fling(float pVelocityX, float pVelocityY);
+    
+    float                                   mUpdateInterpStartX;
+    float                                   mUpdateInterpStartY;
+    float                                   mUpdateInterpStartRotation;
+    
+    float                                   mUpdateInterpEndX;
+    float                                   mUpdateInterpEndY;
+    float                                   mUpdateInterpEndRotation;
 };
 
 #endif

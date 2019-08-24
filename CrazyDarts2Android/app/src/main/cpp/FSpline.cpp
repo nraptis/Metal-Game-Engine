@@ -1,4 +1,4 @@
-#include "FSpline.h"
+#include "FSpline.hpp"
 #include "core_includes.h"
 
 //#include <string>
@@ -1357,7 +1357,14 @@ void FSpline3D::Translate(float theXDistance, float theYDistance, float theZDist
     }
 }
 
-
+void FSpline3D::Reset()
+{
+    mPointCount=0;
+    mMax=0;
+    mProperties=0;
+    mLength=0;
+    mChanged=true;
+}
 
 void FSpline3D::Clear()
 {

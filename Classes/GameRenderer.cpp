@@ -123,7 +123,7 @@ void GameRenderer::Draw3D() {
     Graphics::MatrixProjectionSet(aProjection);
     Graphics::MatrixModelViewReset();
     
-    Graphics::DepthDisable();
+    //Graphics::DepthDisable();
     //Graphics::CullFacesSetFront();
     Graphics::PipelineStateSetShapeNodeNoBlending();
     Graphics::SetColor();
@@ -133,8 +133,8 @@ void GameRenderer::Draw3D() {
             aBalloon->Draw3DThread();
         }
     }
+    //Graphics::DepthEnable();
     
-    Graphics::DepthEnable();
     
     Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending();
     EnumList (Dart, aDart, mGame->mDartList.mObjectList) {

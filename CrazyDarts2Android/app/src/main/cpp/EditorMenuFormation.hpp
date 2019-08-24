@@ -11,10 +11,6 @@
 
 #include "ToolMenu.hpp"
 
-
-
-
-
 class GameFormationEditor;
 class EditorMenuFormation : public ToolMenu {
 public:
@@ -45,34 +41,11 @@ public:
     
     ToolMenuSectionRow                      *mRowNodes2;
     ToolMenuSectionRow                      *mRowNodes3;
-    
-    
-    ToolMenuPanel                           *mPanelGrid;
-    UISegment                               *mSegmentGridType;
-    
-    ToolMenuPanel                           *mPanelRectGrid;
-    UIStepper                               *mStepperRectGridWidth;
-    UIStepper                               *mStepperRectGridHeight;
-    UIStepper                               *mStepperRectGridSpacing;
-    
-    ToolMenuPanel                           *mPanelCircleGrid;
-    UIStepper                               *mStepperCircleGridCount;
-    UIStepper                               *mStepperCircleRadius;
-    
-    
-    
 
-    ToolMenuPanel                           *mPanelTestBottomBuffer;
-    ToolMenuSectionRow                      *mTestBufferRow1;
-    ToolMenuSectionRow                      *mTestBufferRow2;
-    UIButton                                *mButtonCreep1;
-    UIButton                                *mButtonCreep2;
-    UIButton                                *mButtonCreep3;
+    
     
     
     GameFormationEditor                     *mEditor;
-    
-    void                                    RefreshGridPanels();
     
 };
 

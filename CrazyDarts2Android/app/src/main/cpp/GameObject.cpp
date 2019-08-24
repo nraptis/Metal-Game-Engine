@@ -9,24 +9,95 @@
 #include "GameObject.hpp"
 #include "Game.hpp"
 #include "LevelWave.hpp"
+#include "LevelWaveSpawn.hpp"
+#include "LevelPermSpawn.hpp"
 
 GameObject::GameObject() {
     mWave = NULL;
     mUniform = NULL;
     mModel = NULL;
     mSprite = NULL;
+    
+    mWaveSpawn = NULL;
+    mPermSpawn = NULL;
+    
+    
+    mDidOriginateOnWave = false;
+    mDidOriginateAsPermanent = false;
+    
+    mGameObjectType = GAME_OBJECT_TYPE_UNKNOWN;
+    
+    mFloatAway = false;
+    mFloatAwaySpeedX = 0.0f;
+    mFloatAwaySpeedY = 0.0f;
+    
+    mEllipseRadiusH = 34.0f;
+    mEllipseRadiusV = 52.0f;
 }
 
 GameObject::~GameObject() {
-    
+    if (mWaveSpawn != NULL) {
+        mWaveSpawn->DisposeObject(this);
+        mWaveSpawn = NULL;
+    }
+    if (mPermSpawn != NULL) {
+        mPermSpawn->DisposeObject(this);
+    }
 }
 
 void GameObject::Update() {
-    
-    
+    if (mFloatAway == true) {
+        mTransform.mX += mFloatAwaySpeedX;
+        mTransform.mY += mFloatAwaySpeedY;
+        mFloatAwaySpeedX *= 0.972f;
+        mFloatAwaySpeedY -= 0.042f;
+        mFloatAwaySpeedY *= 0.987f;
+        if (gGame != NULL) {
+            if (mTransform.mY <= gGame->mSpawnZoneTop) {
+                gGame->DisposeObject(this);
+            }
+        }
+    }
 }
 
 void GameObject::Draw() {
+    
+    
+    /*
+    Graphics::PipelineStateSetSpritePremultipliedBlending();
+    Graphics::SetColor();
+    if (mDidOriginateOnWave) {
+        gApp->mSysFontBold.Center("W", mTransform.mX, mTransform.mY);
+    }
+    
+    if (mDidOriginateAsPermanent) {
+        gApp->mSysFontBold.Center("P", mTransform.mX, mTransform.mY);
+    }
+    
+    
+    Graphics::PipelineStateSetShape2DAlphaBlending();
+    if (mEllipseRadiusH > SQRT_EPSILON && mEllipseRadiusV > SQRT_EPSILON) {
+        
+        
+        Graphics::SetColor(1.0f, 0.25f, 0.25f, 0.65f);
+        
+        FVec2 aEllC = FVec2(mTransform.mX, mTransform.mY);
+        FVec2 aP2H = FVec2(mTransform.mX + mEllipseRadiusH, mTransform.mY);
+        aP2H = PivotPoint(aP2H, mTransform.mRotation, aEllC);
+        
+        FVec2 aP2V = FVec2(mTransform.mX, mTransform.mY - mEllipseRadiusV);
+        aP2V = PivotPoint(aP2V, mTransform.mRotation, aEllC);
+        
+        
+        Graphics::SetColor(1.0f, 0.25f, 0.25f, 0.75f);
+        Graphics::DrawLine(mTransform.mX, mTransform.mY, aP2H.mX, aP2H.mY, 2.0f);
+        
+        Graphics::SetColor(0.75f, 1.0f, 0.25f, 0.75f);
+        Graphics::DrawLine(mTransform.mX, mTransform.mY, aP2V.mX, aP2V.mY, 2.0f);
+        
+    }
+    */
+    
     
 }
 
@@ -40,28 +111,30 @@ void GameObject::Draw3D() {
             mModelView.Reset();
             
             //We start by translation...?
-            
             mModelView.Translate(mTransform3D.mX, mTransform3D.mY, mTransform3D.mZ);
             
             //All of our models are exported with X 90 degrees wrong...
-            mModelView.RotateX(90.0f);
+            mModelView.RotateX(-90.0f);
+            mModelView.RotateY(180.0f);
+            
+            //mModelView.RotateZ(180.0f);
             
             if (mTransform3D.mRotationX != 0.0f) {
-                mModelView.RotateX(mTransform3D.mRotationX);
+                //mModelView.RotateX(mTransform3D.mRotationX);
             }
             
             if (mTransform3D.mRotationZ != 0.0f) {
-                mModelView.RotateZ(mTransform3D.mRotationZ);
+                //mModelView.RotateZ(mTransform3D.mRotationZ);
             }
             
             //Now we do a 2-D rotation...
             if (mTransform3D.mRotation2D != 0.0f) {
-                mModelView.RotateY(mTransform3D.mRotation2D);
+                mModelView.RotateY(-mTransform3D.mRotation2D);
             }
             
             //Now we spin around the Y axis...
             if (mTransform3D.mSpin != 0.0f) {
-                mModelView.RotateZ(mTransform3D.mSpin);
+                //mModelView.RotateZ(mTransform3D.mSpin);
             }
             
             //Now we scale down...
@@ -103,83 +176,6 @@ void GameObject::Draw3D() {
         
         Graphics::DrawTrianglesIndexedWithPackedBuffers(mModel->mBuffer, 0, mModel->mIndex, mModel->mIndexCount, mSprite->mTexture);
         
-        
-        //Graphics::DrawTrianglesIndexedFromPackedBuffers(mModel->mBufferVertex, mModel->mBufferVertexOffset, <#int pIndexBuffer#>, <#int pIndexBufferOffset#>, <#int pCount#>, <#FTexture *pTexture#>)
-        
-        /*
-        Graphics::TextureBind(mSprite->mTexture);
-        
-        
-        Graphics::ArrayBufferData(mModel->mBufferVertex, mModel->mBufferVertexOffset);
-        Graphics::ArrayBufferPositions(-1, 0);
-        Graphics::ArrayBufferTextureCoords(-1, sizeof(float) * 3);
-        Graphics::ArrayBufferNormals(-1, sizeof(float) * 6);
-        
-        */
-        
-        //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mModel->mBufferIndex);
-        //glBufferData(GL_ELEMENT_ARRAY_BUFFER, mModel->mIndexCount * sizeof(unsigned short), mModel->mIndex, GL_STATIC_DRAW);
-        
-        
-        //glDrawElements(GL_TRIANGLES, 0, GL_UNSIGNED_SHORT, 0);
-        
-        
-        /*
-        class func bufferIndexSetData(bufferIndex:BufferIndex?, data:inout [IndexBufferType], size:Int) {
-            if let checkIndex = bufferIndex {
-                glBindBuffer(GLenum(GL_ELEMENT_ARRAY_BUFFER), GLuint(checkIndex))
-                glBufferData(GLenum(GL_ELEMENT_ARRAY_BUFFER), size * MemoryLayout<IndexBufferType>.size, &data, GLenum(GL_STATIC_DRAW))
-            }
-        }
-        
-        class func drawElementsTriangle(count:Int, offset:Int) {
-            let ptr = UnsafeRawPointer(bitPattern: (offset << 1))
-            glDrawElements(GLenum(GL_TRIANGLES), GLsizei(count), GLenum(GL_UNSIGNED_SHORT), ptr)
-        }
-        */
-        
-        
-        /*
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mModel->mBufferIndex);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, mModel->mIndexCount * sizeof(GFX_MODEL_INDEX_GL_TYPE), mModel->mIndex, GL_DYNAMIC_DRAW);
-        
-        
-        glDrawElements(GL_TRIANGLES, 0, GFX_MODEL_INDEX_GL_TYPE, 0);
-        */
-        
-        /*
-        //
-        
-        unsigned char *aOffset = NULL;
-        aOffset = &(aOffset[mModel->mBufferIndexOffset]);
-        
-        
-        //mModel->mIndexCount
-        //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mModel->mBufferIndex);
-        //glBufferData(GL_ELEMENT_ARRAY_BUFFER, <#GLsizeiptr size#>, <#const GLvoid *data#>, <#GLenum usage#>)
-        
-        Graphics::BufferElementWrite(mModel->mBufferIndex, mModel->mIndex, mModel->mBufferIndexOffset, mModel->mIndexCount);
-        //glBufferData(GL_ELEMENT_ARRAY_BUFFER, mModel->mIndexCount, mModel->mIndex, GL_DYNAMIC_DRAW);
-        
-        
-        //glDrawElements(GL_TRIANGLES, 100, GFX_MODEL_INDEX_GL_TYPE, aOffset);
-        */
-        
-        //glDrawArraysInstancedEXT(GL_TRIANGLES, pIndexBufferOffset, <#GLsizei count#>, pCount)
-        
-        //Graphics::DrawTrianglesIndexed(mMonolith.mIndex, mMonolith.mIndexCount);
-        
-        
-        //Graphics::DrawTrianglesIndexed(mModel->mIndex, mModel->mIndexCount);
-        
-        /*
-        Graphics::DrawTrianglesIndexedFromPackedBuffers(mModel->mBufferVertex,
-                                                        mModel->mBufferVertexOffset,
-                                                        mModel->mBufferIndex,
-                                                        mModel->mBufferIndexOffset,
-                                                        mModel->mIndexCount,
-                                                        mSprite->mTexture);
-        */
     }
 }
 
@@ -187,7 +183,59 @@ void GameObject::Kill() {
     FObject::Kill();
 }
 
+FString GameObject::TypeString() {
+    
+    if (mGameObjectType == GAME_OBJECT_TYPE_BALLOON) { return FString("balloon"); }
+    if (mGameObjectType == GAME_OBJECT_TYPE_BRICKHEAD) { return FString("brickhead"); }
+    if (mGameObjectType == GAME_OBJECT_TYPE_BOMB) { return FString("bomb"); }
+    if (mGameObjectType == GAME_OBJECT_TYPE_TURTLE) { return FString("turtle"); }
+    
+    if (mGameObjectType == GAME_OBJECT_TYPE_DART) { return FString("dart"); }
+    
+    return FString("unknown");
+}
 
+bool GameObject::IsRequiredToClearForSectionCompletion() {
+    
+    if (mGameObjectType == GAME_OBJECT_TYPE_BALLOON) { return true; }
+    if (mGameObjectType == GAME_OBJECT_TYPE_TURTLE) { return true; }
+    
+    return false;
+}
 
+bool GameObject::WillCollide(float pStartX, float pStartY, float pEndX, float pEndY) {
+    float aDirX = pEndX - pStartX;
+    float aDirY = pEndY - pStartY;
+    float aLength = aDirX * aDirX + aDirY * aDirY;
+    if (aLength > 0.25f) {
+        aLength = sqrtf(aLength);
+        aDirX /= aLength;
+        aDirY /= aLength;
+        int aStepCount = (int)(aLength / 2) + 4;
+        if (aStepCount > 100) {
+            aStepCount = 100;
+            printf("Object moving too fast?\nLOL!\n");
+        }
+        for (int i=0;i<aStepCount;i++) {
+            float aPercent = ((float)i) / ((float)(aStepCount - 1));
+            float aX = pStartX + aDirX * aPercent * aLength;
+            float aY = pStartY + aDirY * aPercent * aLength;
+            if (EllipseContainsPoint(aX, aY, mTransform.mX, mTransform.mY, mEllipseRadiusH, mEllipseRadiusV, mTransform.mRotation)) {
+                return true;
+            }
+        }
+        return false;
+    } else {
+        return EllipseContainsPoint(pStartX, pStartY, mTransform.mX, mTransform.mY, mEllipseRadiusH, mEllipseRadiusV, mTransform.mRotation);
+    }
+}
 
+void GameObject::FloatAway(float pDirX, float pDirY, float pMagnitude) {
+    mFloatAway = true;
+    mFloatAwaySpeedX = pDirX * pMagnitude * 4.0f;
+    mFloatAwaySpeedY = pDirY * pMagnitude * 4.0f;
+}
 
+void GameObject::Disperse(float pDirX, float pDirY, float pMagnitude) {
+    FloatAway(pDirX, pDirY, pMagnitude);
+}

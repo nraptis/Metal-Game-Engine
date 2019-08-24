@@ -23,7 +23,6 @@ FloatingCamera::FloatingCamera() {
     mDistance = 24.0f;
     mRotationPrimary = 0.0f;
     mRotationSecondary = 0.0f;
-    
 }
 
 FloatingCamera::~FloatingCamera() {
@@ -31,18 +30,13 @@ FloatingCamera::~FloatingCamera() {
 }
 
 void FloatingCamera::Print() {
-    
     Log("*** BEGIN FloatingCamera ***\n");
-    
     Log("mFOV = %f;\n", mFOV);
-    
     Log("mTarget = FVec3(%f, %f, %f);\n", mTarget.mX, mTarget.mY, mTarget.mZ);
     Log("mDirection = FVec3(%f, %f, %f);\n", mDirection.mX, mDirection.mY, mDirection.mZ);
-    
     Log("mDistance = %f;\n", mDistance);
     Log("mRotationPrimary = %f;\n", mRotationPrimary);
     Log("mRotationSecondary = %f;\n", mRotationSecondary);
-    
     Log("*** END FloatingCamera ***\n");
 }
 
@@ -62,7 +56,7 @@ FMatrix FloatingCamera::GetProjection() {
     
     //We are always looking at 0,0,0, direction is usually (0.0f, 1.0f, 0.0f) for us...
     FMatrix aCamera = FMatrixCreateLookAt(aEye.mX * mDistance, aEye.mY * mDistance, aEye.mZ * mDistance,
-                                          0.0f, 0.0f, 0.0f,
+                                          mTarget.mX, mTarget.mY, mTarget.mZ,
                                           mDirection.mX, mDirection.mY, mDirection.mZ);
     
     return FMatrixMultiply(aPerspective, aCamera);

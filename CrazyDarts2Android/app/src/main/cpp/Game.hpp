@@ -15,11 +15,16 @@
 #include "FloatingCamera.hpp"
 #include "Dart.hpp"
 #include "Balloon.hpp"
+#include "Bomb.hpp"
+#include "Turtle.hpp"
+#include "BrickHead.hpp"
+#include "Level.hpp"
 #include "LevelData.hpp"
-#include "LevelWavePath.hpp"
+#include "LevelPath.hpp"
 #include "Transform2D.hpp"
 #include "Transform3D.hpp"
-
+#include "GameInfoOverlay.hpp"
+#include "HangingThread.hpp"
 
 #define GAME_WIDTH 768
 #define GAME_HEIGHT 1280
@@ -49,7 +54,7 @@ public:
     virtual void                                Notify(void *pSender, const char *pNotification) override;
     
     bool                                        IsWaveClearForSpawn();
-    bool                                        IsScreenClearForSpawn();
+    bool                                        IsScreenClearForSpawn(bool pIncludePerms);
     
     void                                        Convert2DTransformTo3D(Transform2D *p2D, Transform3D *p3D);
     
@@ -60,6 +65,23 @@ public:
     FVec2                                       Convert3DCoordsTo2D(float pX, float pY);
     float                                       Convert3DXTo2D(float pX);
     float                                       Convert3DYTo2D(float pY);
+    
+    void                                        DisposeObject(GameObject *pObject);
+    
+    void                                        DisposeObjectFromLevelData(GameObject *pObject);
+    
+    
+    void                                        FlyOffEscape(GameObject *pObject);
+    void                                        DartFlyOffScreen(Dart *pDart);
+    
+    void                                        DartCollideWithBrickhead(Dart *pDart, BrickHead *pBrickHead);
+    void                                        DartMovingInterpolation(Dart *pDart, float pPercent, bool pEnd);
+    
+    //Mainly used by editor to "flush" screen before re-spawn...
+    void                                        DisposeAllObjects();
+    
+    GameInfoOverlay                             *mTestOverlay;
+    
     
     float                                       mRenderShiftX;
     float                                       mRenderShiftY;
@@ -74,6 +96,9 @@ public:
     
     FObjectList                                 mDartList;
     FObjectList                                 mBalloonList;
+    FObjectList                                 mBrickHeadList;
+    FObjectList                                 mBombList;
+    FObjectList                                 mTurtleList;
     
     Dart                                        *mCurrentDart;
     int                                         mCurrentDartRespawnTimer;
@@ -155,10 +180,31 @@ public:
     bool                                        IsGameObjectOutsideKillZone(GameObject *pObject);
     
     void                                        Load();
-    
-    
+    void                                        LoadEditorTest();
     
     LevelSection                                mTestSection;
+    
+    bool                                        mSlowMo;
+    int                                         mSlowMoTimer;
+    
+    
+    int                                         mLives;
+    int                                         mLivesMax;
+    
+    int                                         mPoppedCount;
+    int                                         mThrownCount;
+    int                                         mThrownHitCount;
+    int                                         mThrownMissedCount;
+    
+    int                                         mEscapedCount;
+    
+    float                                       mTestBalloonRotX;
+    float                                       mTestBalloonRotY;
+    float                                       mTestBalloonRotZ;
+    
+    
+    float                                       mWind;
+    float                                       mWindSin;
     
     
 };

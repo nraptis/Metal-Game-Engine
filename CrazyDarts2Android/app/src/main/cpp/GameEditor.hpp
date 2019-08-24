@@ -19,12 +19,17 @@
 #include "EditorMenuSpawnPicker.hpp"
 #include "EditorMenuAttachment.hpp"
 #include "EditorMenuFormationPicker.hpp"
+#include "EditorMenuObjectClearing.hpp"
+#include "EditorMenuMotion.hpp"
 
 #include "GamePathEditor.hpp"
 #include "GameFormationEditor.hpp"
-#include "LevelWavePathBlueprint.hpp"
+#include "GamePermanentEditor.hpp"
+
+#include "LevelPathBlueprint.hpp"
 #include "LevelWaveBlueprint.hpp"
 #include "LevelSectionBlueprint.hpp"
+#include "LevelSectionPermanentBlueprint.hpp"
 
 
 class GameEditor : public FCanvas {
@@ -57,12 +62,9 @@ public:
     int                                         mSpeedClassIndex;
     
     
-    void                                        RefreshSpawn();
     void                                        RefreshSpawnRotationSpeed();
     int                                         mSpawnRotationSpeedClassIndex;
     
-    
-    void                                        RefreshSection();
     
     void                                        SetOverlay(FCanvas *pCanvas);
     void                                        SelectClosestObject(float pX, float pY);
@@ -94,50 +96,85 @@ public:
     void                                        SpawnSelect(int pIndex);
     int                                         SpawnIndex();
     LevelWaveSpawnBlueprint                     *SpawnGet();
+    void                                        SpawnClearFormation();
+    
+    void                                        SpawnPickType(int pType);
+    void                                        SpawnPickBalloon();
+    void                                        SpawnPickBrickHead();
+    void                                        SpawnPickBomb();
+    void                                        SpawnPickTurtle();
+    
+    
+    void                                        PermSelect(int pIndex);
+    int                                         PermIndex();
+    LevelSectionPermanentBlueprint              *PermGet();
+    LevelPermSpawnBlueprint                     *PermSpawnGet();
+    
+    void                                        PermDelete();
+    
     
     int                                         SpeedConvertSegmentToType(int pSegmentIndex);
     int                                         SpeedConvertTypeToSegment(int pType);
     
     
-    void                                        OpenPathEditor();
+    void                                        OpenPathEditorForWave();
     void                                        ClosePathEditor();
     
-    void                                        OpenFormationEditor(LevelWaveSpawnFormation *pFormation);
-    
+    void                                        OpenFormationEditor(LevelFormation *pFormation);
     void                                        CloseFormationEditor();
     
+    void                                        OpenPermanentEditor();
+    void                                        ClosePermanentEditor();
+    
+    
     void                                        PickFormationForFormationEditor();
+    void                                        PickFormationForSpawnNode();
+    void                                        PickFormationForPerm();
+    void                                        PickFormationForPermSpawnNode();
+    
+    void                                        PickFormation(int pReason);
+    
+    
+    int                                         mPickFormationReason;
     
     
     void                                        OpenSpawnMenu();
     void                                        OpenWavePickerMenu();
     void                                        OpenSpawnPickerMenu();
     void                                        OpenAttachmentMenu();
+    void                                        OpenObjectClearingMenu();
+    void                                        OpenMotionMenu();
     
     
-    
+    void                                        Test();
     void                                        Clear();
     void                                        LoadCleared();
     void                                        Autosave();
     void                                        Autoload();
     
+    void                                        KillAll();
+    void                                        KillAllBalloons();
+    void                                        KillAllNonBalloons();
+    void                                        KillAllPerms();
+    void                                        KillAllWave();
     
-    //Our current "overlay" which will be either "path editor" or "tool container" etc...
+    
+    
     FCanvas                                     *mOverlay;
-    
-    
-    
     
     Game                                        *mGame;
     
     GamePathEditor                              *mPathEditor;
     GameFormationEditor                         *mFormationEditor;
+    GamePermanentEditor                         *mPermEditor;
     
     EditorMenuSections                          *mMenuSections;
     EditorMenuSpawn                             *mMenuSpawn;
     EditorMenuWavesPicker                       *mMenuWavesPicker;
     EditorMenuSpawnPicker                       *mMenuSpawnPicker;
     EditorMenuAttachment                        *mMenuAttachment;
+    EditorMenuObjectClearing                    *mMenuObjectClearing;
+    EditorMenuMotion                            *mMenuMotion;
     
     
     FCanvas                                     *mToolContainer;
@@ -181,10 +218,15 @@ public:
     void                                        SaveConfig();
     void                                        LoadConfig();
     
+    //To load test sections...
+    bool                                        mTestMode;
+    int                                         mTestIndex;
+    void                                        LoadTest();
+    
     int                                         mAutosaveTimer;
     int                                         mEnqueueInitialLoad;
     
-    
+    int                                         mRandomSeed;
     
     
     
@@ -201,8 +243,18 @@ public:
     bool                                        mEditorPlaybackWaveOnly;
     bool                                        mEditorPlaybackFromCurrentWave;
     
+    bool                                        mEditorPlaybackFromOffScreen;
+    int                                         mEditorPlaybackFromOffScreenType; //left, right, or top... [probably left...]
+    
+    
+    
+    
+    
+    bool                                        mIsRefreshingPlayback;
+    
     LevelSection                                mEditorSection;
     LevelWave                                   mEditorWave;
+    
     FList                                       mEditorObjectList;
     FList                                       mEditorObjectQueue;
     

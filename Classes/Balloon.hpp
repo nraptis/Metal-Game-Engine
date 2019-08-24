@@ -41,6 +41,10 @@ public:
     HangingThread                           mThread;
     
     
+    float                                   mBounceFactor;
+    float                                   mBounceFactorSin;
+    
+    
     
 };
 

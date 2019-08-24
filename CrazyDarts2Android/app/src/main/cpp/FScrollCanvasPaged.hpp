@@ -10,7 +10,7 @@
 #define FScrollCanvasPaged_hpp
 
 #include "FGestureCanvas.hpp"
-//#include "FSpline.h"
+//#include "FSpline.hpp"
 
 class FScrollCanvasPaged : public FGestureCanvas {
 public:

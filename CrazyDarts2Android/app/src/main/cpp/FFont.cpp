@@ -8,7 +8,7 @@
 
 #include "core_includes.h"
 #include "FFont.hpp"
-#include "FXML.h"
+#include "FXML.hpp"
 
 FFont::FFont() {
     mSpaceWidth = 20.0f;

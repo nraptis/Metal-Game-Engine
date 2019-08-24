@@ -13,7 +13,7 @@
 
 #include "FTexture.hpp"
 #include "FVertexBuffer.h"
-#include "FPrimitive.h"
+#include "FPrimitive.hpp"
 #include "FColor.hpp"
 
 #define QUAD_INDEX_1 0

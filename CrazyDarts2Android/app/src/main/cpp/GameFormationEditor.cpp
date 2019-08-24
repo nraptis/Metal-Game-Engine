@@ -9,7 +9,7 @@
 #include "core_includes.h"
 #include "GameFormationEditor.hpp"
 #include "GameEditor.hpp"
-#include "FAnimation.h"
+#include "FAnimation.hpp"
 
 GameFormationEditor *gFormationEditor = NULL;
 
@@ -27,9 +27,11 @@ GameFormationEditor::GameFormationEditor(GameEditor *pEditor) {
     mFormationRotationSpeedClassIndex = 3;
     mTracerSpeedClassIndex = 3;
     
-    
     mCenterX = (float)((int)(mGameAreaLeft + (mGameAreaRight - mGameAreaLeft) / 2.0f + 0.5f));
     mCenterY = (float)((int)(mGameAreaTop + (mGameAreaBottom - mGameAreaTop) / 2.0f + 0.5f));
+    
+    mGrid.mCenterX = mCenterX;
+    mGrid.mCenterY = mCenterY;
     
     if (gGame) {
         mEditorFormation.mX = (float)((int)(gGame->mGameAreaLeft + (gGame->mGameAreaRight - gGame->mGameAreaLeft) / 2.0f + 0.5f));
@@ -50,15 +52,15 @@ GameFormationEditor::GameFormationEditor(GameEditor *pEditor) {
     mTracerEnabled = false;
     
     
-    mGridEnabled = true;
-    mGridType = FORMATION_GRID_TYPE_RECT;
+    mMarkersDisplay = true;
     
-    mGridRectWidth = 7;
-    mGridRectHeight = 7;
-    mGridRectSpacing = 44;
     
-    mGridCircleCount = 14;
-    mGridCircleRadius = 220;
+    
+    //mSelectedSpawnIndex = -1;
+    //mSelectedTracerSpawnIndex = -1;
+    
+    
+    
     
     mName = "[GameFormationEditor]";
     
@@ -67,11 +69,21 @@ GameFormationEditor::GameFormationEditor(GameEditor *pEditor) {
     
     mMenuFormation = new EditorMenuFormation(this);
     AddChild(mMenuFormation);
-    mMenuFormation->SetFrame(gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 20.0f, 400.0f, 680.0f);
+    mMenuFormation->SetFrame(gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 20.0f, 400.0f, 736.0f);
     
     mMenuUtils = new EditorMenuFormationUtilities(this);
     AddChild(mMenuUtils);
-    mMenuUtils->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), gSafeAreaInsetTop + 20.0f, 400.0f, 670.0f);
+    mMenuUtils->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), gSafeAreaInsetTop + 20.0f, 400.0f, 736.0f);
+    
+    mMenuGrid = new EditorMenuFormationGrid(&mGrid);
+    AddChild(mMenuGrid);
+    mMenuGrid->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f + 60.0f), gSafeAreaInsetTop + 20.0f + 200.0f, 400.0f, 736.0f - 200.0f);
+    
+    
+    mMenuSpawn = new EditorMenuFormationSpawnPicker(this);
+    AddChild(mMenuSpawn);
+    mMenuSpawn->SetFrame((gDeviceWidth2 - 500.0f / 2.0f), gSafeAreaInsetTop + 20.0f, 500.0f, 256.0f);
+    
     
 }
 
@@ -81,8 +93,14 @@ GameFormationEditor::~GameFormationEditor() {
         gFormationEditor = NULL;
     }
     
-    mFormation.Print();
+    if (gEditor != NULL) {
+        if (gEditor->mFormationEditor == this) {
+            gEditor->mFormationEditor = NULL;
+        }
+    }
     
+    mFormation.Print();
+    mGrid.SaveGridState();
 }
 
 void GameFormationEditor::SetFrame(float pX, float pY, float pWidth, float pHeight) {
@@ -96,33 +114,23 @@ void GameFormationEditor::Layout() {
 
 void GameFormationEditor::Update() {
     
+    mGrid.Update();
+    
     if (gEditor != NULL) {
-        LevelWaveSpawnFormationTracerBlueprint *aTracerBlueprint = mFormation.GetTracer();
+        LevelFormationTracerBlueprint *aTracerBlueprint = mFormation.GetTracer();
         if (aTracerBlueprint != NULL) {
             mTracerSpeedClassIndex = gEditor->SpeedConvertTypeToSegment(aTracerBlueprint->mSpeedClass);
         }
     }
     
-    
-    
     mFormation.Update();
-    mEditorFormation.Update();
-    
-    
-    
-    if (mGridEnabled) {
-        BuildGrid();
-    }
-    
-    
-    
-    
+    mEditorFormation.Update(NULL);
 }
 
 void GameFormationEditor::Draw() {
     
     Graphics::PipelineStateSetShape2DAlphaBlending();
-    Graphics::SetColor(0.7f, 0.25f, 0.085f, 0.75f);
+    Graphics::SetColor(1.0f, 0.85f, 1.0f, 0.75f);
     Graphics::DrawRect(0.0f, 0.0f, mGameAreaLeft, gDeviceHeight);
     Graphics::DrawRect(mGameAreaLeft, 0.0f, mGameAreaRight - mGameAreaLeft, mGameAreaTop);
     Graphics::DrawRect(mGameAreaLeft, mGameAreaBottom, mGameAreaRight - mGameAreaLeft, gDeviceHeight - mGameAreaBottom);
@@ -133,19 +141,21 @@ void GameFormationEditor::Draw() {
     Graphics::SetColor(0.98f, 0.85f, 0.085f, 0.75f);
     Graphics::DrawPoint(mCenterX, mCenterY, 4.0f);
     
-    mFormation.Draw(true);
     
-    
-    Graphics::SetColor(1.0f, 0.5f, 0.75f, 0.65f);
-    mGridList.DrawPoints(4.0f);
-    
-    
-    
-    
-    if (gGame) {
-        gGame->DrawTransform();
+    if (mMarkersDisplay == true) {
+        
+        mFormation.Draw(true);
+
+        mGrid.Draw();
+        
+        if (gGame) {
+            gGame->DrawTransform();
+        }
+        
+        
+        mEditorFormation.Draw(mFormation.mCurrentTracerIndex);
+        
     }
-    mEditorFormation.Draw();
     
 }
 
@@ -156,41 +166,61 @@ void GameFormationEditor::TouchDown(float pX, float pY, void *pData) {
     float aX = pX;
     float aY = pY;
     
-    GridSnap(&aX, &aY);
-    //TO
-    
+    mGrid.GridSnap(&aX, &aY);
     
     if (mTracerEnabled == true) {
-        
         if (mTracerMode == FORMATION_MODE_ADD_POINT) {
-            mFormation.TracerAdd(aX, aY);
+            LevelFormationTracerBlueprint *aTracerBlueprint = mFormation.GetTracer();
+            if (aTracerBlueprint != NULL) {
+                if (aTracerBlueprint->mSpecialType == TRACER_SPECIAL_TYPE_NONE) {
+                    mFormation.TracerAdd(aX, aY);
+                } else {
+                    aTracerBlueprint->mSpecialSpecialEditorX = aX;
+                    aTracerBlueprint->mSpecialSpecialEditorY = aY;
+                    aTracerBlueprint->RefreshNodePositions();
+                    Refresh();
+                    
+                }
+            }
         } else if (mTracerMode == FORMATION_MODE_MOVE_POINT) {
             if (mSelectedTouch == NULL) {
                 float aDist = 50.0f * 50.0f;
                 
-                LevelWaveSpawnFormationTracerBlueprint *aTracerBlueprint = mFormation.GetTracer();
+                LevelFormationTracerBlueprint *aTracerBlueprint = mFormation.GetTracer();
                 
                 if (aTracerBlueprint != NULL) {
                     
-                    int aIndex = aTracerBlueprint->GetClosestIndex(pX, pY, aDist);
-                    if (aIndex != -1) {
+                    if (aTracerBlueprint->mSpecialType == TRACER_SPECIAL_TYPE_NONE) {
                         
+                        int aIndex = aTracerBlueprint->GetClosestIndex(pX, pY, aDist);
+                        if (aIndex != -1) {
+                            
+                            
+                            
+                            aTracerBlueprint->mSelectedTracerNodeIndex = aIndex;
+                            mSelectedTouch = pData;
+                            mSelectNodeStartX = mFormation.TracerGetX(aIndex);
+                            mSelectNodeStartY = mFormation.TracerGetY(aIndex);
+                            mSelectTouchStartX = pX;
+                            mSelectTouchStartY = pY;
+                        }
                         
-                        
-                        aTracerBlueprint->mSelectedNodeIndex = aIndex;
+                    } else {
+                        aTracerBlueprint->mSelectedTracerNodeIndex = -1;
                         mSelectedTouch = pData;
-                        mSelectNodeStartX = mFormation.TracerGetX(aIndex);
-                        mSelectNodeStartY = mFormation.TracerGetY(aIndex);
+                        mSelectNodeStartX = aTracerBlueprint->mSpecialSpecialEditorX;
+                        mSelectNodeStartY = aTracerBlueprint->mSpecialSpecialEditorY;
                         mSelectTouchStartX = pX;
                         mSelectTouchStartY = pY;
+                        
                     }
                     
                 }
             } else {
                 mSelectedTouch = NULL;
-                LevelWaveSpawnFormationTracerBlueprint *aTracerBlueprint = mFormation.GetTracer();
+                LevelFormationTracerBlueprint *aTracerBlueprint = mFormation.GetTracer();
                 if (aTracerBlueprint != NULL) {
-                    aTracerBlueprint->mSelectedNodeIndex = -1;
+                    aTracerBlueprint->mSelectedTracerNodeIndex = -1;
                 }
                 
             }
@@ -198,7 +228,7 @@ void GameFormationEditor::TouchDown(float pX, float pY, void *pData) {
             if (mSelectedTouch == NULL) {
                 float aDist = 50.0f * 50.0f;
                 
-                LevelWaveSpawnFormationTracerBlueprint *aTracerBlueprint = mFormation.GetTracer();
+                LevelFormationTracerBlueprint *aTracerBlueprint = mFormation.GetTracer();
                 
                 if (aTracerBlueprint != NULL) {
                     
@@ -206,16 +236,16 @@ void GameFormationEditor::TouchDown(float pX, float pY, void *pData) {
                     if (aIndex != -1) {
                         
                         mSelectedTouch = pData;
-                        aTracerBlueprint->mSelectedNodeIndex = aIndex;
+                        aTracerBlueprint->mSelectedTracerNodeIndex = aIndex;
                         mSelectNodeStartX = mFormation.GetX(aIndex);
                         mSelectNodeStartY = mFormation.GetY(aIndex);
                         mSelectTouchStartX = pX; mSelectTouchStartY = pY;
                     }
                 }
             } else {
-                LevelWaveSpawnFormationTracerBlueprint *aTracerBlueprint = mFormation.GetTracer();
+                LevelFormationTracerBlueprint *aTracerBlueprint = mFormation.GetTracer();
                 if (aTracerBlueprint != NULL) {
-                    aTracerBlueprint->mSelectedNodeIndex = -1;
+                    aTracerBlueprint->mSelectedTracerNodeIndex = -1;
                 }
                 mSelectedTouch = NULL;
             }
@@ -259,7 +289,6 @@ void GameFormationEditor::TouchDown(float pX, float pY, void *pData) {
                 mFormation.mSelectedNodeIndex = -1;
             }
         }
-        
     }
 }
 
@@ -268,18 +297,23 @@ void GameFormationEditor::TouchMove(float pX, float pY, void *pData) {
     float aX = mSelectNodeStartX + (pX - mSelectTouchStartX);
     float aY = mSelectNodeStartY + (pY - mSelectTouchStartY);
     
-    GridSnap(&aX, &aY);
+    mGrid.GridSnap(&aX, &aY);
     
     if (mTracerEnabled == true) {
         
         if (mTracerMode == FORMATION_MODE_MOVE_POINT) {
             if (mSelectedTouch == pData) {
-                
-                
-                
-                LevelWaveSpawnFormationTracerBlueprint *aTracerBlueprint = mFormation.GetTracer();
+                LevelFormationTracerBlueprint *aTracerBlueprint = mFormation.GetTracer();
                 if (aTracerBlueprint != NULL) {
-                    aTracerBlueprint->Set(aTracerBlueprint->mSelectedNodeIndex, aX, aY);
+                    if (aTracerBlueprint->mSpecialType == TRACER_SPECIAL_TYPE_NONE) {
+                        aTracerBlueprint->Set(aTracerBlueprint->mSelectedTracerNodeIndex, aX, aY);
+                        
+                    } else {
+                        aTracerBlueprint->mSpecialSpecialEditorX = aX;
+                        aTracerBlueprint->mSpecialSpecialEditorY = aY;
+                        aTracerBlueprint->RefreshNodePositions();
+                        Refresh();
+                    }
                 }
             }
         }
@@ -340,13 +374,13 @@ void GameFormationEditor::KeyDown(int pKey) {
     
     if (pKey == __KEY__S) {
         
-         if (aShift == false && aCtrl == false && aAlt == false) {
-             if (mTracerEnabled) {
-                 mTracerMode = FORMATION_MODE_SELECT_POINT;
-             } else {
-                 mFormationMode = FORMATION_MODE_SELECT_POINT;
-             }
-         }
+        if (aShift == false && aCtrl == false && aAlt == false) {
+            if (mTracerEnabled) {
+                mTracerMode = FORMATION_MODE_SELECT_POINT;
+            } else {
+                mFormationMode = FORMATION_MODE_SELECT_POINT;
+            }
+        }
         
         if (aShift == false && aCtrl == true && aAlt == false) {
             Save();
@@ -371,7 +405,7 @@ void GameFormationEditor::KeyDown(int pKey) {
         
         if (aShift == false && aCtrl == true && aAlt == false) {
             if (mTracerEnabled == true) {
-                mFormation.TracerClear();
+                mFormation.TracerNuke();
                 Refresh();
                 
             } else {
@@ -434,7 +468,7 @@ void GameFormationEditor::Notify(void *pSender, const char *pNotification) {
     
 }
 
-void GameFormationEditor::SetUp(LevelWaveSpawnFormationBlueprint *pFormation) {
+void GameFormationEditor::SetUp(LevelFormationBlueprint *pFormation) {
     if (gEditor != NULL) {
         mGameAreaTop = gEditor->mGameAreaTop;
         mGameAreaRight = gEditor->mGameAreaRight;
@@ -459,23 +493,50 @@ void GameFormationEditor::SetUp(LevelWaveSpawnFormationBlueprint *pFormation) {
     } else {
         Load();
     }
+    
+    PickDefaultModes();
+    
+}
+
+void GameFormationEditor::PickDefaultModes() {
+    bool aHasTracer = false;
+    for (int i=0;i<BLUEPRINT_TRACER_COUNT;i++) {
+        if (mFormation.mTracer[i].IsValid()) {
+            aHasTracer = true;
+        }
+    }
+    
+    if (aHasTracer && mFormation.mNodeList.mCount <= 0) {
+        mTracerMode = true;
+        mFormationMode = FORMATION_MODE_MOVE_POINT;
+        mTracerMode = FORMATION_MODE_MOVE_POINT;
+    } else {
+        mTracerMode = false;
+        mTracerMode = FORMATION_MODE_ADD_POINT;
+        if (mFormation.mNodeList.mCount > 0) {
+            mFormationMode = FORMATION_MODE_MOVE_POINT;
+        } else {
+            mFormationMode = FORMATION_MODE_ADD_POINT;
+        }
+    }
 }
 
 void GameFormationEditor::Close() {
     
     mFormation.Print();
-    mFormation.Clear();
+    mFormation.Reset();
     mEditorFormation.Reset();
     
     mEditor->CloseFormationEditor();
-
 }
 
 void GameFormationEditor::Clear() {
-    printf("GameFormationEditor::Clear()\n");
-    mFormation.Clear();
-    Refresh();
+    mFormation.Reset();
+    for (int i=0;i<BLUEPRINT_TRACER_COUNT;i++) {
+        mFormation.mTracer[i].Nuke();
+    }
     
+    Refresh();
     mTracerMode = FORMATION_MODE_ADD_POINT;
     mFormationMode = FORMATION_MODE_ADD_POINT;
 }
@@ -483,18 +544,11 @@ void GameFormationEditor::Clear() {
 void GameFormationEditor::RefreshTracerSpeed() {
     
     if (gEditor != NULL) {
-        LevelWaveSpawnFormationTracerBlueprint *aTracerBlueprint = mFormation.GetTracer();
+        LevelFormationTracerBlueprint *aTracerBlueprint = mFormation.GetTracer();
         if (aTracerBlueprint != NULL) {
-            
-            //mSpeedClassIndex = SpeedConvertTypeToSegment(mSection.mCurrentWave->mPath.mSpeedClass);
-            //mSection.mCurrentWave->mPath.mSpeedClass = SpeedConvertSegmentToType(mSpeedClassIndex);
-            
             aTracerBlueprint->mSpeedClass = gEditor->SpeedConvertSegmentToType(mTracerSpeedClassIndex);
         }
-        
     }
-    
-    
 }
 
 void GameFormationEditor::RefreshRotationSpeed() {
@@ -503,99 +557,510 @@ void GameFormationEditor::RefreshRotationSpeed() {
 
 
 void GameFormationEditor::Refresh() {
+    if (gGame != NULL) {
+        gGame->DisposeAllObjects();
+    }
     
-    
-    //mFormationRotationSpeedClassIndex = 3;
-    //mTracerSpeedClassIndex = 3;
-    
-    
+    for (int i=0;i<BLUEPRINT_TRACER_COUNT;i++) {
+        mFormation.mTracer[i].RefreshSpawnNodeList();
+    }
     
     mFormation.Build(&mEditorFormation);
-    mEditorFormation.Spawn();
+    mEditorFormation.Spawn(NULL);
 }
 
 void GameFormationEditor::Save() {
     
     if (gEditor == NULL) { return; }
     
-    FString aPath = gDirExport + FString("formation_export_") + FString(gEditor->mExportIndex) + FString(".json");
+    FString aPath = gDirDocuments + FString("formation_export_") + FString(gEditor->mExportIndex) + FString(".json");
     
     FJSON aJSON;
     aJSON.mRoot = mFormation.Save();
     aJSON.Save(aPath.c());
+    
+    FString aName = GenerateName();
+    aJSON.Save(gDirDocuments + aName + ".json");
+    aJSON.Save(gDirExport + aName + ".json");
+    
 }
 
 void GameFormationEditor::Load() {
     
     if (gEditor == NULL) { return; }
     
-    FString aPath = gDirExport + FString("formation_export_") + FString(gEditor->mExportIndex) + FString(".json");
+    FString aPath = gDirDocuments + FString("formation_export_") + FString(gEditor->mExportIndex) + FString(".json");
     
     FJSON aJSON;
     aJSON.Load(aPath.c());
+    printf("Path: %s\n", aPath.c());
+    aJSON.Print();
     mFormation.Load(aJSON.mRoot);
     Refresh();
+    PickDefaultModes();
+    
 }
 
 void GameFormationEditor::Print() {
-    
     mFormation.Print();
+    
+    FString aName = GenerateName();
+    printf("Formation Name: %s\n", aName.c());
 }
 
-void GameFormationEditor::BuildGrid() {
-    BuildRectGrid();
-}
-
-void GameFormationEditor::BuildRectGrid() {
-    
-    if (mGridRectWidth < 1) {
-        mGridRectWidth = 1;
-    }
-    
-    if (mGridRectHeight < 1) {
-        mGridRectHeight = 1;
-    }
-    
-    if (mGridRectSpacing < 0) {
-        mGridRectSpacing = 0;
-    }
-    
-    mGridList.RemoveAll();
-    
-    float aTotalWidth = mGridRectWidth * mGridRectSpacing;
-    float aTotalHeight = mGridRectHeight * mGridRectSpacing;
-    
-    float aLeft = round(mCenterX - (aTotalWidth / 2.0f) + mGridRectSpacing / 2);
-    float aTop = round(mCenterY - (aTotalHeight / 2.0f) + mGridRectSpacing / 2);
-    
-    for (int i=0;i<mGridRectWidth;i++) {
-        
-        float aX = aLeft + ((float)mGridRectSpacing) * ((float)i);
-        
-        for (int n=0;n<mGridRectHeight;n++) {
-            float aY = aTop + ((float)mGridRectSpacing) * ((float)n);
-            mGridList.Add(aX, aY);
-        }
-    }
-}
 
 void GameFormationEditor::DeleteNode() {
     mFormation.Remove(mFormation.mSelectedNodeIndex);
 }
 
 void GameFormationEditor::DeleteTracer() {
-    mFormation.TracerClear();
+    mFormation.TracerNuke();
     Refresh();
 }
 
-void GameFormationEditor::GridSnap(float *pX, float *pY) {
+void GameFormationEditor::SpawnSelect(int pIndex) {
     
-    if (mGridEnabled) {
-        float aBestDist = 60.0f * 60.0f;
-        int aIndex = mGridList.GetClosestIndex(*pX, *pY, aBestDist);
-        if (aIndex != -1) {
-            *pX = mGridList.GetX(aIndex);
-            *pY = mGridList.GetY(aIndex);
+    printf("Select Spawn @ [%d]\n\n", pIndex);
+    if (mTracerEnabled == true) {
+        LevelFormationTracerBlueprint *aTracer = TracerGet();
+        if (aTracer != NULL) {
+            aTracer->mSelectedSpawnNodeIndex = pIndex;
+        }
+    } else {
+        mFormation.mSelectedNodeIndex = pIndex;
+    }
+    
+}
+
+int GameFormationEditor::SpawnIndex() {
+    
+    if (mTracerEnabled == true) {
+        LevelFormationTracerBlueprint *aTracer = TracerGet();
+        if (aTracer != NULL) {
+            return aTracer->mSelectedSpawnNodeIndex;
+        }
+    } else {
+        return mFormation.mSelectedNodeIndex;
+    }
+    return -1;
+}
+
+void GameFormationEditor::SpawnPickBalloon() {
+    LevelFormationNodeBlueprint *aSpawn = SpawnGet();
+    if (aSpawn == NULL) { Refresh(); return; }
+    aSpawn->mObjectType = GAME_OBJECT_TYPE_BALLOON;
+    Refresh();
+}
+
+void GameFormationEditor::SpawnPickBrickHead() {
+    LevelFormationNodeBlueprint *aSpawn = SpawnGet();
+    if (aSpawn == NULL) { Refresh(); return; }
+    aSpawn->mObjectType = GAME_OBJECT_TYPE_BRICKHEAD;
+    Refresh();
+}
+
+void GameFormationEditor::SpawnPickBomb() {
+    LevelFormationNodeBlueprint *aSpawn = SpawnGet();
+    if (aSpawn == NULL) { Refresh(); return; }
+    aSpawn->mObjectType = GAME_OBJECT_TYPE_BOMB;
+    Refresh();
+}
+
+void GameFormationEditor::SpawnPickTurtle() {
+    LevelFormationNodeBlueprint *aSpawn = SpawnGet();
+    if (aSpawn == NULL) { Refresh(); return; }
+    aSpawn->mObjectType = GAME_OBJECT_TYPE_TURTLE;
+    Refresh();
+}
+
+LevelFormationNodeBlueprint *GameFormationEditor::SpawnGet() {
+    LevelFormationNodeBlueprint *aResult = NULL;
+    if (mTracerEnabled == true) {
+        LevelFormationTracerBlueprint *aTracer = TracerGet();
+        if (aTracer != NULL) {
+            aResult = (LevelFormationNodeBlueprint *)aTracer->mSpawnNodeList.Fetch(aTracer->mSelectedSpawnNodeIndex);
+        }
+    } else {
+        aResult = (LevelFormationNodeBlueprint *)mFormation.mNodeList.Fetch(mFormation.mSelectedNodeIndex);
+    }
+    return aResult;
+}
+
+LevelFormationTracerBlueprint *GameFormationEditor::TracerGet() {
+    if (mTracerEnabled == true) {
+        if (mFormation.mCurrentTracerIndex >= 0 && mFormation.mCurrentTracerIndex < BLUEPRINT_TRACER_COUNT) {
+            return &(mFormation.mTracer[mFormation.mCurrentTracerIndex]);
         }
     }
+    return NULL;
 }
+
+
+
+
+
+FString GameFormationEditor::GetShortNameForGameObjectType(int pGameObjectType) {
+    FString aResult;
+    if (pGameObjectType == GAME_OBJECT_TYPE_BRICKHEAD) {
+        aResult = "r";
+    } else {
+        aResult = "b";
+    }
+    return aResult;
+}
+
+FString GameFormationEditor::GetPathSpeedName(int pSpeedClass) {
+    FString aResult = "";
+    if (pSpeedClass == SPEED_CLASS_EXTRA_SLOW) {
+        aResult = "spxs";
+    } else if (pSpeedClass == SPEED_CLASS_SLOW) {
+        aResult = "sps";
+    } else if (pSpeedClass == SPEED_CLASS_MEDIUM_SLOW) {
+        aResult = "spms";
+    } else if (pSpeedClass == SPEED_CLASS_MEDIUM_FAST) {
+        aResult = "spmf";
+    } else if (pSpeedClass == SPEED_CLASS_FAST) {
+        aResult = "spf";
+    } else if (pSpeedClass == SPEED_CLASS_EXTRA_FAST) {
+        aResult = "spxf";
+    } else if (pSpeedClass == SPEED_CLASS_INSANE) {
+        aResult = "spxx";
+    } else { //"Default /
+        aResult = "spm";
+    }
+    return aResult;
+}
+
+FString GameFormationEditor::GetObjectListName(FIntList *pList) {
+    FString aResult = "";
+    
+    
+    bool aShouldSaveAll = false;
+    
+#define GO_TYPE_CNT 32
+    int aTypeCount[GO_TYPE_CNT];
+    memset(aTypeCount, 0, sizeof(aTypeCount));
+    
+    for (int i=0;i<pList->mCount;i++) {
+        int aObjectType = pList->mData[i];
+        if (aObjectType >= 0 && aObjectType < GO_TYPE_CNT) {
+            aTypeCount[aObjectType] += 1;
+        }
+    }
+    
+    int aMonoType = -1;
+    int aDifferentTypes = 0;
+    for (int i=0;i<GO_TYPE_CNT;i++) {
+        if (aTypeCount[i] == pList->mCount) { aMonoType = i; }
+        if (aTypeCount[i] > 0) { aDifferentTypes += 1; }
+    }
+    
+    if (aMonoType != -1) {
+        FString aTypeName = GetShortNameForGameObjectType(aMonoType);
+        aResult = FString("cfg") + FString(pList->mCount) + FString("x") + aTypeName;
+        
+    } else if (aDifferentTypes > 1) {
+        aShouldSaveAll = true;
+    }
+    
+    if (aShouldSaveAll == true) {
+        FJSONNode *aSpawnNodeListNode = new FJSONNode();
+        aSpawnNodeListNode->mNodeType = JSON_NODE_TYPE_ARRAY;
+        
+        aResult.Append("cfg");
+        for (int i=0;i<pList->mCount;i++) {
+            int aObjectType = pList->mData[i];
+            FString aTypeName = GetShortNameForGameObjectType(aObjectType);
+            aResult.Append(aTypeName.c());
+        }
+    }
+    return aResult;
+}
+
+FString GameFormationEditor::GenerateTracerName(LevelFormationTracerBlueprint *pTracer) {
+    FString aResult;
+    FList aChunkList;
+    aChunkList.Add(new FString("tr"));
+    if (pTracer->mSpecialType == TRACER_SPECIAL_TYPE_CIRCLE) {
+        aChunkList.Add(new FString("circ"));
+        FString aRadiusString = FString(pTracer->mSpecialRadius) + FString("sz");
+        aChunkList.Add(new FString(aRadiusString.c()));
+    } else if (pTracer->mSpecialType == TRACER_SPECIAL_TYPE_ROUNDED_RECT) {
+        aChunkList.Add(new FString("rrct"));
+        FString aSizeString = FString(pTracer->mSpecialRadius) + FString("sz");
+        aChunkList.Add(new FString(aSizeString.c()));
+        FString aCornerString = FString(pTracer->mSpecialCornerRadius) + FString("cr");
+        aChunkList.Add(new FString(aCornerString.c()));
+    } else {
+        //no special type..
+        FString aPolyString = FString(pTracer->mTracerNodeList.mCount) + FString("poly");
+        aChunkList.Add(new FString(aPolyString.c()));
+    }
+    
+    if (true) {
+        FIntList aTypeList;
+        for (int i=0;i<pTracer->mSpawnNodeList.mCount;i++) {
+            LevelFormationNodeBlueprint *aNodeBlueprint = (LevelFormationNodeBlueprint *)pTracer->mSpawnNodeList.mData[i];
+            aTypeList.Add(aNodeBlueprint->mObjectType);
+        }
+        FString aTypeString = GetObjectListName(&aTypeList);
+        if (aTypeString.mLength > 0) {
+            aChunkList.Add(new FString(aTypeString.c()));
+        }
+    }
+    
+    if (true) {
+        FString aSpeedString = GetPathSpeedName(pTracer->mSpeedClass);
+        aChunkList.Add(new FString(aSpeedString.c()));
+    }
+    
+    for (int i=0;i<aChunkList.mCount;i++) {
+        FString *aChunk = (FString *)aChunkList.mData[i];
+        aResult.Append(aChunk->c());
+        if (i < (aChunkList.mCount - 1)) {
+            aResult.Append('_');
+        }
+    }
+    
+    FreeList(FString, aChunkList);
+    return aResult;
+}
+
+FString GameFormationEditor::GenerateGridName() {
+    FString aResult = "";
+    FList aChunkList;
+    
+    aChunkList.Add(new FString("grid"));
+    
+    if (mGrid.mGridType == SNAP_GRID_TYPE_RECT) {
+        aChunkList.Add(new FString("rect"));
+        FString aSizeString = FString(mGrid.mGridRectWidth) + "x" + FString(mGrid.mGridRectHeight);
+        aChunkList.Add(new FString(aSizeString.c()));
+        FString aSpacingString = FString(mGrid.mGridRectSpacing) + "spc";
+        aChunkList.Add(new FString(aSpacingString.c()));
+    }
+    
+    if (mGrid.mGridType == SNAP_GRID_TYPE_CIRCLE) {
+        aChunkList.Add(new FString("circ"));
+        FString aSpacingString = FString(mGrid.mGridCircleRingSpacing) + "rngs";
+        aChunkList.Add(new FString(aSpacingString.c()));
+        FString aCountString = FString(mGrid.mGridCircleRingCount) + "rngc";
+        aChunkList.Add(new FString(aCountString.c()));
+        FString aRadialString = FString(mGrid.mGridCircleRadialCount) + "radc";
+        aChunkList.Add(new FString(aRadialString.c()));
+    }
+    
+    if (mGrid.mGridType == SNAP_GRID_TYPE_STAR) {
+        aChunkList.Add(new FString("star"));
+        FString aRadInnerString = FString(mGrid.mGridStarInnerRadius) + "radi";
+        aChunkList.Add(new FString(aRadInnerString.c()));
+        
+        FString aRadOuterString = FString(mGrid.mGridStarOuterRadius) + "rado";
+        aChunkList.Add(new FString(aRadOuterString.c()));
+        
+        FString aPointCountString = FString(mGrid.mGridStarLinePointCount) + "pntc";
+        aChunkList.Add(new FString(aPointCountString.c()));
+        
+        FString aArmCountString = FString(mGrid.mGridStarArmCount) + "armc";
+        aChunkList.Add(new FString(aArmCountString.c()));
+        
+        if (mGrid.mGridStarStartRotation != 0) {
+            FString aStartRotationString = FString(mGrid.mGridStarStartRotation) + "roff";
+            aChunkList.Add(new FString(aStartRotationString.c()));
+        }
+    }
+    
+    
+    
+    if (mGrid.mGridType == SNAP_GRID_TYPE_NGON1) {
+        
+        if (mGrid.mGridNGON1Sides == 3) { aChunkList.Add(new FString("tri")); }
+        if (mGrid.mGridNGON1Sides == 4) { aChunkList.Add(new FString("quad")); }
+        if (mGrid.mGridNGON1Sides == 5) { aChunkList.Add(new FString("penta")); }
+        if (mGrid.mGridNGON1Sides == 6) { aChunkList.Add(new FString("hexa")); }
+        if (mGrid.mGridNGON1Sides == 7) { aChunkList.Add(new FString("hepta")); }
+        if (mGrid.mGridNGON1Sides == 8) { aChunkList.Add(new FString("octo")); }
+        if (mGrid.mGridNGON1Sides == 9) { aChunkList.Add(new FString("nono")); }
+        if (mGrid.mGridNGON1Sides == 10) { aChunkList.Add(new FString("deca")); }
+        
+        aChunkList.Add(new FString("ngon1"));
+        FString aSidesString = FString(mGrid.mGridNGON1Sides) + "sid";
+        aChunkList.Add(new FString(aSidesString.c()));
+        FString aSpacingString = FString(mGrid.mGridNGON1RingSpacing) + "rngs";
+        aChunkList.Add(new FString(aSpacingString.c()));
+        FString aCountString = FString(mGrid.mGridNGON1RingCount) + "rngc";
+        aChunkList.Add(new FString(aCountString.c()));
+        FString aPointSpacingString = FString(mGrid.mGridNGON1PointSpacing) + "pnts";
+        aChunkList.Add(new FString(aPointSpacingString.c()));
+        if (mGrid.mGridNGON1StartRotation != 0) {
+            FString aStartRotationString = FString(mGrid.mGridNGON1StartRotation) + "roff";
+            aChunkList.Add(new FString(aStartRotationString.c()));
+        }
+    }
+    
+    int aCount = 0;
+    int aOnCount = 0;
+    float aForgiveness = 2.0f;
+    
+    for (int i=0;i<mGrid.mGridList.mCount;i++) {
+        bool aHit = false;
+        EnumList(LevelFormationNodeBlueprint, aNode, mFormation.mNodeList) {
+            float aX = aNode->mEditorX;
+            float aY = aNode->mEditorY;
+            float aDistance = Distance(mGrid.mGridList.GetX(i), mGrid.mGridList.GetY(i), aX, aY);
+            if (aDistance <= aForgiveness) {
+                aHit = true;
+            }
+        }
+        
+        if (aHit == true) {
+            aOnCount++;
+        }
+        aCount++;
+    }
+    
+    if (aOnCount >= aCount) {
+        aChunkList.Add(new FString("solid"));
+    } else {
+        
+        if (aCount > 0) {
+            
+            float aPercent = ((float)aOnCount) / ((float)aCount);
+            int aPct = int(round(aPercent * 100.0f));
+            
+            FString aFillString = FString(aPct) + "ful";
+            aChunkList.Add(new FString(aFillString.c()));
+            
+        }
+    }
+    
+    for (int i=0;i<aChunkList.mCount;i++) {
+        FString *aChunk = (FString *)aChunkList.mData[i];
+        aResult.Append(aChunk->c());
+        if (i < (aChunkList.mCount - 1)) {
+            aResult.Append('_');
+        }
+    }
+    
+    FreeList(FString, aChunkList);
+    return aResult;
+}
+
+FString GameFormationEditor::GenerateNodesName() {
+    FString aResult = "";
+    
+    FList aPickList;
+    
+    EnumList(LevelFormationNodeBlueprint, aNode, mFormation.mNodeList) {
+        aPickList.Add(aNode);
+    }
+    FIntList aTypeList;
+    
+    float aForgiveness = 2.0f;
+    while (aPickList.mCount > 0) {
+        int aChosenIndex = 0;
+        LevelFormationNodeBlueprint *aFirstNode = (LevelFormationNodeBlueprint *)aPickList.First();
+        float aTopY = aFirstNode->mEditorY;
+        float aLeftX = aFirstNode->mEditorX;
+        
+        int aIndex = 0;
+        EnumList(LevelFormationNodeBlueprint, aNode, aPickList) {
+            if (aNode->mEditorY < aTopY) {
+                aTopY = aNode->mEditorY;
+                aLeftX = aNode->mEditorX;
+                aChosenIndex = aIndex;
+            }
+            ++aIndex;
+        }
+        
+        aIndex = 0;
+        EnumList(LevelFormationNodeBlueprint, aNode, aPickList) {
+            float aDiffY = fabsf(aNode->mEditorY - aTopY);
+            if (aDiffY <= aForgiveness) {
+                if (aNode->mEditorX < aLeftX) {
+                    aLeftX = aNode->mEditorX;
+                    aChosenIndex = aIndex;
+                }
+            }
+            ++aIndex;
+        }
+        LevelFormationNodeBlueprint *aChosenNode = (LevelFormationNodeBlueprint *)aPickList.Fetch(aChosenIndex);
+        aPickList.RemoveAtIndex(aChosenIndex);
+        aTypeList.Add(aChosenNode->mObjectType);
+    }
+    aResult = FString("nodes_") + GetObjectListName(&aTypeList);
+    
+    int aCount = 0;
+    int aOnCount = 0;
+    aForgiveness = 2.0f;
+    EnumList(LevelFormationNodeBlueprint, aNode, mFormation.mNodeList) {
+        bool aHit = false;
+        for (int i=0;i<mGrid.mGridList.mCount;i++) {
+            float aX = aNode->mEditorX;
+            float aY = aNode->mEditorY;
+            float aDistance = Distance(mGrid.mGridList.GetX(i), mGrid.mGridList.GetY(i), aX, aY);
+            if (aDistance <= aForgiveness) { aHit = true; }
+        }
+        if (aHit == true) { aOnCount++; }
+        aCount++;
+    }
+    if (aCount == aOnCount) {
+        aResult += "_allg";
+    } else {
+        int aOffCount = aCount - aOnCount;
+        aResult += FString(aOnCount) + FString("on") + FString(aOffCount) + FString("off");
+    }
+    return aResult;
+}
+
+FString GameFormationEditor::GenerateName() {
+    
+    FString aResult = "f_";
+    FList aSliceList;
+    
+    bool aUseGridName = false;
+    for (int i=0;i<BLUEPRINT_TRACER_COUNT;i++) {
+        if (mFormation.mTracer[i].IsValid()) {
+            
+            if (mFormation.mTracer[i].mSpecialType == TRACER_SPECIAL_TYPE_NONE) {
+                aUseGridName = true;
+            }
+        }
+    }
+    if (mFormation.mNodeList.mCount > 0) {
+        aUseGridName = true;
+    }
+    if (aUseGridName) {
+        FString aGridName = GenerateGridName();
+        aSliceList.Add(new FString(aGridName.c()));
+    }
+    
+    if (mFormation.mNodeList.mCount > 0) {
+        FString aNodeListName = GenerateNodesName();
+        aSliceList.Add(new FString(aNodeListName.c()));
+    }
+    
+    for (int i=0;i<BLUEPRINT_TRACER_COUNT;i++) {
+        if (mFormation.mTracer[i].IsValid()) {
+            FString aTracerName = GenerateTracerName(&mFormation.mTracer[i]);
+            aSliceList.Add(new FString(aTracerName.c()));
+        }
+    }
+    
+    for (int i=0;i<aSliceList.mCount;i++) {
+        FString *aSlice = (FString *)aSliceList.mData[i];
+        aResult.Append(aSlice->c());
+        if (i < (aSliceList.mCount - 1)) {
+            aResult.Append("__");
+        }
+    }
+    FreeList(FString, aSliceList);
+    
+    
+    return aResult;
+}
+
+
+
+
+

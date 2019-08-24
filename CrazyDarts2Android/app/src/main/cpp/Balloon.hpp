@@ -9,9 +9,10 @@
 #ifndef Balloon_hpp
 #define Balloon_hpp
 
-#include "FSprite.h"
+#include "FSprite.hpp"
 #include "FModelDataPacked.hpp"
 #include "GameObject.hpp"
+#include "HangingThread.hpp"
 
 class Balloon : public GameObject {
 public:
@@ -22,13 +23,29 @@ public:
     virtual void                            Draw();
     virtual void                            Draw3D();
     
-    float                                   mSpinSpeed;
+    void                                    Draw3DThread();
     
-    int                                     mDeathTimer;
-    int                                     mTimer;
+    
+    
+    float                                   mSpinSpeed;
     
     float                                   mVelX;
     float                                   mVelY;
+    
+    bool                                    mTagged;
+    
+    
+    float                                   mTilt;
+    
+    bool                                    mIsThreadVisible;
+    HangingThread                           mThread;
+    
+    
+    float                                   mBounceFactor;
+    float                                   mBounceFactorSin;
+    
+    
+    
 };
 
 

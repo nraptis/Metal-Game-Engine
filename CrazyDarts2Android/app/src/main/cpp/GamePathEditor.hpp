@@ -13,19 +13,27 @@
 #include "Game.hpp"
 #include "EditorMenuPathControl.hpp"
 #include "EditorMenuPath.hpp"
-#include "FPointList.h"
-#include "LevelWavePathBlueprint.hpp"
+#include "FPointList.hpp"
+#include "LevelPathBlueprint.hpp"
 #include "LevelWaveBlueprint.hpp"
 #include "LevelSectionBlueprint.hpp"
+#include "LevelSectionPermanentBlueprint.hpp"
+#include "EditorMenuFormationGrid.hpp"
+#include "GameEditorGrid.hpp"
 
 #define PATH_MODE_CREATE 0
 #define PATH_MODE_EDIT 1
 #define PATH_MODE_SELECT 2
 
 class GameEditor;
+class GamePermanentEditor;
 class GamePathEditor : public FCanvas {
 public:
     GamePathEditor(GameEditor *pEditor);
+    GamePathEditor(GamePermanentEditor *pEditor);
+    
+    void                                        Init();
+    
     virtual ~GamePathEditor();
     
     virtual void                                SetFrame(float pX, float pY, float pWidth, float pHeight) override;
@@ -47,7 +55,8 @@ public:
     
     void                                        Load();
     
-    //FPointList                                  mPath;
+    GameEditorGrid                              mGrid;
+    
     int                                         mPathMode;
     void                                        *mSelectedTouch;
     
@@ -56,7 +65,6 @@ public:
     
     float                                       mSelectTouchStartX;
     float                                       mSelectTouchStartY;
-    
     
     void                                        PathRefresh();
     void                                        PathReset();
@@ -80,18 +88,29 @@ public:
     void                                        ConstraintYToPrev();
     void                                        ConstraintYToNext();
     
-    
-    
-    
     GameEditor                                  *mEditor;
+    GamePermanentEditor                         *mPermanentEditor;
+    
     EditorMenuPathControl                       *mMenuControls;
     EditorMenuPath                              *mMenuPaths;
+    EditorMenuFormationGrid                     *mMenuGrid;
+    
     
     void                                        Close();
     
     void                                        SetUp(LevelWaveBlueprint *pWave);
-    LevelWavePathBlueprint                      *mPath;
+    void                                        SetUp(LevelSectionPermanentBlueprint *pPerm);
+    
+    void                                        SetUpPath(LevelPathBlueprint *pPath);
+    
+    
+    
+    
+    
+    LevelPathBlueprint                          *mPath;
     LevelWaveBlueprint                          *mWave;
+    LevelSectionPermanentBlueprint              *mPerm;
+    
 };
 
 #endif /* GamePathEditor_hpp */

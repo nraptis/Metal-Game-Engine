@@ -156,7 +156,7 @@ public:
     bool                                        mIsLoading;
     bool                                        mIsLoadingComplete;
     
-    
+    bool                                        mDarkMode;
     
     //void os_execute_on_main_thread(void (*pFunc)());
     

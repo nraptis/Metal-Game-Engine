@@ -27,35 +27,38 @@ public:
     UIButton                                *mButtonSaveSection;
     UIButton                                *mButtonLoadSection;
     ToolMenuSectionRow                      *mRowMain2;
+    UIButton                                *mButtonTest;
     UIButton                                *mButtonClear;
     UIButton                                *mButtonLoadCleared;
-    
     
     ToolMenuPanel                           *mMenusPanel;
     ToolMenuSectionRow                      *mRowMenus1;
     ToolMenuSectionRow                      *mRowMenus2;
+    ToolMenuSectionRow                      *mRowMenus3;
     UIButton                                *mButtonShowSpawn;
     UIButton                                *mButtonShowWavePicker;
     UIButton                                *mButtonShowSpawnPicker;
     UIButton                                *mButtonShowAttachments;
     UIButton                                *mButtonShowFormationEditor;
     UIButton                                *mButtonShowFormationPicker;
+    UIButton                                *mButtonShowPermanentEditor;
+    
+    UIButton                                *mButtonShowMotionEditor;
+    UIButton                                *mButtonShowObjectClearer;
+    
+    
     
     
     ToolMenuPanel                           *mWavePanel;
     ToolMenuSectionRow                      *mRowWave1;
     UIButton                                *mButtonAddWave;
     UIButton                                *mButtonDeleteWave;
-    UIButton                                *mButtonEditPaths;
+    UIButton                                *mButtonEditWavePaths;
     
     ToolMenuSectionRow                      *mRowWave2;
     UICheckBox                              *mCheckBoxPreview;
     UIButton                                *mButtonMoveWaveUp;
     UIButton                                *mButtonMoveWaveDown;
-    
-    
-    
-    
     
     ToolMenuPanel                           *mPlaybackPanel;
     ToolMenuSectionRow                      *mRowPlayback1;
@@ -68,6 +71,8 @@ public:
     
     ToolMenuSectionRow                      *mRowPlayback3;
     
+    UICheckBox                              *mCheckBoxPlaybackFromOffScreen;
+    UISegment                               *mSegmentPlaybackFromOffScreenType;
     
     
     

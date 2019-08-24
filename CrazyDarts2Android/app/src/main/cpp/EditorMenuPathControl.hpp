@@ -24,8 +24,6 @@ public:
     ToolMenuSectionRow                      *mRowMain1;
     UIButton                                *mButtonCloseEditor;
     UIButton                                *mButtonResetPath;
-
-    
     
     
     ToolMenuPanel                           *mPathControls;

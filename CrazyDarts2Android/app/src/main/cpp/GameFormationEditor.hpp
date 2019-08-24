@@ -13,22 +13,17 @@
 #include "Game.hpp"
 #include "EditorMenuFormationUtilities.hpp"
 #include "EditorMenuFormation.hpp"
-#include "LevelWaveSpawnFormationBlueprint.hpp"
-#include "LevelWaveSpawnFormation.hpp"
-#include "FPointList.h"
+#include "EditorMenuFormationSpawnPicker.hpp"
+#include "EditorMenuFormationGrid.hpp"
+#include "GameEditorGrid.hpp"
+
+#include "LevelFormationBlueprint.hpp"
+#include "LevelFormation.hpp"
+#include "FPointList.hpp"
 
 #define FORMATION_MODE_ADD_POINT 0
 #define FORMATION_MODE_MOVE_POINT 1
 #define FORMATION_MODE_SELECT_POINT 2
-
-
-#define FORMATION_GRID_TYPE_RECT 0
-#define FORMATION_GRID_TYPE_CIRCLE 1
-#define FORMATION_GRID_TYPE_STAR 2
-#define FORMATION_GRID_TYPE_TRIANGLE 3
-#define FORMATION_GRID_TYPE_ROUNDED_RECT 4
-#define FORMATION_GRID_TYPE_N_GON 5
-
 
 class GameEditor;
 class GameFormationEditor : public FCanvas {
@@ -56,7 +51,11 @@ public:
     GameEditor                                  *mEditor;
     EditorMenuFormationUtilities                *mMenuUtils;
     EditorMenuFormation                         *mMenuFormation;
+    EditorMenuFormationSpawnPicker              *mMenuSpawn;
+    EditorMenuFormationGrid                     *mMenuGrid;
     
+    
+    GameEditorGrid                              mGrid;
     
     //Speed Classes...
     int                                         mFormationRotationSpeedClassIndex;
@@ -68,23 +67,10 @@ public:
     bool                                        mTracerEnabled;
     int                                         mTracerMode;
     
-    
-    bool                                        mGridEnabled;
-    int                                         mGridType;
-    
-    int                                         mGridRectWidth;
-    int                                         mGridRectHeight;
-    int                                         mGridRectSpacing;
-    
-    int                                         mGridCircleCount;
-    int                                         mGridCircleRadius;
+    bool                                        mMarkersDisplay;
     
     
-    
-    FPointList                                  mGridList;
-    
-    
-    
+   
     
     void                                        *mSelectedTouch;
     
@@ -106,19 +92,34 @@ public:
     void                                        Save();
     void                                        Load();
     void                                        Print();
-    
-    void                                        BuildGrid();
-    void                                        BuildRectGrid();
+    void                                        PickDefaultModes();
     
     
     
-    void                                        SetUp(LevelWaveSpawnFormationBlueprint *pFormation);
-    LevelWaveSpawnFormationBlueprint            mFormation;
+    
+    void                                        SetUp(LevelFormationBlueprint *pFormation);
+    LevelFormationBlueprint                     mFormation;
     
     void                                        DeleteNode();
     void                                        DeleteTracer();
     
-    void                                        GridSnap(float *pX, float *pY);
+    
+    void                                        SpawnSelect(int pIndex);
+    int                                         SpawnIndex();
+    LevelFormationNodeBlueprint                 *SpawnGet();
+    //int                                         mSelectedSpawnIndex; // Not on tracer...
+    //int                                         mSelectedTracerSpawnIndex; // Not on tracer...
+    void                                        SpawnPickBalloon();
+    void                                        SpawnPickBrickHead();
+    void                                        SpawnPickBomb();
+    void                                        SpawnPickTurtle();
+    
+    
+    
+    LevelFormationTracerBlueprint               *TracerGet();
+    
+    
+    
     
     float                                       mGameAreaTop;
     float                                       mGameAreaRight;
@@ -128,7 +129,19 @@ public:
     float                                       mCenterX;
     float                                       mCenterY;
     
-    LevelWaveSpawnFormation                     mEditorFormation;
+    LevelFormation                              mEditorFormation;
+    
+    FString                                     GetShortNameForGameObjectType(int pGameObjectType);
+    FString                                     GetPathSpeedName(int pSpeedClass);
+    FString                                     GetObjectListName(FIntList *pList);
+    FString                                     GenerateTracerName(LevelFormationTracerBlueprint *pTracer);
+    
+    FString                                     GenerateGridName();
+    FString                                     GenerateNodesName();
+    
+    
+    FString                                     GenerateName();
+    
     
 };
 

@@ -7,8 +7,8 @@
  *
  */
 
-#include "FSound.h"
-#include "FResource.h"
+#include "FSound.hpp"
+#include "FResource.hpp"
 #include "core_includes.h"
 #include "os_core_sound.h"
 

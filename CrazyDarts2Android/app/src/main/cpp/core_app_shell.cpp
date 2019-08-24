@@ -1,5 +1,5 @@
 
-#include "core_app_shell.h"
+#include "core_app_shell.hpp"
 #include "os_core_graphics.h"
 #include "os_core_social.h"
 #include "os_core_sound.h"
@@ -263,8 +263,8 @@ void AppShellSetDeviceSize(int pWidth, int pHeight) {
             float aAspectRatio = 768.0f / 1024.0f;
             
             
-            
-            if (true) {
+            /*
+            if (false) {
                 
                 
                 float aVirtualHeight = round(gDeviceHeight * 0.75f);
@@ -289,7 +289,7 @@ void AppShellSetDeviceSize(int pWidth, int pHeight) {
                 //TODO:
                 AppShellSetVirtualFrame(aVirtualX, aVirtualY, aVirtualWidth, aVirtualHeight);
             }
-            
+            */
             
             
             //aApp->BaseSetVirtualFrame(aVirtualX, aVirtualY, aVirtualWidth, aVirtualHeight);

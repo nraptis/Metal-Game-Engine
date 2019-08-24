@@ -15,7 +15,7 @@
  */
 
 // OpenGL ES 2.0 code
-#include "core_app_shell.h"
+#include "core_app_shell.hpp"
 #include "os_core_app_shell.h"
 #include "os_core_outlets.h"
 #include "os_core_includes.h"
@@ -29,7 +29,6 @@
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
 
-#include "core_app_shell.h"
 #include "os_core_graphics.h"
 
 #include <stdio.h>

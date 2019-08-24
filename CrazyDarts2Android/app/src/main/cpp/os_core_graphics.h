@@ -17,13 +17,12 @@
 
 #include "OpenGLEngine.hpp"
 #include "FColor.hpp"
-#include "FRect.h"
-#include "FPoint.h"
+#include "FRect.hpp"
 #include "FVec2.hpp"
-#include "FVec3.h"
-#include "FPrimitive.h"
-#include "FMatrix.h"
-#include "FIndexList.h"
+#include "FVec3.hpp"
+#include "FPrimitive.hpp"
+#include "FMatrix.hpp"
+#include "FIndexList.hpp"
 #include "FUniforms.hpp"
 #include "ShaderProgram.hpp"
 #include "FBuffer.hpp"
@@ -152,12 +151,12 @@ public:
     
     static void                             DrawLine(float pX1, float pY1, float pX2, float pY2);
     inline static void                             DrawLine(FVec2 pPoint1, FVec2 pPoint2){DrawLine(pPoint1.mX,pPoint1.mY,pPoint2.mX,pPoint2.mY);}
-    inline static void                             DrawLine(FPoint pPoint1, FPoint pPoint2){DrawLine(pPoint1.mX,pPoint1.mY,pPoint2.mX,pPoint2.mY);}
+    
 
     
     static void                             DrawLine(float pX1, float pY1, float pX2, float pY2, float pThickness);
     inline static void                             DrawLine(FVec2 pPoint1, FVec2 pPoint2, float pThickness){DrawLine(pPoint1.mX,pPoint1.mY,pPoint2.mX,pPoint2.mY, pThickness);}
-    inline static void                             DrawLine(FPoint pPoint1, FPoint pPoint2, float pThickness){DrawLine(pPoint1.mX,pPoint1.mY,pPoint2.mX,pPoint2.mY, pThickness);}
+    
     
     
     static void                             DrawArrow(float pStartX, float pStartY, float pEndX, float pEndY, float pHeadLength=12, float pThickness=2.0f);

@@ -56,61 +56,31 @@ CameraMenu::CameraMenu(FloatingCamera *pCamera) : ToolMenu() {
     mPanelTarget->SetTitle("Target");
     AddSection(mPanelTarget);
     
-    mSliderDummyRot1 = new UISlider();
-    mSliderDummyRot1->SetTarget(&mCamera->mTarget.mX);
-    mSliderDummyRot1->SetRange(0.0f, 360.0f);
-    mSliderDummyRot1->SetText("MROT1:");
-    mPanelTarget->AddSection(mSliderDummyRot1);
-    
-    mSliderDummyRot2 = new UISlider();
-    mSliderDummyRot2->SetTarget(&mCamera->mTarget.mX);
-    mSliderDummyRot2->SetRange(0.0f, 360.0f);
-    mSliderDummyRot2->SetText("MROT2:");
-    mPanelTarget->AddSection(mSliderDummyRot2);
     
     
-    /*
     mSliderTargetX = new UISlider();
-    mSliderTargetX->SetValue(&mCamera->mTarget.mX);
-    mSliderTargetX->SetRange(-2.0f, 2.0f);
-    mSliderTargetX->SetText("X:");
+    mSliderTargetX->SetTarget(&mCamera->mTarget.mX);
+    mSliderTargetX->SetRange(-40.0f, 40.0f);
+    mSliderTargetX->SetText("TX:");
     mPanelTarget->AddSection(mSliderTargetX);
     
     mSliderTargetY = new UISlider();
-    mSliderTargetY->SetValue(&mCamera->mTarget.mY);
-    mSliderTargetY->SetRange(-2.0f, 2.0f);
-    mSliderTargetY->SetText("Y:");
+    mSliderTargetY->SetTarget(&mCamera->mTarget.mY);
+    mSliderTargetY->SetRange(-40.0f, 40.0f);
+    mSliderTargetY->SetText("TY:");
     mPanelTarget->AddSection(mSliderTargetY);
     
     mSliderTargetZ = new UISlider();
-    mSliderTargetZ->SetValue(&mCamera->mTarget.mZ);
-    mSliderTargetZ->SetRange(-2.0f, 2.0f);
-    mSliderTargetZ->SetText("Z:");
+    mSliderTargetZ->SetTarget(&mCamera->mTarget.mZ);
+    mSliderTargetZ->SetRange(-40.0f, 40.0f);
+    mSliderTargetZ->SetText("TZ:");
     mPanelTarget->AddSection(mSliderTargetZ);
-    */
     
     mPanelTarget->Collapse();
     
     
-    mPanelDummy = new ToolMenuPanel();
-    mPanelDummy->SetTitle("Reference Model");
     
-    mSliderDummyX = new UISlider();
-    mSliderDummyX->SetText("Mod-X:");
-    mSliderDummyX->SetRange(-12.0f, 12.0f);
-    mPanelDummy->AddSection(mSliderDummyX);
     
-    mSliderDummyY = new UISlider();
-    mSliderDummyY->SetText("Mod-Y:");
-    mSliderDummyY->SetRange(-12.0f, 12.0f);
-    mPanelDummy->AddSection(mSliderDummyY);
-    
-    mSliderDummyZ = new UISlider();
-    mSliderDummyZ->SetText("Mod-Z:");
-    mSliderDummyZ->SetRange(-10.0f, 10.0f);
-    mPanelDummy->AddSection(mSliderDummyZ);
-    
-    mPanelDummy->Collapse();
     
     DeactivateCloseButton();
 }

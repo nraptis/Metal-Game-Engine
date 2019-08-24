@@ -197,8 +197,6 @@ FString FJSONNode::StringValue(FString pDefaultValue) {
 
 FJSON::FJSON() {
     mRoot = NULL;
-    
-    
 }
 
 FJSON::~FJSON() {
@@ -206,13 +204,16 @@ FJSON::~FJSON() {
 }
 
 void FJSON::Clear() {
-    delete mRoot;
-    mRoot = NULL;
+    if (mRoot != NULL) {
+        delete mRoot;
+        mRoot = NULL;
+    }
 }
 
 void FJSON::Load(const char *pFile) {
     FFile aFile;
     aFile.Load(pFile);
+    
     if (aFile.mLength <= 0) {
         bool aBlock = false;
         while (aBlock == false) {

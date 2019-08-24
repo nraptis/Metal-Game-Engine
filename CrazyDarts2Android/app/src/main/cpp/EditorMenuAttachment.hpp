@@ -13,9 +13,17 @@
 #include "ToolMenu.hpp"
 
 class GameEditor;
+class GamePermanentEditor;
+
 class EditorMenuAttachment : public ToolMenu {
 public:
     EditorMenuAttachment(GameEditor *pEditor);
+    EditorMenuAttachment(GamePermanentEditor *pEditor);
+    
+    void                                    Init();
+    
+    
+    
     virtual ~EditorMenuAttachment();
     
     virtual void                            Layout() override;
@@ -23,31 +31,39 @@ public:
     virtual void                            Update() override;
     
     GameEditor                              *mEditor;
+    GamePermanentEditor                     *mPermEditor;
+    
+    
+    
+    ToolMenuPanel                           *mPanelObjectTypes;
+    
+    ToolMenuSectionRow                      *mRowObjectTypes1;
+    ToolMenuSectionRow                      *mRowObjectTypes2;
+    
+    UIButton                                *mButtonPickBalloon;
+    UIButton                                *mButtonPickBrickHead;
+    
+    UIButton                                *mButtonPickBomb;
+    UIButton                                *mButtonPickTurtle;
+    
+    
+    
+    
     
     
     ToolMenuPanel                           *mPanelFormations;
     
     ToolMenuSectionRow                      *mRowFormations1;
-    UIButton                                *mButtonPickFormation1;
-    UIButton                                *mButtonPickFormation2;
+    UIButton                                *mButtonPickFormation;
     UIButton                                *mButtonClearFormation;
     
     ToolMenuSectionRow                      *mRowFormations2;
     UICheckBox                              *mCheckBoxInvertFormationH;
     UICheckBox                              *mCheckBoxInvertFormationV;
     
-    
     ToolMenuPanel                           *mPanelBehavior;
     
     UIStepper                               *mStepperSpacingOffset;
-    
-    ToolMenuPanel                           *mPanelRotation;
-    UISegment                               *mSegmentRotationSpeed;
-    ToolMenuSectionRow                      *mRowRotation;
-    UICheckBox                              *mCheckBoxRotationNegateAlways;
-    UICheckBox                              *mCheckBoxRotationNegateRandom;
-    
-    
 };
 
 #endif /* EditorMenuAttachment_hpp */

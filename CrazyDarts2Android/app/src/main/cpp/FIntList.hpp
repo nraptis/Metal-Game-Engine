@@ -11,8 +11,8 @@
 
 //#define int unsigned int
 
-#include "FSprite.h"
-#include "FString.h"
+#include "FSprite.hpp"
+#include "FString.hpp"
 #include "FFile.hpp"
 
 class FIntList {

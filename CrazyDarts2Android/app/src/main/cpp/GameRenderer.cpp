@@ -116,19 +116,55 @@ void GameRenderer::Draw3D() {
     //Graphics::UniformBind(&mUniformPhong);
     
     
-    Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending();
+    //Graphics::PipelineStateSetShape3DAlphaBlending();
     
+    
+    FMatrix aProjection = mCamera->GetProjection();
+    Graphics::MatrixProjectionSet(aProjection);
+    Graphics::MatrixModelViewReset();
+    
+    //Graphics::DepthDisable();
+    //Graphics::CullFacesSetFront();
+    Graphics::PipelineStateSetShapeNodeNoBlending();
+    Graphics::SetColor();
+    
+    EnumList (Balloon, aBalloon, mGame->mBalloonList.mObjectList) {
+        if (aBalloon->mKill == 0) {
+            aBalloon->Draw3DThread();
+        }
+    }
+    //Graphics::DepthEnable();
+    
+    
+    Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending();
     EnumList (Dart, aDart, mGame->mDartList.mObjectList) {
         if (aDart->mKill == 0) {
             aDart->Draw3D();
         }
     }
     
-    Graphics::PipelineStateSetModelIndexedLightedPhongAlphaBlending();
-    
+    Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending();
     EnumList (Balloon, aBalloon, mGame->mBalloonList.mObjectList) {
         if (aBalloon->mKill == 0) {
             aBalloon->Draw3D();
+        }
+    }
+    
+    EnumList (BrickHead, aBrickHead, mGame->mBrickHeadList.mObjectList) {
+        if (aBrickHead->mKill == 0) {
+            aBrickHead->Draw3D();
+        }
+    }
+    
+    EnumList (Bomb, aBomb, mGame->mBombList.mObjectList) {
+        if (aBomb->mKill == 0) {
+            aBomb->Draw3D();
+        }
+    }
+    
+    EnumList (Turtle, aTurtle, mGame->mTurtleList.mObjectList) {
+        if (aTurtle->mKill == 0) {
+            aTurtle->Draw3D();
         }
     }
     
@@ -136,28 +172,21 @@ void GameRenderer::Draw3D() {
         mGame->mCurrentDart->Draw3D();
     }
     
-    
-    
-    
 #ifdef EDITOR_MODE
     if (gEditor != NULL) {
-    if (gEditor->mEditorShowReferenced) {
-        for (int i=0;i<gEditor->mEditorWave.mPath.mNodeList.mCount;i++) {
-            GameObject *aObject = (GameObject *)gEditor->mEditorObjectList.Fetch(i);
-            if (aObject != NULL) {
-                aObject->Draw3D();
+        if (gEditor->mEditorShowReferenced) {
+            for (int i=0;i<gEditor->mEditorWave.mPath.mNodeList.mCount;i++) {
+                GameObject *aObject = (GameObject *)gEditor->mEditorObjectList.Fetch(i);
+                if (aObject != NULL) {
+                    aObject->Draw3D();
+                }
             }
         }
     }
-    }
 #endif
-    
-    
-    
     
     Graphics::DepthDisable();
     Graphics::CullFacesSetBack();
-    
 }
 
 
@@ -196,7 +225,6 @@ void GameRenderer::DumpLightsToUniforms() {
     mUniformPhong.mColor = FColor(1.0f, 1.0f, 1.0f, 1.0f);
     mUniformPhong.mProjection.Set(aProjection);
     
-    
     mUniformPhongBalloon.mLight.mRed = aLightRed;
     mUniformPhongBalloon.mLight.mGreen = aLightGreen;
     mUniformPhongBalloon.mLight.mBlue = aLightBlue;
@@ -210,9 +238,6 @@ void GameRenderer::DumpLightsToUniforms() {
     mUniformPhongBalloon.mColor = FColor(1.0f, 1.0f, 1.0f, 1.0f);
     mUniformPhongBalloon.mProjection.Set(aProjection);
     
-    
-    
-    
     mUniformDiffuse.mLight.mRed = aLightRed;
     mUniformDiffuse.mLight.mGreen = aLightGreen;
     mUniformDiffuse.mLight.mBlue = aLightBlue;
@@ -223,6 +248,5 @@ void GameRenderer::DumpLightsToUniforms() {
     mUniformDiffuse.mLight.mDiffuseIntensity = aLightDiffuse;
     mUniformDiffuse.mColor = FColor(1.0f, 1.0f, 1.0f, 1.0f);
     mUniformDiffuse.mProjection.Set(aProjection);
-    
     
 }

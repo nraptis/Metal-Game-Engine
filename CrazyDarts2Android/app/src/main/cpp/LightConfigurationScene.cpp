@@ -279,6 +279,8 @@ void LightConfigurationScene::Draw3D() {
     float aExtraRot = 0.0f;
     
     int aBalloonIndex = 0;
+    
+    /*
     for (float aX=-4.0f;aX<=4.0f;aX+=1.0f) {
         for (float aY=-4.0f;aY<=4.0f;aY+=1.0f) {
             
@@ -333,6 +335,8 @@ void LightConfigurationScene::Draw3D() {
             aExtraRot += 5.0f;
         }
     }
+    */
+    
     
     Graphics::DepthDisable();
 

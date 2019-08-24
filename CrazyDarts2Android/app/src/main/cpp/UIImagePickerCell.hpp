@@ -10,7 +10,7 @@
 #define UIImagePickerCell_hpp
 
 #include "FCanvas.hpp"
-#include "FSprite.h"
+#include "FSprite.hpp"
 #include "FSpriteSequence.h"
 #include "FDrawQuad.hpp"
 

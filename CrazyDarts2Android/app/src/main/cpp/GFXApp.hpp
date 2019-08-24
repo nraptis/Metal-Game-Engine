@@ -18,7 +18,8 @@
 #include "FJSON.hpp"
 
 #define EDITOR_MODE 1
-//#undef EDITOR_MODE
+#undef EDITOR_MODE
+
 
 #ifdef EDITOR_MODE
 class GameEditor;
@@ -31,6 +32,7 @@ class LightMenu;
 class CameraMenu;
 class SoundConfigMenu;
 class GameContainer;
+class WorldConfigScene;
 
 class GFXApp : public FApp {
 public:
@@ -59,6 +61,13 @@ public:
     
 #ifdef EDITOR_MODE
     GameEditor                              *mEditor;
+    
+    void                                    EditorTestSwitchToGame();
+    void                                    EditorTestSwitchToEditor();
+    
+    int                                     mEditorSwitchType;
+    int                                     mEditorSwitchTimer;
+    
 #endif
     
     void                                    Draw3D();
@@ -87,10 +96,17 @@ public:
     FSprite                                 mPalmLeavesMap;
     
     FModelDataPacked                        mDart;
-    FSprite                                 mDartMap;
+    FSprite                                 mDartMap[4];
+    
     
     FModelDataPacked                        mBalloon;
     FSprite                                 mBalloonMap[5];
+    
+    FModelDataPacked                        mBrickhead;
+    FSprite                                 mBrickheadMap;
+    
+    FModelDataPacked                        mBrickheadCage;
+    FSprite                                 mBrickheadCageMap;
     
     FModelDataPacked                        mSpiralPineStump;
     FSprite                                 mSpiralPineStumpMap;
@@ -101,13 +117,15 @@ public:
     FModelDataPacked                        mMonolith;
     FSprite                                 mMonolithMap;
     
+    FSprite                                 mCircle256;
+    FSprite                                 mCircle512;
+    
     FSprite                                 mChaosEgg1X;
     FSprite                                 mChaosEgg2X;
     FSprite                                 mChaosEgg3X;
     FSprite                                 mChaosEgg4X;
     
     FSprite                                 mRay[4];
-    
     
     FSprite                                 mGameAreaMarker;
     
@@ -121,6 +139,7 @@ public:
     
     LevelSelectorScreen                     *mLevelSelect;
     LightConfigurationScene                 *mLightScene;
+    WorldConfigScene                        *mWorldScene;
     Util_ScreenFrame                        *mScreenTool;
     
     
@@ -147,11 +166,8 @@ public:
     float                                   mTestSin1;
     float                                   mTestSin2;
     
-    
     float                                   mAmbientRoll1;
     float                                   mAmbientRoll2;
-    
-    
     
 };
 

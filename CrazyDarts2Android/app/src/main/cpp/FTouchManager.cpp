@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Nick Raptis. All rights reserved.
 //
 
-#include "FTouchManager.h"
+#include "FTouchManager.hpp"
 #include "FApp.hpp"
 #include "core_includes.h"
 
@@ -30,12 +30,9 @@ FTouchAction::FTouchAction() {
 
 FTouchAction::~FTouchAction() { }
 
-FTouch::FTouch()
-{
+FTouch::FTouch() {
     mRenderIndex = 0;
-    
-    for(int i=0;i<TOUCH_HISTORY_STATES;i++)
-    {
+    for (int i=0;i<TOUCH_HISTORY_STATES;i++) {
         mHistoryX[i] = 0.0f;
         mHistoryY[i] = 0.0f;
         mHistoryTime[i] = 0;
@@ -44,25 +41,20 @@ FTouch::FTouch()
     Reset(0.0f, 0.0f, 0);
 }
 
-FTouch::~FTouch()
-{
+FTouch::~FTouch() {
     
 }
 
-void FTouch::Reset(float pX, float pY, void *pData)
-{
+void FTouch::Reset(float pX, float pY, void *pData) {
     Reset(pX, pY);
     mData = pData;
-    
     mHistoryX[0] = pX;
     mHistoryY[0] = pY;
     mHistoryTime[0] = mTimer;
-    
     mHistoryCount = 1;
 }
 
-void FTouch::Reset(float pX, float pY)
-{
+void FTouch::Reset(float pX, float pY) {
     mHistoryCount = 0;
     
     mX = pX;
@@ -78,16 +70,13 @@ void FTouch::Reset(float pX, float pY)
     mData = 0;
 }
 
-
-void FTouch::Move(float pX, float pY)
-{
+void FTouch::Move(float pX, float pY) {
     mX = pX;
     mY = pY;
     
     mChanged = true;
     
-    if(mState == TOUCH_STATE_DOWN || mState == TOUCH_STATE_INACTIVE)
-    {
+    if (mState == TOUCH_STATE_DOWN || mState == TOUCH_STATE_INACTIVE) {
         mState = TOUCH_STATE_MOVING;
     }
     
@@ -96,8 +85,7 @@ void FTouch::Move(float pX, float pY)
     
     mLastActionTime = mTimer;
     
-    if(mHistoryCount == TOUCH_HISTORY_STATES)
-    {
+    if (mHistoryCount == TOUCH_HISTORY_STATES) {
         for(int i=1;i<TOUCH_HISTORY_STATES;i++)mHistoryX[i - 1] = mHistoryX[i];
         for(int i=1;i<TOUCH_HISTORY_STATES;i++)mHistoryY[i - 1] = mHistoryY[i];
         for(int i=1;i<TOUCH_HISTORY_STATES;i++)mHistoryTime[i - 1] = mHistoryTime[i];
@@ -105,9 +93,7 @@ void FTouch::Move(float pX, float pY)
         mHistoryX[TOUCH_HISTORY_STATES - 1] = pX;
         mHistoryY[TOUCH_HISTORY_STATES - 1] = pY;
         mHistoryTime[TOUCH_HISTORY_STATES - 1] = mTimer;
-    }
-    else
-    {
+    } else {
         mHistoryX[mHistoryCount] = pX;
         mHistoryY[mHistoryCount] = pY;
         mHistoryTime[mHistoryCount] = mTimer;
@@ -115,8 +101,7 @@ void FTouch::Move(float pX, float pY)
     }
 }
 
-void FTouch::Up(float pX, float pY)
-{
+void FTouch::Up(float pX, float pY) {
     mX = pX;
     mY = pY;
     mChanged = true;
@@ -143,7 +128,6 @@ FTouchManager::FTouchManager() {
     mRenderIndex = 0;
     
     mIsUpdating = false;
-    
     
     mAndroidFakePointer[0] = (void *)(0xDEADBEE5);
     mAndroidFakePointer[1] = (void *)(0xCABCABCA);
@@ -191,14 +175,16 @@ void FTouchManager::Update() {
                 aTouch->Move(aAction->mX, aAction->mY);
             }
         } else if(aAction->mTouchState == TOUCH_STATE_DOWN) {
-            gAppBase->ProcessTouchDown(aAction->mX, aAction->mY, aAction->mData);
-            FTouch *aTouch = GetTouchDown(aAction->mData);
+            FTouch *aTouch = DequeueTouch(aAction->mData);
             if(aTouch) {
                 aTouch->mRenderIndex = mRenderIndex;
                 aTouch->Reset(aAction->mX, aAction->mY, aAction->mData);
                 mRenderIndex++;
                 if(mRenderIndex > 5)mRenderIndex = 0;
             }
+            
+            gAppBase->ProcessTouchDown(aAction->mX, aAction->mY, aAction->mData);
+            
         } else { //if((aAction->mTouchState == TOUCH_STATE_RELEASED) || (aAction->mTouchState == TOUCH_STATE_CANCELED))
             gAppBase->ProcessTouchUp(aAction->mX, aAction->mY, aAction->mData);
             FinishedTouch(GetTouch(aAction->mData));
@@ -251,8 +237,7 @@ void FTouchManager::Draw() {
     }
 }
 
-void FTouchManager::Reset()
-{
+void FTouchManager::Reset() {
     
 }
 
@@ -376,7 +361,7 @@ void FTouchManager::FinishedTouch(FTouch *pTouch) {
     }
 }
 
-FTouch *FTouchManager::GetTouchDown(void *pData) {
+FTouch *FTouchManager::DequeueTouch(void *pData) {
     FTouch *aTouch = 0;
     if(mTouchCount < (TOUCH_MANAGER_MAX_TOUCHES - 1)) {
         if(mTouchQueueCount > 0) {

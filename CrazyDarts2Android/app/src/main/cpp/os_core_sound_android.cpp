@@ -11,7 +11,7 @@
 #include "os_core_sound.h"
 #include "os_core_includes.h"
 #include "core_includes.h"
-#include "FSound.h"
+#include "FSound.hpp"
 #include "FFile.hpp"
 
 #include "OSSoundBuffer.h"

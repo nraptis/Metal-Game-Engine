@@ -10,22 +10,22 @@
 #define EditorMenuFormationPickerCell_hpp
 
 #include "UIButton.hpp"
-#include "LevelWaveSpawnFormation.hpp"
+#include "LevelFormation.hpp"
 
 class EditorMenuFormationPickerCell : public UIButton {
 public:
-    EditorMenuFormationPickerCell(LevelWaveSpawnFormation *pFormation);
+    EditorMenuFormationPickerCell(LevelFormation *pFormation);
     virtual ~EditorMenuFormationPickerCell();
     virtual void                            Layout() override;
     virtual void                            Update() override;
     virtual void                            Draw() override;
     
-    void                                    DrawFormationNode(LevelWaveSpawnFormationNode *pNode, float pX, float pY);
+    void                                    DrawFormationNode(LevelFormationNode *pNode, float pX, float pY);
     
     
     int                                     mDisplayDelay;
     
-    LevelWaveSpawnFormation                 *mFormation;
+    LevelFormation                 *mFormation;
     
     bool                                    mTouchCanceled;
     float                                   mGameScale;

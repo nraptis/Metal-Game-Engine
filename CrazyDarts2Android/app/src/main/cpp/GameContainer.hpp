@@ -10,9 +10,17 @@
 #define GameContainerContainer_hpp
 
 #include "GFXApp.hpp"
-#include "FloatingCamera.hpp"
-#include "Dart.hpp"
-#include "Balloon.hpp"
+//#include "FloatingCamera.hpp"
+//#include "Dart.hpp"
+//#include "Balloon.hpp"
+
+#include "GameTestEditorOverlay.hpp"
+#include "GameTestRunningOverlay.hpp"
+
+#include "EditorMenuGameTestUtils.hpp"
+#include "EditorMenuGameTest.hpp"
+
+
 
 class Game;
 class GameContainer : public FCanvas {
@@ -36,8 +44,19 @@ public:
     
     virtual void                                Notify(void *pSender, const char *pNotification) override;
     
+    //After the game + editor are ready to go.
+    void                                        Realize();
+    
     Game                                        *mGame;
     FCanvas                                     *mContainer;
+    GameTestEditorOverlay                       *mGameTestEditorOverlay;
+    GameTestRunningOverlay                      *mGameTestRunningOverlay;
+    
+    
+    
+    
+    EditorMenuGameTest                          *mEditorMenu;
+    EditorMenuGameTestUtils                     *mEditorMenuUtils;
     
     //Including Safe Area...
     float                                       mInterfaceLeftWidth;
@@ -45,6 +64,10 @@ public:
     float                                       mInterfaceTopHeight;
     float                                       mInterfaceBottomHeight;
     
+    void                                        OpenEditorTestMenus();
+    
 };
+
+extern GameContainer *gGameContainer;
 
 #endif

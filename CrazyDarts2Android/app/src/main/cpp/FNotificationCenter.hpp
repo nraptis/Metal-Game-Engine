@@ -10,7 +10,7 @@
 #define FNotificationCenter_hpp
 
 #include "FList.hpp"
-#include "FString.h"
+#include "FString.hpp"
 
 class FNotificationCenter;
 class FCanvas;

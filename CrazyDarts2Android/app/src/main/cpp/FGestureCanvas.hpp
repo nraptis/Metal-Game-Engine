@@ -13,7 +13,7 @@
 #define GESTURE_TOUCH_COUNT 8
 
 #include "FCanvas.hpp"
-#include "FObject.h"
+#include "FObject.hpp"
 
 class FTrackedTouch : public FObject {
 public:

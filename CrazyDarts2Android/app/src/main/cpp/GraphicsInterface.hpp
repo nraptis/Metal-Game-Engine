@@ -10,9 +10,9 @@
 #define OPENGL_VIEW_HPP
 
 #include "FVec2.hpp"
-#include "FRect.h"
-#include "FString.h"
-#include "core_app_shell.h"
+#include "FRect.hpp"
+#include "FString.hpp"
+#include "core_app_shell.hpp"
 #include "os_core_app_shell.h"
 
 #if (CURRENT_ENV == ENV_WIN32)

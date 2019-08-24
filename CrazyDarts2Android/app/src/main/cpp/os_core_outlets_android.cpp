@@ -10,7 +10,7 @@
 #include "os_core_outlets.h"
 #include "core_includes.h"
 #include "FList.hpp"
-#include "FString.h"
+#include "FString.hpp"
 
 #include <sys/time.h>
 #include <sys/stat.h>

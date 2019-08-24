@@ -13,7 +13,7 @@
 //#import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
 //#import <FBSDKShareKit/FBSDKShareKit.h>
 
-#include "FString.h"
+#include "FString.hpp"
 
 bool cFacebookLoggedIn = false;
 bool cFacebookLoggingIn = false;

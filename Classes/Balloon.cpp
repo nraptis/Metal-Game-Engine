@@ -33,6 +33,10 @@ Balloon::Balloon() {
     mThread.Setup();
     mIsThreadVisible = true;
     
+    mBounceFactor = 0.0f;
+    mBounceFactorSin = 0.0f;
+    
+    
     mThread.Setup();
 }
 
@@ -51,6 +55,14 @@ void Balloon::Update() {
         mTransform.mX += mVelX;
         mTransform.mY += mVelY;
     }
+    
+    
+    mBounceFactorSin -= 1.5f;
+    if (mBounceFactorSin < 0.0f) { mBounceFactorSin += 360.0f; }
+    
+    mBounceFactor = Sin(mBounceFactorSin);
+    
+    
     
     
 }
@@ -89,19 +101,14 @@ void Balloon::Draw3DThread() {
     
     FVec3 aCenter = FVec3(mTransform3D.mX, mTransform3D.mY, mTransform3D.mZ);
     FVec3 aPos = aCenter;
-    aPos.mY += 10.0f;
+    aPos.mY += 2.15f;
     
-    PivotPoint(aPos, mTransform.mRotation, aCenter);
-    
-
-    
+    aPos = PivotPoint(aPos, mTransform.mRotation, aCenter);
     
     mThread.mOffsetX = aPos.mX;
     mThread.mOffsetY = aPos.mY;
     mThread.mOffsetZ = 0.0f;
     
-    mThread.Generate();
-    
+    mThread.Generate(gGame->mWind, 0.0f);
     mThread.Draw3D();
-    
 }

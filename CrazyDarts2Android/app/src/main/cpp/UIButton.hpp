@@ -9,7 +9,7 @@
 #ifndef UI_BUTTON_HPP
 #define UI_BUTTON_HPP
 
-#include "FButton.h"
+#include "FButton.hpp"
 #include "UIRoundedRect.hpp"
 
 class UIButton : public FButton {

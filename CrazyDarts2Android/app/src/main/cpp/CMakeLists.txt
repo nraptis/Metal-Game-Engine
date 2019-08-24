@@ -7,6 +7,8 @@ add_library(gl2jni SHARED
 
         __DROID.cpp
         Balloon.cpp
+        Bomb.cpp
+        BrickHead.cpp
         CameraMenu.cpp
         Constraint.cpp
         core_app_shell.cpp
@@ -17,14 +19,23 @@ add_library(gl2jni SHARED
         DiffuseLightMenu.cpp
         DragableCanvas.cpp
         EditorMenuAttachment.cpp
-        EditorMenuAttachmentPicker.cpp
-        EditorMenuFlow.cpp
         EditorMenuFormation.cpp
+        EditorMenuFormationGrid.cpp
         EditorMenuFormationPicker.cpp
         EditorMenuFormationPickerCell.cpp
+        EditorMenuFormationSpawnPicker.cpp
         EditorMenuFormationUtilities.cpp
+        EditorMenuGameTest.cpp
+        EditorMenuGameTestUtils.cpp
+        EditorMenuMotion.cpp
+        EditorMenuMotionTypePanel.cpp
+        EditorMenuObjectClearing.cpp
         EditorMenuPath.cpp
         EditorMenuPathControl.cpp
+        EditorMenuPermanent.cpp
+        EditorMenuPermanentUtils.cpp
+        EditorMenuPermPicker.cpp
+        EditorMenuPermSpawnPicker.cpp
         EditorMenuSections.cpp
         EditorMenuSpawn.cpp
         EditorMenuSpawnPicker.cpp
@@ -43,7 +54,6 @@ add_library(gl2jni SHARED
         FFloatBufferCache.cpp
         FFloatList.cpp
         FFont.cpp
-        FFrameController.cpp
         FGestureCanvas.cpp
         FHashMap.cpp
         FImage.cpp
@@ -66,7 +76,6 @@ add_library(gl2jni SHARED
         FObject.cpp
         FormationCollection.cpp
         FParticle.cpp
-        FPoint.cpp
         FPointList.cpp
         FPolyPath.cpp
         FPrimitive.cpp
@@ -83,7 +92,6 @@ add_library(gl2jni SHARED
         FSprite.cpp
         FSpriteSequence.cpp
         FString.cpp
-        FStringBuffer.cpp
         FTexture.cpp
         FTextureCache.cpp
         FTouchManager.cpp
@@ -96,31 +104,51 @@ add_library(gl2jni SHARED
         Game.cpp
         GameContainer.cpp
         GameEditor.cpp
+        GameEditorGrid.cpp
         GameFormationEditor.cpp
+        GameInfoOverlay.cpp
+        GameInfoTextBubble.cpp
         GameLevelController.cpp
         GameObject.cpp
         GamePathEditor.cpp
+        GamePermanentEditor.cpp
         GameRenderer.cpp
+        GameTestEditorOverlay.cpp
+        GameTestRunningMainMenu.cpp
+        GameTestRunningOverlay.cpp
         GFXApp.cpp
         GraphicsInterface.cpp
+        HangingThread.cpp
+        HangingThreadKnot.cpp
+        HangingThreadSegment.cpp
+        HangingThreadTestMenu.cpp
+        Level.cpp
         LevelData.cpp
+        LevelFormation.cpp
+        LevelFormationBlueprint.cpp
+        LevelFormationNode.cpp
+        LevelFormationTracer.cpp
+        LevelFormationTracerBlueprint.cpp
+        LevelFormationTracerNode.cpp
+        LevelGroup.cpp
+        LevelMotionController.cpp
+        LevelMotionControllerBlueprint.cpp
+        LevelMotionControllerSlice.cpp
+        LevelMotionControllerSliceBlueprint.cpp
+        LevelNode.cpp
+        LevelPath.cpp
+        LevelPathBlueprint.cpp
+        LevelPermSpawn.cpp
+        LevelPermSpawnBlueprint.cpp
         LevelSection.cpp
         LevelSectionBlueprint.cpp
+        LevelSectionPermanent.cpp
+        LevelSectionPermanentBlueprint.cpp
         LevelSelectorScreen.cpp
         LevelWave.cpp
         LevelWaveBlueprint.cpp
-        LevelWaveChunk.cpp
-        LevelWaveFormation.cpp
-        LevelWavePath.cpp
-        LevelWavePathBlueprint.cpp
         LevelWaveSpawn.cpp
         LevelWaveSpawnBlueprint.cpp
-        LevelWaveSpawnFormation.cpp
-        LevelWaveSpawnFormationBlueprint.cpp
-        LevelWaveSpawnFormationNode.cpp
-        LevelWaveSpawnFormationTracer.cpp
-        LevelWaveSpawnFormationTracerBlueprint.cpp
-        LevelWaveSpawnFormationTracerNode.cpp
         LightConfigurationScene.cpp
         OpenGLEngine.cpp
         os_core_app_shell_android.cpp
@@ -135,16 +163,9 @@ add_library(gl2jni SHARED
         OSMusicPlayer.cpp
         OSSoundBuffer.cpp
         OSSoundBufferPool.cpp
-        PathEditorMenu.cpp
-        PGMainCanvas.cpp
-        PGMainToolbar.cpp
-        PGNode.cpp
-        PGPath.cpp
-        PGPathEditor.cpp
         PhongConfiguration.cpp
         PhongLightMenu.cpp
         PlatformGraphicsInterface.cpp
-        ScreenTransformMenu.cpp
         ShaderProgram.cpp
         ShaderProgramModelIndexed.cpp
         ShaderProgramModelIndexedLightedAmbient.cpp
@@ -160,17 +181,17 @@ add_library(gl2jni SHARED
         ShaderProgramSpriteWhite.cpp
         SimpleSpotLightMenu.cpp
         SoundConfigMenu.cpp
-        SpawnWave.cpp
         SpotLightSimpleConfiguration.cpp
+        StuckDart.cpp
         ToolMenu.cpp
         ToolMenuHeader.cpp
-        ToolMenuModalUnderlay.cpp
         ToolMenuPanel.cpp
         ToolMenuPanelHeader.cpp
         ToolMenuSection.cpp
         ToolMenuSectionRow.cpp
         Transform2D.cpp
         Transform3D.cpp
+        Turtle.cpp
         UIAlignmentPicker.cpp
         UIAlignmentPickerButton.cpp
         UIButton.cpp
@@ -186,6 +207,7 @@ add_library(gl2jni SHARED
         UIStepper.cpp
         UITextBox.cpp
         Util_ScreenFrame.cpp
+        WorldConfigScene.cpp
         )
 
 # add lib dependencies

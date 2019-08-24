@@ -27,12 +27,14 @@ public:
     
     ToolMenuSectionRow                      *mRowVisuals;
     UICheckBox                              *mCheckBoxSmooth;
-    UICheckBox                              *mCheckBoxPreview;
+    UICheckBox                              *mCheckBoxClosed;
     
     ToolMenuPanel                           *mPointsPanel;
     
     UIStepper                               *mStepperWait;
     UIStepper                               *mStepperChamfer;
+    UIStepper                               *mStepperDecel;
+    UIStepper                               *mStepperAccel;
     
     ToolMenuSectionRow                      *mRowPointOptions;
     UIButton                                *mButtonDeletePoint;

@@ -68,10 +68,6 @@ public:
     int                                     mColorCount;
     int                                     mColorSize;
     
-    //int                                     mExtraCount;
-    //int                                     mExtraSize;
-
-    
     int                                     mBindIndex;
 	
 	int                                     mMode;

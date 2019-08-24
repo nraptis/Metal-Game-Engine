@@ -10,18 +10,33 @@
 #include "core_includes.h"
 #include "GamePathEditor.hpp"
 #include "GameEditor.hpp"
-#include "FAnimation.h"
+#include "GamePermanentEditor.hpp"
+#include "FAnimation.hpp"
 
 GamePathEditor::GamePathEditor(GameEditor *pEditor) {
-    
     mEditor = pEditor;
+    mPermanentEditor = NULL;
+    Init();
     
+    mGrid.mGridEnabled = false;
     
+}
+
+GamePathEditor::GamePathEditor(GamePermanentEditor *pEditor) {
+    mEditor = NULL;
+    mPermanentEditor = pEditor;
+    Init();
+    
+    mGrid.mGridEnabled = mPermanentEditor->mGrid.mGridEnabled;
+}
+
+void GamePathEditor::Init() {
     mPathMode = PATH_MODE_CREATE;
     
-    
-    
     mName = "[GamePathEditor]";
+    
+    
+    mMenuGrid = NULL;
     
     SetWidth(gDeviceWidth);
     SetHeight(gDeviceHeight);
@@ -39,6 +54,7 @@ GamePathEditor::GamePathEditor(GameEditor *pEditor) {
     
     mPath = NULL;
     mWave = NULL;
+    mPerm = NULL;
     
     mMenuPaths = new EditorMenuPath(this);
     AddChild(mMenuPaths);
@@ -47,9 +63,26 @@ GamePathEditor::GamePathEditor(GameEditor *pEditor) {
     mMenuControls = new EditorMenuPathControl(this);
     AddChild(mMenuControls);
     mMenuControls->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), gSafeAreaInsetTop + 20.0f, 400.0f, 480.0f);
+    
+    
+    mMenuGrid = new EditorMenuFormationGrid(&mGrid);
+    AddChild(mMenuGrid);
+    mMenuGrid->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f + 60.0f), gSafeAreaInsetTop + 20.0f + 200.0f, 400.0f, 736.0f - 200.0f);
+    
 }
 
 GamePathEditor::~GamePathEditor() {
+    
+    if (gEditor != NULL) {
+        if (gEditor->mPathEditor == this) {
+            gEditor->mPathEditor = NULL;
+        }
+    }
+    if (mPermanentEditor != NULL) {
+        if (mPermanentEditor->mPathEditor == this) {
+            mPermanentEditor->mPathEditor = NULL;
+        }
+    }
     
 }
 
@@ -63,6 +96,9 @@ void GamePathEditor::Layout() {
 }
 
 void GamePathEditor::Update() {
+    
+    mGrid.Update();
+    
     
     if (mConstrainXToPoint && mConstrainYToPoint) {
         mConstrainXToPoint = false;
@@ -79,6 +115,10 @@ void GamePathEditor::Update() {
 }
 
 void GamePathEditor::Draw() {
+    
+    if (mGrid.mGridEnabled) {
+        mGrid.Draw();
+    }
     
 }
 
@@ -108,15 +148,35 @@ void GamePathEditor::TouchDown(float pX, float pY, void *pData) {
     }
     
     if (mPathMode == PATH_MODE_CREATE) {
-        if (mPath && mWave) {
+        if (mPath) {
             mPath->Add(pX, pY);
             mPath->mSelectedIndex = mPath->mNodeList.mCount - 1;
             
-            LevelWavePathBlueprintNode *aNode = mPath->GetNode();
+            LevelPathNodeBlueprint *aNode = mPath->GetNode();
             if (aNode) {
-                aNode->mConstraint.mTypeX = gEditor->ClosestXConstraint(pX);
-                aNode->mConstraint.mTypeY = gEditor->ClosestYConstraint(pY);
-                mWave->ApplyEditorConstraints();
+                
+                if (mGrid.mGridEnabled) {
+                    float aX = pX;
+                    float aY = pY;
+                    mGrid.GridSnap(&aX, &aY);
+                    aNode->mEditorX = aX;
+                    aNode->mEditorY = aY;
+                    aNode->mConstraint.mTypeX = X_CONSTRAINT_NONE;
+                    aNode->mConstraint.mTypeY = Y_CONSTRAINT_NONE;
+                } else {
+                    aNode->mConstraint.mTypeX = gEditor->ClosestXConstraint(pX);
+                    aNode->mConstraint.mTypeY = gEditor->ClosestYConstraint(pY);
+                }
+                
+                
+                
+                
+                if (mWave != NULL) {
+                    mWave->ApplyEditorConstraints();
+                }
+                if (mPerm != NULL) {
+                    mPerm->ApplyEditorConstraints();
+                }
                 
             }
         }
@@ -154,7 +214,26 @@ void GamePathEditor::TouchDown(float pX, float pY, void *pData) {
 void GamePathEditor::TouchMove(float pX, float pY, void *pData) {
     if (mPathMode == PATH_MODE_EDIT) {
         if (mSelectedTouch == pData && mPath != NULL) {
-            mPath->Set(mPath->mSelectedIndex, mSelectPathStartX + (pX - mSelectTouchStartX), mSelectPathStartY + (pY - mSelectTouchStartY));
+            
+            float aX = mSelectPathStartX + (pX - mSelectTouchStartX);
+            float aY = mSelectPathStartY + (pY - mSelectTouchStartY);
+           
+            LevelPathNodeBlueprint *aNode = mPath->GetNode();
+            
+            if (aNode != NULL) {
+                if (mGrid.mGridEnabled) {
+                    mGrid.GridSnap(&aX, &aY);
+                    aNode->mEditorX = aX;
+                    aNode->mEditorY = aY;
+                    aNode->mConstraint.mTypeX = X_CONSTRAINT_NONE;
+                    aNode->mConstraint.mTypeY = Y_CONSTRAINT_NONE;
+                } else {
+                    mPath->Set(mPath->mSelectedIndex, aX, aY);
+                    //aNode->mConstraint.mTypeX = gEditor->ClosestXConstraint(pX);
+                    //aNode->mConstraint.mTypeY = gEditor->ClosestYConstraint(pY);
+                    
+                }
+            }
         }
     }
 }
@@ -171,18 +250,31 @@ void GamePathEditor::TouchFlush() {
 
 void GamePathEditor::KeyDown(int pKey) {
     
+    if (gEditor == NULL) { return; }
+    
+    if (mPermanentEditor != NULL) {
+        if (mPermanentEditor->mOverlay != this) {
+            return;
+        }
+    }
+    if (mEditor != NULL) {
+        if (mEditor->mOverlay != this) {
+            return;
+        }
+    }
+    
     bool aShift = gKeyDownShift;
     bool aCtrl = gKeyDownCtrl;
     bool aAlt = gKeyDownAlt;
     
-    if (mWave == NULL) { return; }
+    //if (mWave == NULL) { return; }
+    
     if (mPath == NULL) { return; }
-    LevelWavePathBlueprintNode *aNode = mPath->GetNode();
+    LevelPathNodeBlueprint *aNode = mPath->GetNode();
     
     if (pKey == __KEY__P) {
         PathPrint();
     }
-    
     
     if (pKey == __KEY__DELETE) {
         if (aShift == false && aCtrl == false && aAlt == false) { PathDeletePoint(); }
@@ -191,6 +283,10 @@ void GamePathEditor::KeyDown(int pKey) {
     if (pKey == __KEY__A) {
         if (aShift == false && aCtrl == false && aAlt == false) { mPathMode = PATH_MODE_CREATE; }
         
+    }
+    
+    if (pKey == __KEY__G) {
+        if (aShift == false && aCtrl == false && aAlt == false) { mGrid.mGridEnabled = !mGrid.mGridEnabled; }
     }
     
     if (pKey == __KEY__ESCAPE) {
@@ -207,7 +303,6 @@ void GamePathEditor::KeyDown(int pKey) {
             ConstraintXToType(X_CONSTRAINT_NONE);
             ConstraintYToType(Y_CONSTRAINT_NONE);
         }
-        
     }
     
     if (pKey == __KEY__E) {
@@ -220,7 +315,12 @@ void GamePathEditor::KeyDown(int pKey) {
         if (pKey == __KEY__X) {
             if (aShift == false && aCtrl == true && aAlt == false) {
                 aNode->mConstraint.mOffsetX = 0.0f;
-                mWave->ApplyEditorConstraints();
+                if (mWave != NULL) {
+                    mWave->ApplyEditorConstraints();
+                }
+                if (mPerm != NULL) {
+                    mPerm->ApplyEditorConstraints();
+                }
             } else {
                 mConstrainXToPoint = !mConstrainXToPoint;
                 if (mConstrainXToPoint) {
@@ -232,7 +332,12 @@ void GamePathEditor::KeyDown(int pKey) {
         if (pKey == __KEY__Y) {
             if (aShift == false && aCtrl == true && aAlt == false) {
                 aNode->mConstraint.mOffsetY = 0.0f;
-                mWave->ApplyEditorConstraints();
+                if (mWave != NULL) {
+                    mWave->ApplyEditorConstraints();
+                }
+                if (mPerm != NULL) {
+                    mPerm->ApplyEditorConstraints();
+                }
             } else {
                 mConstrainYToPoint = !mConstrainYToPoint;
                 if (mConstrainYToPoint) {
@@ -259,7 +364,13 @@ void GamePathEditor::KeyDown(int pKey) {
             } else {
                 aNode->mConstraint.mTypeX = X_CONSTRAINT_LEFT_SPAWN;
             }
-            mWave->ApplyEditorConstraints();
+            
+            if (mWave != NULL) {
+                mWave->ApplyEditorConstraints();
+            }
+            if (mPerm != NULL) {
+                mPerm->ApplyEditorConstraints();
+            }
         }
         
         if (pKey == __KEY__U) {
@@ -278,7 +389,13 @@ void GamePathEditor::KeyDown(int pKey) {
             } else {
                 aNode->mConstraint.mTypeY = Y_CONSTRAINT_TOP_SPAWN;
             }
-            mWave->ApplyEditorConstraints();
+            
+            if (mWave != NULL) {
+                mWave->ApplyEditorConstraints();
+            }
+            if (mPerm != NULL) {
+                mPerm->ApplyEditorConstraints();
+            }
         }
     }
     
@@ -288,10 +405,20 @@ void GamePathEditor::KeyDown(int pKey) {
         if (pKey == __KEY__LEFT) {
             if (aShift == false && aCtrl == false && aAlt == false) {
                 aNode->ShiftX(-1.0f);
-                mWave->ApplyEditorConstraints();
+                if (mWave != NULL) {
+                    mWave->ApplyEditorConstraints();
+                }
+                if (mPerm != NULL) {
+                    mPerm->ApplyEditorConstraints();
+                }
             } else if (aShift == true && aCtrl == false && aAlt == false) {
                 aNode->ShiftX(-10.0f);
-                mWave->ApplyEditorConstraints();
+                if (mWave != NULL) {
+                    mWave->ApplyEditorConstraints();
+                }
+                if (mPerm != NULL) {
+                    mPerm->ApplyEditorConstraints();
+                }
             } else if (aShift == false && aCtrl == true && aAlt == false) {
                 ConstraintXToPrev();
             }
@@ -299,9 +426,20 @@ void GamePathEditor::KeyDown(int pKey) {
         if (pKey == __KEY__RIGHT) {
             if (aShift == false && aCtrl == false && aAlt == false) {
                 aNode->ShiftX(1.0f);
+                if (mWave != NULL) {
+                    mWave->ApplyEditorConstraints();
+                }
+                if (mPerm != NULL) {
+                    mPerm->ApplyEditorConstraints();
+                }
             } else if (aShift == true && aCtrl == false && aAlt == false) {
                 aNode->ShiftX(10.0f);
-                mWave->ApplyEditorConstraints();
+                if (mWave != NULL) {
+                    mWave->ApplyEditorConstraints();
+                }
+                if (mPerm != NULL) {
+                    mPerm->ApplyEditorConstraints();
+                }
             } else if (aShift == false && aCtrl == true && aAlt == false) {
                 ConstraintXToNext();
                 
@@ -310,10 +448,20 @@ void GamePathEditor::KeyDown(int pKey) {
         if (pKey == __KEY__UP) {
             if (aShift == false && aCtrl == false && aAlt == false) {
                 aNode->ShiftY(-1.0f);
-                mWave->ApplyEditorConstraints();
+                if (mWave != NULL) {
+                    mWave->ApplyEditorConstraints();
+                }
+                if (mPerm != NULL) {
+                    mPerm->ApplyEditorConstraints();
+                }
             } else if (aShift == true && aCtrl == false && aAlt == false) {
                 aNode->ShiftY(-10.0f);
-                mWave->ApplyEditorConstraints();
+                if (mWave != NULL) {
+                    mWave->ApplyEditorConstraints();
+                }
+                if (mPerm != NULL) {
+                    mPerm->ApplyEditorConstraints();
+                }
                 
             } else if (aShift == false && aCtrl == true && aAlt == false) {
                 ConstraintYToPrev();
@@ -323,11 +471,21 @@ void GamePathEditor::KeyDown(int pKey) {
         if (pKey == __KEY__DOWN) {
             if (aShift == false && aCtrl == false && aAlt == false) {
                 aNode->ShiftY(1.0f);
-                mWave->ApplyEditorConstraints();
+                if (mWave != NULL) {
+                    mWave->ApplyEditorConstraints();
+                }
+                if (mPerm != NULL) {
+                    mPerm->ApplyEditorConstraints();
+                }
                 
             } else if (aShift == true && aCtrl == false && aAlt == false) {
                 aNode->ShiftY(10.0f);
-                mWave->ApplyEditorConstraints();
+                if (mWave != NULL) {
+                    mWave->ApplyEditorConstraints();
+                }
+                if (mPerm != NULL) {
+                    mPerm->ApplyEditorConstraints();
+                }
                 
             } else if (aShift == false && aCtrl == true && aAlt == false) {
                 ConstraintYToNext();
@@ -349,17 +507,62 @@ void GamePathEditor::Load() {
 }
 
 void GamePathEditor::Close() {
-    mEditor->ClosePathEditor();
+    if (mEditor != NULL) {
+        mEditor->ClosePathEditor();
+    }
+    
+    if (mPermanentEditor != NULL) {
+        mPermanentEditor->ClosePathEditor();
+    }
 }
 
 void GamePathEditor::SetUp(LevelWaveBlueprint *pWave) {
+    mWave = NULL;
+    mPath = NULL;
+    mPerm = NULL;
     if (pWave == NULL) {
-        mWave = NULL;
-        mPath = NULL;
         return;
     }
     mWave = pWave;
-    mPath = &(pWave->mPath);
+    SetUpPath(&(pWave->mPath));
+    
+    
+    mGrid.mCenterX = gEditor->mCenterH;
+    mGrid.mCenterY = gEditor->mCenterV;
+    mGrid.BuildGrid();
+}
+
+void GamePathEditor::SetUp(LevelSectionPermanentBlueprint *pPerm) {
+    mWave = NULL;
+    mPath = NULL;
+    mPerm = NULL;
+    if (pPerm == NULL) {
+        return;
+    }
+    mPerm = pPerm;
+    SetUpPath(&(mPerm->mPath));
+    
+    mGrid.mCenterX = mPerm->mEditorX;
+    if (mPerm->mConstraint.mTypeX != X_CONSTRAINT_NONE) {
+        float aFactorX = (gEditor->mGameAreaRight - gEditor->mGameAreaLeft) / (gGame->mGameAreaRight - gGame->mGameAreaLeft);
+        mGrid.mCenterX += mPerm->mConstraint.mOffsetX * aFactorX;
+    }
+    
+    mGrid.mCenterY = mPerm->mEditorY;
+    if (mPerm->mConstraint.mTypeY != Y_CONSTRAINT_NONE) {
+        float aFactorY = (gEditor->mGameAreaBottom - gEditor->mGameAreaTop) / (gGame->mGameAreaBottom - gGame->mGameAreaTop);
+        mGrid.mCenterY += mPerm->mConstraint.mOffsetY * aFactorY;
+    }
+    mGrid.BuildGrid();
+}
+
+void GamePathEditor::SetUpPath(LevelPathBlueprint *pPath) {
+    
+    if (gGame != NULL) {
+        gGame->DisposeAllObjects();
+    }
+    
+    mPath = pPath;
     mSelectedTouch = NULL;
     
     if (mPath->mNodeList.mCount > 0) {
@@ -369,14 +572,24 @@ void GamePathEditor::SetUp(LevelWaveBlueprint *pWave) {
     }
 }
 
+
 void GamePathEditor::PathRefresh() {
-    if (mWave == NULL) { return; }
-    mWave->Build();
+    //if (mWave == NULL) { return; }
+    if (mWave != NULL) {
+        mWave->Build();
+    }
+    if (mPerm != NULL) {
+        
+    }
+    
+    if (gEditor != NULL) {
+        gEditor->RefreshPlayback();
+    }
 }
 
 void GamePathEditor::PathReset() {
     if (mPath == NULL) { return; }
-    mPath->Clear();
+    mPath->Reset();
 }
 
 void GamePathEditor::PathPrint() {
@@ -388,10 +601,15 @@ void GamePathEditor::PathPrint() {
 }
 
 void GamePathEditor::PathDeletePoint() {
-    if (mWave == NULL || mPath == NULL) { return; }
+    if (mPath == NULL) { return; }
     if (mPath->mSelectedIndex == -1) { return; }
     mPath->Remove(mPath->mSelectedIndex);
-    mWave->ApplyEditorConstraints();
+    if (mWave != NULL) {
+        mWave->ApplyEditorConstraints();
+    }
+    if (mPerm != NULL) {
+        mPerm->ApplyEditorConstraints();
+    }
 }
 
 void GamePathEditor::ConstrainXToPoint() {
@@ -420,35 +638,55 @@ void GamePathEditor::ConstraintYToType(int pType) {
 
 
 void GamePathEditor::ConstraintXToPrev() {
-    if (mWave == NULL || mPath == NULL) { return; }
-    LevelWavePathBlueprintNode *aNode = mPath->GetNode();
+    if (mPath == NULL) { return; }
+    LevelPathNodeBlueprint *aNode = mPath->GetNode();
     if (aNode == NULL) { return; }
     aNode->mConstraint.mTypeX = gEditor->PrevXConstraintf(aNode->mEditorX);
-    mWave->ApplyEditorConstraints();
+    if (mWave != NULL) {
+        mWave->ApplyEditorConstraints();
+    }
+    if (mPerm != NULL) {
+        mPerm->ApplyEditorConstraints();
+    }
 }
 
 void GamePathEditor::ConstraintXToNext() {
-    if (mWave == NULL || mPath == NULL) { return; }
-    LevelWavePathBlueprintNode *aNode = mPath->GetNode();
+    if (mPath == NULL) { return; }
+    LevelPathNodeBlueprint *aNode = mPath->GetNode();
     if (aNode == NULL) { return; }
     aNode->mConstraint.mTypeX = gEditor->NextXConstraintf(aNode->mEditorX);
-    mWave->ApplyEditorConstraints();
+    if (mWave != NULL) {
+        mWave->ApplyEditorConstraints();
+    }
+    if (mPerm != NULL) {
+        mPerm->ApplyEditorConstraints();
+    }
 }
 
 void GamePathEditor::ConstraintYToPrev() {
-    if (mWave == NULL || mPath == NULL) { return; }
-    LevelWavePathBlueprintNode *aNode = mPath->GetNode();
+    if (mPath == NULL) { return; }
+    LevelPathNodeBlueprint *aNode = mPath->GetNode();
     if (aNode == NULL) { return; }
     aNode->mConstraint.mTypeY = gEditor->PrevYConstraintf(aNode->mEditorY);
-    mWave->ApplyEditorConstraints();
+    if (mWave != NULL) {
+        mWave->ApplyEditorConstraints();
+    }
+    if (mPerm != NULL) {
+        mPerm->ApplyEditorConstraints();
+    }
 }
 
 void GamePathEditor::ConstraintYToNext() {
-    if (mWave == NULL || mPath == NULL) { return; }
-    LevelWavePathBlueprintNode *aNode = mPath->GetNode();
+    if (mPath == NULL) { return; }
+    LevelPathNodeBlueprint *aNode = mPath->GetNode();
     if (aNode == NULL) { return; }
     aNode->mConstraint.mTypeY = gEditor->NextYConstraintf(aNode->mEditorY);
-    mWave->ApplyEditorConstraints();
+    if (mWave != NULL) {
+        mWave->ApplyEditorConstraints();
+    }
+    if (mPerm != NULL) {
+        mPerm->ApplyEditorConstraints();
+    }
 }
 
 

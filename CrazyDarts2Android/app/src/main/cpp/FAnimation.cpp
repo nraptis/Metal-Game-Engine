@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Nick Raptis. All rights reserved.
 //
 
-#include "FAnimation.h"
+#include "FAnimation.hpp"
 #include "core_includes.h"
-#include "FMath.h"
+#include "FMath.hpp"
 
 FAnimation::FAnimation() {
 

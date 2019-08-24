@@ -10,7 +10,7 @@
 #define FHashMap_hpp
 
 #include "FList.hpp"
-#include "FString.h"
+#include "FString.hpp"
 
 class FHashMap;
 class FHashMapNode {

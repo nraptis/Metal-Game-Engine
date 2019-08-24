@@ -8,8 +8,8 @@
 
 #include "EditorMenuFormationUtilities.hpp"
 #include "GameFormationEditor.hpp"
-#include "LevelWaveSpawnFormationTracerBlueprint.hpp"
-#include "LevelWaveSpawnFormationTracer.hpp"
+#include "LevelFormationTracerBlueprint.hpp"
+#include "LevelFormationTracer.hpp"
 #include "GameEditor.hpp"
 #include "FApp.hpp"
 
@@ -87,11 +87,40 @@ EditorMenuFormationUtilities::EditorMenuFormationUtilities(GameFormationEditor *
     mPanelTracerTweaks->AddSection(mSegmentTracersSpeed);
 
     
+
     
-    mStepperTestIndex = new UIStepper();
-    mStepperTestIndex->SetText("Test Step: ");
-    mPanelTracerTweaks->AddSection(mStepperTestIndex);
+    mPanelTracerSpecial = new ToolMenuPanel();
+    mPanelTracerSpecial->SetTitle("Tracer Special");
+    AddSection(mPanelTracerSpecial);
     
+    
+    //mStepperTracerSpawnCount = new UIStepper();
+    //mStepperTracerSpawnCount->SetText("Spawn Count: ");
+    //mPanelTracerSpecial->AddSection(mStepperTracerSpawnCount);
+    
+    
+    
+    mSegmentTracerSpecialType = new UISegment();
+    mSegmentTracerSpecialType->SetSegmentCount(3);
+    mSegmentTracerSpecialType->SetTitles("None", "Circle", "Round");
+    mPanelTracerSpecial->AddSection(mSegmentTracerSpecialType);
+    
+    mStepperTracerSpecialRadius = new UIStepper();
+    mStepperTracerSpecialRadius->SetText("Size: ");
+    mPanelTracerSpecial->AddSection(mStepperTracerSpecialRadius);
+    
+    mStepperTracerSpecialCornerRadius = new UIStepper();
+    mStepperTracerSpecialCornerRadius->SetText("Corner: ");
+    mPanelTracerSpecial->AddSection(mStepperTracerSpecialCornerRadius);
+    
+    
+    /*
+    mSegmentGridType = new UISegment();
+    mSegmentGridType->SetSegmentCount(6);
+    mSegmentGridType->SetTitles("RECT", "CIRC", "STAR", "TRI", "ROUND", "NGON1");
+    mSegmentGridType->SetTarget(&mEditor->mGridType);
+    mPanelGrid->AddSection(mSegmentGridType);
+    */
     
     
     
@@ -125,6 +154,14 @@ void EditorMenuFormationUtilities::Notify(void *pSender, const char *pNotificati
     if (pSender == mStepperTracerSpawnCount) { mEditor->Refresh(); }
     if (pSender == mButtonDeleteTracer) { mEditor->DeleteTracer(); }
     
+    
+    if (pSender == mSegmentTracerSpecialType) {
+        //mEditor->Update();
+        mEditor->Refresh();
+    }
+    if (pSender == mStepperTracerSpecialRadius) { mEditor->Refresh(); }
+    if (pSender == mStepperTracerSpecialCornerRadius) { mEditor->Refresh(); }
+    
 }
 
 void EditorMenuFormationUtilities::Update() {
@@ -132,9 +169,11 @@ void EditorMenuFormationUtilities::Update() {
     if (mEditor == NULL) { return; }
     if (gEditor == NULL) { return; }
     
-    LevelWaveSpawnFormationTracerBlueprint *aTracer = NULL;
+    LevelFormationTracerBlueprint *aTracer = NULL;
     aTracer = mEditor->mFormation.GetTracer();
     
+    //NOTE: DO NOT SET SPEED CLASS HERE...
+    //mTracerSpeedClassIndex = NO NO NO NO NO
     
     if (mStepperTracerSpawnCount) {
         bool aUnlink = true;
@@ -147,6 +186,7 @@ void EditorMenuFormationUtilities::Update() {
         }
     }
     
+    /*
     if (mSegmentTracersSpeed) {
         bool aUnlink = true;
         if (aTracer != NULL) {
@@ -157,28 +197,41 @@ void EditorMenuFormationUtilities::Update() {
             mSegmentTracersSpeed->SetTarget(NULL);
         }
     }
+    */
+
     
-    if (mStepperTestIndex) {
+    if (mSegmentTracerSpecialType) {
         bool aUnlink = true;
-        
-        LevelWaveSpawnFormationTracer *TT = NULL;
-        
-        int aIndex = 0;
-        EnumList(LevelWaveSpawnFormationTracer, AAA, mEditor->mEditorFormation.mTracerList) {
-            if (aIndex == mEditor->mFormation.mCurrentTracerIndex) {
-                TT = AAA;
-            }
-        }
-        
-        
-        if (TT != NULL) {
+        if (aTracer != NULL) {
             aUnlink = false;
-            mStepperTestIndex->SetTarget(&(TT->mPathIndex));
+            mSegmentTracerSpecialType->SetTarget(&(aTracer->mSpecialType));
         }
         if (aUnlink) {
-            mStepperTestIndex->SetTarget(NULL);
+            mSegmentTracerSpecialType->SetTarget(NULL);
         }
     }
     
 
+    if (mStepperTracerSpecialRadius) {
+        bool aUnlink = true;
+        if (aTracer != NULL) {
+            aUnlink = false;
+            mStepperTracerSpecialRadius->SetTarget(&(aTracer->mSpecialRadius));
+        }
+        if (aUnlink) {
+            mStepperTracerSpecialRadius->SetTarget(NULL);
+        }
+    }
+    
+    
+    if (mStepperTracerSpecialCornerRadius) {
+        bool aUnlink = true;
+        if (aTracer != NULL) {
+            aUnlink = false;
+            mStepperTracerSpecialCornerRadius->SetTarget(&(aTracer->mSpecialCornerRadius));
+        }
+        if (aUnlink) {
+            mStepperTracerSpecialCornerRadius->SetTarget(NULL);
+        }
+    }
 }

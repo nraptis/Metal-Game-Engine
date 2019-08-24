@@ -58,6 +58,7 @@ void PlatformGraphicsInterface::Postrender() {
     }
 }
 
+
 void PlatformGraphicsInterface::SetContext() {
     //[gOpenGLView setContext];
     

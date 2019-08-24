@@ -9,8 +9,8 @@
 #ifndef FloatingCamera_hpp
 #define FloatingCamera_hpp
 
-#include "FVec3.h"
-#include "FMatrix.h"
+#include "FVec3.hpp"
+#include "FMatrix.hpp"
 
 class FloatingCamera {
 public:

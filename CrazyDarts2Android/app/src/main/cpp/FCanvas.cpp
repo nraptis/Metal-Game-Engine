@@ -8,7 +8,7 @@
 
 #include "core_includes.h"
 #include "FCanvas.hpp"
-#include "FAnimation.h"
+#include "FAnimation.hpp"
 #include "FFileTable.hpp"
 
 FCanvas::FCanvas() {
@@ -26,6 +26,8 @@ FCanvas::FCanvas() {
     mConsumesTouches = true;
     mRecievesOutsideTouches = false;
     mRecievesConsumedTouches = false;
+    mExclusiveKeyDownCaptureWhenSelected = false;
+    mExclusiveKeyUpCaptureWhenSelected = false;
     mEnabled = true;
     mHidden = false;
     mDrawManual = false;
@@ -358,8 +360,8 @@ void FCanvas::ConvertPoint(float &pX, float &pY, FCanvas *pFromCanvas, FCanvas *
     }
 }
 
-FPoint FCanvas::Convert(float pX, float pY, FCanvas *pFromCanvas, FCanvas *pToCanvas) {
-    FPoint aResult;
+FVec2 FCanvas::Convert(float pX, float pY, FCanvas *pFromCanvas, FCanvas *pToCanvas) {
+    FVec2 aResult;
     aResult.mX = pX; aResult.mY = pY;
     ConvertPoint(aResult.mX, aResult.mY, pFromCanvas, pToCanvas);
     return aResult;
@@ -840,16 +842,28 @@ void FCanvas::BaseTouchFlush() {
         aChild->BaseTouchFlush();
     }
 }
+
 void FCanvas::BaseKeyDown(int pKey) {
     KeyDown(pKey);
+    
+    if (mWindow != NULL && mWindow->mSelectedCanvas == this && mExclusiveKeyDownCaptureWhenSelected == true) {
+        return;
+    }
+    
     mProcessChildren.RemoveAll();
     mProcessChildren.Add(mChildren);
     EnumList(FCanvas, aChild, mProcessChildren) {
         aChild->BaseKeyDown(pKey);
     }
 }
+
 void FCanvas::BaseKeyUp(int pKey) {
     KeyUp(pKey);
+    
+    if (mWindow != NULL && mWindow->mSelectedCanvas == this && mExclusiveKeyUpCaptureWhenSelected == true) {
+        return;
+    }
+    
     mProcessChildren.RemoveAll();
     mProcessChildren.Add(mChildren);
     EnumList(FCanvas, aChild, mProcessChildren) {
@@ -891,7 +905,9 @@ FCanvasBucket::~FCanvasBucket() {
     mTableCount = 0;
     mTableSize = 0;
 
-    FreeList(FCanvas, mQueue);
+    // We will assume that something outside
+    // is deleting the canvases for real.
+    mQueue.RemoveAll();
 
     mListHead = 0;
     mListTail = 0;

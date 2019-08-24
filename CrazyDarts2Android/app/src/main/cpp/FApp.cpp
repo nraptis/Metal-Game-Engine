@@ -8,7 +8,7 @@
 
 #include "FApp.hpp"
 #include "core_includes.h"
-#include "core_app_shell.h"
+#include "core_app_shell.hpp"
 #include "PlatformGraphicsInterface.hpp"
 
 FApp *gAppBase = NULL;
@@ -26,6 +26,7 @@ FApp::FApp() {
     mIsGraphicsSetUpEnqueued = false;
     mGraphicsSetUpEnqueuedTimer = 0;
     
+    mDarkMode = false;
     
     mDidInitialize = false;
     mDidDetachFrameController = false;
@@ -58,8 +59,7 @@ FApp::FApp() {
     RecoverTime();
 }
 
-FApp::~FApp()
-{
+FApp::~FApp() {
     
 }
 
@@ -67,18 +67,18 @@ void FApp::BaseInitialize() {
     if (mDidInitialize == false) {
         mDidInitialize = true;
         mImageLoadDirectoryList += new FString("");
+        
         if (gDirBundle.mLength > 0) mImageLoadDirectoryList += new FString(gDirBundle.c());
         if (gDirDocuments.mLength > 0) mImageLoadDirectoryList += new FString(gDirDocuments.c());
         
         mImageLoadExtensionList += new FString("jpg");
         mImageLoadExtensionList += new FString("png");
-
         mImageLoadMutableSuffixList += new FString("");
         mImageLoadSuffixList += new FString("");
         
         while (gGraphicsInterface->IsReady() == false) {
             printf("BaseInitialize:: Waiting for GFX...\n");
-            os_sleep(10);
+            os_sleep(100);
         }
         
         Graphics::SetDeviceSize(gDeviceWidth, gDeviceHeight);
@@ -254,6 +254,8 @@ void FApp::BaseDraw() {
         return;
     }
 
+    Log("Base Draw?\n");
+
     int aSlot = 0;
     if (mFrameCaptureDrawCount < FRAME_TIME_CAPTURE_COUNT) {
         aSlot = mFrameCaptureDrawCount;
@@ -329,6 +331,17 @@ void FApp::BaseDraw() {
         Graphics::DrawLine(gVirtualDevX, gVirtualDevY + gVirtualDevHeight - gSafeAreaInsetBottom, gVirtualDevX + gVirtualDevWidth, gVirtualDevY + gVirtualDevHeight - gSafeAreaInsetBottom, 1.0f);
         */
     }
+   
+    
+    if (mDarkMode) {
+    Graphics::PipelineStateSetShape2DAlphaBlending();
+    Graphics::SetColor(0.0075f, 0.0075f, 0.0085f, 0.8f);
+    Graphics::DrawRect(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+    Graphics::SetColor();
+    }
+
+    Log("Base Draw - FINISHED???\n");
+    
 }
 
 void FApp::BaseLoad() {
@@ -842,7 +855,7 @@ void FApp::FrameController() {
         
         /////////////////////////////////////////////////////////////////
         //
-        // Main control loop... calls Update() and Draw() appropriately
+        // Main control loop... calls Update() appropriately
         //
         /////////////////////////////////////////////////////////////////
         

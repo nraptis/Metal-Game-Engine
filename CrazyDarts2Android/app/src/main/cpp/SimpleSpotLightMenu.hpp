@@ -10,7 +10,7 @@
 #define SimpleSpotLightMenu_hpp
 
 #include "ToolMenu.hpp"
-#include "FPoint.h"
+#include "FVec2.hpp"
 
 
 class SpotLightSimpleConfiguration;

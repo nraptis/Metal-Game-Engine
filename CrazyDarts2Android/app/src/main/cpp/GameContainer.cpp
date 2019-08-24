@@ -7,14 +7,25 @@
 //
 #include "core_includes.h"
 #include "GameContainer.hpp"
-#include "FAnimation.h"
+#include "FAnimation.hpp"
 #include "Game.hpp"
+#include "GameEditor.hpp"
 
 GameContainer *gGameContainer = NULL;
 
 GameContainer::GameContainer() {
     
+    gGameContainer = this;
+    
     mName = "{{Game Container}}";
+    
+    
+    mGameTestEditorOverlay = NULL;
+    mGameTestRunningOverlay = NULL;
+    
+    
+    mEditorMenu = NULL;
+    mEditorMenuUtils = NULL;
     
     
     SetWidth(1000.0f);
@@ -36,6 +47,12 @@ GameContainer::GameContainer() {
     mGame = new Game();
     mContainer->AddChild(mGame);
     
+    
+    
+    
+    
+    
+    
 }
 
 GameContainer::~GameContainer() {
@@ -43,9 +60,14 @@ GameContainer::~GameContainer() {
         gGameContainer = NULL;
     }
     
-    if (mGame) {
-        delete mGame;
-        mGame = NULL;
+    if (mEditorMenu != NULL) {
+        mEditorMenu->Kill();
+        mEditorMenu = NULL;
+    }
+    
+    if (mEditorMenuUtils != NULL) {
+        mEditorMenuUtils->Kill();
+        mEditorMenuUtils = NULL;
     }
     
 }
@@ -78,12 +100,21 @@ void GameContainer::Layout() {
         float aGameY = round(mContainer->mHeight2 - mGame->mHeight2);
         mGame->SetX(aGameX);
         mGame->SetY(aGameY);
-        
-        
-        
-        
-        
     }
+    
+    
+    //TODO: When to show this..?
+    
+
+    
+    
+    if (mGameTestEditorOverlay != NULL) {
+        
+        if (mGame != NULL) {
+            mGameTestEditorOverlay->SetFrame(0.0f, 0.0f, mGame->mWidth, mGame->mHeight);
+        }
+    }
+    
 }
 
 void GameContainer::Update() {
@@ -138,6 +169,20 @@ void GameContainer::TouchFlush() {
 
 void GameContainer::KeyDown(int pKey) {
     
+    bool aShift = gKeyDownShift;
+    bool aCtrl = gKeyDownCtrl;
+    bool aAlt = gKeyDownAlt;
+    
+    if (pKey == __KEY__E) {
+#ifdef EDITOR_MODE
+        if (aShift == false && aCtrl == true && aAlt == false) {
+            if (mEditorMenu != NULL) {
+                gApp->EditorTestSwitchToEditor();
+            }
+        }
+#endif
+    }
+    
 }
 
 void GameContainer::KeyUp(int pKey) {
@@ -145,6 +190,48 @@ void GameContainer::KeyUp(int pKey) {
 }
 
 void GameContainer::Notify(void *pSender, const char *pNotification) {
+    
+}
+
+//After the game + editor are ready to go.
+void GameContainer::Realize() {
+    
+    
+    bool aHasEditor = false;
+    
+#ifdef EDITOR_MODE
+    if (mGameTestEditorOverlay == NULL && gEditor == NULL) {
+        mGameTestEditorOverlay = new GameTestEditorOverlay();
+        mGameTestEditorOverlay->mConsumesTouches = false;
+        mGame->AddChild(mGameTestEditorOverlay);
+        mWindow->RegisterFrameDidUpdate(this);
+    }
+    
+    if (gEditor != NULL) {
+        aHasEditor = true;
+    }
+    
+#endif
+    
+    // This is what we show when we are running, not from the editor...
+    if (mGameTestRunningOverlay == NULL && aHasEditor == false && mGameTestEditorOverlay == NULL) {
+        mGameTestRunningOverlay = new GameTestRunningOverlay();
+        mGameTestRunningOverlay->mConsumesTouches = false;
+        mGame->AddChild(mGameTestRunningOverlay);
+        mWindow->RegisterFrameDidUpdate(this);
+    }
+    
+}
+
+void GameContainer::OpenEditorTestMenus() {
+    
+    mEditorMenu = new EditorMenuGameTest();
+    gApp->mWindowTools.AddChild(mEditorMenu);
+    mEditorMenu->SetFrame(gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 20.0f, 400.0f, 680.0f);
+    
+    mEditorMenuUtils = new EditorMenuGameTestUtils();
+    gApp->mWindowTools.AddChild(mEditorMenuUtils);
+    mEditorMenuUtils->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), gSafeAreaInsetTop + 20.0f, 400.0f, 480.0f);
     
 }
 

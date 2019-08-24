@@ -11,7 +11,7 @@
 
 #include "ToolMenu.hpp"
 #include "FloatingCamera.hpp"
-#include "FPoint.h"
+#include "FVec2.hpp"
 
 class CameraMenu : public ToolMenu {
 public:
