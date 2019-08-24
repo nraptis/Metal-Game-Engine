@@ -1,0 +1,70 @@
+{
+	"section": true,
+	"wave_list": [
+		{
+			"spawn_spacing": 90,
+			"path": {
+				"speed_class": 200,
+				"node_list": [
+					{
+						"x_con": 300,
+						"y_con": 300
+					},
+					{
+						"x_con": 700,
+						"y_con": 300
+					}
+				]
+			},
+			"spawn": [
+				{},
+				{},
+				{}
+			]
+		},
+		{
+			"spawn_spacing": 90,
+			"creation_prev_wave_complete": true,
+			"path": {
+				"speed_class": 200,
+				"node_list": [
+					{
+						"x_con": 700,
+						"y_con": 400
+					},
+					{
+						"x_con": 300,
+						"y_con": 400
+					}
+				]
+			},
+			"spawn": [
+				{},
+				{},
+				{}
+			]
+		},
+		{
+			"spawn_spacing": 90,
+			"creation_prev_wave_complete": true,
+			"path": {
+				"speed_class": 200,
+				"node_list": [
+					{
+						"x_con": 300,
+						"y_con": 500
+					},
+					{
+						"x_con": 700,
+						"y_con": 500
+					}
+				]
+			},
+			"spawn": [
+				{},
+				{},
+				{}
+			]
+		}
+	]
+}

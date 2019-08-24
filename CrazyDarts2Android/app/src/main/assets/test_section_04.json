@@ -1,0 +1,154 @@
+{
+	"section": true,
+	"wave_list": [
+		{
+			"max_spawn_size": 260,
+			"path": {
+				"node_list": [
+					{
+						"x_con": 200,
+						"y_con": 500
+					},
+					{
+						"x_con": 500,
+						"y_con": 500,
+						"wait": 50
+					},
+					{
+						"x_con": 150,
+						"y_con": 500
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "f_tr_circ_200sz_cfg10xb_spms.json"
+				}
+			]
+		},
+		{
+			"creation_prev_wave_complete": true,
+			"max_spawn_size": 379,
+			"path": {
+				"node_list": [
+					{
+						"x_con": 200,
+						"y_con": 500
+					},
+					{
+						"x_con": 500,
+						"y_con": 500,
+						"decel": 100,
+						"accel": 100,
+						"wait": 100
+					},
+					{
+						"x_con": 850,
+						"y_con": 500
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "f_grid_hexa_ngon1_6sid_46rngs_3rngc_34pnts_81ful__nodes_cfg30xb_allg.json"
+				}
+			]
+		},
+		{
+			"creation_prev_wave_complete": true,
+			"max_spawn_size": 164,
+			"path": {
+				"node_list": [
+					{
+						"x_con": 200,
+						"y_con": 500
+					},
+					{
+						"x_con": 400,
+						"y_con": 500,
+						"decel": 100,
+						"accel": 100,
+						"wait": 150
+					},
+					{
+						"x_con": 150,
+						"y_con": 500
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "f_grid_penta_ngon1_5sid_45rngs_1rngc_31pnts_solid__nodes_cfg6xb_allg.json"
+				}
+			]
+		},
+		{
+			"creation_prev_wave_start": true,
+			"max_spawn_size": 164,
+			"path": {
+				"node_list": [
+					{
+						"x_con": 800,
+						"y_con": 500
+					},
+					{
+						"x_con": 600,
+						"y_con": 500,
+						"decel": 100,
+						"accel": 100,
+						"wait": 100
+					},
+					{
+						"x_con": 850,
+						"y_con": 500
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "f_grid_penta_ngon1_5sid_45rngs_1rngc_31pnts_solid__nodes_cfg6xb_allg.json"
+				}
+			]
+		},
+		{
+			"creation_prev_wave_complete": true,
+			"max_spawn_size": 337,
+			"path": {
+				"node_list": [
+					{
+						"x_con": 500,
+						"y_con": 200
+					},
+					{
+						"x_con": 500,
+						"y_con": 500,
+						"decel": 100,
+						"accel": 100,
+						"wait": 100
+					},
+					{
+						"x_con": 500,
+						"y_con": 150
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "f_grid_circ_4x4_44spc_75ful__nodes_cfg28xb12on16off.json",
+					"motion": {
+						"slice_list": [
+							{
+								"type": 5,
+								"linear_tick": 15,
+								"linear_time": 30,
+								"radius": 12,
+								"pause_1": 10,
+								"pause_2": 10
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

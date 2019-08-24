@@ -1,0 +1,31 @@
+{
+	"section": true,
+	"wave_list": [],
+	"perm_list": [
+		{
+			"x": 49.999992,
+			"y": 19.686373,
+			"formation": "f_tr_circ_80sz_cfgrbrb_spm.json"
+		},
+		{
+			"x": 83.189682,
+			"y": 34.154606,
+			"formation": "f_tr_rrct_160sz_42cr_cfg2xb_spxs.json"
+		},
+		{
+			"x": 70.512352,
+			"y": 57.564705,
+			"formation": "f_tr_rrct_140sz_42cr_cfg3xb_spm.json"
+		},
+		{
+			"x": 29.487631,
+			"y": 57.564701,
+			"formation": "f_tr_rrct_160sz_42cr_cfg5xb_spmf.json"
+		},
+		{
+			"x": 16.810297,
+			"y": 34.154606,
+			"formation": "f_tr_circ_80sz_cfgrbrb_spm.json"
+		}
+	]
+}

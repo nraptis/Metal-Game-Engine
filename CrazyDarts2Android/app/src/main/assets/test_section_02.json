@@ -1,0 +1,104 @@
+{
+	"section": true,
+	"wave_list": [],
+	"perm_list": [
+		{
+			"x_con": 500,
+			"y_con": 300,
+			"path": {
+				"closed": true,
+				"node_list": [
+					{
+						"x_con": 300,
+						"y_con": 300
+					},
+					{
+						"x_con": 700,
+						"y_con": 300
+					},
+					{
+						"x_con": 700,
+						"y_con": 400,
+						"y_con_offset": 70.000000
+					},
+					{
+						"x_con": 300,
+						"y_con": 400,
+						"y_con_offset": 70.000000
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "f_grid_rect_2x2_44spc_solid__nodes_cfg4xb_allg.json",
+					"motion": {
+						"slice_list": [
+							{
+								"type": 3,
+								"linear_tick": 50,
+								"linear_time": 100,
+								"angle_span": 50
+							}
+						]
+					}
+				},
+				{
+					"type": 1
+				},
+				{
+					"formation": "f_tr_circ_80sz_cfg4xb_spm.json"
+				},
+				{
+					"type": 1
+				}
+			]
+		},
+		{
+			"x_con": 500,
+			"y_con": 500,
+			"path": {
+				"closed": true,
+				"node_list": [
+					{
+						"x_con": 300,
+						"y_con": 500,
+						"y_con_offset": 60.000000
+					},
+					{
+						"x_con": 700,
+						"y_con": 500,
+						"y_con_offset": 60.000000
+					},
+					{
+						"x_con": 700,
+						"y_con": 600,
+						"y_con_offset": 100.000000
+					},
+					{
+						"x_con": 300,
+						"y_con": 600,
+						"y_con_offset": 100.000000
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "f_grid_rect_2x2_44spc_solid__nodes_cfg4xb_allg.json"
+				},
+				{
+					"type": 1
+				},
+				{},
+				{
+					"type": 1
+				},
+				{
+					"formation": "f_tr_circ_80sz_cfgrbrb_spm.json"
+				},
+				{
+					"type": 1
+				}
+			]
+		}
+	]
+}
