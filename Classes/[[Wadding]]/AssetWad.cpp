@@ -44,7 +44,7 @@ void AssetWad::QuickLoad(const char *pKey, FSprite *pSprite) {
         aSprite = pSprite;
     }
     
-    aSprite->Kill();
+    //aSprite->Kill();
     aSprite->Load(pKey);
 }
 
