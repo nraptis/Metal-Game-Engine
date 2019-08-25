@@ -304,7 +304,7 @@ void FApp::BaseDraw() {
         Graphics::MatrixModelViewReset();
         Graphics::SetColor();
         Graphics::PipelineStateSetSpritePremultipliedBlending();
-        Graphics::BufferSetIndicesSprite();
+        //Graphics::BufferSetIndicesSprite();
         
         
         mSysFont.Draw(FString("FPS = ") + FString(GetFPS()), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 2.0f, 0.5f);

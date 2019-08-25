@@ -98,6 +98,13 @@ void FTextureCache::TextureBindRemove(FTexture *pTexture) {
                 if (aNode->mBindCount <= 0) {
                     Log("Remove [%s] Has %d Binds!\n", pTexture->mFileName.c(), aNode->mBindCount);
                     aNode->mTexture->Unload();
+                    
+                    
+                    
+                    //mTableNodes.Remove(aNode->mTexture->mFileName.c());
+                    //aNode->mTexture->Unload();
+                    //delete aNode;
+                    
                 }
             }
         }

@@ -23,6 +23,8 @@
 #include "CameraMenu.hpp"
 
 #include "SoundConfigMenu.hpp"
+#include "AssetConfigMenu.hpp"
+
 
 #ifdef EDITOR_MODE
 class GameEditor;
@@ -56,6 +58,11 @@ GFXApp::GFXApp() {
     mScreenTool = NULL;
     mCameraMenu = NULL;
     mSoundMenu = NULL;
+    mAssetMenu = NULL;
+    
+    
+    
+    
     
     mTestTouch1 = NULL;
     mTestTouch2 = NULL;
@@ -83,6 +90,15 @@ GFXApp::GFXApp() {
      */
     
     mLoadGame = 12;
+    
+    
+    mWadReloadIsEnqueued = false;
+    mWadReloadOnNextDraw = false;
+    mWadReloadTimer = 0;
+    
+    
+    
+    
 }
 
 GFXApp::~GFXApp() {
@@ -197,6 +213,9 @@ void GFXApp::Load() {
      */
     
     
+    ExecuteWadReload();
+    
+    
     gFormationCollection.Load();
     
 }
@@ -267,14 +286,22 @@ void GFXApp::LoadComplete() {
      }
     */
     
+    if (mAssetMenu == NULL) {
+        mAssetMenu = new AssetConfigMenu();
+        mAssetMenu->SetFrame(gSafeAreaInsetLeft + 20.0f, gSafeAreaInsetTop + 20.0f, 450.0f, gDeviceHeight * 0.8f);
+        mWindowTools.AddChild(mAssetMenu);
+    }
     
-    /*
-     if (mScreenTool == NULL) {
-     mScreenTool = new Util_ScreenFrame();
-     mScreenTool->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
-     mWindowTools.AddChild(mScreenTool);
-     }
-     */
+    
+    if (gDeviceWidth > 900) {
+    if (mScreenTool == NULL) {
+         mScreenTool = new Util_ScreenFrame();
+         mScreenTool->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+         mWindowTools.AddChild(mScreenTool);
+    }
+    }
+    
+    
     
     
     
@@ -706,6 +733,63 @@ void GFXApp::Draw() {
         
         Graphics::PipelineStateSetSpriteAlphaBlending();
         
+        
+        
+        if (mWadReloadIsEnqueued) {
+            
+            if (mWadReloadOnNextDraw) {
+                
+                
+                printf("WAD RELOAD - Triggered!!!\n");
+                
+                
+                mWadReloadIsEnqueued = false;
+                mWadReloadOnNextDraw = false;
+                mWadReloadTimer = 0;
+                
+                ExecuteWadReload();
+                
+            } else {
+                mWadReloadTimer--;
+                if (mWadReloadTimer <= 0) {
+                    mWadReloadOnNextDraw = true;
+                }
+            }
+            
+            
+            Graphics::MatrixProjectionResetOrtho();
+            Graphics::MatrixModelViewReset();
+            Graphics::SetColor();
+            
+            
+            Graphics::PipelineStateSetShape2DAlphaBlending();
+            Graphics::SetColor(0.0f, 0.0f, 0.0f, 0.75f);
+            Graphics::DrawRect(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+            
+            
+            
+            Graphics::PipelineStateSetSpritePremultipliedBlending();
+            Graphics::SetColor();
+            //Graphics::BufferSetIndicesSprite();
+            
+            
+            mSysFont.Center(FString("RELOAD..."), gDeviceWidth2, gDeviceHeight2, 1.0f);
+            
+        }
+        
+        
+        //mWadReloadIsEnqueued = true;
+        //mWadReloadTimer = pTime;
+        
+        
+        Graphics::PipelineStateSetSpriteAlphaBlending();
+        Graphics::SetColor();
+        
+        
+        mWadGameInterface.mSpriteTest.Draw(40.0f, 200.0f);
+        
+        
+        
     }
 }
 
@@ -863,6 +947,47 @@ void GFXApp::SetDeviceSize(int pWidth, int pHeight) {
     
     
 }
+
+
+void GFXApp::EnqueueWadReload(int pTime) {
+
+    mWadReloadIsEnqueued = true;
+    mWadReloadOnNextDraw = false;
+    mWadReloadTimer = pTime;
+    
+}
+
+void GFXApp::ExecuteWadReload() {
+    
+    printf("*** BEGIN:: GFXApp::ExecuteWadReload()\n");
+    
+    if (gWadConfiguration.ShouldReload() == false) {
+        printf("BLOCKING RELOAD, NO NEED...\n");
+        return;
+    }
+    
+    printf("NOTIFYING RELOAD, NO NEED...\n");
+    gWadConfiguration.NotifyReload();
+    
+    
+    AppShellSetImageFileScale(gWadConfiguration.mAssetScale);
+    AppShellSetSpriteScale(gWadConfiguration.mSpriteScale);
+    
+    
+    mWadGameInterface.Load();
+    
+    
+    
+    //AssetWadGameInterface                   ;
+    
+    
+    
+    
+    
+    printf("*** End:: GFXApp::ExecuteWadReload()\n");
+    
+}
+
 
 
 #ifdef EDITOR_MODE

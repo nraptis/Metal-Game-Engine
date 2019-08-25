@@ -124,6 +124,7 @@ extern int gQuadBufferTextureCoord;
 
 
 extern int gImageFileScale;
+extern int gSpriteScale;
 
 extern FString gDirDocuments;
 extern FString gDirBundle;

@@ -14,8 +14,11 @@
 #include "FModelDataPacked.hpp"
 #include "UIRoundedRect.hpp"
 #include "FloatingCamera.hpp"
+#include "WadGlobalConfiguration.hpp"
 #include "FUniforms.hpp"
 #include "FJSON.hpp"
+
+#include "AssetWadGameInterface.hpp"
 
 #define EDITOR_MODE 1
 #undef EDITOR_MODE
@@ -31,8 +34,12 @@ class LevelSelectorScreen;
 class LightMenu;
 class CameraMenu;
 class SoundConfigMenu;
+class AssetConfigMenu;
 class GameContainer;
 class WorldConfigScene;
+
+
+
 
 class GFXApp : public FApp {
 public:
@@ -73,11 +80,24 @@ public:
     void                                    Draw3D();
     void                                    Draw2D();
     
+    void                                    EnqueueWadReload(int pTime);
+    bool                                    mWadReloadIsEnqueued;
+    bool                                    mWadReloadOnNextDraw;
+    void                                    ExecuteWadReload();
+    int                                     mWadReloadTimer;
+    
+    
+    
+    AssetWadGameInterface                   mWadGameInterface;
+    
+    
     FloatingCamera                          mCamera;
     
     CameraMenu                              *mCameraMenu;
     
     SoundConfigMenu                         *mSoundMenu;
+    AssetConfigMenu                         *mAssetMenu;
+    
     
     FModelData                              mSnail;
     FSprite                                 mSnailMap;

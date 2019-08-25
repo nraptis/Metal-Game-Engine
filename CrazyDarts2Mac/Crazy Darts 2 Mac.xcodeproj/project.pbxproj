@@ -209,6 +209,10 @@
 		0D8FCF86225DA8ED00A74580 /* os_core_app_shell_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCE8F225DA8ED00A74580 /* os_core_app_shell_mac.mm */; };
 		0D8FCF87225DA8ED00A74580 /* OSMusicPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCE96225DA8ED00A74580 /* OSMusicPlayer.mm */; };
 		0D8FCF88225DA8ED00A74580 /* os_core_outlets_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCE97225DA8ED00A74580 /* os_core_outlets_mac.mm */; };
+		0DBDC2E92312127F00DBA34C /* WadGlobalConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBDC2E72312127F00DBA34C /* WadGlobalConfiguration.cpp */; };
+		0DBDC2EC2312129100DBA34C /* AssetWad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBDC2EA2312129100DBA34C /* AssetWad.cpp */; };
+		0DBDC2EF23121B1E00DBA34C /* AssetWadGameInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBDC2ED23121B1D00DBA34C /* AssetWadGameInterface.cpp */; };
+		0DBDC2F223121E3700DBA34C /* AssetConfigMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBDC2F023121E3700DBA34C /* AssetConfigMenu.cpp */; };
 		E1705008222232CF000C5127 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1705007222232CF000C5127 /* Assets.xcassets */; };
 		E17054B0222236F9000C5127 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E17054AC222236F9000C5127 /* Cocoa.framework */; };
 		E17054B1222236F9000C5127 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E17054AD222236F9000C5127 /* AVFoundation.framework */; };
@@ -617,6 +621,14 @@
 		0D8FCE95225DA8ED00A74580 /* os_core_sound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os_core_sound.h; sourceTree = "<group>"; };
 		0D8FCE96225DA8ED00A74580 /* OSMusicPlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OSMusicPlayer.mm; sourceTree = "<group>"; };
 		0D8FCE97225DA8ED00A74580 /* os_core_outlets_mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = os_core_outlets_mac.mm; sourceTree = "<group>"; };
+		0DBDC2E72312127F00DBA34C /* WadGlobalConfiguration.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WadGlobalConfiguration.cpp; sourceTree = "<group>"; };
+		0DBDC2E82312127F00DBA34C /* WadGlobalConfiguration.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WadGlobalConfiguration.hpp; sourceTree = "<group>"; };
+		0DBDC2EA2312129100DBA34C /* AssetWad.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AssetWad.cpp; sourceTree = "<group>"; };
+		0DBDC2EB2312129100DBA34C /* AssetWad.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AssetWad.hpp; sourceTree = "<group>"; };
+		0DBDC2ED23121B1D00DBA34C /* AssetWadGameInterface.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AssetWadGameInterface.cpp; sourceTree = "<group>"; };
+		0DBDC2EE23121B1E00DBA34C /* AssetWadGameInterface.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AssetWadGameInterface.hpp; sourceTree = "<group>"; };
+		0DBDC2F023121E3700DBA34C /* AssetConfigMenu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AssetConfigMenu.cpp; sourceTree = "<group>"; };
+		0DBDC2F123121E3700DBA34C /* AssetConfigMenu.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AssetConfigMenu.hpp; sourceTree = "<group>"; };
 		E1705001222232CF000C5127 /* Crazy Darts 2 Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crazy Darts 2 Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1705007222232CF000C5127 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E170500C222232CF000C5127 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -649,6 +661,7 @@
 		0D181717230DBAF70055019D /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0DBDC2E62312125700DBA34C /* [[Wadding]] */,
 				0D181792230DBAF70055019D /* [[Editor]] */,
 				0D181721230DBAF70055019D /* [[Levels]] */,
 				0D181734230DBAF70055019D /* [[Spawn Blueprints]] */,
@@ -776,6 +789,8 @@
 				0D18175B230DBAF70055019D /* SimpleSpotLightMenu.hpp */,
 				0D181757230DBAF70055019D /* SoundConfigMenu.cpp */,
 				0D18175C230DBAF70055019D /* SoundConfigMenu.hpp */,
+				0DBDC2F023121E3700DBA34C /* AssetConfigMenu.cpp */,
+				0DBDC2F123121E3700DBA34C /* AssetConfigMenu.hpp */,
 			);
 			path = "[Menus]";
 			sourceTree = "<group>";
@@ -1180,6 +1195,19 @@
 			path = "[Mac]";
 			sourceTree = "<group>";
 		};
+		0DBDC2E62312125700DBA34C /* [[Wadding]] */ = {
+			isa = PBXGroup;
+			children = (
+				0DBDC2E72312127F00DBA34C /* WadGlobalConfiguration.cpp */,
+				0DBDC2E82312127F00DBA34C /* WadGlobalConfiguration.hpp */,
+				0DBDC2EA2312129100DBA34C /* AssetWad.cpp */,
+				0DBDC2EB2312129100DBA34C /* AssetWad.hpp */,
+				0DBDC2ED23121B1D00DBA34C /* AssetWadGameInterface.cpp */,
+				0DBDC2EE23121B1E00DBA34C /* AssetWadGameInterface.hpp */,
+			);
+			path = "[[Wadding]]";
+			sourceTree = "<group>";
+		};
 		E1704FF8222232CF000C5127 = {
 			isa = PBXGroup;
 			children = (
@@ -1339,6 +1367,7 @@
 				0D8FCF1F225DA8ED00A74580 /* SpriteShaders.metal in Sources */,
 				0D8FCF68225DA8ED00A74580 /* Util_ScreenFrame.cpp in Sources */,
 				0D8FCF6E225DA8ED00A74580 /* FWindow.cpp in Sources */,
+				0DBDC2F223121E3700DBA34C /* AssetConfigMenu.cpp in Sources */,
 				0D8FCF4B225DA8ED00A74580 /* FCanvas.cpp in Sources */,
 				0D181800230DBAF70055019D /* Transform2D.cpp in Sources */,
 				0D181815230DBAF70055019D /* EditorMenuFormationUtilities.cpp in Sources */,
@@ -1347,6 +1376,7 @@
 				0D8FCF46225DA8ED00A74580 /* FScrollCanvas.cpp in Sources */,
 				0D8FCF2F225DA8ED00A74580 /* FBufferCache.cpp in Sources */,
 				0D8FCF77225DA8ED00A74580 /* FNotificationCenter.cpp in Sources */,
+				0DBDC2EC2312129100DBA34C /* AssetWad.cpp in Sources */,
 				0D18182F230DBAF70055019D /* Game.cpp in Sources */,
 				0D1817E8230DBAF70055019D /* LevelSectionBlueprint.cpp in Sources */,
 				0D181813230DBAF70055019D /* LightConfigurationScene.cpp in Sources */,
@@ -1447,8 +1477,10 @@
 				0D8FCF70225DA8ED00A74580 /* FUniforms.cpp in Sources */,
 				0D181821230DBAF70055019D /* EditorMenuMotion.cpp in Sources */,
 				0D1817DC230DBAF70055019D /* Level.cpp in Sources */,
+				0DBDC2EF23121B1E00DBA34C /* AssetWadGameInterface.cpp in Sources */,
 				0D8FCF74225DA8ED00A74580 /* FFile.cpp in Sources */,
 				0D181809230DBAF70055019D /* LevelWave.cpp in Sources */,
+				0DBDC2E92312127F00DBA34C /* WadGlobalConfiguration.cpp in Sources */,
 				0D1817DA230DBAF70055019D /* SpotLightSimpleConfiguration.cpp in Sources */,
 				0D181829230DBAF70055019D /* EditorMenuGameTest.cpp in Sources */,
 				0D8FCF41225DA8ED00A74580 /* FSize.cpp in Sources */,

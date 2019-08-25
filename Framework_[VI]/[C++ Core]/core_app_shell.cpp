@@ -59,6 +59,7 @@ FBufferCache gBufferCache;
 
 int gEnvironment = ENV_IOS;
 int gImageFileScale = 1;
+int gSpriteScale = 1;
 
 bool gIsLargeScreen = false;
 bool gIsRetina = false;
@@ -362,6 +363,10 @@ void AppShellSetImageFileScale(int pScale) {
     gImageFileScale = pScale;
     
     if (gAppBase) gAppBase->BaseSetImageFileScale(pScale);
+}
+
+void AppShellSetSpriteScale(int pScale) {
+    gSpriteScale = pScale;
 }
 
 

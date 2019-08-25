@@ -61,22 +61,10 @@ void Balloon::Update() {
     if (mBounceFactorSin < 0.0f) { mBounceFactorSin += 360.0f; }
     
     mBounceFactor = Sin(mBounceFactorSin);
-    
-    
-    
-    
 }
 
 void Balloon::Draw() {
-    
-    
-    
     GameObject::Draw();
-    
-    //Graphics::PipelineStateSetShape2DNoBlending();
-    //Graphics::SetColor(1.0f, 0.25f, 0.25f, 0.35f);
-    //Graphics::DrawPoint(mTransform.mX, mTransform.mY);
-    
 }
 
 void Balloon::Draw3D() {
