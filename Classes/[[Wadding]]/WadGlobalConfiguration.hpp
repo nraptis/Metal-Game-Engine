@@ -32,9 +32,6 @@ public:
     bool                                        mAutoScale;
     
     void                                        Print();
-    
-    
-    
 };
 
 extern WadGlobalConfiguration gWadConfiguration;

@@ -11,6 +11,9 @@
 #include "FAnimation.hpp"
 #include "StuckDart.hpp"
 
+#include "EffectDartFadeStar.hpp"
+#include "EffectBalloonBurst.hpp"
+
 #ifdef EDITOR_MODE
 #include "GameEditor.hpp"
 #endif
@@ -127,12 +130,9 @@ Game::Game() {
     mWind = 0.0f;
     mWindSin = 0.0f;
     
-    
     mTestBalloonRotX = 0.0f;
     mTestBalloonRotY = 0.0f;
     mTestBalloonRotZ = 0.0f;
-    
-    
     
 }
 
@@ -191,8 +191,6 @@ void Game::LayoutTransform() {
     
     mDartPullbackRangeMax = aSpawnShiftY;
     
-    
-    
     float aScreenMinDimension = mWidth;
     if (mHeight < aScreenMinDimension) { aScreenMinDimension = mHeight; }
     
@@ -202,11 +200,11 @@ void Game::LayoutTransform() {
     mCamera->mDistance = 20.0f;
     
     for (int aCalibrationLoops=0;aCalibrationLoops<2048;aCalibrationLoops++) {
-        //
+        
         // The algebra for this conversion does not
         // seem to work out, se we calibrate the camera
         // by easing towards the best distance...
-        //
+        
         float aTestSceneLeft = Convert2DXTo3D(0.0f);
         float aTestSceneRight = Convert2DXTo3D(mWidth);
         //float aExpectedWidth = 34.0f;
@@ -363,18 +361,8 @@ void Game::Update() {
     //TODO: Remove
     for (int i=0;i<mBalloonList.mObjectList.mCount;i++) {
         Balloon *aBalloon = (Balloon *)mBalloonList.mObjectList.mData[i];
-        
         aBalloon->mTransform.mRotation = mTestBalloonRotZ;
         aBalloon->mTilt = mTestBalloonRotX;
-        
-        
-        
-        //mTestBalloonRotX = 0.0f;
-        //mTestBalloonRotY = 0.0f;
-        //mTestBalloonRotZ = 0.0f;
-        
-        
-        
     }
     
     mBalloonList.Update();
@@ -383,7 +371,9 @@ void Game::Update() {
     mBombList.Update();
     mTurtleList.Update();
     
-
+    mEffectListBalloonBursts.Update();
+    mEffectListDartFadeStar.Update();
+    
     
     //New thing, the dart now moves small increments and tries to collide.
     
@@ -495,22 +485,6 @@ void Game::Draw() {
     Graphics::PipelineStateSetSpriteAlphaBlending();
     Graphics::SetColor();
     
-    
-    
-    
-    
-    //gApp->mGameAreaMarker.Draw(0.0f, 0.0f);
-    
-    
-    
-    gApp->mChaosEgg1X.Draw(mWidth2 / 2.0f + 20.0f, 200.0f, 1.5f, 0.0f);
-    gApp->mChaosEgg2X.Draw(mWidth2 + mWidth2 / 2.0f, 200.0f, 1.5f, 0.0f);
-    gApp->mChaosEgg3X.Draw(mWidth2 / 2.0f + 20.0f, 380.0f, 1.5f, 0.0f);
-    gApp->mChaosEgg4X.Draw(mWidth2 + mWidth2 / 2.0f, 380.0f, 1.5f, 0.0f);
-    
-    
-    
-    
     /*
      Graphics::PipelineStateSetShape2DAlphaBlending();
      Graphics::SetColor(0.66f, 0.25f, 0.25f, 0.66f);
@@ -531,6 +505,22 @@ void Game::Draw() {
     if (mCurrentDart) {
         mCurrentDart->Draw();
     }
+    
+    
+  
+    Graphics::MatrixProjectionResetOrtho();
+    Graphics::MatrixModelViewReset();
+    //Graphics::PipelineStateSetSpriteAlphaBlending();
+    //Graphics::SetColor();
+    
+    Graphics::PipelineStateSetSpritePremultipliedBlending();
+    mEffectListBalloonBursts.Draw();
+    
+    
+    Graphics::PipelineStateSetSpriteAdditiveBlending();
+    mEffectListDartFadeStar.Draw();
+    
+    
     
     //
     Graphics::PipelineStateSetSpriteAlphaBlending();
@@ -592,8 +582,6 @@ void Game::Draw() {
 
 void Game::DartMovingInterpolation(Dart *pDart, float pPercent, bool pEnd) {
     
-    //...
-    
     if (pEnd) {
         pDart->mTransform.mX = pDart->mUpdateInterpEndX;
         pDart->mTransform.mY = pDart->mUpdateInterpEndY;
@@ -614,8 +602,6 @@ void Game::DartMovingInterpolation(Dart *pDart, float pPercent, bool pEnd) {
     FVec2 aTip = pDart->GetTipPoint();
     pDart->mTipX = aTip.mX;
     pDart->mTipY = aTip.mY;
-    
-    
     
     for (int n=0;n<mBalloonList.mObjectList.mCount;n++) {
         Balloon *aBalloon = (Balloon *)mBalloonList.mObjectList.mData[n];
@@ -893,6 +879,15 @@ void Game::DartFlyOffScreen(Dart *pDart) {
         pDart->Kill();
     }
 }
+
+void Game::StuckDartBeginFadeOut(Dart *pDart) {
+    
+}
+
+void Game::StuckDartFinishFadeOut(Dart *pDart) {
+    
+}
+
 
 void Game::DartCollideWithBrickhead(Dart *pDart, BrickHead *pBrickHead) {
     if (pDart != NULL) {

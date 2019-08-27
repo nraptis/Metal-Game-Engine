@@ -74,6 +74,11 @@ public:
     void                                        FlyOffEscape(GameObject *pObject);
     void                                        DartFlyOffScreen(Dart *pDart);
     
+    void                                        StuckDartBeginFadeOut(Dart *pDart);
+    void                                        StuckDartFinishFadeOut(Dart *pDart);
+    
+    
+    
     void                                        DartCollideWithBrickhead(Dart *pDart, BrickHead *pBrickHead);
     void                                        DartMovingInterpolation(Dart *pDart, float pPercent, bool pEnd);
     
@@ -99,6 +104,11 @@ public:
     FObjectList                                 mBrickHeadList;
     FObjectList                                 mBombList;
     FObjectList                                 mTurtleList;
+    
+    FObjectList                                 mEffectListBalloonBursts;
+    FObjectList                                 mEffectListDartFadeStar;
+    
+    
     
     Dart                                        *mCurrentDart;
     int                                         mCurrentDartRespawnTimer;

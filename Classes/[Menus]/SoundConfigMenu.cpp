@@ -236,30 +236,19 @@ void SoundConfigMenu::Layout() {
 void SoundConfigMenu::Notify(void *pSender, const char *pNotification) {
     if (FString(pNotification) == "button_click") {
         
-        if (pSender == mButtonSingleInstance1) { gApp->mSoundOne[0].PlayPitched(mPitch); }
-        if (pSender == mButtonSingleInstance2) { gApp->mSoundOne[1].PlayPitched(mPitch); }
-        if (pSender == mButtonSingleInstance3) { gApp->mSoundOne[2].PlayPitched(mPitch); }
         
-        if (pSender == mButtonSingleLoopStart) { gApp->mSoundOne[0].LoopPitched(mPitch); }
-        if (pSender == mButtonSingleLoopStop) { gApp->mSoundOne[0].Stop(); }
+        //if (pSender == mButtonSingleInstance1) { gApp->mSoundOne[0].PlayPitched(mPitch); }
+        //if (pSender == mButtonSingleInstance2) { gApp->mSoundOne[1].PlayPitched(mPitch); }
+        //if (pSender == mButtonSingleInstance3) { gApp->mSoundOne[2].PlayPitched(mPitch); }
         
+        //if (pSender == mButtonSingleLoopStart) { gApp->mSoundOne[0].LoopPitched(mPitch); }
+        //if (pSender == mButtonSingleLoopStop) { gApp->mSoundOne[0].Stop(); }
         
-        // = new UIButton();
-        //mButtonSingleLoopStart->SetText("Loop");
-        //mRowSingleInstance2->AddButton(mButtonSingleLoopStart);
-        
-        // = new UIButton();
-        //mButtonSingleLoopStop->SetText("Stop");
-        //mRowSingleInstance2->AddButton(mButtonSingleLoopStop);
-        
-
-        
-        
-        if (pSender == mButtonMultiInstance1) { gApp->mSoundMulti[0].PlayPitched(mPitch); }
-        if (pSender == mButtonMultiInstance2) { gApp->mSoundMulti[1].PlayPitched(mPitch); }
-        if (pSender == mButtonMultiInstance3) { gApp->mSoundMulti[2].PlayPitched(mPitch); }
-        if (pSender == mButtonMultiInstanceLoopStart) { gApp->mSoundMulti[0].LoopPitched(mPitch); }
-        if (pSender == mButtonMultiInstanceLoopStop) { gApp->mSoundMulti[0].Stop(); }
+        //if (pSender == mButtonMultiInstance1) { gApp->mSoundMulti[0].PlayPitched(mPitch); }
+        //if (pSender == mButtonMultiInstance2) { gApp->mSoundMulti[1].PlayPitched(mPitch); }
+        //if (pSender == mButtonMultiInstance3) { gApp->mSoundMulti[2].PlayPitched(mPitch); }
+        //if (pSender == mButtonMultiInstanceLoopStart) { gApp->mSoundMulti[0].LoopPitched(mPitch); }
+        //if (pSender == mButtonMultiInstanceLoopStop) { gApp->mSoundMulti[0].Stop(); }
         
         
         

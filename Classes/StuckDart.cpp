@@ -46,6 +46,10 @@ void StuckDart::Update() {
         mDart->Kill();
         mDart = NULL;
         mDelete = true;
+        
+        //.Update();
+        
+        
     } else {
         float aPercent = ((float)mFadeoutTimer) / ((float)mFadeoutTime);
         mDart->mTransform.mOffsetScale = (1.0f - aPercent);

@@ -19,6 +19,7 @@
 #include "FJSON.hpp"
 
 #include "AssetWadGameInterface.hpp"
+#include "AssetWadGameEffects.hpp"
 
 #define EDITOR_MODE 1
 #undef EDITOR_MODE
@@ -37,9 +38,6 @@ class SoundConfigMenu;
 class AssetConfigMenu;
 class GameContainer;
 class WorldConfigScene;
-
-
-
 
 class GFXApp : public FApp {
 public:
@@ -76,9 +74,7 @@ public:
     int                                     mEditorSwitchTimer;
     
 #endif
-    
-    void                                    Draw3D();
-    void                                    Draw2D();
+
     
     void                                    EnqueueWadReload(int pTime);
     bool                                    mWadReloadIsEnqueued;
@@ -88,7 +84,12 @@ public:
     
     
     
-    AssetWadGameInterface                   mWadGameInterface;
+    //AssetWadGameInterface                   mWadGameInterface;
+    //AssetWadGameEffects                     mWadGameEffects;
+    
+    
+    //effect_twinkle_additive_white_large.png
+    //effect_twinkle_additive_white_small.png
     
     
     FloatingCamera                          mCamera;
@@ -139,22 +140,9 @@ public:
     
     FSprite                                 mCircle256;
     FSprite                                 mCircle512;
-    
-    FSprite                                 mChaosEgg1X;
-    FSprite                                 mChaosEgg2X;
-    FSprite                                 mChaosEgg3X;
-    FSprite                                 mChaosEgg4X;
-    
-    FSprite                                 mRay[4];
+
     
     FSprite                                 mGameAreaMarker;
-    
-    
-    FSound                                  mSound1;
-    FSound                                  mSound2;
-    
-    FSound                                  mSoundOne[6];
-    FSound                                  mSoundMulti[6];
     
     
     LevelSelectorScreen                     *mLevelSelect;
@@ -170,27 +158,13 @@ public:
     FUniformsLightDiffuse                   mUniDiff;
     FUniformsLightPhong                     mUniPhong;
     
-    
-    
     int                                     mLoadGame;
-    
-    void                                    *mTestTouch1;
-    void                                    *mTestTouch2;
-    
-    float                                   mTestX1;
-    float                                   mTestY1;
-    
-    float                                   mTestX2;
-    float                                   mTestY2;
-    
-    float                                   mTestSin1;
-    float                                   mTestSin2;
-    
-    float                                   mAmbientRoll1;
-    float                                   mAmbientRoll2;
-    
 };
 
 extern GFXApp *gApp;
+
+extern AssetWadGameInterface gWadGameInterface;
+extern AssetWadGameEffects gWadGameEffects;
+
 
 #endif /* GFXApp_hpp */
