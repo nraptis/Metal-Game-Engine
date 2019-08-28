@@ -84,10 +84,27 @@ void GFXApp::Load() {
     
     //   TODO: Need fnt data exported as XML, not flat file...
     
-    FFontImportData *aData = FFont::BitmapDataImport("candy_beans_256.fnt", "candy_beans_256_0.png", 0, 16, 4);
-    FFont::BitmapDataExportTestStrips(aData, "fnt_cb_");
-    FFont::BitmapDataExportGlyphs(aData, "candy_beans_256_");
-    FFont::BitmapDataExportData(aData, "candy_beans_256_");
+    FFontImportData *aData1 = FFont::BitmapDataImport("candy_beans_256.fnt", "candy_beans_256_0.png", 0, 16, 48);
+    FFont::BitmapDataExportTestStrips(aData1, "fnt_cb_256_");
+    FFont::BitmapDataExportGlyphs(aData1, "fnt_cb_256_");
+    FFont::BitmapDataExportData(aData1, "fnt_cb_256_");
+    
+    
+    FFontImportData *aData2 = FFont::BitmapDataImport("mont_heavy_256.fnt", "mont_heavy_256_0.png", 0, 16, 48);
+    FFont::BitmapDataExportTestStrips(aData2, "fnt_mh_256_");
+    FFont::BitmapDataExportGlyphs(aData2, "fnt_mh_256_");
+    FFont::BitmapDataExportData(aData2, "fnt_mh_256_");
+    
+    FFontImportData *aData3 = FFont::BitmapDataImport("old_sans_black_256.fnt", "old_sans_black_256_0.png", 0, 16, 48);
+    FFont::BitmapDataExportTestStrips(aData3, "fnt_osb_256_");
+    FFont::BitmapDataExportGlyphs(aData3, "fnt_osb_256_");
+    FFont::BitmapDataExportData(aData3, "fnt_osb_256_");
+    
+    
+    //
+    //
+    //
+    //
     
     
     

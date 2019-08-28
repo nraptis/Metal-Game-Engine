@@ -949,7 +949,7 @@ void FFont::BitmapDataExportTestStrips(FFontImportData *pImport, const char *pNa
             aGlyph = 0;
             aStamped = false;
             aStripX = 32;
-            aStrip.Make(2048, aPointSize + 128, IMAGE_RGBA(gRand.Get(80), 70 + gRand.Get(40), 180 + gRand.Get(60), 32 + gRand.Get(120)));
+            aStrip.Make(2048, aPointSize + 128, IMAGE_RGBA(0, 0, 0, 255));
             for (int i=0;i<220;i++) {
                 aGlyph = pImport->GetGlyph(gRand.Get(256));
                 if (aGlyph != 0) {
