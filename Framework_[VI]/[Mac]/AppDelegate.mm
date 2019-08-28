@@ -67,7 +67,7 @@ int kDeviceHeight = 320;
     char aExportPath[2048];
     getcwd(aExportPath, sizeof(aExportPath));
     strcat(aExportPath, "/Exports/");
-    AppShellSetDirectoryExport(aDocPath);
+    AppShellSetDirectoryExport(aExportPath);
     
     NSLog(@"Read Exports Directory: %s", aExportPath);
     

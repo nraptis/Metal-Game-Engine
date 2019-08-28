@@ -84,8 +84,11 @@ void GFXApp::Load() {
     
     //   TODO: Need fnt data exported as XML, not flat file...
     
-    //FFontImportData *aData = FFont::BitmapDataImport("candy_beans.fnt", "candy_beans_0.png", 0, 16, 4);
-    //FFont::BitmapDataExportTestStrips(aData, "fnt_cb_");
+    FFontImportData *aData = FFont::BitmapDataImport("candy_beans_256.fnt", "candy_beans_256_0.png", 0, 16, 4);
+    FFont::BitmapDataExportTestStrips(aData, "fnt_cb_");
+    FFont::BitmapDataExportGlyphs(aData, "candy_beans_256_");
+    FFont::BitmapDataExportData(aData, "candy_beans_256_");
+    
     
     
     ///

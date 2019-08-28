@@ -216,6 +216,7 @@
 		0D8FCF86225DA8ED00A74580 /* os_core_app_shell_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCE8F225DA8ED00A74580 /* os_core_app_shell_mac.mm */; };
 		0D8FCF87225DA8ED00A74580 /* OSMusicPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCE96225DA8ED00A74580 /* OSMusicPlayer.mm */; };
 		0D8FCF88225DA8ED00A74580 /* os_core_outlets_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCE97225DA8ED00A74580 /* os_core_outlets_mac.mm */; };
+		0DE5621B2316259C00B1BBF9 /* GameOverlay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DE562192316259C00B1BBF9 /* GameOverlay.cpp */; };
 		E1705008222232CF000C5127 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1705007222232CF000C5127 /* Assets.xcassets */; };
 		E17054B0222236F9000C5127 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E17054AC222236F9000C5127 /* Cocoa.framework */; };
 		E17054B1222236F9000C5127 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E17054AD222236F9000C5127 /* AVFoundation.framework */; };
@@ -638,6 +639,8 @@
 		0D8FCE95225DA8ED00A74580 /* os_core_sound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os_core_sound.h; sourceTree = "<group>"; };
 		0D8FCE96225DA8ED00A74580 /* OSMusicPlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OSMusicPlayer.mm; sourceTree = "<group>"; };
 		0D8FCE97225DA8ED00A74580 /* os_core_outlets_mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = os_core_outlets_mac.mm; sourceTree = "<group>"; };
+		0DE562192316259C00B1BBF9 /* GameOverlay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameOverlay.cpp; sourceTree = "<group>"; };
+		0DE5621A2316259C00B1BBF9 /* GameOverlay.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameOverlay.hpp; sourceTree = "<group>"; };
 		E1705001222232CF000C5127 /* Crazy Darts 2 Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crazy Darts 2 Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1705007222232CF000C5127 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E170500C222232CF000C5127 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -695,6 +698,8 @@
 				0D70E951231598B400A8B037 /* FormationCollection.hpp */,
 				0D70E9E0231598B500A8B037 /* Game.cpp */,
 				0D70E923231598B400A8B037 /* Game.hpp */,
+				0DE562192316259C00B1BBF9 /* GameOverlay.cpp */,
+				0DE5621A2316259C00B1BBF9 /* GameOverlay.hpp */,
 				0D70E913231598B400A8B037 /* GameContainer.cpp */,
 				0D70E99A231598B400A8B037 /* GameContainer.hpp */,
 				0D70E91B231598B400A8B037 /* GameInfoOverlay.cpp */,
@@ -1497,6 +1502,7 @@
 				0D8FCF28225DA8ED00A74580 /* FQuad.cpp in Sources */,
 				0D8FCF63225DA8ED00A74580 /* DragableCanvas.cpp in Sources */,
 				0D8FCF7C225DA8ED00A74580 /* os_core_social.cpp in Sources */,
+				0DE5621B2316259C00B1BBF9 /* GameOverlay.cpp in Sources */,
 				0D8FCF7B225DA8ED00A74580 /* RecursiveLockWrapper.m in Sources */,
 				0D8FCF70225DA8ED00A74580 /* FUniforms.cpp in Sources */,
 				0D70E9E7231598B500A8B037 /* Level.cpp in Sources */,
