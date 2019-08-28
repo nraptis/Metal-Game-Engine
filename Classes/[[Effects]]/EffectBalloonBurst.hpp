@@ -11,7 +11,7 @@
 
 #include "FParticle.hpp"
 
-class EffectBalloonBurst : FParticle {
+class EffectBalloonBurst : public FParticle {
     
 public:
     EffectBalloonBurst();

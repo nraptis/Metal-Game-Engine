@@ -8,10 +8,13 @@
 
 #include "StuckDart.hpp"
 #include "Dart.hpp"
+#include "Game.hpp"
 
 StuckDart::StuckDart() {
     
     mDelete = false;
+    
+    mDidStartFadeout = false;
     
     mDart = NULL;
     mStartDartRotation = 0.0f;
@@ -19,7 +22,7 @@ StuckDart::StuckDart() {
     mStartXDiff = 0.0f;
     mStartYDiff = 0.0f;
     
-    mWaitTimer = 200 + gRand.Get(30);
+    mWaitTimer = 100 + gRand.Get(30);
     
     mFadeoutTime = 20;
     mFadeoutTimer = 0;
@@ -41,26 +44,26 @@ void StuckDart::Update() {
         return;
     }
     
+    if (mDidStartFadeout == false) {
+        mDidStartFadeout = true;
+        gGame->StuckDartBeginFadeOut(mDart);
+    }
+    
     mFadeoutTimer++;
     if (mFadeoutTimer >= mFadeoutTime) {
+        
+        gGame->StuckDartFinishFadeOut(mDart);
+        
         mDart->Kill();
         mDart = NULL;
         mDelete = true;
-        
-        //.Update();
-        
-        
     } else {
         float aPercent = ((float)mFadeoutTimer) / ((float)mFadeoutTime);
         mDart->mTransform.mOffsetScale = (1.0f - aPercent);
-        //mDart->mTransform.mOffsetRotation = aPercent * 360.0f;
-        //mDart->mTransform.mOffsetY = aPercent * 30.0f;
     }
-    
 }
 
 void StuckDart::Draw() {
-    
     
 }
 

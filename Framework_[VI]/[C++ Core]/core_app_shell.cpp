@@ -355,20 +355,13 @@ void AppShellSetOSVersion(float pOSVersion) {
 
 //1X, 2X, 3X, 4X...
 void AppShellSetImageFileScale(int pScale) {
-    
-    
-    //mImageLoadMutableSuffixList
-    
-    
     gImageFileScale = pScale;
-    
     if (gAppBase) gAppBase->BaseSetImageFileScale(pScale);
 }
 
 void AppShellSetSpriteScale(int pScale) {
     gSpriteScale = pScale;
 }
-
 
 void AppShellFrame() {
     if (gAppBase) gAppBase->BaseFrame();

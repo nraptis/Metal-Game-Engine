@@ -11,7 +11,7 @@
 
 #include "FParticle.hpp"
 
-class EffectDartFadeStar : FParticle {
+class EffectDartFadeStar : public FParticle {
     
 public:
     

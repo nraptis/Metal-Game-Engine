@@ -99,7 +99,6 @@ public:
     SoundConfigMenu                         *mSoundMenu;
     AssetConfigMenu                         *mAssetMenu;
     
-    
     FModelData                              mSnail;
     FSprite                                 mSnailMap;
     
@@ -118,7 +117,6 @@ public:
     
     FModelDataPacked                        mDart;
     FSprite                                 mDartMap[4];
-    
     
     FModelDataPacked                        mBalloon;
     FSprite                                 mBalloonMap[5];
@@ -140,9 +138,23 @@ public:
     
     FSprite                                 mCircle256;
     FSprite                                 mCircle512;
-
     
     FSprite                                 mGameAreaMarker;
+    
+    
+    FSound                                  mSoundBalloonPop;
+    FSound                                  mSoundDartPullback;
+    FSound                                  mSoundDartRelease;
+    
+    FSound                                  mSoundHitBrickhead;
+    FSound                                  mSoundHitTurtle;
+    
+    FSound                                  mSoundFreeLife;
+    
+    FSound                                  mSoundSparkle1;
+    FSound                                  mSoundSparkle2;
+    
+    FSound                                  mSoundXylophone;
     
     
     LevelSelectorScreen                     *mLevelSelect;
@@ -151,14 +163,9 @@ public:
     Util_ScreenFrame                        *mScreenTool;
     
     
-    UIRoundedRect                           mTestRR;
-    
-    
-    FUniformsLightAmbient                   mUniAmb;
-    FUniformsLightDiffuse                   mUniDiff;
-    FUniformsLightPhong                     mUniPhong;
-    
     int                                     mLoadGame;
+    
+    
 };
 
 extern GFXApp *gApp;

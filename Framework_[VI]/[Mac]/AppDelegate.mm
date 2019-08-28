@@ -13,8 +13,12 @@
 //int kDeviceWidth = 480;
 //int kDeviceHeight = 320;
 
-int kDeviceWidth = 1400;
-int kDeviceHeight = 760;
+//int kDeviceWidth = 1400;
+//int kDeviceHeight = 760;
+
+int kDeviceWidth = 320;
+int kDeviceHeight = 320;
+
 
 @interface AppDelegate ()
 
@@ -60,6 +64,16 @@ int kDeviceHeight = 760;
     
     
     
+    char aExportPath[2048];
+    getcwd(aExportPath, sizeof(aExportPath));
+    strcat(aExportPath, "/Exports/");
+    AppShellSetDirectoryExport(aDocPath);
+    
+    NSLog(@"Read Exports Directory: %s", aExportPath);
+    
+    //
+    
+    
     
     
     AppShellInitialize(ENV_MAC);
@@ -81,7 +95,7 @@ int kDeviceHeight = 760;
     NSRect aWindowFrame = NSMakeRect(14.0, screenSize.height / 2.0 - kDeviceHeight / 2.0 - 14, kDeviceWidth, kDeviceHeight);
     
     _window = [[NSWindow alloc] initWithContentRect: aWindowFrame styleMask: aWindowStyle backing: NSBackingStoreBuffered defer: NO];
-    [_window setTitle:@"Robot Reptile Motorcycle Gun"];
+    [_window setTitle:@"App Window"];
     [_window setOpaque: YES];
     [_window setHasShadow: YES];
     [_window setDelegate: self];
@@ -95,13 +109,9 @@ int kDeviceHeight = 760;
         [_rootViewController loadView];
     };
     
-    //...
-    
     [_rootViewController setup];
     
     AppShellLoad();
-
-    
 }
 
 - (void)applicationWillTerminate: (NSNotification *)aNotification {

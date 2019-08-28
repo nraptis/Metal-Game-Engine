@@ -79,9 +79,19 @@ GFXApp::~GFXApp() {
 void GFXApp::Load() {
     
     
+    ///
+    ///  TODO: Temp Font Load Stuff...
+    
+    //   TODO: Need fnt data exported as XML, not flat file...
+    
+    //FFontImportData *aData = FFont::BitmapDataImport("candy_beans.fnt", "candy_beans_0.png", 0, 16, 4);
+    //FFont::BitmapDataExportTestStrips(aData, "fnt_cb_");
+    
+    
+    ///
+    
     mCircle256.Load("circle_256");
     mCircle512.Load("circle_512");
-    
     
     
     mRocket.mUseNormals = false;
@@ -137,6 +147,34 @@ void GFXApp::Load() {
     
     ExecuteWadReload();
     
+    mSoundBalloonPop.Load("balloon_pop_1", 3);
+    //balloon_pop_1
+    //balloon_pop_2
+    //balloon_pop_3
+    //balloon_pop_4
+    //balloon_pop_5
+    
+    mSoundDartPullback.Load("pullback");
+    mSoundDartRelease.Load("release_dart_01", 3);
+    //release_dart_01
+    //release_dart_02
+    //release_dart_03
+    //release_dart_04
+    //release_dart_05
+    //release_dart_06
+    
+    
+    mSoundHitBrickhead.Load("hit_brickhead");
+    mSoundHitTurtle.Load("hit_turtle");
+    
+    mSoundFreeLife.Load("free_life");
+    
+    mSoundSparkle1.Load("sparkle_1");
+    mSoundSparkle2.Load("sparkle_2");
+    
+    mSoundXylophone.Load("xylophone");
+    
+    
     gFormationCollection.Load();
     
 }
@@ -145,11 +183,6 @@ void GFXApp::LoadComplete() {
     //
     //
     //
-    
-    mTestRR.SetRect(gDeviceWidth - 200, gDeviceHeight - 300.0f, 150.0f, 200.0f);
-    mTestRR.SetColorTop(1.0f, 0.25f, 0.25f, 0.66f);
-    mTestRR.SetColorBottom(0.0f, 1.0f, 0.5f, 1.0f);
-    
     
     //music_play("song2.mp3", true);
     
@@ -194,10 +227,7 @@ void GFXApp::LoadComplete() {
         mGameContainer = new GameContainer();
         mWindowMain.AddChild(mGameContainer);
 #endif
-        
     }
-    
-    
     
     /*
      if (mSoundMenu == NULL) {
@@ -209,46 +239,24 @@ void GFXApp::LoadComplete() {
     
     if (mAssetMenu == NULL) {
         mAssetMenu = new AssetConfigMenu();
-        mAssetMenu->SetFrame(gSafeAreaInsetLeft + 20.0f, gSafeAreaInsetTop + 20.0f, 450.0f, gDeviceHeight * 0.8f);
         mWindowTools.AddChild(mAssetMenu);
+        
+        if (gDeviceWidth > 600.0f) {
+            mAssetMenu->SetFrame(gSafeAreaInsetLeft + 20.0f, gSafeAreaInsetTop + 20.0f, 450.0f, gDeviceHeight * 0.4f);
+        } else {
+            mAssetMenu->SetFrame(gSafeAreaInsetLeft + 20.0f, gSafeAreaInsetTop + 20.0f, 300.0f, gDeviceHeight * 0.4f);
+            mAssetMenu->Collapse();
+        }
     }
     
-    
-    if (gDeviceWidth > 900) {
-    if (mScreenTool == NULL) {
-         mScreenTool = new Util_ScreenFrame();
-         mScreenTool->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
-         mWindowTools.AddChild(mScreenTool);
+    if (gDeviceWidth > 300) {
+        if (mScreenTool == NULL) {
+             mScreenTool = new Util_ScreenFrame();
+             mScreenTool->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+             mWindowTools.AddChild(mScreenTool);
+        }
     }
-    }
     
-    
-    
-    
-    
-    //
-    
-    
-    /*
-     if (mLightScene == NULL) {
-     mLightScene = new LightConfigurationScene();
-     mWindowTools.AddChild(mLightScene);
-     }
-    */
-    
-    
-    /*
-     float aAngle = 0.0f;
-     for (float aX=0; aX < gDeviceWidth;aX += 40.0f){
-     for (float aY=0; aY < gDeviceHeight;aY += 40.0f){
-     SpamDart *aDart = new SpamDart();
-     aDart->mX = aX;
-     aDart->mY = aY;
-     aDart->mScale = 10.0f;
-     mDartList.Add(aDart);
-     }
-     }
-     */
 }
 
 void GFXApp::Update() {
@@ -301,8 +309,8 @@ void GFXApp::Draw() {
                                   true, //Clear Color
                                   true); //Clear Depth
         
-        if (mGameContainer != NULL) mGameContainer->Draw3D();
-        //if (mLevelSelect) mLevelSelect->mPage1->Draw3D();
+        if (mGameContainer != NULL) { mGameContainer->Draw3D(); }
+        
         if (mLightScene != NULL) { mLightScene->Draw3D(); }
         
         if (mWorldScene != NULL) { mWorldScene->Draw3D(); }
@@ -498,11 +506,6 @@ void GFXApp::SetDeviceSize(int pWidth, int pHeight) {
         mWorldScene->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
     }
     
-    
-    
-    
-    
-    
 }
 
 
@@ -586,8 +589,6 @@ void GFXApp::EditorTestSwitchToEditor() {
     
     //TODO:
     AppShellSetVirtualFrame(aVirtualX, aVirtualY, aVirtualWidth, aVirtualHeight);
-    
-    
     
     
     mEditorSwitchType = 0;

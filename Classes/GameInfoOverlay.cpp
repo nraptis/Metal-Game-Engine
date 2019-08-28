@@ -11,11 +11,11 @@
 #include "GFXApp.hpp"
 
 GameInfoOverlay::GameInfoOverlay() {
-    //mClipDisabled = true;
     mConsumesTouches = false;
 }
 
 GameInfoOverlay::~GameInfoOverlay() {
+    
     
 }
 

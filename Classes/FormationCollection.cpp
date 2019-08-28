@@ -272,7 +272,7 @@ bool FormationCollection::Load(const char *pName) {
         aFormation->mID = pName;
         mFormationList.Add(aFormation);
         
-        printf("Loaded Formation [%llx][%s]\n", (unsigned long long)aFormation, pName);
+        //printf("Loaded Formation [%llx][%s]\n", (unsigned long long)aFormation, pName);
         
         return true;
     }

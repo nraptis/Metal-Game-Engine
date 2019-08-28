@@ -127,6 +127,8 @@ Game::Game() {
     mSlowMo = false;
     mSlowMoTimer = 0;
     
+    mPopSoundDelay = 0;
+    
     mWind = 0.0f;
     mWindSin = 0.0f;
     
@@ -299,6 +301,8 @@ void Game::Update() {
     }
 #endif
     
+    if (mPopSoundDelay > 0) { mPopSoundDelay--; }
+    
     if (aShowOverlay) {
         if (mTestOverlay == NULL) {
             
@@ -371,8 +375,7 @@ void Game::Update() {
     mBombList.Update();
     mTurtleList.Update();
     
-    mEffectListBalloonBursts.Update();
-    mEffectListDartFadeStar.Update();
+    
     
     
     //New thing, the dart now moves small increments and tries to collide.
@@ -506,23 +509,9 @@ void Game::Draw() {
         mCurrentDart->Draw();
     }
     
-    
-  
-    Graphics::MatrixProjectionResetOrtho();
-    Graphics::MatrixModelViewReset();
-    //Graphics::PipelineStateSetSpriteAlphaBlending();
-    //Graphics::SetColor();
-    
-    Graphics::PipelineStateSetSpritePremultipliedBlending();
-    mEffectListBalloonBursts.Draw();
+
     
     
-    Graphics::PipelineStateSetSpriteAdditiveBlending();
-    mEffectListDartFadeStar.Draw();
-    
-    
-    
-    //
     Graphics::PipelineStateSetSpriteAlphaBlending();
     Graphics::SetColor();
     //
@@ -607,9 +596,7 @@ void Game::DartMovingInterpolation(Dart *pDart, float pPercent, bool pEnd) {
         Balloon *aBalloon = (Balloon *)mBalloonList.mObjectList.mData[n];
         if (aBalloon->mKill == 0) {
             if (aBalloon->WillCollide(pDart->mPrevTipX, pDart->mPrevTipY, pDart->mTipX, pDart->mTipY)) {
-                pDart->mHitCount++;
-                aBalloon->Kill();
-                mPoppedCount++;
+                DartCollideWithBalloon(pDart, aBalloon);
             }
         }
     }
@@ -675,7 +662,12 @@ void Game::TouchMove(float pX, float pY, void *pData) {
         float aDiffY = pY - mDartTouchStartY;
         float aDistanceSquared = aDiffX * aDiffX + aDiffY * aDiffY;
         if (aDistanceSquared > (mDartPullbackRangeMin * mDartPullbackRangeMin)) {
-            mIsDartBeingPulled = true;
+            
+            if (mIsDartBeingPulled == false) {
+                mIsDartBeingPulled = true;
+                gApp->mSoundDartPullback.Play();
+            }
+            
             float aLength = aDiffX * aDiffX + aDiffY * aDiffY;
             if (aLength > SQRT_EPSILON) {
                 aLength = sqrtf(aLength);
@@ -882,12 +874,90 @@ void Game::DartFlyOffScreen(Dart *pDart) {
 
 void Game::StuckDartBeginFadeOut(Dart *pDart) {
     
+    if (pDart != NULL) {
+        
+        int aCount = 6 + gRand.Get(4);
+        
+        float aOffsetRotation = gRand.GetRotation();
+        
+        for (int i=0;i<aCount;i++) {
+            
+            float aRotation = aOffsetRotation + ((float)i) / ((float)aCount) * 360.0f + gRand.GetFloat(-10.0f, 10.0f);
+            
+            float aDirX = Sin(aRotation);
+            float aDirY = -Cos(aRotation);
+            float aSpeed = gRand.GetFloat(0.65f, 1.25f);
+            float aShift = gRand.GetFloat(3.0f, 7.0f);
+            
+            EffectDartFadeStar *aStar = new EffectDartFadeStar();
+            FVec2 aPos = FCanvas::Convert(pDart->mTransform.mX, pDart->mTransform.mY, this, gGameOverlay);
+            aStar->SetPos(aPos.mX + aDirX * aShift, aPos.mY + aDirY * aShift);
+            aStar->SetSpeed(aDirX * aSpeed, aDirY * aSpeed);
+            aStar->SetAccel(0.970f);
+            aStar->SetScale(0.325f, -0.001f);
+            aStar->SetRotation(gRand.GetRotation(), gRand.GetFloat(-8.0f, 8.0f), 0.985f);
+            
+            gGameOverlay->mEffectListDartFadeStar.Add(aStar);
+        }
+    }
 }
 
 void Game::StuckDartFinishFadeOut(Dart *pDart) {
     
+    /*
+    if (pDart != NULL) {
+        
+        int aCount = 4 + gRand.Get(3);
+        
+        for (int i=0;i<aCount;i++) {
+            
+            float aRotation = gRand.GetRotation();
+            
+            float aDirX = Sin(aRotation);
+            float aDirY = -Cos(aRotation);
+            float aSpeed = gRand.GetFloat(0.65f, 1.25f);
+            
+            EffectDartFadeStar *aStar = new EffectDartFadeStar();
+            FVec2 aPos = FCanvas::Convert(pDart->mTransform.mX, pDart->mTransform.mY, this, gGameOverlay);
+            aStar->SetPos(aPos.mX + gRand.GetFloat(-5.0f, 5.0f), aPos.mY + gRand.GetFloat(-5.0f, 5.0f));
+            
+            aStar->SetSpeed(aDirX * aSpeed, aDirY * aSpeed);
+            aStar->SetAccel(0.935f);
+            aStar->SetScale(0.25f, -0.001f);
+            
+            gGameOverlay->mEffectListDartFadeStar.Add(aStar);
+            
+        }
+    }
+    */
+    
 }
 
+void Game::DartCollideWithBalloon(Dart *pDart, Balloon *pBalloon) {
+    
+    if (pDart != NULL) {
+        pDart->mHitCount++;
+    }
+    
+    if (pBalloon != NULL) {
+        pBalloon->Kill();
+        
+        if (mPopSoundDelay == 0) {
+            mPopSoundDelay = 4;
+            
+            gApp->mSoundBalloonPop.Play();
+        }
+        
+        EffectBalloonBurst *aBurst = new EffectBalloonBurst();
+        FVec2 aPos = FCanvas::Convert(pBalloon->mTransform.mX, pBalloon->mTransform.mY, this, gGameOverlay);
+        aBurst->SetPos(aPos.mX, aPos.mY);
+        gGameOverlay->mEffectListBalloonBursts.Add(aBurst);
+    }
+    
+    mPoppedCount++;
+    
+    
+}
 
 void Game::DartCollideWithBrickhead(Dart *pDart, BrickHead *pBrickHead) {
     if (pDart != NULL) {
@@ -953,67 +1023,25 @@ void Game::ReleaseDart() {
             float aReleaseVelocity = mDartReleaseVelocityMin + (mDartReleaseVelocityMax - mDartReleaseVelocityMin) * aReleaseFactor;
             mCurrentDart->Fling(aDiffX * aReleaseVelocity, aDiffY * aReleaseVelocity);
             
+            gApp->mSoundDartRelease.Play();
+            gApp->mSoundDartPullback.Stop();
+            
         } else {
             Log("Fizzle? This should never trigger...\n");
             delete mCurrentDart;
         }
-        
-        
-        /*
-         float aSceneDirX = Convert2DXTo3D(mDartSpawnX) - Convert2DXTo3D(mDartSpawnX + mDartPullX);
-         float aSceneDirY = Convert2DYTo3D(mDartSpawnY) - Convert2DYTo3D(mDartSpawnY + mDartPullY);
-         
-         float aPullLength = aDiffX * aDiffX + aDiffY * aDiffY;
-         float aScenePullLength = aSceneDirX * aSceneDirX + aSceneDirY * aSceneDirY;
-         
-         if (aPullLength > SQRT_EPSILON && aScenePullLength > SQRT_EPSILON) {
-         
-         mDartList.Add(mCurrentDart);
-         
-         aPullLength = (float)(sqrtf(aPullLength));
-         aScenePullLength = (float)(sqrtf(aScenePullLength));
-         
-         aDiffX /= aPullLength;
-         aDiffY /= aPullLength;
-         
-         aSceneDirX /= aScenePullLength;
-         aSceneDirY /= aScenePullLength;
-         
-         aReleaseFactor = (aPullLength - mDartPullbackRangeMin) / (mDartPullbackRangeMax - mDartPullbackRangeMin);
-         if (aReleaseFactor < 0.0f) aReleaseFactor = 0.0f;
-         if (aReleaseFactor > 1.0f) aReleaseFactor = 1.0f;
-         
-         aReleaseFactor = FAnimation::EaseInCirc(aReleaseFactor) * 0.5f + aReleaseFactor * 0.5f;
-         
-         //Log("Release Factor: %f\n", aReleaseFactor);
-         
-         float aReleaseVelocity = mDartReleaseVelocityMin + (mDartReleaseVelocityMax - mDartReleaseVelocityMin) * aReleaseFactor;
-         
-         mCurrentDart->Fling(aSceneDirX * aReleaseVelocity, aSceneDirY * aReleaseVelocity);
-         
-         } else {
-         Log("Fizzle? This should never trigger...\n");
-         delete mCurrentDart;
-         }
-         */
         
         mCurrentDart = NULL;
         mDartTouch = NULL;
         ResetDartTouch();
         
         mCurrentDartRespawnTimer = 8;
-        
     }
-    
-    //ResetDartTouch();
-    
-    
-    
 }
 
 void Game::ResetDartTouch() {
     
-    if (mDartTouch != NULL) {//} && mIsDartBeingPulled == true) {
+    if (mDartTouch != NULL) {
         
         mDartTouch = NULL;
         mIsDartBeingPulled = false;
@@ -1088,13 +1116,12 @@ void Game::Load() {
     aLevel.AddSection("test_section_perm_only_all_brickheads");
     aLevel.AddSection("test_section_perm_only_all_brickheads");
     */
-
+    
+    aLevel.SetAliveTimer(2400);
+    aLevel.AddSection("test_section_perm_only_all_brickheads");
     
     aLevel.SetKillTimer(1200);
     aLevel.AddSection("test_section_perm_only_all_balloons_all_tracers");
-    
-    aLevel.SetKillTimer(1200);
-    aLevel.AddSection("test_section_perm_only_all_brickheads");
     
     aLevel.SetAliveTimer(800);
     aLevel.AddSection("test_section_perm_only_all_balloons");

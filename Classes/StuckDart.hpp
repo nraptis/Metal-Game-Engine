@@ -32,6 +32,8 @@ public:
     int                                     mFadeoutTime;
     int                                     mFadeoutTimer;
     
+    bool                                    mDidStartFadeout;
+    
 };
 
 #endif
