@@ -364,30 +364,64 @@ void FApp::BaseLoad() {
     
     float aImageScale = (float)gSpriteScale;
     
-    AppShellSetImageFileScale(3);
+    //AppShellSetImageFileScale(3);
     
-    gImageBundler.StartBundle("bndl_sys_font");
+    //gImageBundler.StartBundle("bndl_roboto_bold_260");
+    //if (gImageBundler.mBundleWidth > 32 && gImageBundler.mBundleHeight > 32) {
+    //    mSysFontBold.LoadNew("roboto_bold_260_font.kern", "roboto_bold_260_");
+    //}
+    //gImageBundler.EndBundle();
+    
+    
+    gImageBundler.StartBundle("bndl_roboto_bold_300");
     if (gImageBundler.mBundleWidth > 32 && gImageBundler.mBundleHeight > 32) {
-        mSysFontBold.LoadNew("sys_font.kern", "sys_font_");
+        mSysFontBold.LoadNew("roboto_bold_300_font.kern", "roboto_bold_300_");
     }
+    gImageBundler.EndBundle();
+    
     mSysFontBold.mDataScale = 0.125f * aImageScale;
     mSysFontBold.ApplyExpand(14.0f);
     mSysFontBold.SetSpaceWidth(64.0f);
+    
+    
+    
+    
+    //gImageBundler.StartBundle("bndl_roboto_260");
+    //if (gImageBundler.mBundleWidth > 32 && gImageBundler.mBundleHeight > 32) {
+    //    mSysFont.LoadNew("roboto_260_font.kern", "roboto_260_");
+    //}
+    //gImageBundler.EndBundle();
+    
+    
+    gImageBundler.StartBundle("bndl_roboto_300");
+    if (gImageBundler.mBundleWidth > 32 && gImageBundler.mBundleHeight > 32) {
+        mSysFont.LoadNew("roboto_300_font.kern", "roboto_300_");
+    }
     gImageBundler.EndBundle();
     
-    gImageBundler.StartBundle("bndl_sys_font");
-    if (gImageBundler.mBundleWidth > 32 && gImageBundler.mBundleHeight > 32) {
-        mSysFont.LoadNew("sys_font.kern", "sys_font_");
-    }
     mSysFont.mDataScale = 0.125f * aImageScale;
     mSysFont.ApplyExpand(14.0f);
     mSysFont.SetSpaceWidth(64.0f);
-    gImageBundler.EndBundle();
+    
     
     AppShellSetImageFileScale(1);
     
     
     Load();
+    
+    
+    
+    
+    /*
+    gImageBundler.mAutoBundle = true;
+    gImageBundler.StartBundle("bndl_roboto_300");
+    mFontLarge.LoadNew("roboto_300_font.kern", "roboto_300_");
+    gImageBundler.EndBundle();
+    
+    gImageBundler.StartBundle("bndl_roboto_bold_300");
+    mFontSmall.LoadNew("roboto_bold_300_font.kern", "roboto_bold_300_");
+    gImageBundler.EndBundle();
+    */
     //
     //
     //

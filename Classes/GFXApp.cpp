@@ -41,7 +41,7 @@ GFXApp::GFXApp() {
     gApp = this;
     
 #ifndef EDITOR_MODE
-    mDarkMode = true;
+    //mDarkMode = true;
     
 #endif
     
@@ -102,6 +102,40 @@ void GFXApp::Load() {
     FFont::BitmapDataExportData(aData3, "fnt_osb_256_");
     
     */
+    
+    /*
+    FFontImportData *aData4 = FFont::BitmapDataImport("roboto_260.fnt", "roboto_260_0.png", 0, 16, 0);
+    FFont::BitmapDataExportGlyphs(aData4, "roboto_260_");
+    FFont::BitmapDataExportData(aData4, "roboto_260_");
+    
+    
+    FFontImportData *aData5 = FFont::BitmapDataImport("roboto_bold_260.fnt", "roboto_bold_260_0.png", 0, 16, 0);
+    FFont::BitmapDataExportGlyphs(aData5, "roboto_bold_260_");
+    FFont::BitmapDataExportData(aData5, "roboto_bold_260_");
+    
+    
+    
+    
+    
+    FFontImportData *aData6 = FFont::BitmapDataImport("roboto_300.fnt", "roboto_300_0.png", 0, 16, 0);
+    FFont::BitmapDataExportGlyphs(aData6, "roboto_300_");
+    FFont::BitmapDataExportData(aData6, "roboto_300_");
+    
+    
+    FFontImportData *aData7 = FFont::BitmapDataImport("roboto_bold_300.fnt", "roboto_bold_300_0.png", 0, 16, 0);
+    FFont::BitmapDataExportGlyphs(aData7, "roboto_bold_300_");
+    FFont::BitmapDataExportData(aData7, "roboto_bold_300_");
+    
+    
+    exit(0);
+    */
+    
+    
+    
+    
+    
+    
+    
     
     //
     //

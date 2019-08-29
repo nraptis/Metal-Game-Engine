@@ -131,9 +131,6 @@ Game::Game() {
     
     mPopSoundDelay = 0;
     
-    mWind = 0.0f;
-    mWindSin = 0.0f;
-    
     mTestBalloonRotX = 0.0f;
     mTestBalloonRotY = 0.0f;
     mTestBalloonRotZ = 0.0f;
@@ -1125,7 +1122,7 @@ void Game::Load() {
     aLevel.AddSection("test_section_perm_only_all_brickheads");
     */
     
-    aLevel.SetAliveTimer(2400);
+    aLevel.SetAliveTimer(2800);
     aLevel.AddSection("test_section_perm_only_all_brickheads");
     
     aLevel.SetKillTimer(1200);

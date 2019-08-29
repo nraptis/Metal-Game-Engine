@@ -12,27 +12,10 @@
 WindSpeedSimulator::WindSpeedSimulator() {
     mPower = 0.0f;
     
-    
-#define WIND_BASELINE_MODE_WANDER 0
-#define WIND_BASELINE_MODE_GUSTING 1
-    
-    class WindSpeedSimulator {
-    public:
-        WindSpeedSimulator();
-        ~WindSpeedSimulator();
-        
-        void                            Update();
-        
-        //This will be a magnitude in the range [-1, 1]
-        float                           mPower;
-        
-        
-        int                             mBaselineMode;
-        int                             mBaselineModeTick;
-        float                           mBaseline;
-        float                           mTargetBaseline;
-        
-    
+    mBaselineMode = WIND_BASELINE_MODE_WANDER;
+    mBaselineModeTick = 1000;
+    mBaseline = 0;
+    mTargetBaseline = 30;
 }
 
 

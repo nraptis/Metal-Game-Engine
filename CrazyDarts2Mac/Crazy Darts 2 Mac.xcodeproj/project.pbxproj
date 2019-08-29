@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D2F979523176C4A00895EA1 /* WindSpeedSimulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D2F979423176C4900895EA1 /* WindSpeedSimulator.cpp */; };
 		0D70E9E1231598B500A8B037 /* GameContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D70E913231598B400A8B037 /* GameContainer.cpp */; };
 		0D70E9E2231598B500A8B037 /* HangingThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D70E917231598B400A8B037 /* HangingThread.cpp */; };
 		0D70E9E3231598B500A8B037 /* FloatingCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D70E918231598B400A8B037 /* FloatingCamera.cpp */; };
@@ -227,6 +228,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D2F979323176C4900895EA1 /* WindSpeedSimulator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WindSpeedSimulator.hpp; sourceTree = "<group>"; };
+		0D2F979423176C4900895EA1 /* WindSpeedSimulator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WindSpeedSimulator.cpp; sourceTree = "<group>"; };
 		0D70E913231598B400A8B037 /* GameContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameContainer.cpp; sourceTree = "<group>"; };
 		0D70E914231598B400A8B037 /* Bomb.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Bomb.hpp; sourceTree = "<group>"; };
 		0D70E915231598B400A8B037 /* Turtle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Turtle.hpp; sourceTree = "<group>"; };
@@ -682,6 +685,8 @@
 				0D70E952231598B400A8B037 /* [Menus] */,
 				0D70E928231598B400A8B037 /* Balloon.cpp */,
 				0D70E963231598B400A8B037 /* Balloon.hpp */,
+				0D2F979423176C4900895EA1 /* WindSpeedSimulator.cpp */,
+				0D2F979323176C4900895EA1 /* WindSpeedSimulator.hpp */,
 				0D70E99B231598B400A8B037 /* Bomb.cpp */,
 				0D70E914231598B400A8B037 /* Bomb.hpp */,
 				0D70E976231598B400A8B037 /* BrickHead.cpp */,
@@ -1424,6 +1429,7 @@
 				0D8FCF31225DA8ED00A74580 /* FMatrix.cpp in Sources */,
 				0D70E9EB231598B500A8B037 /* Dart.cpp in Sources */,
 				0D8FCF35225DA8ED00A74580 /* FSlider.cpp in Sources */,
+				0D2F979523176C4A00895EA1 /* WindSpeedSimulator.cpp in Sources */,
 				0D8FCF53225DA8ED00A74580 /* FModelDataSequence.cpp in Sources */,
 				0D70E9EC231598B500A8B037 /* GameObject.cpp in Sources */,
 				0D70EA32231598B600A8B037 /* EditorMenuSpawnPicker.cpp in Sources */,
