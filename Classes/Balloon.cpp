@@ -97,6 +97,6 @@ void Balloon::Draw3DThread() {
     mThread.mOffsetY = aPos.mY;
     mThread.mOffsetZ = 0.0f;
     
-    mThread.Generate(gGame->mWind, 0.0f);
+    mThread.Generate(gGame->mWind.mPower, 0.0f);
     mThread.Draw3D();
 }

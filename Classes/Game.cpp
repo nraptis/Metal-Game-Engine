@@ -480,14 +480,6 @@ void Game::Update() {
          */
     }
     
-    
-    mWindSin += 2.0f;
-    if (mWindSin >= 360.0f) { mWindSin -= 360.0f; }
-    
-    mWind = Sin(mWindSin);
-    
-    
-    
 }
 
 void Game::Draw() {

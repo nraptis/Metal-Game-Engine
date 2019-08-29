@@ -3729,6 +3729,7 @@
 		0D3A0E2623175889009BD55B /* EditorMenuPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3AF9CD23175884009BD55B /* EditorMenuPath.cpp */; };
 		0D3A0E2723175889009BD55B /* EditorMenuPathControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3AF9CE23175884009BD55B /* EditorMenuPathControl.cpp */; };
 		0D3A0E2823175889009BD55B /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3AF9D523175884009BD55B /* Game.cpp */; };
+		0D3A0E2B23175F01009BD55B /* WindSpeedSimulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3A0E2923175F01009BD55B /* WindSpeedSimulator.cpp */; };
 		0D3AF9D623175884009BD55B /* fnt_cb_256_font.kern in Resources */ = {isa = PBXBuildFile; fileRef = 0D3AE4E123175874009BD55B /* fnt_cb_256_font.kern */; };
 		0D3AF9D723175884009BD55B /* mont_heavy_256_font.kern in Resources */ = {isa = PBXBuildFile; fileRef = 0D3AE4E223175874009BD55B /* mont_heavy_256_font.kern */; };
 		0D3AF9D823175884009BD55B /* fnt_mh_256_font.kern in Resources */ = {isa = PBXBuildFile; fileRef = 0D3AE4E323175874009BD55B /* fnt_mh_256_font.kern */; };
@@ -5525,6 +5526,8 @@
 		0D3592D122FB4DE50032E8FC /* os_core_music.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os_core_music.h; sourceTree = "<group>"; };
 		0D3592D222FB4DE50032E8FC /* os_core_sound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os_core_sound.h; sourceTree = "<group>"; };
 		0D3592D322FB4DE50032E8FC /* OSMusicPlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OSMusicPlayer.mm; sourceTree = "<group>"; };
+		0D3A0E2923175F01009BD55B /* WindSpeedSimulator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WindSpeedSimulator.cpp; sourceTree = "<group>"; };
+		0D3A0E2A23175F01009BD55B /* WindSpeedSimulator.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WindSpeedSimulator.hpp; sourceTree = "<group>"; };
 		0D3AE4E123175874009BD55B /* fnt_cb_256_font.kern */ = {isa = PBXFileReference; lastKnownFileType = file; path = fnt_cb_256_font.kern; sourceTree = "<group>"; };
 		0D3AE4E223175874009BD55B /* mont_heavy_256_font.kern */ = {isa = PBXFileReference; lastKnownFileType = file; path = mont_heavy_256_font.kern; sourceTree = "<group>"; };
 		0D3AE4E323175874009BD55B /* fnt_mh_256_font.kern */ = {isa = PBXFileReference; lastKnownFileType = file; path = fnt_mh_256_font.kern; sourceTree = "<group>"; };
@@ -16707,6 +16710,8 @@
 				0D3AF90923175884009BD55B /* Turtle.hpp */,
 				0D3AF93823175884009BD55B /* WorldConfigScene.cpp */,
 				0D3AF96923175884009BD55B /* WorldConfigScene.hpp */,
+				0D3A0E2923175F01009BD55B /* WindSpeedSimulator.cpp */,
+				0D3A0E2A23175F01009BD55B /* WindSpeedSimulator.hpp */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -22273,6 +22278,7 @@
 				0D35933F22FB4DE50032E8FC /* FLight.cpp in Sources */,
 				0D35931B22FB4DE50032E8FC /* FImageBundler.cpp in Sources */,
 				0D3A0DD123175889009BD55B /* Dart.cpp in Sources */,
+				0D3A0E2B23175F01009BD55B /* WindSpeedSimulator.cpp in Sources */,
 				0D3A0E1623175889009BD55B /* EditorMenuPermSpawnPicker.cpp in Sources */,
 				0D35935022FB4DE50032E8FC /* UIAlignmentPicker.cpp in Sources */,
 				0D35939622FB4DE50032E8FC /* main.mm in Sources */,
