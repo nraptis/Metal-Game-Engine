@@ -84,12 +84,13 @@ void GFXApp::Load() {
     
     //   TODO: Need fnt data exported as XML, not flat file...
     
+    /*
+    
     FFontImportData *aData1 = FFont::BitmapDataImport("candy_beans_256.fnt", "candy_beans_256_0.png", 0, 16, 48);
     FFont::BitmapDataExportTestStrips(aData1, "fnt_cb_256_");
     FFont::BitmapDataExportGlyphs(aData1, "fnt_cb_256_");
     FFont::BitmapDataExportData(aData1, "fnt_cb_256_");
-    
-    
+     
     FFontImportData *aData2 = FFont::BitmapDataImport("mont_heavy_256.fnt", "mont_heavy_256_0.png", 0, 16, 48);
     FFont::BitmapDataExportTestStrips(aData2, "fnt_mh_256_");
     FFont::BitmapDataExportGlyphs(aData2, "fnt_mh_256_");
@@ -100,6 +101,7 @@ void GFXApp::Load() {
     FFont::BitmapDataExportGlyphs(aData3, "fnt_osb_256_");
     FFont::BitmapDataExportData(aData3, "fnt_osb_256_");
     
+    */
     
     //
     //
@@ -310,7 +312,6 @@ void GFXApp::Update() {
 #endif
                 
                 mGameContainer->Realize();
-                
             }
         }
     }
@@ -521,20 +522,15 @@ void GFXApp::SetDeviceSize(int pWidth, int pHeight) {
         mLightScene->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
     }
     
-    
     if (mWorldScene != NULL) {
         mWorldScene->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
     }
-    
 }
 
-
 void GFXApp::EnqueueWadReload(int pTime) {
-
     mWadReloadIsEnqueued = true;
     mWadReloadOnNextDraw = false;
     mWadReloadTimer = pTime;
-    
 }
 
 void GFXApp::ExecuteWadReload() {
@@ -552,7 +548,10 @@ void GFXApp::ExecuteWadReload() {
     AppShellSetImageFileScale(gWadConfiguration.mAssetScale);
     AppShellSetSpriteScale(gWadConfiguration.mSpriteScale);
     
+    gWadGameInterface.Unload();
     gWadGameInterface.Load();
+    
+    gWadGameEffects.Unload();
     gWadGameEffects.Load();
     
     printf("*** End:: GFXApp::ExecuteWadReload()\n");
@@ -593,7 +592,6 @@ void GFXApp::EditorTestSwitchToGame() {
     mWindowMain.AddChild(mGameContainer);
     
     mLoadGame = 4;
-    
 }
 
 void GFXApp::EditorTestSwitchToEditor() {

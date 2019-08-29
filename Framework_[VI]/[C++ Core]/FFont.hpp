@@ -23,13 +23,16 @@ public:
     FFont();
     ~FFont();
     
+    void                            Kill();
+    
     float                           mPointSize;
 
     float                           mDataScale;
     float                           mSpriteScale;
     float                           mGlobalSqueeze;
 
-    float                           mSpaceWidth;
+    void                            SetSpaceWidth(float pSpaceWidth);
+    //float                           mSpaceWidth;
 
     FString                         mPrefix;
     FSprite                         mCharacterSprite[256];

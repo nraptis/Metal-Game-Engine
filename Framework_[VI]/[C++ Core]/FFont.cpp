@@ -11,13 +11,11 @@
 #include "FXML.hpp"
 
 FFont::FFont() {
-    mSpaceWidth = 20.0f;
     mPointSize = 0.0f;
     for (int i=0;i<256;i++) {
         mCharacterStrideX[i] = 0.0f;
         mCharacterOffsetX[i] = 0.0f;
     }
-    
     for (int i=0;i<256;i++) {
         for (int n=0;n<256;n++) {
             mKern[i][n] = 0.0f;
@@ -99,8 +97,6 @@ void FFont::LoadScore(const char *pFilePrefix) {
 }
 
 void FFont::Unload() {
-    
-    mSpaceWidth = 20.0f;
     mPointSize = 0.0f;
     for (int i=0;i<256;i++) {
         mCharacterSprite[i].Kill();
@@ -142,13 +138,18 @@ void FFont::Draw(const char *pText, float pX, float pY, float pScale) {
             aCharIndex = aChar;
             if(aCharIndexPrev != -1)aKern = mKern[aCharIndexPrev][aCharIndex];
             float aSpriteWidth = mCharacterSprite[aCharIndex].mWidth * aSpriteScale;
-            mCharacterSprite[aCharIndex].Draw(aDrawX + ((mCharacterOffsetX[aCharIndex] + aKern) * aScale) + aSpriteWidth  * 0.5f, aDrawY + aPointSize / 2.0f, aSpriteScale);
+            mCharacterSprite[aCharIndex].Draw(aDrawX + ((mCharacterOffsetX[aCharIndex] + aKern) * aScale) + aSpriteWidth  * 0.5f, aDrawY + aPointSize / 2.0f, aSpriteScale, 0.0f);
+            //mCharacterSprite[aCharIndex].Draw(aDrawX + ((mCharacterOffsetX[aCharIndex] + aKern) * aScale), aDrawY + aPointSize / 2.0f, aSpriteScale, 0.0f);
+            
             aDrawX += (mCharacterStrideX[aCharIndex] + aKern) * aScale;
             aPtr++;
         }
     }
 }
 
+void FFont::SetSpaceWidth(float pSpaceWidth) {
+    mCharacterStrideX[32] = pSpaceWidth;
+}
 
 int FFont::GetCursor(float pTouchX, float pTouchY, const char *pText, float pX, float pY, float pScale) {
     if (pTouchX < pX) { return 0; }
@@ -476,10 +477,14 @@ FString FFont::CharToReadable(char pChar)
     return aResult;
 }
 
+void FFont::Kill() {
+    for (int i=0;i<256;i++) {
+        mCharacterSprite[i].Kill();
+    }
+}
 
 
-void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix, const char *pCharacters)
-{
+void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix, const char *pCharacters) {
     mPointSize = 24.0f;
     
     int aCharIndex[256];
@@ -487,15 +492,13 @@ void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix, const char 
     char aCharAllowed[256];
     
     
-    for(int i=0;i<256;i++)
-    {
+    for (int i=0;i<256;i++) {
         aChar[i] = 0;
         aCharIndex[i] = 0;
         aCharAllowed[i] = 1;
     }
     
-    if(pCharacters != 0)
-    {
+    if (pCharacters != 0) {
         
         unsigned char *aPtr = ((unsigned char *)pCharacters);
         int aLen = FString::Length(pCharacters);
@@ -516,11 +519,9 @@ void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix, const char 
     int aCharIndexCursor = 0;
 
     
-    for(int i=0;i<256;i++)mCharacterStrideX[i] = 0.0f;
-    for(int i=0;i<256;i++)
-    {
-        for(int n=0;n<256;n++)
-        {
+    for (int i=0;i<256;i++) { mCharacterStrideX[i] = 0.0f; }
+    for (int i=0;i<256;i++) {
+        for (int n=0;n<256;n++) {
             mKern[i][n] = 0.0f;
         }
     }
@@ -537,8 +538,7 @@ void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix, const char 
     mPointSize = ((float)(aLoadFile.ReadShort()));
     int aCharCount = (int)(aLoadFile.ReadShort());
 
-    if(aCharCount <= 0)
-    {
+    if (aCharCount <= 0) {
         //Log("__Font (%s) Failed To Load__\n\n", aPath.c());
         //Log("File \"%s\"   Length = %d\n", pDataFile, aLoadFile.mLength);
         //Log("Char Count = %d    Point Size = %f\n", aCharCount, mPointSize);
@@ -558,8 +558,7 @@ void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix, const char 
     //unsigned short aReadShort = 0;
     
     
-    for(int aLoopIndex = 0;aLoopIndex < aCharCount;aLoopIndex++)
-    {
+    for (int aLoopIndex = 0;aLoopIndex < aCharCount;aLoopIndex++) {
         aScanChar = aLoadFile.ReadChar();
         aReadIndex = aScanChar;
         

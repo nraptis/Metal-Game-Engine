@@ -570,13 +570,10 @@ void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix, const char 
         mCharacterStrideX[aReadIndex] = ((float)(aLoadFile.ReadShort()));
         mCharacterOffsetX[aReadIndex] = ((float)(aLoadFile.ReadShort()));
         
-        if(aCharAllowed[aReadIndex])
-        {
+        if (aCharAllowed[aReadIndex]) {
             FString aPath = FString(pImagePrefix) + FString(aScanChar);
             mCharacterSprite[aReadIndex].Load(aPath);
-        }
-        else
-        {
+        } else {
             mCharacterStrideX[aReadIndex] = 0.0f;
             mCharacterOffsetX[aReadIndex] = 0.0f;
         }
@@ -586,16 +583,14 @@ void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix, const char 
         
         //}
         
-        if(aCharIndexCursor < 256)
-        {
+        if (aCharIndexCursor < 256) {
             aCharIndex[aCharIndexCursor] = aReadIndex;
             aChar[aCharIndexCursor] = aScanChar;
             aCharIndexCursor++;
         }
     }
     
-    if(aLoadFile.ReadBool())
-    {
+    if (aLoadFile.ReadBool()) {
         unsigned char aKernPartnerChar = 0;
         int aKernPartnerIndex = -1;
         

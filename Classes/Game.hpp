@@ -192,6 +192,8 @@ public:
     int                                         mSlowMoTimer;
     
     
+    int                                         mScore;
+    
     int                                         mLives;
     int                                         mLivesMax;
     

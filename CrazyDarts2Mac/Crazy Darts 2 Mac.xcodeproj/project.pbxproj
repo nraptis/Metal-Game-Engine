@@ -824,13 +824,13 @@
 		0D70E96B231598B400A8B037 /* [[Wadding]] */ = {
 			isa = PBXGroup;
 			children = (
-				0D70E96C231598B400A8B037 /* WadGlobalConfiguration.cpp */,
-				0D70E96D231598B400A8B037 /* AssetWad.hpp */,
-				0D70E96E231598B400A8B037 /* AssetWadGameInterface.cpp */,
-				0D70E96F231598B400A8B037 /* AssetWadGameEffects.hpp */,
 				0D70E970231598B400A8B037 /* AssetWad.cpp */,
-				0D70E971231598B400A8B037 /* AssetWadGameInterface.hpp */,
+				0D70E96D231598B400A8B037 /* AssetWad.hpp */,
 				0D70E972231598B400A8B037 /* AssetWadGameEffects.cpp */,
+				0D70E96F231598B400A8B037 /* AssetWadGameEffects.hpp */,
+				0D70E96E231598B400A8B037 /* AssetWadGameInterface.cpp */,
+				0D70E971231598B400A8B037 /* AssetWadGameInterface.hpp */,
+				0D70E96C231598B400A8B037 /* WadGlobalConfiguration.cpp */,
 				0D70E973231598B400A8B037 /* WadGlobalConfiguration.hpp */,
 			);
 			path = "[[Wadding]]";

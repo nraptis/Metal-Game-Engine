@@ -21,6 +21,36 @@ public:
     
     FSprite                                         mSpriteTest;
     
+    FFont                                           mFontLarge;
+    FFont                                           mFontSmall;
+    
+    //FFont                                           mFontSystem;
+    
+    
+    //candy_beans_256_font.kern
+    //fnt_cb_256_font.kern
+    //fnt_mh_256_font.kern
+    //fnt_osb_256_font.kern
+    //mont_heavy_256_font.kern
+    //old_sans_black_256_font.kern
+    
+    /*
+    fnt_cb_64
+    fnt_cb_128
+    fnt_mh_64
+    fnt_mh_128
+    fnt_osb_64
+    fnt_osb_128
+    
+    candy_beans_64
+    candy_beans_128
+    mont_heavy_64
+    mont_heavy_128
+    old_sans_black_64
+    old_sans_black_128
+    */
+    
+    
     
 };
 

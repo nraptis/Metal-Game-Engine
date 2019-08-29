@@ -113,6 +113,8 @@ Game::Game() {
     mDartResetAnimationTick = 0;
     mDartResetAnimationTime = 200;
     
+    mScore = 0;
+    
     mLivesMax = 5;
     mLives = mLivesMax;
     
@@ -300,6 +302,20 @@ void Game::Update() {
         aShowOverlay = false;
     }
 #endif
+    
+    if (gRand.Get(40) == 22) {
+        mScore += gRand.Get(1, 100);
+    }
+    
+    if (gRand.Get(80) == 22) {
+        mScore += gRand.Get(80, 999);
+    }
+    
+    if (gRand.Get(200) == 50) {
+        mScore += gRand.Get(1000, 4999);
+    }
+    
+    
     
     if (mPopSoundDelay > 0) { mPopSoundDelay--; }
     

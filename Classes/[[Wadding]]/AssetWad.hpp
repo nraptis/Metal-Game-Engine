@@ -12,6 +12,8 @@
 #include "FList.hpp"
 #include "FSprite.hpp"
 #include "FHashMap.hpp"
+#include "FFont.hpp"
+#include "core_includes.h"
 
 class AssetWad {
 public:
@@ -26,8 +28,6 @@ public:
     
     FList                                           mSpriteList;
     FStringMap                                      mSpriteMap;
-    
-    
     
     
 };

@@ -1,4 +1,10 @@
 
+1.) Convert XML bundle load to use JSON.
+
+1.A) Need way to dynamically choose proper image scale + image resolution as device size changes...
+
+1.B) We need a new system font. The old one doesn't work anymore.
+
 3.) When brick is hit, it should rumble. The dart should be stuck for ~2 secs and then dissappear...
 
 1.) Show lives indicators at top-right of screen.
