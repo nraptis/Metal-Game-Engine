@@ -10,27 +10,31 @@
 
 WindSpeedSimulator::WindSpeedSimulator() {
     mPower = 0.0f;
+    mPowerTarget = 0.0f;
     
     mChannelBaseline.AddAvailableMode(WIND_MODE_SLEEPING_LIGHT);
     mChannelBaseline.AddAvailableMode(WIND_MODE_SLEEPING_HARD);
+    mChannelBaseline.AddAvailableMode(WIND_MODE_SLEEPING_HARD);
+    mChannelBaseline.AddAvailableMode(WIND_MODE_WANDER);
     mChannelBaseline.AddAvailableMode(WIND_MODE_WANDER);
     mChannelBaseline.AddAvailableMode(WIND_MODE_GUSTING_HARD);
+    mChannelBaseline.AddAvailableMode(WIND_MODE_GUSTING_LIGHT);
     mChannelBaseline.AddAvailableMode(WIND_MODE_GUSTING_LIGHT);
     mChannelBaseline.mModeTimerMin = 380;
     mChannelBaseline.mModeTimerMax = 700;
     mChannelBaseline.Realize();
     
-    mChannelFlanger.AddAvailableMode(WIND_MODE_SLEEPING_LIGHT);
-    mChannelFlanger.AddAvailableMode(WIND_MODE_SLEEPING_HARD);
+    mChannelFlanger.AddAvailableMode(WIND_MODE_GUSTING_HARD);
     mChannelFlanger.AddAvailableMode(WIND_MODE_GUSTING_HARD);
     mChannelFlanger.AddAvailableMode(WIND_MODE_GUSTING_LIGHT);
-    mChannelFlanger.AddAvailableMode(WIND_MODE_OSCILLATING);
     mChannelFlanger.mModeTimerMin = 200;
     mChannelFlanger.mModeTimerMax = 400;
     mChannelFlanger.Realize();
     
     mChannelNoise.AddAvailableMode(WIND_MODE_GUSTING_HARD);
+    mChannelNoise.AddAvailableMode(WIND_MODE_GUSTING_HARD);
     mChannelNoise.AddAvailableMode(WIND_MODE_GUSTING_LIGHT);
+    mChannelNoise.AddAvailableMode(WIND_MODE_OSCILLATING);
     mChannelNoise.AddAvailableMode(WIND_MODE_OSCILLATING);
     mChannelNoise.mModeTimerMin = 100;
     mChannelNoise.mModeTimerMax = 140;
@@ -51,10 +55,14 @@ void WindSpeedSimulator::Update() {
     
     float aPowerBaseline = mChannelBaseline.mForce;
     float aPowerFlanger = mChannelBaseline.mForce * 0.25f;
-    float aPowerNoise = mChannelBaseline.mForce * 0.125f;
+    float aPowerNoise = mChannelBaseline.mForce * 0.15f;
     
-    mPower = (aPowerBaseline + aPowerFlanger + aPowerNoise) / 130.0f;
-    if (mPower > 1.0f) { mPower = 1.0f; }
-    if (mPower < -1.0f) { mPower = -1.0f; }
+    mPowerTarget = (aPowerBaseline + aPowerFlanger + aPowerNoise) / 130.0f;
+    if (mPowerTarget > 1.0f) { mPowerTarget = 1.0f; }
+    if (mPowerTarget < -1.0f) { mPowerTarget = -1.0f; }
+    
+    
+    mPower += (mPowerTarget - mPower) * 0.035f;
+    
 }
 

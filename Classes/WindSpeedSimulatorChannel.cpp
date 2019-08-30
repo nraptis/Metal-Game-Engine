@@ -38,8 +38,8 @@ void WindSpeedSimulatorChannel::SetMode(int pMode) {
         mWanderSpeedMin = 0.045f;
         mWanderSpeedMax = 0.0875;
         mWanderBiasDirection = gRand.GetBool();
-        if (mTargetForce < mWanderMin) { mTargetForce = mWanderMin; }
-        if (mTargetForce > mWanderMax) { mTargetForce = mWanderMax; }
+        //if (mTargetForce < mWanderMin) { mTargetForce = mWanderMin; }
+        //if (mTargetForce > mWanderMax) { mTargetForce = mWanderMax; }
     } else if (mMode == WIND_MODE_SLEEPING_HARD) {
         //We essentially just slowly move in the range [-14, 14]
         mWanderMin = -14.0f;
@@ -47,18 +47,17 @@ void WindSpeedSimulatorChannel::SetMode(int pMode) {
         mWanderSpeedMin = 0.075f;
         mWanderSpeedMax = 0.1465f;
         mWanderBiasDirection = gRand.GetBool();
-        if (mTargetForce < mWanderMin) { mTargetForce = mWanderMin; }
-        if (mTargetForce > mWanderMax) { mTargetForce = mWanderMax; }
+        //if (mTargetForce < mWanderMin) { mTargetForce = mWanderMin; }
+        //if (mTargetForce > mWanderMax) { mTargetForce = mWanderMax; }
     } else if (mMode == WIND_MODE_WANDER) {
         //Wander is very simply, the force just randomly creeps in range [-60, 60]
-        mGustingBiasDirection = gRand.GetBool();
         mWanderMin = -60.0f;
         mWanderMax = 60.0f;
         mWanderSpeedMin = 0.125;
         mWanderSpeedMax = 0.215;
         mWanderBiasDirection = gRand.GetBool();
-        if (mTargetForce < mWanderMin) { mTargetForce = mWanderMin; }
-        if (mTargetForce > mWanderMax) { mTargetForce = mWanderMax; }
+        //if (mTargetForce < mWanderMin) { mTargetForce = mWanderMin; }
+        //if (mTargetForce > mWanderMax) { mTargetForce = mWanderMax; }
     } else if (mMode == WIND_MODE_GUSTING_HARD) {
         //Gusting picks a direction and oscillates hard in this particular direction. [70, 100]
         mGustingBiasDirection = gRand.GetBool();
@@ -132,8 +131,8 @@ void WindSpeedSimulatorChannel::UpdateWander() {
         if (gRand.Get(3) != 1) { aSpeed = -aSpeed; }
     }
     mTargetForce += aSpeed;
-    if (mTargetForce < mWanderMin) { mTargetForce += (mWanderMin - mTargetForce) * 0.045f; }
-    if (mTargetForce > mWanderMax) { mTargetForce -= (mTargetForce - mWanderMin) * 0.045f; }
+    if (mTargetForce < mWanderMin) { mTargetForce += (mWanderMin - mTargetForce) * 0.025f; }
+    if (mTargetForce > mWanderMax) { mTargetForce -= (mTargetForce - mWanderMin) * 0.025f; }
 }
 
 void WindSpeedSimulatorChannel::UpdateGust() {
@@ -145,8 +144,8 @@ void WindSpeedSimulatorChannel::UpdateGust() {
         if (gRand.Get(3) != 1) { aSpeed = -aSpeed; }
     }
     mTargetForce += aSpeed;
-    if (mTargetForce < mGustingMin) { mTargetForce += (mGustingMin - mTargetForce) * 0.045f; }
-    if (mTargetForce > mGustingMax) { mTargetForce -= (mTargetForce - mGustingMax) * 0.045f; }
+    if (mTargetForce < mGustingMin) { mTargetForce += (mGustingMin - mTargetForce) * 0.025f; }
+    if (mTargetForce > mGustingMax) { mTargetForce -= (mTargetForce - mGustingMax) * 0.025f; }
 }
 
 void WindSpeedSimulatorChannel::UpdateOscillate() {
@@ -157,8 +156,8 @@ void WindSpeedSimulatorChannel::UpdateOscillate() {
     if (mOscillatingSin >= 360.0f) { mOscillatingSin -= 360.0f; }
     float aForce = (1.0f + Sin(mOscillatingSin)) * 0.5f;
     aForce = mOscillatingMin + (mOscillatingMax - mOscillatingMin) * aForce;
-    if (mTargetForce < aForce) { mTargetForce += (aForce - mTargetForce) * 0.075f; }
-    if (mTargetForce > aForce) { mTargetForce -= (mTargetForce - aForce) * 0.075f; }
+    if (mTargetForce < aForce) { mTargetForce += (aForce - mTargetForce) * 0.035f; }
+    if (mTargetForce > aForce) { mTargetForce -= (mTargetForce - aForce) * 0.035f; }
 }
 
 void WindSpeedSimulatorChannel::AddAvailableMode(int pMode) {

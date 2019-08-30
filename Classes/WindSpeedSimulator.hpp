@@ -20,6 +20,7 @@ public:
     
     //This will be a magnitude in the range [-1, 1]
     float                           mPower;
+    float                           mPowerTarget;
     
     
     WindSpeedSimulatorChannel       mChannelBaseline;

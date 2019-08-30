@@ -1123,11 +1123,14 @@ void Game::Load() {
     aLevel.AddSection("test_section_perm_only_all_brickheads");
     */
     
+    
+    aLevel.SetKillTimer(4000);
+    aLevel.AddSection("test_section_perm_only_all_balloons_all_tracers");
+    
+    
     aLevel.SetAliveTimer(2800);
     aLevel.AddSection("test_section_perm_only_all_brickheads");
     
-    aLevel.SetKillTimer(1200);
-    aLevel.AddSection("test_section_perm_only_all_balloons_all_tracers");
     
     aLevel.SetAliveTimer(800);
     aLevel.AddSection("test_section_perm_only_all_balloons");
