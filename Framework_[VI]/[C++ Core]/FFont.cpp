@@ -569,32 +569,22 @@ void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix, const char 
         mCharacterStrideX[aReadIndex] = ((float)(aLoadFile.ReadShort()));
         mCharacterOffsetX[aReadIndex] = ((float)(aLoadFile.ReadShort()));
         
-        if(aCharAllowed[aReadIndex])
-        {
+        if (aCharAllowed[aReadIndex]) {
             FString aPath = FString(pImagePrefix) + FString(aScanChar);
             mCharacterSprite[aReadIndex].Load(aPath);
-        }
-        else
-        {
+        } else {
             mCharacterStrideX[aReadIndex] = 0.0f;
             mCharacterOffsetX[aReadIndex] = 0.0f;
         }
         
-        //if(mCharacterSprite[aReadIndex].mWidth <= 0)
-        //{
-        
-        //}
-        
-        if(aCharIndexCursor < 256)
-        {
+        if (aCharIndexCursor < 256) {
             aCharIndex[aCharIndexCursor] = aReadIndex;
             aChar[aCharIndexCursor] = aScanChar;
             aCharIndexCursor++;
         }
     }
     
-    if(aLoadFile.ReadBool())
-    {
+    if (aLoadFile.ReadBool()) {
         unsigned char aKernPartnerChar = 0;
         int aKernPartnerIndex = -1;
         
@@ -607,22 +597,19 @@ void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix, const char 
         int aLoopIndex = 0;
         int aTotalKernIndex = 0;
         
-        for(int i=0;((i<aCharCount) && (aTotalKernIndex < aTotalKernCount) && (aLoopIndex < aCharIndexCursor));i++)
-        {
+        for (int i=0;((i<aCharCount) && (aTotalKernIndex < aTotalKernCount) && (aLoopIndex < aCharIndexCursor));i++) {
             aCharKernCount = ((int)(aLoadFile.ReadShort()));
             aReadIndex = aCharIndex[aLoopIndex];
             aScanChar = aChar[aLoopIndex];
             
-            while((aCharKernCount > 0) && (aTotalKernIndex < aTotalKernCount))
-            {
+            while ((aCharKernCount > 0) && (aTotalKernIndex < aTotalKernCount)) {
                 aKernPartnerChar = aLoadFile.ReadChar();
                 aKernAmount = ((int)(aLoadFile.ReadShort()));
                 
                 
                 aKernPartnerIndex = aKernPartnerChar;
                 
-                if((aReadIndex >= 0) && (aReadIndex < 256) && (aKernPartnerIndex >= 0) && (aKernPartnerIndex < 256))
-                {
+                if ((aReadIndex >= 0) && (aReadIndex < 256) && (aKernPartnerIndex >= 0) && (aKernPartnerIndex < 256)) {
                     mKern[aReadIndex][aKernPartnerIndex] = aKernAmount;
                 }
                 
@@ -641,8 +628,7 @@ void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix, const char 
     
 }
 
-void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix)
-{
+void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix) {
     LoadNew(pDataFile, pImagePrefix, 0);
 }
 
@@ -651,13 +637,10 @@ void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix)
 
 void FFont::BitmapDataBatch(const char *pDataPath, const char *pImagePath,
                             const char *pFilePrefixCharImages, const char *pDataFile,
-                            int pPaddingCrop, int pPaddingGlyph, int pPaddingRadix, const char *pRemoveCharacters)
-{
+                            int pPaddingCrop, int pPaddingGlyph, const char *pRemoveCharacters) {
+    FFontImportData *aImport = BitmapDataImport(pDataPath, pImagePath, pPaddingCrop, pPaddingGlyph, pRemoveCharacters);
     
-    FFontImportData *aImport = BitmapDataImport(pDataPath, pImagePath, pPaddingCrop, pPaddingGlyph, pPaddingRadix, pRemoveCharacters);
-    
-    if(aImport == 0)
-    {
+    if (aImport == 0) {
         Log("Failed To Batch Font[%s] [%s]\n", pDataPath, pImagePath);
     }
     
@@ -681,7 +664,7 @@ void FFont::BitmapDataBatch(const char *pDataPath, const char *pImagePath,
     
 }
 
-FFontImportData *FFont::BitmapDataImport(const char *pDataPath, const char *pImagePath, int pPaddingCrop, int pPaddingGlyph, int pPaddingRadix, const char *pRemoveCharacters)
+FFontImportData *FFont::BitmapDataImport(const char *pDataPath, const char *pImagePath, int pPaddingCrop, int pPaddingGlyph, const char *pRemoveCharacters)
 {
     FFontImportData *aImportData = 0;
     
@@ -705,29 +688,22 @@ FFontImportData *FFont::BitmapDataImport(const char *pDataPath, const char *pIma
     FXML aXML;
     FXMLTag *aRoot = 0;
     
-    if(aFile.mLength > 0)
-    {
+    if (aFile.mLength > 0) {
         aXML.Parse((char*)aFile.mData, aFile.mLength);aRoot = aXML.GetRoot();
     }
     
-    if(aRoot == 0)
-    {
+    if (aRoot == 0) {
         aXML.Load(pDataPath);aRoot = aXML.GetRoot();
-        
     }
     
-    if(aRoot == 0)
-    {
+    if (aRoot == 0) {
         aXML.Load(aPath);aRoot = aXML.GetRoot();
-        
     }
     
     FFontImportGlyph *aGlyph = 0;
     FFontImportGlyph *aGlyphCompare = 0;
     
-    
-    if(aRoot)
-    {
+    if (aRoot) {
         aImportData = new FFontImportData();
         
         int aPaddingUp = 0;
@@ -739,8 +715,7 @@ FFontImportData *FFont::BitmapDataImport(const char *pDataPath, const char *pIma
         aImportData->mName.RemovePath();
         aImportData->mName.RemoveExtension();
         
-        EnumTagsMatching(aRoot, aInfoTag, "info")
-        {
+        EnumTagsMatching(aRoot, aInfoTag, "info") {
             aImportData->mPointSize = aInfoTag->GetParamInt("size");
             aImportData->mBold = aInfoTag->GetParamBool("bold");
             aImportData->mItalic = aInfoTag->GetParamBool("italic");
@@ -756,7 +731,7 @@ FFontImportData *FFont::BitmapDataImport(const char *pDataPath, const char *pIma
             aImportData->mSpacingV = aSpacingString.GetNextNumberI();
         }
         
-        if(aImportData->mPointSize <= 0)aImportData->mPointSize = 24;
+        if (aImportData->mPointSize <= 0) { aImportData->mPointSize = 24; }
         
         aImportData->mKernCount = 0;
         
@@ -773,15 +748,12 @@ FFontImportData *FFont::BitmapDataImport(const char *pDataPath, const char *pIma
         
         BitmapDataRemoveCharacters(aImportData, pRemoveCharacters);
         
-        EnumTagsMatching(aRoot, aCharListTag, "chars")
-        {
-            EnumTagsMatching(aCharListTag, aCharTag, "char")
-            {
+        EnumTagsMatching(aRoot, aCharListTag, "chars") {
+            EnumTagsMatching(aCharListTag, aCharTag, "char") {
                 int aID = aCharTag->GetParamInt("id");
                 aGlyph = aImportData->GetGlyph(aID);
                 
-                if(aGlyph != 0)
-                {
+                if (aGlyph != 0) {
                     aGlyph->Reset();
                     
                     aGlyph->mImageX = aCharTag->GetParamInt("x");
@@ -792,8 +764,7 @@ FFontImportData *FFont::BitmapDataImport(const char *pDataPath, const char *pIma
                     aGlyph->mImageOffsetX = aCharTag->GetParamInt("xoffset");
                     aGlyph->mImageOffsetY = aCharTag->GetParamInt("yoffset");
                     
-                    if((aImage.mWidth > 0) && (aImage.mHeight > 0) && (aGlyph->mAllowed == true) && (aImportData->mPointSize > 0))
-                    {
+                    if((aImage.mWidth > 0) && (aImage.mHeight > 0) && (aGlyph->mAllowed == true) && (aImportData->mPointSize > 0)) {
                         int aCropX = (aGlyph->mImageX - pPaddingCrop);
                         int aCropY = (aGlyph->mImageY - pPaddingCrop);
                         
@@ -802,10 +773,8 @@ FFontImportData *FFont::BitmapDataImport(const char *pDataPath, const char *pIma
                         
                         FImage *aImageBase = aImage.Crop(aCropX, aCropY, aCropWidth, aCropHeight);
                         
-                        if(aImageBase)
-                        {
-                            if((aImageBase->mWidth > 0) && (aImageBase->mHeight > 0))
-                            {
+                        if (aImageBase) {
+                            if ((aImageBase->mWidth > 0) && (aImageBase->mHeight > 0)) {
                                 int aFixedWidth = (aImageBase->mWidth + pPaddingGlyph * 2);
                                 int aFixedHeight = (aImportData->mPointSize + pPaddingGlyph * 2);
                                 
@@ -818,15 +787,18 @@ FFontImportData *FFont::BitmapDataImport(const char *pDataPath, const char *pIma
                                 
                                 bool aOdd = false;
                                 
-                                if((pPaddingRadix > 1) && (pPaddingRadix < 512))
-                                {
-                                    for(int aRadixLoop=0;aRadixLoop<=pPaddingRadix;aRadixLoop++)
-                                    {
+                                //Note: If we want to revert to use padding radix, this will achieve the task.
+                                //However, the render logic needs to be rewritten to handle the case where padding
+                                //is non ubiquitous across all glyphs.
+                                /*
+                                if ((pPaddingRadix > 1) && (pPaddingRadix < 512)) {
+                                    for (int aRadixLoop=0;aRadixLoop<=pPaddingRadix;aRadixLoop++) {
                                         if((aFixedWidth % pPaddingRadix) != 0){aFixedWidth++;if(aOdd == true)aFixedX++;}
                                         if((aFixedHeight % pPaddingRadix) != 0){aFixedHeight++;if(aOdd == true)aFixedY++;}
                                         aOdd = (!aOdd);
                                     }
                                 }
+                                */
                                 
                                 FImage *aImageAdjusted = new FImage();
                                 //aImageAdjusted->Make (aFixedWidth, aFixedHeight, IMAGE_RGBA(gRand.Get(200), gRand.Get(200), gRand.Get(220), 30 + gRand.Get(70)));
@@ -875,10 +847,9 @@ FFontImportData *FFont::BitmapDataImport(const char *pDataPath, const char *pIma
                     if(aID == 32)aGlyph->mLoadSuccess = true;
                 }
                 
-                EnumTagsMatching(aRoot, aKernListTag, "kernings")
-                {
+                EnumTagsMatching(aRoot, aKernListTag, "kernings") {
                     EnumTagsMatching(aKernListTag, aKernTag, "kerning")
-                    {
+{
                         int aKernChar1 = aKernTag->GetParamInt("first");
                         int aKernChar2 = aKernTag->GetParamInt("second");
                         int aKernAmount = aKernTag->GetParamInt("amount");

@@ -21,8 +21,12 @@ public:
     
     FSprite                                         mSpriteTest;
     
-    FFont                                           mFontLarge;
-    FFont                                           mFontSmall;
+    //FFont                                           mFontLarge;
+    //FFont                                           mFontSmall;
+    
+    FFont                                           mFontScoreLarge;
+    FFont                                           mFontScoreSmall;
+    
     
     //FFont                                           mFontSystem;
     

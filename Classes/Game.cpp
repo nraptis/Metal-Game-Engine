@@ -134,7 +134,6 @@ Game::Game() {
     mTestBalloonRotX = 0.0f;
     mTestBalloonRotY = 0.0f;
     mTestBalloonRotZ = 0.0f;
-    
 }
 
 Game::~Game() {
@@ -476,6 +475,8 @@ void Game::Update() {
          }
          */
     }
+    
+    mWind.Update();
     
 }
 

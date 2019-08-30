@@ -364,7 +364,9 @@ void FApp::BaseLoad() {
     
     float aImageScale = (float)gSpriteScale;
     
-    //AppShellSetImageFileScale(3);
+    //Note: Without this line, these do not load.
+    //TODO: Default scale required.
+    AppShellSetImageFileScale(3);
     
     //gImageBundler.StartBundle("bndl_roboto_bold_260");
     //if (gImageBundler.mBundleWidth > 32 && gImageBundler.mBundleHeight > 32) {

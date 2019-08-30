@@ -37,13 +37,15 @@ void AssetWadGameInterface::Load() {
     //gImageBundler.mBorder = 2;
     
     
-    gImageBundler.StartBundle("gi_fonts");
+    //gImageBundler.StartBundle("gi_fonts");
+    //mFontLarge.LoadNew("fnt_mh_256_font.kern", "mont_heavy_128_", "0123456789AaBbCcDdEeFfXxYyZz ");
+    //mFontSmall.LoadNew("fnt_mh_256_font.kern", "mont_heavy_64_", "0123456789AaBbCcDdEeFfXxYyZz ");
+    //gImageBundler.EndBundle();
     
-    mFontLarge.LoadNew("fnt_mh_256_font.kern", "mont_heavy_128_", "0123456789AaBbCcDdEeFfXxYyZz ");
-    mFontSmall.LoadNew("fnt_mh_256_font.kern", "mont_heavy_64_", "0123456789AaBbCcDdEeFfXxYyZz ");
-    
+    gImageBundler.StartBundle("bndl_score_font");
+    mFontScoreLarge.LoadNew("fnt_mh_256_font.kern", "mont_heavy_128_", "0123456789+-.,");
+    mFontScoreSmall.LoadNew("fnt_mh_256_font.kern", "mont_heavy_64_", "0123456789+-.,");
     gImageBundler.EndBundle();
-    
     
     //mFontLarge.LoadNew("fnt_mh_256_font.kern", "mont_heavy_128_", "0123456789AaBbCcDdEeFfXxYyZz ");
     //mFontSmall.LoadNew("fnt_mh_256_font.kern", "mont_heavy_64_", "0123456789AaBbCcDdEeFfXxYyZz ");
@@ -77,21 +79,13 @@ void AssetWadGameInterface::Load() {
     float aImageScale = (float)gSpriteScale;
     
     
-    //mFontLarge.mDataScale = 0.25f * aImageScale;
-    mFontLarge.mDataScale = 0.125f * aImageScale;
-    mFontLarge.ApplyExpand(14.0f);
-    mFontLarge.SetSpaceWidth(64.0f);
-    //mFontLarge.ApplyScrunch(gSpriteScale * 30.0f);
+    mFontScoreLarge.mDataScale = 0.125f * aImageScale;
+    mFontScoreLarge.ApplyExpand(14.0f);
+    mFontScoreLarge.SetSpaceWidth(64.0f);
     
-    //mFontSmall.mDataScale = 0.125f * aImageScale;
-    mFontSmall.mDataScale = 0.0625f * aImageScale;
-    mFontSmall.ApplyExpand(14.0f);
-    mFontSmall.SetSpaceWidth(64.0f);
-    //mFontSmall.ApplyScrunch(gSpriteScale * 15.0f);
-    
-    
-    //mFontLarge;
-    //mFontSmall;
+    mFontScoreSmall.mDataScale = 0.0625f * aImageScale;
+    mFontScoreSmall.ApplyExpand(14.0f);
+    mFontScoreSmall.SetSpaceWidth(64.0f);
     
     //candy_beans_256_font.kern
     //fnt_cb_256_font.kern
@@ -121,8 +115,8 @@ void AssetWadGameInterface::Load() {
 
 void AssetWadGameInterface::Unload() {
     
-    mFontLarge.Kill();
-    mFontSmall.Kill();
+    mFontScoreLarge.Kill();
+    mFontScoreSmall.Kill();
     
     mSpriteTest.Kill();
     

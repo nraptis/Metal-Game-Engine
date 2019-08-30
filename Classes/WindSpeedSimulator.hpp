@@ -9,8 +9,7 @@
 #ifndef WindSpeedSimulator_hpp
 #define WindSpeedSimulator_hpp
 
-#define WIND_BASELINE_MODE_WANDER 0
-#define WIND_BASELINE_MODE_GUSTING 1
+#include "WindSpeedSimulatorChannel.hpp"
 
 class WindSpeedSimulator {
 public:
@@ -23,14 +22,9 @@ public:
     float                           mPower;
     
     
-    int                             mBaselineMode;
-    int                             mBaselineModeTick;
-    
-    //Control for the "Baseline" wind speed in range [-100, 100]
-    float                           mBaseline;
-    float                           mTargetBaseline;
-    
-    
+    WindSpeedSimulatorChannel       mChannelBaseline;
+    WindSpeedSimulatorChannel       mChannelFlanger;
+    WindSpeedSimulatorChannel       mChannelNoise;
     
 };
 

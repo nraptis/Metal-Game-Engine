@@ -8,16 +8,36 @@
 
 #include "WindSpeedSimulator.hpp"
 
-
 WindSpeedSimulator::WindSpeedSimulator() {
     mPower = 0.0f;
     
-    mBaselineMode = WIND_BASELINE_MODE_WANDER;
-    mBaselineModeTick = 1000;
-    mBaseline = 0;
-    mTargetBaseline = 30;
+    mChannelBaseline.AddAvailableMode(WIND_MODE_SLEEPING_LIGHT);
+    mChannelBaseline.AddAvailableMode(WIND_MODE_SLEEPING_HARD);
+    mChannelBaseline.AddAvailableMode(WIND_MODE_WANDER);
+    mChannelBaseline.AddAvailableMode(WIND_MODE_GUSTING_HARD);
+    mChannelBaseline.AddAvailableMode(WIND_MODE_GUSTING_LIGHT);
+    mChannelBaseline.mModeTimerMin = 380;
+    mChannelBaseline.mModeTimerMax = 700;
+    mChannelBaseline.Realize();
+    
+    mChannelFlanger.AddAvailableMode(WIND_MODE_SLEEPING_LIGHT);
+    mChannelFlanger.AddAvailableMode(WIND_MODE_SLEEPING_HARD);
+    mChannelFlanger.AddAvailableMode(WIND_MODE_GUSTING_HARD);
+    mChannelFlanger.AddAvailableMode(WIND_MODE_GUSTING_LIGHT);
+    mChannelFlanger.AddAvailableMode(WIND_MODE_OSCILLATING);
+    mChannelFlanger.mModeTimerMin = 200;
+    mChannelFlanger.mModeTimerMax = 400;
+    mChannelFlanger.Realize();
+    
+    mChannelNoise.AddAvailableMode(WIND_MODE_GUSTING_HARD);
+    mChannelNoise.AddAvailableMode(WIND_MODE_GUSTING_LIGHT);
+    mChannelNoise.AddAvailableMode(WIND_MODE_OSCILLATING);
+    mChannelNoise.mModeTimerMin = 100;
+    mChannelNoise.mModeTimerMax = 140;
+    mChannelNoise.Realize();
+    
+    Update();
 }
-
 
 WindSpeedSimulator::~WindSpeedSimulator() {
     
@@ -25,6 +45,16 @@ WindSpeedSimulator::~WindSpeedSimulator() {
 
 void WindSpeedSimulator::Update() {
     
+    mChannelBaseline.Update();
+    mChannelFlanger.Update();
+    mChannelNoise.Update();
     
+    float aPowerBaseline = mChannelBaseline.mForce;
+    float aPowerFlanger = mChannelBaseline.mForce * 0.25f;
+    float aPowerNoise = mChannelBaseline.mForce * 0.125f;
+    
+    mPower = (aPowerBaseline + aPowerFlanger + aPowerNoise) / 130.0f;
+    if (mPower > 1.0f) { mPower = 1.0f; }
+    if (mPower < -1.0f) { mPower = -1.0f; }
 }
 

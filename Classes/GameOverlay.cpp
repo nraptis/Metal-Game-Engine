@@ -58,14 +58,13 @@ void GameOverlay::Draw() {
     
     Graphics::PipelineStateSetSpritePremultipliedBlending();
     
-    gWadGameInterface.mFontLarge.Draw("Xa aX0123456789yYzZZzzYaY", 20.0f, 100.0f);
-    gWadGameInterface.mFontLarge.Draw("aa 2345BB", 20.0f, 150.0f);
-    gWadGameInterface.mFontLarge.Draw("987 65bacaBCACAeE", 20.0f, 200.0f);
+    gWadGameInterface.mFontScoreLarge.Draw("Xa aX0123456789yYzZZzzYaY", 20.0f, 100.0f);
+    gWadGameInterface.mFontScoreLarge.Draw("aa 2345BB", 20.0f, 150.0f);
+    gWadGameInterface.mFontScoreLarge.Draw("987 65bacaBCACAeE", 20.0f, 200.0f);
     
-    
-    gWadGameInterface.mFontSmall.Draw("Xaa X0123456789yYzZZzzYaY", 20.0f, 250.0f);
-    gWadGameInterface.mFontSmall.Draw("aa 2345BB", 20.0f, 300.0f);
-    gWadGameInterface.mFontSmall.Draw("987 65bacaBCACAeE", 20.0f, 400.0f);
+    gWadGameInterface.mFontScoreSmall.Draw("Xaa X0123456789yYzZZzzYaY", 20.0f, 250.0f);
+    gWadGameInterface.mFontScoreSmall.Draw("aa 2345BB", 20.0f, 300.0f);
+    gWadGameInterface.mFontScoreSmall.Draw("987 65bacaBCACAeE", 20.0f, 400.0f);
     
     /*
      Graphics::SetColor(1.0f, 0.0f, 0.25f, 0.25f);
@@ -83,7 +82,35 @@ void GameOverlay::Draw() {
      Graphics::DrawRect(0.0f, mHeight - mInterfaceBottomHeight, mWidth, mInterfaceBottomHeight);
      */
     
-    gWadGameInterface.mFontLarge.Right(FString(gGame->mScore), mWidth - 40.0f, 40.0f);
+    gWadGameInterface.mFontScoreLarge.Right(FString(gGame->mScore), mWidth - 40.0f, 40.0f);
+    
+    
+    
+    Graphics::PipelineStateSetShape2DAlphaBlending();
+    
+    float aWindBarCenter = mWidth2;
+    float aWindBarLength = mWidth * 0.9f;
+    
+    Graphics::SetColor(0.45f, 0.45f, 0.45f, 0.9f);
+    Graphics::DrawRect(aWindBarCenter - aWindBarLength / 2.0f, mHeight - 100.0f, aWindBarLength, 50.0f);
+    
+    float aPowerBarLeft = aWindBarCenter;
+    float aPowerBarLength = 0.0f;
+    
+    float aWindPower = gGame->mWind.mPower;
+    float aWindBarWidth = aWindBarLength * aWindPower * 0.5f;
+    
+    if (aWindPower >= 0.0f) {
+        Graphics::SetColor(1.0f, 0.125f, 0.125f, 0.9f);
+        Graphics::DrawRect(aWindBarCenter, mHeight - 100.0f, aWindBarWidth, 50.0f);
+    } else {
+        Graphics::SetColor(1.0f, 0.125f, 0.125f, 0.9f);
+        Graphics::DrawRect(aWindBarCenter + aWindBarWidth, mHeight - 100.0f, -aWindBarWidth, 50.0f);
+    }
+    
+    
+    //mWanderMax
+    
     
     
 }
