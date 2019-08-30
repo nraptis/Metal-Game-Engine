@@ -13,12 +13,12 @@
 //int kDeviceWidth = 480;
 //int kDeviceHeight = 320;
 
-//int kDeviceWidth = 1400;
-//int kDeviceHeight = 760;
+int kDeviceWidth = 1400;
+int kDeviceHeight = 760;
 
 
-int kDeviceWidth = 256;
-int kDeviceHeight = 256;
+//int kDeviceWidth = 256;
+//int kDeviceHeight = 256;
 
 @interface AppDelegate ()
 

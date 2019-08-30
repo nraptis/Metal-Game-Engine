@@ -9,6 +9,8 @@
 
 void os_initialize_outlets();
 
+int os_getAssetScale();
+
 void os_sleep(int pTime);
 
 unsigned int os_system_time();

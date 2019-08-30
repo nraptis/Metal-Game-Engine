@@ -94,6 +94,7 @@ void WindSpeedSimulatorChannel::SetMode(int pMode) {
 }
 
 void WindSpeedSimulatorChannel::Update() {
+    
     mModeTimer--;
     if (mModeTimer <= 0) { SetMode(mAvailableModeList[gRand.Get(mAvailableModeListCount)]); }
     if (mMode == WIND_MODE_SLEEPING_LIGHT) {
@@ -109,7 +110,17 @@ void WindSpeedSimulatorChannel::Update() {
     } else if (mMode == WIND_MODE_OSCILLATING) {
         UpdateOscillate();
     }
-    mForce += (mTargetForce - mForce) * 0.025f;
+    
+    float aDelta = fabsf(mTargetForce - mForce);
+    if (aDelta > 5.0f) {
+        mForce += (mTargetForce - mForce) * 0.01f;
+    } else if (aDelta > 2.25f) {
+        mForce += (mTargetForce - mForce) * 0.0225f;
+    } else if (aDelta > 0.75f) {
+        mForce += (mTargetForce - mForce) * 0.04f;
+    } else {
+        mForce += (mTargetForce - mForce) * 0.064f;
+    }
 }
 
 void WindSpeedSimulatorChannel::UpdateWander() {

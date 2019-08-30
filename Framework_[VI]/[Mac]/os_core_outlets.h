@@ -8,6 +8,10 @@ class FString;
 
 void os_initialize_outlets();
 
+//Returns 0 if the device asset scale is not known.
+//Otherwise returns the device asset scale...
+int os_getAssetScale();
+
 void os_detach_thread(void (*pFunction)(void *pArg), void *pArg);
 
 bool os_fileExists(const char *pFilePath);

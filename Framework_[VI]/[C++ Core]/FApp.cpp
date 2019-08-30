@@ -304,9 +304,6 @@ void FApp::BaseDraw() {
         Graphics::MatrixModelViewReset();
         Graphics::SetColor();
         Graphics::PipelineStateSetSpritePremultipliedBlending();
-        //Graphics::BufferSetIndicesSprite();
-        
-        
         mSysFont.Draw(FString("FPS = ") + FString(GetFPS()), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 2.0f, 0.5f);
         mSysFont.Draw(FString("UPS = ") + FString(GetUPS()), gSafeAreaInsetLeft + 88.0f, gSafeAreaInsetTop + 2.0f, 0.5f);
     }
@@ -332,10 +329,10 @@ void FApp::BaseDraw() {
    
     
     if (mDarkMode) {
-    Graphics::PipelineStateSetShape2DAlphaBlending();
-    Graphics::SetColor(0.0075f, 0.0075f, 0.0085f, 0.8f);
-    Graphics::DrawRect(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
-    Graphics::SetColor();
+        Graphics::PipelineStateSetShape2DAlphaBlending();
+        Graphics::SetColor(0.0075f, 0.0075f, 0.0075f, 0.90f);
+        Graphics::DrawRect(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+        Graphics::SetColor();
     }
     
     
@@ -349,11 +346,7 @@ void FApp::BaseLoad() {
     
     mIsLoading = true;
     
-    if (gQuadBufferPosition == -1) {
-        gQuadBufferPosition = Graphics::BufferArrayGenerate(sizeof(float) * 8);
-        gQuadBufferTextureCoord = Graphics::BufferArrayGenerate(sizeof(float) * 8);
-    }
-    
+    //os_getAssetScale()
     
     //bndl_sys_font_data.json
     //bndl_sys_font_scale_1.png
@@ -363,10 +356,16 @@ void FApp::BaseLoad() {
     //sys_font.kern
     
     float aImageScale = (float)gSpriteScale;
+    int aScreenScale = os_getAssetScale();
+    if (aScreenScale == 0) {
+        if (gSpriteScale > 1) {
+            aScreenScale = gSpriteScale;
+        } else {
+            aScreenScale = 1;
+        }
+    }
+    AppShellSetImageFileScale(aScreenScale);
     
-    //Note: Without this line, these do not load.
-    //TODO: Default scale required.
-    AppShellSetImageFileScale(3);
     
     //gImageBundler.StartBundle("bndl_roboto_bold_260");
     //if (gImageBundler.mBundleWidth > 32 && gImageBundler.mBundleHeight > 32) {

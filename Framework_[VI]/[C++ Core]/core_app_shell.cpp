@@ -64,9 +64,6 @@ int gSpriteScale = 1;
 bool gIsLargeScreen = false;
 bool gIsRetina = false;
 
-int gQuadBufferPosition = -1;
-int gQuadBufferTextureCoord = -1;
-
 bool gKeyDownCtrl = false;
 bool gKeyDownShift = false;
 bool gKeyDownAlt = false;
@@ -89,9 +86,10 @@ void AppShellInitialize(int pEnvironment) {
     os_initialize_outlets();
     sound_initialize();
     music_initialize();
-    
     social_Init();
-
+    
+    AppShellSetImageFileScale(gImageFileScale);
+    
     //if(gAppBase)(gAppBase)->BaseInitialize();
     //gTouch.Initialize(pEnvironment);
     
@@ -259,7 +257,6 @@ void AppShellSetDeviceSize(int pWidth, int pHeight) {
 
             //TODO: Toggle for crop tool...
             //aApp->BaseSetVirtualFrame(gVirtualDevX, gVirtualDevY, gVirtualDevWidth, gVirtualDevHeight);
-            
             
             float aAspectRatio = 768.0f / 1024.0f;
             

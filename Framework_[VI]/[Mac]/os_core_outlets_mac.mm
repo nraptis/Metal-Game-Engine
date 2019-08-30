@@ -11,6 +11,7 @@
 #include "FApp.hpp"
 #include "PlatformGraphicsInterface.hpp"
 #import "MetalViewController.h"
+#import "RootViewController.h"
 
 #include <stdio.h>
 #include <math.h>
@@ -56,6 +57,10 @@ FList gThreadLockList;
 
 void os_initialize_outlets() {
     gThreadLockList.Size(128);
+}
+
+int os_getAssetScale() {
+    return 3;
 }
 
 void os_detach_thread(void (*pFunction)(void *pArg), void *pArg) {

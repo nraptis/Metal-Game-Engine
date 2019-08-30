@@ -104,10 +104,9 @@ void GameContainer::Layout() {
         mGame->SetX(aGameX);
         mGame->SetY(aGameY);
         
-        FVec2 aPos = FCanvas::Convert(0.0f, 0.0f, mGame, this);
-        
-        //mOverlay->SetFrame(aFit.mX, aFit.mY, aFit.mWidth, aFit.mHeight);
-        mOverlay->SetFrame(aPos.mX, aPos.mY, aFit.mWidth, aFit.mHeight);
+        float aContainerCenterX = (int)(mInterfaceLeftWidth + (aGameAreaWidth) * 0.5f);
+        float aContainerCenterY = (int)(mInterfaceTopHeight + (aGameAreaHeight) * 0.5f);
+        mOverlay->SetFrame(aContainerCenterX - mGame->mWidth2 * aScale, aContainerCenterY - mGame->mHeight2 * aScale, mGame->mWidth * aScale, mGame->mHeight * aScale);
         
     }
     

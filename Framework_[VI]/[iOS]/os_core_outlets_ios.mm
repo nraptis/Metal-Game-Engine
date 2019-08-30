@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #include "RecursiveLockWrapper.h"
+#include "RootViewController.h"
 
 #include "os_core_outlets.h"
 #include "core_includes.h"
@@ -44,6 +45,10 @@ void os_initialize_outlets() {
     Log("Initialize Outlets...\n");
     
     gThreadLockList.Size(128);
+}
+
+int os_getAssetScale() {
+    return (int)(gRootBase.view.contentScaleFactor + 0.5f);
 }
 
 void os_detach_thread(void (*pFunction)(void *pArg), void *pArg) {
