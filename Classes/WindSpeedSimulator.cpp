@@ -54,15 +54,14 @@ void WindSpeedSimulator::Update() {
     mChannelNoise.Update();
     
     float aPowerBaseline = mChannelBaseline.mForce;
-    float aPowerFlanger = mChannelBaseline.mForce * 0.25f;
-    float aPowerNoise = mChannelBaseline.mForce * 0.15f;
+    float aPowerFlanger = mChannelFlanger.mForce * 0.25f;
+    float aPowerNoise = mChannelNoise.mForce * 0.125f;
     
-    mPowerTarget = (aPowerBaseline + aPowerFlanger + aPowerNoise) / 130.0f;
+    mPowerTarget = (aPowerBaseline + aPowerFlanger + aPowerNoise) / 135.0f;
     if (mPowerTarget > 1.0f) { mPowerTarget = 1.0f; }
     if (mPowerTarget < -1.0f) { mPowerTarget = -1.0f; }
     
-    
-    mPower += (mPowerTarget - mPower) * 0.035f;
+    mPower += (mPowerTarget - mPower) * 0.125f;
     
 }
 
