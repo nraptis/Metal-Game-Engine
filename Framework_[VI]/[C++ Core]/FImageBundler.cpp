@@ -431,58 +431,25 @@ void FImageBundler::Save(char *pName) {
             
             
             FJSON aJSON;
-            //FXML aXML;
             
             FJSONNode *aRootNode = new FJSONNode();
             aRootNode->mNodeType = JSON_NODE_TYPE_DICTIONARY;
             aJSON.mRoot = aRootNode;
-            
-            //FXMLTag *aRoot=new FXMLTag("image_bundle");
-            //aXML.mRoot=aRoot;
-            
-            //FXMLTag *aNodeListTag = new FXMLTag("node_list");
-            //*aRoot += aNodeListTag;
 
-            
-            //aRoot->AddParam("width", FString(mImage.mWidth).c());
             aRootNode->AddDictionaryInt("width", mImage.mWidth);
-            
-            //aRoot->AddParam("height", FString(mImage.mHeight).c());
             aRootNode->AddDictionaryInt("height", mImage.mHeight);
-            
-            //aRoot->AddParam("border", FString(mBorder).c());
             aRootNode->AddDictionaryInt("border", mBorder);
-            
-            //aRoot->AddParam("edge", FString(mEdgeBorder).c());
             aRootNode->AddDictionaryInt("edge", mEdgeBorder);
-            
             
             FJSONNode *aNodeListNode = new FJSONNode();
             aNodeListNode->mNodeType = JSON_NODE_TYPE_ARRAY;
             aRootNode->AddDictionary("node_list", aNodeListNode);
             
             EnumList(FImageBundlerSaveNode, aSaveNode, mSaveNodeList) {
-                
-                /*
-                FXMLTag *aNodeTag = new FXMLTag("node");
-                *aNodeListTag += aNodeTag;
-                aNodeTag->AddTag("name", aSaveNode->mName.c());
-                aNodeTag->AddTag("inset", FString(aSaveNode->mInset).c());
-                aNodeTag->AddTag("image_width", FString(aSaveNode->mOriginalWidth).c());
-                aNodeTag->AddTag("image_height", FString(aSaveNode->mOriginalHeight).c());
-                aNodeTag->AddTag("offset_x", FString(aSaveNode->mOffsetX).c());
-                aNodeTag->AddTag("offset_y", FString(aSaveNode->mOffsetY).c());
-                aNodeTag->AddTag("rect_x", FString(aSaveNode->mX + aSaveNode->mInset).c());
-                aNodeTag->AddTag("rect_y", FString(aSaveNode->mY + aSaveNode->mInset).c());
-                aNodeTag->AddTag("rect_width", FString(aSaveNode->mWidth - (aSaveNode->mInset * 2)).c());
-                aNodeTag->AddTag("rect_height", FString(aSaveNode->mHeight - (aSaveNode->mInset * 2)).c());
-                */
-                
                 FJSONNode *aNodeNode = new FJSONNode();
                 aNodeNode->mNodeType = JSON_NODE_TYPE_DICTIONARY;
                 
                 aNodeNode->AddDictionaryString("name", aSaveNode->mName.c());
-                
                 aNodeNode->AddDictionaryInt("inset", aSaveNode->mInset);
                 aNodeNode->AddDictionaryInt("image_width", aSaveNode->mOriginalWidth);
                 aNodeNode->AddDictionaryInt("image_height", aSaveNode->mOriginalHeight);
@@ -494,7 +461,6 @@ void FImageBundler::Save(char *pName) {
                 aNodeNode->AddDictionaryInt("rect_height", aSaveNode->mHeight - (aSaveNode->mInset * 2));
                 
                 aNodeListNode->AddArray(aNodeNode);
-                
             }
 
             FString aPath = FString(gDirExport + FString("") + FString(pName) + FString("_scale_1.png")).c();
@@ -581,10 +547,6 @@ void FImageBundler::LoadBundle(const char *pFile) {
     if(aRoot == NULL) { aJSON.Load(gDirBundle + mBundleName + FString("_data.json")); aRoot = aJSON.mRoot; }
     if(aRoot == NULL) { aJSON.Load(gDirDocuments + mBundleName + FString("_data.json")); aRoot = aJSON.mRoot; }
     
-    //if (aRoot == 0) { aXML.Load(gDirBundle + FString("Bundles/") + mBundleName + FString("_data.xml"));aRoot = aXML.GetRoot(); }
-    //if (aRoot == 0) { aXML.Load(gDirBundle + FString("[Bundles]/") + mBundleName + FString("_data.xml"));aRoot = aXML.GetRoot(); }
-    //if (aRoot == 0) { aXML.Load(gDirBundle + FString("[[Bundles]]/") + mBundleName + FString("_data.xml"));aRoot = aXML.GetRoot(); }
-    
     if (aRoot != NULL) {
         
         mBundleWidth = aRoot->GetInt("width", 0);
@@ -609,13 +571,6 @@ void FImageBundler::LoadBundle(const char *pFile) {
         //2x = 1024x1024
         //3x = 2048x2048
         //4x = 2048x2048
-
-        //if (mBundleScale == 3) {
-        //    mBundleWidth *= 3;
-        //    mBundleWidth /= 4;
-        //    mBundleHeight *= 3;
-        //    mBundleHeight /= 4;
-        //}
         
         FJSONNode *aNodeListNode = aRoot->GetArray("node_list");
         
@@ -626,26 +581,26 @@ void FImageBundler::LoadBundle(const char *pFile) {
             
             aNode->mName = aNodeNode->GetString("name", "");
             
-            aNode->mOriginalWidth = aNodeNode->GetInt("image_width", 0);
-            aNode->mOriginalHeight = aNodeNode->GetInt("image_height", 0);
+            aNode->mOriginalWidth = aNodeNode->GetInt("image_width", 0) * mBundleScale;
+            aNode->mOriginalHeight = aNodeNode->GetInt("image_height", 0) * mBundleScale;
             
-            aNode->mOffsetX = aNodeNode->GetInt("offset_x", 0);
-            aNode->mOffsetY = aNodeNode->GetInt("offset_y", 0);
+            aNode->mOffsetX = aNodeNode->GetInt("offset_x", 0) * mBundleScale;
+            aNode->mOffsetY = aNodeNode->GetInt("offset_y", 0) * mBundleScale;
             
-            aNode->mX = aNodeNode->GetInt("rect_x", 0);
-            aNode->mY = aNodeNode->GetInt("rect_y", 0);
+            aNode->mX = aNodeNode->GetInt("rect_x", 0) * mBundleScale;
+            aNode->mY = aNodeNode->GetInt("rect_y", 0) * mBundleScale;
             
-            aNode->mWidth = aNodeNode->GetInt("rect_width", 0);
-            aNode->mHeight = aNodeNode->GetInt("rect_height", 0);
+            aNode->mWidth = aNodeNode->GetInt("rect_width", 0) * mBundleScale;
+            aNode->mHeight = aNodeNode->GetInt("rect_height", 0) * mBundleScale;
             
-            aNode->mX *= mBundleScale;
-            aNode->mY *= mBundleScale;
-            aNode->mWidth *= mBundleScale;
-            aNode->mHeight *= mBundleScale;
-            aNode->mOffsetX *= mBundleScale;
-            aNode->mOffsetY *= mBundleScale;
-            aNode->mOriginalWidth *= mBundleScale;
-            aNode->mOriginalHeight *= mBundleScale;
+            //aNode->mX *= mBundleScale;
+            //aNode->mY *= mBundleScale;
+            //aNode->mWidth *= mBundleScale;
+            //aNode->mHeight *= mBundleScale;
+            //aNode->mOffsetX *= mBundleScale;
+            //aNode->mOffsetY *= mBundleScale;
+            //aNode->mOriginalWidth *= mBundleScale;
+            //aNode->mOriginalHeight *= mBundleScale;
             
             aNode->mSpriteUStart = (float)(aNode->mX) / (float)mBundleWidth;
             aNode->mSpriteVStart = (float)(aNode->mY) / (float)mBundleHeight;
@@ -657,50 +612,7 @@ void FImageBundler::LoadBundle(const char *pFile) {
             aNode->mSpriteBottom = aNode->mSpriteTop + (float)aNode->mHeight;
             aNode->mSpriteWidth = (float)aNode->mOriginalWidth;
             aNode->mSpriteHeight = (float)aNode->mOriginalHeight;
-            
         }
-        
-        
-        /*
-        EnumTags(aRoot, aNodeListTag) {
-            EnumTags(aNodeListTag, aNodeTag) {
-                FImageBundlerLoadNode *aNode = new FImageBundlerLoadNode();
-                mLoadNodeList += aNode;
-                EnumTags(aNodeTag,aNodeSubtag) {
-                    if (FString(aNodeSubtag->mName) == "name") aNode->mName = aNodeSubtag->mValue;
-                    if (FString(aNodeSubtag->mName) == "image_width") aNode->mOriginalWidth = FString(aNodeSubtag->mValue).ToInt();
-                    if (FString(aNodeSubtag->mName) == "image_height") aNode->mOriginalHeight = FString(aNodeSubtag->mValue).ToInt();
-                    if (FString(aNodeSubtag->mName) == "offset_x") aNode->mOffsetX = FString(aNodeSubtag->mValue).ToInt();
-                    if (FString(aNodeSubtag->mName) == "offset_y") aNode->mOffsetY = FString(aNodeSubtag->mValue).ToInt();
-                    if (FString(aNodeSubtag->mName) == "rect_x") aNode->mX = FString(aNodeSubtag->mValue).ToInt();
-                    if (FString(aNodeSubtag->mName) == "rect_y") aNode->mY = FString(aNodeSubtag->mValue).ToInt();
-                    if (FString(aNodeSubtag->mName) == "rect_width") aNode->mWidth = FString(aNodeSubtag->mValue).ToInt();
-                    if (FString(aNodeSubtag->mName) == "rect_height") aNode->mHeight = FString(aNodeSubtag->mValue).ToInt();
-                }
-
-                aNode->mX *= mBundleScale;
-                aNode->mY *= mBundleScale;
-                aNode->mWidth *= mBundleScale;
-                aNode->mHeight *= mBundleScale;
-                aNode->mOffsetX *= mBundleScale;
-                aNode->mOffsetY *= mBundleScale;
-                aNode->mOriginalWidth *= mBundleScale;
-                aNode->mOriginalHeight *= mBundleScale;
-                
-                aNode->mSpriteUStart = (float)(aNode->mX) / (float)mBundleWidth;
-                aNode->mSpriteVStart = (float)(aNode->mY) / (float)mBundleHeight;
-                aNode->mSpriteUEnd = (float)(aNode->mX + aNode->mWidth) / (float)mBundleWidth;
-                aNode->mSpriteVEnd = (float)(aNode->mY + aNode->mHeight) / (float)mBundleHeight;
-                aNode->mSpriteLeft = (float)aNode->mOffsetX - ((float)aNode->mOriginalWidth / 2.0f);
-                aNode->mSpriteRight = aNode->mSpriteLeft + (float)aNode->mWidth;
-                aNode->mSpriteTop = (float)aNode->mOffsetY - ((float)aNode->mOriginalHeight / 2.0f);
-                aNode->mSpriteBottom = aNode->mSpriteTop + (float)aNode->mHeight;
-                aNode->mSpriteWidth = (float)aNode->mOriginalWidth;
-                aNode->mSpriteHeight = (float)aNode->mOriginalHeight;
-            }
-        }
-         */
-        
     }
 }
 
