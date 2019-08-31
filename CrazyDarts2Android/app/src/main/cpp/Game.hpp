@@ -25,6 +25,8 @@
 #include "Transform3D.hpp"
 #include "GameInfoOverlay.hpp"
 #include "HangingThread.hpp"
+#include "GameOverlay.hpp"
+#include "WindSpeedSimulator.hpp"
 
 #define GAME_WIDTH 768
 #define GAME_HEIGHT 1280
@@ -70,10 +72,13 @@ public:
     
     void                                        DisposeObjectFromLevelData(GameObject *pObject);
     
-    
     void                                        FlyOffEscape(GameObject *pObject);
     void                                        DartFlyOffScreen(Dart *pDart);
     
+    void                                        StuckDartBeginFadeOut(Dart *pDart);
+    void                                        StuckDartFinishFadeOut(Dart *pDart);
+    
+    void                                        DartCollideWithBalloon(Dart *pDart, Balloon *pBalloon);
     void                                        DartCollideWithBrickhead(Dart *pDart, BrickHead *pBrickHead);
     void                                        DartMovingInterpolation(Dart *pDart, float pPercent, bool pEnd);
     
@@ -91,6 +96,8 @@ public:
     
     GameRenderer                                *mRenderer;
     FloatingCamera                              *mCamera;
+    
+    WindSpeedSimulator                          mWind;
     
     float                                       mGravity;
     
@@ -188,6 +195,8 @@ public:
     int                                         mSlowMoTimer;
     
     
+    int                                         mScore;
+    
     int                                         mLives;
     int                                         mLivesMax;
     
@@ -202,9 +211,7 @@ public:
     float                                       mTestBalloonRotY;
     float                                       mTestBalloonRotZ;
     
-    
-    float                                       mWind;
-    float                                       mWindSin;
+    int                                         mPopSoundDelay;
     
     
 };

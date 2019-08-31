@@ -92,11 +92,10 @@ void FTextureCache::TextureBindRemove(FTexture *pTexture) {
     if (pTexture) {
         FTextureCacheNode *aNode = GetNodeForTexture(pTexture);
         if (aNode) {
-            Log("Unbind!\n\n");
             if (aNode->mBindCount > 0) {
                 aNode->mBindCount--;
                 if (aNode->mBindCount <= 0) {
-                    Log("Remove [%s] Has %d Binds!\n", pTexture->mFileName.c(), aNode->mBindCount);
+                    //Log("Remove [%s] Has %d Binds!\n", pTexture->mFileName.c(), aNode->mBindCount);
                     aNode->mTexture->Unload();
                     
                     

@@ -10,7 +10,7 @@
 #define FRAMEWORK_OS_sound_H
 
 #include "os_core_includes.h"
-#include "FSound.h"
+#include "FSound.hpp"
 
 
 
@@ -81,11 +81,16 @@ FSoundData *sound_spawn_data();
 SLmillibel GetMinMillibels();
 SLmillibel GetMillibels(float pVolume);
 
+void sound_setAudioAttributes(int pSampleRate, int pBufferSize);
+
 // engine interfaces
 extern SLObjectItf engineObject;
 extern SLEngineItf engineEngine;
 extern SLObjectItf outputMixObject;
 extern SLEnvironmentalReverbItf outputMixEnvironmentalReverb;
+
+extern int gAudioSampleRate;
+extern int gAudioBufferSize;
 
 
 #endif

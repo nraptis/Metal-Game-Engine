@@ -29,6 +29,8 @@ public:
     
     void                                    UpdateDrag(float pX, float pY, void *pData, bool pNotifyApp);
     
+    void                                    RefreshVirtualFrame();
+    
     void                                    ComputeResizeRect();
     
     float                                   mScreenResizeCornerX[4];

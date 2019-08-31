@@ -48,7 +48,7 @@ void os_initialize_outlets() {
 }
 
 int os_getAssetScale() {
-    return (int)(gRootBase.view.contentScaleFactor + 0.5f);
+    return (int)(round([gRootBase getScreenScale]));
 }
 
 void os_detach_thread(void (*pFunction)(void *pArg), void *pArg) {

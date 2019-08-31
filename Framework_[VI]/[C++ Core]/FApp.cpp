@@ -304,8 +304,13 @@ void FApp::BaseDraw() {
         Graphics::MatrixModelViewReset();
         Graphics::SetColor();
         Graphics::PipelineStateSetSpritePremultipliedBlending();
-        mSysFont.Draw(FString("FPS = ") + FString(GetFPS()), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 2.0f, 0.5f);
-        mSysFont.Draw(FString("UPS = ") + FString(GetUPS()), gSafeAreaInsetLeft + 88.0f, gSafeAreaInsetTop + 2.0f, 0.5f);
+        
+        mSysFont.Draw(FString("FPS = ") + FString(GetFPS()), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 2.0f, 0.75f);
+        mSysFont.Draw(FString("UPS = ") + FString(GetUPS()), gSafeAreaInsetLeft + 110.0f, gSafeAreaInsetTop + 2.0f, 0.75f);
+        
+        mSysFont.Draw(FString("RES = ") + FString(gImageFileScale), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 2.0f + 20.0f + 30.0f, 0.75f);
+        mSysFont.Draw(FString("IMG = ") + FString(gSpriteScale), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 2.0f + 40.0f + 30.0f, 0.75f);
+        
     }
     
     if (mIsLoadingComplete && Graphics::RenderPass() == GFX_RENDER_PASS_2D_MAIN) {
@@ -392,7 +397,6 @@ void FApp::BaseLoad() {
     //    mSysFont.LoadNew("roboto_260_font.kern", "roboto_260_");
     //}
     //gImageBundler.EndBundle();
-    
     
     gImageBundler.StartBundle("bndl_roboto_300");
     if (gImageBundler.mBundleWidth > 32 && gImageBundler.mBundleHeight > 32) {
@@ -520,7 +524,6 @@ void FApp::BaseMouseDown(float pX, float pY, int pButton) {
     InterfaceLock();
     gTouch.BaseMouseDown(pX, pY, pButton);
     InterfaceUnlock();
-    
 }
 
 void FApp::BaseMouseMove(float pX, float pY) {
@@ -561,7 +564,6 @@ void FApp::BaseKeyUp(int pKey) {
 
 void FApp::ProcessMouseDown(float pX, float pY, int pButton) {
     MouseDown(pX, pY, pButton);
-    
     mSelectedCanvas = NULL;
     if (mWindowTools.MouseDown(pX, pY, pButton)) {
         mSelectedInputWindow = &mWindowTools;
@@ -661,7 +663,6 @@ void FApp::BaseInactive() {
         InterfaceLock();
         gTouch.Inactive();
         InterfaceUnlock();
-        
         
         mWindowMain.Inactive();
         mWindowModal.Inactive();

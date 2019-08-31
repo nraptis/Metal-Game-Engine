@@ -1,9 +1,5 @@
 J.) We need the "wind" to pick up, sway, die down, and change directions in a semi-realistic fashion...
 
-1.A) Need way to dynamically choose proper image scale + image resolution as device size changes...
-
-1.B) We need a new BOLD system font. The old one doesn't work anymore.
-
 3.) When brick is hit, it should rumble. The dart should be stuck for ~2 secs and then dissappear...
 
 1.) Show lives indicators at top-right of screen.
@@ -22,6 +18,10 @@ E.) Mock model for "Bomb"
 
 F.) Logic for bomb collisions (Spherical).
 
+
+DONE.) Need way to dynamically choose proper image scale + image resolution as device size changes...
+
+DONE.) We need a new BOLD system font. The old one doesn't work anymore.
 
 DONE.) We need a new system font. The old one doesn't work anymore.
 

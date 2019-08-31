@@ -9,13 +9,13 @@
 
 #include "core_includes.h"
 #include "FImageBundler.h"
-#include "FXML.hpp"
+//#include "FXML.hpp"
+#include "FJSON.hpp"
 #include "FFile.hpp"
 
 FImageBundler gImageBundler;
 
-FImageBundler::FImageBundler()
-{
+FImageBundler::FImageBundler() {
     mEdgeBorder=2;
     mBorder=2;
     mInset=0;
@@ -52,29 +52,31 @@ void FImageBundler::AddImage(const char*pImagePath) {
     FString aPath = pImagePath;
     aPath.RemovePath();
     aPath.RemoveExtension();
-    aPath.Replace("@1x", "");
-    aPath.Replace("@2x", "");
-    aPath.Replace("@1_5x", "");
-    aPath.Replace("@3x", "");
-    aPath.Replace("@4x", "");
-    aPath.Replace("@2X", "");
-    aPath.Replace("@1_5X", "");
-    aPath.Replace("@3X", "");
-    aPath.Replace("@4X", "");
+    
+    //aPath.Replace("_scale_1", "");
+    //aPath.Replace("_scale_2", "");
+    //aPath.Replace("@1_5x", "");
+    //aPath.Replace("_scale_3", "");
+    //aPath.Replace("_scale_4", "");
+    //aPath.Replace("_scale_2", "");
+    //aPath.Replace("@1_5X", "");
+    //aPath.Replace("_scale_3", "");
+    //aPath.Replace("_scale_4", "");
+    
 
     FImage aImage;
-    if (aImage. mWidth == 0) aImage.Load(aPath + FString("@1X.png"));
-    if (aImage. mWidth == 0) aImage.Load(aPath + FString("@1X.jpg"));
-    if (aImage. mWidth == 0) aImage.Load(aPath + FString("@1X.jpeg"));
-    if (aImage. mWidth == 0) aImage.Load(aPath + FString("@1X.PNG"));
-    if (aImage. mWidth == 0) aImage.Load(aPath + FString("@1X.JPG"));
-    if (aImage. mWidth == 0) aImage.Load(aPath + FString("@1X.JPEG"));
-    if (aImage. mWidth == 0) aImage.Load(aPath + FString("@1x.png"));
-    if (aImage. mWidth == 0) aImage.Load(aPath + FString("@1x.jpg"));
-    if (aImage. mWidth == 0) aImage.Load(aPath + FString("@1x.jpeg"));
-    if (aImage. mWidth == 0) aImage.Load(aPath + FString("@1x.PNG"));
-    if (aImage. mWidth == 0) aImage.Load(aPath + FString("@1x.JPG"));
-    if (aImage. mWidth == 0) aImage.Load(aPath + FString("@1x.JPEG"));
+    if (aImage. mWidth == 0) aImage.Load(aPath + FString("_scale_1.png"));
+    if (aImage. mWidth == 0) aImage.Load(aPath + FString("_scale_1.jpg"));
+    if (aImage. mWidth == 0) aImage.Load(aPath + FString("_scale_1.jpeg"));
+    if (aImage. mWidth == 0) aImage.Load(aPath + FString("_scale_1.PNG"));
+    if (aImage. mWidth == 0) aImage.Load(aPath + FString("_scale_1.JPG"));
+    if (aImage. mWidth == 0) aImage.Load(aPath + FString("_scale_1.JPEG"));
+    if (aImage. mWidth == 0) aImage.Load(aPath + FString("_scale_1.png"));
+    if (aImage. mWidth == 0) aImage.Load(aPath + FString("_scale_1.jpg"));
+    if (aImage. mWidth == 0) aImage.Load(aPath + FString("_scale_1.jpeg"));
+    if (aImage. mWidth == 0) aImage.Load(aPath + FString("_scale_1.PNG"));
+    if (aImage. mWidth == 0) aImage.Load(aPath + FString("_scale_1.JPG"));
+    if (aImage. mWidth == 0) aImage.Load(aPath + FString("_scale_1.JPEG"));
 
     if (aImage. mWidth == 0) aImage.Load(aPath + FString(".png"));
     if (aImage. mWidth == 0) aImage.Load(aPath + FString(".jpg"));
@@ -96,54 +98,54 @@ void FImageBundler::AddImage(const char*pImagePath) {
 
 
     FImage aDoubleRez;
-    if (aDoubleRez. mWidth == 0) aDoubleRez.Load(aPath + FString("@2X.png"));
-    if (aDoubleRez. mWidth == 0) aDoubleRez.Load(aPath + FString("@2X.jpg"));
-    if (aDoubleRez. mWidth == 0) aDoubleRez.Load(aPath + FString("@2X.jpeg"));
-    if (aDoubleRez. mWidth == 0) aDoubleRez.Load(aPath + FString("@2X.PNG"));
-    if (aDoubleRez. mWidth == 0) aDoubleRez.Load(aPath + FString("@2X.JPG"));
-    if (aDoubleRez. mWidth == 0) aDoubleRez.Load(aPath + FString("@2X.JPEG"));
-    if (aDoubleRez. mWidth == 0) aDoubleRez.Load(aPath + FString("@2x.png"));
-    if (aDoubleRez. mWidth == 0) aDoubleRez.Load(aPath + FString("@2x.jpg"));
-    if (aDoubleRez. mWidth == 0) aDoubleRez.Load(aPath + FString("@2x.jpeg"));
-    if (aDoubleRez. mWidth == 0) aDoubleRez.Load(aPath + FString("@2x.PNG"));
-    if (aDoubleRez. mWidth == 0) aDoubleRez.Load(aPath + FString("@2x.JPG"));
-    if (aDoubleRez. mWidth == 0) aDoubleRez.Load(aPath + FString("@2x.JPEG"));
+    if (aDoubleRez. mWidth == 0) aDoubleRez.Load(aPath + FString("_scale_2.png"));
+    if (aDoubleRez. mWidth == 0) aDoubleRez.Load(aPath + FString("_scale_2.jpg"));
+    if (aDoubleRez. mWidth == 0) aDoubleRez.Load(aPath + FString("_scale_2.jpeg"));
+    if (aDoubleRez. mWidth == 0) aDoubleRez.Load(aPath + FString("_scale_2.PNG"));
+    if (aDoubleRez. mWidth == 0) aDoubleRez.Load(aPath + FString("_scale_2.JPG"));
+    if (aDoubleRez. mWidth == 0) aDoubleRez.Load(aPath + FString("_scale_2.JPEG"));
+    if (aDoubleRez. mWidth == 0) aDoubleRez.Load(aPath + FString("_scale_2.png"));
+    if (aDoubleRez. mWidth == 0) aDoubleRez.Load(aPath + FString("_scale_2.jpg"));
+    if (aDoubleRez. mWidth == 0) aDoubleRez.Load(aPath + FString("_scale_2.jpeg"));
+    if (aDoubleRez. mWidth == 0) aDoubleRez.Load(aPath + FString("_scale_2.PNG"));
+    if (aDoubleRez. mWidth == 0) aDoubleRez.Load(aPath + FString("_scale_2.JPG"));
+    if (aDoubleRez. mWidth == 0) aDoubleRez.Load(aPath + FString("_scale_2.JPEG"));
     if (aDoubleRez.mWidth > 0) {
         if(aDoubleRez.mWidth != (aImage.mWidth * 2))Log("***\nWIDTH MISMATCH (%s) Low[%d] Hi[%d]\n***\n", aPath.c(), aImage.mWidth, aDoubleRez.mWidth);
         if(aDoubleRez.mHeight != (aImage.mHeight * 2))Log("***\nHEIGHT MISMATCH (%s) Low[%d] Hi[%d]\n***\n", aPath.c(), aImage.mHeight, aDoubleRez.mHeight);
     }
 
     FImage aTripleRez;
-    if (aTripleRez. mWidth == 0) aTripleRez.Load(aPath + FString("@3X.png"));
-    if (aTripleRez. mWidth == 0) aTripleRez.Load(aPath + FString("@3X.jpg"));
-    if (aTripleRez. mWidth == 0) aTripleRez.Load(aPath + FString("@3X.jpeg"));
-    if (aTripleRez. mWidth == 0) aTripleRez.Load(aPath + FString("@3X.PNG"));
-    if (aTripleRez. mWidth == 0) aTripleRez.Load(aPath + FString("@3X.JPG"));
-    if (aTripleRez. mWidth == 0) aTripleRez.Load(aPath + FString("@3X.JPEG"));
-    if (aTripleRez. mWidth == 0) aTripleRez.Load(aPath + FString("@3x.png"));
-    if (aTripleRez. mWidth == 0) aTripleRez.Load(aPath + FString("@3x.jpg"));
-    if (aTripleRez. mWidth == 0) aTripleRez.Load(aPath + FString("@3x.jpeg"));
-    if (aTripleRez. mWidth == 0) aTripleRez.Load(aPath + FString("@3x.PNG"));
-    if (aTripleRez. mWidth == 0) aTripleRez.Load(aPath + FString("@3x.JPG"));
-    if (aTripleRez. mWidth == 0) aTripleRez.Load(aPath + FString("@3x.JPEG"));
+    if (aTripleRez. mWidth == 0) aTripleRez.Load(aPath + FString("_scale_3.png"));
+    if (aTripleRez. mWidth == 0) aTripleRez.Load(aPath + FString("_scale_3.jpg"));
+    if (aTripleRez. mWidth == 0) aTripleRez.Load(aPath + FString("_scale_3.jpeg"));
+    if (aTripleRez. mWidth == 0) aTripleRez.Load(aPath + FString("_scale_3.PNG"));
+    if (aTripleRez. mWidth == 0) aTripleRez.Load(aPath + FString("_scale_3.JPG"));
+    if (aTripleRez. mWidth == 0) aTripleRez.Load(aPath + FString("_scale_3.JPEG"));
+    if (aTripleRez. mWidth == 0) aTripleRez.Load(aPath + FString("_scale_3.png"));
+    if (aTripleRez. mWidth == 0) aTripleRez.Load(aPath + FString("_scale_3.jpg"));
+    if (aTripleRez. mWidth == 0) aTripleRez.Load(aPath + FString("_scale_3.jpeg"));
+    if (aTripleRez. mWidth == 0) aTripleRez.Load(aPath + FString("_scale_3.PNG"));
+    if (aTripleRez. mWidth == 0) aTripleRez.Load(aPath + FString("_scale_3.JPG"));
+    if (aTripleRez. mWidth == 0) aTripleRez.Load(aPath + FString("_scale_3.JPEG"));
     if (aTripleRez.mWidth > 0) {
         if(aTripleRez.mWidth != (aImage.mWidth * 3))Log("***\nWIDTH MISMATCH (%s) Low[%d] Hi[%d]\n***\n", aPath.c(), aImage.mWidth, aTripleRez.mWidth);
         if(aTripleRez.mHeight != (aImage.mHeight * 3))Log("***\nHEIGHT MISMATCH (%s) Low[%d] Hi[%d]\n***\n", aPath.c(), aImage.mHeight, aTripleRez.mHeight);
     }
 
     FImage aQuadrupleRez;
-    if (aQuadrupleRez. mWidth == 0) aQuadrupleRez.Load(aPath + FString("@4X.png"));
-    if (aQuadrupleRez. mWidth == 0) aQuadrupleRez.Load(aPath + FString("@4X.jpg"));
-    if (aQuadrupleRez. mWidth == 0) aQuadrupleRez.Load(aPath + FString("@4X.jpeg"));
-    if (aQuadrupleRez. mWidth == 0) aQuadrupleRez.Load(aPath + FString("@4X.PNG"));
-    if (aQuadrupleRez. mWidth == 0) aQuadrupleRez.Load(aPath + FString("@4X.JPG"));
-    if (aQuadrupleRez. mWidth == 0) aQuadrupleRez.Load(aPath + FString("@4X.JPEG"));
-    if (aQuadrupleRez. mWidth == 0) aQuadrupleRez.Load(aPath + FString("@4x.png"));
-    if (aQuadrupleRez. mWidth == 0) aQuadrupleRez.Load(aPath + FString("@4x.jpg"));
-    if (aQuadrupleRez. mWidth == 0) aQuadrupleRez.Load(aPath + FString("@4x.jpeg"));
-    if (aQuadrupleRez. mWidth == 0) aQuadrupleRez.Load(aPath + FString("@4x.PNG"));
-    if (aQuadrupleRez. mWidth == 0) aQuadrupleRez.Load(aPath + FString("@4x.JPG"));
-    if (aQuadrupleRez. mWidth == 0) aQuadrupleRez.Load(aPath + FString("@4x.JPEG"));
+    if (aQuadrupleRez. mWidth == 0) aQuadrupleRez.Load(aPath + FString("_scale_4.png"));
+    if (aQuadrupleRez. mWidth == 0) aQuadrupleRez.Load(aPath + FString("_scale_4.jpg"));
+    if (aQuadrupleRez. mWidth == 0) aQuadrupleRez.Load(aPath + FString("_scale_4.jpeg"));
+    if (aQuadrupleRez. mWidth == 0) aQuadrupleRez.Load(aPath + FString("_scale_4.PNG"));
+    if (aQuadrupleRez. mWidth == 0) aQuadrupleRez.Load(aPath + FString("_scale_4.JPG"));
+    if (aQuadrupleRez. mWidth == 0) aQuadrupleRez.Load(aPath + FString("_scale_4.JPEG"));
+    if (aQuadrupleRez. mWidth == 0) aQuadrupleRez.Load(aPath + FString("_scale_4.png"));
+    if (aQuadrupleRez. mWidth == 0) aQuadrupleRez.Load(aPath + FString("_scale_4.jpg"));
+    if (aQuadrupleRez. mWidth == 0) aQuadrupleRez.Load(aPath + FString("_scale_4.jpeg"));
+    if (aQuadrupleRez. mWidth == 0) aQuadrupleRez.Load(aPath + FString("_scale_4.PNG"));
+    if (aQuadrupleRez. mWidth == 0) aQuadrupleRez.Load(aPath + FString("_scale_4.JPG"));
+    if (aQuadrupleRez. mWidth == 0) aQuadrupleRez.Load(aPath + FString("_scale_4.JPEG"));
     if (aQuadrupleRez.mWidth > 0) {
         if(aQuadrupleRez.mWidth != (aImage.mWidth * 4))Log("***\nWIDTH MISMATCH (%s) Low[%d] Ultra[%d]\n***\n", aPath.c(), aImage.mWidth, aQuadrupleRez.mWidth);
         if(aQuadrupleRez.mHeight != (aImage.mHeight * 4))Log("***\nHEIGHT MISMATCH (%s) Low[%d] Ultra[%d]\n***\n", aPath.c(), aImage.mHeight, aQuadrupleRez.mHeight);
@@ -226,13 +228,18 @@ void FImageBundler::AddNode(FImageBundlerSaveNode *pNode) {
     mSaveNodeList += pNode;
 }
 
+/*
 void FImageBundler::ExportChunksWithCropData() {
-    FXML aXML;
+    //FXML aXML;
+    FJSON aJSON;
     
     FString aName;
     
-    FXMLTag *aRootTag = new FXMLTag("image_crops");
-    aXML.mRoot = aRootTag;
+    FJSONNode *aRootNode = new FJSONNode();
+    aRootNode->mNodeType = JSON_NODE_TYPE_ARRAY;
+    
+    //FXMLTag *aRootTag = new FXMLTag("image_crops");
+    //aXML.mRoot = aRootTag;
     
     FXMLTag *aCropListTag = new FXMLTag("crop_list");
     *aRootTag += aCropListTag;
@@ -249,30 +256,30 @@ void FImageBundler::ExportChunksWithCropData() {
         os_exportPNGImage(aSaveNode->mImage->mData, aImagePath.c(), aSaveNode->mImage->mWidth, aSaveNode->mImage->mHeight);
     }
     
-    FString aPathXML = FString(aPrefix + FString("image_crop_data") + FString(aName) + FString(".xml")).c();
+    FString aPathXML = FString(aPrefix + FString("image_crop_data") + FString(aName) + FString(".json")).c();
     aXML.Save(aPathXML.c());
 }
+*/
 
-void FImageBundler::Save(char *pName)
-{
-    if(mSaveNodeList.mCount <= 0)
-    {
+void FImageBundler::Save(char *pName) {
+    
+    if (mSaveNodeList.mCount <= 0) {
         Log("Skipping Bundle [%s] (0 Nodes!)\n", pName);
         return;
     }
     
-    mSuccess=false;
+    mSuccess = false;
 
     int aTryWidth[32];
     int aTryHeight[32];
 
-    aTryWidth[0]=256;aTryHeight[0]=256;
-    aTryWidth[1]=256;aTryHeight[1]=256;
-    aTryWidth[2]=512;aTryHeight[2]=512;
-    aTryWidth[3]=1024;aTryHeight[3]=512;
-    aTryWidth[4]=1024;aTryHeight[4]=1024;
-    aTryWidth[5]=2048;aTryHeight[5]=1024;
-    aTryWidth[6]=2048;aTryHeight[6]=2048;
+    aTryWidth[0] = 256;aTryHeight[0] = 256;
+    aTryWidth[1] = 256;aTryHeight[1] = 256;
+    aTryWidth[2] = 512;aTryHeight[2] = 512;
+    aTryWidth[3] = 1024;aTryHeight[3] = 512;
+    aTryWidth[4] = 1024;aTryHeight[4] = 1024;
+    aTryWidth[5] = 2048;aTryHeight[5] = 1024;
+    aTryWidth[6] = 2048;aTryHeight[6] = 2048;
     
     FImageBundlerSaveNode *aNode, *aCheckNode;
     
@@ -326,7 +333,7 @@ void FImageBundler::Save(char *pName)
     bool aIntersects;
     bool aEdgeIntersect;
     
-    FString aPrefix = gDirExport;
+    
     for (int aSplatSizeIndex=0;aSplatSizeIndex<7;aSplatSizeIndex++) {
         mBundleWidth = aTryWidth[aSplatSizeIndex];
         mBundleHeight = aTryHeight[aSplatSizeIndex];
@@ -380,7 +387,7 @@ void FImageBundler::Save(char *pName)
             }
         }
         
-        mSuccess=true;
+        mSuccess = true;
         
         int aHitCount=0;
         for (int i=0;i<aNodeCount;i++) {
@@ -422,18 +429,41 @@ void FImageBundler::Save(char *pName)
                 }
             }
             
-            FXML aXML;
-            FXMLTag *aRoot=new FXMLTag("image_bundle");
-            aXML.mRoot=aRoot;
             
-            FXMLTag *aNodeListTag = new FXMLTag("node_list");
-            *aRoot += aNodeListTag;
+            FJSON aJSON;
+            //FXML aXML;
+            
+            FJSONNode *aRootNode = new FJSONNode();
+            aRootNode->mNodeType = JSON_NODE_TYPE_DICTIONARY;
+            aJSON.mRoot = aRootNode;
+            
+            //FXMLTag *aRoot=new FXMLTag("image_bundle");
+            //aXML.mRoot=aRoot;
+            
+            //FXMLTag *aNodeListTag = new FXMLTag("node_list");
+            //*aRoot += aNodeListTag;
 
-            aRoot->AddParam("width", FString(mImage.mWidth).c());
-            aRoot->AddParam("height", FString(mImage.mHeight).c());
-            aRoot->AddParam("border", FString(mBorder).c());
-            aRoot->AddParam("edge", FString(mEdgeBorder).c());
+            
+            //aRoot->AddParam("width", FString(mImage.mWidth).c());
+            aRootNode->AddDictionaryInt("width", mImage.mWidth);
+            
+            //aRoot->AddParam("height", FString(mImage.mHeight).c());
+            aRootNode->AddDictionaryInt("height", mImage.mHeight);
+            
+            //aRoot->AddParam("border", FString(mBorder).c());
+            aRootNode->AddDictionaryInt("border", mBorder);
+            
+            //aRoot->AddParam("edge", FString(mEdgeBorder).c());
+            aRootNode->AddDictionaryInt("edge", mEdgeBorder);
+            
+            
+            FJSONNode *aNodeListNode = new FJSONNode();
+            aNodeListNode->mNodeType = JSON_NODE_TYPE_ARRAY;
+            aRootNode->AddDictionary("node_list", aNodeListNode);
+            
             EnumList(FImageBundlerSaveNode, aSaveNode, mSaveNodeList) {
+                
+                /*
                 FXMLTag *aNodeTag = new FXMLTag("node");
                 *aNodeListTag += aNodeTag;
                 aNodeTag->AddTag("name", aSaveNode->mName.c());
@@ -446,12 +476,31 @@ void FImageBundler::Save(char *pName)
                 aNodeTag->AddTag("rect_y", FString(aSaveNode->mY + aSaveNode->mInset).c());
                 aNodeTag->AddTag("rect_width", FString(aSaveNode->mWidth - (aSaveNode->mInset * 2)).c());
                 aNodeTag->AddTag("rect_height", FString(aSaveNode->mHeight - (aSaveNode->mInset * 2)).c());
+                */
+                
+                FJSONNode *aNodeNode = new FJSONNode();
+                aNodeNode->mNodeType = JSON_NODE_TYPE_DICTIONARY;
+                
+                aNodeNode->AddDictionaryString("name", aSaveNode->mName.c());
+                
+                aNodeNode->AddDictionaryInt("inset", aSaveNode->mInset);
+                aNodeNode->AddDictionaryInt("image_width", aSaveNode->mOriginalWidth);
+                aNodeNode->AddDictionaryInt("image_height", aSaveNode->mOriginalHeight);
+                aNodeNode->AddDictionaryInt("offset_x", aSaveNode->mOffsetX);
+                aNodeNode->AddDictionaryInt("offset_y", aSaveNode->mOffsetY);
+                aNodeNode->AddDictionaryInt("rect_x", aSaveNode->mX + aSaveNode->mInset);
+                aNodeNode->AddDictionaryInt("rect_y", aSaveNode->mY + aSaveNode->mInset);
+                aNodeNode->AddDictionaryInt("rect_width", aSaveNode->mWidth - (aSaveNode->mInset * 2));
+                aNodeNode->AddDictionaryInt("rect_height", aSaveNode->mHeight - (aSaveNode->mInset * 2));
+                
+                aNodeListNode->AddArray(aNodeNode);
+                
             }
 
-            FString aPath = FString(aPrefix + FString("") + FString(pName) + FString("@1X.png")).c();
-            FString aPath2X = FString(aPrefix + FString("") + FString(pName) + FString("@2X.png")).c();
-            FString aPath3X = FString(aPrefix + FString("") + FString(pName) + FString("@3X.png")).c();
-            FString aPath4X = FString(aPrefix + FString("") + FString(pName) + FString("@4X.png")).c();
+            FString aPath = FString(gDirExport + FString("") + FString(pName) + FString("_scale_1.png")).c();
+            FString aPath2X = FString(gDirExport + FString("") + FString(pName) + FString("_scale_2.png")).c();
+            FString aPath3X = FString(gDirExport + FString("") + FString(pName) + FString("_scale_3.png")).c();
+            FString aPath4X = FString(gDirExport + FString("") + FString(pName) + FString("_scale_4.png")).c();
 
             if (mImage.mWidth >= 32 && mImage.mHeight >= 32) {
                 os_exportPNGImage(mImage.mData, aPath.c(), mImage.mWidth, mImage.mHeight);
@@ -466,9 +515,9 @@ void FImageBundler::Save(char *pName)
                 os_exportPNGImage(aImage4X.mData, aPath4X.c(), aImage4X.mWidth, aImage4X.mHeight);
             }
 
-            aPath = FString(aPrefix + FString("") + FString(pName) + FString("_data.xml")).c();
-            aXML.Save(aPath.c());
-
+            aPath = FString(gDirExport + FString("") + FString(pName) + FString("_data.json")).c();
+            aJSON.Save(aPath.c());
+            
             return;
         }
     }
@@ -502,6 +551,8 @@ void FImageBundler::Load(const char *pFileName, const char *pImageName) {
     FImage aImage;
     aImage.Load(pImageName);
     
+    printf("Loaded Image Bundle: (%s) Scale: %d\n", aImage.mFileName.c(), aImage.mScale);
+    
     if (aImage.mScale == 1) {
         mBundleScale = 1;
     } else if (aImage.mScale == 2) {
@@ -518,29 +569,26 @@ void FImageBundler::Load(const char *pFileName, const char *pImageName) {
 }
 
 
-void FImageBundler::LoadBundle(const char *pFileXML) {
-    FXML aXML;
-    aXML.Load(pFileXML);
-    FXMLTag *aRoot = aXML.GetRoot();
-    if (gEnvironment == ENV_IOS) {
-        if(aRoot == 0) { aXML.Load(mBundleName + FString("_data.xml"));aRoot = aXML.GetRoot(); }
-        if(aRoot == 0) { aXML.Load(gDirBundle + mBundleName + FString("_data.xml"));aRoot = aXML.GetRoot(); }
-        if(aRoot == 0) { aXML.Load(gDirDocuments + mBundleName + FString("_data.xml"));aRoot = aXML.GetRoot(); }
-    }
-    if (aRoot == 0) { aXML.Load(gDirBundle + FString("Bundles/") + mBundleName + FString("_data.xml"));aRoot = aXML.GetRoot(); }
-    if (aRoot == 0) { aXML.Load(gDirBundle + FString("[Bundles]/") + mBundleName + FString("_data.xml"));aRoot = aXML.GetRoot(); }
-    if (aRoot == 0) { aXML.Load(gDirBundle + FString("[[Bundles]]/") + mBundleName + FString("_data.xml"));aRoot = aXML.GetRoot(); }
-    if (aRoot) {
-        mBundleWidth = 0;
-        mBundleHeight = 0;
-        EnumParams (aRoot, aParam) {
-            if (FString(aParam->mName) == "width") {
-                mBundleWidth = FString(aParam->mValue).ToInt();
-            }
-            if (FString(aParam->mName) == "height") {
-                mBundleHeight = FString(aParam->mValue).ToInt();
-            }
-        }
+void FImageBundler::LoadBundle(const char *pFile) {
+    
+    FJSON aJSON;
+    
+    aJSON.Load(pFile);
+    
+    FJSONNode *aRoot = aJSON.mRoot;
+    
+    if(aRoot == NULL) { aJSON.Load(mBundleName + FString("_data.json")); aRoot = aJSON.mRoot; }
+    if(aRoot == NULL) { aJSON.Load(gDirBundle + mBundleName + FString("_data.json")); aRoot = aJSON.mRoot; }
+    if(aRoot == NULL) { aJSON.Load(gDirDocuments + mBundleName + FString("_data.json")); aRoot = aJSON.mRoot; }
+    
+    //if (aRoot == 0) { aXML.Load(gDirBundle + FString("Bundles/") + mBundleName + FString("_data.xml"));aRoot = aXML.GetRoot(); }
+    //if (aRoot == 0) { aXML.Load(gDirBundle + FString("[Bundles]/") + mBundleName + FString("_data.xml"));aRoot = aXML.GetRoot(); }
+    //if (aRoot == 0) { aXML.Load(gDirBundle + FString("[[Bundles]]/") + mBundleName + FString("_data.xml"));aRoot = aXML.GetRoot(); }
+    
+    if (aRoot != NULL) {
+        
+        mBundleWidth = aRoot->GetInt("width", 0);
+        mBundleHeight = aRoot->GetInt("height", 0);
 
         if (mBundleScale <= 1) {
             //Nothing
@@ -568,6 +616,52 @@ void FImageBundler::LoadBundle(const char *pFileXML) {
         //    mBundleHeight *= 3;
         //    mBundleHeight /= 4;
         //}
+        
+        FJSONNode *aNodeListNode = aRoot->GetArray("node_list");
+        
+        EnumJSONArray(aNodeListNode, aNodeNode) {
+         
+            FImageBundlerLoadNode *aNode = new FImageBundlerLoadNode();
+            mLoadNodeList += aNode;
+            
+            aNode->mName = aNodeNode->GetString("name", "");
+            
+            aNode->mOriginalWidth = aNodeNode->GetInt("image_width", 0);
+            aNode->mOriginalHeight = aNodeNode->GetInt("image_height", 0);
+            
+            aNode->mOffsetX = aNodeNode->GetInt("offset_x", 0);
+            aNode->mOffsetY = aNodeNode->GetInt("offset_y", 0);
+            
+            aNode->mX = aNodeNode->GetInt("rect_x", 0);
+            aNode->mY = aNodeNode->GetInt("rect_y", 0);
+            
+            aNode->mWidth = aNodeNode->GetInt("rect_width", 0);
+            aNode->mHeight = aNodeNode->GetInt("rect_height", 0);
+            
+            aNode->mX *= mBundleScale;
+            aNode->mY *= mBundleScale;
+            aNode->mWidth *= mBundleScale;
+            aNode->mHeight *= mBundleScale;
+            aNode->mOffsetX *= mBundleScale;
+            aNode->mOffsetY *= mBundleScale;
+            aNode->mOriginalWidth *= mBundleScale;
+            aNode->mOriginalHeight *= mBundleScale;
+            
+            aNode->mSpriteUStart = (float)(aNode->mX) / (float)mBundleWidth;
+            aNode->mSpriteVStart = (float)(aNode->mY) / (float)mBundleHeight;
+            aNode->mSpriteUEnd = (float)(aNode->mX + aNode->mWidth) / (float)mBundleWidth;
+            aNode->mSpriteVEnd = (float)(aNode->mY + aNode->mHeight) / (float)mBundleHeight;
+            aNode->mSpriteLeft = (float)aNode->mOffsetX - ((float)aNode->mOriginalWidth / 2.0f);
+            aNode->mSpriteRight = aNode->mSpriteLeft + (float)aNode->mWidth;
+            aNode->mSpriteTop = (float)aNode->mOffsetY - ((float)aNode->mOriginalHeight / 2.0f);
+            aNode->mSpriteBottom = aNode->mSpriteTop + (float)aNode->mHeight;
+            aNode->mSpriteWidth = (float)aNode->mOriginalWidth;
+            aNode->mSpriteHeight = (float)aNode->mOriginalHeight;
+            
+        }
+        
+        
+        /*
         EnumTags(aRoot, aNodeListTag) {
             EnumTags(aNodeListTag, aNodeTag) {
                 FImageBundlerLoadNode *aNode = new FImageBundlerLoadNode();
@@ -592,8 +686,7 @@ void FImageBundler::LoadBundle(const char *pFileXML) {
                 aNode->mOffsetY *= mBundleScale;
                 aNode->mOriginalWidth *= mBundleScale;
                 aNode->mOriginalHeight *= mBundleScale;
-
-
+                
                 aNode->mSpriteUStart = (float)(aNode->mX) / (float)mBundleWidth;
                 aNode->mSpriteVStart = (float)(aNode->mY) / (float)mBundleHeight;
                 aNode->mSpriteUEnd = (float)(aNode->mX + aNode->mWidth) / (float)mBundleWidth;
@@ -606,6 +699,8 @@ void FImageBundler::LoadBundle(const char *pFileXML) {
                 aNode->mSpriteHeight = (float)aNode->mOriginalHeight;
             }
         }
+         */
+        
     }
 }
 
@@ -843,43 +938,43 @@ FImageBundlerLoadNode::~FImageBundlerLoadNode() { }
 
 FImageBundlerLoadNode *FImageBundlerLoadNode::Clone() {
     FImageBundlerLoadNode *aResult = new FImageBundlerLoadNode();
-    aResult->mX=mX;
-    aResult->mY=mY;
-    aResult->mWidth=mWidth;
-    aResult->mHeight=mHeight;
-    aResult->mOffsetX=mOffsetX;
-    aResult->mOffsetY=mOffsetY;
-    aResult->mOriginalWidth=mOriginalWidth;
-    aResult->mOriginalHeight=mOriginalHeight;
-    aResult->mSpriteLeft=mSpriteLeft;
-    aResult->mSpriteRight=mSpriteRight;
-    aResult->mSpriteTop=mSpriteTop;
-    aResult->mSpriteBottom=mSpriteBottom;
-    aResult->mSpriteUStart=mSpriteUStart;
-    aResult->mSpriteUEnd=mSpriteUEnd;
-    aResult->mSpriteVStart=mSpriteVStart;
-    aResult->mSpriteVEnd=mSpriteVEnd;
-    aResult->mSpriteWidth=mSpriteWidth;
-    aResult->mSpriteHeight=mSpriteHeight;
+    aResult->mX = mX;
+    aResult->mY = mY;
+    aResult->mWidth = mWidth;
+    aResult->mHeight = mHeight;
+    aResult->mOffsetX = mOffsetX;
+    aResult->mOffsetY = mOffsetY;
+    aResult->mOriginalWidth = mOriginalWidth;
+    aResult->mOriginalHeight = mOriginalHeight;
+    aResult->mSpriteLeft = mSpriteLeft;
+    aResult->mSpriteRight = mSpriteRight;
+    aResult->mSpriteTop = mSpriteTop;
+    aResult->mSpriteBottom = mSpriteBottom;
+    aResult->mSpriteUStart = mSpriteUStart;
+    aResult->mSpriteUEnd = mSpriteUEnd;
+    aResult->mSpriteVStart = mSpriteVStart;
+    aResult->mSpriteVEnd = mSpriteVEnd;
+    aResult->mSpriteWidth = mSpriteWidth;
+    aResult->mSpriteHeight = mSpriteHeight;
     aResult->mName=mName;
     return aResult;
 }
 
 FImageBundlerSaveNode::FImageBundlerSaveNode() {
-    mX=0;
-    mY=0;
-    mWidth=0;
-    mHeight=0;
-    mOriginalWidth=0;
-    mOriginalHeight=0;
-    mOffsetX=0;
-    mOffsetY=0;
-    mArea=0;
-    mInset=0;
-    mImage=0;
-    mImageRez2X=0;
-    mImageRez3X=0;
-    mImageRez4X=0;
+    mX = 0;
+    mY = 0;
+    mWidth = 0;
+    mHeight = 0;
+    mOriginalWidth = 0;
+    mOriginalHeight = 0;
+    mOffsetX = 0;
+    mOffsetY = 0;
+    mArea = 0;
+    mInset = 0;
+    mImage = 0;
+    mImageRez2X = 0;
+    mImageRez3X = 0;
+    mImageRez4X = 0;
 }
 
 FImageBundlerSaveNode::~FImageBundlerSaveNode() {

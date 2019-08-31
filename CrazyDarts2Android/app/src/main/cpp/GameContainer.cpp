@@ -23,6 +23,7 @@ GameContainer::GameContainer() {
     mGameTestEditorOverlay = NULL;
     mGameTestRunningOverlay = NULL;
     
+    mOverlay = NULL;
     
     mEditorMenu = NULL;
     mEditorMenuUtils = NULL;
@@ -47,11 +48,8 @@ GameContainer::GameContainer() {
     mGame = new Game();
     mContainer->AddChild(mGame);
     
-    
-    
-    
-    
-    
+    mOverlay = new GameOverlay();
+    AddChild(mOverlay);
     
 }
 
@@ -65,6 +63,11 @@ GameContainer::~GameContainer() {
         mEditorMenu = NULL;
     }
     
+    if (mOverlay != NULL) {
+        mOverlay->Kill();
+        mOverlay = NULL;
+    }
+    
     if (mEditorMenuUtils != NULL) {
         mEditorMenuUtils->Kill();
         mEditorMenuUtils = NULL;
@@ -74,7 +77,7 @@ GameContainer::~GameContainer() {
 
 void GameContainer::Layout() {
 
-    if (mGame != NULL && mContainer != NULL) {
+    if (mGame != NULL && mContainer != NULL && mOverlay != NULL) {
         
         float aScale = 1.0f;
         float aGameAreaWidth = mWidth - (mInterfaceLeftWidth + mInterfaceRightWidth);
@@ -95,11 +98,16 @@ void GameContainer::Layout() {
         mGame->mRenderShiftX = -((mInterfaceRightWidth - mInterfaceLeftWidth) / 2.0f) / aScale;
         mGame->mRenderShiftY = -((mInterfaceBottomHeight - mInterfaceTopHeight) / 2.0f) / aScale;
         
-        
         float aGameX = round(mContainer->mWidth2 - mGame->mWidth2);
         float aGameY = round(mContainer->mHeight2 - mGame->mHeight2);
+        
         mGame->SetX(aGameX);
         mGame->SetY(aGameY);
+        
+        float aContainerCenterX = (int)(mInterfaceLeftWidth + (aGameAreaWidth) * 0.5f);
+        float aContainerCenterY = (int)(mInterfaceTopHeight + (aGameAreaHeight) * 0.5f);
+        mOverlay->SetFrame(aContainerCenterX - mGame->mWidth2 * aScale, aContainerCenterY - mGame->mHeight2 * aScale, mGame->mWidth * aScale, mGame->mHeight * aScale);
+        
     }
     
     
@@ -196,7 +204,6 @@ void GameContainer::Notify(void *pSender, const char *pNotification) {
 //After the game + editor are ready to go.
 void GameContainer::Realize() {
     
-    
     bool aHasEditor = false;
     
 #ifdef EDITOR_MODE
@@ -220,7 +227,6 @@ void GameContainer::Realize() {
         mGame->AddChild(mGameTestRunningOverlay);
         mWindow->RegisterFrameDidUpdate(this);
     }
-    
 }
 
 void GameContainer::OpenEditorTestMenus() {

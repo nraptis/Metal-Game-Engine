@@ -29,7 +29,8 @@ void FTexture::Realize() {
     if ((mBindIndex == -1) && (mDidFailLoad == false)) {
         
         if (mDidUnload == true) {
-            AppShellSetImageFileScale(mScale);
+            //TODO: Why did we have this before?
+            //AppShellSetImageFileScale(mScale);
             mDidUnload = false;
         }
         

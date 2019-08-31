@@ -30,39 +30,31 @@ public class JavaOutlets
 
 	private ArrayList<ReentrantLock> mLockList = new ArrayList<ReentrantLock>(100);
 
-	public static void setContext(Context c)
-	{
-		Log.i("NDKHelper", "setContext:" + c);
+	public static void setContext(Context c) {
 		mContext = c;
 	}
 
-	public static void setOpenGL(GL2JNIView glv)
-	{
+	public static void setOpenGL(GL2JNIView glv) {
 		mOpenGL = glv;
 	}
 
-	public static void PrintMemory()
-	{
+	public static void PrintMemory() {
 		long freeSize = 0L;
 		long totalSize = 0L;
 		long usedSize = -1L;
 
-		try
-		{
+		try {
 			Runtime info = Runtime.getRuntime();
 			freeSize = info.freeMemory();
 			totalSize = info.totalMemory();
 			usedSize = totalSize - freeSize;
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 
 		double aPercent = 1.0f;
 
-		if(totalSize > 20)
-		{
+		if (totalSize > 20) {
 			aPercent = (double)usedSize / (double)totalSize;
 		}
 
@@ -73,44 +65,35 @@ public class JavaOutlets
 
 	}
 
-
-	//
-	// Load Bitmap
-	// Java helper is useful decoding PNG, TIFF etc rather than linking libPng
-	// etc separately
-	//
-
-	/*
-	private int nextPOT(int i)
-	{
-		int pot = 1;
-		while (pot < i)
-		{
-			pot <<= 1;
-		}
-		return pot;
-	}
-	*/
-
 	public void commitRender() {
-		//System.out.println("COMMIT RENDER {JAVA}");
-
 		if (mOpenGL != null) {
 			mOpenGL.requestRender();
 		}
 
 	}
 
+	public int getAssetScale() {
+		int aResult = 0;
+		if (mContext != null) {
 
+			float aDensity = mContext.getResources().getDisplayMetrics().density;
+
+			if (aDensity < 1.95f) {
+				aResult = (int)(aDensity + 0.75);
+			} else {
+				aResult = (int)(aDensity + 0.25);
+			}
+
+			System.out.println("Raw Scale = " + mContext.getResources().getDisplayMetrics().density);
+			System.out.println("Chosen Scale = " + aResult);
+
+		}
+		return aResult;
+	}
 
 
 	public int createThreadLock() {
-		System.out.println("JAVA::createThreadLock[....]...!");
-
 		int aResult = mLockList.size();
-
-		//Semaphore aSemaphore = new Semaphore(1);
-		//mLockList.add(aSemaphore);
 
 		ReentrantLock aLock = new ReentrantLock();
 		mLockList.add(aLock);
@@ -127,15 +110,6 @@ public class JavaOutlets
 
 	public void lockThread(int pLockIndex) {
 		if (pLockIndex >= 0 && pLockIndex < mLockList.size()) {
-
-
-			//mLockList.get(pLockIndex).acquire();
-
-
-			//}//catch (InterruptedException exc) {
-			//	System.out.println("** SEMAPHORE FAILURE **");
-			//	System.out.println(exc);
-			//}
 				try {
 					mLockList.get(pLockIndex).lock();
 				} catch (IllegalMonitorStateException exc) {
@@ -148,8 +122,6 @@ public class JavaOutlets
 
 	public void unlockThread(int pLockIndex) {
 		if (pLockIndex >= 0 && pLockIndex < mLockList.size()) {
-			//mLockList.get(pLockIndex).release();
-
 			try {
 				mLockList.get(pLockIndex).unlock();
 			} catch (IllegalMonitorStateException exc) {
@@ -157,15 +129,11 @@ public class JavaOutlets
 				System.out.println("BAD UN-LOCK!!!!!!!");
 				System.out.println(exc);
 			}
-
-			//mLockList.get(pLockIndex).unlock();
-
 		}
 	}
 
 	public void deleteThreadLock(int pLockIndex) {
 		if (pLockIndex >= 0 && pLockIndex < mLockList.size()) {
-
 			try {
 				mLockList.get(pLockIndex).unlock();
 			} catch (IllegalMonitorStateException exc) {
@@ -173,10 +141,6 @@ public class JavaOutlets
 				System.out.println("BAD UN-LOCK!!!!!!!");
 				System.out.println(exc);
 			}
-
-
-			//mLockList.get(pLockIndex).release();
-
 			mLockList.remove(pLockIndex);
 		}
 	}
@@ -190,8 +154,6 @@ public class JavaOutlets
 				System.out.println("BAD UN-LOCK!!!!!!!");
 				System.out.println(exc);
 			}
-			//mLockList.get(i).release();
-
 		}
 		mLockList.clear();
 	}

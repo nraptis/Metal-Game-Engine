@@ -94,9 +94,6 @@ void GameOverlay::Draw() {
     Graphics::SetColor(0.45f, 0.45f, 0.45f, 0.9f);
     Graphics::DrawRect(aWindBarCenter - aWindBarLength / 2.0f, mHeight - 100.0f, aWindBarLength, 50.0f);
     
-    float aPowerBarLeft = aWindBarCenter;
-    float aPowerBarLength = 0.0f;
-    
     float aWindPower = gGame->mWind.mPower;
     float aWindBarWidth = aWindBarLength * aWindPower * 0.5f;
     
@@ -108,10 +105,10 @@ void GameOverlay::Draw() {
         Graphics::DrawRect(aWindBarCenter + aWindBarWidth, mHeight - 100.0f, -aWindBarWidth, 50.0f);
     }
     
+    Graphics::PipelineStateSetSpriteAlphaBlending();
+    Graphics::SetColor();
     
-    //mWanderMax
-    
-    
+    gWadGameInterface.mMenuButton.Draw(60.0f, 60.0f, 0.5f);
     
 }
 

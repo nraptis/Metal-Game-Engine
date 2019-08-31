@@ -718,6 +718,10 @@
 		0D3A0E2723175889009BD55B /* EditorMenuPathControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3AF9CE23175884009BD55B /* EditorMenuPathControl.cpp */; };
 		0D3A0E2823175889009BD55B /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3AF9D523175884009BD55B /* Game.cpp */; };
 		0D3A0E2B23175F01009BD55B /* WindSpeedSimulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3A0E2923175F01009BD55B /* WindSpeedSimulator.cpp */; };
+		0D4463D92319EBE9000CECE0 /* pause_button_up_scale_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D4463D52319EBE9000CECE0 /* pause_button_up_scale_4.png */; };
+		0D4463DA2319EBE9000CECE0 /* pause_button_up_scale_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D4463D62319EBE9000CECE0 /* pause_button_up_scale_1.png */; };
+		0D4463DB2319EBE9000CECE0 /* pause_button_up_scale_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D4463D72319EBE9000CECE0 /* pause_button_up_scale_3.png */; };
+		0D4463DC2319EBE9000CECE0 /* pause_button_up_scale_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0D4463D82319EBE9000CECE0 /* pause_button_up_scale_2.png */; };
 		0D735543223337F900F975B6 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D735542223337F900F975B6 /* OpenGLES.framework */; };
 		E1704FEC222232B5000C5127 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1704FEB222232B5000C5127 /* Assets.xcassets */; };
 		E1704FEF222232B5000C5127 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1704FED222232B5000C5127 /* LaunchScreen.storyboard */; };
@@ -1653,6 +1657,10 @@
 		0D3AF9D323175884009BD55B /* Dart.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dart.hpp; sourceTree = "<group>"; };
 		0D3AF9D423175884009BD55B /* GFXApp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GFXApp.hpp; sourceTree = "<group>"; };
 		0D3AF9D523175884009BD55B /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
+		0D4463D52319EBE9000CECE0 /* pause_button_up_scale_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause_button_up_scale_4.png; sourceTree = "<group>"; };
+		0D4463D62319EBE9000CECE0 /* pause_button_up_scale_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause_button_up_scale_1.png; sourceTree = "<group>"; };
+		0D4463D72319EBE9000CECE0 /* pause_button_up_scale_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause_button_up_scale_3.png; sourceTree = "<group>"; };
+		0D4463D82319EBE9000CECE0 /* pause_button_up_scale_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause_button_up_scale_2.png; sourceTree = "<group>"; };
 		0D735542223337F900F975B6 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		E1704FDF222232B4000C5127 /* Crazy Darts 2 iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crazy Darts 2 iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1704FEB222232B5000C5127 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -1682,6 +1690,7 @@
 		0D2EFBC7231864E6002EC49B /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				0D4463D42319EBE9000CECE0 /* Pause Button (FPO) */,
 				0D2EFBC8231864E6002EC49B /* [[[[Fonts]]]] */,
 				0D2EFBCF231864E7002EC49B /* UVW */,
 				0D2EFBDB231864E7002EC49B /* Butterfly */,
@@ -2942,20 +2951,20 @@
 		0D3AF94623175884009BD55B /* [Menus] */ = {
 			isa = PBXGroup;
 			children = (
-				0D3AF94723175884009BD55B /* PhongLightMenu.cpp */,
-				0D3AF94823175884009BD55B /* GameTestRunningMainMenu.cpp */,
-				0D3AF94923175884009BD55B /* DiffuseLightMenu.cpp */,
-				0D3AF94A23175884009BD55B /* SimpleSpotLightMenu.cpp */,
-				0D3AF94B23175884009BD55B /* SoundConfigMenu.cpp */,
-				0D3AF94C23175884009BD55B /* AssetConfigMenu.hpp */,
-				0D3AF94D23175884009BD55B /* CameraMenu.hpp */,
-				0D3AF94E23175884009BD55B /* GameTestRunningMainMenu.hpp */,
-				0D3AF94F23175884009BD55B /* DiffuseLightMenu.hpp */,
-				0D3AF95023175884009BD55B /* SimpleSpotLightMenu.hpp */,
-				0D3AF95123175884009BD55B /* SoundConfigMenu.hpp */,
 				0D3AF95223175884009BD55B /* AssetConfigMenu.cpp */,
+				0D3AF94C23175884009BD55B /* AssetConfigMenu.hpp */,
 				0D3AF95323175884009BD55B /* CameraMenu.cpp */,
+				0D3AF94D23175884009BD55B /* CameraMenu.hpp */,
+				0D3AF94923175884009BD55B /* DiffuseLightMenu.cpp */,
+				0D3AF94F23175884009BD55B /* DiffuseLightMenu.hpp */,
+				0D3AF94823175884009BD55B /* GameTestRunningMainMenu.cpp */,
+				0D3AF94E23175884009BD55B /* GameTestRunningMainMenu.hpp */,
+				0D3AF94723175884009BD55B /* PhongLightMenu.cpp */,
 				0D3AF95423175884009BD55B /* PhongLightMenu.hpp */,
+				0D3AF94A23175884009BD55B /* SimpleSpotLightMenu.cpp */,
+				0D3AF95023175884009BD55B /* SimpleSpotLightMenu.hpp */,
+				0D3AF94B23175884009BD55B /* SoundConfigMenu.cpp */,
+				0D3AF95123175884009BD55B /* SoundConfigMenu.hpp */,
 			);
 			path = "[Menus]";
 			sourceTree = "<group>";
@@ -3107,6 +3116,17 @@
 				0D3AF9CE23175884009BD55B /* EditorMenuPathControl.cpp */,
 			);
 			path = "[Path Menus]";
+			sourceTree = "<group>";
+		};
+		0D4463D42319EBE9000CECE0 /* Pause Button (FPO) */ = {
+			isa = PBXGroup;
+			children = (
+				0D4463D52319EBE9000CECE0 /* pause_button_up_scale_4.png */,
+				0D4463D62319EBE9000CECE0 /* pause_button_up_scale_1.png */,
+				0D4463D72319EBE9000CECE0 /* pause_button_up_scale_3.png */,
+				0D4463D82319EBE9000CECE0 /* pause_button_up_scale_2.png */,
+			);
+			path = "Pause Button (FPO)";
 			sourceTree = "<group>";
 		};
 		E1704FD6222232B4000C5127 = {
@@ -3290,6 +3310,7 @@
 				0D2EFF37231864E8002EC49B /* f_tr_rrct_140sz_42cr_cfg2xb_spxs.json in Resources */,
 				0D2EFF47231864E8002EC49B /* f_grid_circ_82rngs_1rngc_11radc_solid__nodes_cfg12xb_allg.json in Resources */,
 				0D2EFE4E231864E8002EC49B /* effect_cool_particle_3.png in Resources */,
+				0D4463D92319EBE9000CECE0 /* pause_button_up_scale_4.png in Resources */,
 				0D2EFDED231864E8002EC49B /* butterfly_wings_4.obj in Resources */,
 				0D2EFE3E231864E8002EC49B /* balloon_skin_05.png in Resources */,
 				0D2EFF0C231864E8002EC49B /* f_tr_rrct_140sz_42cr_cfg2xb_sps.json in Resources */,
@@ -3298,6 +3319,7 @@
 				0D2EFEF9231864E8002EC49B /* f_grid_rect_5x1_46spc_solid__nodes_cfg5xb_allg.json in Resources */,
 				0D2EFF89231864E8002EC49B /* roboto_bold_300_font.kern in Resources */,
 				0D2EFF86231864E8002EC49B /* f_grid_rect_7x7_44spc_solid__nodes_cfgrbrrrbrbrrrrrbrrrrrrrrrrrrrrrrrrrrrbrrrrrbrbbrbbr_allg.json in Resources */,
+				0D4463DC2319EBE9000CECE0 /* pause_button_up_scale_2.png in Resources */,
 				0D2EFEFC231864E8002EC49B /* f_grid_rect_5x5_46spc_52ful__nodes_cfg13xb_allg.json in Resources */,
 				0D2EFF52231864E8002EC49B /* f_grid_star_80radi_40rado_0pntc_5armc_35roff_91ful__nodes_cfg10xb_allg.json in Resources */,
 				0D2EFE2B231864E8002EC49B /* egg.obj in Resources */,
@@ -3365,6 +3387,7 @@
 				0D2EFF41231864E8002EC49B /* f_grid_circ_70rngs_1rngc_9radc_solid__nodes_cfg10xb_allg.json in Resources */,
 				0D2EFEDF231864E8002EC49B /* f_tr_circ_120sz_cfg6xb_spxs.json in Resources */,
 				0D2EFF3C231864E8002EC49B /* f_tr_rrct_320sz_90cr_cfg10xb_spmf.json in Resources */,
+				0D4463DA2319EBE9000CECE0 /* pause_button_up_scale_1.png in Resources */,
 				0D2EFEF4231864E8002EC49B /* f_grid_rect_1x4_46spc_solid__nodes_cfg4xb_allg.json in Resources */,
 				0D2EFED7231864E8002EC49B /* f_tr_circ_200sz_cfg10xb_spmf.json in Resources */,
 				0D2EFE23231864E8002EC49B /* branch_small_leaves_2.obj in Resources */,
@@ -3478,6 +3501,7 @@
 				0D2EFF57231864E8002EC49B /* palm_tree_leaves_01.obj in Resources */,
 				0D2EFF30231864E8002EC49B /* f_tr_rrct_160sz_42cr_cfg2xb_spms.json in Resources */,
 				0D2EFEBC231864E8002EC49B /* f_grid_hexa_ngon1_6sid_46rngs_3rngc_34pnts_49ful__nodes_cfg18xb_allg.json in Resources */,
+				0D4463DB2319EBE9000CECE0 /* pause_button_up_scale_3.png in Resources */,
 				0D2EFF63231864E8002EC49B /* balloon_pop_2.caf in Resources */,
 				0D2EFE68231864E8002EC49B /* effect_hot_particle_small_4.png in Resources */,
 				0D2EFFA3231864E8002EC49B /* gi_chaos_egg_mockup_2_scale_2.png in Resources */,

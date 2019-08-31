@@ -84,16 +84,14 @@ void FSprite::LoadNode(FImageBundler *pImageBundler, FImageBundlerLoadNode *pNod
     FTexture *aTexture = gTextureCache.GetTexture(pImageBundler->mBundleName.c());
 
     SetTexture(aTexture);
-
-    //aStartU,aStartV,aEndU,aEndV;
-    //aLeft, aTop, aRight, aBottom;
-
+    
     float aStartU = pNode->mSpriteUStart;
     float aStartV = pNode->mSpriteVStart;
     float aEndU = pNode->mSpriteUEnd;
     float aEndV = pNode->mSpriteVEnd;
 
     float aScale = 1.0f / (float)aTexture->mScale;
+    aScale *= ((float)gSpriteScale);
     
     
     float aLeft = pNode->mSpriteLeft * aScale;
@@ -132,10 +130,10 @@ void FSprite::Load(char *pName, FImageBundler *pBundler) {
 }
 
 void FSprite::Load(char *pFile) {
-    if (mDidLoad) {
-        Log("Preventing Double Load [%s]\n", pFile);
-        return;
-    }
+    //if (mDidLoad) {
+    //    Log("Preventing Double Load [%s]\n", pFile);
+    //    return;
+    //}
     
     Kill();
     
@@ -227,6 +225,7 @@ void FSprite::Load(FTexture *pTexture, int pX, int pY, int pWidth, int pHeight) 
             SetTexture(pTexture);
             
             float aScale = 1.0f / (float)pTexture->mScale;
+            aScale *= ((float)gSpriteScale);
             
             mWidth = (int)(pWidth * aScale + 0.5f);
             mHeight = (int)(pHeight * aScale + 0.5f);
@@ -353,8 +352,6 @@ void FSprite::Center(float pX, float pY) {
     Graphics::MatrixModelViewGet(&cSpriteMatrixHold);
     cSpriteMatrixModelView.Set(cSpriteMatrixHold);
     cSpriteMatrixModelView.Translate(pX, pY);
-    //aModelView.Rotate(pRotation);
-    //aModelView.Scale(pScaleX, pScaleY, pScaleZ);
     Graphics::MatrixModelViewSet(cSpriteMatrixModelView);
     Draw();
     Graphics::MatrixModelViewSet(cSpriteMatrixHold);
@@ -585,7 +582,7 @@ void FSprite::Draw9x9(float pX, float pY, float pWidth, float pHeight, float pSc
     aX[2] = (aQuadRight - aQuadInsetRight);
     
     aY[0] = pY;
-    aY[1] = pY + aQuadInsetLeft;
+    aY[1] = pY + aQuadInsetTop;
     aY[3] = aQuadBottom;
     aY[2] = (aQuadBottom - aQuadInsetBottom);
     

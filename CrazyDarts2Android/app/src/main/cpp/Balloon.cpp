@@ -61,22 +61,10 @@ void Balloon::Update() {
     if (mBounceFactorSin < 0.0f) { mBounceFactorSin += 360.0f; }
     
     mBounceFactor = Sin(mBounceFactorSin);
-    
-    
-    
-    
 }
 
 void Balloon::Draw() {
-    
-    
-    
     GameObject::Draw();
-    
-    //Graphics::PipelineStateSetShape2DNoBlending();
-    //Graphics::SetColor(1.0f, 0.25f, 0.25f, 0.35f);
-    //Graphics::DrawPoint(mTransform.mX, mTransform.mY);
-    
 }
 
 void Balloon::Draw3D() {
@@ -95,7 +83,6 @@ void Balloon::Draw3D() {
 
 void Balloon::Draw3DThread() {
 
-    
     gGame->Convert2DTransformTo3D(&mTransform, &mTransform3D);
     
     FVec3 aCenter = FVec3(mTransform3D.mX, mTransform3D.mY, mTransform3D.mZ);
@@ -108,6 +95,6 @@ void Balloon::Draw3DThread() {
     mThread.mOffsetY = aPos.mY;
     mThread.mOffsetZ = 0.0f;
     
-    mThread.Generate(gGame->mWind, 0.0f);
+    mThread.Generate(gGame->mWind.mPower, 0.0f);
     mThread.Draw3D();
 }

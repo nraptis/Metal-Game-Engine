@@ -606,14 +606,13 @@ void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix, const char 
                 aKernPartnerChar = aLoadFile.ReadChar();
                 aKernAmount = ((int)(aLoadFile.ReadShort()));
                 
-                
                 aKernPartnerIndex = aKernPartnerChar;
                 
                 if ((aReadIndex >= 0) && (aReadIndex < 256) && (aKernPartnerIndex >= 0) && (aKernPartnerIndex < 256)) {
                     mKern[aReadIndex][aKernPartnerIndex] = aKernAmount;
                 }
                 
-                Log("__________[[%d]] Loaded Kern [%d] => [%d]  ((%c => %c)) [%d]\n", aTotalKernIndex, aReadIndex, aKernPartnerIndex, aScanChar, aKernPartnerChar, aKernAmount);
+                //Log("__________[[%d]] Loaded Kern [%d] => [%d]  ((%c => %c)) [%d]\n", aTotalKernIndex, aReadIndex, aKernPartnerIndex, aScanChar, aKernPartnerChar, aKernAmount);
                 
                 aCharKernCount--;
                 aTotalKernIndex++;

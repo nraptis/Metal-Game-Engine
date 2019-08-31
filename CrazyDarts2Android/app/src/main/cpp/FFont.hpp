@@ -23,13 +23,16 @@ public:
     FFont();
     ~FFont();
     
+    void                            Kill();
+    
     float                           mPointSize;
 
     float                           mDataScale;
     float                           mSpriteScale;
     float                           mGlobalSqueeze;
 
-    float                           mSpaceWidth;
+    void                            SetSpaceWidth(float pSpaceWidth);
+    //float                           mSpaceWidth;
 
     FString                         mPrefix;
     FSprite                         mCharacterSprite[256];
@@ -115,11 +118,12 @@ public:
     void                            Unload();
     
 
+    //NOTE: Do not use padding radix, this will unevenly space glyphs.
     static void                     BitmapDataBatch(const char *pDataPath, const char *pImagePath,
                                                     const char *pFilePrefixCharImages, const char *pDataFile,
-                                                    int pPaddingCrop, int pPaddingGlyph, int pPaddingRadix, const char *pRemoveCharacters=0);
+                                                    int pPaddingCrop, int pPaddingGlyph, const char *pRemoveCharacters=0);
     
-    static FFontImportData          *BitmapDataImport(const char *pDataPath, const char *pImagePath, int pPaddingCrop, int pPaddingGlyph, int pPaddingRadix, const char *pRemoveCharacters=0);
+    static FFontImportData          *BitmapDataImport(const char *pDataPath, const char *pImagePath, int pPaddingCrop, int pPaddingGlyph, const char *pRemoveCharacters=0);
     
     static void                     BitmapDataRemoveCharacters(FFontImportData *pImport, const char *pRemoveCharacters);
     

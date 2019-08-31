@@ -25,7 +25,6 @@
 #include "SoundConfigMenu.hpp"
 #include "AssetConfigMenu.hpp"
 
-
 #ifdef EDITOR_MODE
 class GameEditor;
 #include "GameEditor.hpp"
@@ -34,14 +33,13 @@ class GameEditor;
 AssetWadGameInterface gWadGameInterface;
 AssetWadGameEffects gWadGameEffects;
 
-
 GFXApp *gApp = 0;
 GFXApp::GFXApp() {
     
     gApp = this;
     
 #ifndef EDITOR_MODE
-    //mDarkMode = true;
+    mDarkMode = true;
     
 #endif
     
@@ -78,6 +76,7 @@ GFXApp::~GFXApp() {
 
 void GFXApp::Load() {
     
+    gWadConfiguration.NotifyVirtualFrameChange();
     
     ///
     ///  TODO: Temp Font Load Stuff...
@@ -178,14 +177,11 @@ void GFXApp::Load() {
     mMonolith.LoadOBJ("monolith.obj");
     mMonolithMap.Load("monolith_map");
     
-    
     mDart.LoadOBJ("dart.obj");
     mDartMap[0].Load("dart_color_01");
     mDartMap[1].Load("dart_color_02");
     mDartMap[2].Load("dart_color_03");
     mDartMap[3].Load("dart_color_04");
-    
-    
     
     mBalloon.LoadOBJ("balloon.obj");
     mBalloonMap[0].Load("balloon_skin_01");
@@ -194,14 +190,15 @@ void GFXApp::Load() {
     mBalloonMap[3].Load("balloon_skin_04");
     mBalloonMap[4].Load("balloon_skin_05");
     
-    
     mBrickhead.LoadOBJ("brickhead.obj");
     mBrickheadMap.Load("brickhead_uvw");
     
     mBrickheadCage.LoadOBJ("brickhead_cage.obj");
     mBrickheadCageMap.Load("brickhead_cage_uvw");
     
+    
     ExecuteWadReload();
+    
     
     mSoundBalloonPop.Load("balloon_pop_1", 3);
     //balloon_pop_1
@@ -293,6 +290,7 @@ void GFXApp::LoadComplete() {
      }
     */
     
+    /*
     if (mAssetMenu == NULL) {
         mAssetMenu = new AssetConfigMenu();
         mWindowTools.AddChild(mAssetMenu);
@@ -304,12 +302,14 @@ void GFXApp::LoadComplete() {
             mAssetMenu->Collapse();
         }
     }
+    */
     
     if (gDeviceWidth > 300) {
         if (mScreenTool == NULL) {
-             mScreenTool = new Util_ScreenFrame();
-             mScreenTool->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
-             mWindowTools.AddChild(mScreenTool);
+            mScreenTool = new Util_ScreenFrame();
+            mScreenTool->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+            mScreenTool->RefreshVirtualFrame();
+            mWindowTools.AddChild(mScreenTool);
         }
     }
     
@@ -420,22 +420,6 @@ void GFXApp::Draw() {
                     mWadReloadOnNextDraw = true;
                 }
             }
-            
-            Graphics::MatrixProjectionResetOrtho();
-            Graphics::MatrixModelViewReset();
-            Graphics::SetColor();
-            
-            Graphics::PipelineStateSetShape2DAlphaBlending();
-            Graphics::SetColor(0.0f, 0.0f, 0.0f, 0.75f);
-            Graphics::DrawRect(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
-            
-            Graphics::PipelineStateSetSpritePremultipliedBlending();
-            Graphics::SetColor();
-            //Graphics::BufferSetIndicesSprite();
-            
-            
-            mSysFont.Center(FString("RELOAD..."), gDeviceWidth2, gDeviceHeight2, 1.0f);
-            
         }
         
         
@@ -476,6 +460,8 @@ void GFXApp::SetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
         mWorldScene->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
     }
     
+    
+    ReevaluateScreenResolution();
 }
 
 void GFXApp::TouchDown(float pX, float pY, void *pData) {
@@ -559,6 +545,8 @@ void GFXApp::SetDeviceSize(int pWidth, int pHeight) {
     if (mWorldScene != NULL) {
         mWorldScene->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
     }
+    
+    ReevaluateScreenResolution();
 }
 
 void GFXApp::EnqueueWadReload(int pTime) {
@@ -567,16 +555,24 @@ void GFXApp::EnqueueWadReload(int pTime) {
     mWadReloadTimer = pTime;
 }
 
+void GFXApp::DequeueWadReload() {
+    mWadReloadIsEnqueued = false;
+    mWadReloadOnNextDraw = false;
+    mWadReloadTimer = 0;
+}
+
 void GFXApp::ExecuteWadReload() {
     
     printf("*** BEGIN:: GFXApp::ExecuteWadReload()\n");
     
+    DequeueWadReload();
     if (gWadConfiguration.ShouldReload() == false) {
         printf("BLOCKING RELOAD, NO NEED...\n");
         return;
     }
     
     printf("NOTIFYING RELOAD, NO NEED...\n");
+    
     gWadConfiguration.NotifyReload();
     
     AppShellSetImageFileScale(gWadConfiguration.mAssetScale);
@@ -592,7 +588,12 @@ void GFXApp::ExecuteWadReload() {
     
 }
 
-
+void GFXApp::ReevaluateScreenResolution() {
+    if (mIsLoadingComplete) {
+        gWadConfiguration.NotifyVirtualFrameChange();
+        EnqueueWadReload(1);
+    }
+}
 
 #ifdef EDITOR_MODE
 
@@ -637,8 +638,6 @@ void GFXApp::EditorTestSwitchToEditor() {
     float aVirtualX = round(gDeviceWidth / 2.0f - (aVirtualWidth / 2.0f));
     float aVirtualY = gDeviceHeight - (5.0f + aVirtualHeight);
     
-    
-    
     //TODO:
     AppShellSetVirtualFrame(aVirtualX, aVirtualY, aVirtualWidth, aVirtualHeight);
     
@@ -654,14 +653,11 @@ void GFXApp::EditorTestSwitchToEditor() {
         mGameContainer = NULL;
     }
     
-    
     mGameContainer = new GameContainer();
     mGameContainer->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
     mWindowMain.AddChild(mGameContainer);
     
-    
     mLoadGame = 4;
-    
 }
 
 #endif

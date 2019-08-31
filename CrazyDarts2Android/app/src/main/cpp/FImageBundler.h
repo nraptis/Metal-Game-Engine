@@ -98,7 +98,7 @@ public:
 	void                            AddNode(FImageBundlerSaveNode *pNode);
 	FImageBundlerLoadNode           *FetchNode(char *pName);
 
-    void                            ExportChunksWithCropData();
+    //void                            ExportChunksWithCropData();
     
     FList                           mSaveNodeList;
     FList                           mLoadNodeList;
@@ -132,9 +132,6 @@ public:
 
 	int                             mSplatArea;
     
-    //int                             mTextureWidth;
-    //int                             mTextureHeight;
-	
 	bool                            mSuccess;
     
     bool                            mScreenCenter;
@@ -152,7 +149,7 @@ public:
 	inline void                     Load(FString pName){Load((char*)pName.c());}
     
     void                            Load(const char *pFileName, const char *pImageName);
-    void                            LoadBundle(const char *pFileXML);
+    void                            LoadBundle(const char *pFile);
 
     void                            StartBundle(const char *pBundleName);
     void                            EndBundle();

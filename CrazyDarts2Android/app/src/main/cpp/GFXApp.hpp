@@ -14,8 +14,12 @@
 #include "FModelDataPacked.hpp"
 #include "UIRoundedRect.hpp"
 #include "FloatingCamera.hpp"
+#include "WadGlobalConfiguration.hpp"
 #include "FUniforms.hpp"
 #include "FJSON.hpp"
+
+#include "AssetWadGameInterface.hpp"
+#include "AssetWadGameEffects.hpp"
 
 #define EDITOR_MODE 1
 #undef EDITOR_MODE
@@ -31,6 +35,7 @@ class LevelSelectorScreen;
 class LightMenu;
 class CameraMenu;
 class SoundConfigMenu;
+class AssetConfigMenu;
 class GameContainer;
 class WorldConfigScene;
 
@@ -69,15 +74,34 @@ public:
     int                                     mEditorSwitchTimer;
     
 #endif
+
     
-    void                                    Draw3D();
-    void                                    Draw2D();
+    void                                    EnqueueWadReload(int pTime);
+    void                                    DequeueWadReload();
+    
+    bool                                    mWadReloadIsEnqueued;
+    bool                                    mWadReloadOnNextDraw;
+    void                                    ExecuteWadReload();
+    int                                     mWadReloadTimer;
+    
+    
+    void                                    ReevaluateScreenResolution();
+    
+    
+    //AssetWadGameInterface                   mWadGameInterface;
+    //AssetWadGameEffects                     mWadGameEffects;
+    
+    
+    //effect_twinkle_additive_white_large.png
+    //effect_twinkle_additive_white_small.png
+    
     
     FloatingCamera                          mCamera;
     
     CameraMenu                              *mCameraMenu;
     
     SoundConfigMenu                         *mSoundMenu;
+    AssetConfigMenu                         *mAssetMenu;
     
     FModelData                              mSnail;
     FSprite                                 mSnailMap;
@@ -97,7 +121,6 @@ public:
     
     FModelDataPacked                        mDart;
     FSprite                                 mDartMap[4];
-    
     
     FModelDataPacked                        mBalloon;
     FSprite                                 mBalloonMap[5];
@@ -120,57 +143,35 @@ public:
     FSprite                                 mCircle256;
     FSprite                                 mCircle512;
     
-    FSprite                                 mChaosEgg1X;
-    FSprite                                 mChaosEgg2X;
-    FSprite                                 mChaosEgg3X;
-    FSprite                                 mChaosEgg4X;
-    
-    FSprite                                 mRay[4];
-    
     FSprite                                 mGameAreaMarker;
     
     
-    FSound                                  mSound1;
-    FSound                                  mSound2;
+    FSound                                  mSoundBalloonPop;
+    FSound                                  mSoundDartPullback;
+    FSound                                  mSoundDartRelease;
     
-    FSound                                  mSoundOne[6];
-    FSound                                  mSoundMulti[6];
+    FSound                                  mSoundHitBrickhead;
+    FSound                                  mSoundHitTurtle;
     
+    FSound                                  mSoundFreeLife;
+    
+    FSound                                  mSoundSparkle1;
+    FSound                                  mSoundSparkle2;
+    
+    FSound                                  mSoundXylophone;
     
     LevelSelectorScreen                     *mLevelSelect;
     LightConfigurationScene                 *mLightScene;
     WorldConfigScene                        *mWorldScene;
     Util_ScreenFrame                        *mScreenTool;
     
-    
-    UIRoundedRect                           mTestRR;
-    
-    
-    FUniformsLightAmbient                   mUniAmb;
-    FUniformsLightDiffuse                   mUniDiff;
-    FUniformsLightPhong                     mUniPhong;
-    
-    
-    
     int                                     mLoadGame;
-    
-    void                                    *mTestTouch1;
-    void                                    *mTestTouch2;
-    
-    float                                   mTestX1;
-    float                                   mTestY1;
-    
-    float                                   mTestX2;
-    float                                   mTestY2;
-    
-    float                                   mTestSin1;
-    float                                   mTestSin2;
-    
-    float                                   mAmbientRoll1;
-    float                                   mAmbientRoll2;
-    
 };
 
 extern GFXApp *gApp;
+
+extern AssetWadGameInterface gWadGameInterface;
+extern AssetWadGameEffects gWadGameEffects;
+
 
 #endif /* GFXApp_hpp */

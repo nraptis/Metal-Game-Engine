@@ -31,6 +31,7 @@ void Log(const char *pText, ...);
 
 void os_initialize_outlets();
 
+int os_getAssetScale();
 
 void os_commitRender();
 

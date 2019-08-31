@@ -168,6 +168,54 @@ bool os_draws_in_background() {
     return true;
 }
 
+int os_getAssetScale() {
+
+    Log("os_getAssetScale!!!???\n");
+
+    int aResult = 0;
+
+    jmethodID aMethodID = 0;
+    if (gJVM != 0) {
+        bool aDetach = false;
+        JNIEnv *aEnv = os_getJNIEnv(&aDetach);
+        if (aEnv != 0) {
+            jclass aClass = os_getClassID(aEnv);
+            if (aClass != 0) {
+                aMethodID = aEnv->GetMethodID(aClass, "getAssetScale", "()I");
+                if (aMethodID) {
+                    aResult = aEnv->CallIntMethod(_objJNIHelper, aMethodID);
+                }
+            }
+        }
+        if (aDetach) {
+            //gJVM->DetachCurrentThread();
+        }
+    }
+    return aResult;
+
+    /*
+
+    jmethodID aMethodID = 0;
+    if (gJVM != 0) {
+        bool aDetach = false;
+        JNIEnv *aEnv = os_getJNIEnv(&aDetach);
+        if (aEnv != 0) {
+            jclass aClass = os_getClassID(aEnv);
+            if (aClass != 0) {
+                aMethodID = aEnv->GetMethodID(aClass, "getAssetScale", "()I");
+                if (aMethodID) {
+                    aResult = aEnv->CallIntMethod(_objJNIHelper, aMethodID);
+                }
+            }
+        }
+        if (aDetach) {
+            //gJVM->DetachCurrentThread();
+        }
+    }
+    */
+    return aResult;
+}
+
 void os_commitRender() {
     jmethodID aMethodID = 0;
     if (gJVM != 0) {
@@ -254,9 +302,6 @@ void os_delete_thread_lock(int pLockIndex) {
                     }
                 }
             }
-            if (aDetach) {
-                //gJVM->DetachCurrentThread();
-            }
         }
     }
 }
@@ -274,9 +319,6 @@ void os_delete_all_thread_locks() {
                         aEnv->CallVoidMethod(_objJNIHelper, aMethodID);
                     }
                 }
-            }
-            if (aDetach) {
-                //gJVM->DetachCurrentThread();
             }
         }
 }
@@ -296,10 +338,6 @@ void os_lock_thread(int pLockIndex) {
                     }
                 }
             }
-            if (aDetach) {
-                Log("os_lock_thread::DETATCH\n");
-                //gJVM->DetachCurrentThread();
-            }
         }
     }
 }
@@ -318,10 +356,6 @@ void os_unlock_thread(int pLockIndex) {
                         aEnv->CallVoidMethod(_objJNIHelper, aMethodID, pLockIndex);
                     }
                 }
-            }
-            if (aDetach) {
-                Log("os_unlock_thread::DETATCH\n");
-                //gJVM->DetachCurrentThread();
             }
         }
     }
@@ -408,9 +442,6 @@ unsigned char *os_read_file(const char *pFileName, unsigned int &pLength) {
                 aEnv->DeleteLocalRef(aFileName);
             }
         }
-        if (aDetach) {
-            //gJVM->DetachCurrentThread();
-        }
     }
     return aData;
 }
@@ -445,9 +476,6 @@ bool os_write_file(const char *pFileName, unsigned char *pData, unsigned int pLe
                 aEnv->ReleaseByteArrayElements(aArray, aByte, 0);
                 aEnv->DeleteLocalRef(aArray);
             }
-        }
-        if (aDetach) {
-            //gJVM->DetachCurrentThread();
         }
     }
     return aReturn;
@@ -485,16 +513,14 @@ void os_load_image_to_buffer(char *pFile, unsigned int *pData)
         jobject aBitmap = aEnv->CallObjectMethod(_objJNIHelper, aMethodID, aJavaFileName);
         aEnv->DeleteLocalRef(aJavaFileName);
 
-        if(aBitmap)
-        {
+        if (aBitmap) {
             aMethodID = aEnv->GetMethodID(_clsJNIHelper, "getBitmapWidth", "(Landroid/graphics/Bitmap;)I");
             int aWidth = aEnv->CallIntMethod(_objJNIHelper, aMethodID, aBitmap);
 
             aMethodID = aEnv->GetMethodID(_clsJNIHelper, "getBitmapHeight", "(Landroid/graphics/Bitmap;)I");
             int aHeight = aEnv->CallIntMethod(_objJNIHelper, aMethodID, aBitmap);
 
-            if((aWidth > 0) && (aHeight > 0))
-            {
+            if ((aWidth > 0) && (aHeight > 0)) {
                 int aArea = aWidth * aHeight;
 
                 jintArray aArray = aEnv->NewIntArray(aArea);

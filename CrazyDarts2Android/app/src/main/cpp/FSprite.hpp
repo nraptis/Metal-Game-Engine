@@ -35,11 +35,11 @@ public:
     
 
 	void                                    Load(char *pName, FImageBundler *pBundler);
-	inline void                             Load(const char *pFile, FImageBundler *pBundler){Load((char*)pFile,pBundler);}
-    inline void                             Load(FString pFile, FImageBundler *pBundler){Load(pFile.c(),pBundler);}
+	inline void                             Load(const char *pFile, FImageBundler *pBundler) { Load((char*)pFile,pBundler); }
+    inline void                             Load(FString pFile, FImageBundler *pBundler) { Load(pFile.c(),pBundler); }
     
-	inline void                             Load(FString pFile){Load(pFile.c());}
-	inline void                             Load(const char *pFile){Load((char*)pFile);}
+	inline void                             Load(FString pFile) { Load(pFile.c()); }
+	inline void                             Load(const char *pFile) { Load((char*)pFile); }
 	void                                    Load(char *pFile);
     
     void                                    LoadN(const char *pFileStart, int pIndex);

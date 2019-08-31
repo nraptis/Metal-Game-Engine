@@ -11,13 +11,11 @@
 #include "FXML.hpp"
 
 FFont::FFont() {
-    mSpaceWidth = 20.0f;
     mPointSize = 0.0f;
     for (int i=0;i<256;i++) {
         mCharacterStrideX[i] = 0.0f;
         mCharacterOffsetX[i] = 0.0f;
     }
-    
     for (int i=0;i<256;i++) {
         for (int n=0;n<256;n++) {
             mKern[i][n] = 0.0f;
@@ -99,8 +97,6 @@ void FFont::LoadScore(const char *pFilePrefix) {
 }
 
 void FFont::Unload() {
-    
-    mSpaceWidth = 20.0f;
     mPointSize = 0.0f;
     for (int i=0;i<256;i++) {
         mCharacterSprite[i].Kill();
@@ -142,13 +138,18 @@ void FFont::Draw(const char *pText, float pX, float pY, float pScale) {
             aCharIndex = aChar;
             if(aCharIndexPrev != -1)aKern = mKern[aCharIndexPrev][aCharIndex];
             float aSpriteWidth = mCharacterSprite[aCharIndex].mWidth * aSpriteScale;
-            mCharacterSprite[aCharIndex].Draw(aDrawX + ((mCharacterOffsetX[aCharIndex] + aKern) * aScale) + aSpriteWidth  * 0.5f, aDrawY + aPointSize / 2.0f, aSpriteScale);
+            mCharacterSprite[aCharIndex].Draw(aDrawX + ((mCharacterOffsetX[aCharIndex] + aKern) * aScale) + aSpriteWidth  * 0.5f, aDrawY + aPointSize / 2.0f, aSpriteScale, 0.0f);
+            //mCharacterSprite[aCharIndex].Draw(aDrawX + ((mCharacterOffsetX[aCharIndex] + aKern) * aScale), aDrawY + aPointSize / 2.0f, aSpriteScale, 0.0f);
+            
             aDrawX += (mCharacterStrideX[aCharIndex] + aKern) * aScale;
             aPtr++;
         }
     }
 }
 
+void FFont::SetSpaceWidth(float pSpaceWidth) {
+    mCharacterStrideX[32] = pSpaceWidth;
+}
 
 int FFont::GetCursor(float pTouchX, float pTouchY, const char *pText, float pX, float pY, float pScale) {
     if (pTouchX < pX) { return 0; }
@@ -476,10 +477,14 @@ FString FFont::CharToReadable(char pChar)
     return aResult;
 }
 
+void FFont::Kill() {
+    for (int i=0;i<256;i++) {
+        mCharacterSprite[i].Kill();
+    }
+}
 
 
-void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix, const char *pCharacters)
-{
+void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix, const char *pCharacters) {
     mPointSize = 24.0f;
     
     int aCharIndex[256];
@@ -487,15 +492,13 @@ void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix, const char 
     char aCharAllowed[256];
     
     
-    for(int i=0;i<256;i++)
-    {
+    for (int i=0;i<256;i++) {
         aChar[i] = 0;
         aCharIndex[i] = 0;
         aCharAllowed[i] = 1;
     }
     
-    if(pCharacters != 0)
-    {
+    if (pCharacters != 0) {
         
         unsigned char *aPtr = ((unsigned char *)pCharacters);
         int aLen = FString::Length(pCharacters);
@@ -516,11 +519,9 @@ void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix, const char 
     int aCharIndexCursor = 0;
 
     
-    for(int i=0;i<256;i++)mCharacterStrideX[i] = 0.0f;
-    for(int i=0;i<256;i++)
-    {
-        for(int n=0;n<256;n++)
-        {
+    for (int i=0;i<256;i++) { mCharacterStrideX[i] = 0.0f; }
+    for (int i=0;i<256;i++) {
+        for (int n=0;n<256;n++) {
             mKern[i][n] = 0.0f;
         }
     }
@@ -537,8 +538,7 @@ void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix, const char 
     mPointSize = ((float)(aLoadFile.ReadShort()));
     int aCharCount = (int)(aLoadFile.ReadShort());
 
-    if(aCharCount <= 0)
-    {
+    if (aCharCount <= 0) {
         //Log("__Font (%s) Failed To Load__\n\n", aPath.c());
         //Log("File \"%s\"   Length = %d\n", pDataFile, aLoadFile.mLength);
         //Log("Char Count = %d    Point Size = %f\n", aCharCount, mPointSize);
@@ -558,8 +558,7 @@ void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix, const char 
     //unsigned short aReadShort = 0;
     
     
-    for(int aLoopIndex = 0;aLoopIndex < aCharCount;aLoopIndex++)
-    {
+    for (int aLoopIndex = 0;aLoopIndex < aCharCount;aLoopIndex++) {
         aScanChar = aLoadFile.ReadChar();
         aReadIndex = aScanChar;
         
@@ -577,11 +576,6 @@ void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix, const char 
             mCharacterStrideX[aReadIndex] = 0.0f;
             mCharacterOffsetX[aReadIndex] = 0.0f;
         }
-        
-        //if(mCharacterSprite[aReadIndex].mWidth <= 0)
-        //{
-        
-        //}
         
         if (aCharIndexCursor < 256) {
             aCharIndex[aCharIndexCursor] = aReadIndex;
@@ -603,26 +597,22 @@ void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix, const char 
         int aLoopIndex = 0;
         int aTotalKernIndex = 0;
         
-        for(int i=0;((i<aCharCount) && (aTotalKernIndex < aTotalKernCount) && (aLoopIndex < aCharIndexCursor));i++)
-        {
+        for (int i=0;((i<aCharCount) && (aTotalKernIndex < aTotalKernCount) && (aLoopIndex < aCharIndexCursor));i++) {
             aCharKernCount = ((int)(aLoadFile.ReadShort()));
             aReadIndex = aCharIndex[aLoopIndex];
             aScanChar = aChar[aLoopIndex];
             
-            while((aCharKernCount > 0) && (aTotalKernIndex < aTotalKernCount))
-            {
+            while ((aCharKernCount > 0) && (aTotalKernIndex < aTotalKernCount)) {
                 aKernPartnerChar = aLoadFile.ReadChar();
                 aKernAmount = ((int)(aLoadFile.ReadShort()));
                 
-                
                 aKernPartnerIndex = aKernPartnerChar;
                 
-                if((aReadIndex >= 0) && (aReadIndex < 256) && (aKernPartnerIndex >= 0) && (aKernPartnerIndex < 256))
-                {
+                if ((aReadIndex >= 0) && (aReadIndex < 256) && (aKernPartnerIndex >= 0) && (aKernPartnerIndex < 256)) {
                     mKern[aReadIndex][aKernPartnerIndex] = aKernAmount;
                 }
                 
-                Log("__________[[%d]] Loaded Kern [%d] => [%d]  ((%c => %c)) [%d]\n", aTotalKernIndex, aReadIndex, aKernPartnerIndex, aScanChar, aKernPartnerChar, aKernAmount);
+                //Log("__________[[%d]] Loaded Kern [%d] => [%d]  ((%c => %c)) [%d]\n", aTotalKernIndex, aReadIndex, aKernPartnerIndex, aScanChar, aKernPartnerChar, aKernAmount);
                 
                 aCharKernCount--;
                 aTotalKernIndex++;
@@ -637,8 +627,7 @@ void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix, const char 
     
 }
 
-void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix)
-{
+void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix) {
     LoadNew(pDataFile, pImagePrefix, 0);
 }
 
@@ -647,13 +636,10 @@ void FFont::LoadNew(const char *pDataFile, const char *pImagePrefix)
 
 void FFont::BitmapDataBatch(const char *pDataPath, const char *pImagePath,
                             const char *pFilePrefixCharImages, const char *pDataFile,
-                            int pPaddingCrop, int pPaddingGlyph, int pPaddingRadix, const char *pRemoveCharacters)
-{
+                            int pPaddingCrop, int pPaddingGlyph, const char *pRemoveCharacters) {
+    FFontImportData *aImport = BitmapDataImport(pDataPath, pImagePath, pPaddingCrop, pPaddingGlyph, pRemoveCharacters);
     
-    FFontImportData *aImport = BitmapDataImport(pDataPath, pImagePath, pPaddingCrop, pPaddingGlyph, pPaddingRadix, pRemoveCharacters);
-    
-    if(aImport == 0)
-    {
+    if (aImport == 0) {
         Log("Failed To Batch Font[%s] [%s]\n", pDataPath, pImagePath);
     }
     
@@ -677,7 +663,7 @@ void FFont::BitmapDataBatch(const char *pDataPath, const char *pImagePath,
     
 }
 
-FFontImportData *FFont::BitmapDataImport(const char *pDataPath, const char *pImagePath, int pPaddingCrop, int pPaddingGlyph, int pPaddingRadix, const char *pRemoveCharacters)
+FFontImportData *FFont::BitmapDataImport(const char *pDataPath, const char *pImagePath, int pPaddingCrop, int pPaddingGlyph, const char *pRemoveCharacters)
 {
     FFontImportData *aImportData = 0;
     
@@ -701,29 +687,22 @@ FFontImportData *FFont::BitmapDataImport(const char *pDataPath, const char *pIma
     FXML aXML;
     FXMLTag *aRoot = 0;
     
-    if(aFile.mLength > 0)
-    {
+    if (aFile.mLength > 0) {
         aXML.Parse((char*)aFile.mData, aFile.mLength);aRoot = aXML.GetRoot();
     }
     
-    if(aRoot == 0)
-    {
+    if (aRoot == 0) {
         aXML.Load(pDataPath);aRoot = aXML.GetRoot();
-        
     }
     
-    if(aRoot == 0)
-    {
+    if (aRoot == 0) {
         aXML.Load(aPath);aRoot = aXML.GetRoot();
-        
     }
     
     FFontImportGlyph *aGlyph = 0;
     FFontImportGlyph *aGlyphCompare = 0;
     
-    
-    if(aRoot)
-    {
+    if (aRoot) {
         aImportData = new FFontImportData();
         
         int aPaddingUp = 0;
@@ -735,8 +714,7 @@ FFontImportData *FFont::BitmapDataImport(const char *pDataPath, const char *pIma
         aImportData->mName.RemovePath();
         aImportData->mName.RemoveExtension();
         
-        EnumTagsMatching(aRoot, aInfoTag, "info")
-        {
+        EnumTagsMatching(aRoot, aInfoTag, "info") {
             aImportData->mPointSize = aInfoTag->GetParamInt("size");
             aImportData->mBold = aInfoTag->GetParamBool("bold");
             aImportData->mItalic = aInfoTag->GetParamBool("italic");
@@ -752,7 +730,7 @@ FFontImportData *FFont::BitmapDataImport(const char *pDataPath, const char *pIma
             aImportData->mSpacingV = aSpacingString.GetNextNumberI();
         }
         
-        if(aImportData->mPointSize <= 0)aImportData->mPointSize = 24;
+        if (aImportData->mPointSize <= 0) { aImportData->mPointSize = 24; }
         
         aImportData->mKernCount = 0;
         
@@ -769,15 +747,12 @@ FFontImportData *FFont::BitmapDataImport(const char *pDataPath, const char *pIma
         
         BitmapDataRemoveCharacters(aImportData, pRemoveCharacters);
         
-        EnumTagsMatching(aRoot, aCharListTag, "chars")
-        {
-            EnumTagsMatching(aCharListTag, aCharTag, "char")
-            {
+        EnumTagsMatching(aRoot, aCharListTag, "chars") {
+            EnumTagsMatching(aCharListTag, aCharTag, "char") {
                 int aID = aCharTag->GetParamInt("id");
                 aGlyph = aImportData->GetGlyph(aID);
                 
-                if(aGlyph != 0)
-                {
+                if (aGlyph != 0) {
                     aGlyph->Reset();
                     
                     aGlyph->mImageX = aCharTag->GetParamInt("x");
@@ -788,8 +763,7 @@ FFontImportData *FFont::BitmapDataImport(const char *pDataPath, const char *pIma
                     aGlyph->mImageOffsetX = aCharTag->GetParamInt("xoffset");
                     aGlyph->mImageOffsetY = aCharTag->GetParamInt("yoffset");
                     
-                    if((aImage.mWidth > 0) && (aImage.mHeight > 0) && (aGlyph->mAllowed == true) && (aImportData->mPointSize > 0))
-                    {
+                    if((aImage.mWidth > 0) && (aImage.mHeight > 0) && (aGlyph->mAllowed == true) && (aImportData->mPointSize > 0)) {
                         int aCropX = (aGlyph->mImageX - pPaddingCrop);
                         int aCropY = (aGlyph->mImageY - pPaddingCrop);
                         
@@ -798,10 +772,8 @@ FFontImportData *FFont::BitmapDataImport(const char *pDataPath, const char *pIma
                         
                         FImage *aImageBase = aImage.Crop(aCropX, aCropY, aCropWidth, aCropHeight);
                         
-                        if(aImageBase)
-                        {
-                            if((aImageBase->mWidth > 0) && (aImageBase->mHeight > 0))
-                            {
+                        if (aImageBase) {
+                            if ((aImageBase->mWidth > 0) && (aImageBase->mHeight > 0)) {
                                 int aFixedWidth = (aImageBase->mWidth + pPaddingGlyph * 2);
                                 int aFixedHeight = (aImportData->mPointSize + pPaddingGlyph * 2);
                                 
@@ -814,15 +786,18 @@ FFontImportData *FFont::BitmapDataImport(const char *pDataPath, const char *pIma
                                 
                                 bool aOdd = false;
                                 
-                                if((pPaddingRadix > 1) && (pPaddingRadix < 512))
-                                {
-                                    for(int aRadixLoop=0;aRadixLoop<=pPaddingRadix;aRadixLoop++)
-                                    {
+                                //Note: If we want to revert to use padding radix, this will achieve the task.
+                                //However, the render logic needs to be rewritten to handle the case where padding
+                                //is non ubiquitous across all glyphs.
+                                /*
+                                if ((pPaddingRadix > 1) && (pPaddingRadix < 512)) {
+                                    for (int aRadixLoop=0;aRadixLoop<=pPaddingRadix;aRadixLoop++) {
                                         if((aFixedWidth % pPaddingRadix) != 0){aFixedWidth++;if(aOdd == true)aFixedX++;}
                                         if((aFixedHeight % pPaddingRadix) != 0){aFixedHeight++;if(aOdd == true)aFixedY++;}
                                         aOdd = (!aOdd);
                                     }
                                 }
+                                */
                                 
                                 FImage *aImageAdjusted = new FImage();
                                 //aImageAdjusted->Make (aFixedWidth, aFixedHeight, IMAGE_RGBA(gRand.Get(200), gRand.Get(200), gRand.Get(220), 30 + gRand.Get(70)));
@@ -871,10 +846,9 @@ FFontImportData *FFont::BitmapDataImport(const char *pDataPath, const char *pIma
                     if(aID == 32)aGlyph->mLoadSuccess = true;
                 }
                 
-                EnumTagsMatching(aRoot, aKernListTag, "kernings")
-                {
+                EnumTagsMatching(aRoot, aKernListTag, "kernings") {
                     EnumTagsMatching(aKernListTag, aKernTag, "kerning")
-                    {
+{
                         int aKernChar1 = aKernTag->GetParamInt("first");
                         int aKernChar2 = aKernTag->GetParamInt("second");
                         int aKernAmount = aKernTag->GetParamInt("amount");
@@ -944,7 +918,7 @@ void FFont::BitmapDataExportTestStrips(FFontImportData *pImport, const char *pNa
             aGlyph = 0;
             aStamped = false;
             aStripX = 32;
-            aStrip.Make(2048, aPointSize + 128, IMAGE_RGBA(gRand.Get(80), 70 + gRand.Get(40), 180 + gRand.Get(60), 32 + gRand.Get(120)));
+            aStrip.Make(2048, aPointSize + 128, IMAGE_RGBA(0, 0, 0, 255));
             for (int i=0;i<220;i++) {
                 aGlyph = pImport->GetGlyph(gRand.Get(256));
                 if (aGlyph != 0) {

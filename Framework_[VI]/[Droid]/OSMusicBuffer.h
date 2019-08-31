@@ -12,7 +12,7 @@
 #include <SLES/OpenSLES.h>
 #include <SLES/OpenSLES_Android.h>
 
-#include "FString.h"
+#include "FString.hpp"
 
 class OSMusicBuffer {
 

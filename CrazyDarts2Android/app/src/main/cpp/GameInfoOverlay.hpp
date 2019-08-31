@@ -54,7 +54,6 @@ public:
     
     //GameInfoTextBubble
     
-    
 };
 
 #endif /* GameInfoOverlay_hpp */

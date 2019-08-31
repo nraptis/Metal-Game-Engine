@@ -72,7 +72,9 @@ bool gKeyDownAlt = false;
 
 void AppShellInitialize(int pEnvironment) {
     gEnvironment = pEnvironment;
-
+    
+    AppShellSetVirtualFrame(gSafeAreaInsetLeft, gSafeAreaInsetTop, gDeviceWidth - (gSafeAreaInsetLeft + gSafeAreaInsetRight), gDeviceHeight - (gSafeAreaInsetTop + gSafeAreaInsetBottom));
+    
 	FList aResourceList;
     
 	os_getAllResources(gDirBundle.c(), &aResourceList);
@@ -310,7 +312,7 @@ void AppShellSetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
 	gVirtualDevWidth = (float)pWidth;
 	gVirtualDevHeight = (float)pHeight;
     
-    //Log("Set Virtual Frame [%d %d %d %d]\n", gVirtualDevX, gVirtualDevY, gVirtualDevWidth, gVirtualDevHeight);
+    Log("Set Virtual Frame [%f %f %f %f]\n", gVirtualDevX, gVirtualDevY, gVirtualDevWidth, gVirtualDevHeight);
     
     gAppWidth = (float)pWidth;
     gAppHeight = (float)pHeight;
@@ -323,10 +325,16 @@ void AppShellSetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
 }
 
 void AppShellSetSafeAreaInsets(int pInsetUp, int pInsetRight, int pInsetDown, int pInsetLeft) {
+    
+    printf("I - AppShellSetSafeAreaInsets(%d, %d, %d, %d)\n", pInsetUp, pInsetRight, pInsetDown, pInsetLeft);
+    
     gSafeAreaInsetTop = pInsetUp;
     gSafeAreaInsetRight = pInsetRight;
     gSafeAreaInsetBottom = pInsetDown;
     gSafeAreaInsetLeft = pInsetLeft;
+    
+    printf("II - AppShellSetSafeAreaInsets(%f, %f, %f, %f)\n", gSafeAreaInsetTop, gSafeAreaInsetRight, gSafeAreaInsetBottom, gSafeAreaInsetLeft);
+    
     if (gAppBase) {
         gAppBase->BaseSetSafeAreaInsets(gSafeAreaInsetTop, gSafeAreaInsetRight, gSafeAreaInsetBottom, gSafeAreaInsetLeft);
     }

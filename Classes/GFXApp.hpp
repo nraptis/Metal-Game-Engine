@@ -77,11 +77,15 @@ public:
 
     
     void                                    EnqueueWadReload(int pTime);
+    void                                    DequeueWadReload();
+    
     bool                                    mWadReloadIsEnqueued;
     bool                                    mWadReloadOnNextDraw;
     void                                    ExecuteWadReload();
     int                                     mWadReloadTimer;
     
+    
+    void                                    ReevaluateScreenResolution();
     
     
     //AssetWadGameInterface                   mWadGameInterface;
@@ -156,16 +160,12 @@ public:
     
     FSound                                  mSoundXylophone;
     
-    
     LevelSelectorScreen                     *mLevelSelect;
     LightConfigurationScene                 *mLightScene;
     WorldConfigScene                        *mWorldScene;
     Util_ScreenFrame                        *mScreenTool;
     
-    
     int                                     mLoadGame;
-    
-    
 };
 
 extern GFXApp *gApp;

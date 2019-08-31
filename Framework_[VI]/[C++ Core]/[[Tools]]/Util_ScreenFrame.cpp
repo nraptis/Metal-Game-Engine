@@ -25,6 +25,15 @@ Util_ScreenFrame::Util_ScreenFrame() {
     mResizeDragCornerX = 0.0f;
     mResizeDragCornerY = 0.0f;
     mResizeCornerIndex = -1;
+    
+    RefreshVirtualFrame();
+}
+
+Util_ScreenFrame::~Util_ScreenFrame() {
+    
+}
+
+void Util_ScreenFrame::RefreshVirtualFrame() {
     mScreenResizeCornerX[0] = gVirtualDevX;
     mScreenResizeCornerY[0] = gVirtualDevY;
     mScreenResizeCornerX[1] = gVirtualDevX;
@@ -34,8 +43,6 @@ Util_ScreenFrame::Util_ScreenFrame() {
     mScreenResizeCornerX[3] = gVirtualDevX + gVirtualDevWidth;
     mScreenResizeCornerY[3] = gVirtualDevY + gVirtualDevHeight;
 }
-
-Util_ScreenFrame::~Util_ScreenFrame() { }
 
 void Util_ScreenFrame::Layout() {
     SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);

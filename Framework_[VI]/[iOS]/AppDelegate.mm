@@ -52,9 +52,6 @@ int kDeviceHeight = 320;
         //AppShellSetVirtualFrame(20, 40, kDeviceWidth - 50, kDeviceHeight - 110);
         //AppShellSetVirtualFrame(0, 0, kDeviceWidth, kDeviceHeight);
     }
-    //
-    AppShellSetVirtualFrame(0, 0, kDeviceWidth, kDeviceHeight);
-    //
     
     //
     ///////////////
@@ -85,15 +82,36 @@ int kDeviceHeight = 320;
     }
     aDocPath[i] = '/';
     AppShellSetDirectoryDocuments(aDocPath);
-    //
-    //
-    //
+    
+    
+    if ([_rootViewController isLandscape]) {
+        int aHold = kDeviceWidth;
+        kDeviceWidth = kDeviceHeight;
+        kDeviceHeight = aHold;
+    }
+    
+    _window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
+    
+    
+    if (@available(iOS 11.0, *)) {
+        AppShellSetSafeAreaInsets(_window.safeAreaInsets.top, _window.safeAreaInsets.right, _window.safeAreaInsets.bottom, _window.safeAreaInsets.left);
+    } else {
+        // Fallback on earlier versions
+    }
+    
+    
+    
     AppShellInitialize(ENV_IOS);
-    //
-    //
-    //
+    
+    
+    
     //AppShellSetImageFileScale(2);
+    
     _rootViewController = [[RootViewController alloc] init];
+    _window.rootViewController = _rootViewController;
+    [_window makeKeyAndVisible];
+    
+    
     //
     
     //
@@ -106,17 +124,7 @@ int kDeviceHeight = 320;
     //AppShellSetAdBannerHeight(0.0f);
     
     
-    if ([_rootViewController isLandscape]) {
-        int aHold = kDeviceWidth;
-        kDeviceWidth = kDeviceHeight;
-        kDeviceHeight = aHold;
-    }
     
-    _window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
-    _window.rootViewController = self.rootViewController;
-    [_window makeKeyAndVisible];
-    
-    AppShellSetSafeAreaInsets(_window.safeAreaInsets.top, _window.safeAreaInsets.right, _window.safeAreaInsets.bottom, _window.safeAreaInsets.left);
     // ...
     
     [_rootViewController loadViewIfNeeded];

@@ -139,14 +139,14 @@ void GameRenderer::Draw3D() {
     Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending();
     EnumList (Dart, aDart, mGame->mDartList.mObjectList) {
         if (aDart->mKill == 0) {
-            aDart->Draw3D();
+            //aDart->Draw3D();
         }
     }
     
     Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending();
     EnumList (Balloon, aBalloon, mGame->mBalloonList.mObjectList) {
         if (aBalloon->mKill == 0) {
-            aBalloon->Draw3D();
+            //aBalloon->Draw3D();
         }
     }
     
@@ -158,18 +158,18 @@ void GameRenderer::Draw3D() {
     
     EnumList (Bomb, aBomb, mGame->mBombList.mObjectList) {
         if (aBomb->mKill == 0) {
-            aBomb->Draw3D();
+            //aBomb->Draw3D();
         }
     }
     
     EnumList (Turtle, aTurtle, mGame->mTurtleList.mObjectList) {
         if (aTurtle->mKill == 0) {
-            aTurtle->Draw3D();
+            //aTurtle->Draw3D();
         }
     }
     
     if (mGame->mCurrentDart) {
-        mGame->mCurrentDart->Draw3D();
+        //mGame->mCurrentDart->Draw3D();
     }
     
 #ifdef EDITOR_MODE

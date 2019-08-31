@@ -3,48 +3,41 @@
 #include "os_core_graphics.h"
 #include "core_includes.h"
 
-FParticle::FParticle(FSpriteSequence &pSpriteSequence, bool pLoop)// : FParticle()
-{
+FParticle::FParticle(FSpriteSequence &pSpriteSequence, bool pLoop) {
     BaseInitialize();
     SetSpriteSequence(&pSpriteSequence);
     mFrameLoop = pLoop;
 }
 
-FParticle::FParticle(FSpriteSequence *pSpriteSequence, bool pLoop)// : FParticle()
-{
+FParticle::FParticle(FSpriteSequence *pSpriteSequence, bool pLoop) {
     BaseInitialize();
     SetSpriteSequence(pSpriteSequence);
     mFrameLoop = pLoop;
 }
 
-FParticle::FParticle(FSpriteSequence &pSpriteSequence)// : FParticle()
-{
+FParticle::FParticle(FSpriteSequence &pSpriteSequence) {
     BaseInitialize();
     SetSpriteSequence(&pSpriteSequence);
     mFrameLoop = false;
 }
 
-FParticle::FParticle(FSpriteSequence *pSpriteSequence)// : FParticle()
-{
+FParticle::FParticle(FSpriteSequence *pSpriteSequence) {
     BaseInitialize();
     SetSpriteSequence(pSpriteSequence);
     mFrameLoop = false;
 }
 
-FParticle::FParticle(FSprite &pSprite)// : FParticle()
-{
+FParticle::FParticle(FSprite &pSprite) {
     BaseInitialize();
     SetSprite(&pSprite);
 }
 
-FParticle::FParticle(FSprite *pSprite)// : FParticle()
-{
+FParticle::FParticle(FSprite *pSprite) {
     BaseInitialize();
     SetSprite(pSprite);
 }
 
-FParticle::FParticle()
-{
+FParticle::FParticle() {
     BaseInitialize();
 }
 
@@ -104,77 +97,66 @@ void FParticle::BaseInitialize()
 
 void FParticle::Update()
 {
-    if(mTimerDelay > 0)
-    {
+    if (mTimerDelay > 0) {
         mTimerDelay--;
-    }
-    else
-    {
+    } else {
         mTimerAlive++;
         
-        if(mRedSpeed != 0.0f)mRed -= mRedSpeed;
-        if(mGreenSpeed != 0.0f)mGreen -= mGreenSpeed;
-        if(mBlueSpeed != 0.0f)mBlue -= mBlueSpeed;
-        if(mAlphaSpeed != 0.0f)mAlpha -= mAlphaSpeed;
+        if (mRedSpeed != 0.0f) { mRed -= mRedSpeed; }
+        if (mGreenSpeed != 0.0f) { mGreen -= mGreenSpeed; }
+        if (mBlueSpeed != 0.0f) { mBlue -= mBlueSpeed; }
+        if (mAlphaSpeed != 0.0f) { mAlpha -= mAlphaSpeed; }
         
-        if(mXSpeed != 0.0f)mX += mXSpeed;
-        if(mYSpeed != 0.0f)mY += mYSpeed;
+        if (mXSpeed != 0.0f) { mX += mXSpeed; }
+        if (mYSpeed != 0.0f) { mY += mYSpeed; }
         
-		if(mGravityX != 0.0f)mXSpeed += mGravityX;
-        if(mGravityY != 0.0f)mYSpeed += mGravityY;
-		if(mGravityYAdd != 0.0f)mGravityY += mGravityYAdd;
+        if (mGravityX != 0.0f) { mXSpeed += mGravityX; }
+        if (mGravityY != 0.0f) { mYSpeed += mGravityY; }
+        if (mGravityYAdd != 0.0f) { mGravityY += mGravityYAdd; }
         
-		if(mSpeedAccel != 1.0f)
-		{
+		if (mSpeedAccel != 1.0f) {
 			mXSpeed *= mSpeedAccel;
 			mYSpeed *= mSpeedAccel;
 		}
         
-        if(mRotationSpeed != 0.0f)mRotation += mRotationSpeed;
-        if(mRotationAccel != 1.0f)mRotationSpeed *= mRotationAccel;
+        if (mRotationSpeed != 0.0f) { mRotation += mRotationSpeed; }
+        if (mRotationAccel != 1.0f) { mRotationSpeed *= mRotationAccel; }
         
-        if(mScaleSpeed != 0.0f)mScale += mScaleSpeed;
-        if(mScaleAccel != 1.0f)mScaleSpeed *= mScaleAccel;
-		if(mScaleSpeedAdd != 0.0f)mScaleSpeed += mScaleSpeedAdd;
+        if (mScaleSpeed != 0.0f) { mScale += mScaleSpeed; }
+        if (mScaleAccel != 1.0f) { mScaleSpeed *= mScaleAccel; }
+        if (mScaleSpeedAdd != 0.0f) { mScaleSpeed += mScaleSpeedAdd; }
         
-        if(mDelayScaleSpeedAdd != 0.0f)
-        {
-            if(mTimerAlive >= mDelayScaleSpeedAddTime)mScaleSpeed += mDelayScaleSpeedAdd;
+        
+        if (mDelayScaleSpeedAdd != 0.0f) {
+            if(mTimerAlive >= mDelayScaleSpeedAddTime) {
+                mScaleSpeed += mDelayScaleSpeedAdd;
+            }
         }
         
-        if(mDelayAlphaSpeedAdd != 0.0f)
-        {
-            if(mTimerAlive >= mDelayAlphaSpeedAddTime)mAlphaSpeed += mDelayAlphaSpeedAdd;
+        if (mDelayAlphaSpeedAdd != 0.0f) {
+            if(mTimerAlive >= mDelayAlphaSpeedAddTime) {
+                mAlphaSpeed += mDelayAlphaSpeedAdd;
+            }
         }
         
-        if(mAlpha <= 0.0f)Kill();
-        if(mScale <= 0.0f)Kill();
-        if(mTimerAlive >= mTimeKill)Kill();
+        if (mAlpha <= 0.0f) { Kill(); }
+        if (mScale <= 0.0f) { Kill(); }
+        if (mTimerAlive >= mTimeKill) { Kill(); }
         
-        if((mSpriteSequence != 0) && (mFrameMax > 0.0f))
-        {
+        if ((mSpriteSequence != 0) && (mFrameMax > 0.0f)) {
             mFrame += mFrameSpeed;
             
-            if(mFrame > mFrameMax)
-            {
-                if(mFrameLoop)
-                {
+            if (mFrame > mFrameMax) {
+                if (mFrameLoop) {
                     mFrame -= mFrameMax;
-                }
-                else
-                {
+                } else {
                     mFrame = mFrameMax;
                     Kill();
                 }
-            }
-            else if(mFrame < 0)
-            {
-                if(mFrameLoop)
-                {
+            } else if(mFrame < 0) {
+                if (mFrameLoop) {
                     mFrame += mFrameMax;
-                }
-                else
-                {
+                } else {
                     mFrame = 0.0f;
                     Kill();
                 }

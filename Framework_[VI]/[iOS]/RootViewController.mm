@@ -30,6 +30,10 @@ RootViewController *gRootBase = NULL;
 @property (nonatomic, strong) OpenGLViewController *openGLViewController;
 #endif
 
+
+@property (nonatomic, assign) float screenScale;
+
+
 @end
 
 @implementation RootViewController
@@ -42,6 +46,8 @@ RootViewController *gRootBase = NULL;
     
     self.view.opaque = true;
     self.view.backgroundColor = [UIColor blackColor];
+    
+    self.screenScale = self.view.contentScaleFactor;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         //gAppBase->MainRunLoop();
@@ -106,6 +112,14 @@ RootViewController *gRootBase = NULL;
     
 #endif
 }
+
+
+- (float) getScreenScale {
+    return self.screenScale;
+}
+
+//
+
 
 
 @end

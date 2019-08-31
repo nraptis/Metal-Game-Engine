@@ -15,7 +15,6 @@
 OSMusicPlayer gMusicPlayer;
 
 OSMusicPlayer::OSMusicPlayer() {
-
     mPlayingBuffer = NULL;
     mPlayingFadeinTick = 0;
     mPlayingFadeinTime = 0;

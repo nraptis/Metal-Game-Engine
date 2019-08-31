@@ -10,12 +10,10 @@
 #define GameContainerContainer_hpp
 
 #include "GFXApp.hpp"
-//#include "FloatingCamera.hpp"
-//#include "Dart.hpp"
-//#include "Balloon.hpp"
 
 #include "GameTestEditorOverlay.hpp"
 #include "GameTestRunningOverlay.hpp"
+#include "GameOverlay.hpp"
 
 #include "EditorMenuGameTestUtils.hpp"
 #include "EditorMenuGameTest.hpp"
@@ -51,6 +49,9 @@ public:
     FCanvas                                     *mContainer;
     GameTestEditorOverlay                       *mGameTestEditorOverlay;
     GameTestRunningOverlay                      *mGameTestRunningOverlay;
+    
+    //This is essentially a scaled-down 2-D overlay which rests atop the game...
+    GameOverlay                                 *mOverlay;
     
     
     

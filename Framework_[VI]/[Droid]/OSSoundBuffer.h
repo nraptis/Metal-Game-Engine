@@ -40,7 +40,6 @@ public:
     SLVolumeItf                         bqPlayerVolume;
     SLpermille                          bqPlaybackRateMin;
     SLpermille                          bqPlaybackRateMax;
-    SLmillibel                          bqVolumeMax;
 
     FSoundInstanceAndroid               *mSoundInstance;
     FSoundDataAndroid                   *mSoundData;
