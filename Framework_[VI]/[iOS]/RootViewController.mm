@@ -49,9 +49,9 @@ RootViewController *gRootBase = NULL;
     
     self.screenScale = [UIScreen mainScreen].scale;
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        //gAppBase->MainRunLoop();
-    });
+    //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    //gAppBase->MainRunLoop();
+    //});
 }
 
 
@@ -115,7 +115,18 @@ RootViewController *gRootBase = NULL;
 
 
 - (float) getScreenScale {
-    return self.screenScale;
+    
+    float aScale = self.screenScale;
+    
+    if (gDeviceWidth > 1023.0f || gDeviceHeight > 1023.0f) {
+        //For iPad, we scale by 2...
+        aScale *= 2.0f;
+    }
+    
+    if (aScale < 1.0f) { aScale = 1.0f; }
+    if (aScale > 4.0f) { aScale = 4.0f; }
+    
+    return aScale;
 }
 
 //
