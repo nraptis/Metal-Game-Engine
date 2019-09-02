@@ -48,7 +48,8 @@ void os_initialize_outlets() {
 }
 
 int os_getAssetScale() {
-    return (int)(round([gRootBase getScreenScale]));
+    return (int)(round([UIScreen mainScreen].scale));
+    //return (int)(round([gRootBase getScreenScale]));
 }
 
 void os_detach_thread(void (*pFunction)(void *pArg), void *pArg) {

@@ -20,6 +20,14 @@ AssetWadModelMaps::~AssetWadModelMaps() {
 void AssetWadModelMaps::Load() {
     
     
+    //batdart_color_6_map_scale_2
+    //dart_color_4_map_scale_2
+    //minidart_color_6_map_scale_2
+    //extra_life_map_scale_4
+    //turtle_map_scale_2
+    //turtle_damaged_map_scale_2
+    //turtle_propeller_map_scale_3
+    
     //gImageBundler.mA
     gImageBundler.StartBundle("bndl_score_font");
     //mFontScoreLarge.LoadNew("fnt_mh_256_font.kern", "mont_heavy_128_", "0123456789+-.,");

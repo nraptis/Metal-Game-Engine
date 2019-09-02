@@ -47,7 +47,7 @@ RootViewController *gRootBase = NULL;
     self.view.opaque = true;
     self.view.backgroundColor = [UIColor blackColor];
     
-    self.screenScale = self.view.contentScaleFactor;
+    self.screenScale = [UIScreen mainScreen].scale;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         //gAppBase->MainRunLoop();
