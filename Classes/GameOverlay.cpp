@@ -42,8 +42,8 @@ void GameOverlay::Draw() {
     
     Graphics::PipelineStateSetShape2DAlphaBlending();
     
-    Graphics::SetColor(1.0f, 0.0f, 0.0f, 0.50f);
-    Graphics::DrawRect(0.0f, 0.0f, mWidth, mHeight);
+    //Graphics::SetColor(1.0f, 0.0f, 0.0f, 0.50f);
+    //Graphics::DrawRect(0.0f, 0.0f, mWidth, mHeight);
     
     Graphics::SetColor();
     
@@ -58,6 +58,7 @@ void GameOverlay::Draw() {
     
     Graphics::PipelineStateSetSpritePremultipliedBlending();
     
+    /*
     gWadGameInterface.mFontScoreLarge.Draw("Xa aX0123456789yYzZZzzYaY", 20.0f, 100.0f);
     gWadGameInterface.mFontScoreLarge.Draw("aa 2345BB", 20.0f, 150.0f);
     gWadGameInterface.mFontScoreLarge.Draw("987 65bacaBCACAeE", 20.0f, 200.0f);
@@ -65,21 +66,6 @@ void GameOverlay::Draw() {
     gWadGameInterface.mFontScoreSmall.Draw("Xaa X0123456789yYzZZzzYaY", 20.0f, 250.0f);
     gWadGameInterface.mFontScoreSmall.Draw("aa 2345BB", 20.0f, 300.0f);
     gWadGameInterface.mFontScoreSmall.Draw("987 65bacaBCACAeE", 20.0f, 400.0f);
-    
-    /*
-     Graphics::SetColor(1.0f, 0.0f, 0.25f, 0.25f);
-     Graphics::DrawRect(0.0f, 0.0f, mInterfaceLeftWidth, mHeight);
-     
-     Graphics::SetColor(0.0f, 0.125f, 1.0f, 0.25f);
-     Graphics::DrawRect(mWidth - mInterfaceRightWidth, 0.0f, mInterfaceRightWidth, mHeight);
-     
-     
-     
-     Graphics::SetColor(0.5f, 0.75f, 0.5f, 0.25f);
-     Graphics::DrawRect(0.0f, 0.0f, mWidth, mInterfaceTopHeight);
-     
-     Graphics::SetColor(1.0f, 0.5f, 0.0f, 0.25f);
-     Graphics::DrawRect(0.0f, mHeight - mInterfaceBottomHeight, mWidth, mInterfaceBottomHeight);
      */
     
     gWadGameInterface.mFontScoreLarge.Right(FString(gGame->mScore), mWidth - 40.0f, 40.0f);
@@ -108,7 +94,26 @@ void GameOverlay::Draw() {
     Graphics::PipelineStateSetSpriteAlphaBlending();
     Graphics::SetColor();
     
-    gWadGameInterface.mMenuButton.Draw(60.0f, 60.0f, 0.5f);
+    gWadGameInterface.mPauseButtonUp.Draw(20.0f, 20.0f);
+    
+    float aPauseWidth = gWadGameInterface.mPauseButtonUp.mWidth;
+    float aPauseHeight = gWadGameInterface.mPauseButtonUp.mHeight;
+    
+    
+    gWadGameInterface.mPauseButtonDown.Draw(20.0f + aPauseWidth * 0.75f, 20.0f);
+    
+    
+    
+    float aLIWidth = gWadGameInterface.mLivesIndicatorShadow.mWidth;
+    gWadGameInterface.mLivesIndicatorShadow.Draw(20.0f + aPauseWidth, 120.0f);
+    
+    gWadGameInterface.mLivesIndicatorFull.Draw(20.0f + aLIWidth * 0.7f, 20.0f + aPauseHeight);
+    gWadGameInterface.mLivesIndicatorFull.Draw(20.0f + aLIWidth * 0.7f * 2, 20.0f + aPauseHeight);
+    gWadGameInterface.mLivesIndicatorEmpty.Draw(20.0f + aLIWidth * 0.7f * 3, 20.0f + aPauseHeight);
+    gWadGameInterface.mLivesIndicatorEmpty.Draw(20.0f + aLIWidth * 0.7f * 4, 20.0f + aPauseHeight);
+
+    
+    
     
 }
 

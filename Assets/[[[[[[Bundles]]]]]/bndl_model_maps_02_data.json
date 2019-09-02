@@ -1,0 +1,56 @@
+{
+	"width": 512,
+	"height": 512,
+	"border": 0,
+	"edge": 0,
+	"node_list": [
+		{
+			"name": "dart_color_5_map",
+			"inset": 0,
+			"image_width": 256,
+			"image_height": 256,
+			"offset_x": 0,
+			"offset_y": 0,
+			"rect_x": 0,
+			"rect_y": 0,
+			"rect_width": 256,
+			"rect_height": 256
+		},
+		{
+			"name": "dart_color_6_map",
+			"inset": 0,
+			"image_width": 256,
+			"image_height": 256,
+			"offset_x": 0,
+			"offset_y": 0,
+			"rect_x": 256,
+			"rect_y": 0,
+			"rect_width": 256,
+			"rect_height": 256
+		},
+		{
+			"name": "minidart_color_1_map",
+			"inset": 0,
+			"image_width": 256,
+			"image_height": 256,
+			"offset_x": 0,
+			"offset_y": 0,
+			"rect_x": 0,
+			"rect_y": 256,
+			"rect_width": 256,
+			"rect_height": 256
+		},
+		{
+			"name": "minidart_color_2_map",
+			"inset": 0,
+			"image_width": 256,
+			"image_height": 256,
+			"offset_x": 0,
+			"offset_y": 0,
+			"rect_x": 256,
+			"rect_y": 256,
+			"rect_width": 256,
+			"rect_height": 256
+		}
+	]
+}

@@ -134,7 +134,7 @@ void GameObject::Draw3D() {
             
             //Now we spin around the Y axis...
             if (mTransform3D.mSpin != 0.0f) {
-                //mModelView.RotateZ(mTransform3D.mSpin);
+                mModelView.RotateZ(mTransform3D.mSpin);
             }
             
             //Now we scale down...

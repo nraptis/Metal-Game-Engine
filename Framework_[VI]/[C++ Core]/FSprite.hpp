@@ -160,7 +160,7 @@ public:
 extern bool gSpriteListEnabled;
 extern FList gSpriteList;
 extern FList gSpriteSequenceList;
-extern FList gPackedModelList;
+//extern FList gPackedModelList;
 
 #ifdef SETUP_MODE
 

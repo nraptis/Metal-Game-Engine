@@ -61,6 +61,8 @@ public:
     void                                            RegisterKill(FCanvas *pCanvas);
     void                                            RegisterDealloc(FCanvas *pCanvas);
     
+    void                                            RefreshAll();
+    
 //protected:
 
     

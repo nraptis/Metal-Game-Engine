@@ -1,0 +1,56 @@
+{
+	"width": 512,
+	"height": 512,
+	"border": 0,
+	"edge": 0,
+	"node_list": [
+		{
+			"name": "turtle_map",
+			"inset": 0,
+			"image_width": 256,
+			"image_height": 256,
+			"offset_x": 0,
+			"offset_y": 0,
+			"rect_x": 0,
+			"rect_y": 0,
+			"rect_width": 256,
+			"rect_height": 256
+		},
+		{
+			"name": "turtle_damaged_map",
+			"inset": 0,
+			"image_width": 256,
+			"image_height": 256,
+			"offset_x": 0,
+			"offset_y": 0,
+			"rect_x": 256,
+			"rect_y": 0,
+			"rect_width": 256,
+			"rect_height": 256
+		},
+		{
+			"name": "turtle_propeller_map",
+			"inset": 0,
+			"image_width": 128,
+			"image_height": 128,
+			"offset_x": 0,
+			"offset_y": 0,
+			"rect_x": 256,
+			"rect_y": 256,
+			"rect_width": 128,
+			"rect_height": 128
+		},
+		{
+			"name": "prize_star_map",
+			"inset": 0,
+			"image_width": 256,
+			"image_height": 256,
+			"offset_x": 0,
+			"offset_y": 0,
+			"rect_x": 0,
+			"rect_y": 256,
+			"rect_width": 256,
+			"rect_height": 256
+		}
+	]
+}

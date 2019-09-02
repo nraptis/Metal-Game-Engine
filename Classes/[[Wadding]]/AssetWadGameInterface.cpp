@@ -20,15 +20,20 @@ AssetWadGameInterface::~AssetWadGameInterface() {
 void AssetWadGameInterface::Load() {
     
     
-    mSpriteScreenSizeSmall.Load("reference_screen_block_small");
-    mSpriteScreenSizeMedium.Load("reference_screen_block_medium");
-    mSpriteScreenSizeLarge.Load("reference_screen_block_large");
-    
+    mSpriteScreenSize.Load("reference_slab");
     
     mSpriteTest.Load("demo_sprite");
     
-    mMenuButton.Load("pause_button_up");
-    mMenuButtonDown.Load("pause_button_up");
+    mPauseButtonUp.Load("pause_button_up");
+    mPauseButtonDown.Load("pause_button_down");
+    
+    
+    
+    mLivesIndicatorShadow.Load("lives_indicator_shadow");
+    mLivesIndicatorFull.Load("lives_indicator_full");
+    mLivesIndicatorEmpty.Load("lives_indicator_empty");
+    
+    
     
     
     //mFontLarge.LoadNew("candy_beans_256_font.kern", "fnt_cb_128_", "0123456789AaBbCcDdEeFfXxYyZz ");
@@ -128,13 +133,15 @@ void AssetWadGameInterface::Unload() {
     
     mSpriteTest.Kill();
     
-    mSpriteScreenSizeSmall.Kill();
-    mSpriteScreenSizeMedium.Kill();
-    mSpriteScreenSizeLarge.Kill();
+    mSpriteScreenSize.Kill();
     
+    mPauseButtonUp.Kill();
+    mPauseButtonDown.Kill();
     
-    mMenuButton.Kill();
-    mMenuButtonDown.Kill();
+    mLivesIndicatorShadow.Kill();
+    mLivesIndicatorFull.Kill();
+    mLivesIndicatorEmpty.Kill();
+    
     
 }
 

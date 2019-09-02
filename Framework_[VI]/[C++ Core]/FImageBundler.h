@@ -141,8 +141,8 @@ public:
     void                            Clear();
 	
 	void                            Save(char *pName);
-	inline void                     Save(const char *pName){Save((char*)pName);}
-	inline void                     Save(FString pName){Save((char*)pName.c());}
+	inline void                     Save(const char *pName) { Save((char*)pName); }
+	inline void                     Save(FString pName) { Save((char*)pName.c()); }
     
 	void                            Load(char *pName);
 	inline void                     Load(const char *pName){Load((char*)pName);}

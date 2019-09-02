@@ -21,17 +21,14 @@ public:
     
     FSprite                                         mSpriteTest;
     
-    FSprite                                         mSpriteScreenSizeSmall;
-    FSprite                                         mSpriteScreenSizeMedium;
-    FSprite                                         mSpriteScreenSizeLarge;
+    FSprite                                         mSpriteScreenSize;
     
+    FSprite                                         mLivesIndicatorShadow;
+    FSprite                                         mLivesIndicatorFull;
+    FSprite                                         mLivesIndicatorEmpty;
     
-    
-    FSprite                                         mMenuButton;
-    FSprite                                         mMenuButtonDown;
-    
-    //FFont                                           mFontLarge;
-    //FFont                                           mFontSmall;
+    FSprite                                         mPauseButtonUp;
+    FSprite                                         mPauseButtonDown;
     
     FFont                                           mFontScoreLarge;
     FFont                                           mFontScoreSmall;

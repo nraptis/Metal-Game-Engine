@@ -30,8 +30,8 @@ HangingThreadTestMenu::HangingThreadTestMenu(Game *pGame) : ToolMenu() {
     
     //ToolMenuPanel                           *;
     //UISlider                                *;
-    UISlider                                *mSliderTestAxisY;
-    UISlider                                *mSliderTestAxisZ;
+    //UISlider                                *mSliderTestAxisY;
+    //UISlider                                *mSliderTestAxisZ;
     
     
     mPanelTestAxis = new ToolMenuPanel();

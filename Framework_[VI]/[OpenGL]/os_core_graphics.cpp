@@ -143,9 +143,10 @@ void Graphics::SetUp() {
             printf("Sprite Name: %s\n", aSprite->mFileName.c());
         }
         
-        EnumList(FModelDataPacked, aModel, gPackedModelList) {
-            aModel->WriteBuffers();
-        }
+        //EnumList(FModelDataPacked, aModel, gPackedModelList) {
+        //    aModel->WriteBuffers();
+        //}
+        
         
     }
 }

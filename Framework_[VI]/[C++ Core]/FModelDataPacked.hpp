@@ -22,36 +22,49 @@ public:
     FModelDataPacked();
     virtual ~FModelDataPacked();
     
-    void                        Free();
+    void                                Free();
     
-    void                        BindBuffers();
-    void                        KillBuffers();
+    void                                BindBuffers();
+    void                                KillBuffers();
     
-    void                        SetSprite(FSprite *pSprite, bool pFixUVW = true);
-    void                        SetTexture(FTexture *pTexture);
-    FTexture                    *mTexture;
+    //void                                SetSprite(FSprite *pSprite, bool pFixUVW = true);
+    //void                                SetTexture(FTexture *pTexture);
+    //FTexture                            *mTexture;
     
-    void                        FitUVW(float pStartU, float pEndU, float pStartV, float pEndV);
     
-    void                        Load(const char *pFile);
-    inline void                 Load(char *pFile){Load((const char *)pFile);}
-    inline void                 Load(FString pFile){Load((const char *)(pFile.c()));}
+    void                                FitUVW(float pStartU, float pEndU, float pStartV, float pEndV);
     
     void                                Draw();
     void                                Draw(FTexture *pTexture);
     
     void                                Save(FFile *pFile);
     void                                Save(const char *pFile);
+    inline void                         Save(FString pName) { Save((const char*)pName.c()); }
     
-    void                                LoadData(FFile *pFile);
-    void                                LoadData(const char *pFile);
+    
+    
+    void                                LoadData(FFile *pFile, FSprite *pSprite);
+    void                                LoadData(const char *pFile, FSprite *pSprite);
+    inline void                         LoadData(FString pFile, FSprite *pSprite) { LoadData((const char*)pFile.c(), pSprite); }
+    
     
     void                                LoadOBJ(FFile *pFile);
     void                                LoadOBJ(const char *pFile);
+    inline void                         LoadOBJ(FString pFile) { LoadOBJ((const char*)pFile.c()); }
+    
     
     void                                WriteBuffers();
     
     FString                             mFileName;
+    
+    
+    bool                                mHasXYZ;
+    bool                                mHasUVW;
+    bool                                mHasNormals;
+    bool                                mHasTangents;
+    bool                                mHasUNormals;
+    
+    
     
     GFX_MODEL_INDEX_TYPE                *mIndex;
     int                                 mIndexCount;
@@ -59,16 +72,15 @@ public:
     float                               *mData;
     int                                 mDataCount;
     
+    
+    
+    
     bool                                mUseUVW;
     bool                                mUseNormals;
     bool                                mUseTangents;
     bool                                mUseUNormals;
     
-    bool                                mHasXYZ;
-    bool                                mHasUVW;
-    bool                                mHasNormals;
-    bool                                mHasTangents;
-    bool                                mHasUNormals;
+    
     
     int                                 mStride;
     

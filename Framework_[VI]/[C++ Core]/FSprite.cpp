@@ -9,7 +9,6 @@
 bool gSpriteListEnabled = true;
 FList gSpriteList;
 FList gSpriteSequenceList;
-FList gPackedModelList;
 
 FMatrix cSpriteMatrixHold;
 FMatrix cSpriteMatrixModelView;

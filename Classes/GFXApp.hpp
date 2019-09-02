@@ -115,9 +115,6 @@ public:
     FModelDataPacked                        mPalmLeaves;
     FSprite                                 mPalmLeavesMap;
     
-    FModelDataPacked                        mDart;
-    FSprite                                 mDartMap[4];
-    
     FModelDataPacked                        mBalloon;
     FSprite                                 mBalloonMap[5];
     
@@ -135,11 +132,6 @@ public:
     
     FModelDataPacked                        mMonolith;
     FSprite                                 mMonolithMap;
-    
-    FSprite                                 mCircle256;
-    FSprite                                 mCircle512;
-    
-    FSprite                                 mGameAreaMarker;
     
     
     FSound                                  mSoundBalloonPop;

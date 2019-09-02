@@ -134,23 +134,6 @@ void GFXApp::Load() {
     
     
     
-    
-    
-    
-    //
-    //
-    //
-    //
-    
-    
-    
-    ///
-    
-    mCircle256.Load("circle_256");
-    mCircle512.Load("circle_512");
-    
-    mGameAreaMarker.Load("game_area_marker");
-    
     mPalmTrunk.LoadOBJ("palm_tree_trunk_01.obj");
     mPalmTrunkMap.Load("palm_tree_trunk_01_map_1024");
     
@@ -170,11 +153,13 @@ void GFXApp::Load() {
     mMonolith.LoadOBJ("monolith.obj");
     mMonolithMap.Load("monolith_map");
     
-    mDart.LoadOBJ("dart.obj");
-    mDartMap[0].Load("dart_color_01");
-    mDartMap[1].Load("dart_color_02");
-    mDartMap[2].Load("dart_color_03");
-    mDartMap[3].Load("dart_color_04");
+    //mDart.LoadOBJ("dart.obj");
+    
+    //mDart.LoadData("dart.3dp");
+    
+    
+    //mDart.Save(gDirExport + FString("dart.3dp"));
+
     
     mBalloon.LoadOBJ("balloon.obj");
     mBalloonMap[0].Load("balloon_skin_01");
@@ -407,6 +392,10 @@ void GFXApp::Draw() {
                 
                 ExecuteWadReload();
                 
+                gApp->mWindowMain.RefreshAll();
+                gApp->mWindowModal.RefreshAll();
+                gApp->mWindowTools.RefreshAll();
+                
             } else {
                 mWadReloadTimer--;
                 if (mWadReloadTimer <= 0) {
@@ -415,29 +404,13 @@ void GFXApp::Draw() {
             }
         }
         
-        
-        //mWadReloadIsEnqueued = true;
-        //mWadReloadTimer = pTime;
-        
+        /*
         Graphics::MatrixProjectionResetOrtho();
         Graphics::MatrixModelViewReset();
         Graphics::PipelineStateSetSpriteAlphaBlending();
-        Graphics::SetColor(1.0f);
-        
-        //gWadGameInterface.mSpriteTest.Draw(40.0f, 40.0f);
-        
-        
-        //gWadGameInterface.mSpriteScreenSizeLarge.Draw(gVirtualDevX + gVirtualDevWidth / 2.0f, gVirtualDevY + gVirtualDevHeight / 2.0f, 1.0f);
-        gWadGameInterface.mSpriteScreenSizeMedium.Draw(gVirtualDevX + gVirtualDevWidth / 2.0f, gVirtualDevY + gVirtualDevHeight / 2.0f, 1.0f);
-        //gWadGameInterface.mSpriteScreenSizeSmall.Draw(gVirtualDevX + gVirtualDevWidth / 2.0f, gVirtualDevY + gVirtualDevHeight / 2.0f, 1.0f);
-        
         Graphics::SetColor();
-        
-        //419
-        //837
-        //1256
-        //1674
-        
+        gWadGameInterface.mSpriteScreenSize.Draw(gVirtualDevX + gVirtualDevWidth / 2.0f, gVirtualDevY + gVirtualDevHeight / 2.0f, 1.0f);
+        */
         
     }
 }

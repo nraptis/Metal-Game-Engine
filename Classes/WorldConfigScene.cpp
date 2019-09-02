@@ -167,8 +167,7 @@ void WorldConfigScene::Draw3D() {
     
     //Graphics::DepthClear();
     
-    
-    FModelDataPacked *aDart = &(gApp->mDart);
+    FModelDataPacked *aDart = &(gWadModelMaps.mDartRegularModel[0]);
     FModelDataPacked *aBalloon = &(gApp->mBalloon);
     
     
@@ -358,92 +357,6 @@ void WorldConfigScene::Draw3D() {
 }
 
 void WorldConfigScene::Draw() {
-    
-    
-    
-    
-    
-    //mEllipseAxisH = 200.0f;
-    //mEllipseAxisV = 60.0f;
-    //mEllipseRotation = 0.0f;
-    
-    
-    //mEllipseX = mWidth2;
-    //mEllipseY = mHeight2;
-    
-    FSprite *aEllipseSprite = &(gApp->mCircle256);
-    
-    
-    if (aEllipseSprite != NULL && aEllipseSprite->mWidth > 32 && aEllipseSprite->mHeight > 32) {
-        
-        Graphics::PipelineStateSetSpriteWhiteBlending();
-        
-        
-        float aSpriteWidth = aEllipseSprite->mWidth / 2.0f;
-        float aSpriteHeight = aEllipseSprite->mHeight / 2.0f;
-        
-        float aScaleX = mEllipseAxisH / aSpriteWidth;
-        float aScaleY = mEllipseAxisV / aSpriteHeight;
-        
-        
-        
-        aEllipseSprite->DrawScaled(mEllipseX, mEllipseY, aScaleX, aScaleY, mEllipseRotation);
-        
-        
-        
-        
-        
-        Graphics::PipelineStateSetShape2DAlphaBlending();
-        
-        FVec2 aEllC = FVec2(mEllipseX, mEllipseY);
-        FVec2 aP2H = FVec2(mEllipseX + mEllipseAxisH, mEllipseY);
-        aP2H = PivotPoint(aP2H, mEllipseRotation, aEllC);
-        
-        FVec2 aP2V = FVec2(mEllipseX, mEllipseY -  + mEllipseAxisV);
-        aP2V = PivotPoint(aP2V, mEllipseRotation, aEllC);
-        
-        
-        Graphics::SetColor(1.0f, 0.25f, 0.25f, 0.75f);
-        Graphics::DrawLine(mEllipseX, mEllipseY, aP2H.mX, aP2H.mY, 2.0f);
-        
-        
-        Graphics::SetColor(0.75f, 1.0f, 0.25f, 0.75f);
-        Graphics::DrawLine(mEllipseX, mEllipseY, aP2V.mX, aP2V.mY, 2.0f);
-        
-        
-        float aMaxAxis = MaxC(mEllipseAxisV, mEllipseAxisH);
-        
-        float aStartX = mEllipseX - (aMaxAxis + 20.0f);
-        float aEndX = mEllipseX + (aMaxAxis + 20.0f);
-        
-        float aStartY = mEllipseY - (aMaxAxis + 20.0f);
-        float aEndY = mEllipseY + (aMaxAxis + 20.0f);
-        
-        for (float aX=aStartX;aX<=aEndX;aX+=3.0f) {
-            for (float aY=aStartY;aY<aEndY;aY+=3.0f) {
-                if (EllipseContainsPoint(aX, aY, mEllipseX, mEllipseY, mEllipseAxisH, mEllipseAxisV, mEllipseRotation)) {
-                    Graphics::SetColor(1.0f, 0.25f, 0.25f, 0.5f);
-                } else {
-                    Graphics::SetColor(0.25f, 1.0f, 0.25f, 0.5f);
-                }
-                Graphics::DrawRect(aX, aY, 3.0f, 3.0f);
-            }
-        }
-    }
-    
-    /*
-     Graphics::SetColor(0.66f, 0.90f, 0.95f, 1.0f);
-     Graphics::DrawPoint(mCenterX, mCenterY, 12.0f);
-     Graphics::SetColor(0.25f, 0.75f, 0.25f, 1.0f);
-     Graphics::DrawPoint(mCenterX, mCenterY, 8.0f);
-     //
-     Graphics::SetColor(0.0f, 0.66f, 0.66f, 0.66f);
-     Graphics::DrawLine(mWidth2, mHeight2, mCenterX, mCenterY, 2.0f);
-     
-     Graphics::SetColor(0.5f, 0.25f, 0.125f, 0.65f);
-     Graphics::DrawLine(0.0f, 0.0, mWidth, mHeight);
-     Graphics::DrawLine(0.0f, mWidth, 0.0f, mHeight);
-     */
     
     
 }

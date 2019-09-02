@@ -26,10 +26,10 @@ Dart::Dart() {
     
     mHitCount = 0;
     
-    mModel = &gApp->mDart;
+    mStyleIndex = gRand.Get(6);
+    mModel = &gWadModelMaps.mDartRegularModel[mStyleIndex];
+    mSprite = &gWadModelMaps.mDartRegular[mStyleIndex];
     
-    mStyleIndex = gRand.Get(4);
-    mSprite = &gApp->mDartMap[mStyleIndex];
     
     mUniform = &(gGame->mRenderer->mUniformPhong);
     //mUniform = &(gGame->mRenderer->mUniformPhongBalloon);
@@ -67,8 +67,9 @@ Dart::~Dart() {
 }
 
 void Dart::Update() {
-    //mTransform3D.mSpin += mSpinSpeed;
-    mTransform3D.mSpin = 0.0f;
+    
+    mTransform3D.mSpin += mSpinSpeed;
+    //mTransform3D.mSpin = 0.0f;
     
     mPrevTipX = mTipX;
     mPrevTipY = mTipY;

@@ -45,7 +45,7 @@ public:
     
     FUniformsLightPhong                 mUniformPhongBalloon;
     FUniformsLightPhong                 mUniformPhong;
-    FUniformsLightDiffuse        mUniformDiffuse;
+    FUniformsLightDiffuse               mUniformDiffuse;
     FUniformsLightAmbient               mUniformAmbient;
     
     float                               mDartSpin;

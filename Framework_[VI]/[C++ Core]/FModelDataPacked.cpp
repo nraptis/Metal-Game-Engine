@@ -68,54 +68,38 @@ void FModelDataPacked::Free() {
     mHasNormals = false;
 }
 
-void FModelDataPacked::SetTexture(FTexture *pTexture) {
-    SET_TEXTURE_BODY;
-}
-
-void FModelDataPacked::SetSprite(FSprite *pSprite, bool pFixUVW) {
-    if (pSprite) {
-        SetTexture(pSprite->mTexture);
-        if (pFixUVW) {
-            float aStartU = pSprite->mTextureRect.GetStartU();
-            float aStartV = pSprite->mTextureRect.GetStartV();
-            
-            float aEndU = pSprite->mTextureRect.GetEndU();
-            float aEndV = pSprite->mTextureRect.GetEndV();
-            
-            FitUVW(aStartU, aEndU, aStartV, aEndV);
-        }
-    }
-}
-
 void FModelDataPacked::FitUVW(float pStartU, float pEndU, float pStartV, float pEndV) {
     
-    /*
-    if ((pStartU == 0) && (pStartV == 0) && (pEndU == 1) && (pEndV == 1)) {
-        return;
-    }
+    if ((pStartU <= 0.0f) && (pStartV <= 0.0f) && (pEndU >= 1.0f) && (pEndV >= 1.0f)) { return; }
     
-    if (mUVWCount <= 0) return;
+    if (mHasUVW == false) { return; }
+    if (mDataCount <= 0) { return; }
     
     float aSpanU = pEndU - pStartU;
     float aSpanV = pEndV - pStartV;
     
-    int aIndex = 0;
-    float aU, aV;
-    for (int i=0;i<mUVWCount;i++) {
-        
-        
-        aIndex = i * 3;
-        
-        aU = mUVW[aIndex];
-        aV = mUVW[aIndex+1];
-        
+    int aStartIndex = 0;
+    if (mHasXYZ) { aStartIndex += 3; }
+    
+    int aStride = 0;
+    if (mHasXYZ) { aStride += 3; }
+    if (mHasUVW) { aStride += 3; }
+    if (mHasNormals) { aStride += 3; }
+    if (mHasTangents) { aStride += 3; }
+    if (mHasUNormals) { aStride += 3; }
+    
+    int aIndex = aStartIndex;
+    
+    float aU = 0.0f, aV = 0.0f;
+    while (aIndex < mDataCount) {
+        aU = mData[aIndex];
+        aV = mData[aIndex + 1];
         aU = (pStartU + aSpanU * aU);
         aV = (pStartV + aSpanV * aV);
-        
-        mUVW[aIndex] = aU;
-        mUVW[aIndex+1] = aV;
+        mData[aIndex] = aU;
+        mData[aIndex + 1] = aV;
+        aIndex += aStride;
     }
-    */
 }
 
 void FModelDataPacked::Save(const char *pFile) {
@@ -125,39 +109,96 @@ void FModelDataPacked::Save(const char *pFile) {
 }
 
 void FModelDataPacked::Save(FFile *pFile) {
-    if (!pFile) return;
+    if (!pFile) { return; }
     
+    //We start with 8 32 bit words.
+    pFile->WriteInt(mHasXYZ);
+    pFile->WriteInt(mHasUVW);
+    pFile->WriteInt(mHasNormals);
+    pFile->WriteInt(mHasTangents);
+    
+    pFile->WriteInt(mHasUNormals);
+    pFile->WriteInt(0);
+    pFile->WriteInt(0);
+    pFile->WriteInt(0);
+    
+    //Now the data count.
+    pFile->WriteInt(mDataCount);
+    
+    //Now the data.
+    for (int i=0;i<mDataCount;i++) {
+        pFile->WriteFloat(mData[i]);
+    }
+    
+    //Now the index count.
+    pFile->WriteInt(mIndexCount);
+    
+    //Now the indices.
+    for (int i=0;i<mDataCount;i++) {
+        pFile->WriteShort(mIndex[i]);
+    }
 }
 
-void FModelDataPacked::LoadData(FFile *pFile) {
-    if(!pFile) return;
+void FModelDataPacked::LoadData(FFile *pFile, FSprite *pSprite) {
     
+    Free();
+    if (!pFile) { return; }
+    
+    if (pFile->mLength < 10) { return; }
+    
+    //We start with 8 32 bit words.
+    mHasXYZ = pFile->ReadInt();
+    mHasUVW = pFile->ReadInt();
+    mHasNormals = pFile->ReadInt();
+    mHasTangents = pFile->ReadInt();
+    
+    mHasUNormals = pFile->ReadInt();
+    pFile->ReadInt();
+    pFile->ReadInt();
+    pFile->ReadInt();
+    
+    
+    //Now the data count.
+    
+    mDataCount = pFile->ReadInt();
+    
+    
+    //Now the data.
+    mData = new float[mDataCount];
+    for (int i=0;i<mDataCount;i++) {
+        mData[i] = pFile->ReadFloat();
+    }
+
+    //Now the index count.
+    mIndexCount = pFile->ReadInt();
+    
+    mIndex = new GFX_MODEL_INDEX_TYPE[mIndexCount+1];
+    for (int i=0;i<mIndexCount;i++) {
+        mIndex[i] = pFile->ReadShort();
+    }
+    
+    if (pSprite != NULL) {
+        float aStartU = pSprite->mTextureRect.GetStartU();
+        float aStartV = pSprite->mTextureRect.GetStartV();
+        
+        float aEndU = pSprite->mTextureRect.GetEndU();
+        float aEndV = pSprite->mTextureRect.GetEndV();
+        
+        FitUVW(aStartU, aEndU, aStartV, aEndV);
+    }
+    
+    
+    
+    
+    mBuffer = new FBuffer(sizeof(float) * mDataCount, BUFFER_TYPE_ARRAY);
+    
+    WriteBuffers();
 }
 
-void FModelDataPacked::LoadData(const char *pFile) {
+void FModelDataPacked::LoadData(const char *pFile, FSprite *pSprite) {
     FFile aFile;
     aFile.Load(pFile);
-    LoadData(&aFile);
-}
-
-void FModelDataPacked::Load(const char *pFile) {
-    
-    FString aBasePath = pFile;
-    aBasePath.RemoveExtension();
-    
-    FString aPath = aBasePath + FString(".3dp");
-    
-    LoadData(aPath.c());
-    
-    if (mDataCount == 0) {
-        aPath = aBasePath + FString(".obj");
-        LoadOBJ(aPath.c());
-    }
-    
-    if (mDataCount == 0) {
-        aPath = aBasePath + FString(".OBJ");
-        LoadOBJ(aPath.c());
-    }
+    LoadData(&aFile, pSprite);
 }
 
 void FModelDataPacked::LoadOBJ(FFile *pFile) {
@@ -213,8 +254,6 @@ void FModelDataPacked::LoadOBJ(FFile *pFile) {
                 mData[aWriteIndex++] = aData.mNormal[aIndex + 2];
             }
         }
-        
-        gPackedModelList.Add(this);
         
         mBuffer = new FBuffer(sizeof(float) * mDataCount, BUFFER_TYPE_ARRAY);
         

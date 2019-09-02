@@ -231,7 +231,12 @@ void FWindow::MemoryWarning(bool pSevere) {
 void FWindow::SetDeviceSize(int pWidth, int pHeight) {
     mDeviceWidth = pWidth;
     mDeviceHeight = pHeight;
-    RegisterTransformDidUpdate(&mRoot);
+    //RegisterTransformDidUpdate(&mRoot);
+    RegisterFrameDidUpdate(&mRoot);
+}
+
+void FWindow::RefreshAll() {
+    RegisterFrameDidUpdate(&mRoot);
 }
 
 void FWindow::SetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
