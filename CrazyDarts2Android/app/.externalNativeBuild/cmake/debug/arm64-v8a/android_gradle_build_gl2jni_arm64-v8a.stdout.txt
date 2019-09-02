@@ -1,0 +1,2 @@
+[1/2] Building CXX object CMakeFiles/gl2jni.dir/GameRenderer.cpp.o
+[2/2] Linking CXX shared library /Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/build/intermediates/cmake/debug/obj/arm64-v8a/libgl2jni.so

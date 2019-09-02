@@ -1,3 +1,13 @@
+
+A1.) We need a format to export PACKED 3-D models.
+
+A2.) We need to keep track of streaks.
+
+A3.) We need to keep track of particularily good throws. (like 6 balloons with 1 dart)..
+
+A4.) We need to keep track of some achievements!
+
+
 J.) We need the "wind" to pick up, sway, die down, and change directions in a semi-realistic fashion...
 
 3.) When brick is hit, it should rumble. The dart should be stuck for ~2 secs and then dissappear...
