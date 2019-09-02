@@ -1,2 +1,483 @@
-[1/2] Building CXX object CMakeFiles/gl2jni.dir/GameRenderer.cpp.o
-[2/2] Linking CXX shared library /Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/build/intermediates/cmake/debug/obj/arm64-v8a/libgl2jni.so
+[1/214] Building CXX object CMakeFiles/gl2jni.dir/__DROID.cpp.o
+[2/214] Building CXX object CMakeFiles/gl2jni.dir/AssetConfigMenu.cpp.o
+[3/214] Building CXX object CMakeFiles/gl2jni.dir/AssetWad.cpp.o
+[4/214] Building CXX object CMakeFiles/gl2jni.dir/AssetWadGameEffects.cpp.o
+[5/214] Building CXX object CMakeFiles/gl2jni.dir/AssetWadGameInterface.cpp.o
+[6/214] Building CXX object CMakeFiles/gl2jni.dir/Balloon.cpp.o
+[7/214] Building CXX object CMakeFiles/gl2jni.dir/Bomb.cpp.o
+[8/214] Building CXX object CMakeFiles/gl2jni.dir/BrickHead.cpp.o
+[9/214] Building CXX object CMakeFiles/gl2jni.dir/CameraMenu.cpp.o
+[10/214] Building CXX object CMakeFiles/gl2jni.dir/Constraint.cpp.o
+[11/214] Building CXX object CMakeFiles/gl2jni.dir/core_app_shell.cpp.o
+[12/214] Building CXX object CMakeFiles/gl2jni.dir/core_social.cpp.o
+[13/214] Building CXX object CMakeFiles/gl2jni.dir/core_web.cpp.o
+[14/214] Building CXX object CMakeFiles/gl2jni.dir/Dart.cpp.o
+[15/214] Building CXX object CMakeFiles/gl2jni.dir/DiffuseConfiguration.cpp.o
+[16/214] Building CXX object CMakeFiles/gl2jni.dir/DiffuseLightMenu.cpp.o
+[17/214] Building CXX object CMakeFiles/gl2jni.dir/DragableCanvas.cpp.o
+[18/214] Building CXX object CMakeFiles/gl2jni.dir/EditorMenuAttachment.cpp.o
+[19/214] Building CXX object CMakeFiles/gl2jni.dir/EditorMenuFormation.cpp.o
+[20/214] Building CXX object CMakeFiles/gl2jni.dir/EditorMenuFormationGrid.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/CameraMenu.cpp:104:20: warning: unused variable 'aSegment' [-Wunused-variable]
+        UISegment *aSegment = (UISegment *)pSender;
+                   ^
+1 warning generated.
+[21/214] Building CXX object CMakeFiles/gl2jni.dir/EditorMenuFormationPicker.cpp.o
+[22/214] Building CXX object CMakeFiles/gl2jni.dir/EditorMenuFormationPickerCell.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/core_app_shell.cpp:84:2: warning: delete called on non-final 'FString' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+        FreeList(FString, aResourceList);
+        ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/FList.hpp:12:76: note: expanded from macro 'FreeList'
+#define FreeList(pType,pList){EnumList(pType,__LIST_ITERATOR_NAME__,pList){delete __LIST_ITERATOR_NAME__;}pList.Clear();}
+                                                                           ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/core_app_shell.cpp:263:19: warning: unused variable 'aAspectRatio' [-Wunused-variable]
+            float aAspectRatio = 768.0f / 1024.0f;
+                  ^
+2 warnings generated.
+[23/214] Building CXX object CMakeFiles/gl2jni.dir/EditorMenuFormationSpawnPicker.cpp.o
+[24/214] Building CXX object CMakeFiles/gl2jni.dir/EditorMenuFormationUtilities.cpp.o
+[25/214] Building CXX object CMakeFiles/gl2jni.dir/EditorMenuGameTest.cpp.o
+[26/214] Building CXX object CMakeFiles/gl2jni.dir/EditorMenuGameTestUtils.cpp.o
+[27/214] Building CXX object CMakeFiles/gl2jni.dir/EditorMenuMotion.cpp.o
+[28/214] Building CXX object CMakeFiles/gl2jni.dir/EditorMenuMotionTypePanel.cpp.o
+[29/214] Building CXX object CMakeFiles/gl2jni.dir/EditorMenuObjectClearing.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/DiffuseLightMenu.cpp:116:20: warning: unused variable 'aSegment' [-Wunused-variable]
+        UISegment *aSegment = (UISegment *)pSender;
+                   ^
+1 warning generated.
+[30/214] Building CXX object CMakeFiles/gl2jni.dir/EditorMenuPath.cpp.o
+[31/214] Building CXX object CMakeFiles/gl2jni.dir/EditorMenuPathControl.cpp.o
+[32/214] Building CXX object CMakeFiles/gl2jni.dir/EditorMenuPermanent.cpp.o
+[33/214] Building CXX object CMakeFiles/gl2jni.dir/EditorMenuPermanentUtils.cpp.o
+[34/214] Building CXX object CMakeFiles/gl2jni.dir/EditorMenuPermPicker.cpp.o
+[35/214] Building CXX object CMakeFiles/gl2jni.dir/EditorMenuPermSpawnPicker.cpp.o
+[36/214] Building CXX object CMakeFiles/gl2jni.dir/EditorMenuSections.cpp.o
+[37/214] Building CXX object CMakeFiles/gl2jni.dir/EditorMenuSpawn.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/EditorMenuFormationSpawnPicker.cpp:218:25: warning: unused variable 'aWave' [-Wunused-variable]
+    LevelWaveBlueprint *aWave = NULL;
+                        ^
+1 warning generated.
+[38/214] Building CXX object CMakeFiles/gl2jni.dir/EditorMenuSpawnPicker.cpp.o
+[39/214] Building CXX object CMakeFiles/gl2jni.dir/EditorMenuWavesPicker.cpp.o
+[40/214] Building CXX object CMakeFiles/gl2jni.dir/EffectBalloonBurst.cpp.o
+[41/214] Building CXX object CMakeFiles/gl2jni.dir/EffectDartFadeStar.cpp.o
+[42/214] Building CXX object CMakeFiles/gl2jni.dir/FAchievement.cpp.o
+[43/214] Building CXX object CMakeFiles/gl2jni.dir/FAnimation.cpp.o
+[44/214] Building CXX object CMakeFiles/gl2jni.dir/FApp.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/EditorMenuPathControl.cpp:88:20: warning: unused variable 'aSegment' [-Wunused-variable]
+        UISegment *aSegment = (UISegment *)pSender;
+                   ^
+1 warning generated.
+[45/214] Building CXX object CMakeFiles/gl2jni.dir/FBuffer.cpp.o
+[46/214] Building CXX object CMakeFiles/gl2jni.dir/FBufferCache.cpp.o
+[47/214] Building CXX object CMakeFiles/gl2jni.dir/FButton.cpp.o
+[48/214] Building CXX object CMakeFiles/gl2jni.dir/FCanvas.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/FAchievement.cpp:346:9: warning: delete called on non-final 'FAchievement' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+        delete aFAchievement;
+        ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/FAchievement.cpp:358:13: warning: delete called on non-final 'FAchievement' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+            delete aFAchievement;
+            ^
+2 warnings generated.
+[49/214] Building CXX object CMakeFiles/gl2jni.dir/FColor.cpp.o
+[50/214] Building CXX object CMakeFiles/gl2jni.dir/FDrawQuad.cpp.o
+[51/214] Building CXX object CMakeFiles/gl2jni.dir/FFile.cpp.o
+[52/214] Building CXX object CMakeFiles/gl2jni.dir/FFileTable.cpp.o
+[53/214] Building CXX object CMakeFiles/gl2jni.dir/FFloatBufferCache.cpp.o
+[54/214] Building CXX object CMakeFiles/gl2jni.dir/FFloatList.cpp.o
+[55/214] Building CXX object CMakeFiles/gl2jni.dir/FFont.cpp.o
+[56/214] Building CXX object CMakeFiles/gl2jni.dir/FGestureCanvas.cpp.o
+[57/214] Building CXX object CMakeFiles/gl2jni.dir/FHashMap.cpp.o
+[58/214] Building CXX object CMakeFiles/gl2jni.dir/FImage.cpp.o
+[59/214] Building CXX object CMakeFiles/gl2jni.dir/FImageBundler.cpp.o
+[60/214] Building CXX object CMakeFiles/gl2jni.dir/FIndexBufferCache.cpp.o
+[61/214] Building CXX object CMakeFiles/gl2jni.dir/FIndexList.cpp.o
+[62/214] Building CXX object CMakeFiles/gl2jni.dir/FIntList.cpp.o
+[63/214] Building CXX object CMakeFiles/gl2jni.dir/FJoystick.cpp.o
+[64/214] Building CXX object CMakeFiles/gl2jni.dir/FJSON.cpp.o
+[65/214] Building CXX object CMakeFiles/gl2jni.dir/FLight.cpp.o
+[66/214] Building CXX object CMakeFiles/gl2jni.dir/FLine.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/FFile.cpp:442:5: warning: delete called on non-final 'FString' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+    FreeList(FString, mList);
+    ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/FList.hpp:12:76: note: expanded from macro 'FreeList'
+#define FreeList(pType,pList){EnumList(pType,__LIST_ITERATOR_NAME__,pList){delete __LIST_ITERATOR_NAME__;}pList.Clear();}
+                                                                           ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/FFile.cpp:447:5: warning: delete called on non-final 'FString' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+    FreeList(FString, mList);
+    ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/FList.hpp:12:76: note: expanded from macro 'FreeList'
+#define FreeList(pType,pList){EnumList(pType,__LIST_ITERATOR_NAME__,pList){delete __LIST_ITERATOR_NAME__;}pList.Clear();}
+                                                                           ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/FFile.cpp:452:5: warning: delete called on non-final 'FString' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+    FreeList(FString, mList);
+    ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/FList.hpp:12:76: note: expanded from macro 'FreeList'
+#define FreeList(pType,pList){EnumList(pType,__LIST_ITERATOR_NAME__,pList){delete __LIST_ITERATOR_NAME__;}pList.Clear();}
+                                                                           ^
+3 warnings generated.
+[67/214] Building CXX object CMakeFiles/gl2jni.dir/FList.cpp.o
+[68/214] Building CXX object CMakeFiles/gl2jni.dir/FloatingCamera.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/FDrawQuad.cpp:989:11: warning: unused variable 'aQuadInsetTop' [-Wunused-variable]
+    float aQuadInsetTop = pInsetTop * aScale;
+          ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/FDrawQuad.cpp:29:29: warning: unused variable 'cQuadIndex' [-Wunused-variable]
+static GFX_MODEL_INDEX_TYPE cQuadIndex[6] = { 0, 1, 2, 1, 3, 2 };
+                            ^
+2 warnings generated.
+[69/214] Building CXX object CMakeFiles/gl2jni.dir/FMath.cpp.o
+[70/214] Building CXX object CMakeFiles/gl2jni.dir/FMatrix.cpp.o
+[71/214] Building CXX object CMakeFiles/gl2jni.dir/FModelData.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/FFont.cpp:787:38: warning: unused variable 'aOdd' [-Wunused-variable]
+                                bool aOdd = false;
+                                     ^
+1 warning generated.
+[72/214] Building CXX object CMakeFiles/gl2jni.dir/FModelDataPacked.cpp.o
+[73/214] Building CXX object CMakeFiles/gl2jni.dir/FModelDataSequence.cpp.o
+[74/214] Building CXX object CMakeFiles/gl2jni.dir/FNotificationCenter.cpp.o
+[75/214] Building CXX object CMakeFiles/gl2jni.dir/FObject.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/FImage.cpp:2593:9: warning: 'delete' applied to a pointer that was allocated with 'new[]'; did you mean 'delete[]'? [-Wmismatched-new-delete]
+        delete aNewHorzPixels;
+        ^
+              []
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/FImage.cpp:2372:41: note: allocated with 'new[]' here
+        unsigned long* aNewHorzPixels = new unsigned long[aTempDestWidth*aSrcHeightI*4];
+                                        ^
+1 warning generated.
+[76/214] Building CXX object CMakeFiles/gl2jni.dir/FormationCollection.cpp.o
+[77/214] Building CXX object CMakeFiles/gl2jni.dir/FParticle.cpp.o
+[78/214] Building CXX object CMakeFiles/gl2jni.dir/FPointList.cpp.o
+[79/214] Building CXX object CMakeFiles/gl2jni.dir/FPolyPath.cpp.o
+[80/214] Building CXX object CMakeFiles/gl2jni.dir/FPrimitive.cpp.o
+[81/214] Building CXX object CMakeFiles/gl2jni.dir/FQuad.cpp.o
+[82/214] Building CXX object CMakeFiles/gl2jni.dir/FRandomizer.cpp.o
+[83/214] Building CXX object CMakeFiles/gl2jni.dir/FRect.cpp.o
+[84/214] Building CXX object CMakeFiles/gl2jni.dir/FResource.cpp.o
+[85/214] Building CXX object CMakeFiles/gl2jni.dir/FScrollCanvas.cpp.o
+[86/214] Building CXX object CMakeFiles/gl2jni.dir/FScrollCanvasPaged.cpp.o
+[87/214] Building CXX object CMakeFiles/gl2jni.dir/FSize.cpp.o
+[88/214] Building CXX object CMakeFiles/gl2jni.dir/FSlider.cpp.o
+[89/214] Building CXX object CMakeFiles/gl2jni.dir/FSound.cpp.o
+[90/214] Building CXX object CMakeFiles/gl2jni.dir/FSpline.cpp.o
+[91/214] Building CXX object CMakeFiles/gl2jni.dir/FSprite.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/FormationCollection.cpp:25:5: warning: delete called on non-final 'FString' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+    FreeList(FString, mNameList);
+    ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/FList.hpp:12:76: note: expanded from macro 'FreeList'
+#define FreeList(pType,pList){EnumList(pType,__LIST_ITERATOR_NAME__,pList){delete __LIST_ITERATOR_NAME__;}pList.Clear();}
+                                                                           ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/FormationCollection.cpp:40:5: warning: delete called on non-final 'FString' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+    FreeList(FString, mNameList);
+    ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/FList.hpp:12:76: note: expanded from macro 'FreeList'
+#define FreeList(pType,pList){EnumList(pType,__LIST_ITERATOR_NAME__,pList){delete __LIST_ITERATOR_NAME__;}pList.Clear();}
+                                                                           ^
+2 warnings generated.
+[92/214] Building CXX object CMakeFiles/gl2jni.dir/FSpriteSequence.cpp.o
+[93/214] Building CXX object CMakeFiles/gl2jni.dir/FString.cpp.o
+[94/214] Building CXX object CMakeFiles/gl2jni.dir/FTexture.cpp.o
+[95/214] Building CXX object CMakeFiles/gl2jni.dir/FTextureCache.cpp.o
+[96/214] Building CXX object CMakeFiles/gl2jni.dir/FTouchManager.cpp.o
+[97/214] Building CXX object CMakeFiles/gl2jni.dir/FUniforms.cpp.o
+[98/214] Building CXX object CMakeFiles/gl2jni.dir/FVec2.cpp.o
+[99/214] Building CXX object CMakeFiles/gl2jni.dir/FVec3.cpp.o
+[100/214] Building CXX object CMakeFiles/gl2jni.dir/FVertexBuffer.cpp.o
+[101/214] Building CXX object CMakeFiles/gl2jni.dir/FWindow.cpp.o
+[102/214] Building CXX object CMakeFiles/gl2jni.dir/FXML.cpp.o
+[103/214] Building CXX object CMakeFiles/gl2jni.dir/Game.cpp.o
+[104/214] Building CXX object CMakeFiles/gl2jni.dir/GameContainer.cpp.o
+[105/214] Building CXX object CMakeFiles/gl2jni.dir/GameEditor.cpp.o
+[106/214] Building CXX object CMakeFiles/gl2jni.dir/GameEditorGrid.cpp.o
+[107/214] Building CXX object CMakeFiles/gl2jni.dir/GameFormationEditor.cpp.o
+[108/214] Building CXX object CMakeFiles/gl2jni.dir/GameInfoOverlay.cpp.o
+[109/214] Building CXX object CMakeFiles/gl2jni.dir/GameInfoTextBubble.cpp.o
+[110/214] Building CXX object CMakeFiles/gl2jni.dir/GameLevelController.cpp.o
+[111/214] Building CXX object CMakeFiles/gl2jni.dir/GameObject.cpp.o
+[112/214] Building CXX object CMakeFiles/gl2jni.dir/GameOverlay.cpp.o
+[113/214] Building CXX object CMakeFiles/gl2jni.dir/GamePathEditor.cpp.o
+[114/214] Building CXX object CMakeFiles/gl2jni.dir/GamePermanentEditor.cpp.o
+[115/214] Building CXX object CMakeFiles/gl2jni.dir/GameRenderer.cpp.o
+[116/214] Building CXX object CMakeFiles/gl2jni.dir/GameTestEditorOverlay.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/Game.cpp:457:15: warning: unused variable 'aDartPos' [-Wunused-variable]
+        FVec3 aDartPos = Convert2DCoordsTo3D(mDartSpawnX + mDartPullX, mDartSpawnY + mDartPullY);
+              ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/Game.cpp:859:72: warning: format specifies type 'unsigned int' but the argument has type 'GameObject *' [-Wformat]
+        printf("Miss Object... [%s][%x]\n", pObject->TypeString().c(), pObject);
+                                    ~~                                 ^~~~~~~
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/Game.cpp:869:68: warning: format specifies type 'unsigned int' but the argument has type 'Dart *' [-Wformat]
+        printf("Miss Dart... [%s][%x]\n", pDart->TypeString().c(), pDart);
+                                  ~~                               ^~~~~
+3 warnings generated.
+[117/214] Building CXX object CMakeFiles/gl2jni.dir/GameTestRunningMainMenu.cpp.o
+[118/214] Building CXX object CMakeFiles/gl2jni.dir/GameTestRunningOverlay.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/GameContainer.cpp:182:10: warning: unused variable 'aAlt' [-Wunused-variable]
+    bool aAlt = gKeyDownAlt;
+         ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/GameContainer.cpp:180:10: warning: unused variable 'aShift' [-Wunused-variable]
+    bool aShift = gKeyDownShift;
+         ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/GameContainer.cpp:181:10: warning: unused variable 'aCtrl' [-Wunused-variable]
+    bool aCtrl = gKeyDownCtrl;
+         ^
+3 warnings generated.
+[119/214] Building CXX object CMakeFiles/gl2jni.dir/GFXApp.cpp.o
+[120/214] Building CXX object CMakeFiles/gl2jni.dir/GraphicsInterface.cpp.o
+[121/214] Building CXX object CMakeFiles/gl2jni.dir/HangingThread.cpp.o
+[122/214] Building CXX object CMakeFiles/gl2jni.dir/HangingThreadKnot.cpp.o
+[123/214] Building CXX object CMakeFiles/gl2jni.dir/HangingThreadSegment.cpp.o
+[124/214] Building CXX object CMakeFiles/gl2jni.dir/HangingThreadTestMenu.cpp.o
+[125/214] Building CXX object CMakeFiles/gl2jni.dir/Level.cpp.o
+[126/214] Building CXX object CMakeFiles/gl2jni.dir/LevelData.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/GameEditor.cpp:586:66: warning: format specifies type 'unsigned long long' but the argument has type 'LevelWaveSpawnBlueprint *' [-Wformat]
+            printf("Formation Selected for WAVE SPAWN [%llx]\n", aSpawn);
+                                                       ~~~~      ^~~~~~
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/GameEditor.cpp:594:66: warning: format specifies type 'unsigned long long' but the argument has type 'LevelPermSpawnBlueprint *' [-Wformat]
+            printf("Formation Selected for PERM SPAWN [%llx]\n", aSpawn);
+                                                       ~~~~      ^~~~~~
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/GameEditor.cpp:606:60: warning: format specifies type 'unsigned long long' but the argument has type 'LevelSectionPermanentBlueprint *' [-Wformat]
+            printf("Formation Selected for PERM [%llx]\n", aPerm);
+                                                 ~~~~      ^~~~~
+3 warnings generated.
+[127/214] Building CXX object CMakeFiles/gl2jni.dir/LevelFormation.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/GameFormationEditor.cpp:825:5: warning: delete called on non-final 'FString' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+    FreeList(FString, aChunkList);
+    ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/FList.hpp:12:76: note: expanded from macro 'FreeList'
+#define FreeList(pType,pList){EnumList(pType,__LIST_ITERATOR_NAME__,pList){delete __LIST_ITERATOR_NAME__;}pList.Clear();}
+                                                                           ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/GameFormationEditor.cpp:945:5: warning: delete called on non-final 'FString' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+    FreeList(FString, aChunkList);
+    ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/FList.hpp:12:76: note: expanded from macro 'FreeList'
+#define FreeList(pType,pList){EnumList(pType,__LIST_ITERATOR_NAME__,pList){delete __LIST_ITERATOR_NAME__;}pList.Clear();}
+                                                                           ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/GameFormationEditor.cpp:1057:5: warning: delete called on non-final 'FString' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+    FreeList(FString, aSliceList);
+    ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/FList.hpp:12:76: note: expanded from macro 'FreeList'
+#define FreeList(pType,pList){EnumList(pType,__LIST_ITERATOR_NAME__,pList){delete __LIST_ITERATOR_NAME__;}pList.Clear();}
+                                                                           ^
+3 warnings generated.
+[128/214] Building CXX object CMakeFiles/gl2jni.dir/LevelFormationBlueprint.cpp.o
+[129/214] Building CXX object CMakeFiles/gl2jni.dir/LevelFormationNode.cpp.o
+[130/214] Building CXX object CMakeFiles/gl2jni.dir/LevelFormationTracer.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/GamePermanentEditor.cpp:186:19: warning: unused variable 'aDist' [-Wunused-variable]
+            float aDist = 50.0f * 50.0f;
+                  ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/GamePermanentEditor.cpp:177:11: warning: unused variable 'aX' [-Wunused-variable]
+    float aX = pX;
+          ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/GamePermanentEditor.cpp:178:11: warning: unused variable 'aY' [-Wunused-variable]
+    float aY = pY;
+          ^
+3 warnings generated.
+[131/214] Building CXX object CMakeFiles/gl2jni.dir/LevelFormationTracerBlueprint.cpp.o
+[132/214] Building CXX object CMakeFiles/gl2jni.dir/LevelFormationTracerNode.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/GameTestRunningMainMenu.cpp:61:20: warning: unused variable 'aSegment' [-Wunused-variable]
+        UISegment *aSegment = (UISegment *)pSender;
+                   ^
+1 warning generated.
+[133/214] Building CXX object CMakeFiles/gl2jni.dir/LevelGroup.cpp.o
+[134/214] Building CXX object CMakeFiles/gl2jni.dir/LevelMotionController.cpp.o
+[135/214] Building CXX object CMakeFiles/gl2jni.dir/LevelMotionControllerBlueprint.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/HangingThread.cpp:121:12: warning: explicitly assigning value of variable of type 'float' to itself [-Wself-assign]
+        aZ = aZ;
+        ~~ ^ ~~
+1 warning generated.
+[136/214] Building CXX object CMakeFiles/gl2jni.dir/LevelMotionControllerSlice.cpp.o
+[137/214] Building CXX object CMakeFiles/gl2jni.dir/LevelMotionControllerSliceBlueprint.cpp.o
+[138/214] Building CXX object CMakeFiles/gl2jni.dir/LevelNode.cpp.o
+[139/214] Building CXX object CMakeFiles/gl2jni.dir/LevelPath.cpp.o
+[140/214] Building CXX object CMakeFiles/gl2jni.dir/LevelPathBlueprint.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/HangingThreadTestMenu.cpp:34:46: warning: unused variable 'mSliderTestAxisZ' [-Wunused-variable]
+    UISlider                                *mSliderTestAxisZ;
+                                             ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/HangingThreadTestMenu.cpp:77:20: warning: unused variable 'aSegment' [-Wunused-variable]
+        UISegment *aSegment = (UISegment *)pSender;
+                   ^
+2 warnings generated.
+[141/214] Building CXX object CMakeFiles/gl2jni.dir/LevelPermSpawn.cpp.o
+[142/214] Building CXX object CMakeFiles/gl2jni.dir/LevelPermSpawnBlueprint.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/LevelFormationNode.cpp:129:71: warning: format specifies type 'unsigned long long' but the argument has type 'GameObject *' [-Wformat]
+        printf("LevelFormationNode::SUCCESS - DisposeObject(%llx)\n", pObject);
+                                                            ~~~~      ^~~~~~~
+1 warning generated.
+[143/214] Building CXX object CMakeFiles/gl2jni.dir/LevelSection.cpp.o
+[144/214] Building CXX object CMakeFiles/gl2jni.dir/LevelSectionBlueprint.cpp.o
+[145/214] Building CXX object CMakeFiles/gl2jni.dir/LevelSectionPermanent.cpp.o
+[146/214] Building CXX object CMakeFiles/gl2jni.dir/LevelSectionPermanentBlueprint.cpp.o
+[147/214] Building CXX object CMakeFiles/gl2jni.dir/LevelSelectorScreen.cpp.o
+[148/214] Building CXX object CMakeFiles/gl2jni.dir/LevelWave.cpp.o
+[149/214] Building CXX object CMakeFiles/gl2jni.dir/LevelWaveBlueprint.cpp.o
+[150/214] Building CXX object CMakeFiles/gl2jni.dir/LevelWaveSpawn.cpp.o
+[151/214] Building CXX object CMakeFiles/gl2jni.dir/LevelWaveSpawnBlueprint.cpp.o
+[152/214] Building CXX object CMakeFiles/gl2jni.dir/LightConfigurationScene.cpp.o
+[153/214] Building CXX object CMakeFiles/gl2jni.dir/OpenGLEngine.cpp.o
+[154/214] Building CXX object CMakeFiles/gl2jni.dir/os_core_app_shell_android.cpp.o
+[155/214] Building CXX object CMakeFiles/gl2jni.dir/os_core_graphics.cpp.o
+[156/214] Building CXX object CMakeFiles/gl2jni.dir/os_core_includes.cpp.o
+[157/214] Building CXX object CMakeFiles/gl2jni.dir/os_core_music_android.cpp.o
+[158/214] Building CXX object CMakeFiles/gl2jni.dir/os_core_outlets_android.cpp.o
+[159/214] Building CXX object CMakeFiles/gl2jni.dir/os_core_social.cpp.o
+[160/214] Building CXX object CMakeFiles/gl2jni.dir/os_core_sound_android.cpp.o
+[161/214] Building CXX object CMakeFiles/gl2jni.dir/os_core_web.cpp.o
+[162/214] Building CXX object CMakeFiles/gl2jni.dir/OSMusicBuffer.cpp.o
+[163/214] Building CXX object CMakeFiles/gl2jni.dir/OSMusicPlayer.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/LevelWave.cpp:214:43: warning: format specifies type 'unsigned long long' but the argument has type 'LevelWaveSpawn *' [-Wformat]
+    printf("HandleSpawnComplete(%llx)\n", pSpawn);
+                                ~~~~      ^~~~~~
+1 warning generated.
+[164/214] Building CXX object CMakeFiles/gl2jni.dir/OSSoundBuffer.cpp.o
+[165/214] Building CXX object CMakeFiles/gl2jni.dir/OSSoundBufferPool.cpp.o
+[166/214] Building CXX object CMakeFiles/gl2jni.dir/PhongConfiguration.cpp.o
+[167/214] Building CXX object CMakeFiles/gl2jni.dir/PhongLightMenu.cpp.o
+[168/214] Building CXX object CMakeFiles/gl2jni.dir/PlatformGraphicsInterface.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/OpenGLEngine.cpp:66:5: warning: delete called on non-final 'ShaderProgram' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+    delete mShaderProgramShape2D;
+    ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/OpenGLEngine.cpp:69:5: warning: delete called on non-final 'ShaderProgramShape3D' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+    delete mShaderProgramShape3D;
+    ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/OpenGLEngine.cpp:72:5: warning: delete called on non-final 'ShaderProgramSprite' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+    delete mShaderProgramSprite;
+    ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/OpenGLEngine.cpp:75:5: warning: delete called on non-final 'ShaderProgramSpriteWhite' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+    delete mShaderProgramSpriteWhite;
+    ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/OpenGLEngine.cpp:78:5: warning: delete called on non-final 'ShaderProgramShapeNode' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+    delete mShaderProgramShapeNode;
+    ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/OpenGLEngine.cpp:81:5: warning: delete called on non-final 'ShaderProgramSpriteNode' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+    delete mShaderProgramSpriteNode;
+    ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/OpenGLEngine.cpp:84:5: warning: delete called on non-final 'ShaderProgramSimpleModel' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+    delete mShaderProgramSimpleModel;
+    ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/OpenGLEngine.cpp:87:5: warning: delete called on non-final 'ShaderProgramSimpleModelIndexed' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+    delete mShaderProgramSimpleModelIndexed;
+    ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/OpenGLEngine.cpp:90:5: warning: delete called on non-final 'ShaderProgramModelIndexed' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+    delete mShaderProgramModelIndexed;
+    ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/OpenGLEngine.cpp:93:5: warning: delete called on non-final 'ShaderProgramModelIndexedLightedAmbient' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+    delete mShaderProgramModelIndexedLightedAmbient;
+    ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/OpenGLEngine.cpp:96:5: warning: delete called on non-final 'ShaderProgramModelIndexedLightedDiffuse' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+    delete mShaderProgramModelIndexedLightedDiffuse;
+    ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/OpenGLEngine.cpp:99:5: warning: delete called on non-final 'ShaderProgramModelIndexedLightedPhong' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+    delete mShaderProgramModelIndexedLightedPhong;
+    ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/OpenGLEngine.cpp:102:5: warning: delete called on non-final 'ShaderProgramModelIndexedLightedPhong' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+    delete mShaderProgramModelIndexedLightedPhongOverlay;
+    ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/OpenGLEngine.cpp:105:5: warning: delete called on non-final 'ShaderProgramModelIndexedLightedSimpleSpotlight' that has virtual functions but non-virtual destructor [-Wdelete-non-virtual-dtor]
+    delete mShaderProgramModelIndexedLightedSimpleSpotlight;
+    ^
+14 warnings generated.
+[169/214] Building CXX object CMakeFiles/gl2jni.dir/ShaderProgram.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/LightConfigurationScene.cpp:37:11: warning: unused variable 'aMenuGroupHeight' [-Wunused-variable]
+    float aMenuGroupHeight = (gDeviceHeight - (aPaddingTop + aPaddingBottom));
+          ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/LightConfigurationScene.cpp:170:23: warning: unused variable 'aBalloon' [-Wunused-variable]
+    FModelDataPacked *aBalloon = &(gApp->mBalloon);
+                      ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/LightConfigurationScene.cpp:173:23: warning: unused variable 'aGround' [-Wunused-variable]
+    FModelDataPacked *aGround = &(gApp->mGround);
+                      ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/LightConfigurationScene.cpp:279:11: warning: unused variable 'aExtraRot' [-Wunused-variable]
+    float aExtraRot = 0.0f;
+          ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/LightConfigurationScene.cpp:169:23: warning: unused variable 'aDart' [-Wunused-variable]
+    FModelDataPacked *aDart = &(gApp->mDart);
+                      ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/LightConfigurationScene.cpp:281:9: warning: unused variable 'aBalloonIndex' [-Wunused-variable]
+    int aBalloonIndex = 0;
+        ^
+6 warnings generated.
+[170/214] Building CXX object CMakeFiles/gl2jni.dir/ShaderProgramModelIndexed.cpp.o
+[171/214] Building CXX object CMakeFiles/gl2jni.dir/ShaderProgramModelIndexedLightedAmbient.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/os_core_graphics.cpp:37:45: warning: unused variable 'gGraphicsThread' [-Wunused-variable]
+static int                                  gGraphicsThread = -1;
+                                            ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/os_core_graphics.cpp:78:45: warning: unused variable 'cGraphicsThreadLocked' [-Wunused-variable]
+volatile static bool                        cGraphicsThreadLocked = false;
+                                            ^
+2 warnings generated.
+[172/214] Building CXX object CMakeFiles/gl2jni.dir/ShaderProgramModelIndexedLightedDiffuse.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/os_core_sound_android.cpp:129:9: warning: unused variable 'aLoadedInstanceCount' [-Wunused-variable]
+    int aLoadedInstanceCount = 0;
+        ^
+1 warning generated.
+[173/214] Building CXX object CMakeFiles/gl2jni.dir/ShaderProgramModelIndexedLightedPhong.cpp.o
+[174/214] Building CXX object CMakeFiles/gl2jni.dir/ShaderProgramModelIndexedLightedSimpleSpotlight.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/OSMusicPlayer.cpp:99:1: warning: control reaches end of non-void function [-Wreturn-type]
+}
+^
+1 warning generated.
+[175/214] Building CXX object CMakeFiles/gl2jni.dir/ShaderProgramShape3D.cpp.o
+[176/214] Building CXX object CMakeFiles/gl2jni.dir/ShaderProgramShapeNode.cpp.o
+[177/214] Building CXX object CMakeFiles/gl2jni.dir/ShaderProgramSimpleModel.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/os_core_outlets_android.cpp:151:39: warning: format specifies type 'unsigned int' but the argument has type 'void *' [-Wformat]
+    printf("Detaching Threat [%X]\n", pArg);
+                              ~~      ^~~~
+1 warning generated.
+[178/214] Building CXX object CMakeFiles/gl2jni.dir/ShaderProgramSimpleModelIndexed.cpp.o
+[179/214] Building CXX object CMakeFiles/gl2jni.dir/ShaderProgramSprite.cpp.o
+[180/214] Building CXX object CMakeFiles/gl2jni.dir/ShaderProgramSpriteNode.cpp.o
+[181/214] Building CXX object CMakeFiles/gl2jni.dir/ShaderProgramSpriteWhite.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/PhongLightMenu.cpp:132:20: warning: unused variable 'aSegment' [-Wunused-variable]
+        UISegment *aSegment = (UISegment *)pSender;
+                   ^
+1 warning generated.
+[182/214] Building CXX object CMakeFiles/gl2jni.dir/SimpleSpotLightMenu.cpp.o
+[183/214] Building CXX object CMakeFiles/gl2jni.dir/SoundConfigMenu.cpp.o
+[184/214] Building CXX object CMakeFiles/gl2jni.dir/SpotLightSimpleConfiguration.cpp.o
+[185/214] Building CXX object CMakeFiles/gl2jni.dir/StuckDart.cpp.o
+[186/214] Building CXX object CMakeFiles/gl2jni.dir/ToolMenu.cpp.o
+[187/214] Building CXX object CMakeFiles/gl2jni.dir/ToolMenuHeader.cpp.o
+[188/214] Building CXX object CMakeFiles/gl2jni.dir/ToolMenuPanel.cpp.o
+[189/214] Building CXX object CMakeFiles/gl2jni.dir/ToolMenuPanelHeader.cpp.o
+[190/214] Building CXX object CMakeFiles/gl2jni.dir/ToolMenuSection.cpp.o
+[191/214] Building CXX object CMakeFiles/gl2jni.dir/ToolMenuSectionRow.cpp.o
+[192/214] Building CXX object CMakeFiles/gl2jni.dir/Transform2D.cpp.o
+[193/214] Building CXX object CMakeFiles/gl2jni.dir/Transform3D.cpp.o
+[194/214] Building CXX object CMakeFiles/gl2jni.dir/Turtle.cpp.o
+[195/214] Building CXX object CMakeFiles/gl2jni.dir/UIAlignmentPicker.cpp.o
+[196/214] Building CXX object CMakeFiles/gl2jni.dir/UIAlignmentPickerButton.cpp.o
+[197/214] Building CXX object CMakeFiles/gl2jni.dir/UIButton.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/SimpleSpotLightMenu.cpp:154:20: warning: unused variable 'aSegment' [-Wunused-variable]
+        UISegment *aSegment = (UISegment *)pSender;
+                   ^
+1 warning generated.
+[198/214] Building CXX object CMakeFiles/gl2jni.dir/UICheckBox.cpp.o
+[199/214] Building CXX object CMakeFiles/gl2jni.dir/UIElement.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/SoundConfigMenu.cpp:276:20: warning: unused variable 'aSegment' [-Wunused-variable]
+        UISegment *aSegment = (UISegment *)pSender;
+                   ^
+1 warning generated.
+[200/214] Building CXX object CMakeFiles/gl2jni.dir/UIImagePicker.cpp.o
+[201/214] Building CXX object CMakeFiles/gl2jni.dir/UIImagePickerCell.cpp.o
+[202/214] Building CXX object CMakeFiles/gl2jni.dir/UILabel.cpp.o
+[203/214] Building CXX object CMakeFiles/gl2jni.dir/UIRoundedRect.cpp.o
+[204/214] Building CXX object CMakeFiles/gl2jni.dir/UISegment.cpp.o
+[205/214] Building CXX object CMakeFiles/gl2jni.dir/UISegmentButton.cpp.o
+[206/214] Building CXX object CMakeFiles/gl2jni.dir/UISlider.cpp.o
+[207/214] Building CXX object CMakeFiles/gl2jni.dir/UIStepper.cpp.o
+[208/214] Building CXX object CMakeFiles/gl2jni.dir/UITextBox.cpp.o
+[209/214] Building CXX object CMakeFiles/gl2jni.dir/Util_ScreenFrame.cpp.o
+[210/214] Building CXX object CMakeFiles/gl2jni.dir/WadGlobalConfiguration.cpp.o
+[211/214] Building CXX object CMakeFiles/gl2jni.dir/WindSpeedSimulator.cpp.o
+[212/214] Building CXX object CMakeFiles/gl2jni.dir/WindSpeedSimulatorChannel.cpp.o
+[213/214] Building CXX object CMakeFiles/gl2jni.dir/WorldConfigScene.cpp.o
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/WorldConfigScene.cpp:37:11: warning: unused variable 'aMenuGroupHeight' [-Wunused-variable]
+    float aMenuGroupHeight = (gDeviceHeight - (aPaddingTop + aPaddingBottom));
+          ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/WorldConfigScene.cpp:171:23: warning: unused variable 'aDart' [-Wunused-variable]
+    FModelDataPacked *aDart = &(gApp->mDart);
+                      ^
+/Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/src/main/cpp/WorldConfigScene.cpp:175:23: warning: unused variable 'aGround' [-Wunused-variable]
+    FModelDataPacked *aGround = &(gApp->mGround);
+                      ^
+3 warnings generated.
+[214/214] Linking CXX shared library /Users/nraptis/Desktop/Orbital/CrazyDarts2Android/app/build/intermediates/cmake/debug/obj/arm64-v8a/libgl2jni.so

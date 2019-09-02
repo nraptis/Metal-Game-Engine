@@ -39,83 +39,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9264ae7f-2017-4291-a045-1593eb4a1b11" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../Classes/GFXApp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Classes/GFXApp.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Classes/GFXApp.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Classes/GFXApp.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Classes/GameOverlay.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Classes/GameOverlay.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Classes/[Menus]/AssetConfigMenu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Classes/[Menus]/AssetConfigMenu.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Classes/[[Wadding]]/AssetWad.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Classes/[[Wadding]]/AssetWad.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Classes/[[Wadding]]/AssetWad.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Classes/[[Wadding]]/AssetWad.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Classes/[[Wadding]]/AssetWadGameEffects.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Classes/[[Wadding]]/AssetWadGameEffects.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Classes/[[Wadding]]/AssetWadGameEffects.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Classes/[[Wadding]]/AssetWadGameEffects.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Classes/[[Wadding]]/AssetWadGameInterface.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Classes/[[Wadding]]/AssetWadGameInterface.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Classes/[[Wadding]]/AssetWadGameInterface.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Classes/[[Wadding]]/AssetWadGameInterface.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Classes/[[Wadding]]/WadGlobalConfiguration.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Classes/[[Wadding]]/WadGlobalConfiguration.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Classes/[[Wadding]]/WadGlobalConfiguration.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Classes/[[Wadding]]/WadGlobalConfiguration.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/Balloon.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/Balloon.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/FApp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/FApp.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/FFont.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/FFont.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/FFont.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/FFont.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/FImageBundler.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/FImageBundler.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/FImageBundler.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/FImageBundler.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/FParticle.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/FParticle.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/FSprite.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/FSprite.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/FSprite.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/FSprite.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/FTexture.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/FTexture.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/FTextureCache.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/FTextureCache.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/FormationCollection.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/FormationCollection.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/GFXApp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/GFXApp.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/GFXApp.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/GFXApp.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/Game.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/Game.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/Game.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/Game.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/GameContainer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/GameContainer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/GameContainer.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/GameContainer.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/GameInfoOverlay.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/GameInfoOverlay.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/GameInfoOverlay.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/GameInfoOverlay.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/GameRenderer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/GameRenderer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/SoundConfigMenu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/SoundConfigMenu.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/StuckDart.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/StuckDart.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/StuckDart.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/StuckDart.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/Util_ScreenFrame.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/Util_ScreenFrame.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/Util_ScreenFrame.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/Util_ScreenFrame.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/core_app_shell.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/core_app_shell.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/core_app_shell.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/core_app_shell.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/core_includes.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/core_includes.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/os_core_outlets.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/os_core_outlets.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/cpp/os_core_outlets_android.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/cpp/os_core_outlets_android.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/froggy/game/GL2JNIView.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/froggy/game/GL2JNIView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/froggy/game/JavaOutlets.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/froggy/game/JavaOutlets.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CrazyDarts2iOS/Crazy Darts 2 iOS.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../CrazyDarts2iOS/Crazy Darts 2 iOS.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CrazyDarts2iOS/Crazy Darts 2 iOS.xcodeproj/project.xcworkspace/xcuserdata/nraptis.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/../CrazyDarts2iOS/Crazy Darts 2 iOS.xcodeproj/project.xcworkspace/xcuserdata/nraptis.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../CrazyDarts2iOS/Crazy Darts 2 iOS/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/../CrazyDarts2iOS/Crazy Darts 2 iOS/Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../FImageBundler.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../FImageBundler.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Framework_[VI]/[C++ Core]/FApp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Framework_[VI]/[C++ Core]/FApp.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Framework_[VI]/[C++ Core]/FFont.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Framework_[VI]/[C++ Core]/FFont.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Framework_[VI]/[C++ Core]/FTextureCache.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Framework_[VI]/[C++ Core]/FTextureCache.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Framework_[VI]/[C++ Core]/[[Tools]]/Util_ScreenFrame.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Framework_[VI]/[C++ Core]/[[Tools]]/Util_ScreenFrame.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Framework_[VI]/[C++ Core]/[[Tools]]/Util_ScreenFrame.h" beforeDir="false" afterPath="$PROJECT_DIR$/../Framework_[VI]/[C++ Core]/[[Tools]]/Util_ScreenFrame.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Framework_[VI]/[C++ Core]/core_app_shell.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Framework_[VI]/[C++ Core]/core_app_shell.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/OSMusicBuffer.h" beforeDir="false" afterPath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/OSMusicBuffer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/OSMusicPlayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/OSMusicPlayer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/OSSoundBuffer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/OSSoundBuffer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/OSSoundBuffer.h" beforeDir="false" afterPath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/OSSoundBuffer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/PlatformGraphicsInterface.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/PlatformGraphicsInterface.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/PlatformGraphicsInterface.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/PlatformGraphicsInterface.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/java/com/froggy/game/GL2JNIActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/java/com/froggy/game/GL2JNIActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/java/com/froggy/game/GL2JNILib.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/java/com/froggy/game/GL2JNILib.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/java/com/froggy/game/GL2JNIView.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/java/com/froggy/game/GL2JNIView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/os_core_graphics.h" beforeDir="false" afterPath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/os_core_graphics.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/os_core_outlets_android.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/os_core_outlets_android.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/os_core_social.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/os_core_social.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/os_core_sound.h" beforeDir="false" afterPath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/os_core_sound.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/os_core_sound_android.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Framework_[VI]/[Droid]/os_core_sound_android.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Framework_[VI]/[iOS]/AppDelegate.mm" beforeDir="false" afterPath="$PROJECT_DIR$/../Framework_[VI]/[iOS]/AppDelegate.mm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Framework_[VI]/[iOS]/RootViewController.h" beforeDir="false" afterPath="$PROJECT_DIR$/../Framework_[VI]/[iOS]/RootViewController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Framework_[VI]/[iOS]/RootViewController.mm" beforeDir="false" afterPath="$PROJECT_DIR$/../Framework_[VI]/[iOS]/RootViewController.mm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Framework_[VI]/[iOS]/os_core_outlets_ios.mm" beforeDir="false" afterPath="$PROJECT_DIR$/../Framework_[VI]/[iOS]/os_core_outlets_ios.mm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../action_list.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../action_list.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/arm64-v8a/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/arm64-v8a/.ninja_deps" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/arm64-v8a/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/arm64-v8a/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/arm64-v8a/CMakeFiles/gl2jni.dir/Balloon.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/arm64-v8a/CMakeFiles/gl2jni.dir/Balloon.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/arm64-v8a/android_gradle_build_gl2jni_arm64-v8a.stdout.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/arm64-v8a/android_gradle_build_gl2jni_arm64-v8a.stdout.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/armeabi-v7a/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/armeabi-v7a/.ninja_deps" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/armeabi-v7a/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/armeabi-v7a/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/armeabi-v7a/CMakeFiles/gl2jni.dir/Balloon.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/armeabi-v7a/CMakeFiles/gl2jni.dir/Balloon.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/armeabi-v7a/android_gradle_build_gl2jni_armeabi-v7a.stdout.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/armeabi-v7a/android_gradle_build_gl2jni_armeabi-v7a.stdout.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/x86/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/x86/.ninja_deps" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/x86/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/x86/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/x86/CMakeFiles/gl2jni.dir/Balloon.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/x86/CMakeFiles/gl2jni.dir/Balloon.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/x86/android_gradle_build_gl2jni_x86.stdout.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/x86/android_gradle_build_gl2jni_x86.stdout.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/x86_64/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/x86_64/.ninja_deps" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/x86_64/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/x86_64/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/x86_64/CMakeFiles/gl2jni.dir/Balloon.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/x86_64/CMakeFiles/gl2jni.dir/Balloon.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/x86_64/android_gradle_build_gl2jni_x86_64.stdout.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/.externalNativeBuild/cmake/debug/x86_64/android_gradle_build_gl2jni_x86_64.stdout.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/build/classes/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -125,8 +71,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DefaultGradleProjectSettings">
-    <option name="testRunner" value="GRADLE" />
-    <option name="delegatedBuild" value="true" />
+    <option name="isMigrated" value="true" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_2_API_27" />
   <component name="ExternalProjectsManager">
@@ -141,24 +86,22 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/cpp/Balloon.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="26" column="17" lean-forward="true" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
+            <state relative-caret-position="172">
+              <caret line="20" column="4" lean-forward="true" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/cpp/Dart.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-72" />
-          </provider>
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/cpp/os_core_outlets_android.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="554" lean-forward="true" selection-start-line="554" selection-end-line="554" />
+            <state relative-caret-position="8310">
+              <caret line="554" selection-start-line="554" selection-end-line="554" />
               <folding>
                 <element signature="e#138#166#0" expanded="true" />
                 <element signature="e#10914#10927#0" expanded="true" />
@@ -170,8 +113,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/cpp/WadGlobalConfiguration.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="79" column="1" lean-forward="true" selection-start-line="79" selection-start-column="1" selection-end-line="79" selection-end-column="1" />
+            <state relative-caret-position="1185">
+              <caret line="79" column="1" selection-start-line="79" selection-start-column="1" selection-end-line="79" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -179,7 +122,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/cpp/LevelWave.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
+            <state relative-caret-position="3195">
               <caret line="213" selection-start-line="213" selection-end-line="213" />
             </state>
           </provider>
@@ -188,8 +131,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/cpp/GFXApp.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="246">
-              <caret line="205" column="19" lean-forward="true" selection-start-line="205" selection-start-column="19" selection-end-line="205" selection-end-column="19" />
+            <state relative-caret-position="3075">
+              <caret line="205" column="19" selection-start-line="205" selection-start-column="19" selection-end-line="205" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -197,17 +140,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/froggy/game/JavaOutlets.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="85" lean-forward="true" selection-start-line="85" selection-end-line="85" />
+            <state relative-caret-position="945">
+              <caret line="85" selection-start-line="85" selection-end-line="85" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#871#872#0" expanded="true" />
-                <element signature="e#890#891#0" expanded="true" />
-                <element signature="e#939#940#0" expanded="true" />
-                <element signature="e#959#960#0" expanded="true" />
-                <element signature="e#7402#7403#0" expanded="true" />
-                <element signature="e#7475#7476#0" expanded="true" />
-                <element signature="e#8194#8195#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -216,8 +152,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/cpp/GameOverlay.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="148">
-              <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
+            <state relative-caret-position="540">
+              <caret line="36" selection-start-line="36" selection-end-line="36" />
             </state>
           </provider>
         </entry>
@@ -225,8 +161,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/cpp/GameRenderer.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="307">
-              <caret line="147" column="32" lean-forward="true" selection-start-line="147" selection-start-column="32" selection-end-line="147" selection-end-column="32" />
+            <state relative-caret-position="2205">
+              <caret line="147" column="32" selection-start-line="147" selection-start-column="32" selection-end-line="147" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -234,8 +170,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/cpp/BrickHead.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2833">
-              <caret line="30" column="41" lean-forward="true" selection-start-line="30" selection-start-column="41" selection-end-line="30" selection-end-column="41" />
+            <state relative-caret-position="450">
+              <caret line="30" column="41" selection-start-line="30" selection-start-column="41" selection-end-line="30" selection-end-column="41" />
             </state>
           </provider>
         </entry>
@@ -323,33 +259,10 @@
     </navigator>
     <panes>
       <pane id="ProjectPane" />
+      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <expand>
-            <path>
-              <item name="CrazyDarts2Android" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-            </path>
-            <path>
-              <item name="CrazyDarts2Android" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="manifests" type="f94875db:AndroidManifestsGroupNode" />
-            </path>
-            <path>
-              <item name="CrazyDarts2Android" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-            <path>
-              <item name="CrazyDarts2Android" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="cpp" type="9a30073f:AndroidJniFolderNode" />
-            </path>
-            <path>
-              <item name="CrazyDarts2Android" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-            </path>
             <path>
               <item name="CrazyDarts2Android" type="1abcf292:AndroidViewProjectNode" />
               <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
@@ -359,7 +272,6 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -602,7 +514,7 @@
       <window_info anchor="bottom" id="TODO" order="1" weight="0.3290398" />
       <window_info anchor="bottom" id="Terminal" order="2" weight="0.2201722" />
       <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
-      <window_info anchor="bottom" id="Build" order="4" weight="0.18238342" />
+      <window_info anchor="bottom" id="Build" order="4" visible="true" weight="0.18238342" />
       <window_info anchor="bottom" id="Run" order="5" weight="0.307772" />
       <window_info anchor="bottom" id="Logcat" order="6" weight="0.3296433" />
       <window_info anchor="bottom" id="Android Profiler" order="7" weight="0.3296433" />
@@ -785,12 +697,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider editor-type-id="android-manifest" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="16" column="40" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="40" />
         </state>
       </provider>
-      <provider editor-type-id="android-manifest" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/cpp/core_app_shell.cpp">
       <provider selected="true" editor-type-id="text-editor">
@@ -799,17 +711,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/cpp/LevelWave.cpp">
+    <entry file="file://$PROJECT_DIR$/app/src/main/cpp/Balloon.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="213" selection-start-line="213" selection-end-line="213" />
+        <state relative-caret-position="172">
+          <caret line="20" column="4" lean-forward="true" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/cpp/Dart.cpp">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/cpp/os_core_outlets_android.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="554" lean-forward="true" selection-start-line="554" selection-end-line="554" />
+        <state relative-caret-position="8310">
+          <caret line="554" selection-start-line="554" selection-end-line="554" />
           <folding>
             <element signature="e#138#166#0" expanded="true" />
             <element signature="e#10914#10927#0" expanded="true" />
@@ -819,65 +734,53 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/cpp/WadGlobalConfiguration.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="79" column="1" lean-forward="true" selection-start-line="79" selection-start-column="1" selection-end-line="79" selection-end-column="1" />
+        <state relative-caret-position="1185">
+          <caret line="79" column="1" selection-start-line="79" selection-start-column="1" selection-end-line="79" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/cpp/LevelWave.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3195">
+          <caret line="213" selection-start-line="213" selection-end-line="213" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/cpp/GFXApp.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="205" column="19" lean-forward="true" selection-start-line="205" selection-start-column="19" selection-end-line="205" selection-end-column="19" />
+        <state relative-caret-position="3075">
+          <caret line="205" column="19" selection-start-line="205" selection-start-column="19" selection-end-line="205" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/froggy/game/JavaOutlets.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="85" lean-forward="true" selection-start-line="85" selection-end-line="85" />
+        <state relative-caret-position="945">
+          <caret line="85" selection-start-line="85" selection-end-line="85" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#871#872#0" expanded="true" />
-            <element signature="e#890#891#0" expanded="true" />
-            <element signature="e#939#940#0" expanded="true" />
-            <element signature="e#959#960#0" expanded="true" />
-            <element signature="e#7402#7403#0" expanded="true" />
-            <element signature="e#7475#7476#0" expanded="true" />
-            <element signature="e#8194#8195#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/cpp/GameOverlay.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
+        <state relative-caret-position="540">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/cpp/GameRenderer.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="147" column="32" lean-forward="true" selection-start-line="147" selection-start-column="32" selection-end-line="147" selection-end-column="32" />
+        <state relative-caret-position="2205">
+          <caret line="147" column="32" selection-start-line="147" selection-start-column="32" selection-end-line="147" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/cpp/BrickHead.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2833">
-          <caret line="30" column="41" lean-forward="true" selection-start-line="30" selection-start-column="41" selection-end-line="30" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/cpp/Dart.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-72" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/cpp/Balloon.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="26" column="17" lean-forward="true" selection-start-line="26" selection-start-column="17" selection-end-line="26" selection-end-column="17" />
+        <state relative-caret-position="450">
+          <caret line="30" column="41" selection-start-line="30" selection-start-column="41" selection-end-line="30" selection-end-column="41" />
         </state>
       </provider>
     </entry>

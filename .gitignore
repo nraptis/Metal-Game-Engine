@@ -12,4 +12,7 @@
 /captures
 .externalNativeBuild
 .externalNativeBuild/
-
+.gradle
+.gradle/
+/.gradle
+/.externalNativeBuild
