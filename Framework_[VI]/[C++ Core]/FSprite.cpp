@@ -90,9 +90,7 @@ void FSprite::LoadNode(FImageBundler *pImageBundler, FImageBundlerLoadNode *pNod
     float aEndU = pNode->mSpriteUEnd;
     float aEndV = pNode->mSpriteVEnd;
 
-    float aScale = 1.0f / (float)aTexture->mScale;
-    aScale *= ((float)gSpriteScale);
-    
+    float aScale = (1.0f / (float)aTexture->mScale) * gSpriteDrawScale;
     
     float aLeft = pNode->mSpriteLeft * aScale;
     float aRight = pNode->mSpriteRight * aScale;
@@ -224,8 +222,10 @@ void FSprite::Load(FTexture *pTexture, int pX, int pY, int pWidth, int pHeight) 
         if ((pTexture->mExpandedWidth > 0) && (pTexture->mExpandedHeight > 0)) {
             SetTexture(pTexture);
             
-            float aScale = 1.0f / (float)pTexture->mScale;
-            aScale *= ((float)gSpriteScale);
+            float aScale = (1.0f / (float)pTexture->mScale) * gSpriteDrawScale;
+            
+            //float aScale = 1.0f / (float)pTexture->mScale;
+            //aScale *= ((float)gSpriteScale);
             
             mWidth = (int)(pWidth * aScale + 0.5f);
             mHeight = (int)(pHeight * aScale + 0.5f);

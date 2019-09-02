@@ -19,6 +19,12 @@ AssetWadGameInterface::~AssetWadGameInterface() {
 
 void AssetWadGameInterface::Load() {
     
+    
+    mSpriteScreenSizeSmall.Load("reference_screen_block_small");
+    mSpriteScreenSizeMedium.Load("reference_screen_block_medium");
+    mSpriteScreenSizeLarge.Load("reference_screen_block_large");
+    
+    
     mSpriteTest.Load("demo_sprite");
     
     mMenuButton.Load("pause_button_up");
@@ -78,16 +84,16 @@ void AssetWadGameInterface::Load() {
     
     
     //float aImageScale = 1.0f / ((float)gSpriteScale);
-    float aImageScale = (float)gSpriteScale;
     
-    
-    mFontScoreLarge.mDataScale = 0.125f * aImageScale;
+    mFontScoreLarge.mDataScale = 0.125f * gSpriteDrawScale;
     mFontScoreLarge.ApplyExpand(14.0f);
     mFontScoreLarge.SetSpaceWidth(64.0f);
     
-    mFontScoreSmall.mDataScale = 0.0625f * aImageScale;
+    mFontScoreSmall.mDataScale = 0.0625f * gSpriteDrawScale;
     mFontScoreSmall.ApplyExpand(14.0f);
     mFontScoreSmall.SetSpaceWidth(64.0f);
+    
+    
     
     //candy_beans_256_font.kern
     //fnt_cb_256_font.kern
@@ -121,6 +127,11 @@ void AssetWadGameInterface::Unload() {
     mFontScoreSmall.Kill();
     
     mSpriteTest.Kill();
+    
+    mSpriteScreenSizeSmall.Kill();
+    mSpriteScreenSizeMedium.Kill();
+    mSpriteScreenSizeLarge.Kill();
+    
     
     mMenuButton.Kill();
     mMenuButtonDown.Kill();

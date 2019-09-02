@@ -29,10 +29,7 @@ float gSafeAreaInsetRight = 0.0f;
 float gSafeAreaInsetBottom = 0.0f;
 float gSafeAreaInsetLeft = 0.0f;
 
-
 float gOSVersion = 1.0f;
-
-float gAdjustmentScale = 1.0f;
 
 float gSoundVolume = 1.0f;
 float gMusicVolume = 1.0f;
@@ -58,11 +55,9 @@ FTextureCache gTextureCache;
 FBufferCache gBufferCache;
 
 int gEnvironment = ENV_IOS;
-int gImageFileScale = 1;
-int gSpriteScale = 1;
 
-bool gIsLargeScreen = false;
-bool gIsRetina = false;
+int gImageResolutionScale = 1;
+float gSpriteDrawScale = 1.0f;
 
 bool gKeyDownCtrl = false;
 bool gKeyDownShift = false;
@@ -90,7 +85,7 @@ void AppShellInitialize(int pEnvironment) {
     music_initialize();
     social_Init();
     
-    AppShellSetImageFileScale(gImageFileScale);
+    AppShellSetImageFileScale(gImageResolutionScale);
     
     //if(gAppBase)(gAppBase)->BaseInitialize();
     //gTouch.Initialize(pEnvironment);
@@ -360,12 +355,38 @@ void AppShellSetOSVersion(float pOSVersion) {
 
 //1X, 2X, 3X, 4X...
 void AppShellSetImageFileScale(int pScale) {
-    gImageFileScale = pScale;
+    gImageResolutionScale = pScale;
     if (gAppBase) gAppBase->BaseSetImageFileScale(pScale);
 }
 
-void AppShellSetSpriteScale(int pScale) {
-    gSpriteScale = pScale;
+void AppShellSetSpriteDrawScale(float pScale) {
+    
+    gSpriteDrawScale = pScale;
+    
+    if (gSpriteDrawScale < 1.0f) {
+        gSpriteDrawScale = 1.0f;
+    } else if (gSpriteDrawScale >= 1.0f && gSpriteDrawScale < 2.0f) {
+        if (gSpriteDrawScale >= 1.5f) {
+            gSpriteDrawScale = 1.5f;
+        } else {
+            gSpriteDrawScale = 1.0f;
+        }
+    } else if (gSpriteDrawScale >= 2.0f && gSpriteDrawScale < 3.0f) {
+        if (gSpriteDrawScale >= 2.5f) {
+            gSpriteDrawScale = 2.5f;
+        } else {
+            gSpriteDrawScale = 2.0f;
+        }
+    } else if (gSpriteDrawScale >= 3.0f && gSpriteDrawScale < 4.0f) {
+        
+        if (gSpriteDrawScale >= 3.5f) {
+            gSpriteDrawScale = 3.5f;
+        } else {
+            gSpriteDrawScale = 3.0f;
+        }
+    } else {
+        gSpriteDrawScale = 4.0f;
+    }
 }
 
 void AppShellFrame() {

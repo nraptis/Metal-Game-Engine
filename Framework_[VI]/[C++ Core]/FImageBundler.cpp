@@ -507,6 +507,8 @@ void FImageBundler::EndBundle() {
             Save(mBundleName);
             Clear();
         }
+    } else {
+        Clear();
     }
 }
 

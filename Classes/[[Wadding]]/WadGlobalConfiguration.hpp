@@ -26,9 +26,12 @@ public:
     int                                         mAssetScale;
     int                                         mPrevAssetScale;
     
-    void                                        SetSpriteScale(int pScale);
-    int                                         mSpriteScale;
-    int                                         mPrevSpriteScale;
+    void                                        SetSpriteScale(float pScale);
+    float                                       mSpriteScale;
+    float                                       mPrevSpriteScale;
+    
+    float                                       RoundSpriteScale(float pScale);
+    
     
     bool                                        mAutoScale;
     

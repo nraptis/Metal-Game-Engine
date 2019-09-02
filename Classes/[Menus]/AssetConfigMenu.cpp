@@ -41,7 +41,7 @@ AssetConfigMenu::AssetConfigMenu() : ToolMenu() {
     mSegmentSpriteScale = new UISegment();
     mSegmentSpriteScale->SetSegmentCount(5);
     mSegmentSpriteScale->SetTitles("S-0X", "S-1X", "S-2X", "S-3X", "S-4X");
-    mSegmentSpriteScale->SetTarget(&gWadConfiguration.mSpriteScale);
+    //mSegmentSpriteScale->SetTarget(&gWadConfiguration.mSpriteScale);
     mPanelScaling->AddSection(mSegmentSpriteScale);
     
     

@@ -60,7 +60,7 @@ void os_initialize_outlets() {
 }
 
 int os_getAssetScale() {
-    return 3;
+    return 1;
 }
 
 void os_detach_thread(void (*pFunction)(void *pArg), void *pArg) {

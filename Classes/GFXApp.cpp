@@ -32,6 +32,7 @@ class GameEditor;
 
 AssetWadGameInterface gWadGameInterface;
 AssetWadGameEffects gWadGameEffects;
+AssetWadModelMaps gWadModelMaps;
 
 GFXApp *gApp = 0;
 GFXApp::GFXApp() {
@@ -39,7 +40,7 @@ GFXApp::GFXApp() {
     gApp = this;
     
 #ifndef EDITOR_MODE
-    mDarkMode = true;
+    //mDarkMode = true;
     
 #endif
     
@@ -147,14 +148,6 @@ void GFXApp::Load() {
     
     mCircle256.Load("circle_256");
     mCircle512.Load("circle_512");
-    
-    
-    mRocket.mUseNormals = false;
-    mRocket.LoadOBJ("rocket.obj");
-    mRocketMap.Load("rocket_uvw");
-    
-    mSnail.LoadOBJ("snail.obj");
-    mSnailMap.Load("snail_uvw");
     
     mGameAreaMarker.Load("game_area_marker");
     
@@ -429,9 +422,23 @@ void GFXApp::Draw() {
         Graphics::MatrixProjectionResetOrtho();
         Graphics::MatrixModelViewReset();
         Graphics::PipelineStateSetSpriteAlphaBlending();
+        Graphics::SetColor(1.0f);
+        
+        //gWadGameInterface.mSpriteTest.Draw(40.0f, 40.0f);
+        
+        
+        //gWadGameInterface.mSpriteScreenSizeLarge.Draw(gVirtualDevX + gVirtualDevWidth / 2.0f, gVirtualDevY + gVirtualDevHeight / 2.0f, 1.0f);
+        gWadGameInterface.mSpriteScreenSizeMedium.Draw(gVirtualDevX + gVirtualDevWidth / 2.0f, gVirtualDevY + gVirtualDevHeight / 2.0f, 1.0f);
+        //gWadGameInterface.mSpriteScreenSizeSmall.Draw(gVirtualDevX + gVirtualDevWidth / 2.0f, gVirtualDevY + gVirtualDevHeight / 2.0f, 1.0f);
+        
         Graphics::SetColor();
         
-        gWadGameInterface.mSpriteTest.Draw(40.0f, 40.0f);
+        //419
+        //837
+        //1256
+        //1674
+        
+        
     }
 }
 
@@ -576,13 +583,17 @@ void GFXApp::ExecuteWadReload() {
     gWadConfiguration.NotifyReload();
     
     AppShellSetImageFileScale(gWadConfiguration.mAssetScale);
-    AppShellSetSpriteScale(gWadConfiguration.mSpriteScale);
+    AppShellSetSpriteDrawScale(gWadConfiguration.mSpriteScale);
     
     gWadGameInterface.Unload();
     gWadGameInterface.Load();
     
     gWadGameEffects.Unload();
     gWadGameEffects.Load();
+    
+    gWadModelMaps.Unload();
+    gWadModelMaps.Load();
+    
     
     printf("*** End:: GFXApp::ExecuteWadReload()\n");
     

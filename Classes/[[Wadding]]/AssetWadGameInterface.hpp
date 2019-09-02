@@ -21,6 +21,11 @@ public:
     
     FSprite                                         mSpriteTest;
     
+    FSprite                                         mSpriteScreenSizeSmall;
+    FSprite                                         mSpriteScreenSizeMedium;
+    FSprite                                         mSpriteScreenSizeLarge;
+    
+    
     
     FSprite                                         mMenuButton;
     FSprite                                         mMenuButtonDown;

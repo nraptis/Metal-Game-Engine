@@ -20,6 +20,7 @@
 
 #include "AssetWadGameInterface.hpp"
 #include "AssetWadGameEffects.hpp"
+#include "AssetWadModelMaps.hpp"
 
 #define EDITOR_MODE 1
 #undef EDITOR_MODE
@@ -103,11 +104,6 @@ public:
     SoundConfigMenu                         *mSoundMenu;
     AssetConfigMenu                         *mAssetMenu;
     
-    FModelData                              mSnail;
-    FSprite                                 mSnailMap;
-    
-    FModelDataPacked                        mRocket;
-    FSprite                                 mRocketMap;
     
     FModelDataPacked                        mGround;
     FSprite                                 mGroundMixedMap;
@@ -172,6 +168,7 @@ extern GFXApp *gApp;
 
 extern AssetWadGameInterface gWadGameInterface;
 extern AssetWadGameEffects gWadGameEffects;
+extern AssetWadModelMaps gWadModelMaps;
 
 
 #endif /* GFXApp_hpp */

@@ -88,7 +88,6 @@ void FImage::Load(char *pFile) {
                     cImageLoadHelper.Append(*aPathMutableSuffix);
                     aWriteIndex = cImageLoadHelper.mLength;
                     
-                    
                     aWriteIndexHold[2] = aWriteIndex;
                     for (int aScaleSuffixIndex = 0;aScaleSuffixIndex < 2; aScaleSuffixIndex++) {
                         
@@ -123,7 +122,7 @@ void FImage::Load(char *pFile) {
                             LoadDirect(cImageLoadHelper.c());
                             if ((mWidth > 0) && (mHeight > 0) && (mData != 0)) {
                                 if (aScaleSuffixIndex == 0) {
-                                    mScale = gImageFileScale;
+                                    mScale = gImageResolutionScale;
                                 }
                                 aDidLoad = true;
                             } else {
@@ -133,7 +132,7 @@ void FImage::Load(char *pFile) {
                                         LoadDirect(aResourcePath);
                                         if((mWidth > 0) && (mHeight > 0) && (mData != 0)) {
                                             if (aScaleSuffixIndex == 0) {
-                                                mScale = gImageFileScale;
+                                                mScale = gImageResolutionScale;
                                             }
                                             aDidLoad = true;
                                         } else {

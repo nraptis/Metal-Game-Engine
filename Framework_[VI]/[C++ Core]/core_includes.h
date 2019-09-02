@@ -111,15 +111,10 @@ extern float gMusicVolume;
 
 extern float gOSVersion;
 
-extern float gAdjustmentScale;
-
-extern bool gIsLargeScreen;
-extern bool gIsRetina;
-
 extern int gEnvironment;
 
-extern int gImageFileScale;
-extern int gSpriteScale;
+extern int gImageResolutionScale;
+extern float gSpriteDrawScale;
 
 extern FString gDirDocuments;
 extern FString gDirBundle;

@@ -46,21 +46,37 @@ void WadGlobalConfiguration::NotifyVirtualFrameChange() {
     if (aScreenWidth < 100.0f) { aScreenWidth = 100.0f; }
     
     //TODO: This will be the magic number that determines our scale...
-    float aExampleImageWidth = 400.0f;
+    float aExampleImageWidth = 480.0f;
     
-    float aExpectScale = aScreenWidth / (aExampleImageWidth);
-    int aScale = (int)(floorf(aExpectScale));
     
-    printf("WadGlobalConfiguration::Expect Scale: %d (%f) VD(%f x %f)\n", aScale, aExpectScale, gVirtualDevWidth, gVirtualDevHeight);
+    float aFactor = (aScreenWidth - 640.0f) / (1440 - 640.0f);
+    if (aFactor < 0.0f) { aFactor = 0.0f; }
+    if (aFactor > 1.0f) { aFactor = 1.0f; }
+    
+    float aNumer = aScreenWidth + (aExampleImageWidth * 0.5f) + (aExampleImageWidth * 0.5f * aFactor);
+    float aExpectScale = aNumer / (aExampleImageWidth);
+    
+    float aScale = RoundSpriteScale(aExpectScale);
+    
+    
+    //int aScale = (int)(floorf(aExpectScale));
+    
+    printf("WadGlobalConfiguration::Expect Scale: %f (%f) VD(%f x %f)\n", aScale, aExpectScale, gVirtualDevWidth, gVirtualDevHeight);
     
     if (aScale < 1) { aScale = 1; }
     if (aScale > 4) { aScale = 4; }
     
     if (mAutoScale) {
+        
         mSpriteScale = aScale;
         mAssetScale = os_getAssetScale();
-        if (mAssetScale < mSpriteScale) {
-            mAssetScale = mSpriteScale;
+        
+        int aThresholdScale = (int)(mSpriteScale + 0.5f);
+        if (aThresholdScale < 1) { aThresholdScale = 1; }
+        if (aThresholdScale > 4) { aThresholdScale = 4; }
+        
+        if (mAssetScale < aThresholdScale) {
+            mAssetScale = aThresholdScale;
         }
     }
     
@@ -69,7 +85,7 @@ void WadGlobalConfiguration::NotifyVirtualFrameChange() {
     }
     
     if (mSpriteScale != mPrevSpriteScale) {
-        printf("WadGlobalConfiguration::UPDATE Asset Scale: %d\n", mSpriteScale);
+        printf("WadGlobalConfiguration::UPDATE Asset Scale: %f\n", mSpriteScale);
     }
     
 }
@@ -79,8 +95,40 @@ void WadGlobalConfiguration::SetAssetScale(int pScale) {
     mAssetScale = pScale;
 }
 
-void WadGlobalConfiguration::SetSpriteScale(int pScale) {
-    mSpriteScale = pScale;
+void WadGlobalConfiguration::SetSpriteScale(float pScale) {
+    mSpriteScale = RoundSpriteScale(pScale);
+}
+
+float WadGlobalConfiguration::RoundSpriteScale(float pScale) {
+    
+    float aScale = pScale;
+    
+    if (aScale < 1.0f) {
+        aScale = 1.0f;
+    } else if (aScale >= 1.0f && aScale < 2.0f) {
+        if (aScale >= 1.5f) {
+            aScale = 1.5f;
+        } else {
+            aScale = 1.0f;
+        }
+    } else if (aScale >= 2.0f && aScale < 3.0f) {
+        if (aScale >= 2.5f) {
+            aScale = 2.5f;
+        } else {
+            aScale = 2.0f;
+        }
+    } else if (aScale >= 3.0f && aScale < 4.0f) {
+        
+        if (aScale >= 3.5f) {
+            aScale = 3.5f;
+        } else {
+            aScale = 3.0f;
+        }
+    } else {
+        aScale = 4.0f;
+    }
+    
+    return aScale;
 }
 
 void WadGlobalConfiguration::Print() {

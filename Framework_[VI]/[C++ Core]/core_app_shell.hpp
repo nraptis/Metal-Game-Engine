@@ -43,7 +43,7 @@ void AppShellSetOSVersion(float pOSVersion);
 
 //1X, 2X, 3X, 4X...
 void AppShellSetImageFileScale(int pScale);
-void AppShellSetSpriteScale(int pScale);
+void AppShellSetSpriteDrawScale(float pScale);
 
 
 ////

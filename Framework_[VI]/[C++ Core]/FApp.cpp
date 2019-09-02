@@ -305,11 +305,15 @@ void FApp::BaseDraw() {
         Graphics::SetColor();
         Graphics::PipelineStateSetSpritePremultipliedBlending();
         
-        mSysFont.Draw(FString("FPS = ") + FString(GetFPS()), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 2.0f, 0.75f);
-        mSysFont.Draw(FString("UPS = ") + FString(GetUPS()), gSafeAreaInsetLeft + 110.0f, gSafeAreaInsetTop + 2.0f, 0.75f);
+        mSysFont.Draw(FString("FPS: ") + FString(GetFPS()), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 2.0f, 0.75f);
+        mSysFont.Draw(FString("UPS: ") + FString(GetUPS()), gSafeAreaInsetLeft + 130.0f, gSafeAreaInsetTop + 2.0f, 0.75f);
         
-        mSysFont.Draw(FString("RES = ") + FString(gImageFileScale), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 2.0f + 20.0f + 30.0f, 0.75f);
-        mSysFont.Draw(FString("IMG = ") + FString(gSpriteScale), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 2.0f + 40.0f + 30.0f, 0.75f);
+        mSysFont.Draw(FString("SPRSC: ") + FString(gSpriteDrawScale), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 2.0f + 20.0f + 30.0f, 0.75f);
+        mSysFont.Draw(FString("REZSC: ") + FString(gImageResolutionScale), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 2.0f + 40.0f + 30.0f, 0.75f);
+        
+        
+        FString aResString = FString("HW: ") + FString(gDeviceWidth) + FString(" x ") + FString(gDeviceHeight) + FString(", VD: ") + FString(gVirtualDevWidth) + FString(" x ") + FString(gVirtualDevHeight);
+        mSysFont.Center(aResString, gDeviceWidth2, gDeviceHeight - 60.0f);
         
     }
     
@@ -360,15 +364,10 @@ void FApp::BaseLoad() {
     //bndl_sys_font_scale_4.png
     //sys_font.kern
     
-    float aImageScale = (float)gSpriteScale;
+    int aImageScale = (int)(gSpriteDrawScale + 0.5f);
     int aScreenScale = os_getAssetScale();
-    if (aScreenScale == 0) {
-        if (gSpriteScale > 1) {
-            aScreenScale = gSpriteScale;
-        } else {
-            aScreenScale = 1;
-        }
-    }
+    if (aScreenScale == 0) { aScreenScale = 1; }
+    if (aImageScale > aScreenScale) { aScreenScale = aImageScale; }
     AppShellSetImageFileScale(aScreenScale);
     
     
@@ -725,7 +724,7 @@ bool FApp::ShouldQuit() {
 }
 
 void FApp::BaseSetImageFileScale(int pScale) {
-    mImageLoadScaleSuffix = FString("_scale_") + FString(gImageFileScale);
+    mImageLoadScaleSuffix = FString("_scale_") + FString(gImageResolutionScale);
     SetImageFileScale(pScale);
 }
 
