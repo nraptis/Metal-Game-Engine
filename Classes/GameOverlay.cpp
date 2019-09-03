@@ -21,6 +21,7 @@ GameOverlay::GameOverlay() {
 }
 
 GameOverlay::~GameOverlay() {
+    if (gGameOverlay == this) { gGameOverlay = NULL; }
     
 }
 

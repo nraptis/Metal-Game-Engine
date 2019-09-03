@@ -48,8 +48,15 @@ GameContainer::GameContainer() {
     mGame = new Game();
     mContainer->AddChild(mGame);
     
+    
+#ifndef EDITOR_MODE
+    
     mOverlay = new GameOverlay();
     AddChild(mOverlay);
+    
+#endif
+    
+    
     
 }
 
@@ -77,7 +84,7 @@ GameContainer::~GameContainer() {
 
 void GameContainer::Layout() {
 
-    if (mGame != NULL && mContainer != NULL && mOverlay != NULL) {
+    if (mGame != NULL && mContainer != NULL) {
         
         float aScale = 1.0f;
         float aGameAreaWidth = mWidth - (mInterfaceLeftWidth + mInterfaceRightWidth);
@@ -104,9 +111,11 @@ void GameContainer::Layout() {
         mGame->SetX(aGameX);
         mGame->SetY(aGameY);
         
-        float aContainerCenterX = (int)(mInterfaceLeftWidth + (aGameAreaWidth) * 0.5f);
-        float aContainerCenterY = (int)(mInterfaceTopHeight + (aGameAreaHeight) * 0.5f);
-        mOverlay->SetFrame(aContainerCenterX - mGame->mWidth2 * aScale, aContainerCenterY - mGame->mHeight2 * aScale, mGame->mWidth * aScale, mGame->mHeight * aScale);
+        if (mOverlay != NULL) {
+            float aContainerCenterX = (int)(mInterfaceLeftWidth + (aGameAreaWidth) * 0.5f);
+            float aContainerCenterY = (int)(mInterfaceTopHeight + (aGameAreaHeight) * 0.5f);
+            mOverlay->SetFrame(aContainerCenterX - mGame->mWidth2 * aScale, aContainerCenterY - mGame->mHeight2 * aScale, mGame->mWidth * aScale, mGame->mHeight * aScale);
+        }
         
     }
     

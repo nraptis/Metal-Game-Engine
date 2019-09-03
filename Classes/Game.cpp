@@ -880,10 +880,8 @@ void Game::DartFlyOffScreen(Dart *pDart) {
 
 void Game::StuckDartBeginFadeOut(Dart *pDart) {
     
-    if (pDart != NULL) {
-        
+    if (pDart != NULL && gGameOverlay != NULL) {
         int aCount = 6 + gRand.Get(4);
-        
         float aOffsetRotation = gRand.GetRotation();
         
         for (int i=0;i<aCount;i++) {
@@ -902,7 +900,6 @@ void Game::StuckDartBeginFadeOut(Dart *pDart) {
             aStar->SetAccel(0.970f);
             aStar->SetScale(0.325f, -0.001f);
             aStar->SetRotation(gRand.GetRotation(), gRand.GetFloat(-8.0f, 8.0f), 0.985f);
-            
             gGameOverlay->mEffectListDartFadeStar.Add(aStar);
         }
     }
@@ -954,10 +951,12 @@ void Game::DartCollideWithBalloon(Dart *pDart, Balloon *pBalloon) {
             gApp->mSoundBalloonPop.Play();
         }
         
-        EffectBalloonBurst *aBurst = new EffectBalloonBurst();
-        FVec2 aPos = FCanvas::Convert(pBalloon->mTransform.mX, pBalloon->mTransform.mY, this, gGameOverlay);
-        aBurst->SetPos(aPos.mX, aPos.mY);
-        gGameOverlay->mEffectListBalloonBursts.Add(aBurst);
+        if (gGameOverlay != NULL) {
+            EffectBalloonBurst *aBurst = new EffectBalloonBurst();
+            FVec2 aPos = FCanvas::Convert(pBalloon->mTransform.mX, pBalloon->mTransform.mY, this, gGameOverlay);
+            aBurst->SetPos(aPos.mX, aPos.mY);
+            gGameOverlay->mEffectListBalloonBursts.Add(aBurst);
+        }
     }
     
     mPoppedCount++;
