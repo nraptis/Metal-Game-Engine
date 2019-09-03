@@ -6,8 +6,9 @@
 //  Copyright © 2019 Nicholas Raptis. All rights reserved.
 //
 
+//HOOK:
 #define METAL_MODE 1
-#undef METAL_MODE
+//#undef METAL_MODE
 
 #import "RootViewController.h"
 #import "AppDelegate.h"
@@ -95,14 +96,11 @@ RootViewController *gRootBase = NULL;
 }
 
 - (void) active {
-    
 #ifdef METAL_MODE
     [gMetalView startAnimating];
 #else
     
 #endif
-    
-
 }
 
 - (void) inactive {
@@ -112,7 +110,6 @@ RootViewController *gRootBase = NULL;
     
 #endif
 }
-
 
 - (float) getScreenScale {
     
@@ -128,9 +125,5 @@ RootViewController *gRootBase = NULL;
     
     return aScale;
 }
-
-//
-
-
 
 @end

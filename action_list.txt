@@ -7,6 +7,45 @@ A3.) We need to keep track of particularily good throws. (like 6 balloons with 1
 
 A4.) We need to keep track of some achievements!
 
+A5.) We need an "aim arc" which shows where the dart will go.
+
+A6.) We need a game / pause menu.
+
+A7.) We need a main menu.
+
+A8.) We need a level picker screen.
+
+A9.) We need to figure out purchases on Android.
+
+A10.) We need to figure out ads on Android.
+
+A11.) We need to bucket our formations into groups, which are easier to follow.
+
+A12.) We need to separate mixed type sectons, tracer sectons, wave sectons, permanents sectons.
+
+A13.) We need a lighting configuration setup again, the old one is broken.
+
+A14.) We need to get a sky / gradient / background sprite drawing on the 3-D pass..
+
+A15.) We need to get clouds moving around on the 2-D part of the 3-D scene...
+
+A16.) We need an animation of a little bird flting around.
+
+A17.) We need 5 or 6 "ripping plastic" extremely fast 6 frame animations.
+
+A18.) We need a system to organize level sections.
+
+A19.) We need to implement the "turtle" to carry a balloon.
+
+A20.) We need to implement free life balloon.
+
+A21.) We need to implement "prize box".
+
+A22.) We need to add flying cool stars on level-complete animation.
+
+A23.) We need to show a progress bar for how close you are to finishing level.
+
+A24.) We need to start thinking about how you will earn 1, 2, or 3 stars per level.
 
 J.) We need the "wind" to pick up, sway, die down, and change directions in a semi-realistic fashion...
 

@@ -26,7 +26,7 @@ Dart::Dart() {
     
     mHitCount = 0;
     
-    mStyleIndex = gRand.Get(6);
+    mStyleIndex = gRand.Get(5);
     mModel = &gWadModelMaps.mDartRegularModel[mStyleIndex];
     mSprite = &gWadModelMaps.mDartRegular[mStyleIndex];
     

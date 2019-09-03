@@ -175,7 +175,7 @@ void BrickHead::Update() {
     
     
     
-    float aSize = 1.46f;
+    float aSize = 1.42f;
     
     gGame->Convert2DTransformTo3D(&mTransform, &mTransform3D);
     
