@@ -8,7 +8,7 @@
 
 //HOOK:
 #define METAL_MODE 1
-//#undef METAL_MODE
+#undef METAL_MODE
 
 #import "RootViewController.h"
 #import "AppDelegate.h"
@@ -31,9 +31,7 @@ RootViewController *gRootBase = NULL;
 @property (nonatomic, strong) OpenGLViewController *openGLViewController;
 #endif
 
-
 @property (nonatomic, assign) float screenScale;
-
 
 @end
 
@@ -49,10 +47,6 @@ RootViewController *gRootBase = NULL;
     self.view.backgroundColor = [UIColor blackColor];
     
     self.screenScale = [UIScreen mainScreen].scale;
-    
-    //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    //gAppBase->MainRunLoop();
-    //});
 }
 
 
@@ -62,30 +56,17 @@ RootViewController *gRootBase = NULL;
     
 #ifdef METAL_MODE
     _metalViewController = [[MetalViewController alloc] init];
-    [_metalViewController loadViewIfNeeded];
     [self.view addSubview:_metalViewController.view];
+    [_metalViewController loadViewIfNeeded];
     [_metalViewController setup];
 #else
     _openGLViewController = [[OpenGLViewController alloc] init];
-    [_openGLViewController loadViewIfNeeded];
     [self.view addSubview:_openGLViewController.view];
+    [_openGLViewController loadViewIfNeeded];
     [_openGLViewController setup];
 #endif
     
-    
 }
-
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (BOOL)isLandscape {
     return false;
@@ -99,7 +80,8 @@ RootViewController *gRootBase = NULL;
 #ifdef METAL_MODE
     [gMetalView startAnimating];
 #else
-    
+    //[gOpenGLView active];
+    [_openGLViewController startAnimating];
 #endif
 }
 
@@ -107,7 +89,8 @@ RootViewController *gRootBase = NULL;
 #ifdef METAL_MODE
     [gMetalView stopAnimating];
 #else
-    
+    //[gOpenGLView inactive];
+    [_openGLViewController stopAnimating];
 #endif
 }
 

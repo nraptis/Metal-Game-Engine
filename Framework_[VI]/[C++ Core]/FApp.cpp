@@ -314,7 +314,6 @@ void FApp::BaseDraw() {
         
         FString aResString = FString("HW: ") + FString(gDeviceWidth) + FString(" x ") + FString(gDeviceHeight) + FString(", VD: ") + FString(gVirtualDevWidth) + FString(" x ") + FString(gVirtualDevHeight);
         mSysFont.Center(aResString, gDeviceWidth2, gDeviceHeight - 60.0f);
-        
     }
     
     if (mIsLoadingComplete && Graphics::RenderPass() == GFX_RENDER_PASS_2D_MAIN) {

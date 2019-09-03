@@ -47,4 +47,13 @@ OpenGLView *gOpenGLView = NULL;
     [super viewDidLoad];
 }
 
+- (void)startAnimating {
+    [_openGLView active];
+}
+
+- (void)stopAnimating {
+    [_openGLView inactive];
+}
+
+
 @end

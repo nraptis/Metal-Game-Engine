@@ -20,6 +20,9 @@
 
 - (void)setup;
 
+- (void)startAnimating;
+- (void)stopAnimating;
+
 @end
 
 extern CAEAGLLayer *gOpenGLLayer;
