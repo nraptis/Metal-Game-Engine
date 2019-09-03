@@ -40,7 +40,7 @@ GFXApp::GFXApp() {
     gApp = this;
     
 //#ifndef EDITOR_MODE
-    mDarkMode = true;
+    //mDarkMode = true;
     
 //#endif
     

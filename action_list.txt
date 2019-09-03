@@ -1,4 +1,11 @@
 
+
+B1.) When editor launches game with all permanents, they immediately fly away after landing on screen. There should be some default or programmed-in alive timer...
+
+B2.) Alive timer and kill timer should be part of level section data.
+
+B3.) Alive timer and kill timer need flags for immediate-countdown versus "all waves complete" ? - we need to fully understand how this will work.
+
 A1.) We need a format to export PACKED 3-D models.
 
 A2.) We need to keep track of streaks.
