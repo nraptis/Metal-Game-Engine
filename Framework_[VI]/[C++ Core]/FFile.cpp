@@ -304,14 +304,10 @@ void FFile::Save(char *pFile)
     //os_write_file(aPath.c(), mData, mLength);
 }
 
-void FFile::LoadDirect(char *pFile)
-{
+void FFile::LoadDirect(char *pFile) {
     Clear();
-    
     mData = os_read_file(pFile, mLength);
-    
-    if(mLength > 0)
-    {
+    if (mLength > 0) {
         mFileName = pFile;
         mFileName.RemovePath();
     }
@@ -412,15 +408,11 @@ bool FFileSequence::LoadSequence(const char *pFileBase, const char *pExtension, 
     return aResult;
 }
 
-bool FFileSequence::LoadSequence(const char *pFileBase, const char *pExtension, FList &pList, int pStartIndex, int pEndIndex)
-{
+bool FFileSequence::LoadSequence(const char *pFileBase, const char *pExtension, FList &pList, int pStartIndex, int pEndIndex) {
     bool aResult = false;
-    
-    for(int aLeadingZeros=1;((aLeadingZeros<8) && (aResult==false));aLeadingZeros++)
-    {
+    for (int aLeadingZeros=1;((aLeadingZeros<8) && (aResult==false));aLeadingZeros++) {
         aResult = LoadSequence(pFileBase, pExtension, pList, pStartIndex, pEndIndex, aLeadingZeros);
     }
-    
     return aResult;
 }
 

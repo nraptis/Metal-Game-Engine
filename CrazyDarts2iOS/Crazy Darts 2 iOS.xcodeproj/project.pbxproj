@@ -1343,21 +1343,6 @@
 		0D2EC2A6231F029B00F7E9D2 /* EditorMenuPathControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D2EC239231F029A00F7E9D2 /* EditorMenuPathControl.cpp */; };
 		0D2EC2A7231F029B00F7E9D2 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D2EC242231F029A00F7E9D2 /* Game.cpp */; };
 		0D2EC2AA231F02E900F7E9D2 /* LifeIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D2EC2A8231F02E900F7E9D2 /* LifeIndicator.cpp */; };
-		0D2EC2BF231F0CE100F7E9D2 /* BufferBindingWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D2EC2AC231F0CE000F7E9D2 /* BufferBindingWrapper.mm */; };
-		0D2EC2C0231F0CE100F7E9D2 /* os_core_graphics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D2EC2AD231F0CE000F7E9D2 /* os_core_graphics.mm */; };
-		0D2EC2C1231F0CE100F7E9D2 /* Shape3DShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0D2EC2B1231F0CE000F7E9D2 /* Shape3DShaders.metal */; };
-		0D2EC2C2231F0CE100F7E9D2 /* ShapeNodeShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0D2EC2B2231F0CE000F7E9D2 /* ShapeNodeShaders.metal */; };
-		0D2EC2C3231F0CE100F7E9D2 /* PhongShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0D2EC2B4231F0CE000F7E9D2 /* PhongShaders.metal */; };
-		0D2EC2C4231F0CE100F7E9D2 /* Shape2DShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0D2EC2B5231F0CE000F7E9D2 /* Shape2DShaders.metal */; };
-		0D2EC2C5231F0CE100F7E9D2 /* ModelShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0D2EC2B6231F0CE000F7E9D2 /* ModelShaders.metal */; };
-		0D2EC2C6231F0CE100F7E9D2 /* SpriteShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0D2EC2B7231F0CE000F7E9D2 /* SpriteShaders.metal */; };
-		0D2EC2C7231F0CE100F7E9D2 /* SimpleModelShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0D2EC2B8231F0CE000F7E9D2 /* SimpleModelShaders.metal */; };
-		0D2EC2C8231F0CE100F7E9D2 /* TextureBindingWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D2EC2BA231F0CE000F7E9D2 /* TextureBindingWrapper.mm */; };
-		0D2EC2C9231F0CE100F7E9D2 /* MetalEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D2EC2BD231F0CE000F7E9D2 /* MetalEngine.mm */; };
-		0D2EC2CA231F0CE100F7E9D2 /* MetalPipeline.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D2EC2BE231F0CE000F7E9D2 /* MetalPipeline.mm */; };
-		0D2EC2D2231F0CED00F7E9D2 /* MetalViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D2EC2CC231F0CED00F7E9D2 /* MetalViewController.mm */; };
-		0D2EC2D3231F0CED00F7E9D2 /* PlatformGraphicsInterface.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D2EC2CD231F0CED00F7E9D2 /* PlatformGraphicsInterface.mm */; };
-		0D2EC2D4231F0CED00F7E9D2 /* MetalView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D2EC2D0231F0CED00F7E9D2 /* MetalView.mm */; };
 		0D35931622FB4DE50032E8FC /* FHashMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3591C022FB4DE40032E8FC /* FHashMap.cpp */; };
 		0D35931722FB4DE50032E8FC /* FTextureCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3591C322FB4DE40032E8FC /* FTextureCache.cpp */; };
 		0D35931822FB4DE50032E8FC /* FModelData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3591C622FB4DE40032E8FC /* FModelData.cpp */; };
@@ -1458,6 +1443,47 @@
 		0D635569231F2CD70033993E /* GameOverlayEffects.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D635567231F2CD70033993E /* GameOverlayEffects.cpp */; };
 		0D63556C231F2CE50033993E /* GameOverlayInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D63556A231F2CE50033993E /* GameOverlayInterface.cpp */; };
 		0D735543223337F900F975B6 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D735542223337F900F975B6 /* OpenGLES.framework */; };
+		0DBAFDD7231F81EF00C11381 /* ShaderProgramSpriteWhite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFDA5231F81EE00C11381 /* ShaderProgramSpriteWhite.cpp */; };
+		0DBAFDD8231F81EF00C11381 /* ShaderProgramModelIndexed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFDA6231F81EE00C11381 /* ShaderProgramModelIndexed.cpp */; };
+		0DBAFDD9231F81EF00C11381 /* ShaderProgramSimpleModelIndexed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFDA9231F81EE00C11381 /* ShaderProgramSimpleModelIndexed.cpp */; };
+		0DBAFDDA231F81EF00C11381 /* ShaderProgramModelIndexedLightedPhong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFDAD231F81EE00C11381 /* ShaderProgramModelIndexedLightedPhong.cpp */; };
+		0DBAFDDB231F81EF00C11381 /* OpenGLEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFDB0231F81EE00C11381 /* OpenGLEngine.cpp */; };
+		0DBAFDDC231F81EF00C11381 /* os_core_graphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFDB1231F81EE00C11381 /* os_core_graphics.cpp */; };
+		0DBAFDDD231F81EF00C11381 /* ShaderProgramShapeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFDB3231F81EE00C11381 /* ShaderProgramShapeNode.cpp */; };
+		0DBAFDDE231F81EF00C11381 /* ShaderProgramModelIndexedLightedSimpleSpotlight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFDB4231F81EE00C11381 /* ShaderProgramModelIndexedLightedSimpleSpotlight.cpp */; };
+		0DBAFDDF231F81EF00C11381 /* ShaderProgramShape3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFDB6231F81EE00C11381 /* ShaderProgramShape3D.cpp */; };
+		0DBAFDE0231F81EF00C11381 /* model_lighted_phong_fragment_shader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAFDB8231F81EE00C11381 /* model_lighted_phong_fragment_shader.glsl */; };
+		0DBAFDE1231F81EF00C11381 /* model_lighted_sunbeam_vertex_shader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAFDB9231F81EE00C11381 /* model_lighted_sunbeam_vertex_shader.glsl */; };
+		0DBAFDE2231F81EF00C11381 /* model_lighted_phong_overlay_vertex_shader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAFDBA231F81EE00C11381 /* model_lighted_phong_overlay_vertex_shader.glsl */; };
+		0DBAFDE3231F81EF00C11381 /* shape_node_fragment_shader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAFDBB231F81EE00C11381 /* shape_node_fragment_shader.glsl */; };
+		0DBAFDE4231F81EF00C11381 /* simple_model_fragment_shader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAFDBC231F81EE00C11381 /* simple_model_fragment_shader.glsl */; };
+		0DBAFDE5231F81EF00C11381 /* sprite_white_vertex_shader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAFDBD231F81EE00C11381 /* sprite_white_vertex_shader.glsl */; };
+		0DBAFDE6231F81EF00C11381 /* model_lighted_diffuse_fragment_shader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAFDBE231F81EE00C11381 /* model_lighted_diffuse_fragment_shader.glsl */; };
+		0DBAFDE7231F81EF00C11381 /* sprite_white_fragment_shader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAFDBF231F81EE00C11381 /* sprite_white_fragment_shader.glsl */; };
+		0DBAFDE8231F81EF00C11381 /* sprite_fragment_shader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAFDC0231F81EE00C11381 /* sprite_fragment_shader.glsl */; };
+		0DBAFDE9231F81EF00C11381 /* model_lighted_diffuse_vertex_shader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAFDC1231F81EE00C11381 /* model_lighted_diffuse_vertex_shader.glsl */; };
+		0DBAFDEA231F81EF00C11381 /* shape_2d_fragment_shader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAFDC2231F81EE00C11381 /* shape_2d_fragment_shader.glsl */; };
+		0DBAFDEB231F81EF00C11381 /* model_lighted_phong_overlay_fragment_shader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAFDC3231F81EE00C11381 /* model_lighted_phong_overlay_fragment_shader.glsl */; };
+		0DBAFDEC231F81EF00C11381 /* model_lighted_phong_vertex_shader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAFDC4231F81EE00C11381 /* model_lighted_phong_vertex_shader.glsl */; };
+		0DBAFDED231F81EF00C11381 /* shape_3d_vertex_shader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAFDC5231F81EE00C11381 /* shape_3d_vertex_shader.glsl */; };
+		0DBAFDEE231F81EF00C11381 /* simple_model_vertex_shader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAFDC6231F81EE00C11381 /* simple_model_vertex_shader.glsl */; };
+		0DBAFDEF231F81EF00C11381 /* model_lighted_ambient_vertex_shader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAFDC7231F81EE00C11381 /* model_lighted_ambient_vertex_shader.glsl */; };
+		0DBAFDF0231F81EF00C11381 /* shape_2d_vertex_shader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAFDC8231F81EF00C11381 /* shape_2d_vertex_shader.glsl */; };
+		0DBAFDF1231F81EF00C11381 /* shape_node_vertex_shader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAFDC9231F81EF00C11381 /* shape_node_vertex_shader.glsl */; };
+		0DBAFDF2231F81EF00C11381 /* sprite_vertex_shader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAFDCA231F81EF00C11381 /* sprite_vertex_shader.glsl */; };
+		0DBAFDF3231F81EF00C11381 /* model_lighted_sunbeam_fragment_shader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAFDCB231F81EF00C11381 /* model_lighted_sunbeam_fragment_shader.glsl */; };
+		0DBAFDF4231F81EF00C11381 /* model_lighted_ambient_fragment_shader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAFDCC231F81EF00C11381 /* model_lighted_ambient_fragment_shader.glsl */; };
+		0DBAFDF5231F81EF00C11381 /* shape_3d_fragment_shader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAFDCD231F81EF00C11381 /* shape_3d_fragment_shader.glsl */; };
+		0DBAFDF6231F81EF00C11381 /* ShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFDCE231F81EF00C11381 /* ShaderProgram.cpp */; };
+		0DBAFDF7231F81EF00C11381 /* ShaderProgramModelIndexedLightedAmbient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFDCF231F81EF00C11381 /* ShaderProgramModelIndexedLightedAmbient.cpp */; };
+		0DBAFDF8231F81EF00C11381 /* ShaderProgramModelIndexedLightedDiffuse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFDD0231F81EF00C11381 /* ShaderProgramModelIndexedLightedDiffuse.cpp */; };
+		0DBAFDF9231F81EF00C11381 /* ShaderProgramSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFDD1231F81EF00C11381 /* ShaderProgramSprite.cpp */; };
+		0DBAFDFA231F81EF00C11381 /* ShaderProgramSimpleModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFDD2231F81EF00C11381 /* ShaderProgramSimpleModel.cpp */; };
+		0DBAFDFB231F81EF00C11381 /* ShaderProgramSpriteNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFDD5231F81EF00C11381 /* ShaderProgramSpriteNode.cpp */; };
+		0DBAFE03231F81FB00C11381 /* OpenGLViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFDFF231F81FB00C11381 /* OpenGLViewController.mm */; };
+		0DBAFE04231F81FB00C11381 /* PlatformGraphicsInterface.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFE00231F81FB00C11381 /* PlatformGraphicsInterface.mm */; };
+		0DBAFE05231F81FB00C11381 /* OpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFE02231F81FB00C11381 /* OpenGLView.mm */; };
+		0DBAFE07231F829200C11381 /* test_section_turtles.json in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAFE06231F829200C11381 /* test_section_turtles.json */; };
 		E1704FEC222232B5000C5127 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1704FEB222232B5000C5127 /* Assets.xcassets */; };
 		E1704FEF222232B5000C5127 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1704FED222232B5000C5127 /* LaunchScreen.storyboard */; };
 		E1705301222234C8000C5127 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E17052FD222234C8000C5127 /* AVFoundation.framework */; };
@@ -2903,30 +2929,6 @@
 		0D2EC242231F029A00F7E9D2 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
 		0D2EC2A8231F02E900F7E9D2 /* LifeIndicator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LifeIndicator.cpp; sourceTree = "<group>"; };
 		0D2EC2A9231F02E900F7E9D2 /* LifeIndicator.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LifeIndicator.hpp; sourceTree = "<group>"; };
-		0D2EC2AC231F0CE000F7E9D2 /* BufferBindingWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BufferBindingWrapper.mm; sourceTree = "<group>"; };
-		0D2EC2AD231F0CE000F7E9D2 /* os_core_graphics.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = os_core_graphics.mm; sourceTree = "<group>"; };
-		0D2EC2AE231F0CE000F7E9D2 /* TextureBindingWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureBindingWrapper.h; sourceTree = "<group>"; };
-		0D2EC2AF231F0CE000F7E9D2 /* MetalPipeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetalPipeline.h; sourceTree = "<group>"; };
-		0D2EC2B1231F0CE000F7E9D2 /* Shape3DShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shape3DShaders.metal; sourceTree = "<group>"; };
-		0D2EC2B2231F0CE000F7E9D2 /* ShapeNodeShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = ShapeNodeShaders.metal; sourceTree = "<group>"; };
-		0D2EC2B3231F0CE000F7E9D2 /* ShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
-		0D2EC2B4231F0CE000F7E9D2 /* PhongShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = PhongShaders.metal; sourceTree = "<group>"; };
-		0D2EC2B5231F0CE000F7E9D2 /* Shape2DShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shape2DShaders.metal; sourceTree = "<group>"; };
-		0D2EC2B6231F0CE000F7E9D2 /* ModelShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = ModelShaders.metal; sourceTree = "<group>"; };
-		0D2EC2B7231F0CE000F7E9D2 /* SpriteShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = SpriteShaders.metal; sourceTree = "<group>"; };
-		0D2EC2B8231F0CE000F7E9D2 /* SimpleModelShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = SimpleModelShaders.metal; sourceTree = "<group>"; };
-		0D2EC2B9231F0CE000F7E9D2 /* BufferBindingWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BufferBindingWrapper.h; sourceTree = "<group>"; };
-		0D2EC2BA231F0CE000F7E9D2 /* TextureBindingWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TextureBindingWrapper.mm; sourceTree = "<group>"; };
-		0D2EC2BB231F0CE000F7E9D2 /* MetalEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetalEngine.h; sourceTree = "<group>"; };
-		0D2EC2BC231F0CE000F7E9D2 /* os_core_graphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os_core_graphics.h; sourceTree = "<group>"; };
-		0D2EC2BD231F0CE000F7E9D2 /* MetalEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MetalEngine.mm; sourceTree = "<group>"; };
-		0D2EC2BE231F0CE000F7E9D2 /* MetalPipeline.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MetalPipeline.mm; sourceTree = "<group>"; };
-		0D2EC2CC231F0CED00F7E9D2 /* MetalViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MetalViewController.mm; sourceTree = "<group>"; };
-		0D2EC2CD231F0CED00F7E9D2 /* PlatformGraphicsInterface.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PlatformGraphicsInterface.mm; sourceTree = "<group>"; };
-		0D2EC2CE231F0CED00F7E9D2 /* MetalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetalViewController.h; sourceTree = "<group>"; };
-		0D2EC2CF231F0CED00F7E9D2 /* PlatformGraphicsInterface.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PlatformGraphicsInterface.hpp; sourceTree = "<group>"; };
-		0D2EC2D0231F0CED00F7E9D2 /* MetalView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MetalView.mm; sourceTree = "<group>"; };
-		0D2EC2D1231F0CED00F7E9D2 /* MetalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetalView.h; sourceTree = "<group>"; };
 		0D3591C022FB4DE40032E8FC /* FHashMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FHashMap.cpp; sourceTree = "<group>"; };
 		0D3591C122FB4DE40032E8FC /* FImage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FImage.hpp; sourceTree = "<group>"; };
 		0D3591C222FB4DE40032E8FC /* FObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FObject.hpp; sourceTree = "<group>"; };
@@ -3126,6 +3128,65 @@
 		0D63556A231F2CE50033993E /* GameOverlayInterface.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameOverlayInterface.cpp; sourceTree = "<group>"; };
 		0D63556B231F2CE50033993E /* GameOverlayInterface.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameOverlayInterface.hpp; sourceTree = "<group>"; };
 		0D735542223337F900F975B6 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		0DBAFDA2231F81EE00C11381 /* ShaderProgramModelIndexedLightedDiffuse.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShaderProgramModelIndexedLightedDiffuse.hpp; sourceTree = "<group>"; };
+		0DBAFDA3231F81EE00C11381 /* ShaderProgramSprite.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShaderProgramSprite.hpp; sourceTree = "<group>"; };
+		0DBAFDA4231F81EE00C11381 /* ShaderProgramSimpleModel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShaderProgramSimpleModel.hpp; sourceTree = "<group>"; };
+		0DBAFDA5231F81EE00C11381 /* ShaderProgramSpriteWhite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderProgramSpriteWhite.cpp; sourceTree = "<group>"; };
+		0DBAFDA6231F81EE00C11381 /* ShaderProgramModelIndexed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderProgramModelIndexed.cpp; sourceTree = "<group>"; };
+		0DBAFDA7231F81EE00C11381 /* ShaderProgramSpriteNode.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShaderProgramSpriteNode.hpp; sourceTree = "<group>"; };
+		0DBAFDA8231F81EE00C11381 /* OpenGLEngine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenGLEngine.hpp; sourceTree = "<group>"; };
+		0DBAFDA9231F81EE00C11381 /* ShaderProgramSimpleModelIndexed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderProgramSimpleModelIndexed.cpp; sourceTree = "<group>"; };
+		0DBAFDAA231F81EE00C11381 /* ShaderProgramShapeNode.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShaderProgramShapeNode.hpp; sourceTree = "<group>"; };
+		0DBAFDAB231F81EE00C11381 /* ShaderProgramModelIndexedLightedSimpleSpotlight.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShaderProgramModelIndexedLightedSimpleSpotlight.hpp; sourceTree = "<group>"; };
+		0DBAFDAC231F81EE00C11381 /* ShaderProgramShape3D.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShaderProgramShape3D.hpp; sourceTree = "<group>"; };
+		0DBAFDAD231F81EE00C11381 /* ShaderProgramModelIndexedLightedPhong.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderProgramModelIndexedLightedPhong.cpp; sourceTree = "<group>"; };
+		0DBAFDAE231F81EE00C11381 /* ShaderProgram.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShaderProgram.hpp; sourceTree = "<group>"; };
+		0DBAFDAF231F81EE00C11381 /* ShaderProgramModelIndexedLightedAmbient.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShaderProgramModelIndexedLightedAmbient.hpp; sourceTree = "<group>"; };
+		0DBAFDB0231F81EE00C11381 /* OpenGLEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLEngine.cpp; sourceTree = "<group>"; };
+		0DBAFDB1231F81EE00C11381 /* os_core_graphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = os_core_graphics.cpp; sourceTree = "<group>"; };
+		0DBAFDB2231F81EE00C11381 /* ShaderProgramSimpleModelIndexed.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShaderProgramSimpleModelIndexed.hpp; sourceTree = "<group>"; };
+		0DBAFDB3231F81EE00C11381 /* ShaderProgramShapeNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderProgramShapeNode.cpp; sourceTree = "<group>"; };
+		0DBAFDB4231F81EE00C11381 /* ShaderProgramModelIndexedLightedSimpleSpotlight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderProgramModelIndexedLightedSimpleSpotlight.cpp; sourceTree = "<group>"; };
+		0DBAFDB5231F81EE00C11381 /* ShaderProgramModelIndexedLightedPhong.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShaderProgramModelIndexedLightedPhong.hpp; sourceTree = "<group>"; };
+		0DBAFDB6231F81EE00C11381 /* ShaderProgramShape3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderProgramShape3D.cpp; sourceTree = "<group>"; };
+		0DBAFDB8231F81EE00C11381 /* model_lighted_phong_fragment_shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = model_lighted_phong_fragment_shader.glsl; sourceTree = "<group>"; };
+		0DBAFDB9231F81EE00C11381 /* model_lighted_sunbeam_vertex_shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = model_lighted_sunbeam_vertex_shader.glsl; sourceTree = "<group>"; };
+		0DBAFDBA231F81EE00C11381 /* model_lighted_phong_overlay_vertex_shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = model_lighted_phong_overlay_vertex_shader.glsl; sourceTree = "<group>"; };
+		0DBAFDBB231F81EE00C11381 /* shape_node_fragment_shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shape_node_fragment_shader.glsl; sourceTree = "<group>"; };
+		0DBAFDBC231F81EE00C11381 /* simple_model_fragment_shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = simple_model_fragment_shader.glsl; sourceTree = "<group>"; };
+		0DBAFDBD231F81EE00C11381 /* sprite_white_vertex_shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sprite_white_vertex_shader.glsl; sourceTree = "<group>"; };
+		0DBAFDBE231F81EE00C11381 /* model_lighted_diffuse_fragment_shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = model_lighted_diffuse_fragment_shader.glsl; sourceTree = "<group>"; };
+		0DBAFDBF231F81EE00C11381 /* sprite_white_fragment_shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sprite_white_fragment_shader.glsl; sourceTree = "<group>"; };
+		0DBAFDC0231F81EE00C11381 /* sprite_fragment_shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sprite_fragment_shader.glsl; sourceTree = "<group>"; };
+		0DBAFDC1231F81EE00C11381 /* model_lighted_diffuse_vertex_shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = model_lighted_diffuse_vertex_shader.glsl; sourceTree = "<group>"; };
+		0DBAFDC2231F81EE00C11381 /* shape_2d_fragment_shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shape_2d_fragment_shader.glsl; sourceTree = "<group>"; };
+		0DBAFDC3231F81EE00C11381 /* model_lighted_phong_overlay_fragment_shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = model_lighted_phong_overlay_fragment_shader.glsl; sourceTree = "<group>"; };
+		0DBAFDC4231F81EE00C11381 /* model_lighted_phong_vertex_shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = model_lighted_phong_vertex_shader.glsl; sourceTree = "<group>"; };
+		0DBAFDC5231F81EE00C11381 /* shape_3d_vertex_shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shape_3d_vertex_shader.glsl; sourceTree = "<group>"; };
+		0DBAFDC6231F81EE00C11381 /* simple_model_vertex_shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = simple_model_vertex_shader.glsl; sourceTree = "<group>"; };
+		0DBAFDC7231F81EE00C11381 /* model_lighted_ambient_vertex_shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = model_lighted_ambient_vertex_shader.glsl; sourceTree = "<group>"; };
+		0DBAFDC8231F81EF00C11381 /* shape_2d_vertex_shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shape_2d_vertex_shader.glsl; sourceTree = "<group>"; };
+		0DBAFDC9231F81EF00C11381 /* shape_node_vertex_shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shape_node_vertex_shader.glsl; sourceTree = "<group>"; };
+		0DBAFDCA231F81EF00C11381 /* sprite_vertex_shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sprite_vertex_shader.glsl; sourceTree = "<group>"; };
+		0DBAFDCB231F81EF00C11381 /* model_lighted_sunbeam_fragment_shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = model_lighted_sunbeam_fragment_shader.glsl; sourceTree = "<group>"; };
+		0DBAFDCC231F81EF00C11381 /* model_lighted_ambient_fragment_shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = model_lighted_ambient_fragment_shader.glsl; sourceTree = "<group>"; };
+		0DBAFDCD231F81EF00C11381 /* shape_3d_fragment_shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shape_3d_fragment_shader.glsl; sourceTree = "<group>"; };
+		0DBAFDCE231F81EF00C11381 /* ShaderProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderProgram.cpp; sourceTree = "<group>"; };
+		0DBAFDCF231F81EF00C11381 /* ShaderProgramModelIndexedLightedAmbient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderProgramModelIndexedLightedAmbient.cpp; sourceTree = "<group>"; };
+		0DBAFDD0231F81EF00C11381 /* ShaderProgramModelIndexedLightedDiffuse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderProgramModelIndexedLightedDiffuse.cpp; sourceTree = "<group>"; };
+		0DBAFDD1231F81EF00C11381 /* ShaderProgramSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderProgramSprite.cpp; sourceTree = "<group>"; };
+		0DBAFDD2231F81EF00C11381 /* ShaderProgramSimpleModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderProgramSimpleModel.cpp; sourceTree = "<group>"; };
+		0DBAFDD3231F81EF00C11381 /* ShaderProgramSpriteWhite.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShaderProgramSpriteWhite.hpp; sourceTree = "<group>"; };
+		0DBAFDD4231F81EF00C11381 /* ShaderProgramModelIndexed.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShaderProgramModelIndexed.hpp; sourceTree = "<group>"; };
+		0DBAFDD5231F81EF00C11381 /* ShaderProgramSpriteNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderProgramSpriteNode.cpp; sourceTree = "<group>"; };
+		0DBAFDD6231F81EF00C11381 /* os_core_graphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os_core_graphics.h; sourceTree = "<group>"; };
+		0DBAFDFD231F81FB00C11381 /* OpenGLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLViewController.h; sourceTree = "<group>"; };
+		0DBAFDFE231F81FB00C11381 /* OpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLView.h; sourceTree = "<group>"; };
+		0DBAFDFF231F81FB00C11381 /* OpenGLViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenGLViewController.mm; sourceTree = "<group>"; };
+		0DBAFE00231F81FB00C11381 /* PlatformGraphicsInterface.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PlatformGraphicsInterface.mm; sourceTree = "<group>"; };
+		0DBAFE01231F81FB00C11381 /* PlatformGraphicsInterface.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PlatformGraphicsInterface.hpp; sourceTree = "<group>"; };
+		0DBAFE02231F81FB00C11381 /* OpenGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenGLView.mm; sourceTree = "<group>"; };
+		0DBAFE06231F829200C11381 /* test_section_turtles.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test_section_turtles.json; sourceTree = "<group>"; };
 		E1704FDF222232B4000C5127 /* Crazy Darts 2 iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crazy Darts 2 iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1704FEB222232B5000C5127 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1704FEE222232B5000C5127 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -4537,6 +4598,7 @@
 		0D2EBAA9231EF10800F7E9D2 /* [[[Sections]]] */ = {
 			isa = PBXGroup;
 			children = (
+				0DBAFE06231F829200C11381 /* test_section_turtles.json */,
 				0D2EBAAA231EF10800F7E9D2 /* test_section_01_old.json */,
 				0D2EBAAB231EF10800F7E9D2 /* test_section_one_simple_wave.json */,
 				0D2EBAAC231EF10800F7E9D2 /* test_section_perm_only_all_brickheads_landings.json */,
@@ -5104,56 +5166,10 @@
 			path = "[[Main Menu]]";
 			sourceTree = "<group>";
 		};
-		0D2EC2AB231F0CE000F7E9D2 /* [Metal] */ = {
-			isa = PBXGroup;
-			children = (
-				0D2EC2AC231F0CE000F7E9D2 /* BufferBindingWrapper.mm */,
-				0D2EC2AD231F0CE000F7E9D2 /* os_core_graphics.mm */,
-				0D2EC2AE231F0CE000F7E9D2 /* TextureBindingWrapper.h */,
-				0D2EC2AF231F0CE000F7E9D2 /* MetalPipeline.h */,
-				0D2EC2B0231F0CE000F7E9D2 /* Shaders */,
-				0D2EC2B9231F0CE000F7E9D2 /* BufferBindingWrapper.h */,
-				0D2EC2BA231F0CE000F7E9D2 /* TextureBindingWrapper.mm */,
-				0D2EC2BB231F0CE000F7E9D2 /* MetalEngine.h */,
-				0D2EC2BC231F0CE000F7E9D2 /* os_core_graphics.h */,
-				0D2EC2BD231F0CE000F7E9D2 /* MetalEngine.mm */,
-				0D2EC2BE231F0CE000F7E9D2 /* MetalPipeline.mm */,
-			);
-			path = "[Metal]";
-			sourceTree = "<group>";
-		};
-		0D2EC2B0231F0CE000F7E9D2 /* Shaders */ = {
-			isa = PBXGroup;
-			children = (
-				0D2EC2B1231F0CE000F7E9D2 /* Shape3DShaders.metal */,
-				0D2EC2B2231F0CE000F7E9D2 /* ShapeNodeShaders.metal */,
-				0D2EC2B3231F0CE000F7E9D2 /* ShaderTypes.h */,
-				0D2EC2B4231F0CE000F7E9D2 /* PhongShaders.metal */,
-				0D2EC2B5231F0CE000F7E9D2 /* Shape2DShaders.metal */,
-				0D2EC2B6231F0CE000F7E9D2 /* ModelShaders.metal */,
-				0D2EC2B7231F0CE000F7E9D2 /* SpriteShaders.metal */,
-				0D2EC2B8231F0CE000F7E9D2 /* SimpleModelShaders.metal */,
-			);
-			path = Shaders;
-			sourceTree = "<group>";
-		};
-		0D2EC2CB231F0CED00F7E9D2 /* [Metal] */ = {
-			isa = PBXGroup;
-			children = (
-				0D2EC2CC231F0CED00F7E9D2 /* MetalViewController.mm */,
-				0D2EC2CD231F0CED00F7E9D2 /* PlatformGraphicsInterface.mm */,
-				0D2EC2CE231F0CED00F7E9D2 /* MetalViewController.h */,
-				0D2EC2CF231F0CED00F7E9D2 /* PlatformGraphicsInterface.hpp */,
-				0D2EC2D0231F0CED00F7E9D2 /* MetalView.mm */,
-				0D2EC2D1231F0CED00F7E9D2 /* MetalView.h */,
-			);
-			path = "[Metal]";
-			sourceTree = "<group>";
-		};
 		0D3591AA22FB4DE40032E8FC /* Framework_[VI] */ = {
 			isa = PBXGroup;
 			children = (
-				0D2EC2AB231F0CE000F7E9D2 /* [Metal] */,
+				0DBAFDA1231F81EE00C11381 /* [OpenGL] */,
 				0D3591BF22FB4DE40032E8FC /* [C++ Core] */,
 				0D3592AE22FB4DE50032E8FC /* [iOS] */,
 			);
@@ -5350,7 +5366,7 @@
 		0D3592AE22FB4DE50032E8FC /* [iOS] */ = {
 			isa = PBXGroup;
 			children = (
-				0D2EC2CB231F0CED00F7E9D2 /* [Metal] */,
+				0DBAFDFC231F81FB00C11381 /* [OpenGL] */,
 				0D3592B422FB4DE50032E8FC /* AppDelegate.h */,
 				0D3592CC22FB4DE50032E8FC /* AppDelegate.mm */,
 				0D3592C022FB4DE50032E8FC /* main.mm */,
@@ -5376,6 +5392,86 @@
 				0D3592B122FB4DE50032E8FC /* RootViewController.mm */,
 			);
 			path = "[iOS]";
+			sourceTree = "<group>";
+		};
+		0DBAFDA1231F81EE00C11381 /* [OpenGL] */ = {
+			isa = PBXGroup;
+			children = (
+				0DBAFDA2231F81EE00C11381 /* ShaderProgramModelIndexedLightedDiffuse.hpp */,
+				0DBAFDA3231F81EE00C11381 /* ShaderProgramSprite.hpp */,
+				0DBAFDA4231F81EE00C11381 /* ShaderProgramSimpleModel.hpp */,
+				0DBAFDA5231F81EE00C11381 /* ShaderProgramSpriteWhite.cpp */,
+				0DBAFDA6231F81EE00C11381 /* ShaderProgramModelIndexed.cpp */,
+				0DBAFDA7231F81EE00C11381 /* ShaderProgramSpriteNode.hpp */,
+				0DBAFDA8231F81EE00C11381 /* OpenGLEngine.hpp */,
+				0DBAFDA9231F81EE00C11381 /* ShaderProgramSimpleModelIndexed.cpp */,
+				0DBAFDAA231F81EE00C11381 /* ShaderProgramShapeNode.hpp */,
+				0DBAFDAB231F81EE00C11381 /* ShaderProgramModelIndexedLightedSimpleSpotlight.hpp */,
+				0DBAFDAC231F81EE00C11381 /* ShaderProgramShape3D.hpp */,
+				0DBAFDAD231F81EE00C11381 /* ShaderProgramModelIndexedLightedPhong.cpp */,
+				0DBAFDAE231F81EE00C11381 /* ShaderProgram.hpp */,
+				0DBAFDAF231F81EE00C11381 /* ShaderProgramModelIndexedLightedAmbient.hpp */,
+				0DBAFDB0231F81EE00C11381 /* OpenGLEngine.cpp */,
+				0DBAFDB1231F81EE00C11381 /* os_core_graphics.cpp */,
+				0DBAFDB2231F81EE00C11381 /* ShaderProgramSimpleModelIndexed.hpp */,
+				0DBAFDB3231F81EE00C11381 /* ShaderProgramShapeNode.cpp */,
+				0DBAFDB4231F81EE00C11381 /* ShaderProgramModelIndexedLightedSimpleSpotlight.cpp */,
+				0DBAFDB5231F81EE00C11381 /* ShaderProgramModelIndexedLightedPhong.hpp */,
+				0DBAFDB6231F81EE00C11381 /* ShaderProgramShape3D.cpp */,
+				0DBAFDB7231F81EE00C11381 /* Shaders */,
+				0DBAFDCE231F81EF00C11381 /* ShaderProgram.cpp */,
+				0DBAFDCF231F81EF00C11381 /* ShaderProgramModelIndexedLightedAmbient.cpp */,
+				0DBAFDD0231F81EF00C11381 /* ShaderProgramModelIndexedLightedDiffuse.cpp */,
+				0DBAFDD1231F81EF00C11381 /* ShaderProgramSprite.cpp */,
+				0DBAFDD2231F81EF00C11381 /* ShaderProgramSimpleModel.cpp */,
+				0DBAFDD3231F81EF00C11381 /* ShaderProgramSpriteWhite.hpp */,
+				0DBAFDD4231F81EF00C11381 /* ShaderProgramModelIndexed.hpp */,
+				0DBAFDD5231F81EF00C11381 /* ShaderProgramSpriteNode.cpp */,
+				0DBAFDD6231F81EF00C11381 /* os_core_graphics.h */,
+			);
+			path = "[OpenGL]";
+			sourceTree = "<group>";
+		};
+		0DBAFDB7231F81EE00C11381 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				0DBAFDB8231F81EE00C11381 /* model_lighted_phong_fragment_shader.glsl */,
+				0DBAFDB9231F81EE00C11381 /* model_lighted_sunbeam_vertex_shader.glsl */,
+				0DBAFDBA231F81EE00C11381 /* model_lighted_phong_overlay_vertex_shader.glsl */,
+				0DBAFDBB231F81EE00C11381 /* shape_node_fragment_shader.glsl */,
+				0DBAFDBC231F81EE00C11381 /* simple_model_fragment_shader.glsl */,
+				0DBAFDBD231F81EE00C11381 /* sprite_white_vertex_shader.glsl */,
+				0DBAFDBE231F81EE00C11381 /* model_lighted_diffuse_fragment_shader.glsl */,
+				0DBAFDBF231F81EE00C11381 /* sprite_white_fragment_shader.glsl */,
+				0DBAFDC0231F81EE00C11381 /* sprite_fragment_shader.glsl */,
+				0DBAFDC1231F81EE00C11381 /* model_lighted_diffuse_vertex_shader.glsl */,
+				0DBAFDC2231F81EE00C11381 /* shape_2d_fragment_shader.glsl */,
+				0DBAFDC3231F81EE00C11381 /* model_lighted_phong_overlay_fragment_shader.glsl */,
+				0DBAFDC4231F81EE00C11381 /* model_lighted_phong_vertex_shader.glsl */,
+				0DBAFDC5231F81EE00C11381 /* shape_3d_vertex_shader.glsl */,
+				0DBAFDC6231F81EE00C11381 /* simple_model_vertex_shader.glsl */,
+				0DBAFDC7231F81EE00C11381 /* model_lighted_ambient_vertex_shader.glsl */,
+				0DBAFDC8231F81EF00C11381 /* shape_2d_vertex_shader.glsl */,
+				0DBAFDC9231F81EF00C11381 /* shape_node_vertex_shader.glsl */,
+				0DBAFDCA231F81EF00C11381 /* sprite_vertex_shader.glsl */,
+				0DBAFDCB231F81EF00C11381 /* model_lighted_sunbeam_fragment_shader.glsl */,
+				0DBAFDCC231F81EF00C11381 /* model_lighted_ambient_fragment_shader.glsl */,
+				0DBAFDCD231F81EF00C11381 /* shape_3d_fragment_shader.glsl */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
+		0DBAFDFC231F81FB00C11381 /* [OpenGL] */ = {
+			isa = PBXGroup;
+			children = (
+				0DBAFDFD231F81FB00C11381 /* OpenGLViewController.h */,
+				0DBAFDFE231F81FB00C11381 /* OpenGLView.h */,
+				0DBAFDFF231F81FB00C11381 /* OpenGLViewController.mm */,
+				0DBAFE00231F81FB00C11381 /* PlatformGraphicsInterface.mm */,
+				0DBAFE01231F81FB00C11381 /* PlatformGraphicsInterface.hpp */,
+				0DBAFE02231F81FB00C11381 /* OpenGLView.mm */,
+			);
+			path = "[OpenGL]";
 			sourceTree = "<group>";
 		};
 		E1704FD6222232B4000C5127 = {
@@ -5489,6 +5585,7 @@
 				0D2EBFD1231EF10A00F7E9D2 /* f_grid_rect_1x6_46spc_solid__nodes_cfg6xb_allg.json in Resources */,
 				0D2EBE06231EF10900F7E9D2 /* menu_button_text_resume_scale_1.png in Resources */,
 				0D2EC07E231EF10A00F7E9D2 /* bndl_model_maps_06_data.json in Resources */,
+				0DBAFDEA231F81EF00C11381 /* shape_2d_fragment_shader.glsl in Resources */,
 				0D2EBC87231EF10900F7E9D2 /* balloon_blast_01_15_scale_4.png in Resources */,
 				0D2EBEBD231EF10900F7E9D2 /* coin_spin_04_07_scale_3.png in Resources */,
 				0D2EBCB6231EF10900F7E9D2 /* balloon_blast_01_28_scale_1.png in Resources */,
@@ -5535,6 +5632,7 @@
 				0D2EC0FF231EF10A00F7E9D2 /* reference_slab_scale_4.png in Resources */,
 				0D2EC0C6231EF10A00F7E9D2 /* bndl_roboto_300_scale_3.png in Resources */,
 				0D2EC0EC231EF10A00F7E9D2 /* butterfly_body_4.obj in Resources */,
+				0DBAFDF2231F81EF00C11381 /* sprite_vertex_shader.glsl in Resources */,
 				0D2EBF18231EF10900F7E9D2 /* coin_spin_02_03_scale_2.png in Resources */,
 				0D2EBC76231EF10900F7E9D2 /* balloon_blast_03_21_scale_4.png in Resources */,
 				0D2EBE4B231EF10900F7E9D2 /* coin_spin_03_15_scale_4.png in Resources */,
@@ -5561,6 +5659,7 @@
 				0D2EBE1B231EF10900F7E9D2 /* game_menu_back_scale_2.png in Resources */,
 				0D2EBDCA231EF10900F7E9D2 /* balloon_blast_02_14_scale_3.png in Resources */,
 				0D2EBF3A231EF10900F7E9D2 /* coin_spin_02_12_scale_1.png in Resources */,
+				0DBAFDED231F81EF00C11381 /* shape_3d_vertex_shader.glsl in Resources */,
 				0D2EBF69231EF10900F7E9D2 /* coin_spin_01_02_scale_2.png in Resources */,
 				0D2EBFBB231EF10900F7E9D2 /* f_tr_circ_200sz_cfg10xb_sps.json in Resources */,
 				0D2EBF05231EF10900F7E9D2 /* coin_spin_02_09_scale_4.png in Resources */,
@@ -5573,6 +5672,7 @@
 				0D2EBE9C231EF10900F7E9D2 /* coin_spin_04_06_scale_4.png in Resources */,
 				0D2EBDBD231EF10900F7E9D2 /* balloon_blast_01_12_scale_2.png in Resources */,
 				0D2EBC55231EF10900F7E9D2 /* balloon_blast_02_21_scale_3.png in Resources */,
+				0DBAFDE4231F81EF00C11381 /* simple_model_fragment_shader.glsl in Resources */,
 				0D2EC016231EF10A00F7E9D2 /* f_tr_rrct_210sz_42cr_cfg7xb_spmf.json in Resources */,
 				0D2EBC40231EF10900F7E9D2 /* batdart_color_6_map_scale_4.png in Resources */,
 				0D2EBD00231EF10900F7E9D2 /* balloon_blast_02_22_scale_2.png in Resources */,
@@ -5613,6 +5713,7 @@
 				0D2EBD9B231EF10900F7E9D2 /* balloon_blast_01_30_scale_3.png in Resources */,
 				0D2EBEAB231EF10900F7E9D2 /* coin_spin_04_14_scale_3.png in Resources */,
 				0D2EC033231EF10A00F7E9D2 /* f_grid_star_80radi_40rado_0pntc_5armc_91ful__nodes_cfg10xb_allg.json in Resources */,
+				0DBAFDE6231F81EF00C11381 /* model_lighted_diffuse_fragment_shader.glsl in Resources */,
 				0D2EBF3C231EF10900F7E9D2 /* coin_spin_02_12_scale_4.png in Resources */,
 				0D2EBF11231EF10900F7E9D2 /* coin_spin_02_00_scale_1.png in Resources */,
 				0D2EBD2E231EF10900F7E9D2 /* balloon_blast_03_17_scale_4.png in Resources */,
@@ -5896,7 +5997,9 @@
 				0D2EBF57231EF10900F7E9D2 /* coin_spin_01_15_scale_1.png in Resources */,
 				0D2EC0E7231EF10A00F7E9D2 /* butterfly_body_9.obj in Resources */,
 				0D2EBC39231EF10900F7E9D2 /* monolith_map.png in Resources */,
+				0DBAFDE5231F81EF00C11381 /* sprite_white_vertex_shader.glsl in Resources */,
 				0D2EBDF4231EF10900F7E9D2 /* lives_indicator_full_scale_4.png in Resources */,
+				0DBAFDF5231F81EF00C11381 /* shape_3d_fragment_shader.glsl in Resources */,
 				0D2EBF48231EF10900F7E9D2 /* coin_spin_01_06_scale_1.png in Resources */,
 				0D2EBF39231EF10900F7E9D2 /* coin_spin_02_07_scale_3.png in Resources */,
 				0D2EBE8E231EF10900F7E9D2 /* coin_spin_04_00_scale_4.png in Resources */,
@@ -5923,9 +6026,12 @@
 				0D2EBCAE231EF10900F7E9D2 /* balloon_blast_02_16_scale_3.png in Resources */,
 				0D2EBCAA231EF10900F7E9D2 /* balloon_blast_01_05_scale_1.png in Resources */,
 				0D2EBD71231EF10900F7E9D2 /* balloon_blast_03_08_scale_2.png in Resources */,
+				0DBAFDE2231F81EF00C11381 /* model_lighted_phong_overlay_vertex_shader.glsl in Resources */,
 				0D2EBCC9231EF10900F7E9D2 /* balloon_blast_03_05_scale_1.png in Resources */,
+				0DBAFDE9231F81EF00C11381 /* model_lighted_diffuse_vertex_shader.glsl in Resources */,
 				0D2EBD76231EF10900F7E9D2 /* balloon_blast_01_30_scale_1.png in Resources */,
 				0D2EBD3D231EF10900F7E9D2 /* balloon_blast_03_20_scale_1.png in Resources */,
+				0DBAFDF4231F81EF00C11381 /* model_lighted_ambient_fragment_shader.glsl in Resources */,
 				0D2EC089231EF10A00F7E9D2 /* bndl_model_maps_04_scale_2.png in Resources */,
 				0D2EBD5B231EF10900F7E9D2 /* balloon_blast_02_07_scale_1.png in Resources */,
 				0D2EBE7F231EF10900F7E9D2 /* coin_spin_03_12_scale_3.png in Resources */,
@@ -6002,6 +6108,7 @@
 				0D2EBE7A231EF10900F7E9D2 /* coin_spin_03_07_scale_3.png in Resources */,
 				0D2EBF4D231EF10900F7E9D2 /* coin_spin_01_00_scale_4.png in Resources */,
 				0D2EBFD6231EF10A00F7E9D2 /* f_grid_rect_6x6_46spc_89ful__nodes_cfg32xb_allg.json in Resources */,
+				0DBAFDE0231F81EF00C11381 /* model_lighted_phong_fragment_shader.glsl in Resources */,
 				0D2EBD80231EF10900F7E9D2 /* balloon_blast_03_18_scale_4.png in Resources */,
 				0D2EBDD5231EF10900F7E9D2 /* effect_white_star_scale_4.png in Resources */,
 				0D2EBDD6231EF10900F7E9D2 /* effect_white_star_small_scale_2.png in Resources */,
@@ -6016,6 +6123,7 @@
 				0D2EBE16231EF10900F7E9D2 /* menu_button_text_okay_scale_3.png in Resources */,
 				0D2EBE43231EF10900F7E9D2 /* coin_spin_03_00_scale_1.png in Resources */,
 				0D2EBD51231EF10900F7E9D2 /* balloon_blast_01_01_scale_3.png in Resources */,
+				0DBAFDF1231F81EF00C11381 /* shape_node_vertex_shader.glsl in Resources */,
 				0D2EBD9D231EF10900F7E9D2 /* balloon_blast_01_25_scale_1.png in Resources */,
 				0D2EBE0E231EF10900F7E9D2 /* menu_button_text_level_select_scale_1.png in Resources */,
 				0D2EBC8F231EF10900F7E9D2 /* balloon_blast_01_05_scale_3.png in Resources */,
@@ -6147,6 +6255,7 @@
 				0D2EC03A231EF10A00F7E9D2 /* release_dart_03.caf in Resources */,
 				0D2EBCB2231EF10900F7E9D2 /* balloon_blast_01_22_scale_2.png in Resources */,
 				0D2EC066231EF10A00F7E9D2 /* test_section_three_simple_waves_staggered.json in Resources */,
+				0DBAFDF0231F81EF00C11381 /* shape_2d_vertex_shader.glsl in Resources */,
 				0D2EBD42231EF10900F7E9D2 /* balloon_blast_02_25_scale_4.png in Resources */,
 				0D2EBDF1231EF10900F7E9D2 /* lives_indicator_full_scale_1.png in Resources */,
 				0D2EBD81231EF10900F7E9D2 /* balloon_blast_03_26_scale_3.png in Resources */,
@@ -6158,6 +6267,7 @@
 				0D2EBFFF231EF10A00F7E9D2 /* f_tr_rrct_280sz_42cr_cfg9xb_spms.json in Resources */,
 				0D2EBF84231EF10900F7E9D2 /* f_grid_penta_ngon1_5sid_48rngs_3rngc_39pnts_35roff_48ful__nodes_cfg30xb15on15off.json in Resources */,
 				0D2EC0C1231EF10A00F7E9D2 /* bndl_roboto_bold_260_scale_1.png in Resources */,
+				0DBAFDE3231F81EF00C11381 /* shape_node_fragment_shader.glsl in Resources */,
 				0D2EBFE5231EF10A00F7E9D2 /* f_grid_rect_3x3_34spc_33ful__nodes_cfg3xb_allg.json in Resources */,
 				0D2EBF38231EF10900F7E9D2 /* coin_spin_02_07_scale_2.png in Resources */,
 				0D2EBC7F231EF10900F7E9D2 /* balloon_blast_01_09_scale_1.png in Resources */,
@@ -6362,9 +6472,11 @@
 				0D2EBF5E231EF10900F7E9D2 /* coin_spin_01_00_scale_1.png in Resources */,
 				0D2EBFFB231EF10A00F7E9D2 /* f_tr_rrct_280sz_42cr_cfg9xb_spm.json in Resources */,
 				0D2EC0C3231EF10A00F7E9D2 /* bndl_roboto_300_scale_1.png in Resources */,
+				0DBAFE07231F829200C11381 /* test_section_turtles.json in Resources */,
 				0D2EBE9F231EF10900F7E9D2 /* coin_spin_04_03_scale_3.png in Resources */,
 				0D2EBCAD231EF10900F7E9D2 /* balloon_blast_01_10_scale_3.png in Resources */,
 				0D2EC0A5231EF10A00F7E9D2 /* dart_color_3_map_scale_1.png in Resources */,
+				0DBAFDEF231F81EF00C11381 /* model_lighted_ambient_vertex_shader.glsl in Resources */,
 				0D2EC01C231EF10A00F7E9D2 /* f_tr_rrct_320sz_90cr_cfg10xb_spmf.json in Resources */,
 				0D2EBE4C231EF10900F7E9D2 /* coin_spin_03_05_scale_3.png in Resources */,
 				0D2EBFFE231EF10A00F7E9D2 /* f_tr_rrct_250sz_42cr_cfg8xb_sps.json in Resources */,
@@ -6380,6 +6492,7 @@
 				0D2EBFC5231EF10900F7E9D2 /* f_tr_circ_140sz_cfg7xb_spm.json in Resources */,
 				0D2EBDF8231EF10900F7E9D2 /* extra_life_map_scale_1.png in Resources */,
 				0D2EBFBF231EF10900F7E9D2 /* f_tr_circ_120sz_cfg6xb_spxs.json in Resources */,
+				0DBAFDE7231F81EF00C11381 /* sprite_white_fragment_shader.glsl in Resources */,
 				0D2EBD91231EF10900F7E9D2 /* balloon_blast_01_17_scale_1.png in Resources */,
 				0D2EBCC8231EF10900F7E9D2 /* balloon_blast_03_10_scale_3.png in Resources */,
 				0D2EBFA9231EF10900F7E9D2 /* f_tr_circ_100sz_cfg5xb_spm.json in Resources */,
@@ -6415,6 +6528,7 @@
 				0D2EBE2C231EF10900F7E9D2 /* minidart_color_1_map_scale_1.png in Resources */,
 				0D2EC05B231EF10A00F7E9D2 /* balloon_skin_03.png in Resources */,
 				0D2EBEEF231EF10900F7E9D2 /* coin_spin_05_14_scale_4.png in Resources */,
+				0DBAFDEC231F81EF00C11381 /* model_lighted_phong_vertex_shader.glsl in Resources */,
 				0D2EC07F231EF10A00F7E9D2 /* bndl_model_maps_02_scale_1.png in Resources */,
 				0D2EBDE5231EF10900F7E9D2 /* lives_indicator_shadow_scale_1.png in Resources */,
 				0D2EBDD7231EF10900F7E9D2 /* effect_white_star_small_scale_3.png in Resources */,
@@ -6426,6 +6540,8 @@
 				0D2EC0F8231EF10A00F7E9D2 /* butterfly_wings_11.obj in Resources */,
 				0D2EBD0A231EF10900F7E9D2 /* balloon_blast_02_19_scale_1.png in Resources */,
 				0D2EBFF5231EF10A00F7E9D2 /* f_tr_rrct_190sz_42cr_cfg6xb_sps.json in Resources */,
+				0DBAFDF3231F81EF00C11381 /* model_lighted_sunbeam_fragment_shader.glsl in Resources */,
+				0DBAFDEE231F81EF00C11381 /* simple_model_vertex_shader.glsl in Resources */,
 				0D2EBCF8231EF10900F7E9D2 /* balloon_blast_03_27_scale_1.png in Resources */,
 				0D2EBD0B231EF10900F7E9D2 /* balloon_blast_03_15_scale_3.png in Resources */,
 				0D2EBE77231EF10900F7E9D2 /* coin_spin_03_02_scale_3.png in Resources */,
@@ -6476,6 +6592,7 @@
 				0D2EBD6F231EF10900F7E9D2 /* balloon_blast_03_02_scale_1.png in Resources */,
 				0D2EBE47231EF10900F7E9D2 /* coin_spin_03_00_scale_3.png in Resources */,
 				0D2EBD49231EF10900F7E9D2 /* balloon_blast_01_01_scale_2.png in Resources */,
+				0DBAFDEB231F81EF00C11381 /* model_lighted_phong_overlay_fragment_shader.glsl in Resources */,
 				0D2EC04B231EF10A00F7E9D2 /* turtle_damaged_map_scale_4.png in Resources */,
 				0D2EC072231EF10A00F7E9D2 /* ground.obj in Resources */,
 				0D2EBD62231EF10900F7E9D2 /* balloon_blast_02_29_scale_1.png in Resources */,
@@ -6508,6 +6625,7 @@
 				0D2EBF25231EF10900F7E9D2 /* coin_spin_02_14_scale_3.png in Resources */,
 				0D2EBE03231EF10900F7E9D2 /* menu_button_text_resume_scale_4.png in Resources */,
 				0D2EBDD8231EF10900F7E9D2 /* effect_white_star_small_scale_1.png in Resources */,
+				0DBAFDE1231F81EF00C11381 /* model_lighted_sunbeam_vertex_shader.glsl in Resources */,
 				0D2EBE4A231EF10900F7E9D2 /* coin_spin_03_09_scale_1.png in Resources */,
 				0D2EC007231EF10A00F7E9D2 /* f_tr_rrct_140sz_42cr_cfg3xb_sps.json in Resources */,
 				0D2EBD3E231EF10900F7E9D2 /* balloon_blast_01_11_scale_1.png in Resources */,
@@ -6650,6 +6768,7 @@
 				0D2EBFB7231EF10900F7E9D2 /* f_tr_circ_200sz_cfg10xb_spmf.json in Resources */,
 				0D2EBD5C231EF10900F7E9D2 /* balloon_blast_01_26_scale_2.png in Resources */,
 				0D2EC076231EF10A00F7E9D2 /* turtle.3dp in Resources */,
+				0DBAFDE8231F81EF00C11381 /* sprite_fragment_shader.glsl in Resources */,
 				0D2EC093231EF10A00F7E9D2 /* bndl_model_maps_03_scale_4.png in Resources */,
 				0D2EBD8F231EF10900F7E9D2 /* balloon_blast_03_23_scale_4.png in Resources */,
 				0D2EBD85231EF10900F7E9D2 /* balloon_blast_01_25_scale_2.png in Resources */,
@@ -6728,35 +6847,38 @@
 				0D2EC294231F029B00F7E9D2 /* EditorMenuPermanent.cpp in Sources */,
 				0D35935E22FB4DE50032E8FC /* ToolMenuPanel.cpp in Sources */,
 				0D35938D22FB4DE50032E8FC /* os_core_app_shell_ios.cpp in Sources */,
+				0DBAFDF7231F81EF00C11381 /* ShaderProgramModelIndexedLightedAmbient.cpp in Sources */,
 				0D2EC276231F029A00F7E9D2 /* BrickHead.cpp in Sources */,
 				0D2EC268231F029A00F7E9D2 /* StuckDart.cpp in Sources */,
 				0D2EC27D231F029A00F7E9D2 /* LevelFormationNode.cpp in Sources */,
 				0D35932B22FB4DE50032E8FC /* FDrawQuad.cpp in Sources */,
 				0D2EC247231F029A00F7E9D2 /* SimpleSpotLightMenu.cpp in Sources */,
 				0D35931E22FB4DE50032E8FC /* FAchievement.cpp in Sources */,
+				0DBAFE05231F81FB00C11381 /* OpenGLView.mm in Sources */,
 				0D35933222FB4DE50032E8FC /* FSize.cpp in Sources */,
 				0D35934B22FB4DE50032E8FC /* UISegment.cpp in Sources */,
 				0D35936622FB4DE50032E8FC /* FBuffer.cpp in Sources */,
 				0D35931722FB4DE50032E8FC /* FTextureCache.cpp in Sources */,
 				0D63556C231F2CE50033993E /* GameOverlayInterface.cpp in Sources */,
 				0D35938F22FB4DE50032E8FC /* RecursiveLockWrapper.m in Sources */,
+				0DBAFDDE231F81EF00C11381 /* ShaderProgramModelIndexedLightedSimpleSpotlight.cpp in Sources */,
 				0D35931C22FB4DE50032E8FC /* FFont.cpp in Sources */,
 				0D2EC25C231F029A00F7E9D2 /* LevelSectionBlueprint.cpp in Sources */,
-				0D2EC2C9231F0CE100F7E9D2 /* MetalEngine.mm in Sources */,
 				0D2EC28A231F029A00F7E9D2 /* Bomb.cpp in Sources */,
 				0D35933722FB4DE50032E8FC /* FScrollCanvas.cpp in Sources */,
 				0D35939B22FB4DE50032E8FC /* AppDelegate.mm in Sources */,
 				0D35931F22FB4DE50032E8FC /* FVertexBuffer.cpp in Sources */,
 				0D35931922FB4DE50032E8FC /* FIntList.cpp in Sources */,
+				0DBAFDF6231F81EF00C11381 /* ShaderProgram.cpp in Sources */,
 				0D2EC299231F029B00F7E9D2 /* EditorMenuMotion.cpp in Sources */,
 				0D2EC24B231F029A00F7E9D2 /* GameContainer.cpp in Sources */,
 				0D2EC2A7231F029B00F7E9D2 /* Game.cpp in Sources */,
 				0D2EC280231F029A00F7E9D2 /* LevelWave.cpp in Sources */,
-				0D2EC2D3231F0CED00F7E9D2 /* PlatformGraphicsInterface.mm in Sources */,
 				0D35936A22FB4DE50032E8FC /* FString.cpp in Sources */,
 				0D2EC29F231F029B00F7E9D2 /* EditorMenuAttachment.cpp in Sources */,
 				0D2EC2A1231F029B00F7E9D2 /* EditorMenuGameTest.cpp in Sources */,
 				0D35934922FB4DE50032E8FC /* UILabel.cpp in Sources */,
+				0DBAFDD7231F81EF00C11381 /* ShaderProgramSpriteWhite.cpp in Sources */,
 				0D35936222FB4DE50032E8FC /* FRect.cpp in Sources */,
 				0D2EC27F231F029A00F7E9D2 /* LevelMotionController.cpp in Sources */,
 				0D35935A22FB4DE50032E8FC /* UIStepper.cpp in Sources */,
@@ -6765,8 +6887,10 @@
 				0D2EC27B231F029A00F7E9D2 /* LevelSection.cpp in Sources */,
 				0D2EC2A0231F029B00F7E9D2 /* GameFormationEditor.cpp in Sources */,
 				0D2EC262231F029A00F7E9D2 /* LevelPermSpawnBlueprint.cpp in Sources */,
+				0DBAFDDC231F81EF00C11381 /* os_core_graphics.cpp in Sources */,
 				0D2EC267231F029A00F7E9D2 /* GameLevelController.cpp in Sources */,
 				0D2EC285231F029A00F7E9D2 /* LevelMotionControllerSlice.cpp in Sources */,
+				0DBAFDDA231F81EF00C11381 /* ShaderProgramModelIndexedLightedPhong.cpp in Sources */,
 				0D35935822FB4DE50032E8FC /* UIImagePicker.cpp in Sources */,
 				0D35932122FB4DE50032E8FC /* FBufferCache.cpp in Sources */,
 				0D35936822FB4DE50032E8FC /* FNotificationCenter.cpp in Sources */,
@@ -6789,21 +6913,22 @@
 				0D2EC26F231F029A00F7E9D2 /* WadGlobalConfiguration.cpp in Sources */,
 				0D635569231F2CD70033993E /* GameOverlayEffects.cpp in Sources */,
 				0D35934C22FB4DE50032E8FC /* UITextBox.cpp in Sources */,
-				0D2EC2C2231F0CE100F7E9D2 /* ShapeNodeShaders.metal in Sources */,
+				0DBAFDF9231F81EF00C11381 /* ShaderProgramSprite.cpp in Sources */,
 				0D2EC251231F029A00F7E9D2 /* WindSpeedSimulatorChannel.cpp in Sources */,
 				0D2EC254231F029A00F7E9D2 /* LevelGroup.cpp in Sources */,
 				0D35939A22FB4DE50032E8FC /* os_core_web.cpp in Sources */,
 				0D2EC253231F029A00F7E9D2 /* LevelNode.cpp in Sources */,
 				0D2EC271231F029A00F7E9D2 /* AssetWadGameInterface.cpp in Sources */,
+				0DBAFE03231F81FB00C11381 /* OpenGLViewController.mm in Sources */,
 				0D35934A22FB4DE50032E8FC /* UIElement.cpp in Sources */,
 				0D2EC25A231F029A00F7E9D2 /* DiffuseConfiguration.cpp in Sources */,
 				0D35931A22FB4DE50032E8FC /* FQuad.cpp in Sources */,
 				0D2EC252231F029A00F7E9D2 /* Level.cpp in Sources */,
 				0D35933922FB4DE50032E8FC /* FJSON.cpp in Sources */,
+				0DBAFDFA231F81EF00C11381 /* ShaderProgramSimpleModel.cpp in Sources */,
 				0D35935622FB4DE50032E8FC /* ToolMenu.cpp in Sources */,
 				0D2EC282231F029A00F7E9D2 /* LevelSectionPermanent.cpp in Sources */,
 				0D2EC29C231F029B00F7E9D2 /* EditorMenuSpawn.cpp in Sources */,
-				0D2EC2C8231F0CE100F7E9D2 /* TextureBindingWrapper.mm in Sources */,
 				0D2EC26D231F029A00F7E9D2 /* Transform3D.cpp in Sources */,
 				0D2EC244231F029A00F7E9D2 /* GameTestRunningMainMenu.cpp in Sources */,
 				0D2EC256231F029A00F7E9D2 /* Dart.cpp in Sources */,
@@ -6815,6 +6940,7 @@
 				0D35931B22FB4DE50032E8FC /* FImageBundler.cpp in Sources */,
 				0D35935022FB4DE50032E8FC /* UIAlignmentPicker.cpp in Sources */,
 				0D2EC29B231F029B00F7E9D2 /* EditorMenuWavesPicker.cpp in Sources */,
+				0DBAFDD8231F81EF00C11381 /* ShaderProgramModelIndexed.cpp in Sources */,
 				0D35939622FB4DE50032E8FC /* main.mm in Sources */,
 				0D35933122FB4DE50032E8FC /* FLine.cpp in Sources */,
 				0D35934E22FB4DE50032E8FC /* UISegmentButton.cpp in Sources */,
@@ -6822,21 +6948,20 @@
 				0D35932A22FB4DE50032E8FC /* core_web.cpp in Sources */,
 				0D35938C22FB4DE50032E8FC /* os_core_outlets_ios.mm in Sources */,
 				0D35936122FB4DE50032E8FC /* FUniforms.cpp in Sources */,
-				0D2EC2C5231F0CE100F7E9D2 /* ModelShaders.metal in Sources */,
 				0D2EC29D231F029B00F7E9D2 /* EditorMenuSections.cpp in Sources */,
 				0D35933A22FB4DE50032E8FC /* FVec3.cpp in Sources */,
 				0D35932322FB4DE50032E8FC /* FMatrix.cpp in Sources */,
 				0D35932722FB4DE50032E8FC /* FJoystick.cpp in Sources */,
+				0DBAFDF8231F81EF00C11381 /* ShaderProgramModelIndexedLightedDiffuse.cpp in Sources */,
+				0DBAFDD9231F81EF00C11381 /* ShaderProgramSimpleModelIndexed.cpp in Sources */,
 				0D2EC26B231F029A00F7E9D2 /* GameTestEditorOverlay.cpp in Sources */,
 				0D2EC293231F029A00F7E9D2 /* GamePathEditor.cpp in Sources */,
-				0D2EC2C1231F0CE100F7E9D2 /* Shape3DShaders.metal in Sources */,
 				0D2EC269231F029A00F7E9D2 /* EffectDartFadeStar.cpp in Sources */,
 				0D35931622FB4DE50032E8FC /* FHashMap.cpp in Sources */,
 				0D2EC259231F029A00F7E9D2 /* Balloon.cpp in Sources */,
 				0D2EC265231F029A00F7E9D2 /* LevelFormationTracerBlueprint.cpp in Sources */,
 				0D35932F22FB4DE50032E8FC /* FIndexBufferCache.cpp in Sources */,
 				0D35932922FB4DE50032E8FC /* core_social.cpp in Sources */,
-				0D2EC2C6231F0CE100F7E9D2 /* SpriteShaders.metal in Sources */,
 				0D2EC2A6231F029B00F7E9D2 /* EditorMenuPathControl.cpp in Sources */,
 				0D35938E22FB4DE50032E8FC /* RootViewController.mm in Sources */,
 				0D35933022FB4DE50032E8FC /* FSpline.cpp in Sources */,
@@ -6844,14 +6969,15 @@
 				0D2EC2A4231F029B00F7E9D2 /* GamePermanentEditor.cpp in Sources */,
 				0D2EC292231F029A00F7E9D2 /* GameEditorGrid.cpp in Sources */,
 				0D2EC29A231F029B00F7E9D2 /* EditorMenuObjectClearing.cpp in Sources */,
-				0D2EC2C0231F0CE100F7E9D2 /* os_core_graphics.mm in Sources */,
 				0D35933D22FB4DE50032E8FC /* GraphicsInterface.cpp in Sources */,
 				0D2EC24D231F029A00F7E9D2 /* FloatingCamera.cpp in Sources */,
-				0D2EC2BF231F0CE100F7E9D2 /* BufferBindingWrapper.mm in Sources */,
+				0DBAFDDD231F81EF00C11381 /* ShaderProgramShapeNode.cpp in Sources */,
 				0D35932422FB4DE50032E8FC /* FPrimitive.cpp in Sources */,
 				0D35932C22FB4DE50032E8FC /* FAnimation.cpp in Sources */,
 				0D2EC25B231F029A00F7E9D2 /* GameInfoTextBubble.cpp in Sources */,
+				0DBAFE04231F81FB00C11381 /* PlatformGraphicsInterface.mm in Sources */,
 				0D2EC25F231F029A00F7E9D2 /* LevelWaveSpawnBlueprint.cpp in Sources */,
+				0DBAFDDB231F81EF00C11381 /* OpenGLEngine.cpp in Sources */,
 				0D2EC243231F029A00F7E9D2 /* PhongLightMenu.cpp in Sources */,
 				0D35936722FB4DE50032E8FC /* FApp.cpp in Sources */,
 				0D35934022FB4DE50032E8FC /* FXML.cpp in Sources */,
@@ -6887,7 +7013,6 @@
 				0D2EC257231F029A00F7E9D2 /* GameObject.cpp in Sources */,
 				0D2EC24F231F029A00F7E9D2 /* SpotLightSimpleConfiguration.cpp in Sources */,
 				0D35939D22FB4DE50032E8FC /* OSMusicPlayer.mm in Sources */,
-				0D2EC2CA231F0CE100F7E9D2 /* MetalPipeline.mm in Sources */,
 				0D35934722FB4DE50032E8FC /* FObject.cpp in Sources */,
 				0D35934D22FB4DE50032E8FC /* UIButton.cpp in Sources */,
 				0D35936422FB4DE50032E8FC /* FList.cpp in Sources */,
@@ -6903,27 +7028,23 @@
 				0D2EC24E231F029A00F7E9D2 /* PhongConfiguration.cpp in Sources */,
 				0D2EC249231F029A00F7E9D2 /* AssetConfigMenu.cpp in Sources */,
 				0D2EC24C231F029A00F7E9D2 /* HangingThread.cpp in Sources */,
-				0D2EC2D4231F0CED00F7E9D2 /* MetalView.mm in Sources */,
 				0D2EC27E231F029A00F7E9D2 /* LevelData.cpp in Sources */,
 				0D35932622FB4DE50032E8FC /* FSlider.cpp in Sources */,
+				0DBAFDFB231F81EF00C11381 /* ShaderProgramSpriteNode.cpp in Sources */,
 				0D35936022FB4DE50032E8FC /* FPolyPath.cpp in Sources */,
-				0D2EC2C7231F0CE100F7E9D2 /* SimpleModelShaders.metal in Sources */,
 				0D35939C22FB4DE50032E8FC /* os_core_music_ios.mm in Sources */,
 				0D2EC291231F029A00F7E9D2 /* EditorMenuFormationGrid.cpp in Sources */,
 				0D2EC272231F029A00F7E9D2 /* AssetWad.cpp in Sources */,
 				0D2EC297231F029B00F7E9D2 /* EditorMenuPermPicker.cpp in Sources */,
 				0D35935D22FB4DE50032E8FC /* UIImagePickerCell.cpp in Sources */,
-				0D2EC2C4231F0CE100F7E9D2 /* Shape2DShaders.metal in Sources */,
 				0D2EC274231F029A00F7E9D2 /* HangingThreadSegment.cpp in Sources */,
 				0D35932E22FB4DE50032E8FC /* FGestureCanvas.cpp in Sources */,
-				0D2EC2C3231F0CE100F7E9D2 /* PhongShaders.metal in Sources */,
 				0D35933E22FB4DE50032E8FC /* FButton.cpp in Sources */,
 				0D35932522FB4DE50032E8FC /* FSound.cpp in Sources */,
 				0D35932222FB4DE50032E8FC /* FFloatBufferCache.cpp in Sources */,
 				0D2EC26A231F029A00F7E9D2 /* EffectBalloonBurst.cpp in Sources */,
 				0D2EC283231F029A00F7E9D2 /* LevelWaveSpawn.cpp in Sources */,
 				0D2EC2A3231F029B00F7E9D2 /* GameEditor.cpp in Sources */,
-				0D2EC2D2231F0CED00F7E9D2 /* MetalViewController.mm in Sources */,
 				0D35936322FB4DE50032E8FC /* FFloatList.cpp in Sources */,
 				0D35936922FB4DE50032E8FC /* core_app_shell.cpp in Sources */,
 				0D2EC28C231F029A00F7E9D2 /* EditorMenuFormationPicker.cpp in Sources */,
@@ -6936,6 +7057,7 @@
 				0D2EC266231F029A00F7E9D2 /* WorldConfigScene.cpp in Sources */,
 				0D2EC2A5231F029B00F7E9D2 /* EditorMenuPath.cpp in Sources */,
 				0D2EC279231F029A00F7E9D2 /* FormationCollection.cpp in Sources */,
+				0DBAFDDF231F81EF00C11381 /* ShaderProgramShape3D.cpp in Sources */,
 				0D2EC273231F029A00F7E9D2 /* AssetWadGameEffects.cpp in Sources */,
 				0D2EC2AA231F02E900F7E9D2 /* LifeIndicator.cpp in Sources */,
 				0D35934522FB4DE50032E8FC /* FPointList.cpp in Sources */,

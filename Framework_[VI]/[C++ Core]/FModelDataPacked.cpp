@@ -142,9 +142,12 @@ void FModelDataPacked::Save(FFile *pFile) {
 void FModelDataPacked::LoadData(FFile *pFile, FSprite *pSprite) {
     
     Free();
+    
+    
     if (!pFile) { return; }
     
-    if (pFile->mLength < 10) { return; }
+    mFileName = pFile->mFileName.c();
+    mFileName.RemovePath();
     
     //We start with 8 32 bit words.
     mHasXYZ = pFile->ReadInt();
@@ -196,13 +199,28 @@ void FModelDataPacked::LoadData(FFile *pFile, FSprite *pSprite) {
 }
 
 void FModelDataPacked::LoadData(const char *pFile, FSprite *pSprite) {
+    
     FFile aFile;
-    aFile.Load(pFile);
+    const char *aResourcePath = gRes.GetResourcePathOfType(pFile, RESOURCE_TYPE_MODEL_DATA);
+    while ((aResourcePath != 0)) {
+        aFile.LoadDirect((char *)aResourcePath);
+        if (aFile.mLength > 0) { break; }
+        aResourcePath = gRes.GetNextResourcePath();
+    }
+    
+    if (aFile.mLength == 0) {
+        aFile.Load(pFile);
+    }
+    
     LoadData(&aFile, pSprite);
 }
 
 void FModelDataPacked::LoadOBJ(FFile *pFile) {
     Free();
+    
+    mFileName = pFile->mFileName.c();
+    mFileName.RemovePath();
+    
     FModelData aTemp;
     FModelDataIndexed aData;
     aTemp.LoadOBJ(pFile);
@@ -295,12 +313,18 @@ void FModelDataPacked::LoadOBJ(FFile *pFile) {
 
 void FModelDataPacked::LoadOBJ(const char *pFile) {
     
-    mFileName = pFile;
-    mFileName.RemovePath();
-    mFileName.RemoveExtension();
-    
     FFile aFile;
-    aFile.Load(pFile);
+    const char *aResourcePath = gRes.GetResourcePathOfType(pFile, RESOURCE_TYPE_MODEL_OBJ);
+    while ((aResourcePath != 0)) {
+        aFile.LoadDirect((char *)aResourcePath);
+        if (aFile.mLength > 0) { break; }
+        aResourcePath = gRes.GetNextResourcePath();
+    }
+    
+    if (aFile.mLength == 0) {
+        aFile.Load(pFile);
+    }
+    
     LoadOBJ(&aFile);
 }
 

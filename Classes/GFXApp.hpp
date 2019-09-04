@@ -22,7 +22,7 @@
 #include "AssetWadGameEffects.hpp"
 #include "AssetWadModels.hpp"
 
-//#define EDITOR_MODE 1
+#define EDITOR_MODE 1
 #undef EDITOR_MODE
 
 #ifdef EDITOR_MODE

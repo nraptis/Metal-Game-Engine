@@ -4,48 +4,44 @@
 	"perm_list": [
 		{
 			"x_con": 400,
-			"y_con": 400
-		},
-		{
-			"x_con": 850,
-			"y_con": 150,
-			"path": {
-				"closed": true,
-				"speed_class": 200,
-				"node_list": [
-					{
-						"x_con": 300,
-						"y_con": 300
-					},
-					{
-						"x_con": 500,
-						"y_con": 300
-					},
-					{
-						"x_con": 600,
-						"y_con": 400
-					},
-					{
-						"x_con": 600,
-						"y_con": 500
-					},
-					{
-						"x_con": 300,
-						"y_con": 500
-					}
-				]
-			},
-			"spawn": [
-				{},
-				{},
-				{},
-				{}
-			]
+			"y_con": 400,
+			"y_con_offset": 30.000000,
+			"type": 3
 		},
 		{
 			"x_con": 600,
-			"y_con": 600,
-			"formation": "f_tr_rrct_190sz_42cr_cfg6xb_spms.json"
+			"y_con": 400,
+			"y_con_offset": 30.000000,
+			"type": 3
+		},
+		{
+			"x_con": 300,
+			"y_con": 500,
+			"y_con_offset": -70.000000,
+			"type": 3
+		},
+		{
+			"x_con": 700,
+			"y_con": 500,
+			"y_con_offset": -70.000000,
+			"type": 3
+		},
+		{
+			"x_con": 500,
+			"y_con": 500,
+			"formation": "f_grid_rect_2x2_44spc_solid__nodes_cfg4xb_allg.json"
+		},
+		{
+			"x_con": 700,
+			"y_con": 800,
+			"y_con_offset": -90.000000,
+			"formation": "f_grid_rect_1x5_46spc_solid__nodes_cfg5xb_allg.json"
+		},
+		{
+			"x_con": 300,
+			"y_con": 800,
+			"y_con_offset": -90.000000,
+			"formation": "f_grid_rect_1x5_46spc_solid__nodes_cfg5xb_allg.json"
 		}
 	]
 }

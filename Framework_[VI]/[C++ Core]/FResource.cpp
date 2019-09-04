@@ -54,34 +54,29 @@ FResource *FResourceManager::AddResource(const char *pResourcePath, bool pPrint)
         aResult->mExtension = aExtension;
         aResult->mResourceType = 0;
 
-        if((aExtension == "png") || (aExtension == "jpg") || (aExtension == "jpeg") || (aExtension == "gif") || (aExtension == "tga") || (aExtension == "bmp"))
-        {
+        if ((aExtension == "png") || (aExtension == "jpg") || (aExtension == "jpeg") || (aExtension == "gif") || (aExtension == "tga") || (aExtension == "bmp")) {
             (aResult->mResourceType) |= RESOURCE_TYPE_IMAGE;
-        }
-        else if((aExtension == "caf") || (aExtension == "aif") || (aExtension == "aiff") || (aExtension == "wav") || (aExtension == "ogg") || (aExtension == "pcm"))
-        {
+        } else if((aExtension == "caf") || (aExtension == "aif") || (aExtension == "aiff") || (aExtension == "wav") || (aExtension == "ogg") || (aExtension == "pcm")) {
             (aResult->mResourceType) |= RESOURCE_TYPE_SOUND_EFFECT;
             (aResult->mResourceType) |= RESOURCE_TYPE_AUDIO;
             
-        }
-        else if((aExtension == "mp3") || (aExtension == "mod") || (aExtension == "midi"))
-        {
+        } else if((aExtension == "mp3") || (aExtension == "mod") || (aExtension == "midi")) {
             (aResult->mResourceType) |= RESOURCE_TYPE_MUSIC;
             (aResult->mResourceType) |= RESOURCE_TYPE_AUDIO;
-        }
-        else if((aExtension == "xml") || (aExtension == "cml") || (aExtension == "jsn") || (aExtension == "json"))
-        {
+        } else if((aExtension == "xml") || (aExtension == "cml") || (aExtension == "jsn") || (aExtension == "json")) {
             (aResult->mResourceType) |= RESOURCE_TYPE_XMLJSON;
-        }
-        else if((aExtension == "dat") || (aExtension == "sav"))
-        {
+        } else if ((aExtension == "3dp") || (aExtension == "3dm")) {
+            (aResult->mResourceType) |= RESOURCE_TYPE_MODEL_DATA;
+        } else if (aExtension == "obj") {
+            (aResult->mResourceType) |= RESOURCE_TYPE_MODEL_OBJ;
+        } else if((aExtension == "dat") || (aExtension == "sav")) {
             (aResult->mResourceType) |= RESOURCE_TYPE_BINARY;
         }
         
         mTable.Add(aName.c(), pResourcePath, aResult);
         mResourceList.Add(aResult);
 
-        if(pPrint)
+        if (pPrint)
         {
             FString aTypeString = "";
             //Log("+++[New Recource]+++ (%s) [%s]", aName.c(), aExtension.c());
@@ -216,128 +211,28 @@ const char *FResourceManager::GetResourcePathOfType(const char *pFileName, int p
 }
 
 const char *FResourceManager::GetResourcePathImage(const char *pFileName) {
-    
     return GetResourcePathOfType(pFileName, RESOURCE_TYPE_IMAGE);
-    
-    /*
-	const char *aResult = 0;
-    
-    GetResourcePath(pFileName);
-    
-    mSearchResultsFilter.RemoveAll();
-    
-    EnumList(FFileTableNode, aNode, mSearchResults)
-    {
-        FResource *aResource = ((FResource *)(aNode->mObject));
-        if(aResource)
-        {
-            if(((aResource->mResourceType) & RESOURCE_TYPE_IMAGE) != 0)
-            {
-                mSearchResultsFilter.Add(aNode);
-            }
-        }
-    }
-    
-    mSearchResults.RemoveAll();
-    
-    EnumList(FFileTableNode, aNode, mSearchResultsFilter)mSearchResults.Add(aNode);
-    
-    mSearchResultsFilter.RemoveAll();
-    
-    FFileTableNode *aNode = (FFileTableNode *)(mSearchResults.Fetch(0));
-    if(aNode)
-    {
-        mSearchIndex = 1;
-        aResult = aNode->mKeyFull.c();
-    }
-    else mSearchIndex = 0;
-    return aResult;
-    */
-    
 }
 
-const char *FResourceManager::GetResourcePathSound(const char *pFileName)
-{
-    
+const char *FResourceManager::GetResourcePathSound(const char *pFileName) {
     return GetResourcePathOfType(pFileName, RESOURCE_TYPE_SOUND_EFFECT);
-    
-    /*
-    const char *aResult = 0;
-    
-    GetResourcePath(pFileName);
-    mSearchResultsFilter.RemoveAll();
-    EnumList(FFileTableNode, aNode, mSearchResults)
-    {
-        FResource *aResource = ((FResource *)(aNode->mObject));
-        if(aResource)
-        {
-            if(((aResource->mResourceType) & RESOURCE_TYPE_SOUND_EFFECT) != 0)mSearchResultsFilter.Add(aNode);
-        }
-    }
-    
-    mSearchResults.RemoveAll();
-    EnumList(FFileTableNode, aNode, mSearchResultsFilter)mSearchResults.Add(aNode);
-    
-    mSearchResultsFilter.RemoveAll();
-    FFileTableNode *aNode = (FFileTableNode *)(mSearchResults.Fetch(0));
-    if(aNode)
-    {
-        mSearchIndex = 1;
-        aResult = aNode->mKeyFull.c();
-    }
-    else mSearchIndex = 0;
-    return aResult;
-    */
 }
 
-const char *FResourceManager::GetResourcePathMusic(const char *pFileName)
-{
+const char *FResourceManager::GetResourcePathMusic(const char *pFileName) {
     return GetResourcePathOfType(pFileName, RESOURCE_TYPE_MUSIC);
-    
-    /*
-    const char *aResult = 0;
-    
-    GetResourcePath(pFileName);
-    mSearchResultsFilter.RemoveAll();
-    EnumList(FFileTableNode, aNode, mSearchResults)
-    {
-        FResource *aResource = ((FResource *)(aNode->mObject));
-        if(aResource)
-        {
-            if(((aResource->mResourceType) & RESOURCE_TYPE_SOUND_EFFECT) != 0)mSearchResultsFilter.Add(aNode);
-        }
-    }
-    
-    mSearchResults.RemoveAll();
-    EnumList(FFileTableNode, aNode, mSearchResultsFilter)mSearchResults.Add(aNode);
-    
-    mSearchResultsFilter.RemoveAll();
-    FFileTableNode *aNode = (FFileTableNode *)(mSearchResults.Fetch(0));
-    if(aNode)
-    {
-        mSearchIndex = 1;
-        aResult = aNode->mKeyFull.c();
-    }
-    else mSearchIndex = 0;
-    return aResult;
-    */
 }
 
-const char *FResourceManager::GetResourcePathFile(const char *pFileName)
-{
+const char *FResourceManager::GetResourcePathFile(const char *pFileName) {
     const char *aResult = 0;
     
     GetResourcePath(pFileName);
     
     mSearchResultsFilter.RemoveAll();
     
-    EnumList(FFileTableNode, aNode, mSearchResults)
-    {
+    EnumList(FFileTableNode, aNode, mSearchResults) {
         FResource *aResource = ((FResource *)(aNode->mObject));
-        if(aResource)
-        {
-            if(((aResource->mResourceType) & RESOURCE_TYPE_IMAGE) == 0)
-            {
+        if (aResource) {
+            if (((aResource->mResourceType) & RESOURCE_TYPE_IMAGE) == 0) {
                 mSearchResultsFilter.Add(aNode);
             }
         }
@@ -345,36 +240,28 @@ const char *FResourceManager::GetResourcePathFile(const char *pFileName)
     
     mSearchResults.RemoveAll();
     
-    EnumList(FFileTableNode, aNode, mSearchResultsFilter)
-    {
+    EnumList(FFileTableNode, aNode, mSearchResultsFilter) {
         mSearchResults.Add(aNode);
     }
     
     mSearchResultsFilter.RemoveAll();
     
-    
-    
     FFileTableNode *aNode = (FFileTableNode *)(mSearchResults.Fetch(0));
-    if(aNode)
-    {
+    if (aNode) {
         mSearchIndex = 1;
         aResult = aNode->mKeyFull.c();
-    }
-    else
-    {
+    } else {
         mSearchIndex = 0;
     }
     return aResult;
 }
 
-const char *FResourceManager::GetNextResourcePath()
-{
+const char *FResourceManager::GetNextResourcePath() {
     const char *aResult = 0;
     
     FFileTableNode *aNode = (FFileTableNode *)(mSearchResults.Fetch(mSearchIndex));
     
-    if(aNode)
-    {
+    if (aNode) {
         aResult = aNode->mKeyFull.c();
         mSearchIndex++;
     }

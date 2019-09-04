@@ -13,7 +13,7 @@
 //int kDeviceWidth = 480;
 //int kDeviceHeight = 320;
 
-int kDeviceWidth = 1600;
+int kDeviceWidth = 1480;
 int kDeviceHeight = 760;
 
 

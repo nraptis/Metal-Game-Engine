@@ -115,7 +115,7 @@ void GameOverlayEffects::Draw() {
     
     
     
-    Graphics::PipelineStateSetSpriteNoBlending();
+    Graphics::PipelineStateSetSpriteAdditiveBlending();
     
     Graphics::SetColor();
     
