@@ -279,9 +279,8 @@ void OpenGLEngine::UseProgramModelIndexedPhongOverlay() {
 
 void OpenGLEngine::UseProgramModelIndexedSimpleSpotlight() {
     
-    printf("Not Implemented:: UseProgramModelIndexedSimpleSpotlight\n");
+    Log("Not Implemented:: UseProgramModelIndexedSimpleSpotlight\n");
     exit(0);
     //UseProgram(mShaderProgramModelIndexedLightedSimpleSpotlight);
-    
 }
 

@@ -255,7 +255,7 @@ void GamePermanentEditor::TouchFlush() {
 void GamePermanentEditor::KeyDown(int pKey) {
     
     if (mOverlay == mPathEditor) {
-        printf("Niffing Key [Perm Path]\n");
+        Log("Niffing Key [Perm Path]\n");
         return;
     }
     
@@ -448,7 +448,7 @@ void GamePermanentEditor::Close() {
 }
 
 void GamePermanentEditor::ResetSelected() {
-    printf("GamePermanentEditor::ResetSelected()\n");
+    Log("GamePermanentEditor::ResetSelected()\n");
 }
 
 void GamePermanentEditor::Refresh() {
@@ -523,7 +523,7 @@ void GamePermanentEditor::SetOverlay(FCanvas *pCanvas) {
 void GamePermanentEditor::OpenPathEditor() {
     LevelSectionPermanentBlueprint *aPerm = GetPerm();
     if (aPerm == NULL) {
-        printf("No Perm Selected...\n");
+        Log("No Perm Selected...\n");
         return;
     }
     mPathEditor = new GamePathEditor(this);

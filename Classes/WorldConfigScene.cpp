@@ -167,7 +167,7 @@ void WorldConfigScene::Draw3D() {
     
     //Graphics::DepthClear();
     
-    FModelDataPacked *aDart = &(gWadModelMaps.mDartRegularModel[0]);
+    FModelDataPacked *aDart = &(gWadModels.mDartRegular[0]);
     FModelDataPacked *aBalloon = &(gApp->mBalloon);
     
     

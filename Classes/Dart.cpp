@@ -26,9 +26,27 @@ Dart::Dart() {
     
     mHitCount = 0;
     
-    mStyleIndex = gRand.Get(5);
-    mModel = &gWadModelMaps.mDartRegularModel[mStyleIndex];
-    mSprite = &gWadModelMaps.mDartRegular[mStyleIndex];
+    mStyleIndex = gRand.Get(6);
+    //mModel = &gWadModels.mDartRegular[mStyleIndex];
+    //mSprite = &gWadModels.mDartRegularMap[mStyleIndex];
+    
+    //mModel = &gWadModels.mDartMini[mStyleIndex];
+    //mSprite = &gWadModels.mDartMiniMap[mStyleIndex];
+    
+    //mModel = &gWadModels.mDartBat[mStyleIndex];
+    //mSprite = &gWadModels.mDartBatMap[mStyleIndex];
+    
+    //mModel = &gWadModels.mExtraLife;
+    //mSprite = &gWadModels.mExtraLifeMap;
+    
+    //mModel = &gWadModels.mTurtle;
+    //mSprite = &gWadModels.mTurtleMap;
+    
+    //mModel = &gWadModels.mTurtlePropeller;
+    //mSprite = &gWadModels.mTurtlePropellerMap;
+    
+    mModel = &gWadModels.mPrizeStar;
+    mSprite = &gWadModels.mPrizeStarMap;
     
     
     mUniform = &(gGame->mRenderer->mUniformPhong);
@@ -51,7 +69,6 @@ Dart::Dart() {
     mEllipseRadiusH = 0.0f;
     mEllipseRadiusV = 0.0f;
     
-    
     mUpdateInterpStartX = 0.0f;
     mUpdateInterpStartY = 0.0f;
     mUpdateInterpStartRotation = 0.0f;
@@ -59,7 +76,6 @@ Dart::Dart() {
     mUpdateInterpEndX = 0.0f;
     mUpdateInterpEndY = 0.0f;
     mUpdateInterpEndRotation = 0.0f;
-    
 }
 
 Dart::~Dart() {
@@ -68,8 +84,13 @@ Dart::~Dart() {
 
 void Dart::Update() {
     
-    mTransform3D.mSpin += mSpinSpeed;
-    //mTransform3D.mSpin = 0.0f;
+    
+    if (mStuck) {
+        //Once we are stuck, we can NEVER SPIN, EVER AGAIN!!!
+        mSpinSpeed = 0;
+    } else {
+        mTransform3D.mSpin += mSpinSpeed;
+    }
     
     mPrevTipX = mTipX;
     mPrevTipY = mTipY;
@@ -83,7 +104,6 @@ void Dart::Update() {
         
         //mOffsetZ = -aPercentInv * gGame->mCamera->mDistance * 0.125f;
         mTransform.mOffsetY = aPercentInv * 70.0f;
-        
         mTransform3D.mRotationX = -aPercentInv * 220.0f;
         mTransform.mOffsetScale = 0.25f + aPercent * 0.75f;
         
@@ -103,8 +123,6 @@ void Dart::Update() {
     
     if (!mIdle) {
         mTimer++;
-        
-        //We are flying through space...
         
         mUpdateInterpStartX = mTransform.mX;
         mUpdateInterpStartY = mTransform.mY;
@@ -133,12 +151,9 @@ void Dart::Update() {
         
         --mDeathTimer;
         if (mDeathTimer <= 0) {
-            gGame->DartFlyOffScreen(this);
-        }
-        
-        if (gGame->IsGameObjectOutsideKillZone(this)) {
-            printf("Kill Dart[ %f %f ]\n\n", mTransform.mX, mTransform.mY);
-            gGame->DartFlyOffScreen(this);
+            gGame->DisposeObject(this);
+        } else if (gGame->IsGameObjectOutsideKillZone(this)) {
+            gGame->DisposeObject(this);
         }
     }
     

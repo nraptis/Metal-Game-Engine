@@ -36,6 +36,19 @@ void AssetWadGameInterface::Load() {
     
     
     
+    
+    mGameMenuBack.Load("game_menu_back");
+    
+    mGameMenuGenericButtonUp.Load("game_menu_button_up");
+    mGameMenuGenericButtonDown.Load("game_menu_button_down");
+    
+    mGameMenuButtonTextMainMenu.Load("menu_button_text_main_menu");
+    mGameMenuButtonTextLevelSelect.Load("menu_button_text_level_select");
+    mGameMenuButtonTextOkay.Load("menu_button_text_okay");
+    mGameMenuButtonTextCancel.Load("menu_button_text_cancel");
+    mGameMenuButtonTextOptions.Load("menu_button_text_options");
+    mGameMenuButtonTextResume.Load("menu_button_text_resume");
+    
     //mFontLarge.LoadNew("candy_beans_256_font.kern", "fnt_cb_128_", "0123456789AaBbCcDdEeFfXxYyZz ");
     //mFontSmall.LoadNew("candy_beans_256_font.kern", "fnt_cb_64_", "0123456789AaBbCcDdEeFfXxYyZz ");
     
@@ -72,7 +85,6 @@ void AssetWadGameInterface::Load() {
     
     //sys_font_
     
-    //exit(0);
     
     //mFontLarge.LoadNew("fnt_osb_256_font.kern", "old_sans_black_128_", "0123456789AaBbCcDdEeFfXxYyZz ");
     //mFontSmall.LoadNew("fnt_osb_256_font.kern", "old_sans_black_64_", "0123456789AaBbCcDdEeFfXxYyZz ");

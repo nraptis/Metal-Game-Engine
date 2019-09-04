@@ -121,7 +121,7 @@ void LevelFormationTracer::Spawn() {
     
     
     if (cDumpList.mCount <= 1) {
-        printf("Fatal Error, Point Count[%d]\n", cDumpList.mCount);
+        Log("Fatal Error, Point Count[%d]\n", cDumpList.mCount);
         return;
     }
     

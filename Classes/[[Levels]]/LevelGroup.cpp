@@ -7,6 +7,7 @@
 //
 
 #include "LevelGroup.hpp"
+#include "core_includes.h"
 
 LevelGroup::LevelGroup() {
     mCount = 0;
@@ -22,7 +23,7 @@ void LevelGroup::AddNode(LevelNode *pNode) {
 }
 
 void LevelGroup::Build(FList *pList) {
-    if (mNodeList.mCount == 0) { printf("Missing nodes...\n"); return; }
+    if (mNodeList.mCount == 0) { Log("Missing nodes...\n"); return; }
     
     FList aList;
     aList.Add(mNodeList);
@@ -54,8 +55,8 @@ void LevelGroup::Build(FList *pList) {
         return;
     }
     
-    printf("*** NOT IMPLEMENTED **\n\n");
-    printf("*** We want evenly-picked subset...? ***\n");
+    Log("*** NOT IMPLEMENTED **\n\n");
+    Log("*** We want evenly-picked subset...? ***\n");
     
     
 }

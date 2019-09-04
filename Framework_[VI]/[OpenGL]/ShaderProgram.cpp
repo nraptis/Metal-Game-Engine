@@ -50,8 +50,6 @@ void ShaderProgram::Use() {
 }
 
 void ShaderProgram::Compile() {
-    Log("ShaderProgram::Compile(%s)\n", mName.c());
-    
     mProgram = glCreateProgram();
     
     mVertexShader = ShaderCompileVertex(mVertexProgramFile.c());

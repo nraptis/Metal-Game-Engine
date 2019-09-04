@@ -20,11 +20,10 @@
 
 #include "AssetWadGameInterface.hpp"
 #include "AssetWadGameEffects.hpp"
-#include "AssetWadModelMaps.hpp"
+#include "AssetWadModels.hpp"
 
-#define EDITOR_MODE 1
-//#undef EDITOR_MODE
-
+//#define EDITOR_MODE 1
+#undef EDITOR_MODE
 
 #ifdef EDITOR_MODE
 class GameEditor;
@@ -160,7 +159,7 @@ extern GFXApp *gApp;
 
 extern AssetWadGameInterface gWadGameInterface;
 extern AssetWadGameEffects gWadGameEffects;
-extern AssetWadModelMaps gWadModelMaps;
+extern AssetWadModels gWadModels;
 
 
 #endif /* GFXApp_hpp */

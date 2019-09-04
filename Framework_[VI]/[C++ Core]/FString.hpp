@@ -197,7 +197,7 @@ public:
 	
 	void					ParseChar(char *theChar); 
 	void					ParseBool(bool theBool){if(theBool)*this="true";else *this="false";}
-    void                    ParseInt(int pNumber, bool pCommas=false);
+    void                    ParseInt(int pNumber);
 
     
 	//

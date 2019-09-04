@@ -4,7 +4,6 @@
 #include "FString.hpp"
 #include "FList.hpp"
 
-
 #define Log printf
 
 void os_initialize_outlets();

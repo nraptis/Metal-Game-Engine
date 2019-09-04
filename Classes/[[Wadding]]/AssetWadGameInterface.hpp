@@ -23,6 +23,23 @@ public:
     
     FSprite                                         mSpriteScreenSize;
     
+    
+    
+    FSprite                                         mGameMenuBack;
+    
+    FSprite                                         mGameMenuGenericButtonUp;
+    FSprite                                         mGameMenuGenericButtonDown;
+    
+    FSprite                                         mGameMenuButtonTextMainMenu;
+    FSprite                                         mGameMenuButtonTextLevelSelect;
+    FSprite                                         mGameMenuButtonTextOkay;
+    FSprite                                         mGameMenuButtonTextCancel;
+    FSprite                                         mGameMenuButtonTextOptions;
+    FSprite                                         mGameMenuButtonTextResume;
+    
+    
+    
+    
     FSprite                                         mLivesIndicatorShadow;
     FSprite                                         mLivesIndicatorFull;
     FSprite                                         mLivesIndicatorEmpty;

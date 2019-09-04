@@ -79,7 +79,12 @@ public:
 
     bool                                    mTriggerOnDown;
     bool                                    mTriggerOnUp;
-    bool                                    mDrawRectIfSpriteIsNull;
+    
+    //Note: If we use a canvas color, then we must have this flag enabled.
+    //If not, then the sprites will not draw properly...
+    bool                                    mDrawSetsSpriteAlphaPipelineState;
+    
+    
 };
 
 class FButtonLayer

@@ -211,7 +211,7 @@ void LevelWave::DisposeObject(GameObject *pObject) {
 
 
 void LevelWave::HandleSpawnComplete(LevelWaveSpawn *pSpawn) {
-    printf("HandleSpawnComplete(%llx)\n", pSpawn);
+    Log("HandleSpawnComplete(%llx)\n", pSpawn);
     
     FList aList;
     if (pSpawn) {
@@ -227,7 +227,7 @@ void LevelWave::HandleSpawnComplete(LevelWaveSpawn *pSpawn) {
     
     
     if (mExitType == WAVE_EXIT_TYPE_INSTANT) {
-        printf("WAVE_EXIT_TYPE_INSTANT...\n");
+        Log("WAVE_EXIT_TYPE_INSTANT...\n");
         
         
         for (int i=0;i<aList.mCount;i++) {
@@ -240,7 +240,7 @@ void LevelWave::HandleSpawnComplete(LevelWaveSpawn *pSpawn) {
         
     } else { //Default is DISPERSE
         
-        printf("WAVE_EXIT_TYPE_DISPERSE...\n");
+        Log("WAVE_EXIT_TYPE_DISPERSE...\n");
         
         
         if (aList.mCount > 1) {

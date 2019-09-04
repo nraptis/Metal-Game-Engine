@@ -21,7 +21,7 @@ GameInfoOverlay::~GameInfoOverlay() {
 
 void GameInfoOverlay::Layout()  {
     
-    printf("GameInfoOverlay::Layout()\n");
+    Log("GameInfoOverlay::Layout()\n");
     
 }
 

@@ -6,8 +6,6 @@ B2.) Alive timer and kill timer should be part of level section data.
 
 B3.) Alive timer and kill timer need flags for immediate-countdown versus "all waves complete" ? - we need to fully understand how this will work.
 
-A1.) We need a format to export PACKED 3-D models.
-
 A2.) We need to keep track of streaks.
 
 A3.) We need to keep track of particularily good throws. (like 6 balloons with 1 dart)..
@@ -56,24 +54,25 @@ A24.) We need to start thinking about how you will earn 1, 2, or 3 stars per lev
 
 J.) We need the "wind" to pick up, sway, die down, and change directions in a semi-realistic fashion...
 
-3.) When brick is hit, it should rumble. The dart should be stuck for ~2 secs and then dissappear...
-
-1.) Show lives indicators at top-right of screen.
-
-2.) Show pause button at the top-left of screen.
-
 A.) Win condition? We need to capture the win condition.
 
 B.) Losing lives when balloons fly offscreen.
-
-C.) Collisions with "brick head" - the dart should get stuck inside of it.
-
-D.) Mock model for "Turtle"
 
 E.) Mock model for "Bomb"
 
 F.) Logic for bomb collisions (Spherical).
 
+DONE.) When brick is hit, it should rumble. The dart should be stuck for ~2 secs and then dissappear...
+
+DONE.) Collisions with "brick head" - the dart should get stuck inside of it.
+
+DONE.) Mock model for "Turtle"
+
+DONE.) Show lives indicators at top-right of screen.
+
+DONE.) Show pause button at the top-left of screen.
+
+DONE.) We need a format to export PACKED 3-D models.
 
 DONE.) Need way to dynamically choose proper image scale + image resolution as device size changes...
 

@@ -51,10 +51,9 @@ void StuckDart::Update() {
     
     mFadeoutTimer++;
     if (mFadeoutTimer >= mFadeoutTime) {
-        
         gGame->StuckDartFinishFadeOut(mDart);
+        gGame->DisposeObject(mDart);
         
-        mDart->Kill();
         mDart = NULL;
         mDelete = true;
     } else {

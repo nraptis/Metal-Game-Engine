@@ -679,7 +679,7 @@ void FStringMap::Add(const char *pKey, void *pObject) {
         aNode = mTable[aHash];
         while(aNode) {
             if(aNode->mKey == pKey) {
-                printf("Double Add[%s]\n", pKey);
+                Log("Double Add[%s]\n", pKey);
                 return;
             }
             aNode = aNode->mTableNext;

@@ -593,7 +593,7 @@ void GameFormationEditor::Load() {
     
     FJSON aJSON;
     aJSON.Load(aPath.c());
-    printf("Path: %s\n", aPath.c());
+    Log("Path: %s\n", aPath.c());
     aJSON.Print();
     mFormation.Load(aJSON.mRoot);
     Refresh();
@@ -605,7 +605,7 @@ void GameFormationEditor::Print() {
     mFormation.Print();
     
     FString aName = GenerateName();
-    printf("Formation Name: %s\n", aName.c());
+    Log("Formation Name: %s\n", aName.c());
 }
 
 
@@ -620,7 +620,7 @@ void GameFormationEditor::DeleteTracer() {
 
 void GameFormationEditor::SpawnSelect(int pIndex) {
     
-    printf("Select Spawn @ [%d]\n\n", pIndex);
+    Log("Select Spawn @ [%d]\n\n", pIndex);
     if (mTracerEnabled == true) {
         LevelFormationTracerBlueprint *aTracer = TracerGet();
         if (aTracer != NULL) {

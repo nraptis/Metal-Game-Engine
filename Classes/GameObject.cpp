@@ -214,7 +214,7 @@ bool GameObject::WillCollide(float pStartX, float pStartY, float pEndX, float pE
         int aStepCount = (int)(aLength / 2) + 4;
         if (aStepCount > 100) {
             aStepCount = 100;
-            printf("Object moving too fast?\nLOL!\n");
+            Log("Object moving too fast?\nLOL!\n");
         }
         for (int i=0;i<aStepCount;i++) {
             float aPercent = ((float)i) / ((float)(aStepCount - 1));

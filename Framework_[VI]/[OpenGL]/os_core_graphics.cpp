@@ -140,7 +140,7 @@ void Graphics::SetUp() {
         
         EnumList(FSprite, aSprite, gSpriteList) {
             aSprite->WriteBuffers();
-            printf("Sprite Name: %s\n", aSprite->mFileName.c());
+            Log("Sprite Name: %s\n", aSprite->mFileName.c());
         }
         
         //EnumList(FModelDataPacked, aModel, gPackedModelList) {
@@ -668,7 +668,7 @@ void Graphics::ArrayBufferTangents(FBuffer *pBuffer) {
 
 void Graphics::ArrayBufferTangents(FBuffer *pBuffer, int pOffset) {
     //ShaderProgram->ArrayBufferTangents(<#int pIndex#>, <#int pOffset#>)
-    Log("BAD BAD BAD\n");
+    Log("ArrayBufferTangents - NOT IMPLEMENTED - EXITING...\n");
     exit(0);
 }
 

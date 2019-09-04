@@ -38,7 +38,7 @@ LevelWaveSpawn::LevelWaveSpawn(LevelWave *pWave, LevelPath *pPath) {
 
 LevelWaveSpawn::~LevelWaveSpawn() {
     
-    //printf("Dealloc[LevelWaveSpawn:%X] Obj[%d]\n", this, mObject);
+    //Log("Dealloc[LevelWaveSpawn:%X] Obj[%d]\n", this, mObject);
     
     if (mObject != NULL) {
         mObject->Kill();
@@ -159,7 +159,7 @@ bool LevelWaveSpawn::IsClear() {
         if (mFormation->IsClear() == false) {
             return false;
         } else {
-            printf("What?\n");
+            Log("What?\n");
         }
     }
     

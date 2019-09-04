@@ -43,7 +43,7 @@ LevelFormationNode::LevelFormationNode() {
 
 LevelFormationNode::~LevelFormationNode() {
     
-    //printf("Dealloc[LevelFormationNode:%X] Obj[%d]\n", this, mObject);
+    //Log("Dealloc[LevelFormationNode:%X] Obj[%d]\n", this, mObject);
     
     if (mObject) {
         mObject->Kill();
@@ -126,7 +126,7 @@ void LevelFormationNode::Draw() {
 
 void LevelFormationNode::DisposeObject(GameObject *pObject) {
     if (mObject != NULL && mObject == pObject) {
-        printf("LevelFormationNode::SUCCESS - DisposeObject(%llx)\n", pObject);
+        Log("LevelFormationNode::SUCCESS - DisposeObject(%llx)\n", pObject);
         mObject = NULL;
     }
 }
@@ -163,7 +163,7 @@ void LevelFormationNode::PositionObject() {
                 mY += mFormation->mY;
                 
             } else {
-                printf("Miss?\n");
+                Log("Miss?\n");
             }
         } else if (mFormation != NULL) {
             

@@ -77,7 +77,7 @@ void FApp::BaseInitialize() {
         mImageLoadSuffixList += new FString("");
         
         while (gGraphicsInterface->IsReady() == false) {
-            printf("BaseInitialize:: Waiting for GFX...\n");
+            Log("BaseInitialize:: Waiting for GFX...\n");
             os_sleep(100);
         }
         
@@ -250,7 +250,7 @@ void FApp::BaseDraw() {
     
     if (mActive == false) { return; }
     if (mIsGraphicsSetUpEnqueued == true) {
-        printf("BLOCKING: SETUP...\n");
+        Log("BLOCKING: SETUP...\n");
         return;
     }
 
@@ -308,8 +308,8 @@ void FApp::BaseDraw() {
         mSysFont.Draw(FString("FPS: ") + FString(GetFPS()), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 2.0f, 0.75f);
         mSysFont.Draw(FString("UPS: ") + FString(GetUPS()), gSafeAreaInsetLeft + 130.0f, gSafeAreaInsetTop + 2.0f, 0.75f);
         
-        mSysFont.Draw(FString("SPRSC: ") + FString(gSpriteDrawScale), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 2.0f + 20.0f + 30.0f, 0.75f);
-        mSysFont.Draw(FString("REZSC: ") + FString(gImageResolutionScale), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 2.0f + 40.0f + 30.0f, 0.75f);
+        mSysFont.Draw(FString("SPRSC: ") + FString(gSpriteDrawScale), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 2.0f + 30.0f, 0.75f);
+        mSysFont.Draw(FString("REZSC: ") + FString(gImageResolutionScale), gSafeAreaInsetLeft + 16.0f + 160.0f, gSafeAreaInsetTop + 2.0f + 30.0f, 0.75f);
         
         
         FString aResString = FString("HW: ") + FString(gDeviceWidth) + FString(" x ") + FString(gDeviceHeight) + FString(", VD: ") + FString(gVirtualDevWidth) + FString(" x ") + FString(gVirtualDevHeight);
@@ -334,16 +334,13 @@ void FApp::BaseDraw() {
         Graphics::DrawLine(gVirtualDevX, gVirtualDevY + gVirtualDevHeight - gSafeAreaInsetBottom, gVirtualDevX + gVirtualDevWidth, gVirtualDevY + gVirtualDevHeight - gSafeAreaInsetBottom, 1.0f);
         */
     }
-   
     
-    if (mDarkMode) {
+    if (mDarkMode == true) {
         Graphics::PipelineStateSetShape2DAlphaBlending();
-        Graphics::SetColor(0.0075f, 0.0075f, 0.0075f, 0.90f);
+        Graphics::SetColor(0.0075f, 0.0075f, 0.0075f, 0.875f);
         Graphics::DrawRect(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
         Graphics::SetColor();
     }
-    
-    
     
 }
 

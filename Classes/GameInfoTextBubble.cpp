@@ -26,7 +26,7 @@ GameInfoTextBubble::GameInfoTextBubble(const char *pText) {
 }
 
 GameInfoTextBubble::~GameInfoTextBubble() {
-    printf("Delete GameInfoTextBubble(%s)\n", mText.c());
+    Log("Delete GameInfoTextBubble(%s)\n", mText.c());
 }
 
 void GameInfoTextBubble::Update() {

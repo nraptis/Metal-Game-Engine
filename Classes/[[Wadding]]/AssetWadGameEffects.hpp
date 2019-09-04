@@ -22,6 +22,21 @@ public:
     FSprite                                         mAdditiveTwinkleWhiteLarge;
     FSprite                                         mAdditiveTwinkleWhiteSmall;
     
+    
+    
+    FSpriteSequence                                 mSequenceBlast1;
+    FSpriteSequence                                 mSequenceBlast2;
+    FSpriteSequence                                 mSequenceBlast3;
+    
+    
+    //balloon_blast_01_00_scale_1.png
+    //balloon_blast_01_30_scale_1.png
+    //balloon_blast_02_00_scale_1.png
+    //balloon_blast_02_31_scale_1.png
+    //balloon_blast_03_00_scale_1.png
+    //balloon_blast_03_31_scale_1.png
+    
+    
 };
 
 #endif /* AssetWadGameEffects_hpp */

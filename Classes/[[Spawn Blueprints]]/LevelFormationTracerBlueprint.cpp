@@ -429,7 +429,7 @@ FJSONNode *LevelFormationTracerBlueprint::Save() {
         LevelFormationNodeBlueprint *aNodeBlueprint = (LevelFormationNodeBlueprint *)mSpawnNodeList.mData[i];
         if (aNodeBlueprint->mObjectType >= 0 && aNodeBlueprint->mObjectType < GO_TYPE_CNT) {
             aTypeCount[aNodeBlueprint->mObjectType] += 1;
-        } else { printf("ILLEGAL TYPE!!!\n***\n\n***\n"); }
+        } else { Log("ILLEGAL TYPE!!!\n***\n\n***\n"); }
     }
     
     int aMonoType = GAME_OBJECT_TYPE_BALLOON;

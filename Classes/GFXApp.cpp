@@ -32,7 +32,7 @@ class GameEditor;
 
 AssetWadGameInterface gWadGameInterface;
 AssetWadGameEffects gWadGameEffects;
-AssetWadModelMaps gWadModelMaps;
+AssetWadModels gWadModels;
 
 GFXApp *gApp = 0;
 GFXApp::GFXApp() {
@@ -40,10 +40,10 @@ GFXApp::GFXApp() {
     gApp = this;
     
 //#ifndef EDITOR_MODE
-    //mDarkMode = true;
+    
+    mDarkMode = true;
     
 //#endif
-    
     
 #ifdef EDITOR_MODE
     mEditor = NULL;
@@ -78,6 +78,29 @@ GFXApp::~GFXApp() {
 void GFXApp::Load() {
     
     gWadConfiguration.NotifyVirtualFrameChange();
+    
+    
+    /*
+    
+    FModelDataPacked aExportModel;
+    aExportModel.LoadOBJ("bardart.obj");
+    aExportModel.Save(gDirExport + FString("bardart.3dp"));
+    
+    aExportModel.LoadOBJ("minidart.obj");
+    aExportModel.Save(gDirExport + FString("minidart.3dp"));
+    
+    exit(0);
+    
+    */
+    
+    //mDart.LoadOBJ("dart.obj");
+    
+    //mDart.LoadData("dart.3dp");
+    
+    
+    //mDart.Save(gDirExport + FString("dart.3dp"));
+    
+    
     
     ///
     ///  TODO: Temp Font Load Stuff...
@@ -322,7 +345,7 @@ void GFXApp::Update() {
                     
                 }
                 
-                printf("Preventing Load, Editor Mode...\n");
+                Log("Preventing Load, Editor Mode...\n");
                 
 #else
                 Log("Loading Game...\n");
@@ -389,7 +412,7 @@ void GFXApp::Draw() {
             if (mWadReloadOnNextDraw) {
                 
                 
-                printf("WAD RELOAD - Triggered!!!\n");
+                Log("WAD RELOAD - Triggered!!!\n");
                 
                 
                 mWadReloadIsEnqueued = false;
@@ -549,15 +572,15 @@ void GFXApp::DequeueWadReload() {
 
 void GFXApp::ExecuteWadReload() {
     
-    printf("*** BEGIN:: GFXApp::ExecuteWadReload()\n");
+    Log("*** BEGIN:: GFXApp::ExecuteWadReload()\n");
     
     DequeueWadReload();
     if (gWadConfiguration.ShouldReload() == false) {
-        printf("BLOCKING RELOAD, NO NEED...\n");
+        Log("BLOCKING RELOAD, NO NEED...\n");
         return;
     }
     
-    printf("NOTIFYING RELOAD, NO NEED...\n");
+    Log("NOTIFYING RELOAD, NO NEED...\n");
     
     gWadConfiguration.NotifyReload();
     
@@ -570,11 +593,11 @@ void GFXApp::ExecuteWadReload() {
     gWadGameEffects.Unload();
     gWadGameEffects.Load();
     
-    gWadModelMaps.Unload();
-    gWadModelMaps.Load();
+    gWadModels.Unload();
+    gWadModels.Load();
     
     
-    printf("*** End:: GFXApp::ExecuteWadReload()\n");
+    Log("*** End:: GFXApp::ExecuteWadReload()\n");
     
 }
 

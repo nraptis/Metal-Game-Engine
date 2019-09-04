@@ -96,29 +96,29 @@ void AssetConfigMenu::Notify(void *pSender, const char *pNotification) {
         //if (pSender == mButtonSingleInstance1) { gApp->mSoundOne[0].PlayPitched(mPitch); }
         
         if (pSender == mButtonReload) {
-            printf("RE-LOAD!!!\n");
+            Log("RE-LOAD!!!\n");
             
             gApp->EnqueueWadReload(1);
         }
         
         if (pSender == mButtonUnload) {
-            printf("UN-LOAD!!!\n");
+            Log("UN-LOAD!!!\n");
         }
     }
     
     if (FString(pNotification) == "segment") {
         if (pSender == mSegmentRetinaScale) {
-            printf("Ret-Scale!\n");
+            Log("Ret-Scale!\n");
         }
         
         if (pSender == mSegmentSpriteScale) {
-            printf("Sprite-Scale!\n");
+            Log("Sprite-Scale!\n");
         }
     }
     
     if (FString(pNotification) == "checkbox") {
         if (pSender == mCheckBoxAutoScale) {
-            printf("Auto-Scale!\n");
+            Log("Auto-Scale!\n");
         }
     }
     

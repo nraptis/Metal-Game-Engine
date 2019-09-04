@@ -117,6 +117,8 @@ Game::Game() {
     
     mLivesMax = 5;
     mLives = mLivesMax;
+    //TODO: Remove mLives = 3;
+    mLives = 3;
     
     mPoppedCount = 0;
     
@@ -632,7 +634,7 @@ void Game::Draw3D() {
 void Game::TouchDown(float pX, float pY, void *pData) {
     
     if (gTouch.mTouchCount >= 3) {
-        printf("Hack: Killing all balloons..!");
+        Log("Hack: Killing all balloons..!");
         
         EnumList(GameObject, aObject, gGame->mBalloonList.mObjectList) {
             aObject->Kill();
@@ -814,24 +816,45 @@ float Game::Convert3DYTo2D(float pY) {
 
 void Game::DisposeObject(GameObject *pObject) {
     
-    if (pObject != NULL) {
-        pObject->Kill();
+    if (pObject == NULL) {
+        return;
     }
     
+    if (pObject->mKill != 0) {
+        printf("Already Killed %x\n", pObject);
+        return;
+    }
+    
+    pObject->Kill();
+    
     if (pObject->mGameObjectType == GAME_OBJECT_TYPE_DART) {
+        
+        Dart *aDart = (Dart *)pObject;
+        
         EnumList (BrickHead, aBrickHead, mBrickHeadList.mObjectList) {
             EnumList(StuckDart, aStuck, aBrickHead->mStuckDartList) {
-                if (aStuck->mDart == pObject) {
+                if (aStuck->mDart == aDart) {
                     aStuck->mDart = NULL;
                 }
             }
         }
+        
+        if (aDart->mHitCount <= 0) {
+            mThrownMissedCount++;
+        } else {
+            mThrownHitCount++;
+        }
+        
+    } else {
+        
+        
+        if (mLevelData != NULL) {
+            mLevelData->DisposeObject(pObject);
+        }
+        
     }
     
-    //TODO: Pass dispose along to all sections, waves, etc
-    if (mLevelData != NULL) {
-        mLevelData->DisposeObject(pObject);
-    }
+    
 }
 
 void Game::DisposeObjectFromLevelData(GameObject *pObject) {
@@ -856,31 +879,15 @@ void Game::DisposeAllObjects() {
 
 void Game::FlyOffEscape(GameObject *pObject) {
     if (pObject != NULL) {
-        printf("Miss Object... [%s][%x]\n", pObject->TypeString().c(), pObject);
-        
         DisposeObject(pObject);
         mEscapedCount++;
         pObject->Kill();
     }
 }
 
-void Game::DartFlyOffScreen(Dart *pDart) {
-    if (pDart != NULL) {
-        printf("Miss Dart... [%s][%x]\n", pDart->TypeString().c(), pDart);
-        
-        DisposeObject(pDart);
-        if (pDart->mHitCount <= 0) {
-            mThrownMissedCount++;
-        } else {
-            mThrownHitCount++;
-        }
-        pDart->Kill();
-    }
-}
-
 void Game::StuckDartBeginFadeOut(Dart *pDart) {
     
-    if (pDart != NULL && gGameOverlay != NULL) {
+    if (pDart != NULL && gEffectsOverlay != NULL) {
         int aCount = 6 + gRand.Get(4);
         float aOffsetRotation = gRand.GetRotation();
         
@@ -894,13 +901,13 @@ void Game::StuckDartBeginFadeOut(Dart *pDart) {
             float aShift = gRand.GetFloat(3.0f, 7.0f);
             
             EffectDartFadeStar *aStar = new EffectDartFadeStar();
-            FVec2 aPos = FCanvas::Convert(pDart->mTransform.mX, pDart->mTransform.mY, this, gGameOverlay);
+            FVec2 aPos = FCanvas::Convert(pDart->mTransform.mX, pDart->mTransform.mY, this, gEffectsOverlay);
             aStar->SetPos(aPos.mX + aDirX * aShift, aPos.mY + aDirY * aShift);
             aStar->SetSpeed(aDirX * aSpeed, aDirY * aSpeed);
             aStar->SetAccel(0.970f);
             aStar->SetScale(0.325f, -0.001f);
             aStar->SetRotation(gRand.GetRotation(), gRand.GetFloat(-8.0f, 8.0f), 0.985f);
-            gGameOverlay->mEffectListDartFadeStar.Add(aStar);
+            gEffectsOverlay->mEffectListDartFadeStar.Add(aStar);
         }
     }
 }
@@ -951,11 +958,11 @@ void Game::DartCollideWithBalloon(Dart *pDart, Balloon *pBalloon) {
             gApp->mSoundBalloonPop.Play();
         }
         
-        if (gGameOverlay != NULL) {
+        if (gEffectsOverlay != NULL) {
             EffectBalloonBurst *aBurst = new EffectBalloonBurst();
-            FVec2 aPos = FCanvas::Convert(pBalloon->mTransform.mX, pBalloon->mTransform.mY, this, gGameOverlay);
+            FVec2 aPos = FCanvas::Convert(pBalloon->mTransform.mX, pBalloon->mTransform.mY, this, gEffectsOverlay);
             aBurst->SetPos(aPos.mX, aPos.mY);
-            gGameOverlay->mEffectListBalloonBursts.Add(aBurst);
+            gEffectsOverlay->mEffectListBalloonBursts.Add(aBurst);
         }
     }
     

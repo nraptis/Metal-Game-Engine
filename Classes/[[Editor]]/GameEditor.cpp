@@ -412,7 +412,7 @@ void GameEditor::TouchFlush() {
 void GameEditor::KeyDown(int pKey) {
     
     if (gGame == NULL) {
-        printf("Game doesn't exist?\n");
+        Log("Game doesn't exist?\n");
         return;
     }
     if (mPathEditor != NULL && mOverlay == mPathEditor) {
@@ -520,7 +520,7 @@ void GameEditor::KeyDown(int pKey) {
     }
     
     if (pKey == __KEY__S) {
-        printf("Hit S Shift[%d] Ctrl[%d] Alt[%d]\n", aShift, aCtrl, aAlt);
+        Log("Hit S Shift[%d] Ctrl[%d] Alt[%d]\n", aShift, aCtrl, aAlt);
         if (aShift == false && aCtrl == true && aAlt == false) {
             SaveAt(mExportIndex);
         }
@@ -575,15 +575,15 @@ void GameEditor::Notify(void *pSender, const char *pNotification) {
     
     if (FString("formation_selected") == pNotification) {
         if (gSelectedFormation != NULL) {
-            printf("SELECTED[%s]\n", gSelectedFormation->mID.c());
+            Log("SELECTED[%s]\n", gSelectedFormation->mID.c());
         }
         if (mPickFormationReason == 0) {
-            printf("Formation Selected for Formation Editor...\n");
+            Log("Formation Selected for Formation Editor...\n");
             OpenFormationEditor(gSelectedFormation);
         }
         if (mPickFormationReason == 1) {
             LevelWaveSpawnBlueprint *aSpawn = SpawnGet();
-            printf("Formation Selected for WAVE SPAWN [%llx]\n", aSpawn);
+            Log("Formation Selected for WAVE SPAWN [%llx]\n", aSpawn);
             if (aSpawn != NULL) {
                 aSpawn->mFormationID = gSelectedFormation->mID.c();
                 RefreshPlayback();
@@ -591,7 +591,7 @@ void GameEditor::Notify(void *pSender, const char *pNotification) {
         }
         if (mPickFormationReason == 2) {
             LevelPermSpawnBlueprint *aSpawn = PermSpawnGet();
-            printf("Formation Selected for PERM SPAWN [%llx]\n", aSpawn);
+            Log("Formation Selected for PERM SPAWN [%llx]\n", aSpawn);
             if (aSpawn != NULL) {
                 aSpawn->mFormationID = gSelectedFormation->mID.c();
                 RefreshPlayback();
@@ -603,7 +603,7 @@ void GameEditor::Notify(void *pSender, const char *pNotification) {
         
         if (mPickFormationReason == 3) {
             LevelSectionPermanentBlueprint *aPerm = PermGet();
-            printf("Formation Selected for PERM [%llx]\n", aPerm);
+            Log("Formation Selected for PERM [%llx]\n", aPerm);
             if (aPerm != NULL) {
                 aPerm->mFormationID = gSelectedFormation->mID.c();
                 RefreshPlayback();
@@ -766,7 +766,7 @@ void GameEditor::RefreshPlayback() {
     
     
     if (mIsRefreshingPlayback == true) {
-        printf("Niffing refreshing...\n");
+        Log("Niffing refreshing...\n");
         return;
     }
     
@@ -1081,7 +1081,7 @@ LevelPermSpawnBlueprint *GameEditor::PermSpawnGet() {
 
 
 void GameEditor::OpenPathEditorForWave() {
-    if (mSection.mCurrentWave == NULL) { printf("Must have wave...\n"); return; }
+    if (mSection.mCurrentWave == NULL) { Log("Must have wave...\n"); return; }
     mPathEditor = new GamePathEditor(this);
     mPathEditor->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
     mPathEditor->mName = "{Path Editor}";
@@ -1157,7 +1157,7 @@ void GameEditor::PickFormationForFormationEditor() {
 void GameEditor::PickFormationForSpawnNode() {
     LevelWaveSpawnBlueprint *aSpawn = SpawnGet();
     if (aSpawn == NULL) {
-        printf("NO SPAWN IS SELECTED... CANNOT PICK...\n\n");
+        Log("NO SPAWN IS SELECTED... CANNOT PICK...\n\n");
         return;
     }
     PickFormation(1);
@@ -1166,7 +1166,7 @@ void GameEditor::PickFormationForSpawnNode() {
 void GameEditor::PickFormationForPerm() {
     LevelSectionPermanentBlueprint *aPerm = PermGet();
     if (aPerm == NULL) {
-        printf("NO PERM PERM PERM IS AVAILABLE... CANNOT PICK...\n\n");
+        Log("NO PERM PERM PERM IS AVAILABLE... CANNOT PICK...\n\n");
         return;
     }
     PickFormation(3);
@@ -1179,7 +1179,7 @@ void GameEditor::PickFormationForPermSpawnNode() {
     
     LevelPermSpawnBlueprint *aSpawn = PermSpawnGet();
     if (aSpawn == NULL) {
-        printf("NO PERM SPAWN IS AVAILABLE... CANNOT PICK...\n\n");
+        Log("NO PERM SPAWN IS AVAILABLE... CANNOT PICK...\n\n");
         return;
     }
     PickFormation(2);
@@ -1359,7 +1359,7 @@ void GameEditor::LoadTest() {
     }
     
     FString aPath = FString("test_section_") + aNumberString;
-    printf("Loading Test: %s\n", aPath.c());
+    Log("Loading Test: %s\n", aPath.c());
     
     Load(aPath.c());
 }

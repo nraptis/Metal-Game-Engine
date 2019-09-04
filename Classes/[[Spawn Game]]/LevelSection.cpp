@@ -425,7 +425,7 @@ void LevelSection::HandOffAllPermanentGameObjects(FList *pList) {
         aPerm->HandOffAllGameObjects(pList);
     }
     
-    printf("Handing off all game objects, count = %d\n", pList->mCount);
+    Log("Handing off all game objects, count = %d\n", pList->mCount);
     
     
 }

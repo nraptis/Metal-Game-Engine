@@ -23,7 +23,8 @@ GameContainer::GameContainer() {
     mGameTestEditorOverlay = NULL;
     mGameTestRunningOverlay = NULL;
     
-    mOverlay = NULL;
+    mEffectsOverlay = NULL;
+    mInterfaceOverlay = NULL;
     
     mEditorMenu = NULL;
     mEditorMenuUtils = NULL;
@@ -51,8 +52,11 @@ GameContainer::GameContainer() {
     
 #ifndef EDITOR_MODE
     
-    mOverlay = new GameOverlay();
-    AddChild(mOverlay);
+    mEffectsOverlay = new GameOverlayEffects();
+    AddChild(mEffectsOverlay);
+    
+    mInterfaceOverlay = new GameOverlayInterface();
+    AddChild(mInterfaceOverlay);
     
 #endif
     
@@ -70,9 +74,14 @@ GameContainer::~GameContainer() {
         mEditorMenu = NULL;
     }
     
-    if (mOverlay != NULL) {
-        mOverlay->Kill();
-        mOverlay = NULL;
+    if (mEffectsOverlay != NULL) {
+        mEffectsOverlay->Kill();
+        mEffectsOverlay = NULL;
+    }
+    
+    if (mInterfaceOverlay != NULL) {
+        mInterfaceOverlay->Kill();
+        mInterfaceOverlay = NULL;
     }
     
     if (mEditorMenuUtils != NULL) {
@@ -111,12 +120,17 @@ void GameContainer::Layout() {
         mGame->SetX(aGameX);
         mGame->SetY(aGameY);
         
-        if (mOverlay != NULL) {
+        if (mEffectsOverlay != NULL) {
             float aContainerCenterX = (int)(mInterfaceLeftWidth + (aGameAreaWidth) * 0.5f);
             float aContainerCenterY = (int)(mInterfaceTopHeight + (aGameAreaHeight) * 0.5f);
-            mOverlay->SetFrame(aContainerCenterX - mGame->mWidth2 * aScale, aContainerCenterY - mGame->mHeight2 * aScale, mGame->mWidth * aScale, mGame->mHeight * aScale);
+            mEffectsOverlay->SetFrame(aContainerCenterX - mGame->mWidth2 * aScale, aContainerCenterY - mGame->mHeight2 * aScale, mGame->mWidth * aScale, mGame->mHeight * aScale);
         }
         
+        if (mInterfaceOverlay != NULL) {
+            float aContainerCenterX = (int)(mInterfaceLeftWidth + (aGameAreaWidth) * 0.5f);
+            float aContainerCenterY = (int)(mInterfaceTopHeight + (aGameAreaHeight) * 0.5f);
+            mInterfaceOverlay->SetFrame(aContainerCenterX - mGame->mWidth2 * aScale, aContainerCenterY - mGame->mHeight2 * aScale, mGame->mWidth * aScale, mGame->mHeight * aScale);
+        }
     }
     
     

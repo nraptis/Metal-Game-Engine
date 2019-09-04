@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D2EB656231EF04A00F7E9D2 /* AssetWadModels.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D2EB655231EF04A00F7E9D2 /* AssetWadModels.cpp */; };
 		0D31100B2318C76A00795281 /* GameContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D310F382318C76A00795281 /* GameContainer.cpp */; };
 		0D31100C2318C76A00795281 /* HangingThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D310F3C2318C76A00795281 /* HangingThread.cpp */; };
 		0D31100D2318C76A00795281 /* FloatingCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D310F3D2318C76A00795281 /* FloatingCamera.cpp */; };
@@ -107,7 +108,6 @@
 		0D31106C2318C76A00795281 /* EditorMenuPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3110012318C76A00795281 /* EditorMenuPath.cpp */; };
 		0D31106D2318C76A00795281 /* EditorMenuPathControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D3110022318C76A00795281 /* EditorMenuPathControl.cpp */; };
 		0D31106E2318C76A00795281 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D31100A2318C76A00795281 /* Game.cpp */; };
-		0D31E980231CAC9C00E2EF2D /* AssetWadModelMaps.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D31E97E231CAC9C00E2EF2D /* AssetWadModelMaps.cpp */; };
 		0D8FCF18225DA8ED00A74580 /* BufferBindingWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDB8225DA8EC00A74580 /* BufferBindingWrapper.mm */; };
 		0D8FCF19225DA8ED00A74580 /* os_core_graphics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDB9225DA8EC00A74580 /* os_core_graphics.mm */; };
 		0D8FCF1A225DA8ED00A74580 /* Shape3DShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDBD225DA8EC00A74580 /* Shape3DShaders.metal */; };
@@ -230,6 +230,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D2EB654231EF04900F7E9D2 /* AssetWadModels.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AssetWadModels.hpp; sourceTree = "<group>"; };
+		0D2EB655231EF04A00F7E9D2 /* AssetWadModels.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AssetWadModels.cpp; sourceTree = "<group>"; };
 		0D310F372318C76A00795281 /* GameOverlay.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameOverlay.hpp; sourceTree = "<group>"; };
 		0D310F382318C76A00795281 /* GameContainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameContainer.cpp; sourceTree = "<group>"; };
 		0D310F392318C76A00795281 /* Bomb.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Bomb.hpp; sourceTree = "<group>"; };
@@ -430,8 +432,6 @@
 		0D3110082318C76A00795281 /* Dart.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dart.hpp; sourceTree = "<group>"; };
 		0D3110092318C76A00795281 /* GFXApp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GFXApp.hpp; sourceTree = "<group>"; };
 		0D31100A2318C76A00795281 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
-		0D31E97E231CAC9C00E2EF2D /* AssetWadModelMaps.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AssetWadModelMaps.cpp; sourceTree = "<group>"; };
-		0D31E97F231CAC9C00E2EF2D /* AssetWadModelMaps.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AssetWadModelMaps.hpp; sourceTree = "<group>"; };
 		0D8FCDB8225DA8EC00A74580 /* BufferBindingWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BufferBindingWrapper.mm; sourceTree = "<group>"; };
 		0D8FCDB9225DA8EC00A74580 /* os_core_graphics.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = os_core_graphics.mm; sourceTree = "<group>"; };
 		0D8FCDBA225DA8EC00A74580 /* TextureBindingWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureBindingWrapper.h; sourceTree = "<group>"; };
@@ -837,6 +837,8 @@
 		0D310F922318C76A00795281 /* [[Wadding]] */ = {
 			isa = PBXGroup;
 			children = (
+				0D2EB655231EF04A00F7E9D2 /* AssetWadModels.cpp */,
+				0D2EB654231EF04900F7E9D2 /* AssetWadModels.hpp */,
 				0D310F932318C76A00795281 /* WadGlobalConfiguration.cpp */,
 				0D310F9A2318C76A00795281 /* WadGlobalConfiguration.hpp */,
 				0D310F972318C76A00795281 /* AssetWad.cpp */,
@@ -845,8 +847,6 @@
 				0D310F962318C76A00795281 /* AssetWadGameEffects.hpp */,
 				0D310F952318C76A00795281 /* AssetWadGameInterface.cpp */,
 				0D310F982318C76A00795281 /* AssetWadGameInterface.hpp */,
-				0D31E97E231CAC9C00E2EF2D /* AssetWadModelMaps.cpp */,
-				0D31E97F231CAC9C00E2EF2D /* AssetWadModelMaps.hpp */,
 			);
 			path = "[[Wadding]]";
 			sourceTree = "<group>";
@@ -1402,7 +1402,6 @@
 				0D31102F2318C76A00795281 /* DiffuseLightMenu.cpp in Sources */,
 				0D8FCF26225DA8ED00A74580 /* FModelData.cpp in Sources */,
 				0D31101F2318C76A00795281 /* LevelMotionControllerSliceBlueprint.cpp in Sources */,
-				0D31E980231CAC9C00E2EF2D /* AssetWadModelMaps.cpp in Sources */,
 				0D8FCF25225DA8ED00A74580 /* FTextureCache.cpp in Sources */,
 				0D31100D2318C76A00795281 /* FloatingCamera.cpp in Sources */,
 				0D3110352318C76A00795281 /* Transform3D.cpp in Sources */,
@@ -1435,6 +1434,7 @@
 				0D3110332318C76A00795281 /* CameraMenu.cpp in Sources */,
 				0D8FCF51225DA8ED00A74580 /* FSpriteSequence.cpp in Sources */,
 				0D8FCF5B225DA8ED00A74580 /* UITextBox.cpp in Sources */,
+				0D2EB656231EF04A00F7E9D2 /* AssetWadModels.cpp in Sources */,
 				0D8FCF31225DA8ED00A74580 /* FMatrix.cpp in Sources */,
 				0D8FCF35225DA8ED00A74580 /* FSlider.cpp in Sources */,
 				0D8FCF53225DA8ED00A74580 /* FModelDataSequence.cpp in Sources */,

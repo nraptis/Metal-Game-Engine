@@ -321,14 +321,14 @@ void AppShellSetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
 
 void AppShellSetSafeAreaInsets(int pInsetUp, int pInsetRight, int pInsetDown, int pInsetLeft) {
     
-    printf("I - AppShellSetSafeAreaInsets(%d, %d, %d, %d)\n", pInsetUp, pInsetRight, pInsetDown, pInsetLeft);
+    Log("I - AppShellSetSafeAreaInsets(%d, %d, %d, %d)\n", pInsetUp, pInsetRight, pInsetDown, pInsetLeft);
     
     gSafeAreaInsetTop = pInsetUp;
     gSafeAreaInsetRight = pInsetRight;
     gSafeAreaInsetBottom = pInsetDown;
     gSafeAreaInsetLeft = pInsetLeft;
     
-    printf("II - AppShellSetSafeAreaInsets(%f, %f, %f, %f)\n", gSafeAreaInsetTop, gSafeAreaInsetRight, gSafeAreaInsetBottom, gSafeAreaInsetLeft);
+    Log("II - AppShellSetSafeAreaInsets(%f, %f, %f, %f)\n", gSafeAreaInsetTop, gSafeAreaInsetRight, gSafeAreaInsetBottom, gSafeAreaInsetLeft);
     
     if (gAppBase) {
         gAppBase->BaseSetSafeAreaInsets(gSafeAreaInsetTop, gSafeAreaInsetRight, gSafeAreaInsetBottom, gSafeAreaInsetLeft);

@@ -16,12 +16,9 @@ FSpriteSequence::FSpriteSequence()
     mHeight = 0.0f;
 }
 
-FSpriteSequence::~FSpriteSequence()
-{
+FSpriteSequence::~FSpriteSequence() {
     gSpriteSequenceList.Remove(this);
- 
-    EnumList(FSprite, aSprite, mList)
-    {
+    EnumList (FSprite, aSprite, mList) {
         gSpriteList.Remove(aSprite);
         delete aSprite;
     }
@@ -35,33 +32,26 @@ FSpriteSequence::~FSpriteSequence()
     mHeight = 0.0f;
 }
 
-void FSpriteSequence::LoadBundle(const char *pBundleName)
-{
+void FSpriteSequence::LoadBundle(const char *pBundleName) {
     gSpriteListEnabled = false;
     
     mFilePrefix = pBundleName;
     
-    //FImageBundler aBundler;
     gImageBundler.Load(pBundleName);
     
-    EnumList(FImageBundlerLoadNode, aNode, gImageBundler.mLoadNodeList)
-    {
+    EnumList(FImageBundlerLoadNode, aNode, gImageBundler.mLoadNodeList) {
         FSprite *aSprite = new FSprite();
         aSprite->LoadNode(&gImageBundler, aNode);
         aSprite->mFileName = aNode->mName;
         mList.Add(aSprite);
     }
     
-    if(mList.mCount > 0)
-    {
-        if(gSpriteSequenceList.Exists(this) == false)
-        {
+    if (mList.mCount > 0) {
+        if (gSpriteSequenceList.Exists(this) == false) {
             gSpriteSequenceList.Add(this);
         }
     }
-    
     gSpriteListEnabled = true;
-
     ComputeBounds();
 }
 
@@ -75,67 +65,74 @@ void FSpriteSequence::Load(const char *pFilePrefix)
     bool aSuccess = false;
     
     FString aFileBase = pFilePrefix;
-    FString aNumberString;
+    //FString aNumberString;
+    FString aNumberStringUnpadded;
+    FString aNumberStringPadded;
+    
     FString aPath;
     FSprite *aSprite = new FSprite();
     aSprite->mAddToSpriteList = false;
     
     int aLoops = 0;
     
-    for(int aStartIndex=0;(aStartIndex < 5) && (aSuccess == false);aStartIndex++)
-    {
+    FString aZeroString;
+    
+    for (int aStartIndex=0;(aStartIndex < 5) && (aSuccess == false);aStartIndex++) {
         aLoops++;
         
-        for(int aLeadingZeroes=1;(aLeadingZeroes < 7) && (aSuccess == false) ;aLeadingZeroes++)
-        {
+        for (int aLeadingZeroes=1;(aLeadingZeroes < 7) && (aSuccess == false);aLeadingZeroes++) {
             aLoops++;
             
-            aNumberString = FString(aStartIndex);
-            if(aNumberString.mLength < aLeadingZeroes)
-            {
-                FString aZeroString;
-				aZeroString.Insert('0', (aLeadingZeroes - aNumberString.mLength), 0);
-                aNumberString = FString(aZeroString + aNumberString);
+            aNumberStringUnpadded.ParseInt(aStartIndex);
+            if (aNumberStringUnpadded.mLength < aLeadingZeroes) {
+                aZeroString.Reset();
+                aZeroString.Insert('0', (aLeadingZeroes - aNumberStringUnpadded.mLength), 0);
+                aNumberStringPadded.Reset();
+                aNumberStringPadded.Append(aZeroString);
+                aNumberStringPadded.Append(aNumberStringUnpadded);
+            } else {
+                aNumberStringPadded.Set(aNumberStringUnpadded);
             }
-            
-            aPath = FString(aFileBase + aNumberString);
+            aPath.Reset();
+            aPath.Append(aFileBase);
+            aPath.Append(aNumberStringPadded);
             
             aSprite->Load(aPath);
             
-            if(aSprite->DidLoad())
-            {
+            if (aSprite->DidLoad()) {
                 mList += aSprite;
                 aSprite = new FSprite();
                 aSprite->mAddToSpriteList = false;
                 
                 int aIndex = aStartIndex + 1;
                 
-                while(true)
-                {
+                while (true) {
                     aLoops++;
                     
-                    aNumberString = FString(aIndex);
-                    if(aNumberString.mLength < aLeadingZeroes)
-                    {
-                        FString aZeroString;
-						aZeroString.Insert('0', (aLeadingZeroes - aNumberString.mLength), 0);
-                        aNumberString = FString(aZeroString + aNumberString);
+                    aNumberStringUnpadded.ParseInt(aIndex);
+                    if (aNumberStringUnpadded.mLength < aLeadingZeroes) {
+                        aZeroString.Reset();
+                        aZeroString.Insert('0', (aLeadingZeroes - aNumberStringUnpadded.mLength), 0);
+                        aNumberStringPadded.Reset();
+                        aNumberStringPadded.Append(aZeroString);
+                        aNumberStringPadded.Append(aNumberStringUnpadded);
+                    } else {
+                        aNumberStringPadded.Set(aNumberStringUnpadded);
                     }
+                    aPath.Reset();
+                    aPath.Append(aFileBase);
+                    aPath.Append(aNumberStringPadded);
                     
-                    aPath = FString(aFileBase + aNumberString);
                     
                     aSprite->Load(aPath);
                     
-                    if(aSprite->DidLoad())
-                    {
+                    if (aSprite->DidLoad()) {
                         mList += aSprite;
                         aSprite = new FSprite();
                         aSprite->mAddToSpriteList = false;
                         
                         aIndex++;
-                    }
-                    else
-                    {
+                    } else {
                         break;
                     }
                 }
@@ -144,8 +141,7 @@ void FSpriteSequence::Load(const char *pFilePrefix)
         }
     }
     
-    if(mList.mCount > 0)
-    {
+    if (mList.mCount > 0) {
         gSpriteSequenceList.Add(this);
     }
     
@@ -165,23 +161,35 @@ void FSpriteSequence::Load(const char *pFilePrefix, int pStartIndex, int pEndInd
     bool aSuccess = false;
     
     FString aFileBase = pFilePrefix;
-    FString aNumberString;
+    FString aNumberStringUnpadded;
+    FString aNumberStringPadded;
+    
+    
     FString aPath;
     FSprite *aSprite = new FSprite();
     aSprite->mAddToSpriteList = false;
     
+    FString aZeroString;
     int aLoops = 0;
     for (int aStartIndex=pStartIndex;aStartIndex <= pEndIndex;aStartIndex++) {
         aLoops++;
         for (int aLeadingZeroes=1;(aLeadingZeroes < 7)&&(aSuccess == false);aLeadingZeroes++) {
             aLoops++;
-            aNumberString = FString(aStartIndex);
-            if (aNumberString.mLength < aLeadingZeroes) {
-                FString aZeroString;
-				aZeroString.Insert('0', (aLeadingZeroes - aNumberString.mLength), 0);
-                aNumberString = FString(aZeroString + aNumberString);
+            
+            aNumberStringUnpadded.ParseInt(aStartIndex);
+            if (aNumberStringUnpadded.mLength < aLeadingZeroes) {
+                aZeroString.Reset();
+                aZeroString.Insert('0', (aLeadingZeroes - aNumberStringUnpadded.mLength), 0);
+                aNumberStringPadded.Reset();
+                aNumberStringPadded.Append(aZeroString);
+                aNumberStringPadded.Append(aNumberStringUnpadded);
+            } else {
+                aNumberStringPadded.Set(aNumberStringUnpadded);
             }
-            aPath = FString(aFileBase + aNumberString);
+            aPath.Reset();
+            aPath.Append(aFileBase);
+            aPath.Append(aNumberStringPadded);
+            
             aSprite->Load(aPath);
             if (aSprite->DidLoad()) {
                 mList += aSprite;
@@ -190,13 +198,22 @@ void FSpriteSequence::Load(const char *pFilePrefix, int pStartIndex, int pEndInd
                 int aIndex = aStartIndex + 1;
                 while (aIndex <= pEndIndex) {
                     aLoops++;
-                    aNumberString = FString(aIndex);
-                    if (aNumberString.mLength < aLeadingZeroes) {
-                        FString aZeroString;
-						aZeroString.Insert('0', (aLeadingZeroes - aNumberString.mLength), 0);
-                        aNumberString = FString(aZeroString + aNumberString);
+                    
+                    aNumberStringUnpadded.ParseInt(aIndex);
+                    if (aNumberStringUnpadded.mLength < aLeadingZeroes) {
+                        aZeroString.Reset();
+                        aZeroString.Insert('0', (aLeadingZeroes - aNumberStringUnpadded.mLength), 0);
+                        aNumberStringPadded.Reset();
+                        aNumberStringPadded.Append(aZeroString);
+                        aNumberStringPadded.Append(aNumberStringUnpadded);
+                    } else {
+                        aNumberStringPadded.Set(aNumberStringUnpadded);
                     }
-                    aPath = FString(aFileBase + aNumberString);
+                    
+                    aPath.Reset();
+                    aPath.Append(aFileBase);
+                    aPath.Append(aNumberStringPadded);
+                    
                     aSprite->Load(aPath);
                     if (aSprite->DidLoad()) {
                         mList += aSprite;
@@ -241,128 +258,6 @@ void FSpriteSequence::ComputeBounds() {
         }
     }
 }
-
-FList *FSpriteSequence::GetList(const char *pFilePrefix)
-{
-    FList *aResult = new FList();
-    
-    GetList(aResult, pFilePrefix);
-    
-    return aResult;
-}
-
-bool FSpriteSequence::GetList(FList *pList, const char *pFilePrefix)
-{
-    
-        gSpriteListEnabled = false;
-    
-    bool aResult = false;
-    if(pList)
-    {
-        FString aFilePrefix = pFilePrefix;
-        
-        bool aSuccess = false;
-        
-        FString aFileBase = pFilePrefix;
-        FString aNumberString;
-        FString aPath;
-    
-        FImage aCheckImage;
-    
-        //FSprite *aSprite = new FSprite();
-        //aSprite->mAddToSpriteList = false;
-        
-        int aLoops = 0;
-        
-        for(int aStartIndex=0;(aStartIndex < 5) && (aSuccess == false);aStartIndex++)
-        {
-            aLoops++;
-            
-            for(int aLeadingZeroes=1;(aLeadingZeroes < 7) && (aSuccess == false) ;aLeadingZeroes++)
-            {
-                aLoops++;
-                
-                aNumberString = FString(aStartIndex);
-                if(aNumberString.mLength < aLeadingZeroes)
-                {
-                    FString aZeroString;
-					aZeroString.Insert('0', (aLeadingZeroes - aNumberString.mLength), 0);
-                    aNumberString = FString(aZeroString + aNumberString);
-                }
-                
-                aPath = FString(aFileBase + aNumberString);
-                
-                //aSprite->Load(aPath);
-                aCheckImage.Load(aPath);
-                
-                if((aCheckImage.mWidth > 0) && (aCheckImage.mHeight > 0))
-                {
-                    aCheckImage.Kill();
-                    pList->Add(new FString(aPath.c()));
-                    
-                    
-                    
-                    //mList += aSprite;
-                    //aSprite = new FSprite();
-                    //aSprite->mAddToSpriteList = false;
-                    
-                    int aIndex = aStartIndex + 1;
-                    
-                    while(true)
-                    {
-                        aLoops++;
-                        
-                        aNumberString = FString(aIndex);
-                        if(aNumberString.mLength < aLeadingZeroes)
-                        {
-                            FString aZeroString;
-							aZeroString.Insert('0', (aLeadingZeroes - aNumberString.mLength), 0);
-                            aNumberString = FString(aZeroString + aNumberString);
-                        }
-                        
-                        aPath = FString(aFileBase + aNumberString);
-                        
-                        aCheckImage.Load(aPath);
-                        
-                        //aSprite->Load(aPath);
-                        
-                        if((aCheckImage.mWidth > 0) && (aCheckImage.mHeight > 0))
-                        {
-                            aCheckImage.Kill();
-                            //gSpriteSequenceList.Remove(this);
-                            
-                            pList->Add(new FString(aPath.c()));
-                            
-                            //mList += aSprite;
-                            //aSprite = new FSprite();
-                            //aSprite->mAddToSpriteList = false;
-                            
-                            aIndex++;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                    aSuccess = true;
-                }
-            }
-        }
-        
-        aCheckImage.Kill();
-    
-        if(pList->mCount > 0)aResult = true;
-    }
-    
-    gSpriteListEnabled = true;
-    
-    return aResult;
-}
-
-
-
-
-
 
 
 float FSpriteSequence::GetMaxFrame()
@@ -470,6 +365,7 @@ FSprite *FSpriteSequence::GetSprite(float pFrame)
     return aResult;
 }
 
+/*
 void FSpriteSequence::FindAllFileSequences(FList &pFileList, FList &pSearchBucketList) {
     FList aNodeList;
     FList aBucketList;
@@ -533,11 +429,13 @@ void FSpriteSequence::FindAllFileSequences(FList &pFileList, FList &pSearchBucke
     }
     
 }
+ */
 
+/*
 void FSpriteSequence::PrintAllFileSequences(FList &pFileList)
 {
 
-    /*
+    
     FList aBucketList;
     
     FindAllFileSequences(pFileList, aBucketList);
@@ -613,9 +511,11 @@ void FSpriteSequence::PrintAllFileSequences(FList &pFileList)
 		Log("mTestSequence[aSeqIndex++].LoadBundle(\"%s\");\n", aString->c());
 	}
 	FreeList(FString, aNameList);
-    */
+    
 }
+*/
 
+/*
 FSpriteSequenceSearchNode::FSpriteSequenceSearchNode(const char *pFilePath, const char *pName, int pIndex)
 {
     mFilePath = pFilePath;
@@ -670,3 +570,5 @@ void FSpriteSequenceSearchBucket::AddNode(FSpriteSequenceSearchNode *pSerchNode)
         mCount = mNodeList.mCount;
     }
 }
+ 
+*/

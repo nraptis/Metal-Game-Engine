@@ -25,8 +25,10 @@
 #include "Transform3D.hpp"
 #include "GameInfoOverlay.hpp"
 #include "HangingThread.hpp"
-#include "GameOverlay.hpp"
+#include "GameOverlayEffects.hpp"
+#include "GameOverlayInterface.hpp"
 #include "WindSpeedSimulator.hpp"
+
 
 #define GAME_WIDTH 768
 #define GAME_HEIGHT 1280
@@ -73,7 +75,6 @@ public:
     void                                        DisposeObjectFromLevelData(GameObject *pObject);
     
     void                                        FlyOffEscape(GameObject *pObject);
-    void                                        DartFlyOffScreen(Dart *pDart);
     
     void                                        StuckDartBeginFadeOut(Dart *pDart);
     void                                        StuckDartFinishFadeOut(Dart *pDart);

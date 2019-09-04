@@ -11,6 +11,7 @@
 
 #include "FList.hpp"
 #include "FSprite.hpp"
+#include "FSpriteSequence.h"
 #include "FHashMap.hpp"
 #include "FFont.hpp"
 #include "core_includes.h"

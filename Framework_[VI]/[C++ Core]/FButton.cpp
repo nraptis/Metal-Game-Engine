@@ -15,19 +15,18 @@ FButton::FButton() {
     mClickData = 0;
 
     mDrawManual = false;
-    
-    mDrawRectIfSpriteIsNull = true;
 
     mTriggerOnDown = false;
     mTriggerOnUp = true;
     
     mButtonLayer = new FButtonLayer();
     
+    mDrawSetsSpriteAlphaPipelineState = true;
     
     //mColor.mRed = 1.0f;
     //mColor.mGreen = 1.0f;
     //mColor.mBlue = 1.0f;
-    mColor.mAlpha = 1.0f;
+    //mColor.mAlpha = 1.0f;
     
     //mSpriteUp = 0;
     //mSpriteOver = 0;
@@ -294,6 +293,14 @@ void FButton::Update() {
 }
 
 void FButton::Draw() {
+    
+    if (mDrawSetsSpriteAlphaPipelineState == true && mColor.mAlpha != 0.0f) {
+        Graphics::PipelineStateSetShape2DAlphaBlending();
+        Graphics::SetColor(mColor);
+        Graphics::DrawRect(0.0f, 0.0f, mWidth, mHeight);
+        Graphics::SetColor();
+    }
+    
     bool aIsActive = true;
     bool aIsOver = mMouseOver;
     bool aIsDown = false;
@@ -310,33 +317,15 @@ void FButton::Draw() {
     EnumList(FButtonLayer, aLayer, mButtonLayersOver) {
         aLayer->Draw(this, aIsActive, aIsOver, aIsDown);
     }
-    
-    if ((mButtonLayersUnder.mCount == 0) && (mButtonLayersOver.mCount == 0)) {
-        bool aDrawRect = mDrawRectIfSpriteIsNull;
-        if (mButtonLayer) {
-            if (mButtonLayer->mSpriteUp != 0) {
-                aDrawRect = false;
-            }
-        }
-        if (aDrawRect) {
-            Graphics::SetColor(0.65f, 0.65f, 0.65f);
-            if(mTouchDownInside)Graphics::SetColor(0.75f, 0.75f, 0.75f);
-
-            Graphics::DrawRect(0.0f, 0.0f, mWidth, mHeight);
-            Graphics::SetColor(mColor);
-            Graphics::OutlineRectInside(0.0f, 0.0f, mWidth, mHeight, 4.0f);
-            Graphics::SetColor();
-        }
-    }
 }
 
 void FButton::TouchDown(float pX, float pY, void *pData) {
-
     if (mClickData == 0) {
         mClickData = pData;
     }
 
     gNotify.Post(this, "button_down");
+    
     if (mTriggerOnDown) {
         gNotify.Post(this, "button_click");
     }
@@ -523,41 +512,30 @@ void FButtonLayer::Draw(FButton *pButton, bool pActive, bool pIsOver, bool pIsDo
 {
     FSprite *aSprite = 0;
     
-    if((pActive == true) && (pButton != 0))
-    {
+    if ((pActive == true) && (pButton != NULL)) {
         
         float aX = pButton->mWidth2;
         float aY = pButton->mHeight2;
         
-        if(pIsDown)
-        {
-            Graphics::SetColor(mColorDown.mRed * pButton->mColor.mRed, mColorDown.mGreen * pButton->mColor.mGreen, mColorDown.mBlue * pButton->mColor.mBlue, mColorDown.mAlpha * pButton->mColor.mAlpha);
+        if (pIsDown) {
+            Graphics::SetColor(mColorDown.mRed, mColorDown.mGreen, mColorDown.mBlue, mColorDown.mAlpha);
             aSprite = mSpriteDown;
-        }
-        else if(pIsOver)
-        {
-            Graphics::SetColor(mColorOver.mRed * pButton->mColor.mRed, mColorOver.mGreen * pButton->mColor.mGreen, mColorOver.mBlue * pButton->mColor.mBlue, mColorOver.mAlpha * pButton->mColor.mAlpha);
-            
-            //Graphics::SetColor(mColorOver);
+        } else if(pIsOver) {
+            Graphics::SetColor(mColorOver.mRed, mColorOver.mGreen, mColorOver.mBlue, mColorOver.mAlpha);
             aSprite = mSpriteOver;
-        }
-        else
-        {
-            Graphics::SetColor(mColorUp.mRed * pButton->mColor.mRed, mColorUp.mGreen * pButton->mColor.mGreen, mColorUp.mBlue * pButton->mColor.mBlue, mColorUp.mAlpha * pButton->mColor.mAlpha);
-            
-            //Graphics::SetColor(mColorUp);
-            
+        } else {
+            Graphics::SetColor(mColorUp.mRed, mColorUp.mGreen, mColorUp.mBlue, mColorUp.mAlpha);
         }
         
-        if(aSprite == 0)
-        {
+        if (aSprite == NULL) {
             aSprite = mSpriteUp;
         }
         
         //Graphics::SetColor(1.0f, 1.0f, 1.0f, 0.85f);
-        
-        if(aSprite != 0)
-        {
+        if (aSprite != NULL) {
+            if (pButton->mDrawSetsSpriteAlphaPipelineState == true) {
+                Graphics::PipelineStateSetSpriteAlphaBlending();
+            }
             aSprite->Draw(aX + mOffsetX, aY + mOffsetY, mScale, mRotation);
         }
         

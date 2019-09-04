@@ -13,7 +13,10 @@
 
 #include "GameTestEditorOverlay.hpp"
 #include "GameTestRunningOverlay.hpp"
-#include "GameOverlay.hpp"
+
+#include "GameOverlayEffects.hpp"
+#include "GameOverlayInterface.hpp"
+
 
 #include "EditorMenuGameTestUtils.hpp"
 #include "EditorMenuGameTest.hpp"
@@ -51,9 +54,8 @@ public:
     GameTestRunningOverlay                      *mGameTestRunningOverlay;
     
     //This is essentially a scaled-down 2-D overlay which rests atop the game...
-    GameOverlay                                 *mOverlay;
-    
-    
+    GameOverlayEffects                          *mEffectsOverlay;
+    GameOverlayInterface                        *mInterfaceOverlay;
     
     
     EditorMenuGameTest                          *mEditorMenu;

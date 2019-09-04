@@ -200,23 +200,11 @@ void BrickHead::Update() {
     mCornerPoint4 = gGame->Convert3DCoordsTo2D(mCornerPoint4.mX, mCornerPoint4.mY);
     
     
-    ////
-    
-    
-    
-    
-    
-    
-    ////
-    
-    
     EnumList(StuckDart, aStuck, mStuckDartList) {
-        
         aStuck->Update();
         if (aStuck->mDelete) {
             mStuckDartDeleteList.Add(aStuck);
         }
-        
         
         Dart *aDart = aStuck->mDart;
         if (aDart != NULL) {

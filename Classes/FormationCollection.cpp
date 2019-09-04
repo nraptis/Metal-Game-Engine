@@ -253,7 +253,7 @@ void FormationCollection::Load() {
         if (Load(aString->c())) {
             
         } else {
-            printf("FAILED to Load Formation [%s]\n", aString->c());
+            Log("FAILED to Load Formation [%s]\n", aString->c());
         }
     }
     
@@ -272,7 +272,7 @@ bool FormationCollection::Load(const char *pName) {
         aFormation->mID = pName;
         mFormationList.Add(aFormation);
         
-        //printf("Loaded Formation [%llx][%s]\n", (unsigned long long)aFormation, pName);
+        //Log("Loaded Formation [%llx][%s]\n", (unsigned long long)aFormation, pName);
         
         return true;
     }

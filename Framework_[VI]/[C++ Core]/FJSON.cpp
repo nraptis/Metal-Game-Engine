@@ -541,10 +541,10 @@ ParseHelperArray_COMPLETE:
 
 
 void FJSON::Print() {
-    printf("__JSON_BEGIN:\n");
+    Log("__JSON_BEGIN:\n");
     FString aString = GetPrettyPrint();
-    printf("\n%s\n", aString.c());
-    printf("__JSON_END:\n");
+    Log("\n%s\n", aString.c());
+    Log("__JSON_END:\n");
 }
 
 FString FJSON::GetPrettyPrint() {

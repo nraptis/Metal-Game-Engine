@@ -457,8 +457,7 @@ void FString::ToPoint(float &theX, float &theY)
 	theX=0;
 	theY=0;
 
-	if(mData)
-	{
+	if (mData) {
 		char *aPtr = mData;
 		while(*aPtr && !(*aPtr == '.' || *aPtr == '-' || (*aPtr >= '0' && *aPtr <= '9')))aPtr++;
 		char *aXStart=aPtr;
@@ -470,8 +469,7 @@ void FString::ToPoint(float &theX, float &theY)
 		if(*aPtr == '-')aPtr++;
 		while(*aPtr && (*aPtr == '.' || (*aPtr >= '0' && *aPtr <= '9')))aPtr++;
 		int aYLength = (int)(aPtr - aYStart);
-		if(aXLength > 0 && aYLength > 0)
-		{
+		if (aXLength > 0 && aYLength > 0) {
 			
 			char *aX = new char[aXLength + 1];
 			char *aY = new char[aYLength + 1];
@@ -1623,7 +1621,7 @@ void FString::ParseChar(char *theChar)
 	Set((const char *)theChar);
 }
 
-void FString::ParseInt(int pNumber, bool pCommas)
+void FString::ParseInt(int pNumber)
 {
     static char cStringNumberChar[64];
     static int cStringNumberInt[64];

@@ -41,7 +41,7 @@ LevelData *Level::Build() {
     //Now we have a flat list of LevelNode.
     
     EnumList(LevelNode, aNode, aList) {
-        printf("Flat Section: %s\n", aNode->mSectionName.c());
+        Log("Flat Section: %s\n", aNode->mSectionName.c());
     }
     
     EnumList(LevelNode, aNode, aList) {
@@ -52,11 +52,11 @@ LevelData *Level::Build() {
         aSection->mKillTimer = aNode->mKillTimer;
         
         if (aSection->mLoadError) {
-            printf("** Failed To Load Section: [%s]\n", aNode->mSectionName.c());
+            Log("** Failed To Load Section: [%s]\n", aNode->mSectionName.c());
             delete aSection;
             continue;
         } else {
-            printf("** Loaded Section: %s\n", aNode->mSectionName.c());
+            Log("** Loaded Section: %s\n", aNode->mSectionName.c());
         }
         
         aData->AddSection(aSection);

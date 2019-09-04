@@ -9,6 +9,7 @@
 #ifndef FJSON_hpp
 #define FJSON_hpp
 
+#include "core_includes.h"
 #include "FString.hpp"
 #include "FList.hpp"
 #include "FHashMap.hpp"
@@ -125,7 +126,7 @@ private:
                     *pChar == '\\') {
                     pChar++;
                 } else {
-                    printf("Illegal character following \\\n\n\n");
+                    Log("Illegal character following \\\n\n\n");
                     return 0;
                 }
             } else {

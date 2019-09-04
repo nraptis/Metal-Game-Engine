@@ -13,6 +13,7 @@
 #include "FSprite.hpp"
 #include "FList.hpp"
 
+/*
 class FSpriteSequenceSearchNode
 {
 public:
@@ -42,6 +43,7 @@ public:
     
     FList                               mNodeList;
 };
+*/
 
 class FSpriteSequence
 {
@@ -60,11 +62,8 @@ public:
 
     void                                ComputeBounds();
 
-    static void                         FindAllFileSequences(FList &pFileList, FList &pSearchBucketList);
-    static void                         PrintAllFileSequences(FList &pFileList);
-
-    static bool                         GetList(FList *pList, const char *pFilePrefix);
-    static FList                        *GetList(const char *pFilePrefix);
+    //static void                         FindAllFileSequences(FList &pFileList, FList &pSearchBucketList);
+    //static void                         PrintAllFileSequences(FList &pFileList);
 
     void                                Add(FSprite *pSprite);
     void                                Add(FSpriteSequence *pSpriteSequence);

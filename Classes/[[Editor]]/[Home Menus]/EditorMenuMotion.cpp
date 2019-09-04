@@ -257,7 +257,7 @@ void EditorMenuMotion::CheckSlicePanels() {
     
     if (aAllMatch == false) {
         
-        printf("Mis-Match!!!\n");
+        Log("Mis-Match!!!\n");
         mPanelTypes->mSectionList.RemoveAll();
         EnumList(EditorMenuMotionTypePanel, aPanel, mTypePanelList) {
             aPanel->Kill();
