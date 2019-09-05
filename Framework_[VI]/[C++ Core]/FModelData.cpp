@@ -334,19 +334,6 @@ void FModelData::Scale(float pScale)
     
 }
 
-/*
-void FModelData::DrawEfficientSetup()
-{
-    Graphics::DrawModelEfficientSetup(mXYZ, mUVW, mNormal, mBindIndex);
-}
-
-void FModelData::DrawEfficient()
-{
-    Graphics::DrawTriangles(mXYZCount);
-}
-
-*/
-
 void FModelData::SetTexture(FTexture *pTexture)
 {
     SET_TEXTURE_BODY;
@@ -897,23 +884,7 @@ void FModelData::PrintOverview()
     Log("FModelDataOverview: XYZ(%d/%d) UVW(%d/%d) NORM(%d/%d)\n", mXYZCount, mXYZSize, mUVWCount, mUVWSize, mNormalCount, mNormalSize);
 }
 
-void FModelData::DrawEfficientSetup()
-{
-    Graphics::DrawModelEfficientSetup(mXYZ, mUVW, mNormal, mTexture);
-}
-
-void FModelData::DrawEfficient()
-{
-    Graphics::DrawTriangles(mXYZCount);
-}
-
-void FModelData::Draw()
-{
-    Graphics::DrawModel(mXYZ, mUVW, mNormal, mXYZCount, mTexture);
-}
-
-void FModelData::Draw(int pBindIndex)
-{
+void FModelData::Draw() {
     Graphics::DrawModel(mXYZ, mUVW, mNormal, mXYZCount, mTexture);
 }
 
@@ -933,13 +904,11 @@ FModelDataIndexed::FModelDataIndexed() {
     mIndexSize = 0;
 }
 
-FModelDataIndexed::~FModelDataIndexed()
-{
+FModelDataIndexed::~FModelDataIndexed() {
     Free();
 }
 
-void FModelDataIndexed::Free()
-{
+void FModelDataIndexed::Free() {
     FModelData::Free();
     
     delete[]mIndex;
@@ -948,18 +917,13 @@ void FModelDataIndexed::Free()
     mIndexSize=0;
 }
 
-void FModelDataIndexed::AddIndex(GFX_MODEL_INDEX_TYPE pIndex)
-{
+void FModelDataIndexed::AddIndex(GFX_MODEL_INDEX_TYPE pIndex) {
     if(mIndexCount >= mIndexSize)SizeIndex(mIndexCount + (mIndexCount / 2) + 1);
     mIndex[mIndexCount]=pIndex;
     mIndexCount++;
 }
 
-
-
-
-void FModelDataIndexed::SizeIndex(int pSize)
-{
+void FModelDataIndexed::SizeIndex(int pSize) {
     mIndexSize = pSize;
     
     GFX_MODEL_INDEX_TYPE *aNew = new GFX_MODEL_INDEX_TYPE[mIndexSize + 1];
@@ -1302,102 +1266,27 @@ void FModelDataIndexed::Draw(FTexture *pTexture) {
     Graphics::DrawModelIndexed(mXYZ, mXYZCount, mUVW, mUVWCount, mNormal, mNormalCount, mIndex, mIndexCount, pTexture);
 }
 
-void FModelDataIndexed::DrawEfficientSetup() {
-    Graphics::DrawModelIndexedEfficientSetup(mXYZ, mUVW, mNormal, mTexture);
-}
-
-void FModelDataIndexed::DrawEfficient() {
-    //Graphics::DrawTrianglesIndexed(mIndex, mIndexCount);
-    //Graphics::DrawModelEfficientSetup(mXYZ, mUVW, mNormal, mBindIndex);
-}
-
-//mUVWShifted
-
-void FModelDataIndexed::DrawShifted(float pUShift, float pVShift)
-{
-    
-    /*
-    if((pUShift == 0) && (pVShift == 0))
-    {
-        Draw();
-    }
-    
-    int aCount = mUVWCount * 3;
-    if(mUVWShifted == 0)
-    {
-        mUVWShifted = new float[aCount + 1];
-    }
-    
-    if((pUShift < 0) || (pUShift > 1))
-    {
-        pUShift = fmodf(pUShift, 1.0f);
-        if(pUShift < 0)pUShift += 1.0f;
-    }
-    
-    if((pVShift < 0) || (pVShift > 1))
-    {
-        pVShift = fmodf(pVShift, 1.0f);
-        if(pVShift < 0)pVShift += 1.0f;
-    }
-    
-    for(int i=0;i<aCount;i+=3)mUVWShifted[i] = (mUVW[i] + pUShift);
-    for(int i=1;i<aCount;i+=3)mUVWShifted[i] = (mUVW[i] + pVShift);
-    for(int i=2;i<aCount;i+=3)mUVWShifted[i] = 0;//(mUVW[i]);
-    
-    float *aHold = mUVW;
-    
-    mUVW = mUVWShifted;
-    
-
-    
-    
-    //Graphics::TextureSetWrap();
-    Draw();
-    //Graphics::TextureSetClamp();
-    
-    mUVW = aHold;
-     
-    */
-    
-}
-
-void FModelDataIndexed::DrawShifted(FModelDataIndexed *pReference, float pUShift, float pVShift)
-{
-    //int aCount = mUVWCount * 3;
-    //float *aUVW = pReference->mUVW;
-    
-    if(pUShift != 0)
-    {
-        
-    }
-    
-    if(pVShift != 0)
-    {
-        
-    }
-    
-    //Graphics::TextureSetWrap();
-    Draw();
-    //Graphics::TextureSetClamp();
-}
 
 
-FModelDataOptimizer::FModelDataOptimizer()
-{
-    mUVW=0;
+
+
+FModelDataOptimizer::FModelDataOptimizer() {
+    mUVW = 0;
     
-    mIndex=0;
-    mIndexCount=0;
+    mIndex = 0;
+    mIndexCount = 0;
+    mIndexSize = 0;
     
-    mCypher=0;
-    mCypherCount=0;
+    mCypher = 0;
+    mCypherCount = 0;
     
-    mHashTable=0;
-    mHashTableSize=0;
+    mHashTable = 0;
+    mHashTableSize = 0;
     
-    mIgnoreXYZ=false;
-    mIgnoreUVW=false;
-    mIgnoreNormal=false;
+    mIgnoreXYZ = false;
+    mIgnoreUVW = false;
+    mIgnoreNormal = false;
+    
 }
 
 FModelDataOptimizer::~FModelDataOptimizer() {

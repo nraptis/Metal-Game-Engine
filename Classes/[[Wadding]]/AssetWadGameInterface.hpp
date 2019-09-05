@@ -51,7 +51,7 @@ public:
     FFont                                           mFontScoreSmall;
     
     
-    //FFont                                           mFontSystem;
+    
     
     
     //candy_beans_256_font.kern

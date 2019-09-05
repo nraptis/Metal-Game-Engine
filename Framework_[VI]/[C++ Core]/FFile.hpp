@@ -73,24 +73,4 @@ public:
 int FloatToInt(float pFloat);
 float IntToFloat(int pInt);
 
-
-class FFileSequence
-{
-public:
-    
-    FFileSequence();
-    ~FFileSequence();
-    
-    static bool                             LoadSequence(const char *pFileBase, const char *pExtension, FList &pList, int pStartIndex, int pEndIndex, int pLeadingZeroCount);
-    static bool                             LoadSequence(const char *pFileBase, const char *pExtension, FList &pList, int pStartIndex, int pEndIndex);
-    static bool                             LoadSequence(const char *pFileBase, FList &pList, int pStartIndex, int pEndIndex);
-    
-    bool                                    LoadSequence(const char *pFileBase, const char *pExtension, int pStartIndex, int pEndIndex, int pLeadingZeroCount);
-    bool                                    LoadSequence(const char *pFileBase, const char *pExtension, int pStartIndex, int pEndIndex);
-    bool                                    LoadSequence(const char *pFileBase, int pStartIndex, int pEndIndex);
-    
-    FList                                   mList;
-};
-
-
 #endif

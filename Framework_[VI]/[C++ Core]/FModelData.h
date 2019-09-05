@@ -34,9 +34,7 @@ public:
     virtual void            LoadOBJ(FFile *pFile);
     virtual void            LoadOBJ(const char *pFile);
     
-    
     void                    Draw();
-    void                    Draw(int pBindIndex);
     
     float                   *mXYZ;
     float                   *mUVW;
@@ -59,9 +57,6 @@ public:
     void                    FitUVW(float pStartU, float pEndU, float pStartV, float pEndV);
     
     FModelData              *Clone();
-    
-    void                    DrawEfficientSetup();
-    void                    DrawEfficient();
     
     virtual void            GetCentroid(float &pCentroidX, float &pCentroidY, float &pCentroidZ);
     
@@ -180,15 +175,6 @@ public:
     
     void                        AddIndex(GFX_MODEL_INDEX_TYPE pIndex);
     void                        SizeIndex(int pSize);
-    
-    void                        DrawEfficientSetup();
-    void                        DrawEfficient();
-    //mUVWShifted
-    
-    void                        DrawShifted(float pUShift, float pVShift);
-    
-    void                        DrawShifted(FModelDataIndexed *pReference, float pUShift, float pVShift);
-    
     
     virtual void                Free();
 };

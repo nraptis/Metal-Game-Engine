@@ -65,7 +65,7 @@ FResource *FResourceManager::AddResource(const char *pResourcePath, bool pPrint)
             (aResult->mResourceType) |= RESOURCE_TYPE_AUDIO;
         } else if((aExtension == "xml") || (aExtension == "cml") || (aExtension == "jsn") || (aExtension == "json")) {
             (aResult->mResourceType) |= RESOURCE_TYPE_XMLJSON;
-        } else if ((aExtension == "3dp") || (aExtension == "3dm")) {
+        } else if ((aExtension == "3dp") || (aExtension == "3dm") || (aExtension == "3ds")) {
             (aResult->mResourceType) |= RESOURCE_TYPE_MODEL_DATA;
         } else if (aExtension == "obj") {
             (aResult->mResourceType) |= RESOURCE_TYPE_MODEL_OBJ;

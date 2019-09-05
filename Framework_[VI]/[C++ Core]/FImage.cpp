@@ -128,7 +128,7 @@ void FImage::Load(char *pFile) {
                             } else {
                                 if ((gRes.mTable.mTableCount > 0) && (aDirectoryIndex == 0)) {
                                     const char *aResourcePath = gRes.GetResourcePathImage(cImageLoadHelper.c());
-                                    while ((aResourcePath != 0) && (aDidLoad == false)) {
+                                    while ((aResourcePath != NULL) && (aDidLoad == false)) {
                                         LoadDirect(aResourcePath);
                                         if((mWidth > 0) && (mHeight > 0) && (mData != 0)) {
                                             if (aScaleSuffixIndex == 0) {
@@ -150,7 +150,7 @@ void FImage::Load(char *pFile) {
     
     if (gRes.mTable.mTableCount > 0) {
         const char *aResourcePath = gRes.GetResourcePathImage(aFile.c());
-        while ((aResourcePath != 0) && (aDidLoad == false)) {
+        while ((aResourcePath != NULL) && (aDidLoad == false)) {
             LoadDirect(aResourcePath);
             if((mWidth > 0) && (mHeight > 0) && (mData != NULL)) {
                 //Log("Scale {Default} (%d) [%d x %d] => Img[%s]\n", mScale, mWidth, mHeight, aFile.c());

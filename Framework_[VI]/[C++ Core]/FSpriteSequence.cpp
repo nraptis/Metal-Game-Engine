@@ -55,9 +55,7 @@ void FSpriteSequence::LoadBundle(const char *pBundleName) {
     ComputeBounds();
 }
 
-
-void FSpriteSequence::Load(const char *pFilePrefix)
-{
+void FSpriteSequence::Load(const char *pFilePrefix) {
     gSpriteListEnabled = false;
     
     mFilePrefix = pFilePrefix;
@@ -152,8 +150,7 @@ void FSpriteSequence::Load(const char *pFilePrefix)
     ComputeBounds();
 }
 
-void FSpriteSequence::Load(const char *pFilePrefix, int pStartIndex, int pEndIndex)
-{
+void FSpriteSequence::Load(const char *pFilePrefix, int pStartIndex, int pEndIndex) {
     mFilePrefix = pFilePrefix;
     
     gSpriteListEnabled = false;
@@ -164,19 +161,17 @@ void FSpriteSequence::Load(const char *pFilePrefix, int pStartIndex, int pEndInd
     FString aNumberStringUnpadded;
     FString aNumberStringPadded;
     
-    
     FString aPath;
     FSprite *aSprite = new FSprite();
     aSprite->mAddToSpriteList = false;
     
     FString aZeroString;
-    int aLoops = 0;
-    for (int aStartIndex=pStartIndex;aStartIndex <= pEndIndex;aStartIndex++) {
-        aLoops++;
+    //int aLoops = 0;
+    //for (int aStartIndex=pStartIndex;aStartIndex <= pEndIndex;aStartIndex++) {
+    
         for (int aLeadingZeroes=1;(aLeadingZeroes < 7)&&(aSuccess == false);aLeadingZeroes++) {
-            aLoops++;
             
-            aNumberStringUnpadded.ParseInt(aStartIndex);
+            aNumberStringUnpadded.ParseInt(pStartIndex);
             if (aNumberStringUnpadded.mLength < aLeadingZeroes) {
                 aZeroString.Reset();
                 aZeroString.Insert('0', (aLeadingZeroes - aNumberStringUnpadded.mLength), 0);
@@ -195,9 +190,8 @@ void FSpriteSequence::Load(const char *pFilePrefix, int pStartIndex, int pEndInd
                 mList += aSprite;
                 aSprite = new FSprite();
                 aSprite->mAddToSpriteList = false;
-                int aIndex = aStartIndex + 1;
+                int aIndex = pStartIndex + 1;
                 while (aIndex <= pEndIndex) {
-                    aLoops++;
                     
                     aNumberStringUnpadded.ParseInt(aIndex);
                     if (aNumberStringUnpadded.mLength < aLeadingZeroes) {
@@ -227,7 +221,7 @@ void FSpriteSequence::Load(const char *pFilePrefix, int pStartIndex, int pEndInd
                 aSuccess = true;
             }
         }
-    }
+    //}
     
     if (mList.mCount > 0) {
         if (gSpriteSequenceList.Exists(this) == false) {
@@ -260,10 +254,10 @@ void FSpriteSequence::ComputeBounds() {
 }
 
 
-float FSpriteSequence::GetMaxFrame()
-{
+float FSpriteSequence::GetMaxFrame() {
     return (float)(mList.mCount);
 }
+
 
 float FSpriteSequence::LoopFrame(float pFrame, float pFrameSpeed)
 {

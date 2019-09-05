@@ -146,6 +146,33 @@ void AssetWadModels::Load() {
     //brickhead.3dp
     //turtle_propeller_billboard.3dp
     
+    //butterfly_body_0.obj
+    
+    //mTestSequence1.LoadOBJSequence("butterfly_wings_", 0, 19);
+    //mTestSequence2.LoadOBJSequence("butterfly_body_", 0, 19);
+    
+    mTestSequenceMap.Load("butterfly_map");
+    
+    mTestSequence1.LoadData("butterfly_wings.3ds", &mTestSequenceMap);
+    mTestSequence2.LoadData("butterfly_body.3ds", &mTestSequenceMap);
+    
+    
+    
+    //mTestSequence1.Save(gDirExport + FString("butterfly_wings.3ds"));
+    //mTestSequence2.Save(gDirExport + FString("butterfly_body.3ds"));
+    
+    
+    //
+    
+    /*
+    butterfly_body_19.obj
+    butterfly_body_0.obj
+    
+    butterfly_wings_0.obj
+    butterfly_wings_19.obj
+    */
+    
+    
 }
 
 void AssetWadModels::Unload() {
@@ -211,6 +238,11 @@ void AssetWadModels::Unload() {
     mTurtleDamaged.Free();
     mTurtlePropeller.Free();
     mPrizeStar.Free();
+    
+    
+    mTestSequence1.Free();
+    mTestSequence2.Free();
+    mTestSequenceMap.Kill();
     
 }
 

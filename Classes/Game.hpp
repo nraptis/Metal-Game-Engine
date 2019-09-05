@@ -106,7 +106,9 @@ public:
     FObjectList                                 mBalloonList;
     FObjectList                                 mBrickHeadList;
     FObjectList                                 mBombList;
+    
     FObjectList                                 mTurtleList;
+    
     
     Dart                                        *mCurrentDart;
     int                                         mCurrentDartRespawnTimer;

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D511DB82320B14F00EB57D1 /* FModelDataPackedSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D511DB62320B14F00EB57D1 /* FModelDataPackedSequence.cpp */; };
 		0D8FCF18225DA8ED00A74580 /* BufferBindingWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDB8225DA8EC00A74580 /* BufferBindingWrapper.mm */; };
 		0D8FCF19225DA8ED00A74580 /* os_core_graphics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDB9225DA8EC00A74580 /* os_core_graphics.mm */; };
 		0D8FCF1A225DA8ED00A74580 /* Shape3DShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDBD225DA8EC00A74580 /* Shape3DShaders.metal */; };
@@ -65,7 +66,6 @@
 		0D8FCF50225DA8ED00A74580 /* FParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCE26225DA8ED00A74580 /* FParticle.cpp */; };
 		0D8FCF51225DA8ED00A74580 /* FSpriteSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCE2A225DA8ED00A74580 /* FSpriteSequence.cpp */; };
 		0D8FCF52225DA8ED00A74580 /* FImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCE2D225DA8ED00A74580 /* FImage.cpp */; };
-		0D8FCF53225DA8ED00A74580 /* FModelDataSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCE2F225DA8ED00A74580 /* FModelDataSequence.cpp */; };
 		0D8FCF54225DA8ED00A74580 /* FPointList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCE31225DA8ED00A74580 /* FPointList.cpp */; };
 		0D8FCF55225DA8ED00A74580 /* FSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCE33225DA8ED00A74580 /* FSprite.cpp */; };
 		0D8FCF56225DA8ED00A74580 /* FObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCE34225DA8ED00A74580 /* FObject.cpp */; };
@@ -232,6 +232,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D511DB62320B14F00EB57D1 /* FModelDataPackedSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FModelDataPackedSequence.cpp; sourceTree = "<group>"; };
+		0D511DB72320B14F00EB57D1 /* FModelDataPackedSequence.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FModelDataPackedSequence.hpp; sourceTree = "<group>"; };
 		0D8FCDB8225DA8EC00A74580 /* BufferBindingWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BufferBindingWrapper.mm; sourceTree = "<group>"; };
 		0D8FCDB9225DA8EC00A74580 /* os_core_graphics.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = os_core_graphics.mm; sourceTree = "<group>"; };
 		0D8FCDBA225DA8EC00A74580 /* TextureBindingWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureBindingWrapper.h; sourceTree = "<group>"; };
@@ -313,7 +315,6 @@
 		0D8FCE09225DA8ED00A74580 /* FParticle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FParticle.hpp; sourceTree = "<group>"; };
 		0D8FCE0A225DA8ED00A74580 /* FGestureCanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FGestureCanvas.cpp; sourceTree = "<group>"; };
 		0D8FCE0B225DA8ED00A74580 /* FIndexBufferCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FIndexBufferCache.cpp; sourceTree = "<group>"; };
-		0D8FCE0C225DA8ED00A74580 /* FModelDataSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FModelDataSequence.h; sourceTree = "<group>"; };
 		0D8FCE0D225DA8ED00A74580 /* FSpline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FSpline.cpp; sourceTree = "<group>"; };
 		0D8FCE0E225DA8ED00A74580 /* FLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FLine.cpp; sourceTree = "<group>"; };
 		0D8FCE0F225DA8ED00A74580 /* FSound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FSound.hpp; sourceTree = "<group>"; };
@@ -347,7 +348,6 @@
 		0D8FCE2C225DA8ED00A74580 /* FLine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FLine.hpp; sourceTree = "<group>"; };
 		0D8FCE2D225DA8ED00A74580 /* FImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FImage.cpp; sourceTree = "<group>"; };
 		0D8FCE2E225DA8ED00A74580 /* FHashMap.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FHashMap.hpp; sourceTree = "<group>"; };
-		0D8FCE2F225DA8ED00A74580 /* FModelDataSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FModelDataSequence.cpp; sourceTree = "<group>"; };
 		0D8FCE30225DA8ED00A74580 /* FTextureCache.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FTextureCache.hpp; sourceTree = "<group>"; };
 		0D8FCE31225DA8ED00A74580 /* FPointList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FPointList.cpp; sourceTree = "<group>"; };
 		0D8FCE32225DA8ED00A74580 /* FJoystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FJoystick.h; sourceTree = "<group>"; };
@@ -800,8 +800,8 @@
 				0D8FCDD8225DA8ED00A74580 /* FModelData.h */,
 				0D8FCE13225DA8ED00A74580 /* FModelDataPacked.cpp */,
 				0D8FCDF6225DA8ED00A74580 /* FModelDataPacked.hpp */,
-				0D8FCE2F225DA8ED00A74580 /* FModelDataSequence.cpp */,
-				0D8FCE0C225DA8ED00A74580 /* FModelDataSequence.h */,
+				0D511DB62320B14F00EB57D1 /* FModelDataPackedSequence.cpp */,
+				0D511DB72320B14F00EB57D1 /* FModelDataPackedSequence.hpp */,
 				0D8FCE75225DA8ED00A74580 /* FNotificationCenter.cpp */,
 				0D8FCDE9225DA8ED00A74580 /* FNotificationCenter.hpp */,
 				0D8FCE34225DA8ED00A74580 /* FObject.cpp */,
@@ -1121,16 +1121,16 @@
 		0DBAFCBF231F78C300C11381 /* [[Wadding]] */ = {
 			isa = PBXGroup;
 			children = (
-				0DBAFCC0231F78C300C11381 /* WadGlobalConfiguration.cpp */,
-				0DBAFCC1231F78C300C11381 /* AssetWadModels.cpp */,
-				0DBAFCC2231F78C300C11381 /* AssetWad.hpp */,
-				0DBAFCC3231F78C300C11381 /* AssetWadGameInterface.cpp */,
-				0DBAFCC4231F78C300C11381 /* AssetWadGameEffects.hpp */,
 				0DBAFCC5231F78C300C11381 /* AssetWad.cpp */,
-				0DBAFCC6231F78C300C11381 /* AssetWadGameInterface.hpp */,
+				0DBAFCC2231F78C300C11381 /* AssetWad.hpp */,
 				0DBAFCC7231F78C300C11381 /* AssetWadGameEffects.cpp */,
-				0DBAFCC8231F78C300C11381 /* WadGlobalConfiguration.hpp */,
+				0DBAFCC4231F78C300C11381 /* AssetWadGameEffects.hpp */,
+				0DBAFCC3231F78C300C11381 /* AssetWadGameInterface.cpp */,
+				0DBAFCC6231F78C300C11381 /* AssetWadGameInterface.hpp */,
+				0DBAFCC1231F78C300C11381 /* AssetWadModels.cpp */,
 				0DBAFCC9231F78C300C11381 /* AssetWadModels.hpp */,
+				0DBAFCC0231F78C300C11381 /* WadGlobalConfiguration.cpp */,
+				0DBAFCC8231F78C300C11381 /* WadGlobalConfiguration.hpp */,
 			);
 			path = "[[Wadding]]";
 			sourceTree = "<group>";
@@ -1138,32 +1138,32 @@
 		0DBAFCD5231F78C300C11381 /* [[Spawn Game]] */ = {
 			isa = PBXGroup;
 			children = (
-				0DBAFCD6231F78C300C11381 /* LevelMotionControllerSlice.hpp */,
-				0DBAFCD7231F78C300C11381 /* LevelSection.cpp */,
-				0DBAFCD8231F78C300C11381 /* LevelFormationTracer.cpp */,
-				0DBAFCD9231F78C300C11381 /* LevelPermSpawn.hpp */,
-				0DBAFCDA231F78C300C11381 /* LevelFormationNode.cpp */,
-				0DBAFCDB231F78C300C11381 /* LevelFormationTracerNode.hpp */,
 				0DBAFCDC231F78C300C11381 /* LevelData.cpp */,
-				0DBAFCDD231F78C300C11381 /* LevelPath.hpp */,
-				0DBAFCDE231F78C300C11381 /* LevelMotionController.cpp */,
-				0DBAFCDF231F78C300C11381 /* LevelSectionPermanent.hpp */,
-				0DBAFCE0231F78C300C11381 /* LevelWaveSpawn.hpp */,
-				0DBAFCE1231F78C300C11381 /* LevelWave.cpp */,
-				0DBAFCE2231F78C300C11381 /* LevelFormation.hpp */,
 				0DBAFCE3231F78C300C11381 /* LevelData.hpp */,
-				0DBAFCE4231F78C300C11381 /* LevelMotionController.hpp */,
-				0DBAFCE5231F78C300C11381 /* LevelPath.cpp */,
-				0DBAFCE6231F78C300C11381 /* LevelSectionPermanent.cpp */,
-				0DBAFCE7231F78C300C11381 /* LevelWaveSpawn.cpp */,
-				0DBAFCE8231F78C300C11381 /* LevelWave.hpp */,
 				0DBAFCE9231F78C300C11381 /* LevelFormation.cpp */,
-				0DBAFCEA231F78C300C11381 /* LevelMotionControllerSlice.cpp */,
-				0DBAFCEB231F78C300C11381 /* LevelSection.hpp */,
-				0DBAFCEC231F78C300C11381 /* LevelFormationTracer.hpp */,
-				0DBAFCED231F78C300C11381 /* LevelPermSpawn.cpp */,
+				0DBAFCE2231F78C300C11381 /* LevelFormation.hpp */,
+				0DBAFCDA231F78C300C11381 /* LevelFormationNode.cpp */,
 				0DBAFCEE231F78C300C11381 /* LevelFormationNode.hpp */,
+				0DBAFCD8231F78C300C11381 /* LevelFormationTracer.cpp */,
+				0DBAFCEC231F78C300C11381 /* LevelFormationTracer.hpp */,
 				0DBAFCEF231F78C300C11381 /* LevelFormationTracerNode.cpp */,
+				0DBAFCDB231F78C300C11381 /* LevelFormationTracerNode.hpp */,
+				0DBAFCDE231F78C300C11381 /* LevelMotionController.cpp */,
+				0DBAFCE4231F78C300C11381 /* LevelMotionController.hpp */,
+				0DBAFCEA231F78C300C11381 /* LevelMotionControllerSlice.cpp */,
+				0DBAFCD6231F78C300C11381 /* LevelMotionControllerSlice.hpp */,
+				0DBAFCE5231F78C300C11381 /* LevelPath.cpp */,
+				0DBAFCDD231F78C300C11381 /* LevelPath.hpp */,
+				0DBAFCED231F78C300C11381 /* LevelPermSpawn.cpp */,
+				0DBAFCD9231F78C300C11381 /* LevelPermSpawn.hpp */,
+				0DBAFCD7231F78C300C11381 /* LevelSection.cpp */,
+				0DBAFCEB231F78C300C11381 /* LevelSection.hpp */,
+				0DBAFCE6231F78C300C11381 /* LevelSectionPermanent.cpp */,
+				0DBAFCDF231F78C300C11381 /* LevelSectionPermanent.hpp */,
+				0DBAFCE1231F78C300C11381 /* LevelWave.cpp */,
+				0DBAFCE8231F78C300C11381 /* LevelWave.hpp */,
+				0DBAFCE7231F78C300C11381 /* LevelWaveSpawn.cpp */,
+				0DBAFCE0231F78C300C11381 /* LevelWaveSpawn.hpp */,
 			);
 			path = "[[Spawn Game]]";
 			sourceTree = "<group>";
@@ -1454,7 +1454,6 @@
 				0D8FCF31225DA8ED00A74580 /* FMatrix.cpp in Sources */,
 				0DBAFD73231F78C300C11381 /* GameRenderer.cpp in Sources */,
 				0D8FCF35225DA8ED00A74580 /* FSlider.cpp in Sources */,
-				0D8FCF53225DA8ED00A74580 /* FModelDataSequence.cpp in Sources */,
 				0D8FCF79225DA8ED00A74580 /* FString.cpp in Sources */,
 				0DBAFD68231F78C300C11381 /* WadGlobalConfiguration.cpp in Sources */,
 				0D8FCF50225DA8ED00A74580 /* FParticle.cpp in Sources */,
@@ -1546,6 +1545,7 @@
 				0D8FCF28225DA8ED00A74580 /* FQuad.cpp in Sources */,
 				0D8FCF63225DA8ED00A74580 /* DragableCanvas.cpp in Sources */,
 				0D8FCF7C225DA8ED00A74580 /* os_core_social.cpp in Sources */,
+				0D511DB82320B14F00EB57D1 /* FModelDataPackedSequence.cpp in Sources */,
 				0D8FCF7B225DA8ED00A74580 /* RecursiveLockWrapper.m in Sources */,
 				0D8FCF70225DA8ED00A74580 /* FUniforms.cpp in Sources */,
 				0DBAFD65231F78C300C11381 /* HangingThreadKnot.cpp in Sources */,

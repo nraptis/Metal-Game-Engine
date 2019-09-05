@@ -132,7 +132,7 @@ void FSound::Load(const char *pFileName, int pDuplicates) {
     bool aDidLoad = false;
     
     const char *aResourcePath = gRes.GetResourcePathSound(pFileName);
-    while ((aResourcePath != 0) && (aDidLoad == false)) {
+    while ((aResourcePath != NULL) && (aDidLoad == false)) {
         aDidLoad = sound_load(this, aResourcePath, pDuplicates);
         if (aDidLoad) {
             mFileName = pFileName;

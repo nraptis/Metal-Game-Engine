@@ -37,14 +37,10 @@ LevelFormationNode::LevelFormationNode() {
     
     mPathIndexOffset = 0;
     
-    
     mKillTimer = 8;
 }
 
 LevelFormationNode::~LevelFormationNode() {
-    
-    //Log("Dealloc[LevelFormationNode:%X] Obj[%d]\n", this, mObject);
-    
     if (mObject) {
         mObject->Kill();
         mObject = NULL;
@@ -63,18 +59,17 @@ void LevelFormationNode::Spawn() {
         gGame->mBrickHeadList.Add(mObject);
     }
     
-    if (mObjectType == GAME_OBJECT_TYPE_BOMB) {
-        mObject = new Bomb();
-        gGame->mBombList.Add(mObject);
-    }
-    
     if (mObjectType == GAME_OBJECT_TYPE_TURTLE) {
         mObject = new Turtle();
         gGame->mTurtleList.Add(mObject);
     }
     
+    if (mObjectType == GAME_OBJECT_TYPE_BOMB) {
+        mObject = new Bomb();
+        gGame->mBombList.Add(mObject);
+    }
+    
     if (mObject != NULL) {
-        
         mObject->mDidOriginateOnWave = mDidOriginateOnWave;
         mObject->mDidOriginateAsPermanent = mDidOriginateAsPermanent;
         
@@ -83,7 +78,6 @@ void LevelFormationNode::Spawn() {
         
         PositionObject();
     }
-    
 }
 
 void LevelFormationNode::Reset() {
@@ -96,18 +90,6 @@ void LevelFormationNode::Reset() {
     mBaseX = 0.0f;
     mBaseY = 0.0f;
 }
-
-/*
-void LevelFormationNode::Restart() {
-    if (mObject) {
-        mObject->Kill();
-        mObject = NULL;
-    }
-    mBaseX = 0.0f;
-    mBaseY = 0.0f;
-    mKillTimer = 8;
-}
-*/
 
 void LevelFormationNode::Update() {
     PositionObject();

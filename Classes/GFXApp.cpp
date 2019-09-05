@@ -41,7 +41,7 @@ GFXApp::GFXApp() {
     
 //#ifndef EDITOR_MODE
     
-    mDarkMode = true;
+    //mDarkMode = true;
     
 //#endif
     
@@ -154,6 +154,9 @@ void GFXApp::Load() {
     */
     
     
+    
+    mBF.LoadOBJ("butterfly_wings_0.obj");
+    mBFMap.Load("butterfly_map");
     
     
     

@@ -1484,6 +1484,7 @@
 		0DBAFE04231F81FB00C11381 /* PlatformGraphicsInterface.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFE00231F81FB00C11381 /* PlatformGraphicsInterface.mm */; };
 		0DBAFE05231F81FB00C11381 /* OpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFE02231F81FB00C11381 /* OpenGLView.mm */; };
 		0DBAFE07231F829200C11381 /* test_section_turtles.json in Resources */ = {isa = PBXBuildFile; fileRef = 0DBAFE06231F829200C11381 /* test_section_turtles.json */; };
+		0DEC5AEC2320336C0095E8F4 /* FModelDataPackedSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DEC5AEA2320336C0095E8F4 /* FModelDataPackedSequence.cpp */; };
 		E1704FEC222232B5000C5127 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1704FEB222232B5000C5127 /* Assets.xcassets */; };
 		E1704FEF222232B5000C5127 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1704FED222232B5000C5127 /* LaunchScreen.storyboard */; };
 		E1705301222234C8000C5127 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E17052FD222234C8000C5127 /* AVFoundation.framework */; };
@@ -3187,6 +3188,8 @@
 		0DBAFE01231F81FB00C11381 /* PlatformGraphicsInterface.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PlatformGraphicsInterface.hpp; sourceTree = "<group>"; };
 		0DBAFE02231F81FB00C11381 /* OpenGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenGLView.mm; sourceTree = "<group>"; };
 		0DBAFE06231F829200C11381 /* test_section_turtles.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test_section_turtles.json; sourceTree = "<group>"; };
+		0DEC5AEA2320336C0095E8F4 /* FModelDataPackedSequence.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FModelDataPackedSequence.cpp; sourceTree = "<group>"; };
+		0DEC5AEB2320336C0095E8F4 /* FModelDataPackedSequence.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FModelDataPackedSequence.hpp; sourceTree = "<group>"; };
 		E1704FDF222232B4000C5127 /* Crazy Darts 2 iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crazy Darts 2 iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1704FEB222232B5000C5127 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1704FEE222232B5000C5127 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -5248,6 +5251,8 @@
 				0D3591CC22FB4DE40032E8FC /* FModelData.h */,
 				0D35920622FB4DE40032E8FC /* FModelDataPacked.cpp */,
 				0D3591E922FB4DE40032E8FC /* FModelDataPacked.hpp */,
+				0DEC5AEA2320336C0095E8F4 /* FModelDataPackedSequence.cpp */,
+				0DEC5AEB2320336C0095E8F4 /* FModelDataPackedSequence.hpp */,
 				0D35922122FB4DE50032E8FC /* FModelDataSequence.cpp */,
 				0D3591FF22FB4DE40032E8FC /* FModelDataSequence.h */,
 				0D35926722FB4DE50032E8FC /* FNotificationCenter.cpp */,
@@ -6998,6 +7003,7 @@
 				0D35935522FB4DE50032E8FC /* ToolMenuSection.cpp in Sources */,
 				0D35931D22FB4DE50032E8FC /* FTouchManager.cpp in Sources */,
 				0D35935C22FB4DE50032E8FC /* UISlider.cpp in Sources */,
+				0DEC5AEC2320336C0095E8F4 /* FModelDataPackedSequence.cpp in Sources */,
 				0D35936522FB4DE50032E8FC /* FFile.cpp in Sources */,
 				0D35933822FB4DE50032E8FC /* FColor.cpp in Sources */,
 				0D35932D22FB4DE50032E8FC /* FTexture.cpp in Sources */,

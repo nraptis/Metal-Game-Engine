@@ -40,8 +40,26 @@ public:
     FModelDataPacked                                mPrizeStar;
     FSprite                                         mPrizeStarMap;
     
+    
+    
+    FModelDataPackedSequence                        mTestSequence1;
+    FModelDataPackedSequence                        mTestSequence2;
+    FSprite                                         mTestSequenceMap;
+    
+    
     virtual void                                    Load();
     virtual void                                    Unload();
+    
+    
+    
+    
+    /*
+    butterfly_body_19.obj
+    butterfly_body_0.obj
+    butterfly_map.png
+    butterfly_wings_0.obj
+    butterfly_wings_19.obj
+    */
     
 };
 

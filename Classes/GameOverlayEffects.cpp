@@ -113,15 +113,12 @@ void GameOverlayEffects::Draw() {
     }
     
     
-    
-    
     Graphics::PipelineStateSetSpriteAdditiveBlending();
     
     Graphics::SetColor();
     
-    gWadGameEffects.mSequenceBlast1.Center(mSeqFrame01, 100.0f, 150.0f);
-    gWadGameEffects.mSequenceBlast2.Center(mSeqFrame02, 180.0f, 250.0f);
-    gWadGameEffects.mSequenceBlast3.Center(mSeqFrame03, 260.0f, 350.0f);
-    
+    //gWadGameEffects.mSequenceBlast1.Center(mSeqFrame01, 100.0f, 150.0f);
+    //gWadGameEffects.mSequenceBlast2.Center(mSeqFrame02, 180.0f, 250.0f);
+    //gWadGameEffects.mSequenceBlast3.Center(mSeqFrame03, 260.0f, 350.0f);
     
 }

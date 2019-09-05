@@ -313,12 +313,11 @@ void FFile::LoadDirect(char *pFile) {
     }
 }
 
-void FFile::Load(char *pFile)
-{
+void FFile::Load(char *pFile) {
     Clear();
     
 	const char *aResourcePath = gRes.GetResourcePathFile(pFile);
-	while ((aResourcePath != 0) && (mLength <= 0)) {
+	while ((aResourcePath != NULL) && (mLength <= 0)) {
         mFileName = aResourcePath;
         mData = os_read_file(mFileName.c(), mLength);
         aResourcePath = gRes.GetNextResourcePath();
@@ -339,110 +338,6 @@ void FFile::Load(char *pFile)
 		mFileName = gDirDocuments + FString(pFile);
 		mData = os_read_file(mFileName.c(), mLength);
     }
-}
-
-
-
-FFileSequence::FFileSequence()
-{
-    
-}
-
-FFileSequence::~FFileSequence()
-{
-    
-}
-
-bool FFileSequence::LoadSequence(const char *pFileBase, const char *pExtension, FList &pList, int pStartIndex, int pEndIndex, int pLeadingZeroCount) {
-    bool aResult = false;
-    FString aFileBase = pFileBase;
-    FString aExtension = pExtension;
-    FString aNumberString = FString(pStartIndex);
-    if (aNumberString.mLength < pLeadingZeroCount) {
-        FString aZeroString;
-		aZeroString.Insert('0', (pLeadingZeroCount - aNumberString.mLength), 0);
-        aNumberString = (aZeroString + aNumberString);
-    }
-    
-    FString aCheck = (aFileBase + aNumberString + FString(".") + aExtension);
-    if (os_fileExists(aCheck.c())) {
-        pList += new FString(aCheck);
-        aResult=true;
-    }
-
-    if ((aResult == false) && (gDirBundle.mLength > 0)) {
-        aCheck = (gDirBundle + aFileBase + aNumberString + FString(".") + aExtension);
-        if (os_fileExists(aCheck.c())) {
-            pList += new FString(aCheck);
-            aFileBase = (gDirBundle + aFileBase);
-            aResult=true;
-        }
-    }
-    
-    if ((aResult == false) && (gDirDocuments.mLength > 0)) {
-        aCheck = (gDirDocuments + aFileBase + aNumberString + FString(".") + aExtension);
-        if (os_fileExists(aCheck.c())) {
-            pList += new FString(aCheck);
-            aFileBase = (gDirDocuments + aFileBase);
-            aResult=true;
-        }
-    }
-    
-    if (aResult) {
-        for (int aIndex=pStartIndex+1;((aIndex<=pEndIndex) || (pEndIndex == -1));aIndex++) {
-            aNumberString = FString(aIndex);
-            if (aNumberString.mLength < pLeadingZeroCount) {
-                FString aZeroString;
-                aZeroString.Insert('0', (pLeadingZeroCount - aNumberString.mLength), 0);
-                aNumberString = (aZeroString + aNumberString);
-            }
-            aCheck = (aFileBase + aNumberString + FString(".") + aExtension);
-            if (os_fileExists(aCheck.c())) {
-                pList += new FString(aCheck);
-            } else {
-                break;
-            }
-        }
-    }
-    
-    return aResult;
-}
-
-bool FFileSequence::LoadSequence(const char *pFileBase, const char *pExtension, FList &pList, int pStartIndex, int pEndIndex) {
-    bool aResult = false;
-    for (int aLeadingZeros=1;((aLeadingZeros<8) && (aResult==false));aLeadingZeros++) {
-        aResult = LoadSequence(pFileBase, pExtension, pList, pStartIndex, pEndIndex, aLeadingZeros);
-    }
-    return aResult;
-}
-
-bool FFileSequence::LoadSequence(const char *pFileBase, FList &pList, int pStartIndex, int pEndIndex) {
-    bool aResult = false;
-    if (!aResult) {
-        aResult = LoadSequence(pFileBase, "png", pList, pStartIndex, pEndIndex);
-    }
-    if (!aResult) {
-        aResult = LoadSequence(pFileBase, "jpg", pList, pStartIndex, pEndIndex);
-    }
-    if (!aResult) {
-        aResult = LoadSequence(pFileBase, "obj", pList, pStartIndex, pEndIndex);
-    }
-    return aResult;
-}
-
-bool FFileSequence::LoadSequence(const char *pFileBase, const char *pExtension, int pStartIndex, int pEndIndex, int pLeadingZeroCount) {
-    FreeList(FString, mList);
-    return FFileSequence::LoadSequence(pFileBase, pExtension, mList, pStartIndex, pEndIndex, pLeadingZeroCount);
-}
-
-bool FFileSequence::LoadSequence(const char *pFileBase, const char *pExtension, int pStartIndex, int pEndIndex) {
-    FreeList(FString, mList);
-    return FFileSequence::LoadSequence(pFileBase, pExtension, mList, pStartIndex, pEndIndex);
-}
-
-bool FFileSequence::LoadSequence(const char *pFileBase, int pStartIndex, int pEndIndex) {
-    FreeList(FString, mList);
-    return FFileSequence::LoadSequence(pFileBase, mList, pStartIndex, pEndIndex);
 }
 
 int FloatToInt(float pFloat) {

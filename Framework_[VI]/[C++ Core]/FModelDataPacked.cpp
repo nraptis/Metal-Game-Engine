@@ -14,14 +14,11 @@
 #include "FFloatBufferCache.hpp"
 #include "FIndexBufferCache.hpp"
 
-FFloatBufferCacheByteAligned256 cModelVertexCache;
-FIndexBufferCache cModelIndexCache;
-
 FModelDataPacked::FModelDataPacked() {
-    mIndex = 0;
+    mIndex = NULL;
     mIndexCount = 0;
     
-    mData = 0;
+    mData = NULL;
     mDataCount = 0;
     
     mHasXYZ = false;
@@ -38,11 +35,6 @@ FModelDataPacked::FModelDataPacked() {
     mStride = 0;
     
     mBuffer = NULL;
-    
-    
-    //mBufferIndex = -1;
-    //mBufferIndexOffset = 0;
-    
 }
 
 FModelDataPacked::~FModelDataPacked() {
@@ -50,22 +42,32 @@ FModelDataPacked::~FModelDataPacked() {
 }
 
 void FModelDataPacked::Free() {
+    DiscardBuffer();
+    DiscardData();
+    DiscardIndex();
+}
+
+void FModelDataPacked::DiscardBuffer() {
     delete mBuffer;
     mBuffer = NULL;
-    
-    delete [] mIndex;
-    mIndex = 0;
-    mIndexCount = 0;
-    
+}
+
+void FModelDataPacked::DiscardData() {
     delete [] mData;
-    mData = 0;
+    mData = NULL;
     mDataCount = 0;
-    
     mStride = 0;
-    
     mHasXYZ = false;
     mHasUVW = false;
     mHasNormals = false;
+    mHasTangents = false;
+    mHasUNormals = false;
+}
+
+void FModelDataPacked::DiscardIndex() {
+    delete [] mIndex;
+    mIndex = NULL;
+    mIndexCount = 0;
 }
 
 void FModelDataPacked::FitUVW(float pStartU, float pEndU, float pStartV, float pEndV) {
@@ -116,7 +118,6 @@ void FModelDataPacked::Save(FFile *pFile) {
     pFile->WriteInt(mHasUVW);
     pFile->WriteInt(mHasNormals);
     pFile->WriteInt(mHasTangents);
-    
     pFile->WriteInt(mHasUNormals);
     pFile->WriteInt(0);
     pFile->WriteInt(0);
@@ -134,7 +135,7 @@ void FModelDataPacked::Save(FFile *pFile) {
     pFile->WriteInt(mIndexCount);
     
     //Now the indices.
-    for (int i=0;i<mDataCount;i++) {
+    for (int i=0;i<mIndexCount;i++) {
         pFile->WriteShort(mIndex[i]);
     }
 }
@@ -143,8 +144,7 @@ void FModelDataPacked::LoadData(FFile *pFile, FSprite *pSprite) {
     
     Free();
     
-    
-    if (!pFile) { return; }
+    if (pFile == NULL) { return; }
     
     mFileName = pFile->mFileName.c();
     mFileName.RemovePath();
@@ -162,9 +162,7 @@ void FModelDataPacked::LoadData(FFile *pFile, FSprite *pSprite) {
     
     
     //Now the data count.
-    
     mDataCount = pFile->ReadInt();
-    
     
     //Now the data.
     mData = new float[mDataCount];
@@ -190,19 +188,15 @@ void FModelDataPacked::LoadData(FFile *pFile, FSprite *pSprite) {
         FitUVW(aStartU, aEndU, aStartV, aEndV);
     }
     
-    
-    
-    
     mBuffer = new FBuffer(sizeof(float) * mDataCount, BUFFER_TYPE_ARRAY);
     
     WriteBuffers();
 }
 
 void FModelDataPacked::LoadData(const char *pFile, FSprite *pSprite) {
-    
     FFile aFile;
     const char *aResourcePath = gRes.GetResourcePathOfType(pFile, RESOURCE_TYPE_MODEL_DATA);
-    while ((aResourcePath != 0)) {
+    while ((aResourcePath != NULL)) {
         aFile.LoadDirect((char *)aResourcePath);
         if (aFile.mLength > 0) { break; }
         aResourcePath = gRes.GetNextResourcePath();
@@ -229,25 +223,42 @@ void FModelDataPacked::LoadOBJ(FFile *pFile) {
     delete aOptimizer;
     aOptimizer = NULL;
     
-    if (aData.mIndexCount > 0 && aData.mXYZCount > 0) {
+    LoadIndexedModel(&aData);
+}
+
+void FModelDataPacked::LoadOBJ(const char *pFile) {
+    FFile aFile;
+    const char *aResourcePath = gRes.GetResourcePathOfType(pFile, RESOURCE_TYPE_MODEL_OBJ);
+    while ((aResourcePath != NULL)) {
+        aFile.LoadDirect((char *)aResourcePath);
+        if (aFile.mLength > 0) { break; }
+        aResourcePath = gRes.GetNextResourcePath();
+    }
+    if (aFile.mLength == 0) {
+        aFile.Load(pFile);
+    }
+    LoadOBJ(&aFile);
+}
+
+
+void FModelDataPacked::LoadIndexedModel(FModelDataIndexed *pModel) {
+    
+    Free();
+    if (pModel == NULL) { return; }
+    
+    if (pModel->mXYZCount > 0) {
         mHasXYZ = true;
         mStride = 3;
-        int aNodeCount = aData.mXYZCount;
+        int aNodeCount = pModel->mXYZCount;
         
-        if (aData.mUVWCount > 0 && mUseUVW) {
+        if (pModel->mUVWCount > 0 && mUseUVW) {
             mHasUVW = true;
             mStride += 3;
         }
         
-        if (aData.mNormalCount > 0 && mUseNormals) {
+        if (pModel->mNormalCount > 0 && mUseNormals) {
             mHasNormals = true;
             mStride += 3;
-        }
-        
-        mIndexCount = aData.mIndexCount;
-        mIndex = new GFX_MODEL_INDEX_TYPE[mIndexCount+1];
-        for (int i=0;i<mIndexCount;i++) {
-            mIndex[i] = aData.mIndex[i];
         }
         
         mDataCount = mStride * aNodeCount;
@@ -257,97 +268,39 @@ void FModelDataPacked::LoadOBJ(FFile *pFile) {
         for (int i=0;i<aNodeCount;i++) {
             int aIndex = i * 3;
             if (mHasXYZ) {
-                mData[aWriteIndex++] = aData.mXYZ[aIndex + 0];
-                mData[aWriteIndex++] = aData.mXYZ[aIndex + 1];
-                mData[aWriteIndex++] = aData.mXYZ[aIndex + 2];
+                mData[aWriteIndex++] = pModel->mXYZ[aIndex + 0];
+                mData[aWriteIndex++] = pModel->mXYZ[aIndex + 1];
+                mData[aWriteIndex++] = pModel->mXYZ[aIndex + 2];
             }
             if (mHasUVW) {
-                mData[aWriteIndex++] = aData.mUVW[aIndex + 0];
-                mData[aWriteIndex++] = aData.mUVW[aIndex + 1];
-                mData[aWriteIndex++] = aData.mUVW[aIndex + 2];
+                mData[aWriteIndex++] = pModel->mUVW[aIndex + 0];
+                mData[aWriteIndex++] = pModel->mUVW[aIndex + 1];
+                mData[aWriteIndex++] = pModel->mUVW[aIndex + 2];
             }
             if (mHasNormals) {
-                mData[aWriteIndex++] = aData.mNormal[aIndex + 0];
-                mData[aWriteIndex++] = aData.mNormal[aIndex + 1];
-                mData[aWriteIndex++] = aData.mNormal[aIndex + 2];
+                mData[aWriteIndex++] = pModel->mNormal[aIndex + 0];
+                mData[aWriteIndex++] = pModel->mNormal[aIndex + 1];
+                mData[aWriteIndex++] = pModel->mNormal[aIndex + 2];
             }
         }
         
         mBuffer = new FBuffer(sizeof(float) * mDataCount, BUFFER_TYPE_ARRAY);
         
         WriteBuffers();
-        //mBufferIndex = Graphics::BufferElementGenerate(sizeof(GFX_MODEL_INDEX_TYPE) * mIndexCount);
-        
-        /*
-        cModelVertexCache.Get(sizeof(float) * mDataCount);
-        if (cModelVertexCache.mResult.mSuccess) {
-            mBufferVertex = cModelVertexCache.mResult.mBufferIndex;
-            mBufferVertexOffset = cModelVertexCache.mResult.mBufferOffset;
-            //
-            Graphics::BufferArrayWrite(mBufferVertex, mData, mBufferVertexOffset, sizeof(float) * mDataCount);
-        } else {
-            Log("Unable to get vertex buffer space for model...\n");
-            mBufferVertex = -1;
-            mBufferVertexOffset = -1;
-        }
-        */
-        
-        /*
-        cModelIndexCache.Get(sizeof(GFX_MODEL_INDEX_TYPE) * mIndexCount);
-        if (cModelIndexCache.mResult.mSuccess) {
-            mBufferIndex = cModelIndexCache.mResult.mBufferIndex;
-            mBufferIndexOffset = cModelIndexCache.mResult.mBufferOffset;
-            //
-            Graphics::BufferElementWrite(mBufferIndex, mIndex, mBufferIndexOffset, sizeof(GFX_MODEL_INDEX_TYPE) * mIndexCount);
-        } else {
-            Log("Unable to get index buffer space for model...\n");
-            mBufferIndex = -1;
-            mBufferIndexOffset = -1;
-        }
-        */
-        
-        
-        //Log("Loaded Packed Model [%s] VB[i:%d s:%lu o:%d] IB[i:%d s:%d o:%d]\n", mFileName.c(), mBufferVertex, mDataCount * sizeof(float), mBufferVertexOffset, mBufferIndex, mIndexCount * sizeof(GFX_MODEL_INDEX_TYPE), mBufferIndexOffset);
     }
+    
+    if (pModel->mIndexCount > 0) {
+        mIndexCount = pModel->mIndexCount;
+        mIndex = new GFX_MODEL_INDEX_TYPE[mIndexCount+1];
+        for (int i=0;i<mIndexCount;i++) {
+            mIndex[i] = pModel->mIndex[i];
+        }
+    }
+    
 }
 
-void FModelDataPacked::LoadOBJ(const char *pFile) {
-    
-    FFile aFile;
-    const char *aResourcePath = gRes.GetResourcePathOfType(pFile, RESOURCE_TYPE_MODEL_OBJ);
-    while ((aResourcePath != 0)) {
-        aFile.LoadDirect((char *)aResourcePath);
-        if (aFile.mLength > 0) { break; }
-        aResourcePath = gRes.GetNextResourcePath();
-    }
-    
-    if (aFile.mLength == 0) {
-        aFile.Load(pFile);
-    }
-    
-    LoadOBJ(&aFile);
-}
 
 void FModelDataPacked::WriteBuffers() {
     Graphics::BufferArrayWrite(mBuffer, mData, sizeof(float) * mDataCount);
 }
-
-void FModelDataPacked::Draw() {
-    
-    
-}
-
-void FModelDataPacked::Draw(FTexture *pTexture) {
-    
-}
-
-void FModelDataPacked::BindBuffers() {
-    
-}
-
-void FModelDataPacked::KillBuffers() {
-    
-    
-}
-
 

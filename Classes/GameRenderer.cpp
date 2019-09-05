@@ -145,6 +145,15 @@ void GameRenderer::Draw3D() {
     }
     
     Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending();
+    
+    
+    EnumList (Turtle, aTurtle, mGame->mTurtleList.mObjectList) {
+        if (aTurtle->mKill == 0) {
+            aTurtle->Draw3D();
+        }
+    }
+    
+    
     EnumList (Balloon, aBalloon, mGame->mBalloonList.mObjectList) {
         if (aBalloon->mKill == 0) {
             aBalloon->Draw3D();
@@ -163,11 +172,7 @@ void GameRenderer::Draw3D() {
         }
     }
     
-    EnumList (Turtle, aTurtle, mGame->mTurtleList.mObjectList) {
-        if (aTurtle->mKill == 0) {
-            aTurtle->Draw3D();
-        }
-    }
+    
     
     if (mGame->mCurrentDart) {
         mGame->mCurrentDart->Draw3D();

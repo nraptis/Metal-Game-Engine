@@ -181,9 +181,9 @@
     
     if (clearColor) {
         MTLClearColor aClearColor;
-        aClearColor.red = 0.0f;
-        aClearColor.green = 0.0f;
-        aClearColor.blue = 0.0f;
+        aClearColor.red = 0.45f;
+        aClearColor.green = 0.45f;
+        aClearColor.blue = 0.45f;
         aClearColor.alpha = 1.0f;
         aRenderPassDescriptor.colorAttachments[0].clearColor = aClearColor;
         aRenderPassDescriptor.colorAttachments[0].loadAction = MTLLoadActionClear;

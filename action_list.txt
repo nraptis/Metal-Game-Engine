@@ -1,4 +1,11 @@
 
+D1.) We need a new scheme for a SEQUENCE of PACKED model data.
+
+D2.) We need to verify the SEQUENCE of PACKED model data for butterfly + billboard with sprite sequence... 
+
+D3.) We need to remove the old FModelDataSequence, this will not work anymore going forward.
+
+D4.) We need to remove the render functionality from the old model data indexed, this will not work going forward...
 
 B1.) When editor launches game with all permanents, they immediately fly away after landing on screen. There should be some default or programmed-in alive timer...
 

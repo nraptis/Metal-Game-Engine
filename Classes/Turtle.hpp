@@ -22,13 +22,34 @@ public:
     virtual void                            Draw();
     virtual void                            Draw3D();
     
+    void                                    Draw3DPropeller();
+    void                                    Draw3DBillboard();
+    
+    
     float                                   mSpinSpeed;
     
-    FModelDataPacked                        *mAccessoryModel;
-    FSprite                                 *mAccessorySprite;
+    FModelDataPacked                        *mPropellerModel;
+    FSprite                                 *mPropellerSprite;
+    
+    
+    
+    //FModelDataPacked                        *mPropellerModel;
+    //FSpriteSequence                         *mPropellerSprite;
     
     float                                   mVelX;
     float                                   mVelY;
+    
+    
+    
+    //mTestSequence1.LoadOBJSequence("butterfly_body_", 0, 19);
+    //mTestSequence2.LoadOBJSequence("butterfly_wings_", 0, 19);
+    //mTestSequenceMap.Load("butterfly_map");
+    
+    float                                   mTestFrame;
+    
+    
+    
+    
 };
 
 #endif /* Turtle_hpp */

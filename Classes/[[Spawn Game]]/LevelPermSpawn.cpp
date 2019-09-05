@@ -81,14 +81,14 @@ void LevelPermSpawn::Spawn() {
             gGame->mBrickHeadList.Add(mObject);
         }
         
-        if (mObjectType == GAME_OBJECT_TYPE_BOMB) {
-            mObject = new Bomb();
-            gGame->mBombList.Add(mObject);
-        }
-        
         if (mObjectType == GAME_OBJECT_TYPE_TURTLE) {
             mObject = new Turtle();
             gGame->mTurtleList.Add(mObject);
+        }
+        
+        if (mObjectType == GAME_OBJECT_TYPE_BOMB) {
+            mObject = new Bomb();
+            gGame->mBombList.Add(mObject);
         }
         
         if (mObject != NULL) {
