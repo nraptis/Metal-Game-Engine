@@ -51,6 +51,8 @@ public:
     
     FSpriteSequence();
     virtual ~FSpriteSequence();
+    
+    void                                Kill();
 
     void                                LoadBundle(const char *pBundleName);
 

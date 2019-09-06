@@ -236,7 +236,23 @@ void FWindow::SetDeviceSize(int pWidth, int pHeight) {
 }
 
 void FWindow::RefreshAll() {
-    RegisterFrameDidUpdate(&mRoot);
+    
+    mTemp.RemoveAll();
+    RefreshAll(&mRoot, &mTemp);
+    
+    EnumList(FCanvas, aCanvas, mTemp) {
+        aCanvas->BaseLayout();
+    }
+}
+
+void FWindow::RefreshAll(FCanvas *pCanvas, FList *pList) {
+    
+    if (pCanvas != NULL) {
+        pList->Add(pCanvas);
+        EnumList(FCanvas, aCanvas, pCanvas->mChildren) {
+            RefreshAll(aCanvas, pList);
+        }
+    }
 }
 
 void FWindow::SetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {

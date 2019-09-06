@@ -1074,7 +1074,7 @@ FModelData *FModelDataIndexed::GetData()
     return aResult;
 }
 
-void FModelDataIndexed::DiscardIndeces()
+void FModelDataIndexed::DiscardIndices()
 {
     if(mIndexCount > 0)
     {
@@ -1150,7 +1150,7 @@ void FModelDataIndexed::LoadData(FFile *pFile)
     
     int aIndexCount = pFile->ReadInt();
 
-    DiscardIndeces();
+    DiscardIndices();
     
     if(aIndexCount > 0)
     {
@@ -1645,7 +1645,7 @@ void FModelDataOptimizer::PrintOverview()
         }
     }
     
-    Log("\n\nDataOptimizer: [Max Ind %d (%f%% Short Max) [%d Indeces] [%d Cyphers]\n\n", aMaximumIndex, (((float)aMaximumIndex) / 65535.0f), mIndexCount, mCypherCount);
+    Log("\n\nDataOptimizer: [Max Ind %d (%f%% Short Max) [%d Indices] [%d Cyphers]\n\n", aMaximumIndex, (((float)aMaximumIndex) / 65535.0f), mIndexCount, mCypherCount);
     
     
 }

@@ -157,7 +157,7 @@ public:
     //void                      Load(const char *pFileStart, int pIndex, const char *pFileEnd, Sprite &pSprite);
     
     FModelData                  *GetData();
-    void                        DiscardIndeces();
+    void                        DiscardIndices();
     
     virtual void                GetCentroid(float &pCentroidX, float &pCentroidY, float &pCentroidZ);
     

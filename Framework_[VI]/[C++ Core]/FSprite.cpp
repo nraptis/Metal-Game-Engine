@@ -280,8 +280,7 @@ void FSprite::WriteBuffers() {
 
 bool FSprite::DidLoad() {
     bool aResult = true;
-    
-    if (mTexture == 0) aResult = false;
+    if (mTexture == NULL) aResult = false;
     if ((mWidth <= 0.0f) || (mHeight <= 0.0f)) {
         aResult = false;
     }

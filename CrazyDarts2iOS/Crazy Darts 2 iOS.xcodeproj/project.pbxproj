@@ -1389,7 +1389,6 @@
 		0D35934122FB4DE50032E8FC /* FParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D35921822FB4DE40032E8FC /* FParticle.cpp */; };
 		0D35934222FB4DE50032E8FC /* FSpriteSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D35921C22FB4DE50032E8FC /* FSpriteSequence.cpp */; };
 		0D35934322FB4DE50032E8FC /* FImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D35921F22FB4DE50032E8FC /* FImage.cpp */; };
-		0D35934422FB4DE50032E8FC /* FModelDataSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D35922122FB4DE50032E8FC /* FModelDataSequence.cpp */; };
 		0D35934522FB4DE50032E8FC /* FPointList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D35922322FB4DE50032E8FC /* FPointList.cpp */; };
 		0D35934622FB4DE50032E8FC /* FSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D35922522FB4DE50032E8FC /* FSprite.cpp */; };
 		0D35934722FB4DE50032E8FC /* FObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D35922622FB4DE50032E8FC /* FObject.cpp */; };
@@ -1443,6 +1442,8 @@
 		0D635569231F2CD70033993E /* GameOverlayEffects.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D635567231F2CD70033993E /* GameOverlayEffects.cpp */; };
 		0D63556C231F2CE50033993E /* GameOverlayInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D63556A231F2CE50033993E /* GameOverlayInterface.cpp */; };
 		0D735543223337F900F975B6 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D735542223337F900F975B6 /* OpenGLES.framework */; };
+		0D8FCF382321EAA900E046A7 /* butterfly_wings.3ds in Resources */ = {isa = PBXBuildFile; fileRef = 0D8FCF362321EAA900E046A7 /* butterfly_wings.3ds */; };
+		0D8FCF392321EAA900E046A7 /* butterfly_body.3ds in Resources */ = {isa = PBXBuildFile; fileRef = 0D8FCF372321EAA900E046A7 /* butterfly_body.3ds */; };
 		0DBAFDD7231F81EF00C11381 /* ShaderProgramSpriteWhite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFDA5231F81EE00C11381 /* ShaderProgramSpriteWhite.cpp */; };
 		0DBAFDD8231F81EF00C11381 /* ShaderProgramModelIndexed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFDA6231F81EE00C11381 /* ShaderProgramModelIndexed.cpp */; };
 		0DBAFDD9231F81EF00C11381 /* ShaderProgramSimpleModelIndexed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFDA9231F81EE00C11381 /* ShaderProgramSimpleModelIndexed.cpp */; };
@@ -2993,7 +2994,6 @@
 		0D3591FC22FB4DE40032E8FC /* FParticle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FParticle.hpp; sourceTree = "<group>"; };
 		0D3591FD22FB4DE40032E8FC /* FGestureCanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FGestureCanvas.cpp; sourceTree = "<group>"; };
 		0D3591FE22FB4DE40032E8FC /* FIndexBufferCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FIndexBufferCache.cpp; sourceTree = "<group>"; };
-		0D3591FF22FB4DE40032E8FC /* FModelDataSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FModelDataSequence.h; sourceTree = "<group>"; };
 		0D35920022FB4DE40032E8FC /* FSpline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FSpline.cpp; sourceTree = "<group>"; };
 		0D35920122FB4DE40032E8FC /* FLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FLine.cpp; sourceTree = "<group>"; };
 		0D35920222FB4DE40032E8FC /* FSound.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FSound.hpp; sourceTree = "<group>"; };
@@ -3027,7 +3027,6 @@
 		0D35921E22FB4DE50032E8FC /* FLine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FLine.hpp; sourceTree = "<group>"; };
 		0D35921F22FB4DE50032E8FC /* FImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FImage.cpp; sourceTree = "<group>"; };
 		0D35922022FB4DE50032E8FC /* FHashMap.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FHashMap.hpp; sourceTree = "<group>"; };
-		0D35922122FB4DE50032E8FC /* FModelDataSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FModelDataSequence.cpp; sourceTree = "<group>"; };
 		0D35922222FB4DE50032E8FC /* FTextureCache.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FTextureCache.hpp; sourceTree = "<group>"; };
 		0D35922322FB4DE50032E8FC /* FPointList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FPointList.cpp; sourceTree = "<group>"; };
 		0D35922422FB4DE50032E8FC /* FJoystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FJoystick.h; sourceTree = "<group>"; };
@@ -3129,6 +3128,8 @@
 		0D63556A231F2CE50033993E /* GameOverlayInterface.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameOverlayInterface.cpp; sourceTree = "<group>"; };
 		0D63556B231F2CE50033993E /* GameOverlayInterface.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameOverlayInterface.hpp; sourceTree = "<group>"; };
 		0D735542223337F900F975B6 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		0D8FCF362321EAA900E046A7 /* butterfly_wings.3ds */ = {isa = PBXFileReference; lastKnownFileType = file; path = butterfly_wings.3ds; sourceTree = "<group>"; };
+		0D8FCF372321EAA900E046A7 /* butterfly_body.3ds */ = {isa = PBXFileReference; lastKnownFileType = file; path = butterfly_body.3ds; sourceTree = "<group>"; };
 		0DBAFDA2231F81EE00C11381 /* ShaderProgramModelIndexedLightedDiffuse.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShaderProgramModelIndexedLightedDiffuse.hpp; sourceTree = "<group>"; };
 		0DBAFDA3231F81EE00C11381 /* ShaderProgramSprite.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShaderProgramSprite.hpp; sourceTree = "<group>"; };
 		0DBAFDA4231F81EE00C11381 /* ShaderProgramSimpleModel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShaderProgramSimpleModel.hpp; sourceTree = "<group>"; };
@@ -3244,6 +3245,8 @@
 				0D2EB660231EF10600F7E9D2 /* Monolith */,
 				0D2EBB0A231EF10800F7E9D2 /* music_game_loop.mp3 */,
 				0D2EB65F231EF10600F7E9D2 /* music_idle.mp3 */,
+				0D8FCF372321EAA900E046A7 /* butterfly_body.3ds */,
+				0D8FCF362321EAA900E046A7 /* butterfly_wings.3ds */,
 				0D2EBB53231EF10800F7E9D2 /* Screen Size Reference */,
 				0D2EB67F231EF10600F7E9D2 /* Sequence - Balloon Breakup */,
 				0D2EB875231EF10700F7E9D2 /* Sequence - Coin Spin */,
@@ -5253,8 +5256,6 @@
 				0D3591E922FB4DE40032E8FC /* FModelDataPacked.hpp */,
 				0DEC5AEA2320336C0095E8F4 /* FModelDataPackedSequence.cpp */,
 				0DEC5AEB2320336C0095E8F4 /* FModelDataPackedSequence.hpp */,
-				0D35922122FB4DE50032E8FC /* FModelDataSequence.cpp */,
-				0D3591FF22FB4DE40032E8FC /* FModelDataSequence.h */,
 				0D35926722FB4DE50032E8FC /* FNotificationCenter.cpp */,
 				0D3591DD22FB4DE40032E8FC /* FNotificationCenter.hpp */,
 				0D35922622FB4DE50032E8FC /* FObject.cpp */,
@@ -5832,6 +5833,7 @@
 				0D2EBD05231EF10900F7E9D2 /* balloon_blast_02_05_scale_1.png in Resources */,
 				0D2EBD1D231EF10900F7E9D2 /* balloon_blast_03_07_scale_1.png in Resources */,
 				0D2EBEAE231EF10900F7E9D2 /* coin_spin_04_14_scale_2.png in Resources */,
+				0D8FCF392321EAA900E046A7 /* butterfly_body.3ds in Resources */,
 				0D2EBEA8231EF10900F7E9D2 /* coin_spin_04_11_scale_2.png in Resources */,
 				0D2EBF0E231EF10900F7E9D2 /* coin_spin_02_05_scale_4.png in Resources */,
 				0D2EC039231EF10A00F7E9D2 /* release_dart_02.caf in Resources */,
@@ -5963,6 +5965,7 @@
 				0D2EBCD6231EF10900F7E9D2 /* balloon_blast_01_24_scale_4.png in Resources */,
 				0D2EBCC3231EF10900F7E9D2 /* balloon_blast_01_13_scale_2.png in Resources */,
 				0D2EBDE3231EF10900F7E9D2 /* pause_button_up_scale_3.png in Resources */,
+				0D8FCF382321EAA900E046A7 /* butterfly_wings.3ds in Resources */,
 				0D2EBE3C231EF10900F7E9D2 /* minidart_color_5_map_scale_2.png in Resources */,
 				0D2EBC9E231EF10900F7E9D2 /* balloon_blast_03_13_scale_3.png in Resources */,
 				0D2EBE53231EF10900F7E9D2 /* coin_spin_03_00_scale_4.png in Resources */,
@@ -7023,7 +7026,6 @@
 				0D35934D22FB4DE50032E8FC /* UIButton.cpp in Sources */,
 				0D35936422FB4DE50032E8FC /* FList.cpp in Sources */,
 				0D2EC27C231F029A00F7E9D2 /* LevelFormationTracer.cpp in Sources */,
-				0D35934422FB4DE50032E8FC /* FModelDataSequence.cpp in Sources */,
 				0D2EC278231F029A00F7E9D2 /* GameTestRunningOverlay.cpp in Sources */,
 				0D2EC298231F029B00F7E9D2 /* EditorMenuSpawnPicker.cpp in Sources */,
 				0D2EC255231F029A00F7E9D2 /* GFXApp.cpp in Sources */,

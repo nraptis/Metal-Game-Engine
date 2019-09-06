@@ -25,12 +25,17 @@ public:
     void                                Free();
     void                                DiscardBuffer();
     void                                DiscardData();
-    void                                DiscardIndex();
+    void                                DiscardIndices();
     
     void                                Draw();
     void                                Draw(FTexture *pTexture);
     
-    void                                BindBuffers();
+    FModelDataPacked                    *Clone();
+    
+    void                                CopyIndex(GFX_MODEL_INDEX_TYPE *pIndex, int pCount);
+    void                                CopyData(float *pData, int pCount);
+    
+    
     void                                KillBuffers();
     
     void                                FitUVW(float pStartU, float pEndU, float pStartV, float pEndV);
@@ -39,14 +44,22 @@ public:
     void                                Save(const char *pFile);
     inline void                         Save(FString pName) { Save((const char*)pName.c()); }
     
+    //For a sequence of files, with one sprite...
     void                                LoadData(FFile *pFile, FSprite *pSprite);
     void                                LoadData(const char *pFile, FSprite *pSprite);
     inline void                         LoadData(FString pFile, FSprite *pSprite) { LoadData((const char*)pFile.c(), pSprite); }
     
+    
+    //For a sequence of files, where the sprite UVW is precomputed and baked in...
+    void                                LoadData(FFile *pFile);
+    void                                LoadData(const char *pFile);
+    inline void                         LoadData(FString pFile) { LoadData((const char*)pFile.c()); }
+    
+    
+    
     void                                LoadOBJ(FFile *pFile);
     void                                LoadOBJ(const char *pFile);
     inline void                         LoadOBJ(FString pFile) { LoadOBJ((const char*)pFile.c()); }
-    
     
     void                                LoadIndexedModel(FModelDataIndexed *pModel);
     

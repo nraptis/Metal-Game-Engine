@@ -44,7 +44,7 @@ FModelDataPacked::~FModelDataPacked() {
 void FModelDataPacked::Free() {
     DiscardBuffer();
     DiscardData();
-    DiscardIndex();
+    DiscardIndices();
 }
 
 void FModelDataPacked::DiscardBuffer() {
@@ -64,11 +64,73 @@ void FModelDataPacked::DiscardData() {
     mHasUNormals = false;
 }
 
-void FModelDataPacked::DiscardIndex() {
+void FModelDataPacked::DiscardIndices() {
     delete [] mIndex;
     mIndex = NULL;
     mIndexCount = 0;
 }
+
+FModelDataPacked *FModelDataPacked::Clone() {
+    FModelDataPacked *aClone = new FModelDataPacked();
+    aClone->CopyData(mData, mDataCount);
+    aClone->CopyIndex(mIndex, mIndexCount);
+    
+    aClone->mHasXYZ      = mHasXYZ;
+    aClone->mHasUVW      = mHasUVW;
+    aClone->mHasNormals  = mHasNormals;
+    aClone->mHasTangents = mHasTangents;
+    aClone->mHasUNormals = mHasUNormals;
+    
+    //NOTE: If we have a buffer, so will the clone!!!
+    if (mBuffer) {
+        aClone->mBuffer = new FBuffer(sizeof(float) * mDataCount, BUFFER_TYPE_ARRAY);
+        aClone->WriteBuffers();
+    }
+    
+    return aClone;
+}
+
+void FModelDataPacked::CopyData(float *pData, int pCount) {
+    
+    delete mData;
+    mData = NULL;
+    mDataCount = NULL;
+    
+    
+    if ((pData == NULL) || (pCount <= 0)) {
+        return;
+    }
+    
+    mDataCount = pCount;
+    
+    //Now the data.
+    mData = new float[mDataCount];
+    for (int i=0;i<mDataCount;i++) {
+        mData[i] = pData[i];
+    }
+}
+
+void FModelDataPacked::CopyIndex(GFX_MODEL_INDEX_TYPE *pIndex, int pCount) {
+    delete [] mIndex;
+    mIndex = NULL;
+    mIndexCount = 0;
+    
+    if ((pIndex == NULL) || (pCount <= 0)) {
+        return;
+    }
+    
+    mIndexCount = pCount;
+    mIndex = new GFX_MODEL_INDEX_TYPE[mIndexCount + 1];
+    for (int i=0;i<mIndexCount;i++) {
+        mIndex[i] = pIndex[i];
+    }
+}
+
+//mData = new float[mDataCount];
+//for (int i=0;i<mDataCount;i++) {
+//    mData[i] = pFile->ReadFloat();
+//}
+
 
 void FModelDataPacked::FitUVW(float pStartU, float pEndU, float pStartV, float pEndV) {
     
@@ -207,6 +269,64 @@ void FModelDataPacked::LoadData(const char *pFile, FSprite *pSprite) {
     }
     
     LoadData(&aFile, pSprite);
+}
+
+void FModelDataPacked::LoadData(FFile *pFile) {
+    Free();
+    
+    if (pFile == NULL) { return; }
+    
+    mFileName = pFile->mFileName.c();
+    mFileName.RemovePath();
+    
+    //We start with 8 32 bit words.
+    mHasXYZ = pFile->ReadInt();
+    mHasUVW = pFile->ReadInt();
+    mHasNormals = pFile->ReadInt();
+    mHasTangents = pFile->ReadInt();
+    
+    mHasUNormals = pFile->ReadInt();
+    pFile->ReadInt();
+    pFile->ReadInt();
+    pFile->ReadInt();
+    
+    
+    //Now the data count.
+    mDataCount = pFile->ReadInt();
+    
+    //Now the data.
+    mData = new float[mDataCount];
+    for (int i=0;i<mDataCount;i++) {
+        mData[i] = pFile->ReadFloat();
+    }
+    
+    //Now the index count.
+    mIndexCount = pFile->ReadInt();
+    
+    mIndex = new GFX_MODEL_INDEX_TYPE[mIndexCount+1];
+    for (int i=0;i<mIndexCount;i++) {
+        mIndex[i] = pFile->ReadShort();
+    }
+    
+    mBuffer = new FBuffer(sizeof(float) * mDataCount, BUFFER_TYPE_ARRAY);
+    
+    WriteBuffers();
+}
+
+void FModelDataPacked::LoadData(const char *pFile) {
+    FFile aFile;
+    const char *aResourcePath = gRes.GetResourcePathOfType(pFile, RESOURCE_TYPE_MODEL_DATA);
+    while ((aResourcePath != NULL)) {
+        aFile.LoadDirect((char *)aResourcePath);
+        if (aFile.mLength > 0) { break; }
+        aResourcePath = gRes.GetNextResourcePath();
+    }
+    
+    if (aFile.mLength == 0) {
+        aFile.Load(pFile);
+    }
+    
+    LoadData(&aFile);
 }
 
 void FModelDataPacked::LoadOBJ(FFile *pFile) {

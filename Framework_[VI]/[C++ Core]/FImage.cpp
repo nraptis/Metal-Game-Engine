@@ -1776,12 +1776,12 @@ FImage *FImage::Crop(int x, int y, int pWidth, int pHeight) {
                 }
                 else
                 {
-                    Log("Copy Indeces Out Of Bounds! Copy[%d %d %d %d] Paste[%d %d %d %d]\n", aStartCopyX, aStartCopyY, aEndCopyX, aEndCopyY, aStartPasteX, aStartPasteY, aEndPasteX, aEndPasteY);
+                    Log("Copy Indices Out Of Bounds! Copy[%d %d %d %d] Paste[%d %d %d %d]\n", aStartCopyX, aStartCopyY, aEndCopyX, aEndCopyY, aStartPasteX, aStartPasteY, aEndPasteX, aEndPasteY);
                 }
             }
             else
             {
-                Log("Copy Indeces Out Of Bounds! Copy[%d %d %d %d] Paste[%d %d %d %d]\n", aStartCopyX, aStartCopyY, aEndCopyX, aEndCopyY, aStartPasteX, aStartPasteY, aEndPasteX, aEndPasteY);
+                Log("Copy Indices Out Of Bounds! Copy[%d %d %d %d] Paste[%d %d %d %d]\n", aStartCopyX, aStartCopyY, aEndCopyX, aEndCopyY, aStartPasteX, aStartPasteY, aEndPasteX, aEndPasteY);
             }
         }
     }

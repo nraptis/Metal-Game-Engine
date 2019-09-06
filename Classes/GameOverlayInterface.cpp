@@ -51,7 +51,7 @@ GameOverlayInterface::~GameOverlayInterface() {
 void GameOverlayInterface::Layout() {
     if (mPauseButton != NULL) {
         float aWidth = gWadGameInterface.mPauseButtonUp.mWidth + 40.0f * gSpriteDrawScale;
-        float aHeight = gWadGameInterface.mPauseButtonUp.mWidth + 40.0f * gSpriteDrawScale;
+        float aHeight = gWadGameInterface.mPauseButtonUp.mHeight + 40.0f * gSpriteDrawScale;
         float aPaddingLeft = 2.0f * gSpriteDrawScale;
         float aPaddingTop = 0.0f * gSpriteDrawScale;
         
@@ -211,7 +211,7 @@ void GameOverlayInterface::RefreshLifeIndicatorFrames() {
     float aWidth = gWadGameInterface.mLivesIndicatorFull.mWidth;
     float aHeight = gWadGameInterface.mLivesIndicatorFull.mHeight;
     
-    float aStride = (float)((int)((aWidth * 0.8f) * gSpriteDrawScale));
+    float aStride = (float)((int)((aWidth * 0.8f)));
     
     float aX = mWidth - 4.0f * gSpriteDrawScale;
     float aY = 6.0f * gSpriteDrawScale;

@@ -935,21 +935,18 @@ void FModelDataIndexed::SizeIndex(int pSize) {
     mIndex = aNew;
 }
 
-void FModelDataIndexed::CopyIndex(GFX_MODEL_INDEX_TYPE *pIndex, int pCount)
-{
-    delete[]mIndex;
-    mIndex=0;
-    mIndexCount=0;
-    mIndexSize=0;
+void FModelDataIndexed::CopyIndex(GFX_MODEL_INDEX_TYPE *pIndex, int pCount) {
+    delete [] mIndex;
+    mIndex = NULL;
+    mIndexCount = 0;
+    mIndexSize = 0;
     
-    if((pIndex == 0) || (pCount <= 0))
-    {
+    if ((pIndex == NULL) || (pCount <= 0)) {
         return;
     }
     
     SizeIndex(pCount);
-    for(int i=0;i<pCount;i++)
-    {
+    for (int i=0;i<pCount;i++) {
         mIndex[i]=pIndex[i];
     }
     mIndexCount=pCount;
@@ -1038,31 +1035,16 @@ FModelData *FModelDataIndexed::GetData()
     return aResult;
 }
 
-void FModelDataIndexed::DiscardIndeces()
-{
-    if(mIndexCount > 0)
-    {
+void FModelDataIndexed::DiscardIndices() {
+    if (mIndexCount > 0) {
         delete [] mIndex;
         mIndexCount = 0;
         mIndexSize = 0;
-        
-        /*
-        FModelData *aData = GetData();
-        
-        Free();
-        
-        CopyXYZ(aData->mXYZ, aData->mXYZCount);
-        CopyUVW(aData->mUVW, aData->mUVWCount);
-        CopyNorm(aData->mNormal, aData->mNormalCount);
-        
-        delete aData;
-        */
     }
-    mIndex=0;
+    mIndex = NULL;
 }
 
-FModelDataIndexed *FModelDataIndexed::Clone()
-{
+FModelDataIndexed *FModelDataIndexed::Clone() {
     FModelDataIndexed *aClone=new FModelDataIndexed();
     aClone->CopyXYZ(mXYZ, mXYZCount);
     aClone->CopyUVW(mUVW, mUVWCount);
@@ -1114,7 +1096,7 @@ void FModelDataIndexed::LoadData(FFile *pFile)
     
     int aIndexCount = pFile->ReadInt();
 
-    DiscardIndeces();
+    DiscardIndices();
     
     if(aIndexCount > 0)
     {
@@ -1534,7 +1516,7 @@ void FModelDataOptimizer::PrintOverview()
         }
     }
     
-    Log("\n\nDataOptimizer: [Max Ind %d (%f%% Short Max) [%d Indeces] [%d Cyphers]\n\n", aMaximumIndex, (((float)aMaximumIndex) / 65535.0f), mIndexCount, mCypherCount);
+    Log("\n\nDataOptimizer: [Max Ind %d (%f%% Short Max) [%d Indices] [%d Cyphers]\n\n", aMaximumIndex, (((float)aMaximumIndex) / 65535.0f), mIndexCount, mCypherCount);
     
     
 }

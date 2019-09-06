@@ -156,10 +156,20 @@ void AssetWadModels::Load() {
     mTestSequence1.LoadData("butterfly_wings.3ds", &mTestSequenceMap);
     mTestSequence2.LoadData("butterfly_body.3ds", &mTestSequenceMap);
     
+    //prop_billboard.3ds
+    
+    gImageBundler.StartBundle("bndl_bblast_1");
+    //mSequenceBlast1.Load("balloon_blast_01_");
+    mBillboardMapSequence.Load("balloon_blast_01_");
+    gImageBundler.EndBundle();
     
     
-    //mTestSequence1.Save(gDirExport + FString("butterfly_wings.3ds"));
-    //mTestSequence2.Save(gDirExport + FString("butterfly_body.3ds"));
+    //mBillboardSequence.mUseNormals = false;
+    
+    mBillboardSequence.LoadData("prop_billboard.3ds");
+    
+    //mBillboardSequence.LoadOBJBillboardSequence("turtle_propeller_billboard.obj", &mBillboardMapSequence);
+    //mBillboardSequence.Save(gDirExport + "prop_billboard_no_normals.3ds");
     
     
     //
@@ -243,6 +253,11 @@ void AssetWadModels::Unload() {
     mTestSequence1.Free();
     mTestSequence2.Free();
     mTestSequenceMap.Kill();
+    
+    
+    mBillboardMapSequence.Kill();
+    mBillboardSequence.Free();
+    
     
 }
 

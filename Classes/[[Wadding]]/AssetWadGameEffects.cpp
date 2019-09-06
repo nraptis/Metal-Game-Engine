@@ -21,12 +21,24 @@ void AssetWadGameEffects::Load() {
     mAdditiveTwinkleWhiteLarge.Load("effect_twinkle_additive_white_large");
     mAdditiveTwinkleWhiteSmall.Load("effect_twinkle_additive_white_small");
     
-    mSequenceBlast1.Load("balloon_blast_01_");
-    mSequenceBlast2.Load("balloon_blast_02_");
-    mSequenceBlast3.Load("balloon_blast_03_");
+    
+    //gImageBundler.mAutoBundle = true;
+    //gImageBundler.StartBundle("bndl_bblast_1");
+    //mSequenceBlast1.Load("balloon_blast_01_");
+    //gImageBundler.EndBundle();
     
     
-    printf("SEQ LOAD CNT: %d\n", mSequenceBlast1.mList.mCount);
+    //gImageBundler.StartBundle("bndl_bblast_2");
+    //mSequenceBlast2.Load("balloon_blast_02_");
+    //gImageBundler.EndBundle();
+    
+    //gImageBundler.StartBundle("bndl_bblast_3");
+    //mSequenceBlast3.Load("balloon_blast_03_");
+    //gImageBundler.EndBundle();
+    
+    //exit(0);
+    
+    //printf("SEQ LOAD CNT: %d\n", mSequenceBlast1.mList.mCount);
     
     
     

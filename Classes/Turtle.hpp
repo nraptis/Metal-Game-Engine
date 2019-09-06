@@ -50,6 +50,10 @@ public:
     
     
     
+    float                                   mBillboardFrame;
+    
+    
+    
 };
 
 #endif /* Turtle_hpp */

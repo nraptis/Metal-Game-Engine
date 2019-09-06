@@ -38,7 +38,7 @@ public:
     
     bool                                    mDisableNormal;
     bool                                    mDisableUVW;
-    bool                                    mDisableIndeces;
+    bool                                    mDisableIndices;
     
     bool                                    mUsesBaseXYZ;
     bool                                    mUsesBaseUVW;

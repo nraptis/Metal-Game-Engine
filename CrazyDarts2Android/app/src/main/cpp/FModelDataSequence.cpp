@@ -19,7 +19,7 @@ FModelDataSequence::FModelDataSequence() {
     mData = 0;
     mDisableNormal = false;
     mDisableUVW = false;
-    mDisableIndeces = false;
+    mDisableIndices = false;
     mUsesBaseXYZ = false;
     mUsesBaseNormal = false;
     mUsesBaseUVW = true;
@@ -288,7 +288,7 @@ void FModelDataSequence::Save(const char *pFile)
     }
     
     
-    if(mDisableIndeces)
+    if(mDisableIndices)
     {
         if(mParent->mIndexCount > 0)
         {
@@ -300,7 +300,7 @@ void FModelDataSequence::Save(const char *pFile)
                     int aPreXYZCount = mData[i]->mXYZCount;
                     
                     mData[i]->CopyIndex(mParent->mIndex, mParent->mIndexCount);
-                    mData[i]->DiscardIndeces();
+                    mData[i]->DiscardIndices();
                     
                     Log("Data[%d] Stripped[%d Index %d XYZ] to [%d XYZ]\n", i, aPreIndCount, aPreXYZCount, mData[i]->mXYZCount);
                 }
@@ -310,12 +310,12 @@ void FModelDataSequence::Save(const char *pFile)
         {
             for(int i=0;i<mCount;i++)
             {
-                mData[i]->DiscardIndeces();
+                mData[i]->DiscardIndices();
             }
         }
         
         
-        mParent->DiscardIndeces();
+        mParent->DiscardIndices();
     }
     
     

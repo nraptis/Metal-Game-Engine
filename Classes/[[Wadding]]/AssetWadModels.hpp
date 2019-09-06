@@ -40,12 +40,12 @@ public:
     FModelDataPacked                                mPrizeStar;
     FSprite                                         mPrizeStarMap;
     
-    
-    
     FModelDataPackedSequence                        mTestSequence1;
     FModelDataPackedSequence                        mTestSequence2;
     FSprite                                         mTestSequenceMap;
     
+    FModelDataPackedSequence                        mBillboardSequence;
+    FSpriteSequence                                 mBillboardMapSequence;
     
     virtual void                                    Load();
     virtual void                                    Unload();

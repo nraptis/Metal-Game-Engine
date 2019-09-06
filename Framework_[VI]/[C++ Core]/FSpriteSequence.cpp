@@ -17,6 +17,11 @@ FSpriteSequence::FSpriteSequence()
 }
 
 FSpriteSequence::~FSpriteSequence() {
+    Kill();
+}
+
+void FSpriteSequence::Kill() {
+    
     gSpriteSequenceList.Remove(this);
     EnumList (FSprite, aSprite, mList) {
         gSpriteList.Remove(aSprite);
@@ -24,9 +29,6 @@ FSpriteSequence::~FSpriteSequence() {
     }
     
     mList.Clear();
-    
-    //FreeList(FSprite, mList);
-    //mCount = 0;
     
     mWidth = 0.0f;
     mHeight = 0.0f;
