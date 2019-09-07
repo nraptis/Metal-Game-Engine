@@ -305,15 +305,16 @@ void FApp::BaseDraw() {
         Graphics::SetColor();
         Graphics::PipelineStateSetSpritePremultipliedBlending();
         
-        mSysFont.Draw(FString("FPS: ") + FString(GetFPS()), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 2.0f, 0.75f);
-        mSysFont.Draw(FString("UPS: ") + FString(GetUPS()), gSafeAreaInsetLeft + 130.0f, gSafeAreaInsetTop + 2.0f, 0.75f);
+        FString aResString = FString("HW: ") + FString(gDeviceWidth, 2) + FString(" x ") + FString(gDeviceHeight, 2) + FString(", VD: ") + FString(gVirtualDevWidth, 2) + FString(" x ") + FString(gVirtualDevHeight, 2);
+        mSysFont.Center(aResString, gDeviceWidth2, gDeviceHeight - 80.0f);
         
-        mSysFont.Draw(FString("SPRSC: ") + FString(gSpriteDrawScale), gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 2.0f + 30.0f, 0.75f);
-        mSysFont.Draw(FString("REZSC: ") + FString(gImageResolutionScale), gSafeAreaInsetLeft + 16.0f + 160.0f, gSafeAreaInsetTop + 2.0f + 30.0f, 0.75f);
+        FString aFPSString = FString("FPS: ") + FString(GetFPS()) + FString(", ") + FString("UPS: ") + FString(GetUPS());
+        mSysFont.Center(aFPSString, gDeviceWidth2, gDeviceHeight - 52.0f);
+        
+        FString aScaleString = FString("SCL: ") + FString(gSpriteDrawScale) + FString(", ") + FString("REZ: ") + FString(gImageResolutionScale);
+        mSysFont.Center(aScaleString, gDeviceWidth2, gDeviceHeight - 24.0f);
         
         
-        FString aResString = FString("HW: ") + FString(gDeviceWidth) + FString(" x ") + FString(gDeviceHeight) + FString(", VD: ") + FString(gVirtualDevWidth) + FString(" x ") + FString(gVirtualDevHeight);
-        mSysFont.Center(aResString, gDeviceWidth2, gDeviceHeight - 60.0f);
     }
     
     if (mIsLoadingComplete && Graphics::RenderPass() == GFX_RENDER_PASS_2D_MAIN) {

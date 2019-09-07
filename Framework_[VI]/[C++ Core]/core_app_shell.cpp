@@ -68,7 +68,9 @@ bool gKeyDownAlt = false;
 void AppShellInitialize(int pEnvironment) {
     gEnvironment = pEnvironment;
     
-    AppShellSetVirtualFrame(gSafeAreaInsetLeft, gSafeAreaInsetTop, gDeviceWidth - (gSafeAreaInsetLeft + gSafeAreaInsetRight), gDeviceHeight - (gSafeAreaInsetTop + gSafeAreaInsetBottom));
+    //TODO: This is only for SCREEN FRAME UTIL on iPHONE...
+    //AppShellSetVirtualFrame(gSafeAreaInsetLeft, gSafeAreaInsetTop, gDeviceWidth - (gSafeAreaInsetLeft + gSafeAreaInsetRight), gDeviceHeight - (gSafeAreaInsetTop + gSafeAreaInsetBottom));
+    AppShellSetVirtualFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
     
 	FList aResourceList;
     
@@ -305,7 +307,11 @@ void AppShellSetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
 	gVirtualDevX = (float)pX;
 	gVirtualDevY = (float)pY;
 	gVirtualDevWidth = (float)pWidth;
-	gVirtualDevHeight = (float)pHeight;
+    //TODO:
+    //gVirtualDevHeight = (float)pHeight;
+    
+    gVirtualDevHeight = (float)pWidth * 4.0f / 3.0f;
+    
     
     Log("Set Virtual Frame [%f %f %f %f]\n", gVirtualDevX, gVirtualDevY, gVirtualDevWidth, gVirtualDevHeight);
     

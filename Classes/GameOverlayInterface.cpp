@@ -112,7 +112,7 @@ void GameOverlayInterface::Draw() {
     Graphics::PipelineStateSetSpriteAlphaBlending();
     Graphics::SetColor();
     
-    //gWadGameInterface.mGameMenuBack.Center(mWidth2, mHeight2);
+    gWadGameInterface.mGameMenuBack.Center(mWidth2, mHeight2);
     
     /*
      

@@ -97,6 +97,7 @@ int kDeviceHeight = 320;
         AppShellSetSafeAreaInsets(_window.safeAreaInsets.top, _window.safeAreaInsets.right, _window.safeAreaInsets.bottom, _window.safeAreaInsets.left);
     } else {
         // Fallback on earlier versions
+        AppShellSetSafeAreaInsets(0.0f, 0.0f, 0.0f, 0.0f);
     }
     
     

@@ -73,7 +73,11 @@ bool gKeyDownAlt = false;
 void AppShellInitialize(int pEnvironment) {
     gEnvironment = pEnvironment;
     
-    AppShellSetVirtualFrame(gSafeAreaInsetLeft, gSafeAreaInsetTop, gDeviceWidth - (gSafeAreaInsetLeft + gSafeAreaInsetRight), gDeviceHeight - (gSafeAreaInsetTop + gSafeAreaInsetBottom));
+    
+    //TODO: This is only for SCREEN FRAME UTIL on iPHONE...
+    //AppShellSetVirtualFrame(gSafeAreaInsetLeft, gSafeAreaInsetTop, gDeviceWidth - (gSafeAreaInsetLeft + gSafeAreaInsetRight), gDeviceHeight - (gSafeAreaInsetTop + gSafeAreaInsetBottom));
+    AppShellSetVirtualFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+    
     
 	FList aResourceList;
     

@@ -489,10 +489,10 @@ void Game::Draw() {
     //Graphics::DrawRect(0.0f, 0.0f, mWidth, mHeight);
     
     Graphics::PipelineStateSetShape2DAlphaBlending();
-    Graphics::SetColor(1.0f, 1.0f, 0.25f, 0.25f);
-    Graphics::OutlineRect(0.0f, 0.0f, mWidth, mHeight, 2000.0f);
+    Graphics::SetColor(0.125f, 0.5f, 0.35f, 0.075f);
+    Graphics::OutlineRect(0.0f, 0.0f, mWidth, mHeight, 20.0f);
     Graphics::SetColor();
-    
+
     Graphics::PipelineStateSetSpriteAlphaBlending();
     Graphics::SetColor();
     

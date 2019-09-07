@@ -78,11 +78,12 @@ void GameOverlayEffects::Draw() {
     
     Graphics::PipelineStateSetShape2DAlphaBlending();
     
+    
     float aWindBarCenter = mWidth2;
     float aWindBarLength = mWidth * 0.9f;
     
     Graphics::SetColor(0.45f, 0.45f, 0.45f, 0.9f);
-    Graphics::DrawRect(aWindBarCenter - aWindBarLength / 2.0f, mHeight - 100.0f, aWindBarLength, 50.0f);
+    Graphics::DrawRect(aWindBarCenter - aWindBarLength / 2.0f, mHeight - 60.0f * gSpriteDrawScale, aWindBarLength, 30.0f * gSpriteDrawScale);
     
     float aWindPower = gGame->mWind.mPower;
     float aWindBarWidth = aWindBarLength * aWindPower * 0.5f;
@@ -92,7 +93,7 @@ void GameOverlayEffects::Draw() {
         Graphics::DrawRect(aWindBarCenter, mHeight - 100.0f, aWindBarWidth, 50.0f);
     } else {
         Graphics::SetColor(1.0f, 0.125f, 0.125f, 0.9f);
-        Graphics::DrawRect(aWindBarCenter + aWindBarWidth, mHeight - 100.0f, -aWindBarWidth, 50.0f);
+        Graphics::DrawRect(aWindBarCenter + aWindBarWidth, mHeight - 60.0f * gSpriteDrawScale, -aWindBarWidth, 30.0f * gSpriteDrawScale);
     }
     
     

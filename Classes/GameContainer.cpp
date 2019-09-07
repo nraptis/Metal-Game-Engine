@@ -92,6 +92,13 @@ GameContainer::~GameContainer() {
 }
 
 void GameContainer::Layout() {
+    
+    
+    mInterfaceLeftWidth = gSafeAreaInsetLeft;
+    mInterfaceRightWidth = gSafeAreaInsetRight;
+    mInterfaceTopHeight = gSafeAreaInsetTop;
+    mInterfaceBottomHeight = gSafeAreaInsetBottom;
+    
 
     if (mGame != NULL && mContainer != NULL) {
         
@@ -127,9 +134,11 @@ void GameContainer::Layout() {
         }
         
         if (mInterfaceOverlay != NULL) {
-            float aContainerCenterX = (int)(mInterfaceLeftWidth + (aGameAreaWidth) * 0.5f);
-            float aContainerCenterY = (int)(mInterfaceTopHeight + (aGameAreaHeight) * 0.5f);
-            mInterfaceOverlay->SetFrame(aContainerCenterX - mGame->mWidth2 * aScale, aContainerCenterY - mGame->mHeight2 * aScale, mGame->mWidth * aScale, mGame->mHeight * aScale);
+            //float aContainerCenterX = (int)(mInterfaceLeftWidth + (aGameAreaWidth) * 0.5f);
+            //float aContainerCenterY = (int)(mInterfaceTopHeight + (aGameAreaHeight) * 0.5f);
+            
+            mInterfaceOverlay->SetFrame(0.0f, 0.0f, mWidth, mHeight);
+            //mInterfaceOverlay->SetFrame(aContainerCenterX - mGame->mWidth2 * aScale, aContainerCenterY - mGame->mHeight2 * aScale, mGame->mWidth * aScale, mGame->mHeight * aScale);
         }
     }
     

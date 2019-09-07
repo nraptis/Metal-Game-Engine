@@ -49,9 +49,10 @@ void WadGlobalConfiguration::NotifyVirtualFrameChange() {
     
     //TODO: This will be the magic number that determines our scale...
     float aExampleImageWidth = 480.0f;
+    //float aExampleImageWidth = 540.0f;
     
     
-    float aFactor = (aScreenWidth - 640.0f) / (1440 - 640.0f);
+    float aFactor = (aScreenWidth - 640.0f) / (1412.0 - 640.0f);
     if (aFactor < 0.0f) { aFactor = 0.0f; }
     if (aFactor > 1.0f) { aFactor = 1.0f; }
     
