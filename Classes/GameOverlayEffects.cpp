@@ -76,23 +76,6 @@ void GameOverlayEffects::Draw() {
     mEffectListDartFadeStar.Draw();
     
     
-    
-    Graphics::PipelineStateSetSpritePremultipliedBlending();
-    
-    /*
-     gWadGameInterface.mFontScoreLarge.Draw("Xa aX0123456789yYzZZzzYaY", 20.0f, 100.0f);
-     gWadGameInterface.mFontScoreLarge.Draw("aa 2345BB", 20.0f, 150.0f);
-     gWadGameInterface.mFontScoreLarge.Draw("987 65bacaBCACAeE", 20.0f, 200.0f);
-     
-     gWadGameInterface.mFontScoreSmall.Draw("Xaa X0123456789yYzZZzzYaY", 20.0f, 250.0f);
-     gWadGameInterface.mFontScoreSmall.Draw("aa 2345BB", 20.0f, 300.0f);
-     gWadGameInterface.mFontScoreSmall.Draw("987 65bacaBCACAeE", 20.0f, 400.0f);
-     */
-    
-    gWadGameInterface.mFontScoreLarge.Right(FString(gGame->mScore), mWidth - 40.0f, 40.0f);
-    
-    
-    
     Graphics::PipelineStateSetShape2DAlphaBlending();
     
     float aWindBarCenter = mWidth2;

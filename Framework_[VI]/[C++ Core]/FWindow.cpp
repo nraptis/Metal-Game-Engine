@@ -236,17 +236,15 @@ void FWindow::SetDeviceSize(int pWidth, int pHeight) {
 }
 
 void FWindow::RefreshAll() {
-    
     mTemp.RemoveAll();
     RefreshAll(&mRoot, &mTemp);
-    
     EnumList(FCanvas, aCanvas, mTemp) {
         aCanvas->BaseLayout();
     }
+    Update();
 }
 
 void FWindow::RefreshAll(FCanvas *pCanvas, FList *pList) {
-    
     if (pCanvas != NULL) {
         pList->Add(pCanvas);
         EnumList(FCanvas, aCanvas, pCanvas->mChildren) {

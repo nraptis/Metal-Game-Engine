@@ -43,6 +43,8 @@ void WadGlobalConfiguration::NotifyReload() {
 void WadGlobalConfiguration::NotifyVirtualFrameChange() {
     
     float aScreenWidth = gVirtualDevWidth;
+    //if (gVirtualDevHeight < aScreenWidth) { aScreenWidth = gVirtualDevHeight; }
+    
     if (aScreenWidth < 100.0f) { aScreenWidth = 100.0f; }
     
     //TODO: This will be the magic number that determines our scale...

@@ -118,7 +118,7 @@ Game::Game() {
     mLivesMax = 5;
     mLives = mLivesMax;
     //TODO: Remove mLives = 3;
-    mLives = 3;
+    mLives = 4;
     
     mPoppedCount = 0;
     
@@ -633,6 +633,15 @@ void Game::Draw3D() {
 
 void Game::TouchDown(float pX, float pY, void *pData) {
     
+    if (pX > mWidth2) {
+        mLives++;
+        gInterfaceOverlay->NotifyLivesChanged();
+    } else {
+        mLives--;
+        gInterfaceOverlay->NotifyLivesChanged();
+    }
+    
+    
     if (gTouch.mTouchCount >= 3) {
         Log("Hack: Killing all balloons..!");
         
@@ -953,8 +962,7 @@ void Game::DartCollideWithBalloon(Dart *pDart, Balloon *pBalloon) {
         pBalloon->Kill();
         
         if (mPopSoundDelay == 0) {
-            mPopSoundDelay = 4;
-            
+            mPopSoundDelay = 2;
             gApp->mSoundBalloonPop.Play();
         }
         
@@ -979,6 +987,8 @@ void Game::DartCollideWithBrickhead(Dart *pDart, BrickHead *pBrickHead) {
         pDart->mStuck = true;
         
         if (pBrickHead != NULL) {
+            
+            gApp->mSoundHitTurtle.Play();
             
             StuckDart *aStuck = new StuckDart();
             aStuck->mDart = pDart;
@@ -1129,6 +1139,7 @@ void Game::Load() {
     aLevel.AddSection("test_section_perm_only_all_brickheads");
     */
     
+    /*
     aLevel.SetKillTimer(1000);
     aLevel.AddSection("test_section_turtles");
     
@@ -1143,7 +1154,8 @@ void Game::Load() {
     
     aLevel.SetKillTimer(4000);
     aLevel.AddSection("test_section_perm_only_all_balloons_all_tracers");
-    
+    */
+     
     aLevel.SetAliveTimer(2800);
     aLevel.AddSection("test_section_perm_only_all_brickheads");
     

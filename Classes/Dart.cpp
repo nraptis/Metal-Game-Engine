@@ -26,15 +26,16 @@ Dart::Dart() {
     
     mHitCount = 0;
     
-    mStyleIndex = gRand.Get(6);
+    mStyleIndex = gRand.Get(5);
+    
     //mModel = &gWadModels.mDartRegular[mStyleIndex];
     //mSprite = &gWadModels.mDartRegularMap[mStyleIndex];
     
     //mModel = &gWadModels.mDartMini[mStyleIndex];
     //mSprite = &gWadModels.mDartMiniMap[mStyleIndex];
     
-    //mModel = &gWadModels.mDartBat[mStyleIndex];
-    //mSprite = &gWadModels.mDartBatMap[mStyleIndex];
+    mModel = &gWadModels.mDartBat[mStyleIndex];
+    mSprite = &gWadModels.mDartBatMap[mStyleIndex];
     
     //mModel = &gWadModels.mExtraLife;
     //mSprite = &gWadModels.mExtraLifeMap;
@@ -45,8 +46,8 @@ Dart::Dart() {
     //mModel = &gWadModels.mTurtlePropeller;
     //mSprite = &gWadModels.mTurtlePropellerMap;
     
-    mModel = &gWadModels.mPrizeStar;
-    mSprite = &gWadModels.mPrizeStarMap;
+    //mModel = &gWadModels.mPrizeStar;
+    //mSprite = &gWadModels.mPrizeStarMap;
     
     
     mUniform = &(gGame->mRenderer->mUniformPhong);

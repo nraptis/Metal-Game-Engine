@@ -50,12 +50,14 @@ GameOverlayInterface::~GameOverlayInterface() {
 
 void GameOverlayInterface::Layout() {
     if (mPauseButton != NULL) {
-        float aWidth = gWadGameInterface.mPauseButtonUp.mWidth + 40.0f * gSpriteDrawScale;
-        float aHeight = gWadGameInterface.mPauseButtonUp.mHeight + 40.0f * gSpriteDrawScale;
+        float aWidth = gWadGameInterface.mPauseButtonUp.mWidth + 6.0f * gSpriteDrawScale;
+        float aHeight = gWadGameInterface.mPauseButtonUp.mHeight + 6.0f * gSpriteDrawScale;
         float aPaddingLeft = 2.0f * gSpriteDrawScale;
-        float aPaddingTop = 0.0f * gSpriteDrawScale;
+        float aPaddingTop = 2.0f * gSpriteDrawScale;
         
-        mPauseButton->SetFrame(aPaddingLeft, aPaddingTop, aWidth, aHeight);
+        float aY = (mHeight - aHeight) - aPaddingTop;
+        
+        mPauseButton->SetFrame(aPaddingLeft, aY, aWidth, aHeight);
     }
     
     RefreshLifeIndicatorFrames();
@@ -83,7 +85,8 @@ void GameOverlayInterface::Draw() {
      gWadGameInterface.mFontScoreSmall.Draw("987 65bacaBCACAeE", 20.0f, 400.0f);
      */
     
-    gWadGameInterface.mFontScoreLarge.Right(FString(gGame->mScore), mWidth - 40.0f, 40.0f);
+    gWadGameInterface.mFontScoreLarge.Draw(FString("Score:") + FString(gGame->mScore), 2.0f * gSpriteDrawScale, -2.0 * gSpriteDrawScale);
+    gWadGameInterface.mFontScoreLarge.Draw(FString("Streak:") + FString(gGame->mScore), 2.0f * gSpriteDrawScale, 20.0 * gSpriteDrawScale);
     
     
     
@@ -92,14 +95,14 @@ void GameOverlayInterface::Draw() {
     float aWindBarCenter = mWidth2;
     float aWindBarLength = mWidth * 0.9f;
     
-    Graphics::SetColor(0.45f, 0.45f, 0.45f, 0.9f);
+    Graphics::SetColor(0.35f, 0.35f, 0.35f, 0.75f);
     Graphics::DrawRect(aWindBarCenter - aWindBarLength / 2.0f, mHeight - 100.0f, aWindBarLength, 50.0f);
     
     float aWindPower = gGame->mWind.mPower;
     float aWindBarWidth = aWindBarLength * aWindPower * 0.5f;
     
     if (aWindPower >= 0.0f) {
-        Graphics::SetColor(1.0f, 0.125f, 0.125f, 0.9f);
+        Graphics::SetColor(1.0f, 0.125f, 0.125f, 0.75f);
         Graphics::DrawRect(aWindBarCenter, mHeight - 100.0f, aWindBarWidth, 50.0f);
     } else {
         Graphics::SetColor(1.0f, 0.125f, 0.125f, 0.9f);
@@ -166,16 +169,18 @@ void GameOverlayInterface::Notify(void *pSender, const char *pNotification) {
 }
 
 void GameOverlayInterface::NotifyLivesChanged() {
+    
+    printf("Lives: %d\n", gGame->mLives);
+    
     for (int i=0;i<mLifeIndicatorCount;i++) {
         if (mLifeIndicator[i] != NULL) {
-            if (i >= gGame->mLives) {
-                if (mLifeIndicator[i]->mFull == true) {
-                    mLifeIndicator[i]->BecomeEmpty();
-                }
-                mLifeIndicator[i]->mFull = false;
-            } else {
+            if (i >= (mLifeIndicatorCount - gGame->mLives)) {
                 if (mLifeIndicator[i]->mFull == false) {
                     mLifeIndicator[i]->BecomeFull();
+                }
+            } else {
+                if (mLifeIndicator[i]->mFull == true) {
+                    mLifeIndicator[i]->BecomeEmpty();
                 }
             }
         }
@@ -192,7 +197,7 @@ void GameOverlayInterface::RefreshLifeIndicators() {
             mLifeIndicator[i] = new LifeIndicator();
             AddChild(mLifeIndicator[i]);
         }
-        mLifeIndicator[i]->mFull = (i < gGame->mLives);
+        mLifeIndicator[i]->mFull = (i >= (mLifeIndicatorCount - gGame->mLives));
         mLifeIndicator[i]->mHidden = false;
     }
     
@@ -211,10 +216,10 @@ void GameOverlayInterface::RefreshLifeIndicatorFrames() {
     float aWidth = gWadGameInterface.mLivesIndicatorFull.mWidth;
     float aHeight = gWadGameInterface.mLivesIndicatorFull.mHeight;
     
-    float aStride = (float)((int)((aWidth * 0.8f)));
+    float aStride = (float)((int)((aWidth * 0.78f)));
     
-    float aX = mWidth - 4.0f * gSpriteDrawScale;
-    float aY = 6.0f * gSpriteDrawScale;
+    float aX = mWidth - 6.0f * gSpriteDrawScale;
+    float aY = 0.0f * gSpriteDrawScale;
     
     for (int i=0;i<MAX_LIFE_INDICATOR_COUNT;i++) {
         if (mLifeIndicator[i] != NULL) {

@@ -59,7 +59,7 @@ A23.) We need to show a progress bar for how close you are to finishing level.
 
 A24.) We need to start thinking about how you will earn 1, 2, or 3 stars per level.
 
-J.) We need the "wind" to pick up, sway, die down, and change directions in a semi-realistic fashion...
+
 
 A.) Win condition? We need to capture the win condition.
 
@@ -68,6 +68,8 @@ B.) Losing lives when balloons fly offscreen.
 E.) Mock model for "Bomb"
 
 F.) Logic for bomb collisions (Spherical).
+
+DONE.) We need the "wind" to pick up, sway, die down, and change directions in a semi-realistic fashion...
 
 DONE.) When brick is hit, it should rumble. The dart should be stuck for ~2 secs and then dissappear...
 
