@@ -472,7 +472,9 @@ void GameEditor::KeyDown(int pKey) {
     
     if (pKey == __KEY__K) {
         if (aShift == false && aCtrl == false && aAlt == false) {
-            KillAll();
+            //KillAll();
+            //DisposeAllObjects();
+            gGame->DisposeAllObjects();
         }
         if (aShift == false && aCtrl == true && aAlt == false) {
             KillAllBalloons();
@@ -774,7 +776,7 @@ void GameEditor::RefreshPlayback() {
     
     mIsRefreshingPlayback = true;
     
-    KillAll();
+    //KillAll();
     
     if (gGame != NULL) {
         gGame->DisposeAllObjects();
@@ -847,45 +849,57 @@ void GameEditor::RefreshSpawnRotationSpeed() {
     
 }
 
-void GameEditor::KillAll() {
-    
-    if (gGame != NULL) {
-        EnumList(GameObject, aObject, gGame->mBalloonList.mObjectList) {
-            aObject->Kill();
-        }
-        EnumList(GameObject, aObject, gGame->mDartList.mObjectList) {
-            aObject->Kill();
-        }
-        EnumList(GameObject, aObject, gGame->mBrickHeadList.mObjectList) {
-            aObject->Kill();
-        }
-    }
-    
-}
-
 void GameEditor::KillAllBalloons() {
     if (gGame != NULL) {
-        EnumList(GameObject, aObject, gGame->mBalloonList.mObjectList) { aObject->Kill(); }
+        EnumList(GameObject, aObject, gGame->mBalloonList.mObjectList) {
+            gGame->DisposeObject(aObject);
+        }
     }
 }
 
 void GameEditor::KillAllNonBalloons() {
     if (gGame != NULL) {
-        EnumList(GameObject, aObject, gGame->mDartList.mObjectList) { aObject->Kill(); }
-        EnumList(GameObject, aObject, gGame->mBrickHeadList.mObjectList) { aObject->Kill(); }
+        EnumList(GameObject, aObject, gGame->mDartList.mObjectList) {
+            gGame->DisposeObject(aObject);
+        }
+        EnumList(GameObject, aObject, gGame->mBrickHeadList.mObjectList) {
+            gGame->DisposeObject(aObject);
+        }
+        EnumList(GameObject, aObject, gGame->mTurtleList.mObjectList) {
+            gGame->DisposeObject(aObject);
+        }
+        EnumList(GameObject, aObject, gGame->mBombList.mObjectList) {
+            gGame->DisposeObject(aObject);
+        }
     }
 }
 
 void GameEditor::KillAllPerms() {
     if (gGame != NULL) {
         EnumList(GameObject, aObject, gGame->mBalloonList.mObjectList) {
-            if (aObject->mDidOriginateAsPermanent == true) { aObject->Kill(); }
+            if (aObject->mDidOriginateAsPermanent == true) {
+                gGame->DisposeObject(aObject);
+            }
         }
         EnumList(GameObject, aObject, gGame->mDartList.mObjectList) {
-            if (aObject->mDidOriginateAsPermanent == true) { aObject->Kill(); }
+            if (aObject->mDidOriginateAsPermanent == true) {
+                gGame->DisposeObject(aObject);
+            }
         }
         EnumList(GameObject, aObject, gGame->mBrickHeadList.mObjectList) {
-            if (aObject->mDidOriginateAsPermanent == true) { aObject->Kill(); }
+            if (aObject->mDidOriginateAsPermanent == true) {
+                gGame->DisposeObject(aObject);
+            }
+        }
+        EnumList(GameObject, aObject, gGame->mTurtleList.mObjectList) {
+            if (aObject->mDidOriginateAsPermanent == true) {
+                gGame->DisposeObject(aObject);
+            }
+        }
+        EnumList(GameObject, aObject, gGame->mBombList.mObjectList) {
+            if (aObject->mDidOriginateAsPermanent == true) {
+                gGame->DisposeObject(aObject);
+            }
         }
     }
 }
@@ -893,17 +907,32 @@ void GameEditor::KillAllPerms() {
 void GameEditor::KillAllWave() {
     if (gGame != NULL) {
         EnumList(GameObject, aObject, gGame->mBalloonList.mObjectList) {
-            if (aObject->mDidOriginateOnWave == true) { aObject->Kill(); }
+            if (aObject->mDidOriginateOnWave == true) {
+                gGame->DisposeObject(aObject);
+            }
         }
         EnumList(GameObject, aObject, gGame->mDartList.mObjectList) {
-            if (aObject->mDidOriginateOnWave == true) { aObject->Kill(); }
+            if (aObject->mDidOriginateOnWave == true) {
+                gGame->DisposeObject(aObject);
+            }
         }
         EnumList(GameObject, aObject, gGame->mBrickHeadList.mObjectList) {
-            if (aObject->mDidOriginateOnWave == true) { aObject->Kill(); }
+            if (aObject->mDidOriginateOnWave == true) {
+                gGame->DisposeObject(aObject);
+            }
+        }
+        EnumList(GameObject, aObject, gGame->mTurtleList.mObjectList) {
+            if (aObject->mDidOriginateOnWave == true) {
+                gGame->DisposeObject(aObject);
+            }
+        }
+        EnumList(GameObject, aObject, gGame->mBombList.mObjectList) {
+            if (aObject->mDidOriginateOnWave == true) {
+                gGame->DisposeObject(aObject);
+            }
         }
     }
 }
-
 
 void GameEditor::WaveAdd() {
     
@@ -1277,7 +1306,10 @@ void GameEditor::Clear() {
     mEditorWave.Reset();
     mEditorSection.Reset();
     
-    KillAll();
+    
+    //KillAll();
+    gGame->DisposeAllObjects();
+    
     
     RefreshPlayback();
 }

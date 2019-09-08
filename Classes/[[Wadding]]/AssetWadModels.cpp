@@ -29,7 +29,17 @@ void AssetWadModels::Load() {
     gImageBundler.mEdgeBorder = 0;
     gImageBundler.mInset = 0;
     
+    
+    
     //gImageBundler.mAutoBundle = true;
+    
+    
+    
+    gImageBundler.mSeamlessBorders = true;
+    gImageBundler.StartBundle("bndl_turt_prop_billboard");
+    mTurtlePropellerBillboardMapSequence.Load("propeller_whirl_", 0, 14);
+    gImageBundler.EndBundle();
+    gImageBundler.mSeamlessBorders = false;
     
     
     gImageBundler.StartBundle("bndl_model_maps_01");
@@ -97,11 +107,7 @@ void AssetWadModels::Load() {
     //prize_star_map
     
     
-    //gImageBundler.mA
-    gImageBundler.StartBundle("bndl_score_font");
-    //mFontScoreLarge.LoadNew("fnt_mh_256_font.kern", "mont_heavy_128_", "0123456789+-.,");
-    //mFontScoreSmall.LoadNew("fnt_mh_256_font.kern", "mont_heavy_64_", "0123456789+-.,");
-    gImageBundler.EndBundle();
+
     
     
     
@@ -134,42 +140,36 @@ void AssetWadModels::Load() {
     
     mExtraLife.LoadData("extra_life.3dp", &mExtraLifeMap);
     
+    mPrizeStar.LoadData("brickhead_cage.3dp", &mPrizeStarMap);
+    
     mTurtle.LoadData("turtle.3dp", &mTurtleMap);
     mTurtleDamaged.LoadData("turtle.3dp", &mTurtleDamagedMap);
     mTurtlePropeller.LoadData("turtle_propeller.3dp", &mTurtlePropellerMap);
+    //mTurtlePropeller.LoadData("turtle_propeller.3dp", &mTurtlePropellerMap);
+    //mTurtlePropeller.LoadOBJ("turtle_propeller.obj");
+    
     
     //TODO: This is loading wrong model.
-    mPrizeStar.LoadData("brickhead_cage.3dp", &mPrizeStarMap);
     
-    //balloon.3dp
-    //brickhead_cage.3dp
-    //brickhead.3dp
+    
+    //
+    
+    mTurtlePropellerBillboardSequence.LoadDataBillboardSequence("turtle_propeller_billboard.3dp", &mTurtlePropellerBillboardMapSequence);
+    
     //turtle_propeller_billboard.3dp
     
-    //butterfly_body_0.obj
+    //FModelDataPacked aPropBBExpo;
+    //aPropBBExpo.LoadOBJ("turtle_propeller_billboard.obj");
+    //aPropBBExpo.Save(gDirExport + "turtle_propeller_billboard.3dm");
     
-    //mTestSequence1.LoadOBJSequence("butterfly_wings_", 0, 19);
-    //mTestSequence2.LoadOBJSequence("butterfly_body_", 0, 19);
+    //turtle_propeller_billboard.3dp
     
-    mTestSequenceMap.Load("butterfly_map");
+    //mTurtlePropellerBillboardSequence.LoadData("turtle_propeller_billboard.3ds");
     
-    mTestSequence1.LoadData("butterfly_wings.3ds", &mTestSequenceMap);
-    mTestSequence2.LoadData("butterfly_body.3ds", &mTestSequenceMap);
-    
-    //prop_billboard.3ds
-    
-    gImageBundler.StartBundle("bndl_bblast_1");
-    //mSequenceBlast1.Load("balloon_blast_01_");
-    mBillboardMapSequence.Load("balloon_blast_01_");
-    gImageBundler.EndBundle();
+    //mTurtlePropellerBillboardSequence.LoadOBJBillboardSequence("turtle_propeller_billboard.obj", &mTurtlePropellerBillboardMapSequence);
+    //mTurtlePropellerBillboardSequence.Save(gDirExport + "turtle_propeller_billboard.3ds");
     
     
-    //mBillboardSequence.mUseNormals = false;
-    
-    mBillboardSequence.LoadData("prop_billboard.3ds");
-    
-    //mBillboardSequence.LoadOBJBillboardSequence("turtle_propeller_billboard.obj", &mBillboardMapSequence);
-    //mBillboardSequence.Save(gDirExport + "prop_billboard_no_normals.3ds");
     
     
     //
@@ -216,6 +216,8 @@ void AssetWadModels::Unload() {
     
     mPrizeStarMap.Kill();
     
+    mTurtlePropellerBillboardMapSequence.Kill();
+    
     /////////////////////////////
     //
     //Unload the models as well...
@@ -247,16 +249,8 @@ void AssetWadModels::Unload() {
     mTurtle.Free();
     mTurtleDamaged.Free();
     mTurtlePropeller.Free();
+    mTurtlePropellerBillboardSequence.Free();
     mPrizeStar.Free();
-    
-    
-    mTestSequence1.Free();
-    mTestSequence2.Free();
-    mTestSequenceMap.Kill();
-    
-    
-    mBillboardMapSequence.Kill();
-    mBillboardSequence.Free();
     
     
 }

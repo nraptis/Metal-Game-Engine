@@ -95,37 +95,57 @@ void FModelDataPackedSequence::LoadData(FFile *pFile, FSprite *pSprite) {
         
         EnumList(FModelDataPacked, aModelPacked, mList) {
             aModelPacked->FitUVW(aStartU, aEndU, aStartV, aEndV);
+            aModelPacked->WriteBuffers();
         }
     }
 }
 
 //This is for loading a sequence of 3DM files... Basically a BILLBOARD with SPRITE SEQUENCE
-void FModelDataPackedSequence::LoadData(FFile *pFile) {
+void FModelDataPackedSequence::LoadDataBillboardSequence(FFile *pFile, FSpriteSequence *pSpriteSequence) {
     
     Free();
     
     if (pFile == NULL) { return; }
     if (pFile->mLength <= 0) { return; }
     
-    mIndexCount = pFile->ReadInt();
-    mIndex = new GFX_MODEL_INDEX_TYPE[mIndexCount+1];
-    for (int i=0;i<mIndexCount;i++) {
-        mIndex[i] = pFile->ReadShort();
-    }
+    if (pSpriteSequence == NULL) { return; }
+    if (pSpriteSequence->mList.mCount <= 0) { return; }
     
-    int aModelListCount = pFile->ReadInt();
-    if (mList.mSize < aModelListCount) {
-        mList.Size(aModelListCount);
-    }
     
-    for (int i=0;i<aModelListCount;i++) {
-        FModelDataPacked *aModelPacked = new FModelDataPacked();
-        aModelPacked->LoadData(pFile);
-        mList.Add(aModelPacked);
+    FModelDataPacked *aModel = new FModelDataPacked();
+    aModel->LoadData(pFile);
+    
+    if (aModel->mHasXYZ && aModel->mIndexCount > 0) {
+        
+        mIndexCount = aModel->mIndexCount;
+        mIndex = new GFX_MODEL_INDEX_TYPE[mIndexCount+1];
+        for (int i=0;i<mIndexCount;i++) {
+            mIndex[i] = aModel->mIndex[i];
+        }
+        
+        aModel->DiscardIndices();
+        
+        EnumList(FSprite, aSprite, pSpriteSequence->mList) {
+            
+            if (aSprite->DidLoad()) {
+                
+                float aStartU = aSprite->mTextureRect.GetStartU();
+                float aStartV = aSprite->mTextureRect.GetStartV();
+                float aEndU = aSprite->mTextureRect.GetEndU();
+                float aEndV = aSprite->mTextureRect.GetEndV();
+                
+                FModelDataPacked *aClone = aModel->Clone();
+                
+                aClone->FitUVW(aStartU, aEndU, aStartV, aEndV);
+                aClone->WriteBuffers();
+                
+                mList.Add(aClone);
+            }
+        }
     }
 }
 
-void FModelDataPackedSequence::LoadData(const char *pFile) {
+void FModelDataPackedSequence::LoadDataBillboardSequence(const char *pFile, FSpriteSequence *pSpriteSequence) {
     FFile aFile;
     const char *aResourcePath = gRes.GetResourcePathOfType(pFile, RESOURCE_TYPE_MODEL_DATA);
     while ((aResourcePath != NULL)) {
@@ -134,7 +154,7 @@ void FModelDataPackedSequence::LoadData(const char *pFile) {
         aResourcePath = gRes.GetNextResourcePath();
     }
     if (aFile.mLength == 0) { aFile.Load(pFile); }
-    LoadData(&aFile);
+    LoadDataBillboardSequence(&aFile, pSpriteSequence);
 }
 
 void FModelDataPackedSequence::LoadData(const char *pFile, FSprite *pSprite) {

@@ -42,7 +42,7 @@ LevelFormationNode::LevelFormationNode() {
 
 LevelFormationNode::~LevelFormationNode() {
     if (mObject) {
-        mObject->Kill();
+        gGame->DisposeObject(mObject);
         mObject = NULL;
     }
 }
@@ -83,7 +83,7 @@ void LevelFormationNode::Spawn() {
 void LevelFormationNode::Reset() {
     
     if (mObject) {
-        mObject->Kill();
+        gGame->DisposeObject(mObject);
         mObject = NULL;
     }
     

@@ -143,39 +143,62 @@ void GameRenderer::Draw3D() {
             aDart->Draw3D();
         }
     }
-    
-    Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending();
-    
-    
-    EnumList (Turtle, aTurtle, mGame->mTurtleList.mObjectList) {
-        if (aTurtle->mKill == 0) {
-            aTurtle->Draw3D();
-        }
+    if (mGame->mCurrentDart != NULL) {
+        mGame->mCurrentDart->Draw3D();
     }
     
+    
+    
+    
+    Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending();
     EnumList (Balloon, aBalloon, mGame->mBalloonList.mObjectList) {
         if (aBalloon->mKill == 0) {
             aBalloon->Draw3D();
         }
     }
     
+    Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending();
     EnumList (BrickHead, aBrickHead, mGame->mBrickHeadList.mObjectList) {
         if (aBrickHead->mKill == 0) {
             aBrickHead->Draw3D();
         }
     }
     
+    Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending();
     EnumList (Bomb, aBomb, mGame->mBombList.mObjectList) {
         if (aBomb->mKill == 0) {
             aBomb->Draw3D();
         }
     }
     
-    
-    
-    if (mGame->mCurrentDart) {
-        mGame->mCurrentDart->Draw3D();
+    Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending();
+    EnumList (Turtle, aTurtle, mGame->mTurtleList.mObjectList) {
+        if (aTurtle->mKill == 0) {
+            aTurtle->Draw3D();
+        }
     }
+    
+    Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending();
+    EnumList (Turtle, aTurtle, mGame->mTurtleList.mObjectList) {
+        if (aTurtle->mKill == 0) {
+            aTurtle->Draw3DPropeller();
+        }
+    }
+    
+    Graphics::PipelineStateSetModelIndexedAlphaBlending();
+    //Graphics::DepthDisable();
+    Graphics::SetColor(0.25f);
+    EnumList (Turtle, aTurtle, mGame->mTurtleList.mObjectList) {
+        if (aTurtle->mKill == 0) {
+            aTurtle->Draw3DBillboard();
+        }
+    }
+    //Graphics::DepthEnable();
+    Graphics::SetColor();
+    
+    
+    
+    
     
 #ifdef EDITOR_MODE
     if (gEditor != NULL) {

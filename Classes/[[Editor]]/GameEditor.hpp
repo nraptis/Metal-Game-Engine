@@ -152,7 +152,8 @@ public:
     void                                        Autosave();
     void                                        Autoload();
     
-    void                                        KillAll();
+    
+    //void                                        KillAll();
     void                                        KillAllBalloons();
     void                                        KillAllNonBalloons();
     void                                        KillAllPerms();

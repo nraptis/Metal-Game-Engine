@@ -42,6 +42,8 @@ public:
     void                                        RefreshLifeIndicatorFrames();
     
     
+    float                                       mCoinFrame[5];
+    
     
     
 };

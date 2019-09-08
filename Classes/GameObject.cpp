@@ -119,23 +119,15 @@ void GameObject::Draw3D() {
             
             //mModelView.RotateZ(180.0f);
             
-            if (mTransform3D.mRotationX != 0.0f) {
-                //mModelView.RotateX(mTransform3D.mRotationX);
-            }
-            
-            if (mTransform3D.mRotationZ != 0.0f) {
-                //mModelView.RotateZ(mTransform3D.mRotationZ);
-            }
+            mModelView.RotateX(mTransform3D.mRotationX);
+            mModelView.RotateZ(mTransform3D.mRotationZ);
             
             //Now we do a 2-D rotation...
-            if (mTransform3D.mRotation2D != 0.0f) {
-                mModelView.RotateY(-mTransform3D.mRotation2D);
-            }
+            
+            mModelView.RotateY(-mTransform3D.mRotation2D);
             
             //Now we spin around the Y axis...
-            if (mTransform3D.mSpin != 0.0f) {
-                mModelView.RotateZ(mTransform3D.mSpin);
-            }
+            mModelView.RotateZ(mTransform3D.mSpin);
             
             //Now we scale down...
             mModelView.Scale(mTransform3D.mScaleX * mTransform3D.mScale, mTransform3D.mScaleY * mTransform3D.mScale, mTransform3D.mScaleZ * mTransform3D.mScale);

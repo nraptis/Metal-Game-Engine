@@ -29,6 +29,9 @@ public:
     FModelDataPacked                                mExtraLife;
     FSprite                                         mExtraLifeMap;
     
+    FModelDataPacked                                mPrizeStar;
+    FSprite                                         mPrizeStarMap;
+    
     FModelDataPacked                                mTurtle;
     FModelDataPacked                                mTurtleDamaged;
     FSprite                                         mTurtleMap;
@@ -36,16 +39,17 @@ public:
     
     FModelDataPacked                                mTurtlePropeller;
     FSprite                                         mTurtlePropellerMap;
+    FModelDataPackedSequence                        mTurtlePropellerBillboardSequence;
+    FSpriteSequence                                 mTurtlePropellerBillboardMapSequence;
     
-    FModelDataPacked                                mPrizeStar;
-    FSprite                                         mPrizeStarMap;
+    //propeller_whirl_14_scale_1.png
+    //propeller_whirl_00_scale_1.png
     
-    FModelDataPackedSequence                        mTestSequence1;
-    FModelDataPackedSequence                        mTestSequence2;
-    FSprite                                         mTestSequenceMap;
     
-    FModelDataPackedSequence                        mBillboardSequence;
-    FSpriteSequence                                 mBillboardMapSequence;
+    
+
+    
+    
     
     virtual void                                    Load();
     virtual void                                    Unload();

@@ -80,7 +80,7 @@ void EditorMenuObjectClearing::Notify(void *pSender, const char *pNotification) 
     if (gEditor == NULL) { return; }
 
     
-    if (pSender == mButtonKillAll) { mEditor->KillAll(); }
+    if (pSender == mButtonKillAll) { gGame->DisposeAllObjects(); }
     if (pSender == mButtonKillAllBalloons) { mEditor->KillAllBalloons(); }
     if (pSender == mButtonKillAllNonBalloons) { mEditor->KillAllNonBalloons(); }
     if (pSender == mButtonKillPerms) { mEditor->KillAllPerms(); }

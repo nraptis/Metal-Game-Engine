@@ -13,9 +13,10 @@
 
 EffectBalloonBurst::EffectBalloonBurst() {
     
-    SetSprite(&gWadGameEffects.mAdditiveTwinkleWhiteLarge);
-    SetDelayAlphaSpeed(200, -0.01f);
+    //SetSprite(&gWadGameEffects.mAdditiveTwinkleWhiteLarge);
     
+    SetSprite(&gWadGameEffects.mBalloonPopMark);
+    SetDelayAlphaSpeed(200, -0.01f);
 }
 
 EffectBalloonBurst::~EffectBalloonBurst() {

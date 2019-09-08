@@ -18,6 +18,28 @@ AssetWadGameEffects::~AssetWadGameEffects() {
 
 void AssetWadGameEffects::Load() {
     
+    gImageBundler.StartBundle("bndl_effect_bling");
+    
+    mSequenceCoin[0].Load("coin_spin_01_", 0, 15);
+    mSequenceCoin[1].Load("coin_spin_02_", 0, 15);
+    mSequenceCoin[2].Load("coin_spin_03_", 0, 15);
+    mSequenceCoin[3].Load("coin_spin_04_", 0, 15);
+    mSequenceCoin[4].Load("coin_spin_05_", 0, 15);
+    
+    mBalloonPopMark.Load("effect_balloon_pop");
+    mBalloonPopMarkSmall.Load("effect_balloon_pop_small");
+    
+    mWhiteStar.Load("effect_white_star");
+    mWhiteStarSmall.Load("effect_white_star_small");
+    
+    
+    gImageBundler.EndBundle();
+    
+    
+    
+    
+    
+    
     mAdditiveTwinkleWhiteLarge.Load("effect_twinkle_additive_white_large");
     mAdditiveTwinkleWhiteSmall.Load("effect_twinkle_additive_white_small");
     
@@ -59,9 +81,18 @@ void AssetWadGameEffects::Load() {
 }
 
 void AssetWadGameEffects::Unload() {
-    mAdditiveTwinkleWhiteLarge.Kill();
-    mAdditiveTwinkleWhiteSmall.Kill();
     
+    mSequenceCoin[0].Kill();
+    mSequenceCoin[1].Kill();
+    mSequenceCoin[2].Kill();
+    mSequenceCoin[3].Kill();
+    mSequenceCoin[4].Kill();
+    
+    mBalloonPopMark.Kill();
+    mBalloonPopMarkSmall.Kill();
+    
+    mWhiteStar.Kill();
+    mWhiteStarSmall.Kill();
     
 }
 

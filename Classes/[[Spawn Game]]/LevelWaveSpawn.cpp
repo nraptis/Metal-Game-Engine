@@ -41,7 +41,7 @@ LevelWaveSpawn::~LevelWaveSpawn() {
     //Log("Dealloc[LevelWaveSpawn:%X] Obj[%d]\n", this, mObject);
     
     if (mObject != NULL) {
-        mObject->Kill();
+        gGame->DisposeObject(mObject);
         mObject = NULL;
     }
     
@@ -54,7 +54,7 @@ LevelWaveSpawn::~LevelWaveSpawn() {
 void LevelWaveSpawn::Spawn() {
     
     if (mObject != NULL) {
-        mObject->Kill();
+        gGame->DisposeObject(mObject);
         mObject = NULL;
     }
     
@@ -175,7 +175,7 @@ bool LevelWaveSpawn::IsClear() {
 void LevelWaveSpawn::Reset() {
     
     if (mObject != NULL) {
-        mObject->Kill();
+        gGame->DisposeObject(mObject);
         mObject = NULL;
     }
     if (mFormation != NULL) {
@@ -191,30 +191,6 @@ void LevelWaveSpawn::Reset() {
     mDidSpawn = false;
     mDidUpdateAfterSpawn = false;
 }
-
-/*
-void LevelWaveSpawn::Restart() {
-    if (mObject) {
-        mObject->Kill();
-        mObject = NULL;
-    }
-    if (mFormation != NULL) {
-        delete mFormation;
-        mFormation = NULL;
-    }
-    mPathIndex = 0;
-    mIsComplete = false;
-    mOffsetSpawnDistance = 0.0f;
-    mBaseX = 0.0f;
-    mBaseY = 0.0f;
-    
-    mDidSpawn = false;
-    mDidUpdateAfterSpawn = false;
-    
-    mDistanceTraveled = 0.0f;
-    mKillTimer = 8;
-}
-*/
 
 void LevelWaveSpawn::Update() {
     

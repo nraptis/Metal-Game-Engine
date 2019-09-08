@@ -95,12 +95,12 @@ void Level::GroupSetCount(int pCount) {
 
 void Level::SetAliveTimer(int pTicks) {
     mAliveTimer = pTicks;
-    if (mAliveTimer != 0) { mKillTimer = 0; }
+    //if (mAliveTimer != 0) { mKillTimer = 0; }
 }
 
 void Level::SetKillTimer(int pTicks) {
     mKillTimer = pTicks;
-    if (mKillTimer != 0) { mAliveTimer = 0; }
+    //if (mKillTimer != 0) { mAliveTimer = 0; }
 }
 
 void Level::ResetAll() {

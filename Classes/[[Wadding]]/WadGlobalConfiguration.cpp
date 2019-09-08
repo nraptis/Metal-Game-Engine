@@ -44,9 +44,9 @@ void WadGlobalConfiguration::NotifyVirtualFrameChange() {
     
     float aScreenWidth = gVirtualDevWidth;
     
-    float aCutoff = gVirtualDevHeight * 0.75f;
     
-    if (aCutoff < aScreenWidth) { aScreenWidth = aCutoff; }
+    //float aCutoff = gVirtualDevHeight * 0.75f;
+    //if (aCutoff < aScreenWidth) { aScreenWidth = aCutoff; }
     
     
     

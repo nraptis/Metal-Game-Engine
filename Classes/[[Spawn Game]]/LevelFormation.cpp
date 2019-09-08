@@ -10,6 +10,7 @@
 #include "LevelFormationTracer.hpp"
 #include "LevelWaveSpawn.hpp"
 #include "LevelPermSpawn.hpp"
+#include "Game.hpp"
 #include "core_includes.h"
 
 LevelFormation::LevelFormation() {
@@ -286,7 +287,7 @@ void LevelFormation::EditorKillAllObjects() {
     
     EnumList(LevelFormationNode, aNode, mSpawnNodeList) {
         if (aNode->mObject != NULL) {
-            aNode->mObject->Kill();
+            gGame->DisposeObject(aNode->mObject);
             aNode->mObject = NULL;
         }
     }

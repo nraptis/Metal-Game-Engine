@@ -68,7 +68,7 @@ void LevelSectionPermanent::Reset() {
     mPath.Reset();
     
     if (mObject != NULL) {
-        mObject->Kill();
+        gGame->DisposeObject(mObject);
         mObject = NULL;
     }
 }
@@ -86,7 +86,7 @@ void LevelSectionPermanent::Prepare() {
 void LevelSectionPermanent::Spawn() {
     
     if (mObject) {
-        mObject->Kill();
+        gGame->DisposeObject(mObject);
         mObject = NULL;
     }
     

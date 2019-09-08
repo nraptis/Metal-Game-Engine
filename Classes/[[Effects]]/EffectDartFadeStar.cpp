@@ -12,8 +12,10 @@
 EffectDartFadeStar::EffectDartFadeStar() {
     
     
-    SetSprite(&gWadGameEffects.mAdditiveTwinkleWhiteLarge);
+    SetSprite(&gWadGameEffects.mWhiteStar);
     SetDelayAlphaSpeed(200, -0.01f);
+    
+    
     
 }
 

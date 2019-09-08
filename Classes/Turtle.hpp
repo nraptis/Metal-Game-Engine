@@ -10,7 +10,6 @@
 #define Turtle_hpp
 
 #include "FSprite.hpp"
-#include "FModelDataPacked.hpp"
 #include "GameObject.hpp"
 
 class Turtle : public GameObject {
@@ -25,11 +24,24 @@ public:
     void                                    Draw3DPropeller();
     void                                    Draw3DBillboard();
     
-    
-    float                                   mSpinSpeed;
+    FMatrix                                 mPropellerMatrixModelView;
+    FMatrix                                 mPropellerMatrixNormal;
     
     FModelDataPacked                        *mPropellerModel;
     FSprite                                 *mPropellerSprite;
+    float                                   mPropellerSpin;
+    float                                   mPropellerSpeed;
+    
+    
+    FModelDataPackedSequence                *mPropellerBillboardSequence;
+    FSpriteSequence                         *mPropellerBillboardSequenceMap;
+    float                                   mPropellerBillboardFrame1;
+    float                                   mPropellerBillboardFrame2;
+    float                                   mPropellerBillboardFrame3;
+    float                                   mPropellerBillboardSpin1;
+    float                                   mPropellerBillboardSpin2;
+    float                                   mPropellerBillboardSpin3;
+    
     
     
     
@@ -38,15 +50,6 @@ public:
     
     float                                   mVelX;
     float                                   mVelY;
-    
-    
-    
-    //mTestSequence1.LoadOBJSequence("butterfly_body_", 0, 19);
-    //mTestSequence2.LoadOBJSequence("butterfly_wings_", 0, 19);
-    //mTestSequenceMap.Load("butterfly_map");
-    
-    float                                   mTestFrame;
-    
     
     
     

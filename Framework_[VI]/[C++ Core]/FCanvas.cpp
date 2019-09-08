@@ -9,7 +9,7 @@
 #include "core_includes.h"
 #include "FCanvas.hpp"
 #include "FAnimation.hpp"
-#include "FFileTable.hpp"
+#include "FHashMap.hpp"
 
 FCanvas::FCanvas() {
     mX = 0.0f;
@@ -20,6 +20,7 @@ FCanvas::FCanvas() {
     mHeight2 = 128.0;
     mKill = 0;
     mLayoutBubbleUpDepth = 1;
+    
     mClipEnabled = false;
     mClipDisabled = false;
     mDidUpdate = false;

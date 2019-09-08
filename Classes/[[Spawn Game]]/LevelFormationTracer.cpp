@@ -408,7 +408,7 @@ void LevelFormationTracer::GetExtremeties(float &pTop, float &pRight, float &pBo
 void LevelFormationTracer::EditorKillAllObjects() {
     EnumList(LevelFormationNode, aNode, mSpawnNodeList) {
         if (aNode->mObject != NULL) {
-            aNode->mObject->Kill();
+            gGame->DisposeObject(aNode->mObject);
             aNode->mObject = NULL;
         }
     }

@@ -35,6 +35,7 @@ public:
     float                                   mRotationX;
     float                                   mRotationZ;
     
+    
 };
 
 #endif /* Transform3D_hpp */

@@ -37,7 +37,7 @@ LevelPermSpawn::LevelPermSpawn(LevelSectionPermanent *pPerm, LevelPath *pPath) {
 
 LevelPermSpawn::~LevelPermSpawn() {
     if (mObject != NULL) {
-        mObject->Kill();
+        gGame->DisposeObject(mObject);
         mObject = NULL;
     }
     if (mFormation != NULL) {
@@ -49,7 +49,7 @@ LevelPermSpawn::~LevelPermSpawn() {
 void LevelPermSpawn::Spawn() {
     
     if (mObject != NULL) {
-        mObject->Kill();
+        gGame->DisposeObject(mObject);
         mObject = NULL;
     }
     
@@ -149,7 +149,7 @@ bool LevelPermSpawn::IsClear() {
 void LevelPermSpawn::Reset() {
     
     if (mObject != NULL) {
-        mObject->Kill();
+        gGame->DisposeObject(mObject);
         mObject = NULL;
     }
     

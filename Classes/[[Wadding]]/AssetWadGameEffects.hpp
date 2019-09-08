@@ -23,10 +23,22 @@ public:
     FSprite                                         mAdditiveTwinkleWhiteSmall;
     
     
+    FSprite                                         mBalloonPopMark;
+    FSprite                                         mBalloonPopMarkSmall;
+    
+    FSprite                                         mWhiteStar;
+    FSprite                                         mWhiteStarSmall;
+    
+    
+    
     
     FSpriteSequence                                 mSequenceBlast1;
     FSpriteSequence                                 mSequenceBlast2;
     FSpriteSequence                                 mSequenceBlast3;
+    
+    
+    
+    FSpriteSequence                                 mSequenceCoin[5];
     
     
     //balloon_blast_01_00_scale_1.png

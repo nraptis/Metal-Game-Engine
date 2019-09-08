@@ -90,21 +90,16 @@ void LevelSection::Restart() {
 */
 
 void LevelSection::Spawn() {
-    Log("LevelSection::Spawn()\n");
-    
     EnumList(LevelSectionPermanent, aPerm, mPermList) {
         aPerm->Prepare();
     }
-    
     EnumList(LevelSectionPermanent, aPerm, mPermList) {
         aPerm->Spawn();
     }
-    
     mDidSpawn = true;
 }
 
 void LevelSection::Update() {
-    
     
     bool aBlockWaves = false;
     

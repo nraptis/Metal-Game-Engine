@@ -19,8 +19,8 @@ Bomb::Bomb() {
     mSpinSpeed = gRand.GetFloat(0.25f, 0.45f);
     if (gRand.GetBool()) mSpinSpeed = -mSpinSpeed;
     
-    //mModel = &gApp->mBomb;
-    //mSprite = &gApp->mBombMap;
+    mModel = &gApp->mMonolith;
+    mSprite = &gApp->mMonolithMap;
     
     mUniform = &(gGame->mRenderer->mUniformPhongBalloon);
     

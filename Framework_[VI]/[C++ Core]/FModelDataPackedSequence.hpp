@@ -39,10 +39,12 @@ public:
     inline void                         LoadData(FString pFile, FSprite *pSprite) { LoadData((const char*)pFile.c(), pSprite); }
     
     
-    //This is for loading a sequence of 3DM files... Basically a BILLBOARD with SPRITE SEQUENCE
-    void                                LoadData(FFile *pFile);
-    void                                LoadData(const char *pFile);
-    inline void                         LoadData(FString pFile) { LoadData((const char*)pFile.c()); }
+    //This is for loading a sequence of 3DM files...
+    //First parameter is SINGLE MODEL (3dp) file.
+    //We then fit the UVW to the sequence and spawn clones...
+    void                                LoadDataBillboardSequence(FFile *pFile, FSpriteSequence *pSpriteSequence);
+    void                                LoadDataBillboardSequence(const char *pFile, FSpriteSequence *pSpriteSequence);
+    inline void                         LoadDataBillboardSequence(FString pFile, FSpriteSequence *pSpriteSequence) { LoadDataBillboardSequence((const char*)pFile.c(), pSpriteSequence); }
     
     
     void                                LoadOBJSequence(const char *pFile, int pStartIndex, int pEndIndex);

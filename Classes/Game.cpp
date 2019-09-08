@@ -648,8 +648,12 @@ void Game::TouchDown(float pX, float pY, void *pData) {
     if (gTouch.mTouchCount >= 3) {
         Log("Hack: Killing all balloons..!");
         
+        FList aList;
         EnumList(GameObject, aObject, gGame->mBalloonList.mObjectList) {
-            aObject->Kill();
+            aList.Add(aObject);
+        }
+        EnumList(GameObject, aObject, aList) {
+            DisposeObject(aObject);
         }
     }
     
@@ -851,6 +855,19 @@ void Game::DisposeObject(GameObject *pObject) {
     
     pObject->Kill();
     
+    if (pObject->mGameObjectType == GAME_OBJECT_TYPE_BRICKHEAD) {
+        BrickHead *aBrickHead = ((BrickHead *)pObject);
+        EnumList(StuckDart, aStuck, aBrickHead->mStuckDartList) {
+            if (aStuck->mDart != NULL) {
+                
+                Dart *aDart = (Dart *)pObject;
+                aStuck->mDart = NULL;
+                DisposeObject(aDart);
+            }
+        }
+    }
+    
+    
     if (pObject->mGameObjectType == GAME_OBJECT_TYPE_DART) {
         
         Dart *aDart = (Dart *)pObject;
@@ -895,9 +912,14 @@ void Game::DisposeAllObjects() {
     EnumList (Balloon, aBalloon, mBalloonList.mObjectList) {
         DisposeObject(aBalloon);
     }
-    
     EnumList (BrickHead, aBrickHead, mBrickHeadList.mObjectList) {
         DisposeObject(aBrickHead);
+    }
+    EnumList (Turtle, aTurtle, mTurtleList.mObjectList) {
+        DisposeObject(aTurtle);
+    }
+    EnumList (Bomb, aBomb, mBombList.mObjectList) {
+        DisposeObject(aBomb);
     }
 }
 
@@ -905,7 +927,6 @@ void Game::FlyOffEscape(GameObject *pObject) {
     if (pObject != NULL) {
         DisposeObject(pObject);
         mEscapedCount++;
-        pObject->Kill();
     }
 }
 
@@ -974,7 +995,8 @@ void Game::DartCollideWithBalloon(Dart *pDart, Balloon *pBalloon) {
     }
     
     if (pBalloon != NULL) {
-        pBalloon->Kill();
+        //pBalloon->mDidPop = true;
+        DisposeObject(pBalloon);
         
         if (mPopSoundDelay == 0) {
             mPopSoundDelay = 2;
@@ -990,7 +1012,6 @@ void Game::DartCollideWithBalloon(Dart *pDart, Balloon *pBalloon) {
     }
     
     mPoppedCount++;
-    
     
 }
 
@@ -1153,6 +1174,39 @@ void Game::Load() {
     aLevel.AddSection("test_section_perm_only_all_brickheads");
     aLevel.AddSection("test_section_perm_only_all_brickheads");
     */
+    
+    
+    aLevel.SetAliveTimer(400);
+    aLevel.SetKillTimer(400);
+    aLevel.AddSection("test_section_perm_only_all_brickheads.json");
+    
+    
+    aLevel.SetAliveTimer(400);
+    aLevel.SetKillTimer(400);
+    
+    aLevel.AddSection("test_section_perm_only_all_balloons.json");
+    
+    aLevel.SetAliveTimer(400);
+    aLevel.SetKillTimer(400);
+    aLevel.AddSection("test_section_perm_only_all_brickheads.json");
+    
+    aLevel.SetAliveTimer(400);
+    aLevel.SetKillTimer(400);
+    aLevel.AddSection("test_section_perm_only_all_balloons.json");
+    
+    aLevel.SetAliveTimer(400);
+    aLevel.SetKillTimer(400);
+    aLevel.AddSection("test_section_perm_only_all_brickheads.json");
+    aLevel.AddSection("test_section_perm_only_all_balloons.json");
+    aLevel.AddSection("test_section_perm_only_all_brickheads.json");
+    
+    //
+    //
+    
+    
+    
+    aLevel.SetAliveTimer(3400);
+    aLevel.AddSection("test_section_bunch_of_turtle_guys.json");
     
     /*
     aLevel.SetKillTimer(1000);
