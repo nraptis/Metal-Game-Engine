@@ -110,7 +110,11 @@ void FCanvas::DrawManual() {
     if (mDidUpdate == true && mHidden == false && mKill == 0) {
         DrawTransform();
         Draw();
-        EnumList(FCanvas, aCanvas, mChildren) { aCanvas->DrawManual(); }
+        EnumList(FCanvas, aCanvas, mChildren) {
+            if (aCanvas->mDrawManual == false) {
+                aCanvas->DrawManual();
+            }
+        }
     }
 }
 

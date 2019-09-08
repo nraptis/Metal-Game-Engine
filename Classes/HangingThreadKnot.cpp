@@ -16,7 +16,6 @@ HangingThreadKnot::HangingThreadKnot() {
     mOffsetX = 0.0f;
     mOffsetY = 0.0f;
     mOffsetZ = 0.0f;
-    
 }
 
 HangingThreadKnot::~HangingThreadKnot() {

@@ -23,11 +23,8 @@ HangingThreadSegment::HangingThreadSegment() {
         mRingY[i] = 0.0f;
         mRingZ[i] = 0.0f;
     }
-    
 }
 
 HangingThreadSegment::~HangingThreadSegment() {
     
 }
-
-

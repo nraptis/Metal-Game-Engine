@@ -168,7 +168,7 @@ void GameContainer::Update() {
     
     if (mPauseFadeEnabled == true) {
         if (mPauseFade < mPauseFadeMax) {
-            mPauseFade += 0.015f;
+            mPauseFade += 0.0085f;
             if (mPauseFade >= mPauseFadeMax) {
                 mPauseFade = mPauseFadeMax;
             }
@@ -350,12 +350,12 @@ void GameContainer::PauseAndShowGameMenu() {
     gApp->mWindowModal.AddChild(mGameMenu);
     
     
-    mGameMenu->SetTransformAnchor(1.0f, 1.0f);
+    //mGameMenu->SetTransformAnchor(1.0f, 1.0f);
     
     mGameMenuAnimation = new FCanvasAnimation(mGameMenu);
     
     
-    mGameMenuAnimation->mStartX = -(gVirtualDevWidth);
+    mGameMenuAnimation->mStartX = -(gVirtualDevWidth / 2.0f + aWidth / 2.0f);
     //mGameMenuAnimation->mStartY = mGameMenuAnimation->mStartY + 64.0f * gSpriteDrawScale;
     //mGameMenuAnimation->mStartScale = 0.0125f;
     //mGameMenuAnimation->mStartRotation = -15.0f;
@@ -363,7 +363,7 @@ void GameContainer::PauseAndShowGameMenu() {
     //mGameMenuAnimation->mStartAnchorY = 1.0f;
     
     //mGameMenuAnimation->GenerateIn(80);
-    mGameMenuAnimation->GenerateIn(800);
+    mGameMenuAnimation->GenerateIn(76);
     
     
     //(ANIMATION_EASE_OUT_ELASTIC, 80);
@@ -397,10 +397,10 @@ void GameContainer::UnpauseAndHideGameMenu() {
     
     
     float aWidth = gWadGameInterface.mGameMenuBack.mWidth + 20.0f;
-    float aHeight = gWadGameInterface.mGameMenuBack.mHeight + 20.0f;
+    //float aHeight = gWadGameInterface.mGameMenuBack.mHeight + 20.0f;
     
     
-    mGameMenuAnimation->mTargetX = gVirtualDevWidth;
+    mGameMenuAnimation->mTargetX = gVirtualDevWidth / 2.0f + aWidth / 2.0f;
     //mGameMenuAnimation->mTargetY = mGameMenuAnimation->mStartY + 64.0f * gSpriteDrawScale;
     //mGameMenuAnimation->mTargetScale = 0.0125f;
     //mGameMenuAnimation->mTargetRotation = 31.0f;
@@ -408,7 +408,7 @@ void GameContainer::UnpauseAndHideGameMenu() {
     //mGameMenuAnimation->mTargetAnchorY = 1.0f;
     
     //mGameMenuAnimation->GenerateOut(80);
-    mGameMenuAnimation->GenerateOut(800);
+    mGameMenuAnimation->GenerateOut(76);
     
 }
 

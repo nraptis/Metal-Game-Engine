@@ -232,7 +232,8 @@ void FWindow::SetDeviceSize(int pWidth, int pHeight) {
     mDeviceWidth = pWidth;
     mDeviceHeight = pHeight;
     //RegisterTransformDidUpdate(&mRoot);
-    RegisterFrameDidUpdate(&mRoot);
+    //RegisterFrameDidUpdate(&mRoot);
+    RefreshAll();
 }
 
 void FWindow::RefreshAll() {
@@ -260,6 +261,7 @@ void FWindow::SetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
         mVirtualFrameWidth = pWidth;
         mVirtualFrameHeight = pHeight;
         mRoot.SetFrame(pX, pY, pWidth, pHeight);
+        RefreshAll();
     }
 }
 
@@ -269,7 +271,8 @@ void FWindow::SetSafeAreaInsets(int pInsetUp, int pInsetRight, int pInsetDown, i
         mSafeAreaInsetRight = pInsetRight;
         mSafeAreaInsetBottom = pInsetDown;
         mSafeAreaInsetLeft = pInsetLeft;
-        RegisterFrameDidUpdate(&mRoot);
+        //RegisterFrameDidUpdate(&mRoot);
+        RefreshAll();
     }
 }
 
