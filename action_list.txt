@@ -9,6 +9,10 @@ I4.) We DESPERATELY need a RESTART BUTTON for test-game-from-editor mode.
 
 I5.) We need "restart wave", "back one wave", and "forward one wave" buttons for test-game-from-editor mode.
 
+I6.) We need to SAVE all filters, search terms, and scroll offset from FORMATION PICKER. There are just too many of them. To quickly try out several, we need to open and close this thing many times.
+
+I7.) We need a reset / clear button for formation picker, which wipes out all filters and scrolls back to home position...
+
 H1.) We have a layout crash when transitioning from editor to TEST game.
 
 H2.) We have lots of garbage / junk buttons in the editor which are not used. We need to remove these because they are distracting.

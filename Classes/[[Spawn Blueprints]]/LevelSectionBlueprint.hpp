@@ -37,8 +37,6 @@ public:
     FList                                       mWaveList;
     LevelWaveBlueprint                          *mCurrentWave;
     
-    
-    
     void                                        PermAdd(float pX, float pY);
     void                                        PermRemove();
     void                                        PermSelectNext();
@@ -50,21 +48,14 @@ public:
     int                                         PermSelectClosest(float pX, float pY);
     void                                        PermRefreshPositions();
     
-    
-    
-    
     FList                                       mPermList;
     LevelSectionPermanentBlueprint              *mCurrentPerm;
-    
-    
     
     void                                        Build();
     void                                        Build(LevelSection *pSection);
     
-    
     FJSONNode                                   *Save();
     void                                        Load(FJSONNode *pNode);
-    
     
     FList                                       mKillWaveList;
     FList                                       mDeleteWaveList;

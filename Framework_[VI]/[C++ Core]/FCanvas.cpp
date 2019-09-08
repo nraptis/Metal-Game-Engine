@@ -420,12 +420,17 @@ void FCanvas::BaseLayoutTransform() {
 
 
 void FCanvas::BaseUpdate() {
-    mDidUpdate=true;
+    mDidUpdate = true;
+    
     Update();
 
     mProcessChildren.RemoveAll();
     mProcessChildren.Add(mChildren);
-    EnumList(FCanvas, aCanvas, mProcessChildren) { aCanvas->BaseUpdate(); }
+    EnumList(FCanvas, aCanvas, mProcessChildren) {
+        if (aCanvas->mKill == 0) {
+            aCanvas->BaseUpdate();
+        }
+    }
 }
 
 void FCanvas::BaseDraw() {

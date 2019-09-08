@@ -15,6 +15,8 @@
 #include "Constraint.hpp"
 #include "FList.hpp"
 
+#define SPEED_CLASS_DEFAULT -1
+
 #define SPEED_CLASS_EXTRA_SLOW -300
 #define SPEED_CLASS_SLOW -200
 #define SPEED_CLASS_MEDIUM_SLOW -100

@@ -62,8 +62,6 @@ LevelData *Level::Build() {
         aData->AddSection(aSection);
     }
     
-    
-    
     return aData;
 }
 

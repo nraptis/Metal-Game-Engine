@@ -157,6 +157,10 @@ void UITextBox::KeyDown(int pKey)  {
         gNotify.Post(this, "text_box_change");
     }
     
+    if (pKey == __KEY__ENTER) {
+        gNotify.Post(this, "text_box_submit");
+    }
+    
     if (pKey == __KEY__DELETE) {
         
         FString aString = mText;

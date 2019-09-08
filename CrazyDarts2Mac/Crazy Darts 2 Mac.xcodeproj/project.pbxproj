@@ -1088,26 +1088,26 @@
 		0DBAFC90231F78C300C11381 /* [[Spawn Blueprints]] */ = {
 			isa = PBXGroup;
 			children = (
-				0DBAFC91231F78C300C11381 /* LevelMotionControllerBlueprint.hpp */,
-				0DBAFC92231F78C300C11381 /* LevelPathBlueprint.hpp */,
-				0DBAFC93231F78C300C11381 /* LevelFormationTracerBlueprint.hpp */,
-				0DBAFC94231F78C300C11381 /* LevelSectionBlueprint.cpp */,
 				0DBAFC95231F78C300C11381 /* LevelFormationBlueprint.cpp */,
-				0DBAFC96231F78C300C11381 /* LevelMotionControllerSliceBlueprint.cpp */,
-				0DBAFC97231F78C300C11381 /* LevelSectionPermanentBlueprint.hpp */,
-				0DBAFC98231F78C300C11381 /* LevelWaveSpawnBlueprint.cpp */,
-				0DBAFC99231F78C300C11381 /* LevelWaveBlueprint.cpp */,
-				0DBAFC9A231F78C300C11381 /* LevelPermSpawnBlueprint.hpp */,
-				0DBAFC9B231F78C300C11381 /* LevelWaveSpawnBlueprint.hpp */,
-				0DBAFC9C231F78C300C11381 /* LevelSectionPermanentBlueprint.cpp */,
-				0DBAFC9D231F78C300C11381 /* LevelWaveBlueprint.hpp */,
-				0DBAFC9E231F78C300C11381 /* LevelPermSpawnBlueprint.cpp */,
-				0DBAFC9F231F78C300C11381 /* LevelPathBlueprint.cpp */,
-				0DBAFCA0231F78C300C11381 /* LevelMotionControllerBlueprint.cpp */,
-				0DBAFCA1231F78C300C11381 /* LevelFormationTracerBlueprint.cpp */,
-				0DBAFCA2231F78C300C11381 /* LevelSectionBlueprint.hpp */,
 				0DBAFCA3231F78C300C11381 /* LevelFormationBlueprint.hpp */,
+				0DBAFCA1231F78C300C11381 /* LevelFormationTracerBlueprint.cpp */,
+				0DBAFC93231F78C300C11381 /* LevelFormationTracerBlueprint.hpp */,
+				0DBAFCA0231F78C300C11381 /* LevelMotionControllerBlueprint.cpp */,
+				0DBAFC91231F78C300C11381 /* LevelMotionControllerBlueprint.hpp */,
+				0DBAFC96231F78C300C11381 /* LevelMotionControllerSliceBlueprint.cpp */,
 				0DBAFCA4231F78C300C11381 /* LevelMotionControllerSliceBlueprint.hpp */,
+				0DBAFC9F231F78C300C11381 /* LevelPathBlueprint.cpp */,
+				0DBAFC92231F78C300C11381 /* LevelPathBlueprint.hpp */,
+				0DBAFC9E231F78C300C11381 /* LevelPermSpawnBlueprint.cpp */,
+				0DBAFC9A231F78C300C11381 /* LevelPermSpawnBlueprint.hpp */,
+				0DBAFC94231F78C300C11381 /* LevelSectionBlueprint.cpp */,
+				0DBAFCA2231F78C300C11381 /* LevelSectionBlueprint.hpp */,
+				0DBAFC9C231F78C300C11381 /* LevelSectionPermanentBlueprint.cpp */,
+				0DBAFC97231F78C300C11381 /* LevelSectionPermanentBlueprint.hpp */,
+				0DBAFC99231F78C300C11381 /* LevelWaveBlueprint.cpp */,
+				0DBAFC9D231F78C300C11381 /* LevelWaveBlueprint.hpp */,
+				0DBAFC98231F78C300C11381 /* LevelWaveSpawnBlueprint.cpp */,
+				0DBAFC9B231F78C300C11381 /* LevelWaveSpawnBlueprint.hpp */,
 			);
 			path = "[[Spawn Blueprints]]";
 			sourceTree = "<group>";
@@ -1176,21 +1176,21 @@
 		0DBAFCF6231F78C300C11381 /* [[Editor]] */ = {
 			isa = PBXGroup;
 			children = (
-				0DBAFCF7231F78C300C11381 /* [Formation Menus] */,
-				0DBAFD04231F78C300C11381 /* GameEditorGrid.cpp */,
-				0DBAFD05231F78C300C11381 /* GamePathEditor.cpp */,
-				0DBAFD06231F78C300C11381 /* [Permanent Menus] */,
-				0DBAFD0F231F78C300C11381 /* GamePermanentEditor.hpp */,
-				0DBAFD10231F78C300C11381 /* GameFormationEditor.hpp */,
-				0DBAFD11231F78C300C11381 /* [Home Menus] */,
-				0DBAFD22231F78C300C11381 /* GameEditor.hpp */,
-				0DBAFD23231F78C300C11381 /* GameFormationEditor.cpp */,
 				0DBAFD24231F78C300C11381 /* [[Game Test Menus]] */,
+				0DBAFCF7231F78C300C11381 /* [Formation Menus] */,
+				0DBAFD11231F78C300C11381 /* [Home Menus] */,
+				0DBAFD2D231F78C300C11381 /* [Path Menus] */,
+				0DBAFD06231F78C300C11381 /* [Permanent Menus] */,
 				0DBAFD29231F78C300C11381 /* GameEditor.cpp */,
+				0DBAFD22231F78C300C11381 /* GameEditor.hpp */,
+				0DBAFD04231F78C300C11381 /* GameEditorGrid.cpp */,
 				0DBAFD2A231F78C300C11381 /* GameEditorGrid.hpp */,
+				0DBAFD23231F78C300C11381 /* GameFormationEditor.cpp */,
+				0DBAFD10231F78C300C11381 /* GameFormationEditor.hpp */,
+				0DBAFD05231F78C300C11381 /* GamePathEditor.cpp */,
 				0DBAFD2B231F78C300C11381 /* GamePathEditor.hpp */,
 				0DBAFD2C231F78C300C11381 /* GamePermanentEditor.cpp */,
-				0DBAFD2D231F78C300C11381 /* [Path Menus] */,
+				0DBAFD0F231F78C300C11381 /* GamePermanentEditor.hpp */,
 			);
 			path = "[[Editor]]";
 			sourceTree = "<group>";
@@ -1198,18 +1198,18 @@
 		0DBAFCF7231F78C300C11381 /* [Formation Menus] */ = {
 			isa = PBXGroup;
 			children = (
-				0DBAFCF8231F78C300C11381 /* EditorMenuFormationPicker.cpp */,
-				0DBAFCF9231F78C300C11381 /* EditorMenuFormationUtilities.cpp */,
-				0DBAFCFA231F78C300C11381 /* EditorMenuFormationGrid.hpp */,
-				0DBAFCFB231F78C300C11381 /* EditorMenuFormationPickerCell.cpp */,
-				0DBAFCFC231F78C300C11381 /* EditorMenuFormationSpawnPicker.cpp */,
 				0DBAFCFD231F78C300C11381 /* EditorMenuFormation.cpp */,
-				0DBAFCFE231F78C300C11381 /* EditorMenuFormationSpawnPicker.hpp */,
 				0DBAFCFF231F78C300C11381 /* EditorMenuFormation.hpp */,
-				0DBAFD00231F78C300C11381 /* EditorMenuFormationPicker.hpp */,
-				0DBAFD01231F78C300C11381 /* EditorMenuFormationUtilities.hpp */,
 				0DBAFD02231F78C300C11381 /* EditorMenuFormationGrid.cpp */,
+				0DBAFCFA231F78C300C11381 /* EditorMenuFormationGrid.hpp */,
+				0DBAFCF8231F78C300C11381 /* EditorMenuFormationPicker.cpp */,
+				0DBAFD00231F78C300C11381 /* EditorMenuFormationPicker.hpp */,
+				0DBAFCFB231F78C300C11381 /* EditorMenuFormationPickerCell.cpp */,
 				0DBAFD03231F78C300C11381 /* EditorMenuFormationPickerCell.hpp */,
+				0DBAFCFC231F78C300C11381 /* EditorMenuFormationSpawnPicker.cpp */,
+				0DBAFCFE231F78C300C11381 /* EditorMenuFormationSpawnPicker.hpp */,
+				0DBAFCF9231F78C300C11381 /* EditorMenuFormationUtilities.cpp */,
+				0DBAFD01231F78C300C11381 /* EditorMenuFormationUtilities.hpp */,
 			);
 			path = "[Formation Menus]";
 			sourceTree = "<group>";

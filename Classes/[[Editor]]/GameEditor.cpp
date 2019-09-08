@@ -1223,7 +1223,7 @@ void GameEditor::PickFormation(int pReason) {
     EditorMenuFormationPicker *aFormationPicker = new EditorMenuFormationPicker();
     mToolContainer->AddChild(aFormationPicker);
     gNotify.Register(this, aFormationPicker, "formation_selected");
-    aFormationPicker->SetFrame(gDeviceWidth2 / 2.0f, gDeviceHeight2 / 2.0f - 50.0f, gDeviceWidth2, gDeviceHeight2 + 100.0f);
+    
 }
 
 void GameEditor::OpenSpawnMenu() {

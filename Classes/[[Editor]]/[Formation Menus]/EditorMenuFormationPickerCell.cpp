@@ -57,7 +57,7 @@ void EditorMenuFormationPickerCell::Update() {
     }
     UIButton::Update();
     
-    if (mFormation) {
+    if (mFormation != NULL) {
         mFormation->Update(NULL);
     }
     

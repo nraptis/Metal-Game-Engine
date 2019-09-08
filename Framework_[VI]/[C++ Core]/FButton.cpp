@@ -22,189 +22,16 @@ FButton::FButton() {
     mButtonLayer = new FButtonLayer();
     
     mDrawSetsSpriteAlphaPipelineState = true;
-    
-    //mColor.mRed = 1.0f;
-    //mColor.mGreen = 1.0f;
-    //mColor.mBlue = 1.0f;
-    //mColor.mAlpha = 1.0f;
-    
-    //mSpriteUp = 0;
-    //mSpriteOver = 0;
-    //mSpriteDown = 0;
-    
-    //mSpriteOverlayUp = 0;
-    //mSpriteOverlayOver = 0;
-    //mSpriteOverlayDown = 0;
-    
-    //mColorUp = FColor(1.0f, 1.0f, 1.0f);
-    //mColorOver = FColor(1.0f, 1.0f, 1.0f);
-    //mColorDown = FColor(1.0f, 1.0f, 1.0f);
-    
-    //mListener = 0;
-
 }
 
 FButton::~FButton() {
-    
-    printf("FButton::~FButton()\n");
-    
     FreeList(FButtonLayer, mButtonLayersUnder);
     FreeList(FButtonLayer, mButtonLayersOver);
     delete mButtonLayer;
     mButtonLayer = 0;
 }
 
-/*
-void FButton::Setup(int x, int y, int pWidth, int pHeight, FView *pListener)
-{
-    SetFrame(x, y, pWidth, pHeight);
-    
-    if(pListener)
-    {
-        pListener->AddSubview(this);
-        
-        GetContainer()->mRetainedByParent = true;
-    }
-}
-
-void FButton::Setup(int x, int y, FSprite *pSpriteArray, int pSpriteCount, FView *pListener)
-{
-    if(pSpriteCount > 0)
-    {
-        mSpriteUp = &(pSpriteArray[0]);
-        
-        if(pSpriteCount > 1)
-        {
-            if(pSpriteCount < 3)
-            {
-                mSpriteDown = &(pSpriteArray[1]);
-            }
-            else
-            {
-                mSpriteOver = &(pSpriteArray[1]);
-                mSpriteDown = &(pSpriteArray[2]);
-            }
-        }
-    }
-    
-    float aWidth = 0.0f;
-    float aHeight = 0.0f;
-    
-    if(mSpriteUp)
-    {
-        aWidth = mSpriteUp->mWidth;
-        aHeight = mSpriteUp->mHeight;
-    }
-    
-    Setup(x, y, aWidth, aHeight, pListener);
-}
-
-void FButton::Setup(int x, int y, FSprite *pSprite, FView *pListener)
-{
-    mSpriteUp = pSprite;
-    
-    float aWidth = 0.0f;
-    float aHeight = 0.0f;
-    
-    if(mSpriteUp)
-    {
-        aWidth = mSpriteUp->mWidth;
-        aHeight = mSpriteUp->mHeight;
-    }
-    
-    Setup(x, y, aWidth, aHeight, pListener);
-}
-
-void FButton::Setup(int x, int y, FSprite *pSprite)
-{
-    mSpriteUp = pSprite;
-    
-    float aWidth = 0.0f;
-    float aHeight = 0.0f;
-    
-    if(mSpriteUp)
-    {
-        aWidth = mSpriteUp->mWidth;
-        aHeight = mSpriteUp->mHeight;
-    }
-    
-    Setup(x, y, aWidth, aHeight, 0);
-}
-
-void FButton::Setup(float pX, float pY, float pWidth, float pHeight)
-{
-    SetFrame(pX, pY, pWidth, pHeight);
-}
-
-
-void FButton::SetUpTopLeft(float pX, float pY, FView *pListener, bool pAutoSize)
-{
-    float aWidth = GetFrame().mWidth;
-    float aHeight = GetFrame().mHeight;
-    
-    if(pAutoSize)
-    {
-        FSprite *aCheck = 0;
-        
-        for(int i=0;i<6;i++)
-        {
-            if(i == 0)aCheck = mSpriteUp;
-            if(i == 1)aCheck = mSpriteOver;
-            if(i == 2)aCheck = mSpriteDown;
-            if(i == 3)aCheck = mSpriteOverlayUp;
-            if(i == 4)aCheck = mSpriteOverlayOver;
-            if(i == 5)aCheck = mSpriteOverlayDown;
-            
-            if(aCheck)
-            {
-                if(aCheck->mWidth > aWidth)aWidth = aCheck->mWidth;
-                if(aCheck->mHeight > aHeight)aHeight = aCheck->mHeight;
-            }
-        }
-    }
-    
-    Setup(pX, pY, aWidth, aHeight, pListener);
-}
-
-void FButton::SetUpCentered(float pX, float pY, FView *pListener, bool pAutoSize)
-{
-    float aWidth = GetFrame().mWidth;
-    float aHeight = GetFrame().mHeight;
-    
-    
-    if(pAutoSize)
-    {
-        
-        FSprite *aCheck = 0;
-        
-        for(int i=0;i<6;i++)
-        {
-            if(i == 0)aCheck = mSpriteUp;
-            if(i == 1)aCheck = mSpriteOver;
-            if(i == 2)aCheck = mSpriteDown;
-            if(i == 3)aCheck = mSpriteOverlayUp;
-            if(i == 4)aCheck = mSpriteOverlayOver;
-            if(i == 5)aCheck = mSpriteOverlayDown;
-            
-            if(aCheck)
-            {
-                if(aCheck->mWidth > aWidth)aWidth = aCheck->mWidth;
-                if(aCheck->mHeight > aHeight)aHeight = aCheck->mHeight;
-            }
-        }
-    }
-    
-    float aX = (pX - (aWidth / 2.0f));
-    float aY = (pY - (aHeight / 2.0f));
-    
-    Setup(aX, aY, aWidth, aHeight, pListener);
-    
-}
- 
-*/
-
-void FButton::AddOverlay(FSprite *pSpriteUp, FSprite *pSpriteOver, FSprite *pSpriteDown)
-{
+void FButton::AddOverlay(FSprite *pSpriteUp, FSprite *pSpriteOver, FSprite *pSpriteDown) {
     FButtonLayer *aLayer = new FButtonLayer();
     aLayer->SetUp(pSpriteUp, pSpriteOver, pSpriteDown);
     mButtonLayersOver.Add(aLayer);
@@ -213,8 +40,7 @@ void FButton::AddOverlay(FSprite *pSpriteUp, FSprite *pSpriteOver, FSprite *pSpr
     if(mHeight < aLayer->mHeight)SetHeight(aLayer->mHeight);
 }
 
-void FButton::AddUnderlay(FSprite *pSpriteUp, FSprite *pSpriteOver, FSprite *pSpriteDown)
-{
+void FButton::AddUnderlay(FSprite *pSpriteUp, FSprite *pSpriteOver, FSprite *pSpriteDown) {
     FButtonLayer *aLayer = new FButtonLayer();
     aLayer->SetUp(pSpriteUp, pSpriteOver, pSpriteDown);
     mButtonLayersUnder.Add(aLayer);
@@ -223,8 +49,7 @@ void FButton::AddUnderlay(FSprite *pSpriteUp, FSprite *pSpriteOver, FSprite *pSp
     if(mHeight < aLayer->mHeight)SetHeight(aLayer->mHeight);
 }
 
-void FButton::SetUp(FSprite *pSpriteUp, FSprite *pSpriteOver, FSprite *pSpriteDown, float pX, float pY)
-{
+void FButton::SetUp(FSprite *pSpriteUp, FSprite *pSpriteOver, FSprite *pSpriteDown, float pX, float pY) {
     if(mButtonLayer == 0)mButtonLayer = new FButtonLayer();
     mButtonLayer->SetUp(pSpriteUp, pSpriteOver, pSpriteDown);
     
@@ -235,68 +60,13 @@ void FButton::SetUp(FSprite *pSpriteUp, FSprite *pSpriteOver, FSprite *pSpriteDo
     if(aHeight < mButtonLayer->mHeight)aHeight = mButtonLayer->mHeight;
     
     SetFrame(pX, pY, aWidth, aHeight);
-    
-    /*
-    if(pSpriteUp)
-    {
-        if(pSpriteUp->DidLoad())
-        {
-            mSpriteUp = pSpriteUp;
-        }
-        else
-        {
-            mSpriteUp = 0;
-        }
-    }
-    else mSpriteUp = 0;
-    
-    if(pSpriteOver)
-    {
-        if(pSpriteOver->DidLoad())
-        {
-            mSpriteOver = pSpriteOver;
-        }
-        else
-        {
-            mSpriteOver = 0;
-        }
-    }
-    else mSpriteOver = 0;
-    
-    if(pSpriteDown)
-    {
-        if(pSpriteDown->DidLoad())
-        {
-            mSpriteDown = pSpriteDown;
-        }
-        else
-        {
-            mSpriteDown = 0;
-        }
-    }
-    else mSpriteDown = 0;
-    
-    if(mSpriteDown == 0)
-    {
-        //mColorDown = FColor(0.85f, 0.85f, 0.85f);
-        mColorDown = FColor(0.05f, 0.05f, 0.05f);
-    }
-    */
-    
-    //FSprite *aSprite = GetButtonImage();
-    
-    //if(aSprite)
-    //{
-    //    SetFrame(pX, pY, aSprite->mWidth, aSprite->mHeight);
-    //}
 }
 
 void FButton::Update() {
-
+    
 }
 
 void FButton::Draw() {
-    
     if (mDrawSetsSpriteAlphaPipelineState == true && mColor.mAlpha != 0.0f) {
         Graphics::PipelineStateSetShape2DAlphaBlending();
         Graphics::SetColor(mColor);
@@ -314,9 +84,11 @@ void FButton::Draw() {
     EnumList(FButtonLayer, aLayer, mButtonLayersUnder) {
         aLayer->Draw(this, aIsActive, aIsOver, aIsDown);
     }
+    
     if (mButtonLayer) {
         mButtonLayer->Draw(this, aIsActive, aIsOver, aIsDown);
     }
+    
     EnumList(FButtonLayer, aLayer, mButtonLayersOver) {
         aLayer->Draw(this, aIsActive, aIsOver, aIsDown);
     }
@@ -355,80 +127,6 @@ void FButton::TouchUp(float pX, float pY, void *pData) {
 void FButton::TouchFlush() {
     mClickData = 0;
 }
-
-
-/*
-FSprite *FButton::GetButtonImage()
-{
-    FSprite *aResult = 0;
-    
-    if(mTouchDownInside)
-    {
-        if(mSpriteDown)
-        {
-            aResult = mSpriteDown;
-        }
-        else
-        {
-            aResult = mSpriteOver;
-        }
-    }
-    //else if(mIsOver)
-    //{
-    //    aResult = mSpriteOver;
-    //}
-    else
-    {
-        aResult = mSpriteUp;
-    }
-    
-    if(aResult == 0)
-    {
-        if(mSpriteUp)aResult = mSpriteUp;
-        else if(mSpriteOver)aResult = mSpriteOver;
-        else if(mSpriteDown)aResult = mSpriteDown;
-    }
-    
-    return aResult;
-}
-
-FSprite *FButton::GetOverlayImage()
-{
-    FSprite *aResult = 0;
-    
-    if(mTouchDownInside)
-    {
-        if(mSpriteOverlayDown)
-        {
-            aResult = mSpriteOverlayDown;
-        }
-        else
-        {
-            aResult = mSpriteOverlayOver;
-        }
-    }
-    //else if(mIsOver)
-    //{
-    //    aResult = mSpriteOverlayOver;
-    //}
-    else
-    {
-        aResult = mSpriteOverlayUp;
-    }
-    
-    if(aResult == 0)
-    {
-        if(mSpriteOverlayUp)aResult = mSpriteOverlayUp;
-        else if(mSpriteOverlayOver)aResult = mSpriteOverlayOver;
-        else if(mSpriteOverlayDown)aResult = mSpriteOverlayDown;
-    }
-    
-    return aResult;
-}
-*/
-
-
-
 
 FButtonLayer::FButtonLayer() {
     mOffsetX = 0.0f;

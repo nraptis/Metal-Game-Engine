@@ -171,6 +171,8 @@ void ToolMenuSectionRow::AddTextBox(UITextBox *pTextBox) {
         aElement->SetTextBox(pTextBox);
         AddElement(aElement);
         gNotify.Register(this, pTextBox, "text_box_change");
+        gNotify.Register(this, pTextBox, "text_box_submit");
+        
     }
 }
 

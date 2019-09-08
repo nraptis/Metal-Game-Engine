@@ -39,6 +39,8 @@ public:
     
     void                                        AddCell(EditorMenuFormationPickerCell *pCell);
     
+    void                                        CatchUpLoadedShift();
+    
     void                                        ClearAll();
     
     virtual void                                PanBegin(float pX, float pY);
@@ -49,6 +51,9 @@ public:
     
     FList                                       mCellList;
     EditorMenuFormationPickerCell               ***mCellGrid;
+    
+    
+    
     
     int                                         mScreenGridWidth;
     int                                         mMaxRows;
@@ -88,8 +93,18 @@ public:
     virtual void                                Notify(void *pSender, const char *pNotification);
     
     
+    void                                        SaveConfig();
+    void                                        LoadConfig();
+    
+    
+    void                                        SaveConfigFrame();
+    void                                        LoadConfigFrame();
+    
+    
+    
     ToolMenuSectionRow                          *mFilterRow1;
     UIButton                                    *mButtonApplyFilter;
+    UIButton                                    *mButtonClearFilter;
     UITextBox                                   *mTextBoxFilter;
     
     ToolMenuSectionRow                          *mFilterRow2;
@@ -99,7 +114,13 @@ public:
     UICheckBox                                  *mCheckBoxNoTracersOnly;
     
     void                                        ApplyFilter();
+    void                                        ClearFilter();
     
+    int                                         mEnqueueApplyFilter;
+    int                                         mEnqueueUpdateScroll;
+    
+    int                                         mLoadConfigTimer;
+    bool                                        mLoadConfig;
     
     EditorMenuFormationPickerScrollContent      *mScrollContent;
     ToolMenuSection                             *mSection;
@@ -112,7 +133,6 @@ public:
     
     FList                                       mFormationList;
     FList                                       mFormationListFiltered;
-    
     
     bool                                        mDidSetUp;
 };

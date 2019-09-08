@@ -22,18 +22,12 @@ EditorMenuFormationPicker::EditorMenuFormationPicker() {
     
     mName = "Formation Picker";
     
-    float aX = gDeviceWidth2 / 3.0f;
-    float aY = gDeviceHeight2 / 3.0f;
-    float aWidth = gDeviceWidth2 + gDeviceWidth2 / 2.0f;
-    float aHeight = gDeviceHeight2 + gDeviceHeight2 / 2.0f;
-    if (aWidth > 768.0f) {
-        aWidth = 768.0f;
-    }
-    if (aHeight > 640.0f) {
-        aHeight = 640.0f;
-    }
+    mLoadConfigTimer = 0;
+    mLoadConfig = true;
     
-    SetFrame(aX, aY, aWidth, aHeight);
+    SetFrame(gDeviceWidth2 / 2.0f, gDeviceHeight2 / 2.0f - 50.0f, gDeviceWidth2, gDeviceHeight2 + 100.0f);
+    
+    LoadConfigFrame();
     
     mSelectedSprite = 0;
     mSelectedSpriteSequence = 0;
@@ -43,7 +37,8 @@ EditorMenuFormationPicker::EditorMenuFormationPicker() {
     
     mManualSectionLayout = true;
     mResizeDragAllowedV = false;
-    
+    mEnqueueApplyFilter = 0;
+    mEnqueueUpdateScroll = 0;
     
     mFilterRow1 = new ToolMenuSectionRow();
     AddSection(mFilterRow1);
@@ -51,9 +46,15 @@ EditorMenuFormationPicker::EditorMenuFormationPicker() {
     mButtonApplyFilter = new UIButton();
     mButtonApplyFilter->SetText("Apply...");
     mFilterRow1->AddButton(mButtonApplyFilter);
+
     
     mTextBoxFilter = new UITextBox();
     mFilterRow1->AddTextBox(mTextBoxFilter);
+    
+    mButtonClearFilter = new UIButton();
+    mButtonClearFilter->SetText("Clear");
+    mFilterRow1->AddButton(mButtonClearFilter);
+    
     
     
     mFilterRow2 = new ToolMenuSectionRow();
@@ -87,6 +88,10 @@ EditorMenuFormationPicker::EditorMenuFormationPicker() {
     mSection->AddChild(mScrollContent);
     
     AddAllFormations();
+    
+    
+    gNotify.Register(this, &(mHeader.mButtonClose), "button_click");
+    
 }
 
 EditorMenuFormationPicker::~EditorMenuFormationPicker() {
@@ -98,10 +103,42 @@ EditorMenuFormationPicker::~EditorMenuFormationPicker() {
 }
 
 void EditorMenuFormationPicker::Update() {
+    
+    
+    
     if (mDidSetUp == false) {
         if (mScrollContent) {
             mScrollContent->SetUp();
             mDidSetUp = true;
+        }
+    }
+    
+    
+    
+    mLoadConfigTimer++;
+    if (mLoadConfigTimer >= 8) {
+        mLoadConfigTimer = 8;
+        if (mLoadConfig == true) {
+            mLoadConfig = false;
+            LoadConfig();
+        }
+    }
+    
+    
+    
+    if (mEnqueueApplyFilter > 0) {
+        printf("mEnqueueApplyFilter = %d\n", mEnqueueApplyFilter);
+        mEnqueueApplyFilter--;
+        if (mEnqueueApplyFilter <= 0) {
+            ApplyFilter();
+        }
+    }
+    
+    if (mEnqueueUpdateScroll > 0) {
+        printf("mEnqueueUpdateScroll = %d\n", mEnqueueUpdateScroll);
+        mEnqueueUpdateScroll--;
+        if (mEnqueueUpdateScroll <= 0) {
+            mScrollContent->CatchUpLoadedShift();
         }
     }
 }
@@ -114,19 +151,31 @@ void EditorMenuFormationPicker::Notify(void *pSender, const char *pNotification)
     if (mScrollContent != NULL) {
         EnumList(EditorMenuFormationPickerCell, aCell, mScrollContent->mCellList) {
             if (aCell == pSender && aCell->mTouchCanceled == false) {
+                
                 gSelectedFormation = aCell->mFormation;
                 gNotify.Post(this, "formation_selected");
+                
+                SaveConfig();
+                
                 Kill();
                 return;
             }
         }
     }
     
+    if (pSender == mTextBoxFilter) { ApplyFilter(); }
     if (pSender == mButtonApplyFilter) { ApplyFilter(); }
     if (pSender == mCheckBoxBalloonsOnly) { ApplyFilter(); }
     if (pSender == mCheckBoxMixedOnly) { ApplyFilter(); }
     if (pSender == mCheckBoxTracersOnly) { ApplyFilter(); }
     if (pSender == mCheckBoxNoTracersOnly) { ApplyFilter(); }
+    
+    if (pSender == mButtonClearFilter) { ClearFilter(); }
+    
+    if (pSender == &(mHeader.mButtonClose)) {
+        printf("We Cleeeek\n");
+        SaveConfig();
+    }
     
 }
 
@@ -139,7 +188,6 @@ void EditorMenuFormationPicker::AddAllFormations() {
     }
     
     ApplyFilter();
-    
 }
 
 void EditorMenuFormationPicker::AddFormation(LevelFormation *pFormation) {
@@ -167,20 +215,27 @@ void EditorMenuFormationPicker::Layout() {
     mSection->SetFrame(0.0f, aOffset, mContent.GetWidth(), mContent.GetHeight() - aOffset);
 }
 
+void EditorMenuFormationPicker::ClearFilter() {
+    
+    mTextBoxFilter->SetText("");
+    
+    mCheckBoxBalloonsOnly->SetChecked(false);
+    mCheckBoxMixedOnly->SetChecked(false);
+    mCheckBoxTracersOnly->SetChecked(false);
+    mCheckBoxNoTracersOnly->SetChecked(false);
+
+    ApplyFilter();
+}
+
 void EditorMenuFormationPicker::ApplyFilter() {
     
     if (mScrollContent == NULL) { return; }
     
+    //EnumList(EditorMenuFormationPickerCell, aCell, mScrollContent->mCellList) {
+    //    aCell->mFormation = NULL;
+    //}
+    
     FString aText = mTextBoxFilter->mText.c();
-    
-    
-    //mCheckBoxTracersOnly
-    
-    
-    //UICheckBox                                  *mCheckBoxBalloonsOnly;
-    //UICheckBox                                  *;
-    //UICheckBox                                  *;
-    //UICheckBox                                  *;
     
     bool aMixedOnly = false;
     bool aBalloonOnly = false;
@@ -251,6 +306,87 @@ void EditorMenuFormationPicker::ApplyFilter() {
     mDidSetUp = false;
 }
 
+
+void EditorMenuFormationPicker::SaveConfig() {
+    FString aPath = gDirDocuments + FString("formation_picker_config.json");
+    FJSON aJSON;
+    FJSONNode *aConfigNode = new FJSONNode();
+    aJSON.mRoot = aConfigNode;
+    
+    
+    aConfigNode->AddDictionaryFloat("scroll_offset_x", mScrollContent->mScrollOffsetX);
+    aConfigNode->AddDictionaryFloat("scroll_offset_y", mScrollContent->mScrollOffsetY);
+    
+    aConfigNode->AddDictionaryInt("grid_offset_x", mScrollContent->mGridOffsetX);
+    aConfigNode->AddDictionaryInt("grid_offset_y", mScrollContent->mGridOffsetY);
+    
+    aConfigNode->AddDictionaryString("filter_text", mTextBoxFilter->mText.c());
+    
+    aConfigNode->AddDictionaryBool("filter_balloons_only", mCheckBoxBalloonsOnly->mIsChecked);
+    aConfigNode->AddDictionaryBool("filter_mixed_only", mCheckBoxMixedOnly->mIsChecked);
+    aConfigNode->AddDictionaryBool("filter_tracers_only", mCheckBoxTracersOnly->mIsChecked);
+    aConfigNode->AddDictionaryBool("filter_no_tracers_only", mCheckBoxNoTracersOnly->mIsChecked);
+    
+    
+    aJSON.Save(aPath.c());
+    
+    SaveConfigFrame();
+}
+
+void EditorMenuFormationPicker::LoadConfig() {
+    FString aPath = gDirDocuments + FString("formation_picker_config.json");
+    FJSON aJSON;
+    aJSON.Load(aPath.c());
+    FJSONNode *aConfigNode = aJSON.mRoot;
+    if (aConfigNode == NULL) return;
+    
+    mScrollContent->mScrollOffsetX = aConfigNode->GetFloat("scroll_offset_x", 0.0f);
+    mScrollContent->mScrollOffsetY = aConfigNode->GetFloat("scroll_offset_y", 0.0f);
+    
+    mScrollContent->mGridOffsetX = aConfigNode->GetInt("grid_offset_x", 0);
+    mScrollContent->mGridOffsetY = aConfigNode->GetInt("grid_offset_y", 0);
+    
+    mTextBoxFilter->SetText(aConfigNode->GetString("filter_text", ""));
+    
+    mCheckBoxBalloonsOnly->SetChecked(aConfigNode->GetBool("filter_balloons_only", false));
+    mCheckBoxMixedOnly->SetChecked(aConfigNode->GetBool("filter_mixed_only", false));
+    mCheckBoxTracersOnly->SetChecked(aConfigNode->GetBool("filter_tracers_only", false));
+    mCheckBoxNoTracersOnly->SetChecked(aConfigNode->GetBool("filter_no_tracers_only", false));
+    
+    mEnqueueApplyFilter = 2;
+    mEnqueueUpdateScroll = 3;
+}
+
+void EditorMenuFormationPicker::SaveConfigFrame() {
+    FString aPath = gDirDocuments + FString("formation_picker_frame_config.json");
+    FJSON aJSON;
+    FJSONNode *aConfigNode = new FJSONNode();
+    aJSON.mRoot = aConfigNode;
+    
+    aConfigNode->AddDictionaryFloat("frame_x", mX);
+    aConfigNode->AddDictionaryFloat("frame_y", mY);
+    aConfigNode->AddDictionaryFloat("frame_width", mWidth);
+    aConfigNode->AddDictionaryFloat("frame_height", mHeight);
+    
+    aJSON.Save(aPath.c());
+}
+
+void EditorMenuFormationPicker::LoadConfigFrame() {
+    FString aPath = gDirDocuments + FString("formation_picker_frame_config.json");
+    FJSON aJSON;
+    aJSON.Load(aPath.c());
+    FJSONNode *aConfigNode = aJSON.mRoot;
+    if (aConfigNode == NULL) return;
+    //mExportIndex = aConfigNode->GetInt("export_index", mExportIndex);
+    
+    
+    float aX = aConfigNode->GetFloat("frame_x", mX);
+    float aY = aConfigNode->GetFloat("frame_y", mY);
+    float aWidth = aConfigNode->GetFloat("frame_width", mWidth);
+    float aHeight = aConfigNode->GetFloat("frame_height", mHeight);
+    
+    SetFrame(aX, aY, aWidth, aHeight);
+}
 
 
 EditorMenuFormationPickerScrollContent::EditorMenuFormationPickerScrollContent() {
@@ -374,6 +510,22 @@ void EditorMenuFormationPickerScrollContent::SetUp() {
     }
 }
 
+void EditorMenuFormationPickerScrollContent::CatchUpLoadedShift() {
+    
+    if (mCellGrid != 0 && mRowCount > 0) {
+        EditorMenuFormationPickerCell *aHold = NULL;
+        for (int aCycle=0;aCycle<mGridOffsetX;aCycle++) {
+            for (int n = 0; n < mRowCount; n++) {
+                aHold = mCellGrid[mColCount - 1][n];
+                for (int i = (mColCount - 2); i >= 0; i--) {
+                    mCellGrid[i + 1][n] = mCellGrid[i][n];
+                }
+                mCellGrid[0][n] = aHold;
+            }
+        }
+    }
+}
+
 void EditorMenuFormationPickerScrollContent::Update() {
     if (mScrollFlingSpeed > 0) {
         mScrollFlingSpeed *= 0.940f;
@@ -386,7 +538,7 @@ void EditorMenuFormationPickerScrollContent::Update() {
     
     float aCellWidth = (mCellWidth + mCellSpacingH);
     
-    EditorMenuFormationPickerCell *aHold = 0;
+    EditorMenuFormationPickerCell *aHold = NULL;
     if (mCellGrid != 0) {
         while (mScrollOffsetX >= aCellWidth) {
             mGridOffsetX++;

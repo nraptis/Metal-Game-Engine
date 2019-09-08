@@ -48,6 +48,8 @@ UIStepper::UIStepper() {
     gNotify.Register(this, &mButtonSub50, "button_click");
     gNotify.Register(this, &mButtonZero, "button_click");
     gNotify.Register(this, &mTextBox, "text_box_change");
+    gNotify.Register(this, &mTextBox, "text_box_submit");
+    
     
     mButtonAdd1.SetText("A");
     mButtonAdd10.SetText("A");
