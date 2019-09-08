@@ -1,11 +1,39 @@
 
-D1.) We need a new scheme for a SEQUENCE of PACKED model data.
+I1.) We need an occasional "gleam" / sparkle animation that emminates from the tip of the dart.
 
-D2.) We need to verify the SEQUENCE of PACKED model data for butterfly + billboard with sprite sequence... 
+I2.) We need to make the balloon threads bounce slightly when the balloons stop moving vertically.
 
-D3.) We need to remove the old FModelDataSequence, this will not work anymore going forward.
+I3.) We need to remove the balloon thread from ballons which are being held captive by a turtle.
 
-D4.) We need to remove the render functionality from the old model data indexed, this will not work going forward...
+I4.) We DESPERATELY need a RESTART BUTTON for test-game-from-editor mode.
+
+I5.) We need "restart wave", "back one wave", and "forward one wave" buttons for test-game-from-editor mode.
+
+H1.) We have a layout crash when transitioning from editor to TEST game.
+
+H2.) We have lots of garbage / junk buttons in the editor which are not used. We need to remove these because they are distracting.
+
+G1.) We need a swirling BILLBOARD animation for the turtle's spinning propeller.
+
+G2.) We need to attach the spining propeller to the turtle so that the rot / scale are bound to the turtle, but it spins around its axis.
+
+G3.) We need to come up with a collision mechanism for the turtle. The dart should not get stuck in the propeller or top of the "cup" - therefore the dart should somehow "die and fall down" possibly flashing, spinning. and falling.
+
+G4.) We need to implement original artwork for the brickhead FACE.
+
+G5.) We need to implement "OUCHIE" artwork for the brickhead FACE, toggle to ouchie face when it gets hit.
+
+G6.) We need to test out different animations for burting balloon. Possibly a fast-playing particle animation for the ripping plastic?
+
+G7.) We need a trail that can follow the dart as it flies through space.
+
+F1.) There are too many formations, due to variable speed. From now on, a formation's speed should be editable from the SPAWN ATTACH menu. We must make adjustments to the format accordingly.
+
+E1.) Editor crashes when using bombs.
+
+E2.) Editor crashes when using "turtles."
+
+E3.) Editor needs way to print out which formation you are selecting... This will help is organizing...
 
 B1.) When editor launches game with all permanents, they immediately fly away after landing on screen. There should be some default or programmed-in alive timer...
 
@@ -20,10 +48,6 @@ A3.) We need to keep track of particularily good throws. (like 6 balloons with 1
 A4.) We need to keep track of some achievements!
 
 A5.) We need an "aim arc" which shows where the dart will go.
-
-A6.) We need a game / pause menu.
-
-A7.) We need a main menu.
 
 A8.) We need a level picker screen.
 
@@ -59,15 +83,25 @@ A23.) We need to show a progress bar for how close you are to finishing level.
 
 A24.) We need to start thinking about how you will earn 1, 2, or 3 stars per level.
 
+1.) Win condition? We need to capture the win condition.
 
+2.) Losing lives when balloons fly offscreen.
 
-A.) Win condition? We need to capture the win condition.
+3.) Mock model for "Bomb"
 
-B.) Losing lives when balloons fly offscreen.
+4.) Logic for bomb collisions (Spherical).
 
-E.) Mock model for "Bomb"
+DONE.) We need a new scheme for a SEQUENCE of PACKED model data.
 
-F.) Logic for bomb collisions (Spherical).
+DONE.) We need to verify the SEQUENCE of PACKED model data for butterfly + billboard with sprite sequence... 
+
+DONE.) We need to remove the old FModelDataSequence, this will not work anymore going forward.
+
+DONE.) We need to remove the render functionality from the old model data indexed, this will not work going forward...
+
+DONE.) We need a game / pause menu.
+
+DONE.) We need a main menu.
 
 DONE.) We need the "wind" to pick up, sway, die down, and change directions in a semi-realistic fashion...
 

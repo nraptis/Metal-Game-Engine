@@ -4,7 +4,7 @@
 	"rect_height": 5,
 	"rect_spacing": 60,
 	"circle_ring_spacing": 116,
-	"circle_ring_count": 1,
+	"circle_ring_count": 3,
 	"circle_radial_count": 5,
 	"star_inner_rad": 145,
 	"star_outer_rad": 62,

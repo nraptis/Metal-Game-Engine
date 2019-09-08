@@ -25,17 +25,15 @@ void LifeIndicator::Update() {
 
 void LifeIndicator::Draw() {
     
-    FCanvas::Draw();
-    
     Graphics::SetColor();
     Graphics::PipelineStateSetSpriteAlphaBlending();
     
-    gWadGameInterface.mLivesIndicatorShadow.Draw(mWidth2, mHeight2, 1.0f, 0.0f);
+    gWadGameInterface.mLivesIndicatorShadow.Draw(mWidth2, mHeight2, 1.0f);
     
     if (mFull) {
-        gWadGameInterface.mLivesIndicatorFull.Draw(mWidth2, mHeight2, 1.0f, 0.0f);
+        gWadGameInterface.mLivesIndicatorFull.Draw(mWidth2, mHeight2, 1.0f);
     } else {
-        gWadGameInterface.mLivesIndicatorEmpty.Draw(mWidth2, mHeight2, 1.0f, 0.0f);
+        gWadGameInterface.mLivesIndicatorEmpty.Draw(mWidth2, mHeight2, 1.0f);
     }
 }
 

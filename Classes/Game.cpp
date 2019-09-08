@@ -8,6 +8,7 @@
 
 #include "core_includes.h"
 #include "Game.hpp"
+#include "GameContainer.hpp"
 #include "FAnimation.hpp"
 #include "StuckDart.hpp"
 
@@ -294,6 +295,11 @@ void Game::Layout() {
 
 void Game::Update() {
     
+    if ((gGameContainer != NULL) && (gGameContainer->mPaused == true)) {
+        return;
+    }
+    
+    
     bool aShowOverlay = true;
 #ifdef EDITOR_MODE
     if (gEditor == NULL) {
@@ -489,7 +495,9 @@ void Game::Draw() {
     //Graphics::DrawRect(0.0f, 0.0f, mWidth, mHeight);
     
     Graphics::PipelineStateSetShape2DAlphaBlending();
-    Graphics::SetColor(0.125f, 0.5f, 0.35f, 0.075f);
+    //Graphics::SetColor(0.125f, 0.5f, 0.35f, 0.075f);
+    Graphics::SetColor(0.825f, 0.5f, 0.35f, 0.575f);
+    
     Graphics::OutlineRect(0.0f, 0.0f, mWidth, mHeight, 20.0f);
     Graphics::SetColor();
 
@@ -624,7 +632,6 @@ void Game::DartMovingInterpolation(Dart *pDart, float pPercent, bool pEnd) {
     }
 }
 
-
 void Game::Draw3D() {
     if (mRenderer) {
         mRenderer->Draw3D();
@@ -633,14 +640,10 @@ void Game::Draw3D() {
 
 void Game::TouchDown(float pX, float pY, void *pData) {
     
-    if (pX > mWidth2) {
-        mLives++;
-        gInterfaceOverlay->NotifyLivesChanged();
-    } else {
-        mLives--;
-        gInterfaceOverlay->NotifyLivesChanged();
+    if ((gGameContainer != NULL) && (gGameContainer->mPaused == true)) {
+        TouchFlush();
+        return;
     }
-    
     
     if (gTouch.mTouchCount >= 3) {
         Log("Hack: Killing all balloons..!");
@@ -674,6 +677,12 @@ void Game::TouchDown(float pX, float pY, void *pData) {
 }
 
 void Game::TouchMove(float pX, float pY, void *pData) {
+    
+    if ((gGameContainer != NULL) && (gGameContainer->mPaused == true)) {
+        TouchFlush();
+        return;
+    }
+    
     if (mDartTouch == pData && mDartTouch != NULL) {
         float aDiffX = pX - mDartTouchStartX;
         float aDiffY = pY - mDartTouchStartY;
@@ -711,6 +720,12 @@ void Game::TouchMove(float pX, float pY, void *pData) {
 }
 
 void Game::TouchUp(float pX, float pY, void *pData) {
+    
+    if ((gGameContainer != NULL) && (gGameContainer->mPaused == true)) {
+        TouchFlush();
+        return;
+    }
+    
     if (mDartTouch) {
         if (mIsDartBeingPulled) {
             ReleaseDart();

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D1096CC232460AC009C0DA2 /* GameMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D1096CA232460AC009C0DA2 /* GameMenu.cpp */; };
 		0D511DB82320B14F00EB57D1 /* FModelDataPackedSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D511DB62320B14F00EB57D1 /* FModelDataPackedSequence.cpp */; };
 		0D8FCF18225DA8ED00A74580 /* BufferBindingWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDB8225DA8EC00A74580 /* BufferBindingWrapper.mm */; };
 		0D8FCF19225DA8ED00A74580 /* os_core_graphics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDB9225DA8EC00A74580 /* os_core_graphics.mm */; };
@@ -232,6 +233,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D1096CA232460AC009C0DA2 /* GameMenu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameMenu.cpp; sourceTree = "<group>"; };
+		0D1096CB232460AC009C0DA2 /* GameMenu.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameMenu.hpp; sourceTree = "<group>"; };
 		0D511DB62320B14F00EB57D1 /* FModelDataPackedSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FModelDataPackedSequence.cpp; sourceTree = "<group>"; };
 		0D511DB72320B14F00EB57D1 /* FModelDataPackedSequence.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FModelDataPackedSequence.hpp; sourceTree = "<group>"; };
 		0D8FCDB8225DA8EC00A74580 /* BufferBindingWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BufferBindingWrapper.mm; sourceTree = "<group>"; };
@@ -1040,6 +1043,8 @@
 			children = (
 				0DBAFC60231F78C300C11381 /* LifeIndicator.cpp */,
 				0DBAFC61231F78C300C11381 /* LifeIndicator.hpp */,
+				0D1096CA232460AC009C0DA2 /* GameMenu.cpp */,
+				0D1096CB232460AC009C0DA2 /* GameMenu.hpp */,
 			);
 			path = "[[Game Interface]]";
 			sourceTree = "<group>";
@@ -1527,6 +1532,7 @@
 				0DBAFD7B231F78C300C11381 /* LevelSectionPermanent.cpp in Sources */,
 				0DBAFD81231F78C300C11381 /* GameOverlayInterface.cpp in Sources */,
 				0D8FCF83225DA8ED00A74580 /* MetalView.mm in Sources */,
+				0D1096CC232460AC009C0DA2 /* GameMenu.cpp in Sources */,
 				0D8FCF85225DA8ED00A74580 /* AppDelegate.mm in Sources */,
 				0D8FCF3C225DA8ED00A74580 /* FTexture.cpp in Sources */,
 				0DBAFD6A231F78C300C11381 /* AssetWadGameInterface.cpp in Sources */,

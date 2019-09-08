@@ -25,6 +25,12 @@ GameContainer::GameContainer() {
     
     mEffectsOverlay = NULL;
     mInterfaceOverlay = NULL;
+    mGameMenu = NULL;
+    mGameMenuAnimation = NULL;
+    
+    
+    
+    
     
     mEditorMenu = NULL;
     mEditorMenuUtils = NULL;
@@ -39,9 +45,18 @@ GameContainer::GameContainer() {
     mInterfaceBottomHeight = 12.0f;
     
     mContainer = new FCanvas();
+    mContainer->mDrawManual = true;
     //mContainer->mColor = FColor(0.25f, 1.0f, 1.0f, 0.66f);
     mContainer->SetTransformAnchor(0.5f, 0.5f);
     //mContainer->SetTransformRotation(2.0f);
+    
+    mPaused = false;
+    mPauseFadeEnabled = false;
+    
+    mPauseFade = 0.0f;
+    mPauseFadeMax = 0.6f;
+    
+    
     
     AddChild(mContainer);
     mContainer->mName = "{Container}";
@@ -53,9 +68,11 @@ GameContainer::GameContainer() {
 #ifndef EDITOR_MODE
     
     mEffectsOverlay = new GameOverlayEffects();
+    mEffectsOverlay->mDrawManual = true;
     AddChild(mEffectsOverlay);
     
     mInterfaceOverlay = new GameOverlayInterface();
+    mInterfaceOverlay->mDrawManual = true;
     AddChild(mInterfaceOverlay);
     
 #endif
@@ -65,28 +82,10 @@ GameContainer::GameContainer() {
 }
 
 GameContainer::~GameContainer() {
-    if (gGameContainer == this) {
-        gGameContainer = NULL;
-    }
-    
-    if (mEditorMenu != NULL) {
-        mEditorMenu->Kill();
-        mEditorMenu = NULL;
-    }
-    
-    if (mEffectsOverlay != NULL) {
-        mEffectsOverlay->Kill();
-        mEffectsOverlay = NULL;
-    }
-    
-    if (mInterfaceOverlay != NULL) {
-        mInterfaceOverlay->Kill();
-        mInterfaceOverlay = NULL;
-    }
-    
-    if (mEditorMenuUtils != NULL) {
-        mEditorMenuUtils->Kill();
-        mEditorMenuUtils = NULL;
+
+    if (mGameMenuAnimation != NULL) {
+        delete mGameMenuAnimation;
+        mGameMenuAnimation = NULL;
     }
     
 }
@@ -143,6 +142,14 @@ void GameContainer::Layout() {
     }
     
     
+    if (mGameMenu != NULL) {
+        float aWidth = gWadGameInterface.mGameMenuBack.mWidth + 20.0f;
+        float aHeight = gWadGameInterface.mGameMenuBack.mHeight + 20.0f;
+        mGameMenu->SetFrame(mWidth / 2.0f - aWidth / 2.0f, mHeight / 2.0f - aHeight / 2.0f, aWidth, aHeight);
+    }
+    
+    
+    
     //TODO: When to show this..?
     
 
@@ -159,13 +166,66 @@ void GameContainer::Layout() {
 
 void GameContainer::Update() {
     
+    if (mPauseFadeEnabled == true) {
+        if (mPauseFade < mPauseFadeMax) {
+            mPauseFade += 0.015f;
+            if (mPauseFade >= mPauseFadeMax) {
+                mPauseFade = mPauseFadeMax;
+            }
+        }
+    } else {
+        if (mPauseFade > 0.0f) {
+            mPauseFade -= 0.02f;
+            if (mPauseFade <= 0.0f) {
+                mPauseFade = 0.0f;
+                if (mGameMenu == NULL) {
+                    Unpause();
+                }
+            }
+        }
+        
+    }
+    
+    
+    if (mGameMenu != NULL) {
+        
+        if (mGameMenuAnimation != NULL) {
+            mGameMenuAnimation->Update();
+            if (mGameMenuAnimation->IsComplete()) {
+                
+                printf("ANIMATION COMPLETEEEEE!!!\n");
+                delete mGameMenuAnimation;
+                mGameMenuAnimation = NULL;
+                
+                if (mGameMenuAnimatingIn == false) {
+                    mGameMenu->Kill();
+                    mGameMenu = NULL;
+                }
+                
+                if (mPauseFade <= 0) {
+                    Unpause();
+                }
+            }
+        }
+    }
+    
 }
 
 void GameContainer::Draw() {
     
-    Graphics::PipelineStateSetShape2DAlphaBlending();
+    if (mContainer != NULL) { mContainer->DrawManual(); }
+    if (mEffectsOverlay != NULL) { mEffectsOverlay->DrawManual(); }
+    if (mInterfaceOverlay != NULL) { mInterfaceOverlay->DrawManual(); }
     
     
+    
+    if (mPauseFade != 0.0f) {
+        DrawTransform();
+        Graphics::PipelineStateSetShape2DAlphaBlending();
+        Graphics::SetColor(0.0f, 0.0f, 0.0f, mPauseFade);
+        Graphics::DrawRect(0.0f, 0.0f, mWidth, mHeight);
+        Graphics::SetColor();
+    }
     /*
     Graphics::SetColor(1.0f, 0.0f, 0.25f, 0.25f);
     Graphics::DrawRect(0.0f, 0.0f, mInterfaceLeftWidth, mHeight);
@@ -259,6 +319,127 @@ void GameContainer::Realize() {
         mGame->AddChild(mGameTestRunningOverlay);
         mWindow->RegisterFrameDidUpdate(this);
     }
+}
+
+void GameContainer::PauseAndShowGameMenu() {
+    
+    BeginPauseFadeIn();
+    Pause();
+    
+    if (mGameMenuAnimation != NULL) {
+        delete mGameMenuAnimation;
+        mGameMenuAnimation = NULL;
+    }
+    
+    if (mGameMenu != NULL) {
+        mGameMenu->Kill();
+        mGameMenu = NULL;
+    }
+    
+    mGameMenuAnimatingIn = true;
+
+    
+    float aWidth = gWadGameInterface.mGameMenuBack.mWidth + 20.0f;
+    float aHeight = gWadGameInterface.mGameMenuBack.mHeight + 20.0f;
+    
+    mGameMenu = new GameMenu();
+    mGameMenu->SetFrame(mWidth / 2.0f - aWidth / 2.0f, mHeight / 2.0f - aHeight / 2.0f, aWidth, aHeight);
+    
+    //mGameMenu->SetTransformTranslate(mWidth2, mHeight2);
+    
+    gApp->mWindowModal.AddChild(mGameMenu);
+    
+    
+    mGameMenu->SetTransformAnchor(1.0f, 1.0f);
+    
+    mGameMenuAnimation = new FCanvasAnimation(mGameMenu);
+    
+    
+    mGameMenuAnimation->mStartX = -(gVirtualDevWidth);
+    //mGameMenuAnimation->mStartY = mGameMenuAnimation->mStartY + 64.0f * gSpriteDrawScale;
+    //mGameMenuAnimation->mStartScale = 0.0125f;
+    //mGameMenuAnimation->mStartRotation = -15.0f;
+    //mGameMenuAnimation->mStartAnchorX = 1.0f;
+    //mGameMenuAnimation->mStartAnchorY = 1.0f;
+    
+    //mGameMenuAnimation->GenerateIn(80);
+    mGameMenuAnimation->GenerateIn(800);
+    
+    
+    //(ANIMATION_EASE_OUT_ELASTIC, 80);
+    
+    
+//#define ANIMATION_TYPE_OVERSHOOT (ANIMATION_TYPE_EASE_OUT_BACK)
+//#define ANIMATION_TYPE_OVERSHOOT_MORE 13
+    
+
+
+}
+
+void GameContainer::UnpauseAndHideGameMenu() {
+    
+    BeginPauseFadeOut();
+    
+    if (mGameMenuAnimation != NULL) {
+        delete mGameMenuAnimation;
+        mGameMenuAnimation = NULL;
+    }
+    
+    if (mGameMenu == NULL) {
+        return;
+    }
+    
+    
+    mGameMenuAnimatingIn = false;
+    
+    
+    mGameMenuAnimation = new FCanvasAnimation(mGameMenu);
+    
+    
+    float aWidth = gWadGameInterface.mGameMenuBack.mWidth + 20.0f;
+    float aHeight = gWadGameInterface.mGameMenuBack.mHeight + 20.0f;
+    
+    
+    mGameMenuAnimation->mTargetX = gVirtualDevWidth;
+    //mGameMenuAnimation->mTargetY = mGameMenuAnimation->mStartY + 64.0f * gSpriteDrawScale;
+    //mGameMenuAnimation->mTargetScale = 0.0125f;
+    //mGameMenuAnimation->mTargetRotation = 31.0f;
+    //mGameMenuAnimation->mTargetAnchorX = 0.0f;
+    //mGameMenuAnimation->mTargetAnchorY = 1.0f;
+    
+    //mGameMenuAnimation->GenerateOut(80);
+    mGameMenuAnimation->GenerateOut(800);
+    
+}
+
+
+void GameContainer::Pause() {
+    mPaused = true;
+    
+}
+
+void GameContainer::Unpause() {
+    mPaused = false;
+    
+}
+
+void GameContainer::BeginPauseFadeIn() {
+    mPauseFadeEnabled = true;
+}
+
+void GameContainer::BeginPauseFadeOut() {
+    mPauseFadeEnabled = false;
+}
+
+bool GameContainer::IsPauseFadeInComplete() {
+    return (mPauseFade >= mPauseFadeMax);
+}
+
+bool GameContainer::IsPauseFadeOutComplete() {
+    if ((mPauseFadeEnabled == false) && (mPauseFade >= mPauseFadeMax)) {
+        return true;
+    }
+    return false;
 }
 
 void GameContainer::OpenEditorTestMenus() {

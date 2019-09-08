@@ -19,12 +19,6 @@ public:
     virtual void                                    Load();
     virtual void                                    Unload();
     
-    FSprite                                         mSpriteTest;
-    
-    FSprite                                         mSpriteScreenSize;
-    
-    
-    
     FSprite                                         mGameMenuBack;
     
     FSprite                                         mGameMenuGenericButtonUp;

@@ -6,6 +6,7 @@
 //  Copyright © 2019 Froggy Studios. All rights reserved.
 //
 
+#include "GameContainer.hpp"
 #include "GameInfoOverlay.hpp"
 #include "core_includes.h"
 #include "GFXApp.hpp"
@@ -26,6 +27,10 @@ void GameInfoOverlay::Layout()  {
 }
 
 void GameInfoOverlay::Update() {
+    
+    if ((gGameContainer != NULL) && (gGameContainer->mPaused == true)) {
+        return;
+    }
     
     
     FList aKillList;

@@ -153,7 +153,6 @@ void GameRenderer::Draw3D() {
         }
     }
     
-    
     EnumList (Balloon, aBalloon, mGame->mBalloonList.mObjectList) {
         if (aBalloon->mKill == 0) {
             aBalloon->Draw3D();

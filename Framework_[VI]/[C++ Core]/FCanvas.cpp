@@ -1333,13 +1333,13 @@ void FCanvasAbsoluteTransform::ApplyAbsoluteTransformation(FCanvasAbsoluteTransf
     mScale *= pParentTransform->mScale;
     mScaleX *= pParentTransform->mScaleX;
     mScaleY *= pParentTransform->mScaleY;
-    if((pParentTransform->mAnchorX != 0.0f) || (pParentTransform->mAnchorY != 0.0f)) {
+    if ((pParentTransform->mAnchorX != 0.0f) || (pParentTransform->mAnchorY != 0.0f)) {
         float aParentShiftX = (pParentTransform->mAnchorX * pParentWidth) * aParentScaleX;
         float aParentShiftY = (pParentTransform->mAnchorY * pParentHeight) * aParentScaleY;
-        if(pParentTransform->mRotation != 0.0f) {
+        if (pParentTransform->mRotation != 0.0f) {
             float aDist = aParentShiftX * aParentShiftX + aParentShiftY * aParentShiftY;
             float aSwivel = 180.0f - FaceTarget(-aParentShiftX, -aParentShiftY);
-            if(aDist > SQRT_EPSILON)aDist = sqrtf(aDist);
+            if (aDist > SQRT_EPSILON) { aDist = sqrtf(aDist); }
             aSwivel -= pParentTransform->mRotation;
             float aDirX = Sin(aSwivel);
             float aDirY = Cos(aSwivel);
@@ -1351,10 +1351,10 @@ void FCanvasAbsoluteTransform::ApplyAbsoluteTransformation(FCanvasAbsoluteTransf
     }
     mX = ((pX + pTransform->mX + aAnchorX + ((aAnchorWidth) - (aAnchorX))) * (aParentScaleX));
     mY = ((pY + pTransform->mY + aAnchorY + ((aAnchorHeight) - (aAnchorY))) * (aParentScaleY));
-    if(pParentTransform->mRotation != 0) {
+    if (pParentTransform->mRotation != 0) {
         float aPivotRotation = FaceTarget(mX, mY);
         float aDist = mX * mX + mY * mY;
-        if(aDist > SQRT_EPSILON)aDist = sqrtf(aDist);
+        if(aDist > SQRT_EPSILON) { aDist = sqrtf(aDist); }
         aPivotRotation += pParentTransform->mRotation;
         float aDirX = Sin(-aPivotRotation);
         float aDirY = Cos(-aPivotRotation);
@@ -1371,7 +1371,7 @@ void FCanvasAbsoluteTransform::ApplyAbsoluteTransformation(FCanvasAbsoluteTransf
     float aHeight = pHeight * (aScaleY);
     float aCornerStartX = mX;
     float aCornerStartY = mY;
-    if(mRotation != 0) {
+    if (mRotation != 0) {
         float aDirX = Sin(-mRotation);
         float aDirY = Cos(-mRotation);
         float aNormalX = (aDirY);
@@ -1380,10 +1380,8 @@ void FCanvasAbsoluteTransform::ApplyAbsoluteTransformation(FCanvasAbsoluteTransf
         float aHeightShiftY = (aHeight * aDirY);
         float aWidthShiftX = (aWidth * aNormalX);
         float aWidthShiftY = (aWidth * aNormalY);
-        //
         aCornerStartX -= ((aWidthShiftX * mAnchorX + aHeightShiftX * mAnchorY));
         aCornerStartY -= ((aWidthShiftY * mAnchorX + aHeightShiftY * mAnchorY));
-        //
         mCornerX[0] = aCornerStartX;
         mCornerY[0] = aCornerStartY;
         mCornerX[1] = aCornerStartX + aHeightShiftX;
@@ -1393,10 +1391,8 @@ void FCanvasAbsoluteTransform::ApplyAbsoluteTransformation(FCanvasAbsoluteTransf
         mCornerX[3] = aCornerStartX + aWidthShiftX;
         mCornerY[3] = aCornerStartY + aWidthShiftY;
     } else {
-        //
         aCornerStartX -= aAnchorWidth * aScaleX;
         aCornerStartY -= aAnchorHeight * aScaleY;
-        //
         mCornerX[0] = aCornerStartX;
         mCornerY[0] = aCornerStartY;
         mCornerX[1] = aCornerStartX;
@@ -1462,9 +1458,9 @@ void FCanvasAbsoluteTransform::ApplyAbsoluteTransformation(FCanvasTransform *pTr
 
 bool FCanvasAbsoluteTransform::ContainsPoint(float pX, float pY) {
     bool aResult = false;
-    if(mRotation != 0) {
-        for(int aStart=0,aEnd=3;aStart<4;aEnd=aStart++) {
-            if((((mCornerY[aStart] <= pY) && (pY < mCornerY[aEnd]))||
+    if (mRotation != 0) {
+        for (int aStart=0,aEnd=3;aStart<4;aEnd=aStart++) {
+            if ((((mCornerY[aStart] <= pY) && (pY < mCornerY[aEnd]))||
                 ((mCornerY[aEnd] <= pY) && (pY < mCornerY[aStart])))&&
                (pX < (mCornerX[aEnd] - mCornerX[aStart]) * (pY - mCornerY[aStart])
                 / (mCornerY[aEnd] - mCornerY[aStart]) + mCornerX[aStart])) {

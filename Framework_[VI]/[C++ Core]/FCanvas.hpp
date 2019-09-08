@@ -380,6 +380,8 @@ public:
     void                            GenerateOut(int pTicks);
     void                            GenerateSmooth(int pTicks);
 
+    bool                            IsComplete() { return (mTimerTick >= mTime); }
+    
     void                            Finish();
     float                           Percent();
 

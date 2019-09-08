@@ -147,6 +147,7 @@ void GameTestRunningOverlay::Draw() {
     
     
     
+    /*
     FFont *aFont = &(gAppBase->mSysFont);
     
     Graphics::PipelineStateSetSpritePremultipliedBlending();
@@ -176,7 +177,8 @@ void GameTestRunningOverlay::Draw() {
     aY -= 40.0f;
     
     Graphics::PipelineStateSetShape2DNoBlending();
-    
+    */
+     
 }
 
 void GameTestRunningOverlay::TouchDown(float pX, float pY, void *pData) {

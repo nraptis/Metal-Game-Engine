@@ -14,14 +14,14 @@
 #include "GameTestEditorOverlay.hpp"
 #include "GameTestRunningOverlay.hpp"
 
+#include "GameMenu.hpp"
 #include "GameOverlayEffects.hpp"
 #include "GameOverlayInterface.hpp"
 
 
+
 #include "EditorMenuGameTestUtils.hpp"
 #include "EditorMenuGameTest.hpp"
-
-
 
 class Game;
 class GameContainer : public FCanvas {
@@ -66,6 +66,31 @@ public:
     float                                       mInterfaceRightWidth;
     float                                       mInterfaceTopHeight;
     float                                       mInterfaceBottomHeight;
+    
+    
+    GameMenu                                    *mGameMenu;
+    FCanvasAnimation                            *mGameMenuAnimation;
+    bool                                        mGameMenuAnimatingIn;
+    
+    void                                        PauseAndShowGameMenu();
+    void                                        UnpauseAndHideGameMenu();
+    
+    void                                        Pause();
+    void                                        Unpause();
+    
+    void                                        BeginPauseFadeIn();
+    void                                        BeginPauseFadeOut();
+    
+    bool                                        IsPauseFadeInComplete();
+    bool                                        IsPauseFadeOutComplete();
+    
+    bool                                        mPaused;
+    bool                                        mPauseFadeEnabled;
+    
+    float                                       mPauseFade;
+    float                                       mPauseFadeMax;
+    
+    
     
     void                                        OpenEditorTestMenus();
     

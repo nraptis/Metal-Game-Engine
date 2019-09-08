@@ -7,6 +7,7 @@
 //
 
 #include "core_includes.h"
+#include "GameContainer.hpp"
 #include "GameOverlayEffects.hpp"
 #include "FAnimation.hpp"
 #include "Game.hpp"
@@ -36,6 +37,10 @@ void GameOverlayEffects::Layout() {
 }
 
 void GameOverlayEffects::Update() {
+    
+    if ((gGameContainer != NULL) && (gGameContainer->mPaused == true)) {
+        return;
+    }
     
     mEffectListBalloonBursts.Update();
     mEffectListDartFadeStar.Update();
@@ -76,33 +81,13 @@ void GameOverlayEffects::Draw() {
     mEffectListDartFadeStar.Draw();
     
     
-    Graphics::PipelineStateSetShape2DAlphaBlending();
-    
-    
-    float aWindBarCenter = mWidth2;
-    float aWindBarLength = mWidth * 0.9f;
-    
-    Graphics::SetColor(0.45f, 0.45f, 0.45f, 0.9f);
-    Graphics::DrawRect(aWindBarCenter - aWindBarLength / 2.0f, mHeight - 60.0f * gSpriteDrawScale, aWindBarLength, 30.0f * gSpriteDrawScale);
-    
-    float aWindPower = gGame->mWind.mPower;
-    float aWindBarWidth = aWindBarLength * aWindPower * 0.5f;
-    
-    if (aWindPower >= 0.0f) {
-        Graphics::SetColor(1.0f, 0.125f, 0.125f, 0.9f);
-        Graphics::DrawRect(aWindBarCenter, mHeight - 100.0f, aWindBarWidth, 50.0f);
-    } else {
-        Graphics::SetColor(1.0f, 0.125f, 0.125f, 0.9f);
-        Graphics::DrawRect(aWindBarCenter + aWindBarWidth, mHeight - 60.0f * gSpriteDrawScale, -aWindBarWidth, 30.0f * gSpriteDrawScale);
-    }
-    
     
     Graphics::PipelineStateSetSpriteAdditiveBlending();
     
     Graphics::SetColor();
     
-    //gWadGameEffects.mSequenceBlast1.Center(mSeqFrame01, 100.0f, 150.0f);
-    //gWadGameEffects.mSequenceBlast2.Center(mSeqFrame02, 180.0f, 250.0f);
-    //gWadGameEffects.mSequenceBlast3.Center(mSeqFrame03, 260.0f, 350.0f);
+    gWadGameEffects.mSequenceBlast1.Center(mSeqFrame01, 100.0f, 150.0f);
+    gWadGameEffects.mSequenceBlast2.Center(mSeqFrame02, 180.0f, 250.0f);
+    gWadGameEffects.mSequenceBlast3.Center(mSeqFrame03, 260.0f, 350.0f);
     
 }

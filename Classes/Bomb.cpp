@@ -11,6 +11,8 @@
 
 Bomb::Bomb() {
     
+    mAccessoryModel = NULL;
+    mAccessorySprite = NULL;
     
     mGameObjectType = GAME_OBJECT_TYPE_BOMB;
     
@@ -19,9 +21,6 @@ Bomb::Bomb() {
     
     //mModel = &gApp->mBomb;
     //mSprite = &gApp->mBombMap;
-    
-    //mAccessoryModel = &gApp->mBombCage;
-    //mAccessorySprite = &gApp->mBombMap;
     
     mUniform = &(gGame->mRenderer->mUniformPhongBalloon);
     

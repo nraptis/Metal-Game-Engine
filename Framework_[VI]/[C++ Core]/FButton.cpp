@@ -45,6 +45,9 @@ FButton::FButton() {
 }
 
 FButton::~FButton() {
+    
+    printf("FButton::~FButton()\n");
+    
     FreeList(FButtonLayer, mButtonLayersUnder);
     FreeList(FButtonLayer, mButtonLayersOver);
     delete mButtonLayer;

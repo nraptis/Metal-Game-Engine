@@ -19,11 +19,6 @@ AssetWadGameInterface::~AssetWadGameInterface() {
 
 void AssetWadGameInterface::Load() {
     
-    
-    mSpriteScreenSize.Load("reference_slab");
-    
-    mSpriteTest.Load("demo_sprite");
-    
     mPauseButtonUp.Load("pause_button_up");
     mPauseButtonDown.Load("pause_button_down");
     
@@ -143,9 +138,21 @@ void AssetWadGameInterface::Unload() {
     mFontScoreLarge.Kill();
     mFontScoreSmall.Kill();
     
-    mSpriteTest.Kill();
+
     
-    mSpriteScreenSize.Kill();
+    mGameMenuBack.Kill();
+    
+    mGameMenuGenericButtonUp.Kill();
+    mGameMenuGenericButtonDown.Kill();
+    
+    mGameMenuButtonTextMainMenu.Kill();
+    mGameMenuButtonTextLevelSelect.Kill();
+    mGameMenuButtonTextOkay.Kill();
+    mGameMenuButtonTextCancel.Kill();
+    mGameMenuButtonTextOptions.Kill();
+    mGameMenuButtonTextResume.Kill();
+    
+    
     
     mPauseButtonUp.Kill();
     mPauseButtonDown.Kill();

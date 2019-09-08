@@ -7,6 +7,7 @@
 //
 
 #include "core_includes.h"
+#include "GameContainer.hpp"
 #include "GameOverlayInterface.hpp"
 #include "FAnimation.hpp"
 #include "Game.hpp"
@@ -40,11 +41,22 @@ GameOverlayInterface::GameOverlayInterface() {
 
 GameOverlayInterface::~GameOverlayInterface() {
     if (gInterfaceOverlay == this) { gInterfaceOverlay = NULL; }
+    
+    
+    mPauseButton = NULL;
+    //if (mPauseButton != NULL) {
+    //    mPauseButton->Kill();
+    //    mPauseButton = NULL;
+    //}
+    
     for (int i=0;i<mLifeIndicatorCount;i++) {
-        if (mLifeIndicator[i] != NULL) {
-            mLifeIndicator[i]->Kill();
-            mLifeIndicator[i] = NULL;
-        }
+        mLifeIndicator[i] = NULL;
+        
+        
+        //if (mLifeIndicator[i] != NULL) {
+        //    mLifeIndicator[i]->Kill();
+        //    mLifeIndicator[i] = NULL;
+        //}
     }
 }
 
@@ -64,6 +76,10 @@ void GameOverlayInterface::Layout() {
 }
 
 void GameOverlayInterface::Update() {
+    
+    if ((gGameContainer != NULL) && (gGameContainer->mPaused == true)) {
+        return;
+    }
     
     if (gGame->mLivesMax != mLifeIndicatorCount) {
         RefreshLifeIndicators();
@@ -94,47 +110,26 @@ void GameOverlayInterface::Draw() {
     
     float aWindBarCenter = mWidth2;
     float aWindBarLength = mWidth * 0.9f;
+    if (aWindBarLength > 300.0f) { aWindBarLength = 300.0f; }
     
     Graphics::SetColor(0.35f, 0.35f, 0.35f, 0.75f);
-    Graphics::DrawRect(aWindBarCenter - aWindBarLength / 2.0f, mHeight - 100.0f, aWindBarLength, 50.0f);
+    Graphics::DrawRect(aWindBarCenter - aWindBarLength / 2.0f, mHeight - 30.0f, aWindBarLength, 25.0f);
     
     float aWindPower = gGame->mWind.mPower;
     float aWindBarWidth = aWindBarLength * aWindPower * 0.5f;
     
     if (aWindPower >= 0.0f) {
         Graphics::SetColor(1.0f, 0.125f, 0.125f, 0.75f);
-        Graphics::DrawRect(aWindBarCenter, mHeight - 100.0f, aWindBarWidth, 50.0f);
+        Graphics::DrawRect(aWindBarCenter, mHeight - 30.0f, aWindBarWidth, 25.0f);
     } else {
-        Graphics::SetColor(1.0f, 0.125f, 0.125f, 0.9f);
-        Graphics::DrawRect(aWindBarCenter + aWindBarWidth, mHeight - 100.0f, -aWindBarWidth, 50.0f);
+        Graphics::SetColor(1.0f, 0.125f, 0.125f, 0.75f);
+        Graphics::DrawRect(aWindBarCenter + aWindBarWidth, mHeight - 30.0f, -aWindBarWidth, 25.0f);
     }
     
-    Graphics::PipelineStateSetSpriteAlphaBlending();
-    Graphics::SetColor();
-    
-    gWadGameInterface.mGameMenuBack.Center(mWidth2, mHeight2);
-    
-    /*
-     
-     gWadGameInterface.mPauseButtonUp.Draw(20.0f, 20.0f);
-     
-     float aPauseWidth = gWadGameInterface.mPauseButtonUp.mWidth;
-     float aPauseHeight = gWadGameInterface.mPauseButtonUp.mHeight;
-     
-     
-     gWadGameInterface.mPauseButtonDown.Draw(20.0f + aPauseWidth * 0.75f, 20.0f);
-     
-     
-     
-     float aLIWidth = gWadGameInterface.mLivesIndicatorShadow.mWidth;
-     gWadGameInterface.mLivesIndicatorShadow.Draw(20.0f + aPauseWidth, 120.0f);
-     
-     gWadGameInterface.mLivesIndicatorFull.Draw(20.0f + aLIWidth * 0.7f, 20.0f + aPauseHeight);
-     gWadGameInterface.mLivesIndicatorFull.Draw(20.0f + aLIWidth * 0.7f * 2, 20.0f + aPauseHeight);
-     gWadGameInterface.mLivesIndicatorEmpty.Draw(20.0f + aLIWidth * 0.7f * 3, 20.0f + aPauseHeight);
-     gWadGameInterface.mLivesIndicatorEmpty.Draw(20.0f + aLIWidth * 0.7f * 4, 20.0f + aPauseHeight);
-     
-     */
+    //Graphics::PipelineStateSetSpriteAlphaBlending();
+    //Graphics::SetColor(0.25f);
+    //gWadGameInterface.mGameMenuBack.Center(mWidth2, mHeight2);
+    //Graphics::SetColor();
     
     
     if (mPauseButton != NULL) {
@@ -165,6 +160,12 @@ void GameOverlayInterface::TouchFlush() {
 void GameOverlayInterface::Notify(void *pSender, const char *pNotification) {
     if (pSender == mPauseButton && mPauseButton != NULL) {
         printf("WE CLICKED PAUSE... LOL!!!\n");
+        
+        if (gGameContainer != NULL) {
+            if (gGameContainer->mGameMenu == NULL) {
+                gGameContainer->PauseAndShowGameMenu();
+            }
+        }
     }
 }
 

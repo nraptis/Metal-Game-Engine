@@ -285,7 +285,6 @@ void LevelFormation::GetExtremeties(float &pTop, float &pRight, float &pBottom, 
 void LevelFormation::EditorKillAllObjects() {
     
     EnumList(LevelFormationNode, aNode, mSpawnNodeList) {
-        
         if (aNode->mObject != NULL) {
             aNode->mObject->Kill();
             aNode->mObject = NULL;

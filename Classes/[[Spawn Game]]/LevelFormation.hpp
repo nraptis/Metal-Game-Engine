@@ -75,7 +75,6 @@ public:
     
     LevelFormation                              *Clone();
     
-    
     //For Editor
     void                                        EditorKillAllObjects();
     

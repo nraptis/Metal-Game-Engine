@@ -300,6 +300,9 @@ void FApp::BaseDraw() {
     DrawOver();
     
     if (mIsLoadingComplete && Graphics::RenderPass() == GFX_RENDER_PASS_2D_MAIN) {
+        
+        /*
+        
         Graphics::MatrixProjectionResetOrtho();
         Graphics::MatrixModelViewReset();
         Graphics::SetColor();
@@ -313,6 +316,8 @@ void FApp::BaseDraw() {
         
         FString aScaleString = FString("SCL: ") + FString(gSpriteDrawScale) + FString(", ") + FString("REZ: ") + FString(gImageResolutionScale);
         mSysFont.Center(aScaleString, gDeviceWidth2, gDeviceHeight - 24.0f);
+         
+        */
         
         
     }

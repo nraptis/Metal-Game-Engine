@@ -308,9 +308,10 @@ void AppShellSetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
 	gVirtualDevY = (float)pY;
 	gVirtualDevWidth = (float)pWidth;
     //TODO:
-    //gVirtualDevHeight = (float)pHeight;
+    gVirtualDevHeight = (float)pHeight;
     
-    gVirtualDevHeight = (float)pWidth * 4.0f / 3.0f;
+    //TODO: Toggle for Galaxy Test
+    //gVirtualDevHeight = (float)pWidth * 4.0f / 3.0f;
     
     
     Log("Set Virtual Frame [%f %f %f %f]\n", gVirtualDevX, gVirtualDevY, gVirtualDevWidth, gVirtualDevHeight);
