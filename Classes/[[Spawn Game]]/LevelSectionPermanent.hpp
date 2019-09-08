@@ -15,6 +15,8 @@
 #include "LevelPermSpawn.hpp"
 #include "LevelMotionController.hpp"
 
+#include "LevelFormationConfiguration.hpp"
+
 class LevelSection;
 class LevelSectionPermanent {
 public:
@@ -42,6 +44,7 @@ public:
     
     //Possibility 1.) We have a formation...
     FString                             mFormationID;
+    LevelFormationConfiguration         mFormationConfiguration;
     
     //Possibility 2.) We have an object...
     int                                 mObjectType;

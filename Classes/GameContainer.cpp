@@ -372,8 +372,6 @@ void GameContainer::PauseAndShowGameMenu() {
 //#define ANIMATION_TYPE_OVERSHOOT (ANIMATION_TYPE_EASE_OUT_BACK)
 //#define ANIMATION_TYPE_OVERSHOOT_MORE 13
     
-
-
 }
 
 void GameContainer::UnpauseAndHideGameMenu() {

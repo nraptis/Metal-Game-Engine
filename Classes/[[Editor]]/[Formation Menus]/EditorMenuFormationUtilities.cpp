@@ -79,16 +79,6 @@ EditorMenuFormationUtilities::EditorMenuFormationUtilities(GameFormationEditor *
     mStepperTracerSpawnCount->SetText("Spawn Count: ");
     mPanelTracerTweaks->AddSection(mStepperTracerSpawnCount);
     
-    
-    mSegmentTracersSpeed = new UISegment();
-    mSegmentTracersSpeed->SetSegmentCount(7);
-    mSegmentTracersSpeed->SetTitles("XS", "S", "MS", "M", "MF", "F", "XF");
-    mSegmentTracersSpeed->SetTarget(&(mEditor->mTracerSpeedClassIndex));
-    mPanelTracerTweaks->AddSection(mSegmentTracersSpeed);
-
-    
-
-    
     mPanelTracerSpecial = new ToolMenuPanel();
     mPanelTracerSpecial->SetTitle("Tracer Special");
     AddSection(mPanelTracerSpecial);
@@ -144,12 +134,6 @@ void EditorMenuFormationUtilities::Notify(void *pSender, const char *pNotificati
     if (pSender == mButtonCloseEditor) { mEditor->Close(); }
     
     if (pSender == mButtonResetFormation) { mEditor->Clear(); }
-    
-    
-    if (pSender == mSegmentTracersSpeed) {
-        mEditor->RefreshTracerSpeed();
-        mEditor->Refresh();
-    }
     
     if (pSender == mStepperTracerSpawnCount) { mEditor->Refresh(); }
     if (pSender == mButtonDeleteTracer) { mEditor->DeleteTracer(); }

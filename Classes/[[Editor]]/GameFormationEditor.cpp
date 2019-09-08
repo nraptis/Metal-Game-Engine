@@ -24,8 +24,8 @@ GameFormationEditor::GameFormationEditor(GameEditor *pEditor) {
     mGameAreaBottom = pEditor->mGameAreaBottom;
     mGameAreaLeft = pEditor->mGameAreaLeft;
     
-    mFormationRotationSpeedClassIndex = 3;
-    mTracerSpeedClassIndex = 3;
+    //mFormationRotationSpeedClassIndex = 3;
+    //mTracerSpeedClassIndex = 3;
     
     mCenterX = (float)((int)(mGameAreaLeft + (mGameAreaRight - mGameAreaLeft) / 2.0f + 0.5f));
     mCenterY = (float)((int)(mGameAreaTop + (mGameAreaBottom - mGameAreaTop) / 2.0f + 0.5f));
@@ -113,16 +113,7 @@ void GameFormationEditor::Layout() {
 }
 
 void GameFormationEditor::Update() {
-    
     mGrid.Update();
-    
-    if (gEditor != NULL) {
-        LevelFormationTracerBlueprint *aTracerBlueprint = mFormation.GetTracer();
-        if (aTracerBlueprint != NULL) {
-            mTracerSpeedClassIndex = gEditor->SpeedConvertTypeToSegment(aTracerBlueprint->mSpeedClass);
-        }
-    }
-    
     mFormation.Update();
     mEditorFormation.Update(NULL);
 }
@@ -541,21 +532,6 @@ void GameFormationEditor::Clear() {
     mFormationMode = FORMATION_MODE_ADD_POINT;
 }
 
-void GameFormationEditor::RefreshTracerSpeed() {
-    
-    if (gEditor != NULL) {
-        LevelFormationTracerBlueprint *aTracerBlueprint = mFormation.GetTracer();
-        if (aTracerBlueprint != NULL) {
-            aTracerBlueprint->mSpeedClass = gEditor->SpeedConvertSegmentToType(mTracerSpeedClassIndex);
-        }
-    }
-}
-
-void GameFormationEditor::RefreshRotationSpeed() {
-    
-}
-
-
 void GameFormationEditor::Refresh() {
     if (gGame != NULL) {
         gGame->DisposeAllObjects();
@@ -566,7 +542,7 @@ void GameFormationEditor::Refresh() {
     }
     
     mFormation.Build(&mEditorFormation);
-    mEditorFormation.Spawn(NULL);
+    mEditorFormation.Spawn(NULL, NULL);
 }
 
 void GameFormationEditor::Save() {
@@ -780,20 +756,20 @@ FString GameFormationEditor::GetObjectListName(FIntList *pList) {
 FString GameFormationEditor::GenerateTracerName(LevelFormationTracerBlueprint *pTracer) {
     FString aResult;
     FList aChunkList;
-    aChunkList.Add(new FString("tr"));
+    aChunkList.Add(new FString("tra"));
     if (pTracer->mSpecialType == TRACER_SPECIAL_TYPE_CIRCLE) {
-        aChunkList.Add(new FString("circ"));
-        FString aRadiusString = FString(pTracer->mSpecialRadius) + FString("sz");
+        aChunkList.Add(new FString("cir"));
+        FString aRadiusString = FString(pTracer->mSpecialRadius) + FString("rad");
         aChunkList.Add(new FString(aRadiusString.c()));
     } else if (pTracer->mSpecialType == TRACER_SPECIAL_TYPE_ROUNDED_RECT) {
-        aChunkList.Add(new FString("rrct"));
-        FString aSizeString = FString(pTracer->mSpecialRadius) + FString("sz");
+        aChunkList.Add(new FString("rrc"));
+        FString aSizeString = FString(pTracer->mSpecialRadius) + FString("siz");
         aChunkList.Add(new FString(aSizeString.c()));
-        FString aCornerString = FString(pTracer->mSpecialCornerRadius) + FString("cr");
+        FString aCornerString = FString(pTracer->mSpecialCornerRadius) + FString("crd");
         aChunkList.Add(new FString(aCornerString.c()));
     } else {
         //no special type..
-        FString aPolyString = FString(pTracer->mTracerNodeList.mCount) + FString("poly");
+        FString aPolyString = FString(pTracer->mTracerNodeList.mCount) + FString("ply");
         aChunkList.Add(new FString(aPolyString.c()));
     }
     
@@ -807,11 +783,6 @@ FString GameFormationEditor::GenerateTracerName(LevelFormationTracerBlueprint *p
         if (aTypeString.mLength > 0) {
             aChunkList.Add(new FString(aTypeString.c()));
         }
-    }
-    
-    if (true) {
-        FString aSpeedString = GetPathSpeedName(pTracer->mSpeedClass);
-        aChunkList.Add(new FString(aSpeedString.c()));
     }
     
     for (int i=0;i<aChunkList.mCount;i++) {
@@ -830,10 +801,10 @@ FString GameFormationEditor::GenerateGridName() {
     FString aResult = "";
     FList aChunkList;
     
-    aChunkList.Add(new FString("grid"));
+    aChunkList.Add(new FString("grd"));
     
     if (mGrid.mGridType == SNAP_GRID_TYPE_RECT) {
-        aChunkList.Add(new FString("rect"));
+        aChunkList.Add(new FString("rec"));
         FString aSizeString = FString(mGrid.mGridRectWidth) + "x" + FString(mGrid.mGridRectHeight);
         aChunkList.Add(new FString(aSizeString.c()));
         FString aSpacingString = FString(mGrid.mGridRectSpacing) + "spc";
@@ -841,31 +812,31 @@ FString GameFormationEditor::GenerateGridName() {
     }
     
     if (mGrid.mGridType == SNAP_GRID_TYPE_CIRCLE) {
-        aChunkList.Add(new FString("circ"));
-        FString aSpacingString = FString(mGrid.mGridCircleRingSpacing) + "rngs";
+        aChunkList.Add(new FString("cir"));
+        FString aSpacingString = FString(mGrid.mGridCircleRingSpacing) + "rsp";
         aChunkList.Add(new FString(aSpacingString.c()));
-        FString aCountString = FString(mGrid.mGridCircleRingCount) + "rngc";
+        FString aCountString = FString(mGrid.mGridCircleRingCount) + "rct";
         aChunkList.Add(new FString(aCountString.c()));
-        FString aRadialString = FString(mGrid.mGridCircleRadialCount) + "radc";
+        FString aRadialString = FString(mGrid.mGridCircleRadialCount) + "rdc";
         aChunkList.Add(new FString(aRadialString.c()));
     }
     
     if (mGrid.mGridType == SNAP_GRID_TYPE_STAR) {
-        aChunkList.Add(new FString("star"));
-        FString aRadInnerString = FString(mGrid.mGridStarInnerRadius) + "radi";
+        aChunkList.Add(new FString("sta"));
+        FString aRadInnerString = FString(mGrid.mGridStarInnerRadius) + "rdi";
         aChunkList.Add(new FString(aRadInnerString.c()));
         
-        FString aRadOuterString = FString(mGrid.mGridStarOuterRadius) + "rado";
+        FString aRadOuterString = FString(mGrid.mGridStarOuterRadius) + "rdo";
         aChunkList.Add(new FString(aRadOuterString.c()));
         
-        FString aPointCountString = FString(mGrid.mGridStarLinePointCount) + "pntc";
+        FString aPointCountString = FString(mGrid.mGridStarLinePointCount) + "ptc";
         aChunkList.Add(new FString(aPointCountString.c()));
         
-        FString aArmCountString = FString(mGrid.mGridStarArmCount) + "armc";
+        FString aArmCountString = FString(mGrid.mGridStarArmCount) + "arc";
         aChunkList.Add(new FString(aArmCountString.c()));
         
         if (mGrid.mGridStarStartRotation != 0) {
-            FString aStartRotationString = FString(mGrid.mGridStarStartRotation) + "roff";
+            FString aStartRotationString = FString(mGrid.mGridStarStartRotation) + "ros";
             aChunkList.Add(new FString(aStartRotationString.c()));
         }
     }
@@ -875,25 +846,25 @@ FString GameFormationEditor::GenerateGridName() {
     if (mGrid.mGridType == SNAP_GRID_TYPE_NGON1) {
         
         if (mGrid.mGridNGON1Sides == 3) { aChunkList.Add(new FString("tri")); }
-        if (mGrid.mGridNGON1Sides == 4) { aChunkList.Add(new FString("quad")); }
-        if (mGrid.mGridNGON1Sides == 5) { aChunkList.Add(new FString("penta")); }
-        if (mGrid.mGridNGON1Sides == 6) { aChunkList.Add(new FString("hexa")); }
-        if (mGrid.mGridNGON1Sides == 7) { aChunkList.Add(new FString("hepta")); }
-        if (mGrid.mGridNGON1Sides == 8) { aChunkList.Add(new FString("octo")); }
-        if (mGrid.mGridNGON1Sides == 9) { aChunkList.Add(new FString("nono")); }
-        if (mGrid.mGridNGON1Sides == 10) { aChunkList.Add(new FString("deca")); }
+        if (mGrid.mGridNGON1Sides == 4) { aChunkList.Add(new FString("qud")); }
+        if (mGrid.mGridNGON1Sides == 5) { aChunkList.Add(new FString("pen")); }
+        if (mGrid.mGridNGON1Sides == 6) { aChunkList.Add(new FString("hex")); }
+        if (mGrid.mGridNGON1Sides == 7) { aChunkList.Add(new FString("hep")); }
+        if (mGrid.mGridNGON1Sides == 8) { aChunkList.Add(new FString("oct")); }
+        if (mGrid.mGridNGON1Sides == 9) { aChunkList.Add(new FString("non")); }
+        if (mGrid.mGridNGON1Sides == 10) { aChunkList.Add(new FString("dec")); }
         
-        aChunkList.Add(new FString("ngon1"));
+        aChunkList.Add(new FString("ng1"));
         FString aSidesString = FString(mGrid.mGridNGON1Sides) + "sid";
         aChunkList.Add(new FString(aSidesString.c()));
-        FString aSpacingString = FString(mGrid.mGridNGON1RingSpacing) + "rngs";
+        FString aSpacingString = FString(mGrid.mGridNGON1RingSpacing) + "rsp";
         aChunkList.Add(new FString(aSpacingString.c()));
-        FString aCountString = FString(mGrid.mGridNGON1RingCount) + "rngc";
+        FString aCountString = FString(mGrid.mGridNGON1RingCount) + "rct";
         aChunkList.Add(new FString(aCountString.c()));
-        FString aPointSpacingString = FString(mGrid.mGridNGON1PointSpacing) + "pnts";
+        FString aPointSpacingString = FString(mGrid.mGridNGON1PointSpacing) + "pts";
         aChunkList.Add(new FString(aPointSpacingString.c()));
         if (mGrid.mGridNGON1StartRotation != 0) {
-            FString aStartRotationString = FString(mGrid.mGridNGON1StartRotation) + "roff";
+            FString aStartRotationString = FString(mGrid.mGridNGON1StartRotation) + "ros";
             aChunkList.Add(new FString(aStartRotationString.c()));
         }
     }

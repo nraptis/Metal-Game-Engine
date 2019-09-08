@@ -14,6 +14,7 @@
 #include "LevelFormationTracer.hpp"
 #include "LevelFormationNode.hpp"
 #include "LevelMotionController.hpp"
+#include "LevelFormationConfiguration.hpp"
 
 class LevelWaveSpawn;
 class LevelPermSpawn;
@@ -29,7 +30,7 @@ public:
     bool                                        HasAnyObjects();
     
     void                                        Reset();
-    void                                        Spawn(LevelMotionController *pMotionController);
+    void                                        Spawn(LevelMotionController *pMotionController, LevelFormationConfiguration *pConfiguration);
     void                                        Update(LevelMotionController *pMotionController);
     
     void                                        Draw(int pSelectedIndex);

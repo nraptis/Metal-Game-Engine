@@ -12,6 +12,8 @@
 #include "LevelPathBlueprint.hpp"
 #include "LevelPermSpawnBlueprint.hpp"
 #include "LevelMotionControllerBlueprint.hpp"
+#include "LevelFormationConfigurationBlueprint.hpp"
+
 
 #define PERM_MAX_SPAWN_COUNT 6
 
@@ -62,6 +64,7 @@ public:
     
     
     FString                                     mFormationID;
+    LevelFormationConfigurationBlueprint        mFormationConfiguration;
     
     int                                         mObjectType;
     

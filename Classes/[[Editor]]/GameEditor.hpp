@@ -30,6 +30,7 @@
 #include "LevelWaveBlueprint.hpp"
 #include "LevelSectionBlueprint.hpp"
 #include "LevelSectionPermanentBlueprint.hpp"
+#include "LevelFormationConfigurationBlueprint.hpp"
 
 
 class GameEditor : public FCanvas {
@@ -61,8 +62,6 @@ public:
     void                                        RefreshPlaybackSpeed();
     int                                         mSpeedClassIndex;
     
-    
-    void                                        RefreshSpawnRotationSpeed();
     int                                         mSpawnRotationSpeedClassIndex;
     
     
@@ -109,6 +108,8 @@ public:
     int                                         PermIndex();
     LevelSectionPermanentBlueprint              *PermGet();
     LevelPermSpawnBlueprint                     *PermSpawnGet();
+    
+    LevelFormationConfigurationBlueprint        *FormationConfigurationGet();
     
     void                                        PermDelete();
     

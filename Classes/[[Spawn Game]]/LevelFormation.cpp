@@ -67,7 +67,12 @@ void LevelFormation::Reset() {
     mTracerList.RemoveAll();
 }
 
-void LevelFormation::Spawn(LevelMotionController *pMotionController) {
+void LevelFormation::Spawn(LevelMotionController *pMotionController, LevelFormationConfiguration *pConfiguration) {
+    
+    if (pConfiguration != NULL) {
+        pConfiguration->Apply(this);
+    }
+    
     EnumList(LevelFormationNode, aNode, mSpawnNodeList) {
         aNode->mFormation = this;
         
@@ -84,6 +89,8 @@ void LevelFormation::Spawn(LevelMotionController *pMotionController) {
         
         aTracer->Spawn();
     }
+    
+    
     
     ApplyMotionController(pMotionController);
     

@@ -124,7 +124,7 @@ void LevelWaveBlueprint::FindLargestSpawnSize() {
         LevelFormation *aFormation = gFormationCollection.Get(mSpawn[i].mFormationID.c());
         if (aFormation != NULL) {
             
-            aFormation->Spawn(NULL);
+            aFormation->Spawn(NULL, NULL);
             
             float aTop, aRight, aBottom, aLeft;
 
@@ -174,12 +174,10 @@ void LevelWaveBlueprint::Build(LevelWave *pWave) {
     pWave->mExitType = mPath.GetExitType();
     
     //pWave->mCreationType = mCreationType;
-    
     pWave->mCreationRequiresPrevWaveStart = mCreationRequiresPrevWaveStart;
     pWave->mCreationRequiresPrevWaveComplete = mCreationRequiresPrevWaveComplete;
     pWave->mCreationRequiresScreenWavesClear = mCreationRequiresScreenWavesClear;
     pWave->mCreationRequiresScreenPermsClear = mCreationRequiresScreenPermsClear;
-    
     pWave->mCreationDelay = mCreationDelay;
     
     if (mSpawnCount < 1) mSpawnCount = 1;
@@ -194,8 +192,12 @@ void LevelWaveBlueprint::Build(LevelWave *pWave) {
         aSpawn->mFormationID = mSpawn[i].mFormationID.c();
         aSpawn->mObjectType = mSpawn[i].mObjectType;
         
-        mSpawn[i].mMotionController.Build(&(aSpawn->mMotionController));
-        
+        if (aSpawn->mMotionController.mSliceList.mCount > 0) {
+            mSpawn[i].mMotionController.Build(&(aSpawn->mMotionController));
+        }
+        if (aSpawn->mFormationID.mLength > 0) {
+            mSpawn[i].mFormationConfiguration.Build(&(aSpawn->mFormationConfiguration));
+        }
         pWave->mSpawnList.Add(aSpawn);
     }
 }

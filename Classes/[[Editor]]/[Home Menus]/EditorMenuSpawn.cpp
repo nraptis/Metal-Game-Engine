@@ -28,13 +28,12 @@ EditorMenuSpawn::EditorMenuSpawn(GameEditor *pEditor) : ToolMenu() {
     AddSection(mGenerationPanel);
     
     mSegmentSpeed = new UISegment();
-    mSegmentSpeed->SetSegmentCount(7);
-    mSegmentSpeed->SetTitles("XS", "S", "MS", "M", "MF", "F", "XF");
+    mSegmentSpeed->SetSegmentCount(8);
+    mSegmentSpeed->SetTitles("--", "XS", "S", "MS", "M", "MF", "F", "XF");
     if (gEditor != NULL) {
         mSegmentSpeed->SetTarget(&gEditor->mSpeedClassIndex);
     }
     mGenerationPanel->AddSection(mSegmentSpeed);
-    
     
     mStepperSpawnCount = new UIStepper();
     mStepperSpawnCount->SetText("Count");

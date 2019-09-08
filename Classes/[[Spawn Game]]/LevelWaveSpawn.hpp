@@ -15,6 +15,7 @@
 #include "GameObject.hpp"
 #include "LevelFormation.hpp"
 #include "LevelMotionController.hpp"
+#include "LevelFormationConfiguration.hpp"
 
 class LevelWave;
 class LevelPath;
@@ -42,6 +43,8 @@ public:
     LevelPath                           *mPath;
     GameObject                          *mObject;
     LevelFormation                      *mFormation;
+    LevelFormationConfiguration         mFormationConfiguration;
+    
     
     int                                 mPathIndex;
     bool                                mIsComplete;

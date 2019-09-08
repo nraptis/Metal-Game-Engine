@@ -1,10 +1,10 @@
 {
-	"scroll_offset_x": 86.847656,
-	"scroll_offset_y": 323.824005,
-	"grid_offset_x": 5,
+	"scroll_offset_x": 11.341125,
+	"scroll_offset_y": -301.156067,
+	"grid_offset_x": 2,
 	"grid_offset_y": 0,
-	"filter_text": "st",
-	"filter_balloons_only": true,
+	"filter_text": "",
+	"filter_balloons_only": false,
 	"filter_mixed_only": false,
 	"filter_tracers_only": false,
 	"filter_no_tracers_only": false

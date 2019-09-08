@@ -27,8 +27,6 @@ public:
     void                                        Reset();
     void                                        Draw();
     
-    //LevelMotionControllerSliceBlueprint         mSlice[BLUEPRINT_MOTION_SLICE_COUNT];
-    
     bool                                        IsEmpty();
     
     void                                        RemoveAllSlices();

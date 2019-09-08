@@ -73,8 +73,8 @@ void EditorMenuMotionTypePanel::Notify(void *pSender, const char *pNotification)
 
 void EditorMenuMotionTypePanel::AddSpeedSegment() {
     mSegmentSpeed = new UISegment();
-    mSegmentSpeed->SetSegmentCount(7);
-    mSegmentSpeed->SetTitles("XS", "S", "MS", "M", "MF", "F", "XF");
+    mSegmentSpeed->SetSegmentCount(8);
+    mSegmentSpeed->SetTitles("--", "XS", "S", "MS", "M", "MF", "F", "XF");
     mSegmentSpeed->SetTarget(&mSpeedIndex);
     AddSection(mSegmentSpeed);
     gNotify.Register(this, mSegmentSpeed, "segment");

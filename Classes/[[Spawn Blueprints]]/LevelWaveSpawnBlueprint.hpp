@@ -11,6 +11,7 @@
 
 #include "FJSON.hpp"
 #include "LevelMotionControllerBlueprint.hpp"
+#include "LevelFormationConfigurationBlueprint.hpp"
 
 class LevelWaveSpawnBlueprint {
 public:
@@ -29,6 +30,7 @@ public:
     
     //Possibility 1.) We have a formation...
     FString                                     mFormationID;
+    LevelFormationConfigurationBlueprint        mFormationConfiguration;
     
     //Possibility 2.) We have an object...
     int                                         mObjectType;

@@ -58,8 +58,8 @@ public:
     GameEditorGrid                              mGrid;
     
     //Speed Classes...
-    int                                         mFormationRotationSpeedClassIndex;
-    int                                         mTracerSpeedClassIndex;
+    //int                                         mFormationRotationSpeedClassIndex;
+    //int                                         mTracerSpeedClassIndex;
     
     
     int                                         mFormationMode;
@@ -84,9 +84,6 @@ public:
     void                                        Close();
     void                                        Clear();
     
-    
-    void                                        RefreshTracerSpeed();
-    void                                        RefreshRotationSpeed();
     void                                        Refresh();
     
     void                                        Save();

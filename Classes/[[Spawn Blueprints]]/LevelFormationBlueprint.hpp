@@ -62,8 +62,8 @@ public:
     void                                        Set(int pIndex, float pX, float pY);
     float                                       GetX(int pIndex);
     float                                       GetY(int pIndex);
-    LevelFormationNodeBlueprint        *GetNode(int pIndex);
-    LevelFormationNodeBlueprint        *GetNode();
+    LevelFormationNodeBlueprint                 *GetNode(int pIndex);
+    LevelFormationNodeBlueprint                 *GetNode();
     
     int                                         mSelectedNodeIndex;
     FList                                       mNodeList;
@@ -77,12 +77,12 @@ public:
     void                                        TracerSet(int pIndex, float pX, float pY);
     float                                       TracerGetX(int pIndex);
     float                                       TracerGetY(int pIndex);
-    LevelFormationTracerBlueprint      *GetTracer();
-    LevelFormationTracerNodeBlueprint  *TracerGetNode(int pIndex);
-    LevelFormationTracerNodeBlueprint  *TracerGetNode();
+    LevelFormationTracerBlueprint               *GetTracer();
+    LevelFormationTracerNodeBlueprint           *TracerGetNode(int pIndex);
+    LevelFormationTracerNodeBlueprint           *TracerGetNode();
     
     int                                         mCurrentTracerIndex;
-    LevelFormationTracerBlueprint      mTracer[BLUEPRINT_TRACER_COUNT];
+    LevelFormationTracerBlueprint               mTracer[BLUEPRINT_TRACER_COUNT];
     
     float                                       mRotation;
     

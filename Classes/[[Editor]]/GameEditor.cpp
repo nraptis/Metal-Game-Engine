@@ -740,27 +740,29 @@ void GameEditor::SetOverlay(FCanvas *pCanvas) {
 
 int GameEditor::SpeedConvertSegmentToType(int pSegmentIndex) {
     int aResult = SPEED_CLASS_MEDIUM_FAST;
-    if (pSegmentIndex == 0) { aResult = SPEED_CLASS_EXTRA_SLOW; }
-    if (pSegmentIndex == 1) { aResult = SPEED_CLASS_SLOW; }
-    if (pSegmentIndex == 2) { aResult = SPEED_CLASS_MEDIUM_SLOW; }
-    if (pSegmentIndex == 3) { aResult = SPEED_CLASS_MEDIUM; }
-    if (pSegmentIndex == 4) { aResult = SPEED_CLASS_MEDIUM_FAST; }
-    if (pSegmentIndex == 5) { aResult = SPEED_CLASS_FAST; }
-    if (pSegmentIndex == 6) { aResult = SPEED_CLASS_EXTRA_FAST; }
-    if (pSegmentIndex == 7) { aResult = SPEED_CLASS_INSANE; }
+    if (pSegmentIndex == 0) { aResult = SPEED_CLASS_DEFAULT; }
+    if (pSegmentIndex == 1) { aResult = SPEED_CLASS_EXTRA_SLOW; }
+    if (pSegmentIndex == 2) { aResult = SPEED_CLASS_SLOW; }
+    if (pSegmentIndex == 3) { aResult = SPEED_CLASS_MEDIUM_SLOW; }
+    if (pSegmentIndex == 4) { aResult = SPEED_CLASS_MEDIUM; }
+    if (pSegmentIndex == 5) { aResult = SPEED_CLASS_MEDIUM_FAST; }
+    if (pSegmentIndex == 6) { aResult = SPEED_CLASS_FAST; }
+    if (pSegmentIndex == 7) { aResult = SPEED_CLASS_EXTRA_FAST; }
+    if (pSegmentIndex == 8) { aResult = SPEED_CLASS_INSANE; }
     return aResult;
 }
 
 int GameEditor::SpeedConvertTypeToSegment(int pType) {
     int aResult = 0;
-    if (pType == SPEED_CLASS_EXTRA_SLOW)   { aResult = 0; }
-    if (pType == SPEED_CLASS_SLOW)         { aResult = 1; }
-    if (pType == SPEED_CLASS_MEDIUM_SLOW)  { aResult = 2; }
-    if (pType == SPEED_CLASS_MEDIUM)       { aResult = 3; }
-    if (pType == SPEED_CLASS_MEDIUM_FAST)  { aResult = 4; }
-    if (pType == SPEED_CLASS_FAST)         { aResult = 5; }
-    if (pType == SPEED_CLASS_EXTRA_FAST)   { aResult = 6; }
-    if (pType == SPEED_CLASS_INSANE)       { aResult = 7; }
+    if (pType == SPEED_CLASS_DEFAULT)      { aResult = 0; }
+    if (pType == SPEED_CLASS_EXTRA_SLOW)   { aResult = 1; }
+    if (pType == SPEED_CLASS_SLOW)         { aResult = 2; }
+    if (pType == SPEED_CLASS_MEDIUM_SLOW)  { aResult = 3; }
+    if (pType == SPEED_CLASS_MEDIUM)       { aResult = 4; }
+    if (pType == SPEED_CLASS_MEDIUM_FAST)  { aResult = 5; }
+    if (pType == SPEED_CLASS_FAST)         { aResult = 6; }
+    if (pType == SPEED_CLASS_EXTRA_FAST)   { aResult = 7; }
+    if (pType == SPEED_CLASS_INSANE)       { aResult = 8; }
     return aResult;
 }
 
@@ -839,14 +841,6 @@ void GameEditor::RefreshPlaybackSpeed() {
     if (mSection.mCurrentWave != NULL) {
         mSection.mCurrentWave->mPath.mSpeedClass = SpeedConvertSegmentToType(mSpeedClassIndex);
     }
-}
-
-
-void GameEditor::RefreshSpawnRotationSpeed() {
-    
-    
-    //mSpawnRotationSpeedClassIndex
-    
 }
 
 void GameEditor::KillAllBalloons() {
@@ -935,7 +929,6 @@ void GameEditor::KillAllWave() {
 }
 
 void GameEditor::WaveAdd() {
-    
     mSection.WaveAdd();
     OpenPathEditorForWave();
 }
@@ -1106,6 +1099,31 @@ LevelPermSpawnBlueprint *GameEditor::PermSpawnGet() {
         }
     }
     return NULL;
+}
+
+LevelFormationConfigurationBlueprint *GameEditor::FormationConfigurationGet() {
+    
+    LevelFormationConfigurationBlueprint *aResult = NULL;
+    
+    if (mOverlay == mPermEditor && mPermEditor != NULL) {
+        LevelPermSpawnBlueprint *aSpawn = PermSpawnGet();
+        if (aSpawn != NULL) {
+            return &(aSpawn->mFormationConfiguration);
+        } else {
+            
+            LevelSectionPermanentBlueprint *aPerm = PermGet();
+            if (aPerm != NULL) {
+                return &(aPerm->mFormationConfiguration);
+            }
+        }
+    } else {
+        LevelWaveSpawnBlueprint *aSpawn = SpawnGet();
+        if (aSpawn != NULL) {
+            return &(aSpawn->mFormationConfiguration);
+        }
+    }
+    
+    return aResult;
 }
 
 

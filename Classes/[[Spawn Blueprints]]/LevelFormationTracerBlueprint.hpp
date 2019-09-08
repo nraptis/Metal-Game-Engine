@@ -74,8 +74,7 @@ public:
     bool                                                IsValid();
     
     int                                                 mCount;
-    int                                                 mSpeedClass;
-    
+    //int                                                 mSpeedClass;
     
     int                                                 mSpecialType;
     

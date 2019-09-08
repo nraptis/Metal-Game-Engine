@@ -1,35 +1,84 @@
 {
 	"section": true,
-	"wave_list": [
+	"wave_list": [],
+	"perm_list": [
 		{
-			"spawn_spacing": 350,
+			"x": 24.652866,
+			"y": 60.235596,
+			"formation": "f_tr_circ_160sz_cfg8xb_spm.json",
+			"formation_config": {
+				"tracer_speed_class_global": 3
+			}
+		},
+		{
+			"spawn_spacing": 470,
+			"x": 79.523010,
+			"y": 13.891171,
 			"path": {
+				"smooth": true,
+				"closed": true,
+				"speed_class": -1,
 				"node_list": [
 					{
-						"x_con": 200,
+						"x_con": 500,
+						"y_con": 300
+					},
+					{
+						"x_con": 700,
+						"y_con": 300
+					},
+					{
+						"x_con": 700,
+						"y_con": 500
+					},
+					{
+						"x_con": 600,
 						"y_con": 500
 					},
 					{
 						"x_con": 500,
-						"y_con": 500
+						"x_con_offset": -140.000000,
+						"y_con": 500,
+						"y_con_offset": -100.000000
 					},
 					{
-						"x_con": 500,
-						"y_con": 150
+						"x_con": 300,
+						"y_con": 400
 					}
 				]
 			},
 			"spawn": [
 				{
-					"formation": "f_tr_rrct_160sz_42cr_cfg2xb_spxs.json"
+					"formation": "f_grid_penta_ngon1_5sid_45rngs_1rngc_31pnts_solid__nodes_cfg6xb_allg.json",
+					"formation_config": {},
+					"motion": {
+						"slice_list": [
+							{
+								"type": 2,
+								"speed_class": 300,
+								"negate": true
+							},
+							{
+								"type": 4
+							},
+							{
+								"type": 5
+							},
+							{
+								"type": 3
+							}
+						]
+					}
 				},
 				{
-					"formation": "f_tr_rrct_140sz_42cr_cfg3xb_spm.json"
-				},
-				{
-					"formation": "f_tr_rrct_140sz_42cr_cfg4xb_spmf.json"
+					"type": 3
 				}
 			]
+		},
+		{
+			"x": 75.934265,
+			"y": 76.189713,
+			"type": 3
 		}
 	]
 }

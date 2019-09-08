@@ -40,7 +40,7 @@ public:
     ToolMenuPanel                           *mPanelTracerTweaks;
     UIStepper                               *mStepperTracerSpawnCount;
     
-    UISegment                               *mSegmentTracersSpeed;
+    //UISegment                               *mSegmentTracersSpeed;
     
     
     

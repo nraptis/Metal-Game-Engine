@@ -849,7 +849,10 @@ void Game::DisposeObject(GameObject *pObject) {
     }
     
     if (pObject->mKill != 0) {
-        printf("Already Killed %x\n", pObject);
+        
+        //TODO: For IN-GAME, we shouldn't see this.
+        //If we do, there is a logical error...
+        //printf("Already Killed %x\n", pObject);
         return;
     }
     

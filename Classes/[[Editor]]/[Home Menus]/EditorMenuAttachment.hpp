@@ -14,6 +14,7 @@
 
 class GameEditor;
 class GamePermanentEditor;
+class EditorMenuPanelFormationConfiguration;
 
 class EditorMenuAttachment : public ToolMenu {
 public:
@@ -60,6 +61,9 @@ public:
     ToolMenuSectionRow                      *mRowFormations2;
     UICheckBox                              *mCheckBoxInvertFormationH;
     UICheckBox                              *mCheckBoxInvertFormationV;
+    
+    EditorMenuPanelFormationConfiguration   *mPanelFormationConfiguration;
+    
     
     ToolMenuPanel                           *mPanelBehavior;
     

@@ -25,7 +25,7 @@ EditorMenuFormationPicker::EditorMenuFormationPicker() {
     mLoadConfigTimer = 0;
     mLoadConfig = true;
     
-    SetFrame(gDeviceWidth2 / 2.0f, gDeviceHeight2 / 2.0f - 50.0f, gDeviceWidth2, gDeviceHeight2 + 100.0f);
+    SetFrame(gDeviceWidth2 / 2.0f, gDeviceHeight2 / 2.0f - 50.0f, gDeviceWidth2, gDeviceHeight2 + 200.0f);
     
     LoadConfigFrame();
     
@@ -172,11 +172,7 @@ void EditorMenuFormationPicker::Notify(void *pSender, const char *pNotification)
     
     if (pSender == mButtonClearFilter) { ClearFilter(); }
     
-    if (pSender == &(mHeader.mButtonClose)) {
-        printf("We Cleeeek\n");
-        SaveConfig();
-    }
-    
+    if (pSender == &(mHeader.mButtonClose)) { SaveConfig(); }
 }
 
 void EditorMenuFormationPicker::AddAllFormations() {
@@ -191,18 +187,8 @@ void EditorMenuFormationPicker::AddAllFormations() {
 }
 
 void EditorMenuFormationPicker::AddFormation(LevelFormation *pFormation) {
-    
     if (pFormation == NULL) { return; }
-    
     mFormationList.Add(pFormation);
-    
-    /*
-    EditorMenuFormationPickerCell *aCell = new EditorMenuFormationPickerCell(pFormation);
-    aCell->SetFrame(0.0f, 0.0f, mScrollContent->mCellWidth, mScrollContent->mCellHeight);
-    gNotify.Register(this, aCell, "button_click");
-    mScrollContent->AddCell(aCell);
-    FrameDidUpdate();
-    */
 }
 
 void EditorMenuFormationPicker::Layout() {
@@ -230,10 +216,6 @@ void EditorMenuFormationPicker::ClearFilter() {
 void EditorMenuFormationPicker::ApplyFilter() {
     
     if (mScrollContent == NULL) { return; }
-    
-    //EnumList(EditorMenuFormationPickerCell, aCell, mScrollContent->mCellList) {
-    //    aCell->mFormation = NULL;
-    //}
     
     FString aText = mTextBoxFilter->mText.c();
     
@@ -623,7 +605,6 @@ void EditorMenuFormationPickerScrollContent::ClearAll() {
     }
     
     mCellList.RemoveAll();
-    
 }
 
 void EditorMenuFormationPickerScrollContent::TouchDown(float pX, float pY, void *pData) {

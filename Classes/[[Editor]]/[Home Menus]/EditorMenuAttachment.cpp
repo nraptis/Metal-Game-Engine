@@ -11,6 +11,8 @@
 #include "EditorMenuAttachment.hpp"
 #include "GameEditor.hpp"
 #include "GamePermanentEditor.hpp"
+#include "EditorMenuPanelFormationConfiguration.hpp"
+
 //#include "FApp.hpp"
 
 EditorMenuAttachment::EditorMenuAttachment(GameEditor *pEditor) : ToolMenu() {
@@ -93,6 +95,10 @@ void EditorMenuAttachment::Init() {
     mCheckBoxInvertFormationV = new UICheckBox();
     mCheckBoxInvertFormationV->SetText("R-Flip H");
     mRowFormations2->AddCheckBox(mCheckBoxInvertFormationV);
+    
+    mPanelFormationConfiguration = new EditorMenuPanelFormationConfiguration();
+    mPanelFormations->AddSection(mPanelFormationConfiguration);
+    //AddSection(mPanelFormationConfiguration);
     
     
     

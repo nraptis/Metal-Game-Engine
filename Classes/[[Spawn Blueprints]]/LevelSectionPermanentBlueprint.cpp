@@ -164,6 +164,8 @@ void LevelSectionPermanentBlueprint::Build(LevelSectionPermanent *pPerm) {
     
     if (mFormationID.mLength > 0) {
         pPerm->mFormationID = mFormationID.c();
+        
+        
     }
     pPerm->mObjectType = mObjectType;
     
@@ -205,13 +207,20 @@ void LevelSectionPermanentBlueprint::Build(LevelSectionPermanent *pPerm) {
             aSpawn->mObjectType = mSpawn[i].mObjectType;
             aSpawn->mSpacingOffset = mSpawn[i].mSpawnSpacingOffset;
             
-            mSpawn[i].mMotionController.Build(&(aSpawn->mMotionController));
+            if (aSpawn->mMotionController.mSliceList.mCount > 0) {
+                mSpawn[i].mMotionController.Build(&(aSpawn->mMotionController));
+            }
+            if (aSpawn->mFormationID.mLength > 0) {
+                mSpawn[i].mFormationConfiguration.Build(&(aSpawn->mFormationConfiguration));
+            }
             
             pPerm->mSpawnList.Add(aSpawn);
         }
     } else {
-        
         mMotionController.Build(&pPerm->mMotionController);
+        if (mFormationID.mLength > 0) {
+            mFormationConfiguration.Build(&(pPerm->mFormationConfiguration));
+        }
     }
     
     
@@ -286,6 +295,7 @@ FJSONNode *LevelSectionPermanentBlueprint::Save() {
     if (mFormationID.mLength > 0) {
         //Possibility 1.) We have a formation...
         aExport->AddDictionaryString("formation", mFormationID.c());
+        aExport->AddDictionary("formation_config", mFormationConfiguration.Save());
     } else {
         //Possibility 2.) We have an object...
         if (mObjectType != GAME_OBJECT_TYPE_BALLOON) {
@@ -353,6 +363,10 @@ void LevelSectionPermanentBlueprint::Load(FJSONNode *pNode) {
     
     if (mFormationID.mLength > 0) {
         //Possibility 1.) We have a formation...
+        
+        FJSONNode *aFormationConfigurationNode = pNode->GetDictionary("formation_config");
+        mFormationConfiguration.Load(aFormationConfigurationNode);
+        
     } else {
         //Possibility 2.) We have an object...
         mObjectType = pNode->GetInt("type", mObjectType);

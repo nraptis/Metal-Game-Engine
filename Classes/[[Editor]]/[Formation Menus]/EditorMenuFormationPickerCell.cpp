@@ -21,7 +21,7 @@ EditorMenuFormationPickerCell::EditorMenuFormationPickerCell(LevelFormation *pFo
     
     if (mFormation) {
         mFormation->EditorKillAllObjects();
-        mFormation->Spawn(NULL);
+        mFormation->Spawn(NULL, NULL);
         mFormation->EditorKillAllObjects();
     }
     

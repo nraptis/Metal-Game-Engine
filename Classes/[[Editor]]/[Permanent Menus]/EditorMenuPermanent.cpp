@@ -43,8 +43,8 @@ EditorMenuPermanent::EditorMenuPermanent(GamePermanentEditor *pEditor) : ToolMen
     AddSection(mPathExtPanel);
     
     mSegmentPathSpeed = new UISegment();
-    mSegmentPathSpeed->SetSegmentCount(7);
-    mSegmentPathSpeed->SetTitles("XS", "S", "MS", "M", "MF", "F", "XF");
+    mSegmentPathSpeed->SetSegmentCount(8);
+    mSegmentPathSpeed->SetTitles("--", "XS", "S", "MS", "M", "MF", "F", "XF");
     if (mEditor != NULL) {
         mSegmentPathSpeed->SetTarget(&mEditor->mPathSpeedClassIndex);
     }

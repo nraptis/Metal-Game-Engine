@@ -64,8 +64,9 @@ void LevelPermSpawn::Spawn() {
         if (mFormation != NULL) {
             mFormation->mDidOriginateAsPermanent = true;
             mFormation->mDidOriginateOnWave = false;
+            
             SetObjectPosition();
-            mFormation->Spawn(&mMotionController);
+            mFormation->Spawn(&mMotionController, &mFormationConfiguration);
         }
     }
     
@@ -152,6 +153,9 @@ void LevelPermSpawn::Reset() {
         gGame->DisposeObject(mObject);
         mObject = NULL;
     }
+
+    mFormationConfiguration.Reset();
+    mMotionController.Reset();
     
     if (mFormation != NULL) {
         delete mFormation;

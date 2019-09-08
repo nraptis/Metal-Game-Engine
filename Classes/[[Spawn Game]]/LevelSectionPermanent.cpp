@@ -64,6 +64,8 @@ void LevelSectionPermanent::Reset() {
     }
     mSpawnList.RemoveAll();
     
+    mMotionController.Reset();
+    mFormationConfiguration.Reset();
     
     mPath.Reset();
     
@@ -154,7 +156,7 @@ void LevelSectionPermanent::Spawn() {
                 
                 mFormation->mX = mBaseX;
                 mFormation->mY = mBaseY;
-                mFormation->Spawn(&mMotionController);
+                mFormation->Spawn(&mMotionController, &mFormationConfiguration);
             }
         }
         

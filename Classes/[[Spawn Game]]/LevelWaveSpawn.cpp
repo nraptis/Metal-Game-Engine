@@ -81,7 +81,7 @@ void LevelWaveSpawn::Spawn() {
             
             mFormation->mX = mBaseX;
             mFormation->mY = mBaseY;
-            mFormation->Spawn(&mMotionController);
+            mFormation->Spawn(&mMotionController, &mFormationConfiguration);
         }
     }
     
@@ -173,7 +173,6 @@ bool LevelWaveSpawn::IsClear() {
 
 
 void LevelWaveSpawn::Reset() {
-    
     if (mObject != NULL) {
         gGame->DisposeObject(mObject);
         mObject = NULL;

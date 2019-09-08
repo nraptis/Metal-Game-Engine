@@ -80,8 +80,6 @@ LevelFormationTracerBlueprint::LevelFormationTracerBlueprint() {
     mSelectedSpawnNodeIndex = 0;
     
     mCount = 5;
-    mSpeedClass = SPEED_CLASS_MEDIUM_SLOW;
-    
     
     mSpecialType = TRACER_SPECIAL_TYPE_NONE;
     
@@ -101,13 +99,8 @@ LevelFormationTracerBlueprint::~LevelFormationTracerBlueprint() {
     FreeList(LevelFormationTracerNodeBlueprint, mTracerNodeList);
     FreeList(LevelFormationTracerNodeBlueprint, mKillTracerNodeList);
     
-    
     FreeList(LevelFormationNodeBlueprint, mSpawnNodeList);
     FreeList(LevelFormationNodeBlueprint, mKillSpawnNodeList);
-    
-    
-    
-    
 }
 
 void LevelFormationTracerBlueprint::Update() {
@@ -171,7 +164,6 @@ void LevelFormationTracerBlueprint::Nuke() {
     Reset();
     
     mCount = 5;
-    mSpeedClass = SPEED_CLASS_MEDIUM_SLOW;
     mSpecialType = TRACER_SPECIAL_TYPE_NONE;
     
     for (int i=0;i<mSpawnNodeList.mCount;i++) {
@@ -336,10 +328,6 @@ void LevelFormationTracerBlueprint::Build(LevelFormationTracer *pTracer) {
     
     pTracer->Reset();
     
-    pTracer->SetSpeedClass(mSpeedClass);
-    //pTracer->mCount = mCount;
-    
-    
     pTracer->mSpecialType = mSpecialType;
     
     pTracer->mSpecialX = mSpecialPercentX;
@@ -378,7 +366,6 @@ FJSONNode *LevelFormationTracerBlueprint::Save() {
     
     
     aExport->AddDictionaryInt("object_count", mCount);
-    aExport->AddDictionaryInt("speed_class", mSpeedClass);
     
     aExport->AddDictionaryInt("special_type", mSpecialType);
     
@@ -466,8 +453,6 @@ void LevelFormationTracerBlueprint::Load(FJSONNode *pNode) {
     mCount = pNode->GetInt("object_count", mCount);
     RefreshSpawnNodeList();
     
-    mSpeedClass = pNode->GetInt("speed_class", mSpeedClass);
-    
     mSpecialType = pNode->GetInt("special_type", mSpecialType);
     
     if (mSpecialType != TRACER_SPECIAL_TYPE_NONE) {
@@ -529,8 +514,6 @@ void LevelFormationTracerBlueprint::Load(FJSONNode *pNode) {
             aNode->mObjectType = aMonoType;
         }
     }
-    
-    
     
     if (gFormationEditor != NULL) { gFormationEditor->Refresh(); }
 }
