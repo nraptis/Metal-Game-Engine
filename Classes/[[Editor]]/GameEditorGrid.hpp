@@ -38,7 +38,8 @@ public:
     
     int                                         mGridRectWidth;
     int                                         mGridRectHeight;
-    int                                         mGridRectSpacing;
+    int                                         mGridRectSpacingH;
+    int                                         mGridRectSpacingV;
     
     int                                         mGridCircleRingSpacing;
     int                                         mGridCircleRingCount;
@@ -66,10 +67,13 @@ public:
     void                                        BuildNGON1Grid();
     void                                        BuildNGON2Grid();
     
-    
     void                                        GridSnap(float *pX, float *pY);
+    
     void                                        SaveGridState();
     void                                        LoadGridState();
+    
+    FJSONNode                                   *SaveCurrentGrid();
+    void                                        LoadCurrentGrid(FJSONNode *pNode);
     
     
     

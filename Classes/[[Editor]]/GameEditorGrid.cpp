@@ -21,7 +21,8 @@ GameEditorGrid::GameEditorGrid() {
     
     mGridRectWidth = 7;
     mGridRectHeight = 7;
-    mGridRectSpacing = 44;
+    mGridRectSpacingH = 44;
+    mGridRectSpacingV = 44;
     
     mGridCircleRingSpacing = 40;
     mGridCircleRingCount = 8;
@@ -93,20 +94,22 @@ void GameEditorGrid::BuildRectGrid() {
     
     if (mGridRectWidth < 1) { mGridRectWidth = 1; }
     if (mGridRectHeight < 1) { mGridRectHeight = 1; }
-    if (mGridRectSpacing < 0) { mGridRectSpacing = 0; }
+    if (mGridRectSpacingH < 0) { mGridRectSpacingH = 0; }
+    if (mGridRectSpacingV < 0) { mGridRectSpacingV = 0; }
     
-    float aTotalWidth = mGridRectWidth * mGridRectSpacing;
-    float aTotalHeight = mGridRectHeight * mGridRectSpacing;
     
-    float aLeft = round(mCenterX - (aTotalWidth / 2.0f) + mGridRectSpacing / 2);
-    float aTop = round(mCenterY - (aTotalHeight / 2.0f) + mGridRectSpacing / 2);
+    float aTotalWidth = mGridRectWidth * mGridRectSpacingH;
+    float aTotalHeight = mGridRectHeight * mGridRectSpacingV;
+    
+    float aLeft = round(mCenterX - (aTotalWidth / 2.0f) + mGridRectSpacingH / 2);
+    float aTop = round(mCenterY - (aTotalHeight / 2.0f) + mGridRectSpacingV / 2);
     
     for (int i=0;i<mGridRectWidth;i++) {
         
-        float aX = aLeft + ((float)mGridRectSpacing) * ((float)i);
+        float aX = aLeft + ((float)mGridRectSpacingH) * ((float)i);
         
         for (int n=0;n<mGridRectHeight;n++) {
-            float aY = aTop + ((float)mGridRectSpacing) * ((float)n);
+            float aY = aTop + ((float)mGridRectSpacingV) * ((float)n);
             mGridList.Add(aX, aY);
         }
     }
@@ -376,7 +379,8 @@ void GameEditorGrid::SaveGridState() {
     
     aConfigNode->AddDictionaryInt("rect_width", mGridRectWidth);
     aConfigNode->AddDictionaryInt("rect_height", mGridRectHeight);
-    aConfigNode->AddDictionaryInt("rect_spacing", mGridRectSpacing);
+    aConfigNode->AddDictionaryInt("rect_spacing_h", mGridRectSpacingH);
+    aConfigNode->AddDictionaryInt("rect_spacing_v", mGridRectSpacingV);
     
     aConfigNode->AddDictionaryInt("circle_ring_spacing", mGridCircleRingSpacing);
     aConfigNode->AddDictionaryInt("circle_ring_count", mGridCircleRingCount);
@@ -409,12 +413,12 @@ void GameEditorGrid::LoadGridState() {
     
     mGridRectWidth = aConfigNode->GetInt("rect_width", mGridRectWidth);
     mGridRectHeight = aConfigNode->GetInt("rect_height", mGridRectHeight);
-    mGridRectSpacing = aConfigNode->GetInt("rect_spacing", mGridRectSpacing);
+    mGridRectSpacingH = aConfigNode->GetInt("rect_spacing_h", mGridRectSpacingH);
+    mGridRectSpacingV = aConfigNode->GetInt("rect_spacing_v", mGridRectSpacingV);
     
     mGridCircleRingSpacing = aConfigNode->GetInt("circle_ring_spacing", mGridCircleRingSpacing);
     mGridCircleRingCount = aConfigNode->GetInt("circle_ring_count", mGridCircleRingCount);
     mGridCircleRadialCount = aConfigNode->GetInt("circle_radial_count", mGridCircleRadialCount);
-    
     
     mGridStarInnerRadius = aConfigNode->GetInt("star_inner_rad", mGridStarInnerRadius);
     mGridStarOuterRadius = aConfigNode->GetInt("star_outer_rad", mGridStarOuterRadius);
@@ -430,5 +434,83 @@ void GameEditorGrid::LoadGridState() {
     
     BuildGrid();
 }
+
+FJSONNode *GameEditorGrid::SaveCurrentGrid() {
+    
+    FJSONNode *aResult = new FJSONNode();
+    
+    aResult->AddDictionaryInt("grid_type", mGridType);
+    
+    if (mGridType == SNAP_GRID_TYPE_RECT) {
+        aResult->AddDictionaryInt("rect_width", mGridRectWidth);
+        aResult->AddDictionaryInt("rect_height", mGridRectHeight);
+        aResult->AddDictionaryInt("rect_spacing_h", mGridRectSpacingH);
+        aResult->AddDictionaryInt("rect_spacing_v", mGridRectSpacingV);
+    }
+    
+    if (mGridType == SNAP_GRID_TYPE_CIRCLE) {
+        aResult->AddDictionaryInt("circle_ring_spacing", mGridCircleRingSpacing);
+        aResult->AddDictionaryInt("circle_ring_count", mGridCircleRingCount);
+        aResult->AddDictionaryInt("circle_radial_count", mGridCircleRadialCount);
+    }
+    
+    if (mGridType == SNAP_GRID_TYPE_STAR) {
+        aResult->AddDictionaryInt("star_inner_rad", mGridStarInnerRadius);
+        aResult->AddDictionaryInt("star_outer_rad", mGridStarOuterRadius);
+        aResult->AddDictionaryInt("star_line_point_count", mGridStarLinePointCount);
+        aResult->AddDictionaryInt("star_arm_count", mGridStarArmCount);
+        aResult->AddDictionaryInt("star_start_rot", mGridStarStartRotation);
+    }
+    
+    if (mGridType == SNAP_GRID_TYPE_NGON1) {
+        aResult->AddDictionaryInt("ngon1_sides", mGridNGON1Sides);
+        aResult->AddDictionaryInt("ngon1_ring_spacing", mGridNGON1RingSpacing);
+        aResult->AddDictionaryInt("ngon1_ring_count", mGridNGON1RingCount);
+        aResult->AddDictionaryInt("ngon1_point_spacing", mGridNGON1PointSpacing);
+        aResult->AddDictionaryInt("ngon1_start_rotation", mGridNGON1StartRotation);
+    }
+    
+    
+    return aResult;
+}
+
+void GameEditorGrid::LoadCurrentGrid(FJSONNode *pNode) {
+    
+    if (pNode == NULL) { return; }
+    
+    mGridType = pNode->GetInt("grid_type", mGridType);
+    
+    if (mGridType == SNAP_GRID_TYPE_RECT) {
+        mGridRectWidth = pNode->GetInt("rect_width", mGridRectWidth);
+        mGridRectHeight = pNode->GetInt("rect_height", mGridRectHeight);
+        mGridRectSpacingH = pNode->GetInt("rect_spacing_h", mGridRectSpacingH);
+        mGridRectSpacingV = pNode->GetInt("rect_spacing_v", mGridRectSpacingV);
+    }
+    
+    if (mGridType == SNAP_GRID_TYPE_CIRCLE) {
+        mGridCircleRingSpacing = pNode->GetInt("circle_ring_spacing", mGridCircleRingSpacing);
+        mGridCircleRingCount = pNode->GetInt("circle_ring_count", mGridCircleRingCount);
+        mGridCircleRadialCount = pNode->GetInt("circle_radial_count", mGridCircleRadialCount);
+    }
+    
+    if (mGridType == SNAP_GRID_TYPE_STAR) {
+        mGridStarInnerRadius = pNode->GetInt("star_inner_rad", mGridStarInnerRadius);
+        mGridStarOuterRadius = pNode->GetInt("star_outer_rad", mGridStarOuterRadius);
+        mGridStarLinePointCount = pNode->GetInt("star_line_point_count", mGridStarLinePointCount);
+        mGridStarArmCount = pNode->GetInt("star_arm_count", mGridStarArmCount);
+        mGridStarStartRotation = pNode->GetInt("star_start_rot", mGridStarStartRotation);
+    }
+    
+    if (mGridType == SNAP_GRID_TYPE_NGON1) {
+        mGridNGON1Sides = pNode->GetInt("ngon1_sides", mGridNGON1Sides);
+        mGridNGON1RingSpacing = pNode->GetInt("ngon1_ring_spacing", mGridNGON1RingSpacing);
+        mGridNGON1RingCount = pNode->GetInt("ngon1_ring_count", mGridNGON1RingCount);
+        mGridNGON1PointSpacing = pNode->GetInt("ngon1_point_spacing", mGridNGON1PointSpacing);
+        mGridNGON1StartRotation = pNode->GetInt("ngon1_start_rotation", mGridNGON1StartRotation);
+    }
+    
+    BuildGrid();
+}
+
 
 

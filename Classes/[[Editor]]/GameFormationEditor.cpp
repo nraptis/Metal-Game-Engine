@@ -85,6 +85,7 @@ GameFormationEditor::GameFormationEditor(GameEditor *pEditor) {
     mMenuSpawn->SetFrame((gDeviceWidth2 - 500.0f / 2.0f), gSafeAreaInsetTop + 20.0f, 500.0f, 256.0f);
     
     
+    mGrid.LoadGridState();
 }
 
 GameFormationEditor::~GameFormationEditor() {
@@ -476,11 +477,18 @@ void GameFormationEditor::SetUp(LevelFormationBlueprint *pFormation) {
     }
     
     if (pFormation != NULL) {
-        FJSONNode *aLoadNode = pFormation->Save();
+        
+        
+        FJSON aJSON;
+        aJSON.Load(pFormation->mFilePath.c());
+        
+        FJSONNode *aLoadNode = aJSON.mRoot;
         if (aLoadNode != NULL) {
-            mFormation.Load(aLoadNode);
+            mFormation.Load(aLoadNode, pFormation->mFilePath);
+            mGrid.LoadCurrentGrid(aLoadNode->GetDictionary("grid"));
         }
-        delete aLoadNode;
+        //delete aLoadNode;
+        
     } else {
         Load();
     }
@@ -488,6 +496,25 @@ void GameFormationEditor::SetUp(LevelFormationBlueprint *pFormation) {
     PickDefaultModes();
     
 }
+
+bool GameFormationEditor::ShouldSaveGrid() {
+    
+    bool aResult = false;
+    for (int i=0;i<BLUEPRINT_TRACER_COUNT;i++) {
+        if (mFormation.mTracer[i].IsValid()) {
+            if (mFormation.mTracer[i].mSpecialType == TRACER_SPECIAL_TYPE_NONE) {
+                aResult = true;
+            }
+        }
+    }
+    
+    if (mFormation.mNodeList.mCount > 0) {
+        aResult = true;
+    }
+    
+    return aResult;
+}
+
 
 void GameFormationEditor::PickDefaultModes() {
     bool aHasTracer = false;
@@ -553,6 +580,13 @@ void GameFormationEditor::Save() {
     
     FJSON aJSON;
     aJSON.mRoot = mFormation.Save();
+    if ((aJSON.mRoot != NULL) && (ShouldSaveGrid() == true)) {
+        FJSONNode *aGridNode = mGrid.SaveCurrentGrid();
+        if (aGridNode != NULL) {
+            aJSON.mRoot->AddDictionary("grid", aGridNode);
+        }
+    }
+    
     aJSON.Save(aPath.c());
     
     FString aName = GenerateName();
@@ -569,9 +603,12 @@ void GameFormationEditor::Load() {
     
     FJSON aJSON;
     aJSON.Load(aPath.c());
-    Log("Path: %s\n", aPath.c());
-    aJSON.Print();
-    mFormation.Load(aJSON.mRoot);
+    
+    if (aJSON.mRoot != NULL) {
+        mFormation.Load(aJSON.mRoot, aPath);
+        mGrid.LoadCurrentGrid(aJSON.mRoot->GetDictionary("grid"));
+    }
+    
     Refresh();
     PickDefaultModes();
     
@@ -671,38 +708,109 @@ LevelFormationTracerBlueprint *GameFormationEditor::TracerGet() {
     return NULL;
 }
 
+FString GameFormationEditor::GenerateClassificationName() {
+    
+    FString aResult;
+    
+    int aNodeCount = 0;
+    int aTracerCount = 0;
+    
+    for (int i=0;i<mFormation.mNodeList.mCount;i++) {
+        aNodeCount++;
+    }
+    for (int i=0;i<BLUEPRINT_TRACER_COUNT;i++) {
+        if (mFormation.mTracer[i].IsValid()) {
+            aTracerCount++;
+        }
+    }
+    
+    if (aNodeCount > 0 && aTracerCount > 0) {
+        aResult = "nod_trc";
+    } else if (aNodeCount > 0) {
+        aResult = "all_nod";
+    } else if (aTracerCount > 0) {
+        aResult = "all_trc";
+    } else {
+        aResult = "nix";
+    }
+    
+    return aResult;
+}
 
-
-
+FString GameFormationEditor::GetMediumNameForGameObjectType(int pGameObjectType) {
+    FString aResult;
+    if (pGameObjectType == GAME_OBJECT_TYPE_BRICKHEAD) {
+        aResult = "brk";
+    } else if (pGameObjectType == GAME_OBJECT_TYPE_TURTLE) {
+        aResult = "tur";
+    } else if (pGameObjectType == GAME_OBJECT_TYPE_BOMB) {
+        aResult = "bom";
+    } else {
+        aResult = "bln";
+    }
+    return aResult;
+}
 
 FString GameFormationEditor::GetShortNameForGameObjectType(int pGameObjectType) {
     FString aResult;
     if (pGameObjectType == GAME_OBJECT_TYPE_BRICKHEAD) {
         aResult = "r";
+    } else if (pGameObjectType == GAME_OBJECT_TYPE_TURTLE) {
+        aResult = "t";
+    } else if (pGameObjectType == GAME_OBJECT_TYPE_BOMB) {
+        aResult = "m";
     } else {
         aResult = "b";
     }
     return aResult;
 }
 
-FString GameFormationEditor::GetPathSpeedName(int pSpeedClass) {
+#define GO_TYPE_CNT 32
+FString GameFormationEditor::GetObjectListDescription(FIntList *pList) {
     FString aResult = "";
-    if (pSpeedClass == SPEED_CLASS_EXTRA_SLOW) {
-        aResult = "spxs";
-    } else if (pSpeedClass == SPEED_CLASS_SLOW) {
-        aResult = "sps";
-    } else if (pSpeedClass == SPEED_CLASS_MEDIUM_SLOW) {
-        aResult = "spms";
-    } else if (pSpeedClass == SPEED_CLASS_MEDIUM_FAST) {
-        aResult = "spmf";
-    } else if (pSpeedClass == SPEED_CLASS_FAST) {
-        aResult = "spf";
-    } else if (pSpeedClass == SPEED_CLASS_EXTRA_FAST) {
-        aResult = "spxf";
-    } else if (pSpeedClass == SPEED_CLASS_INSANE) {
-        aResult = "spxx";
-    } else { //"Default /
-        aResult = "spm";
+    
+    
+
+    int aTypeCount[GO_TYPE_CNT];
+    memset(aTypeCount, 0, sizeof(aTypeCount));
+    
+    for (int i=0;i<pList->mCount;i++) {
+        int aObjectType = pList->mData[i];
+        if (aObjectType >= 0 && aObjectType < GO_TYPE_CNT) {
+            aTypeCount[aObjectType] += 1;
+        }
+    }
+    
+    int aMonoType = -1;
+    int aDifferentTypes = 0;
+    for (int i=0;i<GO_TYPE_CNT;i++) {
+        if (aTypeCount[i] == pList->mCount) { aMonoType = i; }
+        if (aTypeCount[i] > 0) { aDifferentTypes += 1; }
+    }
+    
+    if (aMonoType != -1) {
+        FString aTypeName = GetMediumNameForGameObjectType(aMonoType);
+        aResult = FString("all_") + aTypeName;
+        
+    } else {
+        aResult = FString("mix_");
+        
+        FList aTypeList;
+        for (int i=0;i<GO_TYPE_CNT;i++) {
+            if (aTypeCount[i] > 0) {
+                
+                aTypeList += new FString(GetMediumNameForGameObjectType(i).c());
+            }
+        }
+        
+        for (int i=0;i<aTypeList.mCount;i++) {
+            
+            FString *aString = ((FString *)aTypeList.Fetch(i));
+            
+            aResult.Append(aString->c());
+            if (i != (aTypeList.mCount - 1)) { aResult.Append('_'); }
+        }
+        FreeList(FString, aTypeList);
     }
     return aResult;
 }
@@ -713,7 +821,6 @@ FString GameFormationEditor::GetObjectListName(FIntList *pList) {
     
     bool aShouldSaveAll = false;
     
-#define GO_TYPE_CNT 32
     int aTypeCount[GO_TYPE_CNT];
     memset(aTypeCount, 0, sizeof(aTypeCount));
     
@@ -740,9 +847,6 @@ FString GameFormationEditor::GetObjectListName(FIntList *pList) {
     }
     
     if (aShouldSaveAll == true) {
-        FJSONNode *aSpawnNodeListNode = new FJSONNode();
-        aSpawnNodeListNode->mNodeType = JSON_NODE_TYPE_ARRAY;
-        
         aResult.Append("cfg");
         for (int i=0;i<pList->mCount;i++) {
             int aObjectType = pList->mData[i];
@@ -807,8 +911,10 @@ FString GameFormationEditor::GenerateGridName() {
         aChunkList.Add(new FString("rec"));
         FString aSizeString = FString(mGrid.mGridRectWidth) + "x" + FString(mGrid.mGridRectHeight);
         aChunkList.Add(new FString(aSizeString.c()));
-        FString aSpacingString = FString(mGrid.mGridRectSpacing) + "spc";
-        aChunkList.Add(new FString(aSpacingString.c()));
+        FString aSpacingString1 = FString(mGrid.mGridRectSpacingH) + "sph";
+        aChunkList.Add(new FString(aSpacingString1.c()));
+        FString aSpacingString2 = FString(mGrid.mGridRectSpacingV) + "spv";
+        aChunkList.Add(new FString(aSpacingString2.c()));
     }
     
     if (mGrid.mGridType == SNAP_GRID_TYPE_CIRCLE) {
@@ -891,7 +997,7 @@ FString GameFormationEditor::GenerateGridName() {
     }
     
     if (aOnCount >= aCount) {
-        aChunkList.Add(new FString("solid"));
+        aChunkList.Add(new FString("sld"));
     } else {
         
         if (aCount > 0) {
@@ -976,31 +1082,40 @@ FString GameFormationEditor::GenerateNodesName() {
         aCount++;
     }
     if (aCount == aOnCount) {
-        aResult += "_allg";
+        aResult += "_snp";
     } else {
         int aOffCount = aCount - aOnCount;
-        aResult += FString(aOnCount) + FString("on") + FString(aOffCount) + FString("off");
+        aResult += FString(aOnCount) + FString("on") + FString(aOffCount) + FString("of");
     }
     return aResult;
 }
 
 FString GameFormationEditor::GenerateName() {
     
-    FString aResult = "f_";
+    FString aResult = "form_";
+    
     FList aSliceList;
     
-    bool aUseGridName = false;
+    aSliceList.Add(new FString(GenerateClassificationName().c()));
+    
+    FIntList aTypeList;
+    for (int i=0;i<mFormation.mNodeList.mCount;i++) {
+        LevelFormationNodeBlueprint *aNode = (LevelFormationNodeBlueprint *)mFormation.mNodeList.mData[i];
+        aTypeList.Add(aNode->mObjectType);
+    }
     for (int i=0;i<BLUEPRINT_TRACER_COUNT;i++) {
         if (mFormation.mTracer[i].IsValid()) {
-            
-            if (mFormation.mTracer[i].mSpecialType == TRACER_SPECIAL_TYPE_NONE) {
-                aUseGridName = true;
+            for (int i=0;i<mFormation.mTracer[i].mSpawnNodeList.mCount;i++) {
+                LevelFormationNodeBlueprint *aNodeBlueprint = (LevelFormationNodeBlueprint *)mFormation.mTracer[i].mSpawnNodeList.mData[i];
+                aTypeList.Add(aNodeBlueprint->mObjectType);
             }
         }
     }
-    if (mFormation.mNodeList.mCount > 0) {
-        aUseGridName = true;
-    }
+    
+    aSliceList.Add(new FString(GetObjectListDescription(&aTypeList).c()));
+    
+    bool aUseGridName = ShouldSaveGrid();
+    
     if (aUseGridName) {
         FString aGridName = GenerateGridName();
         aSliceList.Add(new FString(aGridName.c()));
@@ -1022,11 +1137,11 @@ FString GameFormationEditor::GenerateName() {
         FString *aSlice = (FString *)aSliceList.mData[i];
         aResult.Append(aSlice->c());
         if (i < (aSliceList.mCount - 1)) {
-            aResult.Append("__");
+            aResult.Append("_");
         }
     }
-    FreeList(FString, aSliceList);
     
+    FreeList(FString, aSliceList);
     
     return aResult;
 }

@@ -1178,6 +1178,25 @@ void Game::Load() {
     aLevel.AddSection("test_section_perm_only_all_brickheads");
     */
     
+    aLevel.AddSection("section_2_turtles_2_bricks_2_balloon_3_waves_turtles_brickcircle_star.json");
+    
+    
+    aLevel.AddSection("section_2_turtles_2_bricks_2_waves_1_center_balloon.json");
+    
+    
+    aLevel.AddSection("section_2_turtles_2_bricks_2_balloon_3_waves_turtles_brickcircle_star.json");
+    
+    
+    aLevel.AddSection("section_2_turtles_2_bricks_2_waves_1_center_balloon.json");
+    
+    aLevel.AddSection("section_2_turtles_2_bricks_2_balloon_3_waves_turtles_brickcircle_star.json");
+    
+    
+    aLevel.AddSection("section_2_turtles_2_bricks_2_waves_1_center_balloon.json");
+    
+    
+    
+    
     
     aLevel.SetAliveTimer(400);
     aLevel.SetKillTimer(400);

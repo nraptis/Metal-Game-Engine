@@ -91,7 +91,7 @@ public:
     void                                        Print();
     void                                        PickDefaultModes();
     
-    
+    bool                                        ShouldSaveGrid();
     
     
     void                                        SetUp(LevelFormationBlueprint *pFormation);
@@ -129,13 +129,15 @@ public:
     LevelFormation                              mEditorFormation;
     
     FString                                     GetShortNameForGameObjectType(int pGameObjectType);
-    FString                                     GetPathSpeedName(int pSpeedClass);
+    FString                                     GetMediumNameForGameObjectType(int pGameObjectType);
+    FString                                     GetObjectListDescription(FIntList *pList);
     FString                                     GetObjectListName(FIntList *pList);
     FString                                     GenerateTracerName(LevelFormationTracerBlueprint *pTracer);
     
     FString                                     GenerateGridName();
     FString                                     GenerateNodesName();
     
+    FString                                     GenerateClassificationName();
     
     FString                                     GenerateName();
     

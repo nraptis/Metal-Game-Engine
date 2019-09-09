@@ -36,7 +36,9 @@ public:
     
     UIStepper                               *mStepperRectGridWidth;
     UIStepper                               *mStepperRectGridHeight;
-    UIStepper                               *mStepperRectGridSpacing;
+    UIStepper                               *mStepperRectGridSpacingH;
+    UIStepper                               *mStepperRectGridSpacingV;
+    
     
     ToolMenuPanel                           *mPanelCircleGrid;
     UIStepper                               *mStepperCircleRingCount;

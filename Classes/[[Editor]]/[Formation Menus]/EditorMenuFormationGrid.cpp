@@ -56,12 +56,15 @@ EditorMenuFormationGrid::EditorMenuFormationGrid(GameEditorGrid *pGrid) : ToolMe
     mStepperRectGridHeight->SetTarget(&mGrid->mGridRectHeight);
     mPanelRectGrid->AddSection(mStepperRectGridHeight);
     
-    mStepperRectGridSpacing = new UIStepper();
-    mStepperRectGridSpacing->SetText("Grid Height:");
-    mStepperRectGridSpacing->SetTarget(&mGrid->mGridRectSpacing);
-    mPanelRectGrid->AddSection(mStepperRectGridSpacing);
+    mStepperRectGridSpacingH = new UIStepper();
+    mStepperRectGridSpacingH->SetText("Spacing H:");
+    mStepperRectGridSpacingH->SetTarget(&mGrid->mGridRectSpacingH);
+    mPanelRectGrid->AddSection(mStepperRectGridSpacingH);
     
-    
+    mStepperRectGridSpacingV = new UIStepper();
+    mStepperRectGridSpacingV->SetText("Spacing V:");
+    mStepperRectGridSpacingV->SetTarget(&mGrid->mGridRectSpacingV);
+    mPanelRectGrid->AddSection(mStepperRectGridSpacingV);
     
     mPanelCircleGrid = new ToolMenuPanel();
     mPanelCircleGrid->SetTitle("Circular");
@@ -194,7 +197,9 @@ void EditorMenuFormationGrid::Notify(void *pSender, const char *pNotification) {
     
     if (pSender == mStepperRectGridWidth) { mGrid->BuildGrid(); }
     if (pSender == mStepperRectGridHeight) { mGrid->BuildGrid(); }
-    if (pSender == mStepperRectGridSpacing) { mGrid->BuildGrid(); }
+    if (pSender == mStepperRectGridSpacingH) { mGrid->BuildGrid(); }
+    if (pSender == mStepperRectGridSpacingV) { mGrid->BuildGrid(); }
+    
     
     if (pSender == mStepperCircleRingCount) { mGrid->BuildGrid(); }
     if (pSender == mStepperCircleRingSpacing) { mGrid->BuildGrid(); }

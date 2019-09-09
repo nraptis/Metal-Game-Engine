@@ -2,174 +2,84 @@
 	"section": true,
 	"wave_list": [
 		{
-			"spawn_spacing": 125,
+			"spawn_spacing": 240,
 			"path": {
-				"speed_class": -200,
 				"node_list": [
 					{
 						"x_con": 200,
-						"y_con": 300
+						"y_con": 800
 					},
 					{
 						"x_con": 500,
-						"y_con": 300
+						"y_con": 800
 					},
 					{
 						"x_con": 850,
-						"y_con": 300
-					}
-				]
-			},
-			"spawn": [
-				{},
-				{},
-				{},
-				{},
-				{},
-				{}
-			]
-		},
-		{
-			"spawn_spacing": 90,
-			"creation_prev_wave_complete": true,
-			"max_spawn_size": 111,
-			"path": {
-				"speed_class": -100,
-				"node_list": [
-					{
-						"x_con": 800,
-						"y_con": 300
-					},
-					{
-						"x_con": 500,
-						"y_con": 300,
-						"decel": 200,
-						"accel": 150,
-						"wait": 400
-					},
-					{
-						"x_con": 150,
-						"y_con": 300
+						"y_con": 600
 					}
 				]
 			},
 			"spawn": [
 				{
-					"formation": "f_grid_rect_2x2_44spc_solid__nodes_cfg4xb_allg.json",
-					"formation_config": {}
+					"formation": "f_tr_rrct_190sz_42cr_cfg6xb_spms.json",
+					"formation_config": {
+						"tracer_speed_class_global": 300
+					}
+				},
+				{
+					"formation": "f_tr_rrct_160sz_42cr_cfg5xb_spms.json",
+					"formation_config": {
+						"tracer_speed_class_global": -300
+					}
 				}
 			]
 		}
 	],
 	"perm_list": [
 		{
-			"x_con": 400,
-			"y_con": 400,
-			"y_con_offset": 120.000000,
-			"motion": {
-				"slice_list": [
+			"x": 14.478471,
+			"y": 67.968056,
+			"path": {
+				"speed_class": -300,
+				"node_list": [
 					{
-						"type": 5,
-						"linear": true,
-						"linear_tick": 40,
-						"linear_time": 80,
-						"radius": 105,
-						"pause_1": 100,
-						"pause_2": 100
+						"x_con": 300,
+						"y_con": 500
 					},
 					{
-						"type": 4,
-						"linear_tick": 30,
-						"linear_time": 60,
-						"radius": 10,
-						"pause_1": 10,
-						"pause_2": 10
+						"x_con": 500,
+						"y_con": 500
+					},
+					{
+						"x_con": 500,
+						"y_con": 600
+					},
+					{
+						"x_con": 300,
+						"y_con": 600
 					}
 				]
 			},
-			"type": 3
-		},
-		{
-			"x_con": 600,
-			"y_con": 400,
-			"y_con_offset": 120.000000,
-			"motion": {
-				"slice_list": [
-					{
-						"type": 5,
-						"linear": true,
-						"linear_tick": 40,
-						"linear_time": 80,
-						"radius": 105,
-						"pause_1": 100,
-						"pause_2": 100
-					},
-					{
-						"type": 1
-					},
-					{
-						"type": 4,
-						"linear_tick": 30,
-						"linear_time": 60,
-						"radius": 10,
-						"pause_1": 10,
-						"pause_2": 10
+			"spawn": [
+				{
+					"formation": "f_tr_rrct_320sz_90cr_cfg10xb_sps.json",
+					"formation_config": {
+						"tracer_speed_class_global": 300
 					}
-				]
-			},
-			"type": 3
-		},
-		{
-			"x_con": 500,
-			"y_con": 500,
-			"y_con_offset": 160.000000,
-			"formation": "f_tr_rrct_160sz_42cr_cfg5xb_sps.json",
+				}
+			],
+			"formation": "f_tr_rrct_320sz_90cr_cfg10xb_sps.json",
 			"formation_config": {
-				"tracer_speed_class_global": -300
+				"tracer_speed_class_global": 5
 			}
 		},
 		{
-			"x_con": 300,
-			"x_con_offset": 30.000000,
-			"y_con": 600,
-			"y_con_offset": -100.000000,
-			"motion": {
-				"slice_list": [
-					{
-						"type": 4,
-						"linear_tick": 25,
-						"linear_time": 50,
-						"radius": 5,
-						"pause_1": 30,
-						"pause_2": 30
-					}
-				]
-			},
-			"type": 1
-		},
-		{
-			"x_con": 700,
-			"x_con_offset": -30.000000,
-			"y_con": 600,
-			"y_con_offset": -100.000000,
-			"motion": {
-				"slice_list": [
-					{
-						"type": 4,
-						"linear_tick": 25,
-						"linear_time": 50,
-						"radius": 5,
-						"pause_1": 30,
-						"pause_2": 30
-					}
-				]
-			},
-			"type": 1
-		},
-		{
-			"x_con": 500,
-			"y_con": 400,
-			"y_con_offset": 125.000000
+			"x": 70.949844,
+			"y": 15.857354,
+			"formation": "f_tr_rrct_320sz_90cr_cfg10xb_spmf.json",
+			"formation_config": {
+				"tracer_speed_class_global": -200
+			}
 		}
 	]
 }

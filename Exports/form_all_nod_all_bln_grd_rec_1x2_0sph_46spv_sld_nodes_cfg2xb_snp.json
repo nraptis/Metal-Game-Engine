@@ -1,0 +1,19 @@
+{
+	"node_list": [
+		{
+			"x": 0.081093,
+			"y": -4.035088
+		},
+		{
+			"x": 0.081093,
+			"y": 4.035084
+		}
+	],
+	"grid": {
+		"grid_type": 0,
+		"rect_width": 1,
+		"rect_height": 2,
+		"rect_spacing_h": 0,
+		"rect_spacing_v": 46
+	}
+}

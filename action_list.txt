@@ -1,3 +1,14 @@
+H1.) We need TYPES to be bart of FORMATION CONFIGURATION. (Optional) This could also reduce the number of existing formations.
+
+H2.) Every single formation needs to be redone considering that speed is no longer being considered.
+
+H3.) Every single formation needs to have the GRID state it was saved with baked into the file. This way we can re-load formations and switch the types..
+
+J1.) We need an improved achievement manager which uses hash tables. This can be optional, but nice to have.
+
+J2.) The balloon "pop mark" animation should scale up, linger briefly, and rapidly scale down before disappearing.
+
+J3.) The dart fizzle animation should shoot off small white stars which fade rather quickly and look good.
 
 I1.) We need an occasional "gleam" / sparkle animation that emminates from the tip of the dart.
 

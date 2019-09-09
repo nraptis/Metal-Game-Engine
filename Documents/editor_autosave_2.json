@@ -1,0 +1,130 @@
+{
+	"section": true,
+	"wave_list": [
+		{
+			"max_spawn_size": 189,
+			"path": {
+				"node_list": [
+					{
+						"x_con": 200,
+						"y_con": 400
+					},
+					{
+						"x_con": 500,
+						"y_con": 400,
+						"decel": 200,
+						"accel": 150,
+						"wait": 500
+					},
+					{
+						"x_con": 150,
+						"y_con": 400
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "form_all_nod_mix_bln_tur_grd_rec_4x2_38sph_48spv_50ful_nodes_cfgbbttbb4on2of",
+					"formation_config": {}
+				}
+			]
+		},
+		{
+			"creation_prev_wave_complete": true,
+			"max_spawn_size": 195,
+			"path": {
+				"node_list": [
+					{
+						"x_con": 800,
+						"y_con": 400
+					},
+					{
+						"x_con": 500,
+						"y_con": 400,
+						"decel": 200,
+						"wait": 600
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "form_all_nod_mix_bln_brk_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfgbrrbbbrrb_snp",
+					"formation_config": {}
+				}
+			]
+		},
+		{
+			"creation_screen_perms_clear": true,
+			"max_spawn_size": 262,
+			"path": {
+				"node_list": [
+					{
+						"x_con": 500,
+						"y_con": 200
+					},
+					{
+						"x_con": 500,
+						"y_con": 400,
+						"wait": 800
+					},
+					{
+						"x_con": 500,
+						"y_con": 150
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "form_all_nod_all_bln_grd_sta_50rdi_90rdo_3ptc_5arc_27ful_nodes_cfg11xb_snp",
+					"formation_config": {},
+					"motion": {
+						"slice_list": [
+							{
+								"type": 3,
+								"linear": true,
+								"angle_span": 55,
+								"pause_1": 30,
+								"pause_2": 30
+							}
+						]
+					}
+				}
+			]
+		}
+	],
+	"perm_list": [
+		{
+			"x_con": 500,
+			"y_con": 600,
+			"y_con_offset": 60.000000,
+			"formation": "form_all_nod_mix_bln_tur_grd_rec_4x2_38sph_48spv_50ful_nodes_cfgbbttbb4on2of",
+			"formation_config": {}
+		},
+		{
+			"x_con": 300,
+			"x_con_offset": 20.000000,
+			"y_con": 500,
+			"y_con_offset": 120.000000,
+			"type": 1
+		},
+		{
+			"x_con": 700,
+			"x_con_offset": -20.000000,
+			"y_con": 500,
+			"y_con_offset": 120.000000,
+			"type": 1
+		},
+		{
+			"x_con": 300,
+			"x_con_offset": 20.000000,
+			"y_con": 800,
+			"y_con_offset": -190.000000
+		},
+		{
+			"x_con": 700,
+			"x_con_offset": -20.000000,
+			"y_con": 800,
+			"y_con_offset": -170.000000
+		}
+	]
+}

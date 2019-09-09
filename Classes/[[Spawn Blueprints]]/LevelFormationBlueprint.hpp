@@ -93,9 +93,10 @@ public:
     
     
     FJSONNode                                   *Save();
-    void                                        Load(FJSONNode *pNode);
+    void                                        Load(FJSONNode *pNode, FString pFilePath);
     bool                                        IsValid();
     
+    FString                                     mFilePath;
     
     //Note: BUILD should have NO TIE-IN TO EDITOR...
     //This HAS to work WITHOUT EDITOR for GAME......

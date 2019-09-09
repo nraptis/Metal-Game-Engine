@@ -219,6 +219,8 @@ void EditorMenuFormationPicker::ApplyFilter() {
     
     FString aText = mTextBoxFilter->mText.c();
     
+    aText.Replace(" ", "_");
+    
     bool aMixedOnly = false;
     bool aBalloonOnly = false;
     bool aTracersOnly = false;

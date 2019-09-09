@@ -423,8 +423,12 @@ FJSONNode *LevelFormationBlueprint::Save() {
     return aExport;
 }
 
-void LevelFormationBlueprint::Load(FJSONNode *pNode) {
+void LevelFormationBlueprint::Load(FJSONNode *pNode, FString pFilePath) {
     Reset();
+    
+    mFilePath = pFilePath;
+    mFilePath.RemovePathAndExtension();
+    
     
     if (pNode == NULL) { return; }
     

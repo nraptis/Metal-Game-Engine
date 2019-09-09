@@ -344,7 +344,7 @@ void GameEditor::Draw() {
         Graphics::DrawRect(mGameAreaLeft + (mGameAreaRight - mGameAreaLeft), 0.0f, gDeviceWidth - (mGameAreaLeft + (mGameAreaRight - mGameAreaLeft)), gDeviceHeight);
         
         float aMarkerMult = 1.0f;
-        float aMarkerOpacity = 0.75f;
+        float aMarkerOpacity = 0.65f;
         
         Graphics::SetColor(0.125f * aMarkerMult, 1.0f * aMarkerMult, 0.056f * aMarkerMult, aMarkerOpacity);
         Graphics::DrawLine(mSpawnZoneLeft, mSpawnZoneTop, mSpawnZoneRight, mSpawnZoneTop);
@@ -385,15 +385,10 @@ void GameEditor::Draw() {
     Graphics::SetColor();
     FString aExportString = FString("Export: ") + FString(mExportIndex);
     gApp->mSysFontBold.Center(aExportString.c(), gDeviceWidth2, gSafeAreaInsetTop + 20.0f, 0.5f);
-    
-    
 }
 
 void GameEditor::TouchDown(float pX, float pY, void *pData) {
-    
     SelectClosestObject(pX, pY);
-    
-    
 }
 
 void GameEditor::TouchMove(float pX, float pY, void *pData) {
@@ -440,20 +435,19 @@ void GameEditor::KeyDown(int pKey) {
         if (pKey == __KEY__7) { mTestIndex = 7; LoadTest(); return; }
         if (pKey == __KEY__8) { mTestIndex = 8; LoadTest(); return; }
         if (pKey == __KEY__9) { mTestIndex = 9; LoadTest(); return; }
+    } else {
+        if (pKey == __KEY__0) { mExportIndex = 0; SaveConfig(); }
+        if (pKey == __KEY__1) { mExportIndex = 1; SaveConfig(); }
+        if (pKey == __KEY__2) { mExportIndex = 2; SaveConfig(); }
+        if (pKey == __KEY__3) { mExportIndex = 3; SaveConfig(); }
+        if (pKey == __KEY__4) { mExportIndex = 4; SaveConfig(); }
+        if (pKey == __KEY__5) { mExportIndex = 5; SaveConfig(); }
+        if (pKey == __KEY__6) { mExportIndex = 6; SaveConfig(); }
+        if (pKey == __KEY__7) { mExportIndex = 7; SaveConfig(); }
+        if (pKey == __KEY__8) { mExportIndex = 8; SaveConfig(); }
+        if (pKey == __KEY__9) { mExportIndex = 9; SaveConfig(); }
     }
     
-    
-    
-    if (pKey == __KEY__0) { mExportIndex = 0; SaveConfig(); }
-    if (pKey == __KEY__1) { mExportIndex = 1; SaveConfig(); }
-    if (pKey == __KEY__2) { mExportIndex = 2; SaveConfig(); }
-    if (pKey == __KEY__3) { mExportIndex = 3; SaveConfig(); }
-    if (pKey == __KEY__4) { mExportIndex = 4; SaveConfig(); }
-    if (pKey == __KEY__5) { mExportIndex = 5; SaveConfig(); }
-    if (pKey == __KEY__6) { mExportIndex = 6; SaveConfig(); }
-    if (pKey == __KEY__7) { mExportIndex = 7; SaveConfig(); }
-    if (pKey == __KEY__8) { mExportIndex = 8; SaveConfig(); }
-    if (pKey == __KEY__9) { mExportIndex = 9; SaveConfig(); }
     
     
     if (pKey == __KEY__ENTER) {
@@ -798,8 +792,6 @@ void GameEditor::RefreshPlayback() {
         mSpeedClassIndex = SpeedConvertTypeToSegment(mSection.mCurrentWave->mPath.mSpeedClass);
     }
     
-    
-    
     if (mEditorPlaybackWaveOnly) {
         
         if (mSection.mCurrentWave != NULL) {
@@ -962,11 +954,9 @@ void GameEditor::WaveMoveDown() {
 
 void GameEditor::WaveSelect(int pIndex) {
     mSection.WaveSelect(pIndex);
-    
     if (mEditorPlaybackEnabled) {
         RefreshPlayback();
     }
-    
 }
 
 int GameEditor::WaveCount(int pIndex) {
@@ -1178,7 +1168,7 @@ void GameEditor::OpenFormationEditor(LevelFormation *pFormation) {
         
         FJSON aJSON;
         aJSON.Load(pFormation->mID.c());
-        aBBB->Load(aJSON.mRoot);
+        aBBB->Load(aJSON.mRoot, pFormation->mID);
         if (aBBB->IsValid() == false) {
             delete aBBB;
             aBBB = NULL;

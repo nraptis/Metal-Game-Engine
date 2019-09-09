@@ -1,0 +1,22 @@
+{
+	"node_list": [
+		{
+			"x": 0.081093,
+			"y": -4.912292
+		},
+		{
+			"x": 7.171364,
+			"y": 2.456127
+		},
+		{
+			"x": -7.009171,
+			"y": 2.456127
+		}
+	],
+	"grid": {
+		"grid_type": 1,
+		"circle_ring_spacing": 28,
+		"circle_ring_count": 1,
+		"circle_radial_count": 3
+	}
+}

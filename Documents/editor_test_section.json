@@ -30,6 +30,7 @@
 			]
 		},
 		{
+			"spawn_spacing": 90,
 			"creation_prev_wave_complete": true,
 			"max_spawn_size": 111,
 			"path": {

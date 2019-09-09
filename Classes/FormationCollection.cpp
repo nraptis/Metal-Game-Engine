@@ -41,212 +41,478 @@ void FormationCollection::Load() {
     FreeList(LevelFormation, mFormationList);
     mMap.RemoveAll();
     
-    //Dummies
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////
+    //////    All Balloons
+    //////
     
-    mNameList.Add(new FString("f_grid_rect_7x7_44spc_solid__nodes_cfgrbrrrbrbrrrrrbrrrrrrrrrrrrrrrrrrrrrbrrrrrbrbbrbbr_allg.json"));
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Rectangle
+    
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_2x2_38sph_48spv_sld_nodes_cfg4xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_3x2_38sph_48spv_sld_nodes_cfg6xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_2x3_38sph_48spv_sld_nodes_cfg6xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_3x3_38sph_48spv_89ful_nodes_cfg8xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_3x3_38sph_48spv_sld_nodes_cfg9xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_4x3_38sph_48spv_sld_nodes_cfg12xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_3x4_38sph_48spv_sld_nodes_cfg12xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_2x4_38sph_48spv_sld_nodes_cfg8xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_4x2_38sph_48spv_sld_nodes_cfg8xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_5x2_38sph_48spv_sld_nodes_cfg10xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_5x3_38sph_48spv_sld_nodes_cfg15xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_3x5_38sph_48spv_sld_nodes_cfg15xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_4x5_38sph_48spv_sld_nodes_cfg20xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_5x4_38sph_48spv_sld_nodes_cfg20xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_5x5_38sph_48spv_sld_nodes_cfg25xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_6x6_38sph_48spv_sld_nodes_cfg36xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_7x6_38sph_48spv_sld_nodes_cfg42xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_7x6_38sph_48spv_52ful_nodes_cfg22xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_7x6_38sph_48spv_67ful_nodes_cfg28xb_snp.json"));
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Circle
+    
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_28rsp_1rct_3rdc_75ful_nodes_cfg3xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_34rsp_1rct_4rdc_80ful_nodes_cfg4xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_40rsp_1rct_5rdc_83ful_nodes_cfg5xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_46rsp_1rct_6rdc_86ful_nodes_cfg6xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_46rsp_1rct_6rdc_sld_nodes_cfg7xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_54rsp_1rct_7rdc_88ful_nodes_cfg7xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_54rsp_1rct_7rdc_sld_nodes_cfg8xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_60rsp_1rct_8rdc_89ful_nodes_cfg8xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfg9xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_60rsp_2rct_16rdc_48ful_nodes_cfg16xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_60rsp_2rct_16rdc_73ful_nodes_cfg24xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_60rsp_2rct_16rdc_76ful_nodes_cfg25xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_66rsp_1rct_9rdc_90ful_nodes_cfg9xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_66rsp_1rct_9rdc_sld_nodes_cfg10xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_72rsp_1rct_10rdc_91ful_nodes_cfg10xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_72rsp_1rct_10rdc_sld_nodes_cfg11xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_72rsp_2rct_20rdc_49ful_nodes_cfg20xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_72rsp_2rct_20rdc_73ful_nodes_cfg30xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_72rsp_2rct_20rdc_76ful_nodes_cfg31xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_88rsp_1rct_12rdc_92ful_nodes_cfg12xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_96rsp_1rct_12rdc_92ful_nodes_cfg12xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_96rsp_1rct_12rdc_92ful_nodes_cfg16xb12on4of"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_96rsp_1rct_12rdc_92ful_nodes_cfg18xb12on6of"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_96rsp_1rct_12rdc_sld_nodes_cfg19xb13on6of"));
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Arcs
+    
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Heptagon
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Hexagon
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Lines
+    
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_1x6_0sph_46spv_sld_nodes_cfg6xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_1x5_0sph_46spv_sld_nodes_cfg5xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_1x4_0sph_46spv_sld_nodes_cfg4xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_1x3_0sph_46spv_sld_nodes_cfg3xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_1x2_0sph_46spv_sld_nodes_cfg2xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_6x1_38sph_0spv_sld_nodes_cfg6xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_5x1_38sph_0spv_sld_nodes_cfg5xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_4x1_38sph_0spv_sld_nodes_cfg4xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_3x1_38sph_0spv_sld_nodes_cfg3xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_2x1_38sph_0spv_sld_nodes_cfg2xb_snp"));
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Octogon
+    
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_96rsp_1rct_12rdc_sld_nodes_cfg19xb13on6of.json"));
+    
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Pentagon
+    
+    
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Staggered
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Star
+    
+    //mNameList.Add(new FString(""));
+    
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_sta_91rdi_140rdo_3ptc_5arc_180ros_49ful_nodes_cfg20xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_sta_50rdi_90rdo_3ptc_5arc_27ful_nodes_cfg11xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_sta_150rdi_80rdo_1ptc_5arc_180ros_95ful_nodes_cfg20xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_sta_150rdi_80rdo_1ptc_5arc_180ros_95ful_nodes_cfg25xb20on5of"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_sta_150rdi_80rdo_1ptc_5arc_180ros_sld_nodes_cfg26xb21on5of"));
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Trapezoid
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Triangle
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tracers - Circle
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tracers - Custom
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tracers - Rect
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tracers - Rounded Rect
+    
+    //////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    
+    //mNameList.Add(new FString(""));
+    //mNameList.Add(new FString(""));
+    
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////
+    //////    All Brickheads
+    //////
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Arcs
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Circle
+
+    mNameList.Add(new FString("form_all_nod_all_brk_grd_cir_34rsp_1rct_4rdc_80ful_nodes_cfg4xr_snp"));
+    mNameList.Add(new FString("form_all_nod_all_brk_grd_cir_40rsp_1rct_5rdc_83ful_nodes_cfg5xr_snp"));
+    mNameList.Add(new FString("form_all_nod_all_brk_grd_cir_46rsp_1rct_6rdc_86ful_nodes_cfg6xr_snp"));
+    //mNameList.Add(new FString(""));
+    //mNameList.Add(new FString(""));
+
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Heptagon
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Hexagon
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Lines
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Octogon
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Pentagon
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Rectangle
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Staggered
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Star
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Trapezoid
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Triangle
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tracers - Circle
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tracers - Custom
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tracers - Rect
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tracers - Rounded Rect
+    
+    //////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    
+    
+    
+    
+    
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////
+    //////    All Turtles
+    //////
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Arcs
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Circle
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Heptagon
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Hexagon
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Lines
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Octogon
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Pentagon
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Rectangle
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Staggered
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Star
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Trapezoid
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Triangle
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tracers - Circle
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tracers - Custom
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tracers - Rect
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tracers - Rounded Rect
+    
+    //////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    
+    
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////
+    //////    Balloons + Brickheads
+    //////
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Arcs
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Circle
+    
+    //mNameList.Add(new FString(""));
+    //mNameList.Add(new FString(""));
+    
+    mNameList.Add(new FString("form_all_nod_mix_bln_brk_grd_cir_46rsp_1rct_6rdc_sld_nodes_cfgbbbrbbb_snp"));
+    mNameList.Add(new FString("form_all_nod_mix_bln_brk_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfgbbbbrbbbb_snp"));
+    mNameList.Add(new FString("form_all_nod_mix_bln_brk_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfgbrrbbbrrb_snp"));
+    mNameList.Add(new FString("form_all_nod_mix_bln_brk_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfgrbbbbbbbr_snp"));
+    mNameList.Add(new FString("form_all_nod_mix_bln_brk_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfgrbbbrbbbr_snp"));
+    mNameList.Add(new FString("form_all_nod_mix_bln_brk_grd_cir_72rsp_1rct_10rdc_sld_nodes_cfgbrrbbbrrbbr_snp"));
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Heptagon
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Hexagon
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Lines
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Octogon
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Pentagon
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Rectangle
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Staggered
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Star
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Trapezoid
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Triangle
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tracers - Circle
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tracers - Custom
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tracers - Rect
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tracers - Rounded Rect
+    
+    //////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////
+    //////    Balloons + Turtles
+    //////
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Arcs
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Circle
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Heptagon
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Hexagon
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Lines
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Octogon
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Pentagon
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Rectangle
+    
+    //mNameList.Add(new FString(""));
+    //mNameList.Add(new FString(""));
+    
+    mNameList.Add(new FString("form_all_nod_mix_bln_tur_grd_rec_4x2_38sph_48spv_50ful_nodes_cfgbbttbb4on2of"));
+    mNameList.Add(new FString("form_all_nod_mix_bln_tur_grd_rec_5x3_38sph_48spv_73ful_nodes_cfgbbbtbbbtbbb_snp"));
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Staggered
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Star
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Trapezoid
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Triangle
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tracers - Circle
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tracers - Custom
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tracers - Rect
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tracers - Rounded Rect
+    
+    //////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    
+    
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////
+    //////    All Template
+    //////
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Arcs
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Circle
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Heptagon
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Hexagon
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Lines
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Octogon
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Pentagon
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Rectangle
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Staggered
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Star
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Trapezoid
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Shapes - Triangle
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tracers - Circle
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tracers - Custom
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tracers - Rect
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tracers - Rounded Rect
+    
+    //////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     
     
     //[All Balloon] Rect Grid Types...
-    mNameList.Add(new FString("f_grid_rect_1x4_46spc_solid__nodes_cfg4xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_1x5_46spc_solid__nodes_cfg5xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_1x6_46spc_solid__nodes_cfg6xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_2x2_44spc_solid__nodes_cfg4xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_3x3_34spc_33ful__nodes_cfg3xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_3x3_34spc_56ful__nodes_cfg5xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_3x3_44spc_33ful__nodes_cfg3xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_3x3_44spc_56ful__nodes_cfg5xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_3x3_44spc_89ful__nodes_cfg8xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_3x3_44spc_solid__nodes_cfg9xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_4x1_46spc_solid__nodes_cfg4xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_4x4_34spc_25ful__nodes_cfg4xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_4x4_46spc_50ful__nodes_cfg8xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_4x4_46spc_75ful__nodes_cfg12xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_4x4_46spc_solid__nodes_cfg16xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_5x1_46spc_solid__nodes_cfg5xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_5x5_34spc_20ful__nodes_cfg5xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_5x5_34spc_36ful__nodes_cfg9xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_5x5_46spc_52ful__nodes_cfg13xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_5x5_46spc_64ful__nodes_cfg16xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_5x5_46spc_84ful__nodes_cfg21xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_5x5_46spc_96ful__nodes_cfg24xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_5x5_46spc_solid__nodes_cfg25xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_6x1_46spc_solid__nodes_cfg6xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_6x6_34spc_17ful__nodes_cfg6xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_6x6_46spc_89ful__nodes_cfg32xb_allg.json"));
-    mNameList.Add(new FString("f_grid_rect_6x6_46spc_solid__nodes_cfg36xb_allg.json"));
-    
-    mNameList.Add(new FString("f_grid_circ_40rngs_1rngc_5radc_83ful__nodes_cfg5xb_allg.json"));
-    mNameList.Add(new FString("f_grid_circ_46rngs_1rngc_6radc_86ful__nodes_cfg6xb_allg.json"));
-    mNameList.Add(new FString("f_grid_circ_46rngs_1rngc_6radc_solid__nodes_cfg7xb_allg.json"));
-    mNameList.Add(new FString("f_grid_circ_56rngs_1rngc_7radc_88ful__nodes_cfg7xb_allg.json"));
-    mNameList.Add(new FString("f_grid_circ_56rngs_1rngc_7radc_solid__nodes_cfg8xb_allg.json"));
-    mNameList.Add(new FString("f_grid_circ_60rngs_1rngc_8radc_89ful__nodes_cfg8xb_allg.json"));
-    mNameList.Add(new FString("f_grid_circ_60rngs_1rngc_8radc_solid__nodes_cfg9xb_allg.json"));
-    mNameList.Add(new FString("f_grid_circ_70rngs_1rngc_9radc_solid__nodes_cfg10xb_allg.json"));
-    mNameList.Add(new FString("f_grid_circ_70rngs_1rngc_9radc_90ful__nodes_cfg9xb_allg.json"));
-    mNameList.Add(new FString("f_grid_circ_75rngs_1rngc_10radc_91ful__nodes_cfg10xb_allg.json"));
-    mNameList.Add(new FString("f_grid_circ_75rngs_1rngc_10radc_solid__nodes_cfg11xb_allg.json"));
-    mNameList.Add(new FString("f_grid_circ_82rngs_1rngc_11radc_92ful__nodes_cfg11xb_allg.json"));
-    mNameList.Add(new FString("f_grid_circ_82rngs_1rngc_11radc_solid__nodes_cfg12xb_allg.json"));
-    mNameList.Add(new FString("f_grid_circ_88rngs_1rngc_12radc_92ful__nodes_cfg12xb_allg.json"));
-    mNameList.Add(new FString("f_grid_circ_88rngs_1rngc_12radc_solid__nodes_cfg13xb_allg.json"));
-    mNameList.Add(new FString("f_grid_circ_92rngs_1rngc_12radc_92ful__nodes_cfg18xb12on6off.json"));
-    mNameList.Add(new FString("f_grid_circ_120rngs_1rngc_16radc_94ful__nodes_cfg16xb_allg.json"));
-    mNameList.Add(new FString("f_grid_circ_74rngs_1rngc_10radc_91ful__nodes_cfg26xb10on16off.json"));
-    mNameList.Add(new FString("f_grid_circ_4x4_44spc_75ful__nodes_cfg28xb12on16off.json"));
-    
-    //[All Balloon] Triangles...
-    mNameList.Add(new FString("f_grid_tri_ngon1_3sid_91rngs_1rngc_42pnts_180roff_90ful__nodes_cfg9xb_allg.json"));
-    mNameList.Add(new FString("f_grid_tri_ngon1_3sid_54rngs_1rngc_30pnts_86ful__nodes_cfg6xb_allg.json"));
-    mNameList.Add(new FString("f_grid_tri_ngon1_3sid_54rngs_1rngc_30pnts_180roff_86ful__nodes_cfg6xb_allg.json"));
-    mNameList.Add(new FString("f_grid_tri_ngon1_3sid_54rngs_1rngc_130pnts_180roff_solid__nodes_cfg4xb_allg.json"));
-    mNameList.Add(new FString("f_grid_tri_ngon1_3sid_54rngs_1rngc_130pnts_solid__nodes_cfg4xb_allg.json"));
-    mNameList.Add(new FString("f_grid_tri_ngon1_3sid_71rngs_2rngc_44pnts_68ful__nodes_cfg15xb_allg.json"));
-    mNameList.Add(new FString("f_grid_tri_ngon1_3sid_71rngs_2rngc_44pnts_180roff_68ful__nodes_cfg15xb_allg.json"));
-    mNameList.Add(new FString("f_grid_tri_ngon1_3sid_91rngs_1rngc_42pnts_90ful__nodes_cfg9xb_allg.json"));
-    
-    //[All Balloon] Large Stars
-    mNameList.Add(new FString("f_grid_large_star_01.json"));
-    mNameList.Add(new FString("f_grid_large_star_02.json"));
-    mNameList.Add(new FString("f_grid_large_star_03.json"));
-    
-    //[All Balloon] Oddball Stars
-    mNameList.Add(new FString("f_grid_star_72radi_34rado_0pntc_4armc_89ful__nodes_cfg8xb_allg.json"));
-    mNameList.Add(new FString("f_grid_star_80radi_40rado_0pntc_5armc_35roff_91ful__nodes_cfg10xb_allg.json"));
-    mNameList.Add(new FString("f_grid_star_80radi_40rado_0pntc_5armc_91ful__nodes_cfg10xb_allg.json"));
-    mNameList.Add(new FString("f_grid_star_120radi_60rado_1pntc_5armc_23roff_29ful__nodes_cfg16xb6on10off.json"));
-    
-    //[All Balloon] Pentagons
-    mNameList.Add(new FString("f_grid_penta_ngon1_5sid_45rngs_1rngc_31pnts_35roff_83ful__nodes_cfg5xb_allg.json"));
-    mNameList.Add(new FString("f_grid_penta_ngon1_5sid_45rngs_1rngc_31pnts_solid__nodes_cfg6xb_allg.json"));
-    mNameList.Add(new FString("f_grid_penta_ngon1_5sid_45rngs_2rngc_31pnts_35roff_94ful__nodes_cfg15xb_allg.json"));
-    mNameList.Add(new FString("f_grid_penta_ngon1_5sid_45rngs_2rngc_31pnts_solid__nodes_cfg16xb_allg.json"));
-    mNameList.Add(new FString("f_grid_penta_ngon1_5sid_48rngs_3rngc_39pnts_35roff_48ful__nodes_cfg30xb15on15off.json"));
-    mNameList.Add(new FString("f_grid_penta_ngon1_5sid_48rngs_3rngc_39pnts_35roff_solid__nodes_cfg31xb_allg.json"));
-    mNameList.Add(new FString("f_grid_penta_ngon1_5sid_48rngs_3rngc_39pnts_solid__nodes_cfg31xb_allg.json"));
-    
-    //[All Balloon] Hexagons
-    mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_1rngc_30pnts_86ful__nodes_cfg6xb_allg.json"));
-    mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_1rngc_30pnts_solid__nodes_cfg7xb_allg.json"));
-    mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_1rngc_36pnts_30roff_86ful__nodes_cfg6xb_allg.json"));
-    mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_1rngc_36pnts_30roff_solid__nodes_cfg7xb_allg.json"));
-    mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_2rngc_30pnts_68ful__nodes_cfg13xb_allg.json"));
-    mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_2rngc_30pnts_95ful__nodes_cfg18xb_allg.json"));
-    mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_2rngc_30pnts_solid__nodes_cfg19xb_allg.json"));
-    mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_2rngc_36pnts_30roff_63ful__nodes_cfg12xb_allg.json"));
-    mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_2rngc_36pnts_30roff_95ful__nodes_cfg18xb_allg.json"));
-    mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_2rngc_36pnts_30roff_solid__nodes_cfg19xb_allg.json"));
-    mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_2rngc_40pnts_solid__nodes_cfg13xb_allg.json"));
-    mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_3rngc_34pnts_49ful__nodes_cfg18xb_allg.json"));
-    mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_3rngc_34pnts_81ful__nodes_cfg30xb_allg.json"));
-    mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_3rngc_34pnts_97ful__nodes_cfg36xb_allg.json"));
-    mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_3rngc_34pnts_solid__nodes_cfg37xb_allg.json"));
-    mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_3rngc_36pnts_30roff_49ful__nodes_cfg18xb_allg.json"));
-    mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_3rngc_36pnts_30roff_65ful__nodes_cfg24xb_allg.json"));
-    mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_3rngc_36pnts_30roff_81ful__nodes_cfg30xb_allg.json"));
-    mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_3rngc_36pnts_30roff_97ful__nodes_cfg36xb_allg.json"));
-    mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_3rngc_36pnts_30roff_solid__nodes_cfg37xb_allg.json"));
-    mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_3rngc_44pnts_96ful__nodes_cfg24xb_allg.json"));
-    mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_3rngc_66pnts_95ful__nodes_cfg18xb_allg.json"));
-    mNameList.Add(new FString("f_grid_hexa_ngon1_6sid_46rngs_3rngc_66pnts_solid__nodes_cfg19xb_allg.json"));
-    
-    //[All Balloon] Circle tracers...
-    mNameList.Add(new FString("f_tr_circ_80sz_cfg4xb_spm.json"));
-    mNameList.Add(new FString("f_tr_circ_80sz_cfg4xb_spmf.json"));
-    mNameList.Add(new FString("f_tr_circ_80sz_cfg4xb_spms.json"));
-    mNameList.Add(new FString("f_tr_circ_80sz_cfg4xb_sps.json"));
-    mNameList.Add(new FString("f_tr_circ_80sz_cfg4xb_spxs.json"));
-    mNameList.Add(new FString("f_tr_circ_100sz_cfg5xb_spm.json"));
-    mNameList.Add(new FString("f_tr_circ_100sz_cfg5xb_spmf.json"));
-    mNameList.Add(new FString("f_tr_circ_100sz_cfg5xb_spms.json"));
-    mNameList.Add(new FString("f_tr_circ_100sz_cfg5xb_sps.json"));
-    mNameList.Add(new FString("f_tr_circ_100sz_cfg5xb_spxs.json"));
-    mNameList.Add(new FString("f_tr_circ_120sz_cfg6xb_spm.json"));
-    mNameList.Add(new FString("f_tr_circ_120sz_cfg6xb_spmf.json"));
-    mNameList.Add(new FString("f_tr_circ_120sz_cfg6xb_spms.json"));
-    mNameList.Add(new FString("f_tr_circ_120sz_cfg6xb_spxs.json"));
-    mNameList.Add(new FString("f_tr_circ_140sz_cfg7xb_spm.json"));
-    mNameList.Add(new FString("f_tr_circ_140sz_cfg7xb_spmf.json"));
-    mNameList.Add(new FString("f_tr_circ_140sz_cfg7xb_spms.json"));
-    mNameList.Add(new FString("f_tr_circ_140sz_cfg7xb_sps.json"));
-    mNameList.Add(new FString("f_tr_circ_140sz_cfg7xb_spxs.json"));
-    mNameList.Add(new FString("f_tr_circ_160sz_cfg8xb_spm.json"));
-    mNameList.Add(new FString("f_tr_circ_160sz_cfg8xb_spmf.json"));
-    mNameList.Add(new FString("f_tr_circ_160sz_cfg8xb_spms.json"));
-    mNameList.Add(new FString("f_tr_circ_160sz_cfg8xb_sps.json"));
-    mNameList.Add(new FString("f_tr_circ_160sz_cfg8xb_spxs.json"));
-    mNameList.Add(new FString("f_tr_circ_180sz_cfg9xb_spm.json"));
-    mNameList.Add(new FString("f_tr_circ_180sz_cfg9xb_spmf.json"));
-    mNameList.Add(new FString("f_tr_circ_180sz_cfg9xb_spms.json"));
-    mNameList.Add(new FString("f_tr_circ_180sz_cfg9xb_sps.json"));
-    mNameList.Add(new FString("f_tr_circ_180sz_cfg9xb_spxs.json"));
-    mNameList.Add(new FString("f_tr_circ_200sz_cfg10xb_spm.json"));
-    mNameList.Add(new FString("f_tr_circ_200sz_cfg10xb_spmf.json"));
-    mNameList.Add(new FString("f_tr_circ_200sz_cfg10xb_spms.json"));
-    mNameList.Add(new FString("f_tr_circ_200sz_cfg10xb_sps.json"));
-    mNameList.Add(new FString("f_tr_circ_200sz_cfg10xb_spxs.json"));
-    
-    //[All Balloon] RR Tracers...
-    mNameList.Add(new FString("f_tr_rrct_160sz_42cr_cfg2xb_spxs.json"));
-    mNameList.Add(new FString("f_tr_rrct_140sz_42cr_cfg2xb_spm.json"));
-    mNameList.Add(new FString("f_tr_rrct_140sz_42cr_cfg2xb_spmf.json"));
-    mNameList.Add(new FString("f_tr_rrct_140sz_42cr_cfg2xb_spms.json"));
-    mNameList.Add(new FString("f_tr_rrct_140sz_42cr_cfg2xb_sps.json"));
-    mNameList.Add(new FString("f_tr_rrct_140sz_42cr_cfg2xb_spxs.json"));
-    mNameList.Add(new FString("f_tr_rrct_140sz_42cr_cfg3xb_spm.json"));
-    mNameList.Add(new FString("f_tr_rrct_140sz_42cr_cfg3xb_spmf.json"));
-    mNameList.Add(new FString("f_tr_rrct_140sz_42cr_cfg3xb_spms.json"));
-    mNameList.Add(new FString("f_tr_rrct_140sz_42cr_cfg3xb_sps.json"));
-    mNameList.Add(new FString("f_tr_rrct_140sz_42cr_cfg3xb_spxs.json"));
-    mNameList.Add(new FString("f_tr_rrct_140sz_42cr_cfg4xb_spm.json"));
-    mNameList.Add(new FString("f_tr_rrct_140sz_42cr_cfg4xb_spmf.json"));
-    mNameList.Add(new FString("f_tr_rrct_140sz_42cr_cfg4xb_spms.json"));
-    mNameList.Add(new FString("f_tr_rrct_140sz_42cr_cfg4xb_sps.json"));
-    mNameList.Add(new FString("f_tr_rrct_140sz_42cr_cfg4xb_spxs.json"));
-    mNameList.Add(new FString("f_tr_rrct_160sz_42cr_cfg2xb_spm.json"));
-    mNameList.Add(new FString("f_tr_rrct_160sz_42cr_cfg2xb_spmf.json"));
-    mNameList.Add(new FString("f_tr_rrct_160sz_42cr_cfg2xb_spms.json"));
-    mNameList.Add(new FString("f_tr_rrct_160sz_42cr_cfg2xb_sps.json"));
-    mNameList.Add(new FString("f_tr_rrct_160sz_42cr_cfg5xb_spm.json"));
-    mNameList.Add(new FString("f_tr_rrct_160sz_42cr_cfg5xb_spmf.json"));
-    mNameList.Add(new FString("f_tr_rrct_160sz_42cr_cfg5xb_spms.json"));
-    mNameList.Add(new FString("f_tr_rrct_160sz_42cr_cfg5xb_sps.json"));
-    mNameList.Add(new FString("f_tr_rrct_160sz_42cr_cfg5xb_spxs.json"));
-    mNameList.Add(new FString("f_tr_rrct_190sz_42cr_cfg6xb_spm.json"));
-    mNameList.Add(new FString("f_tr_rrct_190sz_42cr_cfg6xb_spmf.json"));
-    mNameList.Add(new FString("f_tr_rrct_190sz_42cr_cfg6xb_spms.json"));
-    mNameList.Add(new FString("f_tr_rrct_190sz_42cr_cfg6xb_sps.json"));
-    mNameList.Add(new FString("f_tr_rrct_190sz_42cr_cfg6xb_spxs.json"));
-    mNameList.Add(new FString("f_tr_rrct_210sz_42cr_cfg7xb_spm.json"));
-    mNameList.Add(new FString("f_tr_rrct_210sz_42cr_cfg7xb_spmf.json"));
-    mNameList.Add(new FString("f_tr_rrct_210sz_42cr_cfg7xb_spms.json"));
-    mNameList.Add(new FString("f_tr_rrct_210sz_42cr_cfg7xb_sps.json"));
-    mNameList.Add(new FString("f_tr_rrct_210sz_42cr_cfg7xb_spxs.json"));
-    mNameList.Add(new FString("f_tr_rrct_250sz_42cr_cfg8xb_spm.json"));
-    mNameList.Add(new FString("f_tr_rrct_250sz_42cr_cfg8xb_spmf.json"));
-    mNameList.Add(new FString("f_tr_rrct_250sz_42cr_cfg8xb_spms.json"));
-    mNameList.Add(new FString("f_tr_rrct_250sz_42cr_cfg8xb_sps.json"));
-    mNameList.Add(new FString("f_tr_rrct_250sz_42cr_cfg8xb_spxs.json"));
-    mNameList.Add(new FString("f_tr_rrct_280sz_42cr_cfg9xb_spm.json"));
-    mNameList.Add(new FString("f_tr_rrct_280sz_42cr_cfg9xb_spmf.json"));
-    mNameList.Add(new FString("f_tr_rrct_280sz_42cr_cfg9xb_spms.json"));
-    mNameList.Add(new FString("f_tr_rrct_280sz_42cr_cfg9xb_sps.json"));
-    mNameList.Add(new FString("f_tr_rrct_280sz_42cr_cfg9xb_spxs.json"));
-    mNameList.Add(new FString("f_tr_rrct_300sz_42cr_cfg10xb_spm.json"));
-    mNameList.Add(new FString("f_tr_rrct_300sz_42cr_cfg10xb_spmf.json"));
-    mNameList.Add(new FString("f_tr_rrct_300sz_42cr_cfg10xb_spms.json"));
-    mNameList.Add(new FString("f_tr_rrct_300sz_42cr_cfg10xb_sps.json"));
-    mNameList.Add(new FString("f_tr_rrct_300sz_42cr_cfg10xb_spxs.json"));
-    mNameList.Add(new FString("f_tr_rrct_320sz_90cr_cfg10xb_spm.json"));
-    mNameList.Add(new FString("f_tr_rrct_320sz_90cr_cfg10xb_spmf.json"));
-    mNameList.Add(new FString("f_tr_rrct_320sz_90cr_cfg10xb_spms.json"));
-    mNameList.Add(new FString("f_tr_rrct_320sz_90cr_cfg10xb_sps.json"));
-    mNameList.Add(new FString("f_tr_rrct_320sz_90cr_cfg10xb_spxs.json"));
+    //mNameList.Add(new FString("f_grid_rect_1x4_46spc_solid__nodes_cfg4xb_allg.json"));
+
     
     
-    //[Mixed] Circle Tracers
-    mNameList.Add(new FString("f_tr_circ_80sz_cfgrbrb_spm.json"));
+    
+    
+    
+    
+    
     
     //
     EnumList(FString, aString, mNameList) {
@@ -264,7 +530,7 @@ bool FormationCollection::Load(const char *pName) {
     FJSON aJSON;
     aJSON.Load(pName);
     LevelFormationBlueprint aBlueprint;
-    aBlueprint.Load(aJSON.mRoot);
+    aBlueprint.Load(aJSON.mRoot, pName);
     if (aBlueprint.IsValid()) {
         LevelFormation *aFormation = new LevelFormation();
         aBlueprint.Build(aFormation);
