@@ -11,7 +11,7 @@
 
 #include "FParticle.hpp"
 
-#define BALLOON_BURST_SLICE_COUNT 3
+#define BALLOON_BURST_SLICE_COUNT 2
 
 class EffectBalloonBurst : public FObject {
     

@@ -1760,7 +1760,9 @@ void Graphics::RenderPassBegin(int pRenderPass, bool pClearColor, bool pClearDep
         Graphics::DepthClear();
     }
     if (pClearColor) {
-        Graphics::Clear(0.025f, 0.025f, 0.065f);
+        //Graphics::Clear(0.025f, 0.025f, 0.065f);
+        Graphics::Clear(0.65f, 0.675f, 0.965f);
+        
     }
     
     //[gMetalEngine startRenderPass:pRenderPass clearingColor: pClearColor clearingDepth: pClearDepth];

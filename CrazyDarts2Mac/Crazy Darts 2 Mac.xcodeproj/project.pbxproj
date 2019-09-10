@@ -1126,10 +1126,10 @@
 		0DBAFCAD231F78C300C11381 /* [[Effects]] */ = {
 			isa = PBXGroup;
 			children = (
-				0DBAFCAE231F78C300C11381 /* EffectBalloonBurst.hpp */,
-				0DBAFCAF231F78C300C11381 /* EffectDartFadeStar.hpp */,
-				0DBAFCB0231F78C300C11381 /* EffectDartFadeStar.cpp */,
 				0DBAFCB1231F78C300C11381 /* EffectBalloonBurst.cpp */,
+				0DBAFCAE231F78C300C11381 /* EffectBalloonBurst.hpp */,
+				0DBAFCB0231F78C300C11381 /* EffectDartFadeStar.cpp */,
+				0DBAFCAF231F78C300C11381 /* EffectDartFadeStar.hpp */,
 			);
 			path = "[[Effects]]";
 			sourceTree = "<group>";

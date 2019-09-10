@@ -745,6 +745,27 @@ void Game::TouchFlush() {
 
 void Game::KeyDown(int pKey) {
     
+    
+    DisposeAllObjects();
+    if (mLevelData != NULL) {
+        if (mLevelController != NULL) {
+            mLevelController->mData = NULL;
+        }
+        delete mLevelData;
+        mLevelData = NULL;
+    }
+    
+    
+    if (gKeyDownCtrl) {
+        if (pKey == __KEY__R) {
+            Load();
+        }
+        
+    }
+    
+    
+    
+    
 }
 
 void Game::KeyUp(int pKey) {
@@ -1192,6 +1213,10 @@ void Game::Load() {
     aLevel.AddSection("test_section_perm_only_all_brickheads");
     aLevel.AddSection("test_section_perm_only_all_brickheads");
     */
+    
+    aLevel.SetKillTimer(800);
+    
+    aLevel.AddSection("section_2_turtles_2_bricks_2_waves_1_center_balloon.json");
     
     aLevel.AddSection("section_2_turtles_2_bricks_2_balloon_3_waves_turtles_brickcircle_star.json");
     

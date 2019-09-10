@@ -79,8 +79,10 @@ void GameOverlayEffects::Draw() {
     Graphics::SetColor();
     
     //Graphics::PipelineStateSetSpritePremultipliedBlending();
-    Graphics::PipelineStateSetSpriteAdditiveBlending();
+    Graphics::PipelineStateSetSpriteWhiteBlending();
+    Graphics::SetColor();
     mEffectListBalloonBursts.Draw();
+    
     
     Graphics::PipelineStateSetSpriteAdditiveBlending();
     mEffectListDartFadeStar.Draw();

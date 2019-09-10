@@ -13,8 +13,8 @@ EffectBalloonBurst::EffectBalloonBurst() {
     
     mMainMode = 0;
     mMainKill = 0;
-    mMainScale = 0.5f;
-    mMainScaleSpeed = 0.17f;
+    mMainScale = 0.25f;
+    mMainScaleSpeed = 0.112f;
     mMainScaleDownAccel = 0.0f;
     mMainRotation = gRand.GetFloat(-4.0f, 4.0f);
     mMainRotationSpeed = gRand.GetFloat(0.4f, 0.525f, true);
@@ -34,6 +34,28 @@ EffectBalloonBurst::EffectBalloonBurst() {
         
     }
     
+    
+    int aSliceSeed = gRand.Get(3);
+    
+    float aSliceRotation = gRand.GetFloat(15.0f, 75.0f);
+    float aSliceRotationOffset = 0.0f;
+    if (aSliceSeed == 1) {
+        aSliceRotationOffset = 90.0f;
+    }
+    if (aSliceSeed == 2) {
+        aSliceRotationOffset = 180.0f;
+    }
+    
+    for (int i=0;i<BALLOON_BURST_SLICE_COUNT;i++) {
+        
+        mSliceRotation[i] = fmodf(aSliceRotation + aSliceRotationOffset, 360.0f);
+        
+        aSliceRotation += gRand.GetFloat(15.0f, 30.0f);
+        if (aSliceRotation > 75.0f) { aSliceRotation -= (75.0f - 15.0f); }
+        
+        aSliceRotationOffset += 90.0f;
+    }
+    
    
     
     
@@ -41,6 +63,7 @@ EffectBalloonBurst::EffectBalloonBurst() {
 
 EffectBalloonBurst::~EffectBalloonBurst() {
     
+    printf("EffectBalloonBurst::~EffectBalloonBurst()\n");
     
 }
 
@@ -52,7 +75,7 @@ void EffectBalloonBurst::Update() {
     if (mMainMode == 0) {
         
         mMainScale += mMainScaleSpeed;
-        mMainScaleSpeed -= 0.013f;
+        mMainScaleSpeed -= 0.0125f;
         if (mMainScaleSpeed <= 0.0f) {
             mMainMode = 1;
             mMainScaleSpeed = 0.0f;
@@ -62,15 +85,31 @@ void EffectBalloonBurst::Update() {
         mMainScale += mMainScaleSpeed;
         
         mMainScaleSpeed -= mMainScaleDownAccel;
-        mMainScaleDownAccel += 0.0002f;
+        mMainScaleDownAccel += 0.0004f;
         
         if (mMainScale <= 0.0f) {
             mMainScale = 0.0f;
             mMainKill = 1;
+            Kill();
         }
     }
     
     
+    for (int i=0;i<BALLOON_BURST_SLICE_COUNT;i++) {
+        
+        float aRotIncrement = 7.0f + gRand.GetFloat(4.0f);
+        
+        if ((i & 1) == 0) {
+            mSliceRotation[i] -= aRotIncrement;
+        } else {
+            mSliceRotation[i] += aRotIncrement;
+        }
+        
+        
+        
+    }
+    
+    /*
     int aSliceSeed = gRand.Get(3);
     
     float aSliceRotation = gRand.GetFloat(15.0f, 75.0f);
@@ -92,6 +131,7 @@ void EffectBalloonBurst::Update() {
         aSliceRotation += gRand.GetFloat(15.0f, 30.0f);
         if (aSliceRotation > 75.0f) { aSliceRotation -= (75.0f - 15.0f); }
     }
+    */
     
     
     for (int i=0;i<BALLOON_BURST_SLICE_COUNT;i++) {
