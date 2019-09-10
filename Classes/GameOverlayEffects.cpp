@@ -9,7 +9,12 @@
 #include "core_includes.h"
 #include "GameContainer.hpp"
 #include "GameOverlayEffects.hpp"
+#include "EffectBalloonBurst.hpp"
 #include "FAnimation.hpp"
+#include "Balloon.hpp"
+#include "BrickHead.hpp"
+#include "StuckDart.hpp"
+#include "Turtle.hpp"
 #include "Game.hpp"
 
 GameOverlayEffects *gEffectsOverlay = NULL;
@@ -90,4 +95,27 @@ void GameOverlayEffects::Draw() {
     gWadGameEffects.mSequenceBlast2.Center(mSeqFrame02, 180.0f, 250.0f);
     gWadGameEffects.mSequenceBlast3.Center(mSeqFrame03, 260.0f, 350.0f);
     
+}
+
+void GameOverlayEffects::Get2DPos(GameObject *pObject, float &pX, float &pY) {
+    pX = mWidth2;
+    pY = mHeight2;
+    if (pObject != NULL) {
+        pX = pObject->mTransform.mX;
+        pY = pObject->mTransform.mY;
+        FCanvas::ConvertPoint(pX, pY, gGame, this);
+    }
+}
+
+void GameOverlayEffects::GenerateBalloonPopAnimation(Balloon *pBalloon) {
+    
+    if (pBalloon == NULL) { return; }
+    
+    float aX = 0.0f, aY = 0.0f;
+    Get2DPos(pBalloon, aX, aY);
+    
+    EffectBalloonBurst *aBurst = new EffectBalloonBurst();
+    aBurst->mX = aX;
+    aBurst->mY = aY;
+    mEffectListBalloonBursts.Add(aBurst);
 }

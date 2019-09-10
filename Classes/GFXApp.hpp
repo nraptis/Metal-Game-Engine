@@ -74,7 +74,6 @@ public:
     int                                     mEditorSwitchTimer;
     
 #endif
-
     
     void                                    EnqueueWadReload(int pTime);
     void                                    DequeueWadReload();
@@ -84,17 +83,7 @@ public:
     void                                    ExecuteWadReload();
     int                                     mWadReloadTimer;
     
-    
     void                                    ReevaluateScreenResolution();
-    
-    
-    //AssetWadGameInterface                   mWadGameInterface;
-    //AssetWadGameEffects                     mWadGameEffects;
-    
-    
-    //effect_twinkle_additive_white_large.png
-    //effect_twinkle_additive_white_small.png
-    
     
     FloatingCamera                          mCamera;
     

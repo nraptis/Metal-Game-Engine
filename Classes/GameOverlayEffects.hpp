@@ -12,6 +12,8 @@
 #include "GFXApp.hpp"
 
 class Game;
+class GameObject;
+class Balloon;
 class GameOverlayEffects : public FCanvas {
 public:
     GameOverlayEffects();
@@ -21,13 +23,13 @@ public:
     virtual void                                Update() override;
     virtual void                                Draw() override;
     
+    
+    void                                        Get2DPos(GameObject *pObject, float &pX, float &pY);
+    
+    void                                        GenerateBalloonPopAnimation(Balloon *pBalloon);
+    
     FObjectList                                 mEffectListBalloonBursts;
     FObjectList                                 mEffectListDartFadeStar;
-    
-    
-    
-    //mSequenceBlast1
-    
     
     float                                       mSeqFrame01;
     float                                       mSeqFrame02;

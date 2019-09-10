@@ -999,7 +999,7 @@ void Game::DartCollideWithBalloon(Dart *pDart, Balloon *pBalloon) {
     
     if (pBalloon != NULL) {
         //pBalloon->mDidPop = true;
-        DisposeObject(pBalloon);
+        
         
         if (mPopSoundDelay == 0) {
             mPopSoundDelay = 2;
@@ -1007,11 +1007,26 @@ void Game::DartCollideWithBalloon(Dart *pDart, Balloon *pBalloon) {
         }
         
         if (gEffectsOverlay != NULL) {
-            EffectBalloonBurst *aBurst = new EffectBalloonBurst();
-            FVec2 aPos = FCanvas::Convert(pBalloon->mTransform.mX, pBalloon->mTransform.mY, this, gEffectsOverlay);
-            aBurst->SetPos(aPos.mX, aPos.mY);
-            gEffectsOverlay->mEffectListBalloonBursts.Add(aBurst);
+            
+            gEffectsOverlay->GenerateBalloonPopAnimation(pBalloon);
+            
+            
+            //int aSpawnCount
+            
+            //EffectBalloonBurst *aBurst = new EffectBalloonBurst();
+            //FVec2 aPos = FCanvas::Convert(pBalloon->mTransform.mX, pBalloon->mTransform.mY, this, gEffectsOverlay);
+            //aBurst->SetPos(aPos.mX, aPos.mY);
+            //gEffectsOverlay->mEffectListBalloonBursts.Add(aBurst);
+            
+            
+            //Balloon *pBalloon
+            
+            //SetSprite(&gWadGameEffects.mBalloonPopMark);
+            
         }
+        
+        DisposeObject(pBalloon);
+        
     }
     
     mPoppedCount++;

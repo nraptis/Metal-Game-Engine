@@ -11,11 +11,43 @@
 
 #include "FParticle.hpp"
 
-class EffectBalloonBurst : public FParticle {
+#define BALLOON_BURST_SLICE_COUNT 3
+
+class EffectBalloonBurst : public FObject {
     
 public:
     EffectBalloonBurst();
     virtual ~EffectBalloonBurst();
+    
+    
+    virtual void                                Update() override;
+    virtual void                                Draw() override;
+    
+    float                                       mX;
+    float                                       mY;
+    
+    int                                         mMainMode;
+    int                                         mMainKill;
+    float                                       mMainScale;
+    float                                       mMainScaleSpeed;
+    float                                       mMainScaleDownAccel;
+    float                                       mMainRotation;
+    float                                       mMainRotationSpeed;
+    float                                       mMainRotationAccel;
+    
+    
+    
+    int                                         mSliceKill[BALLOON_BURST_SLICE_COUNT];
+    
+    float                                       mSliceOffsetX[BALLOON_BURST_SLICE_COUNT];
+    float                                       mSliceOffsetY[BALLOON_BURST_SLICE_COUNT];
+    float                                       mSliceRotation[BALLOON_BURST_SLICE_COUNT];
+    float                                       mSliceScale[BALLOON_BURST_SLICE_COUNT];
+    float                                       mSliceScaleSpeed[BALLOON_BURST_SLICE_COUNT];
+    
+    
+    
+    
     
     
 };
