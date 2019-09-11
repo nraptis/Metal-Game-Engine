@@ -13,6 +13,9 @@ Turtle::Turtle() {
     
     mGameObjectType = GAME_OBJECT_TYPE_TURTLE;
     
+    mBalloon = NULL;
+    mDidSpawnBalloon = false;
+    
     mModel = &(gWadModels.mTurtle);
     mSprite = &(gWadModels.mTurtleMap);
     
@@ -37,35 +40,24 @@ Turtle::Turtle() {
     mPropellerBillboardSpin2 = gRand.Rot();
     mPropellerBillboardSpin3 = gRand.Rot();
     
-    
-    
-    
-    
-    //mPropellerBillboardSequence = gWadModels.mTurtle;
-    //mPropellerBillboardSequenceMap;
-    //mPropellerBillboardFrame = ;
-    
-    
-    
-    
-    //FModelDataPacked                        *mPropellerModel;
-    //FSprite                                 *mPropellerSprite;
-    
-    
-    
-    //mAccessoryModel = &gApp->mTurtleCage;
-    //mAccessorySprite = &gApp->mTurtleMap;
-    
     mUniform = &(gGame->mRenderer->mUniformPhongBalloon);
     
-    mVelX = 0.0f;
-    mVelY = 0.0f;
+    mKnockedDown = false;
+    
     
     mTransform.mOffsetY = 1.0f;
     mTransform.mOffsetScale = 0.65f;
     
     mBillboardFrame = 0.0f;
     
+    mTransform.mOffsetX = 0.0f;
+    //mTransform.mOffsetY = 52.0f;
+    mTransform.mOffsetY = 52.0f;
+    
+    mBalloonOscillationSin = gRand.GetRotation();
+    mBalloonOscillationSinSpeed = gRand.GetFloat(1.4f, 1.8f, true) * 6.0f;
+    
+    BuildEdgePointListBase();
 }
 
 Turtle::~Turtle() {
@@ -74,8 +66,21 @@ Turtle::~Turtle() {
 
 void Turtle::Update() {
     
-    mTransform.mX += mVelX;
-    mTransform.mY += mVelY;
+    if ((mDidSpawnBalloon == false) && (mBalloon == NULL)) {//} && (mKill == 0)) {
+        mDidSpawnBalloon = true;
+        mBalloon = new Balloon();
+        mBalloon->mShouldSpawnThread = false;
+        gGame->mBalloonList.Add(mBalloon);
+    }
+    
+    if (mBalloon != NULL) {
+        mBalloonOscillationSin += mBalloonOscillationSinSpeed;
+        if (mBalloonOscillationSin >= 360.0f) { mBalloonOscillationSin -= 360.0f; }
+        if (mBalloonOscillationSin  < 0.0f  ) { mBalloonOscillationSin += 360.0f; }
+        
+        mBalloon->mTransform.mX = mTransform.mX;
+        mBalloon->mTransform.mY = mTransform.mY + Sin(mBalloonOscillationSin) * 1.65f;
+    }
     
     mPropellerSpin += mPropellerSpeed + gRand.GetFloat(2.0f, 2.5f);
     if (mPropellerSpin >= 360.0f) { mPropellerSpin -= 360.0f; }
@@ -106,22 +111,25 @@ void Turtle::Update() {
         mPropellerBillboardSpin3 += 8.0f + gRand.GetFloat(4.0f);
         if (mPropellerBillboardSpin3 >= 360.0f) { mPropellerBillboardSpin3 -= 360.0f; }
         
-        
-        
-        
-        
-        
     }
     
-    
-    
     if (gWadModels.mTurtlePropellerBillboardMapSequence.mList.mCount > 0) {
-        
         mBillboardFrame += 0.5f;
         if (mBillboardFrame >= gWadModels.mTurtlePropellerBillboardMapSequence.GetMaxFrame()) {
             mBillboardFrame -= gWadModels.mTurtlePropellerBillboardMapSequence.GetMaxFrame();
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    BuildEdgePointList();
     
 }
 
@@ -129,190 +137,14 @@ void Turtle::Draw() {
     
     GameObject::Draw();
     
-}
-
-void Turtle::Draw3D() {
+    Graphics::PipelineStateSetShape2DAlphaBlending();
+    Graphics::SetColor(1.0f, 0.0f, 0.0f, 0.85f);
     
-    //GameObject::Draw3D();
-    GameObject::Draw3D();
+    Graphics::DrawPoint(mTransform.mX, mTransform.mY, 10.0f);
     
     
-    
-    
-    
-    
-    /*
-    if (mUniform != NULL) {
-        gGame->Convert2DTransformTo3D(&mTransform, &mTransform3D);
-        
-        mModelView.Reset();
-        
-        //We start by translation...?
-        mModelView.Translate(mTransform3D.mX, mTransform3D.mY, mTransform3D.mZ);
-        
-        //All of our models are exported with X 90 degrees wrong...
-        mModelView.RotateX(-90.0f);
-        mModelView.RotateY(180.0f);
-        
-        //mModelView.RotateZ(180.0f);
-        
-        if (mTransform3D.mRotationX != 0.0f) {
-            //mModelView.RotateX(mTransform3D.mRotationX);
-        }
-        
-        if (mTransform3D.mRotationZ != 0.0f) {
-            //mModelView.RotateZ(mTransform3D.mRotationZ);
-        }
-        
-        //Now we do a 2-D rotation...
-        if (mTransform3D.mRotation2D != 0.0f) {
-            mModelView.RotateY(-mTransform3D.mRotation2D);
-        }
-        
-        //Now we spin around the Y axis...
-        if (mTransform3D.mSpin != 0.0f) {
-            mModelView.RotateZ(mTransform3D.mSpin);
-        }
-        
-        mModelView.Scale(10.0f);
-        
-        //Now we scale down...
-        mModelView.Scale(mTransform3D.mScaleX * mTransform3D.mScale, mTransform3D.mScaleY * mTransform3D.mScale, mTransform3D.mScaleZ * mTransform3D.mScale);
-        
-        mNormal.SetNormalMatrix(mModelView);
-        
-        
-        
-        
-        //Assign the model view to the uniform...
-        mUniform->mModelView.Set(mModelView);
-        
-        if (mUniform->GetType() == UNIFORM_TYPE_LIGHT_DIFFUSE) {
-            FUniformsLightDiffuse *aUniform = (FUniformsLightDiffuse *)(mUniform);
-            aUniform->mNormal.Set(mNormal);
-        }
-        
-        if (mUniform->GetType() == UNIFORM_TYPE_LIGHT_PHONG) {
-            FUniformsLightPhong *aUniform = (FUniformsLightPhong *)(mUniform);
-            aUniform->mNormal.Set(mNormal);
-        }
-        
-        if (mUniform->GetType() == UNIFORM_TYPE_LIGHT_SIMPLE_SPOTLIGHT) {
-            FUniformsLightSimpleSpotlight *aUniform = (FUniformsLightSimpleSpotlight *)(mUniform);
-            aUniform->mNormal.Set(mNormal);
-        }
-        
-        mUniform->mColor.mRed = mColor.mRed;
-        mUniform->mColor.mGreen = mColor.mGreen;
-        mUniform->mColor.mBlue = mColor.mBlue;
-        mUniform->mColor.mAlpha = mColor.mAlpha;
-        
-        Graphics::UniformBind(mUniform);
-        
-        
-        //Graphics::DrawTrianglesIndexedWithPackedBuffers(mPropellerModel->mBuffer, 0, mPropellerModel->mIndex, mPropellerModel->mIndexCount, mPropellerSprite->mTexture);
-        
-        FModelDataPacked *aModel1 = gWadModels.mTestSequence1.GetModel(mTestFrame);
-        
-        if (aModel1 != NULL && gWadModels.mTestSequence1.mIndexCount > 0) {
-            Graphics::DrawTrianglesIndexedWithPackedBuffers(aModel1->mBuffer, 0, gWadModels.mTestSequence1.mIndex, gWadModels.mTestSequence1.mIndexCount, gWadModels.mTestSequenceMap.mTexture);
-            
-            
-        }
-        
-        FModelDataPacked *aModel2 = gWadModels.mTestSequence2.GetModel(mTestFrame);
-        
-        if (aModel2 != NULL && gWadModels.mTestSequence1.mIndexCount > 0) {
-            Graphics::DrawTrianglesIndexedWithPackedBuffers(aModel2->mBuffer, 0, gWadModels.mTestSequence1.mIndex, gWadModels.mTestSequence1.mIndexCount, gWadModels.mTestSequenceMap.mTexture);
-        }
-        
-        
-        
-    }
-
-
-    if (mUniform != NULL) {
-        gGame->Convert2DTransformTo3D(&mTransform, &mTransform3D);
-        
-        mModelView.Reset();
-        
-        //We start by translation...?
-        mModelView.Translate(mTransform3D.mX, mTransform3D.mY, mTransform3D.mZ);
-        
-        //All of our models are exported with X 90 degrees wrong...
-        mModelView.RotateX(-90.0f);
-        mModelView.RotateY(180.0f);
-        
-        //mModelView.RotateZ(180.0f);
-        
-        if (mTransform3D.mRotationX != 0.0f) {
-            //mModelView.RotateX(mTransform3D.mRotationX);
-        }
-        
-        if (mTransform3D.mRotationZ != 0.0f) {
-            //mModelView.RotateZ(mTransform3D.mRotationZ);
-        }
-        
-        //Now we do a 2-D rotation...
-        if (mTransform3D.mRotation2D != 0.0f) {
-            mModelView.RotateY(-mTransform3D.mRotation2D);
-        }
-        
-        //Now we spin around the Y axis...
-        if (mTransform3D.mSpin != 0.0f) {
-            mModelView.RotateZ(mTransform3D.mSpin);
-        }
-        
-        mModelView.RotateY(45.0f);
-        mModelView.RotateX(45.0f);
-        
-        
-        mModelView.Scale(10.0f);
-        
-        //Now we scale down...
-        mModelView.Scale(mTransform3D.mScaleX * mTransform3D.mScale, mTransform3D.mScaleY * mTransform3D.mScale, mTransform3D.mScaleZ * mTransform3D.mScale);
-        
-        mNormal.SetNormalMatrix(mModelView);
-        
-        
-        
-        
-        //Assign the model view to the uniform...
-        mUniform->mModelView.Set(mModelView);
-        
-        if (mUniform->GetType() == UNIFORM_TYPE_LIGHT_DIFFUSE) {
-            FUniformsLightDiffuse *aUniform = (FUniformsLightDiffuse *)(mUniform);
-            aUniform->mNormal.Set(mNormal);
-        }
-        
-        if (mUniform->GetType() == UNIFORM_TYPE_LIGHT_PHONG) {
-            FUniformsLightPhong *aUniform = (FUniformsLightPhong *)(mUniform);
-            aUniform->mNormal.Set(mNormal);
-        }
-        
-        if (mUniform->GetType() == UNIFORM_TYPE_LIGHT_SIMPLE_SPOTLIGHT) {
-            FUniformsLightSimpleSpotlight *aUniform = (FUniformsLightSimpleSpotlight *)(mUniform);
-            aUniform->mNormal.Set(mNormal);
-        }
-        
-        mUniform->mColor.mRed = mColor.mRed;
-        mUniform->mColor.mGreen = mColor.mGreen;
-        mUniform->mColor.mBlue = mColor.mBlue;
-        mUniform->mColor.mAlpha = mColor.mAlpha;
-        
-        Graphics::UniformBind(mUniform);
-        
-        FModelDataPacked *aModel = gWadModels.mBillboardSequence.GetModel(mBillboardFrame);
-        FSprite *aSprite = gWadModels.mBillboardMapSequence.GetSprite(mBillboardFrame);
-        
-        
-        if (aModel != NULL && aModel->mIndexCount > 0 && aSprite != NULL) {
-            Graphics::DrawTrianglesIndexedWithPackedBuffers(aModel->mBuffer, 0, aModel->mIndex, aModel->mIndexCount, aSprite->mTexture);
-        }
-    }
-     
-    */
-     
+    Graphics::SetColor(1.0f, 0.0f, 0.25f, 0.5f);
+    mEdgePointList2D.DrawEdges(2.0f);
 }
 
 void Turtle::Draw3DPropeller() {
@@ -323,12 +155,7 @@ void Turtle::Draw3DPropeller() {
             
             mPropellerMatrixModelView.Set(mModelView);
             mPropellerMatrixModelView.RotateZ(mPropellerSpin);
-            
             mPropellerMatrixNormal.SetNormalMatrix(mPropellerMatrixModelView);
-            
-            
-            //mPropellerMatrixNormal
-            //mPropellerMatrixModelView
             
             //Assign the model view to the uniform...
             mUniform->mModelView.Set(mPropellerMatrixModelView);
@@ -358,8 +185,6 @@ void Turtle::Draw3DPropeller() {
         
         Graphics::DrawTrianglesIndexedWithPackedBuffers(mPropellerModel->mBuffer, 0, mPropellerModel->mIndex, mPropellerModel->mIndexCount, mPropellerSprite->mTexture);
     }
-    
-    
 }
 
 void Turtle::Draw3DBillboard() {
@@ -374,7 +199,6 @@ void Turtle::Draw3DBillboard() {
             Graphics::UniformBind();
             Graphics::DrawTrianglesIndexedWithPackedBuffers(aModel->mBuffer, 0, mPropellerBillboardSequence->mIndex, mPropellerBillboardSequence->mIndexCount, aSprite->mTexture);
         }
-        
         
         aModel = mPropellerBillboardSequence->GetModel(mPropellerBillboardFrame2);
         aSprite = mPropellerBillboardSequenceMap->GetSprite(mPropellerBillboardFrame2);
@@ -397,5 +221,85 @@ void Turtle::Draw3DBillboard() {
             Graphics::UniformBind();
             Graphics::DrawTrianglesIndexedWithPackedBuffers(aModel->mBuffer, 0, mPropellerBillboardSequence->mIndex, mPropellerBillboardSequence->mIndexCount, aSprite->mTexture);
         }
+    }
+}
+
+void Turtle::KnockDown() {
+    mKnockedDown = true;
+    mModel = &(gWadModels.mTurtleDamaged);
+    mSprite = &(gWadModels.mTurtleDamagedMap);
+}
+
+bool Turtle::WillCollide(float pStartX, float pStartY, float pEndX, float pEndY) {
+    float aMidX = (pStartX + pEndX) * 0.5f;
+    float aMidY = (pStartY + pEndY) * 0.5f;
+    if (mEdgePointList2D.ContainsPoint(pStartX, pStartY)) { return true; }
+    if (mEdgePointList2D.ContainsPoint(aMidX, aMidY)) { return true; }
+    if (mEdgePointList2D.ContainsPoint(pEndX, pEndY)) { return true; }
+    return false;
+}
+
+void Turtle::BuildEdgePointListBase() {
+    mEdgePointList3DBase.RemoveAll();
+    
+    float aOutlineStartY = -1.40f;
+    float aOutlineArcWidth = 1.48f;
+    float aOutlineLipHeight = 0.85f;
+    float aOutlineArcCenterX = 0.0f;
+    float aOutlineArcCenterY = aOutlineStartY + aOutlineLipHeight;
+    float aOutlineArcVerticalCompressionFactor = 0.825f;
+    
+    float aY = aOutlineStartY;
+    float aX = -aOutlineArcWidth;
+    
+    int aLipPointCount = 2;
+    for (int aLipIndex=0;aLipIndex<aLipPointCount;aLipIndex++) {
+        float aPercent = ((float)aLipIndex) / ((float)aLipPointCount);
+        aY = aOutlineStartY + aOutlineLipHeight * aPercent;
+        mEdgePointList3DBase.Add(aX, aY);
+    }
+    
+    int aArcPointCount = 12;
+    for (int i=0;i<aArcPointCount;i++) {
+        float aPercent = ((float)i) / ((float)(aArcPointCount - 1));
+        float aRotation = 270.0f - 180.0f * aPercent;
+        float aDirX = Sin(aRotation);
+        float aDirY = -Cos(aRotation);
+        aX = aOutlineArcCenterX + aDirX * aOutlineArcWidth;
+        aY = aOutlineArcCenterY + aDirY * aOutlineArcWidth * aOutlineArcVerticalCompressionFactor;
+        mEdgePointList3DBase.Add(aX, aY);
+    }
+    
+    aX = aOutlineArcWidth;
+    for (int aLipIndex=0;aLipIndex<aLipPointCount;aLipIndex++) {
+        float aPercent = ((float)(aLipIndex + 1)) / ((float)aLipPointCount);
+        aY = (aOutlineStartY + aOutlineLipHeight) - aOutlineLipHeight * aPercent;
+        mEdgePointList3DBase.Add(aX, aY);
+    }
+}
+
+void Turtle::BuildEdgePointList() {
+    
+    
+    gGame->Convert2DTransformTo3D(&mTransform, &mTransform3D);
+    
+    mEdgePointList3D.RemoveAll();
+    for (int i=0;i<mEdgePointList3DBase.mCount;i++) {
+        mEdgePointList3D.Add(mEdgePointList3DBase.mX[i] + mTransform3D.mX, mEdgePointList3DBase.mY[i] + mTransform3D.mY);
+    }
+    
+    mEdgePointList2D.RemoveAll();
+    
+    float aX = 0.0f;
+    float aY = 0.0f;
+    for (int i=0;i<mEdgePointList3D.mCount;i++) {
+        
+        aX = mEdgePointList3D.mX[i];
+        aY = mEdgePointList3D.mY[i];
+        
+        aX = gGame->Convert3DXTo2D(aX);
+        aY = gGame->Convert3DYTo2D(aY);
+        
+        mEdgePointList2D.Add(aX, aY);
     }
 }

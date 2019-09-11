@@ -37,6 +37,8 @@ public:
     
     float                                   mTilt;
     
+    bool                                    mShouldSpawnThread;
+    bool                                    mDidSpawnThread;
     bool                                    mIsThreadVisible;
     HangingThread                           mThread;
     

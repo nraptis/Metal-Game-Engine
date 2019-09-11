@@ -4,6 +4,10 @@ H2.) Every single formation needs to be redone considering that speed is no long
 
 H3.) Every single formation needs to have the GRID state it was saved with baked into the file. This way we can re-load formations and switch the types..
 
+H4.) Motion Controller / Animations are not working for WAVE SPAWNS...
+
+H5.) When turtle's balloon is popped, the turtle should be removed from the play area in a clever, animated fashion.
+
 J1.) We need an improved achievement manager which uses hash tables. This can be optional, but nice to have.
 
 J2.) The balloon "pop mark" animation should scale up, linger briefly, and rapidly scale down before disappearing.

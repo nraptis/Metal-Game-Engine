@@ -71,9 +71,16 @@ public:
     float                                       Convert3DYTo2D(float pY);
     
     void                                        DisposeObject(GameObject *pObject);
-    
     void                                        DisposeObjectFromLevelData(GameObject *pObject);
     
+    //Mainly used by editor to "flush" screen before re-spawn...
+    void                                        DisposeAllObjects();
+    
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////
+    ////             These are "events" which occur in certain object's life cycles...
+    ////
     void                                        FlyOffEscape(GameObject *pObject);
     
     void                                        StuckDartBeginFadeOut(Dart *pDart);
@@ -81,10 +88,19 @@ public:
     
     void                                        DartCollideWithBalloon(Dart *pDart, Balloon *pBalloon);
     void                                        DartCollideWithBrickhead(Dart *pDart, BrickHead *pBrickHead);
-    void                                        DartMovingInterpolation(Dart *pDart, float pPercent, bool pEnd);
+    void                                        DartCollideWithTurtle(Dart *pDart, Turtle *pTurtle);
     
-    //Mainly used by editor to "flush" screen before re-spawn...
-    void                                        DisposeAllObjects();
+    void                                        TurtleDidLoseBalloon(Turtle *pTurtle);
+    
+    ////
+    ////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    void                                        DartMovingInterpolationTurtles(Dart *pDart, float pPercent, bool pEnd);
+    void                                        DartMovingInterpolationBrickHeads(Dart *pDart, float pPercent, bool pEnd);
+    void                                        DartMovingInterpolationBalloons(Dart *pDart, float pPercent, bool pEnd);
+    
     
     GameInfoOverlay                             *mTestOverlay;
     
@@ -105,9 +121,8 @@ public:
     FObjectList                                 mDartList;
     FObjectList                                 mBalloonList;
     FObjectList                                 mBrickHeadList;
-    FObjectList                                 mBombList;
-    
     FObjectList                                 mTurtleList;
+    FObjectList                                 mBombList;
     
     
     Dart                                        *mCurrentDart;
@@ -115,6 +130,14 @@ public:
     
     void                                        ResetDartTouch();
     void                                        ReleaseDart();
+    
+    
+    bool                                        mTrajectoryExists;
+    float                                       mTrajectoryReleaseDirX;
+    float                                       mTrajectoryReleaseDirY;
+    float                                       mTrajectoryReleaseVelocity;
+    FPointList                                  mTrajectoryList;
+    
     
     float                                       mDartReleaseVelocityMin;
     float                                       mDartReleaseVelocityMax;
@@ -137,6 +160,7 @@ public:
     float                                       mDartPullY;
     float                                       mDartTargetPullRotation;
     float                                       mDartPullRotation;
+    
     
     bool                                        mIsDartBeingPulled;
     void                                        *mDartTouch;

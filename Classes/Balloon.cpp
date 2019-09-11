@@ -30,14 +30,16 @@ Balloon::Balloon() {
     
     mTilt = 0.0f;
     
-    mThread.Setup();
     mIsThreadVisible = true;
     
     mBounceFactor = 0.0f;
     mBounceFactorSin = 0.0f;
     
+    mShouldSpawnThread = true;
+    mDidSpawnThread = false;
     
-    mThread.Setup();
+    //mThread.Setup();
+    
 }
 
 Balloon::~Balloon() {
@@ -45,6 +47,13 @@ Balloon::~Balloon() {
 }
 
 void Balloon::Update() {
+    
+    if (mShouldSpawnThread) {
+        if (mDidSpawnThread == false) {
+            mDidSpawnThread = true;
+            mThread.Setup();
+        }
+    }
     
     GameObject::Update();
     
@@ -83,20 +92,22 @@ void Balloon::Draw3D() {
 
 void Balloon::Draw3DThread() {
     
-    
-    
-    gGame->Convert2DTransformTo3D(&mTransform, &mTransform3D);
-    
-    FVec3 aCenter = FVec3(mTransform3D.mX, mTransform3D.mY, mTransform3D.mZ);
-    FVec3 aPos = aCenter;
-    aPos.mY += 2.15f;
-    
-    aPos = PivotPoint(aPos, mTransform.mRotation, aCenter);
-    
-    mThread.mOffsetX = aPos.mX;
-    mThread.mOffsetY = aPos.mY;
-    mThread.mOffsetZ = 0.0f;
-    
-    mThread.Generate(gGame->mWind.mPower, 0.0f);
-    mThread.Draw3D();
+    if (mIsThreadVisible == true) {
+        
+        gGame->Convert2DTransformTo3D(&mTransform, &mTransform3D);
+        
+        FVec3 aCenter = FVec3(mTransform3D.mX, mTransform3D.mY, mTransform3D.mZ);
+        FVec3 aPos = aCenter;
+        aPos.mY += 2.15f;
+        
+        aPos = PivotPoint(aPos, mTransform.mRotation, aCenter);
+        
+        mThread.mOffsetX = aPos.mX;
+        mThread.mOffsetY = aPos.mY;
+        mThread.mOffsetZ = 0.0f;
+        
+        mThread.Generate(gGame->mWind.mPower, 0.0f);
+        mThread.Draw3D();
+        
+    }
 }

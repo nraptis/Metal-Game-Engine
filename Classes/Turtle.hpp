@@ -11,7 +11,9 @@
 
 #include "FSprite.hpp"
 #include "GameObject.hpp"
+#include "FPointList.hpp"
 
+class Balloon;
 class Turtle : public GameObject {
 public:
     Turtle();
@@ -19,7 +21,9 @@ public:
     
     virtual void                            Update();
     virtual void                            Draw();
-    virtual void                            Draw3D();
+    
+    virtual bool                            WillCollide(float pStartX, float pStartY, float pEndX, float pEndY);
+    
     
     void                                    Draw3DPropeller();
     void                                    Draw3DBillboard();
@@ -32,7 +36,6 @@ public:
     float                                   mPropellerSpin;
     float                                   mPropellerSpeed;
     
-    
     FModelDataPackedSequence                *mPropellerBillboardSequence;
     FSpriteSequence                         *mPropellerBillboardSequenceMap;
     float                                   mPropellerBillboardFrame1;
@@ -43,19 +46,24 @@ public:
     float                                   mPropellerBillboardSpin3;
     
     
-    
-    
-    //FModelDataPacked                        *mPropellerModel;
-    //FSpriteSequence                         *mPropellerSprite;
-    
-    float                                   mVelX;
-    float                                   mVelY;
-    
+    void                                    KnockDown();
+    bool                                    mKnockedDown; //When  we are knocked down, we no longer operate as a blocker.
     
     
     float                                   mBillboardFrame;
     
+    Balloon                                 *mBalloon;
+    bool                                    mDidSpawnBalloon;
     
+    float                                   mBalloonOscillationSin;
+    float                                   mBalloonOscillationSinSpeed;
+    
+    void                                    BuildEdgePointListBase();
+    void                                    BuildEdgePointList();
+    
+    FPointList                              mEdgePointList3DBase;
+    FPointList                              mEdgePointList3D;
+    FPointList                              mEdgePointList2D;
     
 };
 

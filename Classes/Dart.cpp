@@ -123,7 +123,7 @@ void Dart::Update() {
         }
     }
     
-    if (!mIdle) {
+    if ((mIdle == false) && (mStuck == false)) {
         mTimer++;
         
         mUpdateInterpStartX = mTransform.mX;
@@ -133,9 +133,7 @@ void Dart::Update() {
         //mTransform.mX += mVelX;
         //mTransform.mY += mVelY;
         
-        if (mStuck == false && mKill == 0 && mIdle == false) {
-            mVelY += gGame->mGravity;
-        }
+        mVelY += gGame->mGravity;
         
         if (fabsf(mVelX) > 0.001f || fabsf(mVelY) > 0.001f) {
             mTargetRotation = FaceTarget(-mVelX, -mVelY);

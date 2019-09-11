@@ -342,14 +342,7 @@ void BrickHead::Rumble(float pRotation) {
     
     mRumbleBounceMagnitude = 12.0f;
     mRumbleBounceSin = 0.0f;
-    
-    
-    
-    
-    
 }
-
-
 
 bool BrickHead::WillCollide(float pStartX, float pStartY, float pEndX, float pEndY) {
     
