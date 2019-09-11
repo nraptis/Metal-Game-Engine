@@ -2,6 +2,7 @@
 	"section": true,
 	"wave_list": [
 		{
+			"spawn_spacing": 90,
 			"max_spawn_size": 189,
 			"path": {
 				"node_list": [
@@ -30,6 +31,7 @@
 			]
 		},
 		{
+			"spawn_spacing": 90,
 			"creation_prev_wave_complete": true,
 			"max_spawn_size": 195,
 			"path": {
@@ -54,6 +56,7 @@
 			]
 		},
 		{
+			"spawn_spacing": 90,
 			"creation_screen_perms_clear": true,
 			"max_spawn_size": 262,
 			"path": {

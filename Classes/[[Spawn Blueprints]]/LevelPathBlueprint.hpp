@@ -15,7 +15,7 @@
 #include "FJSON.hpp"
 
 class LevelWaveBlueprint;
-class LevelSectionPermanentBlueprint;
+class LevelSectionPermBlueprint;
 
 class LevelPathNodeBlueprint {
 public:
@@ -59,7 +59,7 @@ public:
     ~LevelPathBlueprint();
     
     LevelWaveBlueprint                          *mWave;
-    LevelSectionPermanentBlueprint              *mPerm;
+    LevelSectionPermBlueprint              *mPerm;
     
     void                                        Update();
     void                                        Reset();

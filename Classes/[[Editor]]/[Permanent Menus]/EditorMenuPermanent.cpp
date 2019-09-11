@@ -189,7 +189,7 @@ void EditorMenuPermanent::Update() {
         return;
     }
     
-    LevelSectionPermanentBlueprint *aPerm = gEditor->PermGet();
+    LevelSectionPermBlueprint *aPerm = gEditor->PermGet();
     
     
     

@@ -10,7 +10,7 @@
 #define LevelSectionBlueprint_hpp
 
 #include "LevelWaveBlueprint.hpp"
-#include "LevelSectionPermanentBlueprint.hpp"
+#include "LevelSectionPermBlueprint.hpp"
 #include "FList.hpp"
 
 class LevelSection;
@@ -49,7 +49,7 @@ public:
     void                                        PermRefreshPositions();
     
     FList                                       mPermList;
-    LevelSectionPermanentBlueprint              *mCurrentPerm;
+    LevelSectionPermBlueprint              *mCurrentPerm;
     
     void                                        Build();
     void                                        Build(LevelSection *pSection);

@@ -63,7 +63,7 @@ void LevelSection::Reset() {
     mWaveList.RemoveAll();
     
     
-    EnumList(LevelSectionPermanent, aPerm, mPermList) {
+    EnumList(LevelSectionPerm, aPerm, mPermList) {
         aPerm->Reset();
         mKillPermList.Add(aPerm);
     }
@@ -90,10 +90,10 @@ void LevelSection::Restart() {
 */
 
 void LevelSection::Spawn() {
-    EnumList(LevelSectionPermanent, aPerm, mPermList) {
+    EnumList(LevelSectionPerm, aPerm, mPermList) {
         aPerm->Prepare();
     }
-    EnumList(LevelSectionPermanent, aPerm, mPermList) {
+    EnumList(LevelSectionPerm, aPerm, mPermList) {
         aPerm->Spawn();
     }
     mDidSpawn = true;
@@ -184,7 +184,7 @@ void LevelSection::Update() {
         }
     }
     
-    EnumList(LevelSectionPermanent, aPerm, mPermList) {
+    EnumList(LevelSectionPerm, aPerm, mPermList) {
         aPerm->Update();
     }
     
@@ -209,7 +209,7 @@ void LevelSection::Update() {
         mAllWavesComplete = false;
     }
     
-    EnumList(LevelSectionPermanent, aPerm, mPermList) {
+    EnumList(LevelSectionPerm, aPerm, mPermList) {
         if (aPerm->IsClearForSectionCompletion() == false) {
             mAllPermsComplete = false;
         }
@@ -358,7 +358,7 @@ void LevelSection::DisposeObject(GameObject *pObject) {
         aWave->DisposeObject(pObject);
     }
     
-    EnumList(LevelSectionPermanent, aPerm, mPermList) {
+    EnumList(LevelSectionPerm, aPerm, mPermList) {
         aPerm->DisposeObject(pObject);
     }
     
@@ -368,7 +368,7 @@ void LevelSection::AddWave(LevelWave *pLevelWave) {
     mWaveList.Add(pLevelWave);
 }
 
-void LevelSection::AddPerm(LevelSectionPermanent *pPerm) {
+void LevelSection::AddPerm(LevelSectionPerm *pPerm) {
     mPermList.Add(pPerm);
 }
 
@@ -389,7 +389,7 @@ void LevelSection::FlyOut(int pType) {
 bool LevelSection::HasAnyObjects() {
     if (mIsComplete == false) { return true; }
     
-    EnumList(LevelSectionPermanent, aPerm, mPermList) {
+    EnumList(LevelSectionPerm, aPerm, mPermList) {
         if (aPerm->HasAnyObjects() == true) {
             return true;
         }
@@ -416,7 +416,7 @@ bool LevelSection::HasAllWaves() {
 
 void LevelSection::HandOffAllPermanentGameObjects(FList *pList) {
     
-    EnumList(LevelSectionPermanent, aPerm, mPermList) {
+    EnumList(LevelSectionPerm, aPerm, mPermList) {
         aPerm->HandOffAllGameObjects(pList);
     }
     

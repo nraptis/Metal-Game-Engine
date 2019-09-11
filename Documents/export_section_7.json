@@ -1,43 +1,27 @@
 {
 	"section": true,
-	"wave_list": [],
-	"perm_list": [
+	"wave_list": [
 		{
-			"x": 12.738822,
-			"y": 53.299080,
+			"max_spawn_size": 366,
 			"path": {
-				"speed_class": -300,
 				"node_list": [
 					{
-						"x_con": 300,
+						"x_con": 200,
 						"y_con": 500
 					},
 					{
 						"x_con": 500,
-						"y_con": 500
-					},
-					{
-						"x_con": 500,
-						"y_con": 600
-					},
-					{
-						"x_con": 300,
-						"y_con": 600
+						"y_con": 500,
+						"wait": 1000
 					}
 				]
 			},
 			"spawn": [
 				{
-					"formation": "f_tr_rrct_320sz_90cr_cfg10xb_sps.json",
-					"formation_config": {
-						"tracer_speed_class_global": 7
-					}
+					"formation": "form_all_nod_all_tur_grd_rec_5x4_68sph_68spv_80ful_nodes_cfg16xt_snp.json",
+					"formation_config": {}
 				}
-			],
-			"formation": "f_tr_rrct_320sz_90cr_cfg10xb_sps.json",
-			"formation_config": {
-				"tracer_speed_class_global": 5
-			}
+			]
 		}
 	]
 }

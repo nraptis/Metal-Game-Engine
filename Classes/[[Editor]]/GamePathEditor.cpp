@@ -532,7 +532,7 @@ void GamePathEditor::SetUp(LevelWaveBlueprint *pWave) {
     mGrid.BuildGrid();
 }
 
-void GamePathEditor::SetUp(LevelSectionPermanentBlueprint *pPerm) {
+void GamePathEditor::SetUp(LevelSectionPermBlueprint *pPerm) {
     mWave = NULL;
     mPath = NULL;
     mPerm = NULL;

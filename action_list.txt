@@ -1,3 +1,7 @@
+I1.) BrickHeads have no "dissipate" mechanism. When a wave with brickheads ends, they just sit there on the screen...
+
+I2.) Turtles have no "dissipate" mechanism. When a wave with turtles ends, they just sit there on the screen...
+
 H1.) We need TYPES to be bart of FORMATION CONFIGURATION. (Optional) This could also reduce the number of existing formations.
 
 H2.) Every single formation needs to be redone considering that speed is no longer being considered.

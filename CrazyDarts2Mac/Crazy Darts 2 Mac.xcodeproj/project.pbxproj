@@ -153,7 +153,7 @@
 		0DBAFD56231F78C300C11381 /* LevelMotionControllerSliceBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFC96231F78C300C11381 /* LevelMotionControllerSliceBlueprint.cpp */; };
 		0DBAFD57231F78C300C11381 /* LevelWaveSpawnBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFC98231F78C300C11381 /* LevelWaveSpawnBlueprint.cpp */; };
 		0DBAFD58231F78C300C11381 /* LevelWaveBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFC99231F78C300C11381 /* LevelWaveBlueprint.cpp */; };
-		0DBAFD59231F78C300C11381 /* LevelSectionPermanentBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFC9C231F78C300C11381 /* LevelSectionPermanentBlueprint.cpp */; };
+		0DBAFD59231F78C300C11381 /* LevelSectionPermBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFC9C231F78C300C11381 /* LevelSectionPermBlueprint.cpp */; };
 		0DBAFD5A231F78C300C11381 /* LevelPermSpawnBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFC9E231F78C300C11381 /* LevelPermSpawnBlueprint.cpp */; };
 		0DBAFD5B231F78C300C11381 /* LevelPathBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFC9F231F78C300C11381 /* LevelPathBlueprint.cpp */; };
 		0DBAFD5C231F78C300C11381 /* LevelMotionControllerBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFCA0231F78C300C11381 /* LevelMotionControllerBlueprint.cpp */; };
@@ -187,7 +187,7 @@
 		0DBAFD78231F78C300C11381 /* LevelMotionController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFCDE231F78C300C11381 /* LevelMotionController.cpp */; };
 		0DBAFD79231F78C300C11381 /* LevelWave.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFCE1231F78C300C11381 /* LevelWave.cpp */; };
 		0DBAFD7A231F78C300C11381 /* LevelPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFCE5231F78C300C11381 /* LevelPath.cpp */; };
-		0DBAFD7B231F78C300C11381 /* LevelSectionPermanent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFCE6231F78C300C11381 /* LevelSectionPermanent.cpp */; };
+		0DBAFD7B231F78C300C11381 /* LevelSectionPerm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFCE6231F78C300C11381 /* LevelSectionPerm.cpp */; };
 		0DBAFD7C231F78C300C11381 /* LevelWaveSpawn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFCE7231F78C300C11381 /* LevelWaveSpawn.cpp */; };
 		0DBAFD7D231F78C300C11381 /* LevelFormation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFCE9231F78C300C11381 /* LevelFormation.cpp */; };
 		0DBAFD7E231F78C300C11381 /* LevelMotionControllerSlice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAFCEA231F78C300C11381 /* LevelMotionControllerSlice.cpp */; };
@@ -512,12 +512,12 @@
 		0DBAFC94231F78C300C11381 /* LevelSectionBlueprint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelSectionBlueprint.cpp; sourceTree = "<group>"; };
 		0DBAFC95231F78C300C11381 /* LevelFormationBlueprint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelFormationBlueprint.cpp; sourceTree = "<group>"; };
 		0DBAFC96231F78C300C11381 /* LevelMotionControllerSliceBlueprint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelMotionControllerSliceBlueprint.cpp; sourceTree = "<group>"; };
-		0DBAFC97231F78C300C11381 /* LevelSectionPermanentBlueprint.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelSectionPermanentBlueprint.hpp; sourceTree = "<group>"; };
+		0DBAFC97231F78C300C11381 /* LevelSectionPermBlueprint.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelSectionPermBlueprint.hpp; sourceTree = "<group>"; };
 		0DBAFC98231F78C300C11381 /* LevelWaveSpawnBlueprint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWaveSpawnBlueprint.cpp; sourceTree = "<group>"; };
 		0DBAFC99231F78C300C11381 /* LevelWaveBlueprint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWaveBlueprint.cpp; sourceTree = "<group>"; };
 		0DBAFC9A231F78C300C11381 /* LevelPermSpawnBlueprint.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelPermSpawnBlueprint.hpp; sourceTree = "<group>"; };
 		0DBAFC9B231F78C300C11381 /* LevelWaveSpawnBlueprint.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWaveSpawnBlueprint.hpp; sourceTree = "<group>"; };
-		0DBAFC9C231F78C300C11381 /* LevelSectionPermanentBlueprint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelSectionPermanentBlueprint.cpp; sourceTree = "<group>"; };
+		0DBAFC9C231F78C300C11381 /* LevelSectionPermBlueprint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelSectionPermBlueprint.cpp; sourceTree = "<group>"; };
 		0DBAFC9D231F78C300C11381 /* LevelWaveBlueprint.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWaveBlueprint.hpp; sourceTree = "<group>"; };
 		0DBAFC9E231F78C300C11381 /* LevelPermSpawnBlueprint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelPermSpawnBlueprint.cpp; sourceTree = "<group>"; };
 		0DBAFC9F231F78C300C11381 /* LevelPathBlueprint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelPathBlueprint.cpp; sourceTree = "<group>"; };
@@ -581,14 +581,14 @@
 		0DBAFCDC231F78C300C11381 /* LevelData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelData.cpp; sourceTree = "<group>"; };
 		0DBAFCDD231F78C300C11381 /* LevelPath.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelPath.hpp; sourceTree = "<group>"; };
 		0DBAFCDE231F78C300C11381 /* LevelMotionController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelMotionController.cpp; sourceTree = "<group>"; };
-		0DBAFCDF231F78C300C11381 /* LevelSectionPermanent.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelSectionPermanent.hpp; sourceTree = "<group>"; };
+		0DBAFCDF231F78C300C11381 /* LevelSectionPerm.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelSectionPerm.hpp; sourceTree = "<group>"; };
 		0DBAFCE0231F78C300C11381 /* LevelWaveSpawn.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWaveSpawn.hpp; sourceTree = "<group>"; };
 		0DBAFCE1231F78C300C11381 /* LevelWave.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWave.cpp; sourceTree = "<group>"; };
 		0DBAFCE2231F78C300C11381 /* LevelFormation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelFormation.hpp; sourceTree = "<group>"; };
 		0DBAFCE3231F78C300C11381 /* LevelData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelData.hpp; sourceTree = "<group>"; };
 		0DBAFCE4231F78C300C11381 /* LevelMotionController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelMotionController.hpp; sourceTree = "<group>"; };
 		0DBAFCE5231F78C300C11381 /* LevelPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelPath.cpp; sourceTree = "<group>"; };
-		0DBAFCE6231F78C300C11381 /* LevelSectionPermanent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelSectionPermanent.cpp; sourceTree = "<group>"; };
+		0DBAFCE6231F78C300C11381 /* LevelSectionPerm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelSectionPerm.cpp; sourceTree = "<group>"; };
 		0DBAFCE7231F78C300C11381 /* LevelWaveSpawn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelWaveSpawn.cpp; sourceTree = "<group>"; };
 		0DBAFCE8231F78C300C11381 /* LevelWave.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelWave.hpp; sourceTree = "<group>"; };
 		0DBAFCE9231F78C300C11381 /* LevelFormation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelFormation.cpp; sourceTree = "<group>"; };
@@ -1113,8 +1113,8 @@
 				0DBAFC9A231F78C300C11381 /* LevelPermSpawnBlueprint.hpp */,
 				0DBAFC94231F78C300C11381 /* LevelSectionBlueprint.cpp */,
 				0DBAFCA2231F78C300C11381 /* LevelSectionBlueprint.hpp */,
-				0DBAFC9C231F78C300C11381 /* LevelSectionPermanentBlueprint.cpp */,
-				0DBAFC97231F78C300C11381 /* LevelSectionPermanentBlueprint.hpp */,
+				0DBAFC9C231F78C300C11381 /* LevelSectionPermBlueprint.cpp */,
+				0DBAFC97231F78C300C11381 /* LevelSectionPermBlueprint.hpp */,
 				0DBAFC99231F78C300C11381 /* LevelWaveBlueprint.cpp */,
 				0DBAFC9D231F78C300C11381 /* LevelWaveBlueprint.hpp */,
 				0DBAFC98231F78C300C11381 /* LevelWaveSpawnBlueprint.cpp */,
@@ -1176,8 +1176,8 @@
 				0DBAFCD9231F78C300C11381 /* LevelPermSpawn.hpp */,
 				0DBAFCD7231F78C300C11381 /* LevelSection.cpp */,
 				0DBAFCEB231F78C300C11381 /* LevelSection.hpp */,
-				0DBAFCE6231F78C300C11381 /* LevelSectionPermanent.cpp */,
-				0DBAFCDF231F78C300C11381 /* LevelSectionPermanent.hpp */,
+				0DBAFCE6231F78C300C11381 /* LevelSectionPerm.cpp */,
+				0DBAFCDF231F78C300C11381 /* LevelSectionPerm.hpp */,
 				0DBAFCE1231F78C300C11381 /* LevelWave.cpp */,
 				0DBAFCE8231F78C300C11381 /* LevelWave.hpp */,
 				0DBAFCE7231F78C300C11381 /* LevelWaveSpawn.cpp */,
@@ -1540,13 +1540,13 @@
 				0D8FCF4C225DA8ED00A74580 /* GraphicsInterface.cpp in Sources */,
 				0DBAFD8E231F78C300C11381 /* EditorMenuPermSpawnPicker.cpp in Sources */,
 				0DBAFDA0231F78C300C11381 /* Game.cpp in Sources */,
-				0DBAFD59231F78C300C11381 /* LevelSectionPermanentBlueprint.cpp in Sources */,
+				0DBAFD59231F78C300C11381 /* LevelSectionPermBlueprint.cpp in Sources */,
 				0DBAFD4E231F78C300C11381 /* Dart.cpp in Sources */,
 				0D8FCF3D225DA8ED00A74580 /* FGestureCanvas.cpp in Sources */,
 				0DBAFD55231F78C300C11381 /* LevelFormationBlueprint.cpp in Sources */,
 				0D8FCF1E225DA8ED00A74580 /* ModelShaders.metal in Sources */,
 				0D8FCF49225DA8ED00A74580 /* FVec3.cpp in Sources */,
-				0DBAFD7B231F78C300C11381 /* LevelSectionPermanent.cpp in Sources */,
+				0DBAFD7B231F78C300C11381 /* LevelSectionPerm.cpp in Sources */,
 				0DBAFD81231F78C300C11381 /* GameOverlayInterface.cpp in Sources */,
 				0D8FCF83225DA8ED00A74580 /* MetalView.mm in Sources */,
 				0D1096CC232460AC009C0DA2 /* GameMenu.cpp in Sources */,

@@ -29,7 +29,7 @@
 #include "LevelPathBlueprint.hpp"
 #include "LevelWaveBlueprint.hpp"
 #include "LevelSectionBlueprint.hpp"
-#include "LevelSectionPermanentBlueprint.hpp"
+#include "LevelSectionPermBlueprint.hpp"
 #include "LevelFormationConfigurationBlueprint.hpp"
 
 
@@ -106,7 +106,7 @@ public:
     
     void                                        PermSelect(int pIndex);
     int                                         PermIndex();
-    LevelSectionPermanentBlueprint              *PermGet();
+    LevelSectionPermBlueprint              *PermGet();
     LevelPermSpawnBlueprint                     *PermSpawnGet();
     
     LevelFormationConfigurationBlueprint        *FormationConfigurationGet();

@@ -1,0 +1,36 @@
+{
+	"node_list": [],
+	"tracer_list": [
+		{
+			"object_count": 5,
+			"special_type": 1,
+			"special_x": -25.649895,
+			"special_y": -15.438606,
+			"special_type_radius": 115,
+			"spawn_monotype": 2
+		},
+		{
+			"object_count": 5,
+			"special_type": 1,
+			"special_x": 25.812103,
+			"special_y": -15.438606,
+			"special_type_radius": 115,
+			"spawn_monotype": 1
+		},
+		{
+			"object_count": 5,
+			"special_type": 1,
+			"special_x": -25.649895,
+			"special_y": 15.438591,
+			"special_type_radius": 115,
+			"spawn_monotype": 3
+		},
+		{
+			"object_count": 5,
+			"special_type": 1,
+			"special_x": 25.812103,
+			"special_y": 15.438591,
+			"special_type_radius": 115
+		}
+	]
+}

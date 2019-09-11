@@ -37,11 +37,12 @@ GameObject::GameObject() {
 
 GameObject::~GameObject() {
     if (mWaveSpawn != NULL) {
-        mWaveSpawn->DisposeObject(this);
+        //mWaveSpawn->DisposeObject(this);
         mWaveSpawn = NULL;
     }
     if (mPermSpawn != NULL) {
-        mPermSpawn->DisposeObject(this);
+        //mPermSpawn->DisposeObject(this);
+        mPermSpawn = NULL;
     }
 }
 

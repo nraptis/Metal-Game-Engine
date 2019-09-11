@@ -162,7 +162,7 @@ void EditorMenuPermSpawnPicker::Update() {
     if (mEditor == NULL) { return; }
     
     
-    LevelSectionPermanentBlueprint *aPerm = mEditor->GetPerm();
+    LevelSectionPermBlueprint *aPerm = mEditor->GetPerm();
    
     int aCount = 0;
     

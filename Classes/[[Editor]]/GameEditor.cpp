@@ -275,7 +275,7 @@ void GameEditor::Update() {
                 if (mEditorWave.mIsComplete) {
                     if (mEditorWaveLoop) {
                         //mEditorWave.Restart();
-                        RefreshPlayback();
+                        //RefreshPlayback();
                     }
                 }
                 
@@ -289,7 +289,8 @@ void GameEditor::Update() {
                 if (mEditorSection.mIsComplete) {
                     if (mEditorSectionLoop) {
                         //mEditorSection.Restart();
-                        RefreshPlayback();
+                        //RefreshPlayback();
+                        
                     }
                 }
                 
@@ -598,7 +599,7 @@ void GameEditor::Notify(void *pSender, const char *pNotification) {
         }
         
         if (mPickFormationReason == 3) {
-            LevelSectionPermanentBlueprint *aPerm = PermGet();
+            LevelSectionPermBlueprint *aPerm = PermGet();
             Log("Formation Selected for PERM [%llx]\n", aPerm);
             if (aPerm != NULL) {
                 aPerm->mFormationID = gSelectedFormation->mID.c();
@@ -782,7 +783,7 @@ void GameEditor::RefreshPlayback() {
     mEditorWave.Reset();
     
     if (mPermEditor != NULL && mPermEditor == mOverlay) {
-        LevelSectionPermanentBlueprint *aPerm = PermGet();
+        LevelSectionPermBlueprint *aPerm = PermGet();
         if (aPerm != NULL) {
             mPermEditor->mPathSpeedClassIndex = SpeedConvertTypeToSegment(aPerm->mPath.mSpeedClass);
         }
@@ -1010,7 +1011,7 @@ void GameEditor::SpawnClearFormation() {
         if (aSpawn != NULL) {
             aSpawn->mFormationID.Clear();
         } else {
-            LevelSectionPermanentBlueprint *aPerm = PermGet();
+            LevelSectionPermBlueprint *aPerm = PermGet();
             if (aPerm != NULL) {
                 aPerm->mFormationID.Clear();
             }
@@ -1033,7 +1034,7 @@ void GameEditor::SpawnPickType(int pType) {
             aSpawn->mObjectType = pType;
         } else {
             
-            LevelSectionPermanentBlueprint *aPerm = PermGet();
+            LevelSectionPermBlueprint *aPerm = PermGet();
             if (aPerm != NULL) {
                 aPerm->mFormationID.Clear();
                 aPerm->mObjectType = pType;
@@ -1066,14 +1067,14 @@ void GameEditor::SpawnPickTurtle() {
 }
 
 void GameEditor::PermSelect(int pIndex) {
-    mSection.mCurrentPerm = (LevelSectionPermanentBlueprint *)mSection.mPermList.Fetch(pIndex);
+    mSection.mCurrentPerm = (LevelSectionPermBlueprint *)mSection.mPermList.Fetch(pIndex);
 }
 
 int GameEditor::PermIndex() {
     return mSection.mPermList.Find(mSection.mCurrentPerm);
 }
 
-LevelSectionPermanentBlueprint *GameEditor::PermGet() {
+LevelSectionPermBlueprint *GameEditor::PermGet() {
     return mSection.mCurrentPerm;
 }
 
@@ -1082,7 +1083,7 @@ void GameEditor::PermDelete() {
 }
 
 LevelPermSpawnBlueprint *GameEditor::PermSpawnGet() {
-    LevelSectionPermanentBlueprint *aPerm = PermGet();
+    LevelSectionPermBlueprint *aPerm = PermGet();
     if (aPerm != NULL) {
         if (aPerm->IsPathPerm() && aPerm->mSelectedSpawnIndex >= 0 && aPerm->mSelectedSpawnIndex < aPerm->mSpawnCount) {
             return &aPerm->mSpawn[aPerm->mSelectedSpawnIndex];
@@ -1101,7 +1102,7 @@ LevelFormationConfigurationBlueprint *GameEditor::FormationConfigurationGet() {
             return &(aSpawn->mFormationConfiguration);
         } else {
             
-            LevelSectionPermanentBlueprint *aPerm = PermGet();
+            LevelSectionPermBlueprint *aPerm = PermGet();
             if (aPerm != NULL) {
                 return &(aPerm->mFormationConfiguration);
             }
@@ -1201,7 +1202,7 @@ void GameEditor::PickFormationForSpawnNode() {
 }
 
 void GameEditor::PickFormationForPerm() {
-    LevelSectionPermanentBlueprint *aPerm = PermGet();
+    LevelSectionPermBlueprint *aPerm = PermGet();
     if (aPerm == NULL) {
         Log("NO PERM PERM PERM IS AVAILABLE... CANNOT PICK...\n\n");
         return;
@@ -1428,7 +1429,7 @@ void GameEditor::Load(const char *pFile) {
         aWaveBlueprint->ApplyEditorConstraints();
     }
     
-    EnumList(LevelSectionPermanentBlueprint, aPerm, mSection.mPermList) {
+    EnumList(LevelSectionPermBlueprint, aPerm, mSection.mPermList) {
         aPerm->ApplyEditorConstraints();
     }
     

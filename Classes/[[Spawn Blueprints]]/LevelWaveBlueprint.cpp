@@ -192,10 +192,11 @@ void LevelWaveBlueprint::Build(LevelWave *pWave) {
         aSpawn->mFormationID = mSpawn[i].mFormationID.c();
         aSpawn->mObjectType = mSpawn[i].mObjectType;
         
-        if (aSpawn->mMotionController.mSliceList.mCount > 0) {
+        if (mSpawn[i].mMotionController.IsEmpty() == false) {
             mSpawn[i].mMotionController.Build(&(aSpawn->mMotionController));
         }
-        if (aSpawn->mFormationID.mLength > 0) {
+        
+        if (mSpawn[i].mFormationID.mLength > 0) {
             mSpawn[i].mFormationConfiguration.Build(&(aSpawn->mFormationConfiguration));
         }
         pWave->mSpawnList.Add(aSpawn);

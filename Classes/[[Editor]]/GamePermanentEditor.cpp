@@ -155,7 +155,7 @@ void GamePermanentEditor::Draw() {
         
         int aIndex = gEditor->PermIndex();
         
-        LevelSectionPermanent *aPerm = (LevelSectionPermanent *)gEditor->mEditorSection.mPermList.Fetch(aIndex);
+        LevelSectionPerm *aPerm = (LevelSectionPerm *)gEditor->mEditorSection.mPermList.Fetch(aIndex);
         if (aPerm != NULL) {
             aPerm->mPath.mDrawOffsetX = aPerm->mX;
             aPerm->mPath.mDrawOffsetY = aPerm->mY;
@@ -163,7 +163,7 @@ void GamePermanentEditor::Draw() {
         }
     }
     
-    //LevelSectionPermanentBlueprint *aPerm = GetPerm();
+    //LevelSectionPermBlueprint *aPerm = GetPerm();
     
     
 }
@@ -186,7 +186,7 @@ void GamePermanentEditor::TouchDown(float pX, float pY, void *pData) {
             float aDist = 50.0f * 50.0f;
             
             gEditor->mSection.PermSelectClosest(pX, pY);
-            LevelSectionPermanentBlueprint *aPerm = gEditor->PermGet();
+            LevelSectionPermBlueprint *aPerm = gEditor->PermGet();
             if (aPerm != NULL) {
                 mSelectedTouch = pData;
                 mSelectNodeStartX = aPerm->mEditorX;
@@ -213,7 +213,7 @@ void GamePermanentEditor::TouchMove(float pX, float pY, void *pData) {
     float aY = mSelectNodeStartY + (pY - mSelectTouchStartY);
     
     if (mPermMode == PERMANENT_MODE_MOVE) {
-        LevelSectionPermanentBlueprint *aPerm = gEditor->PermGet();
+        LevelSectionPermBlueprint *aPerm = gEditor->PermGet();
         if (mSelectedTouch == pData && aPerm != NULL) {
             
                 if (mGrid.mGridEnabled) {
@@ -259,7 +259,7 @@ void GamePermanentEditor::KeyDown(int pKey) {
         return;
     }
     
-    LevelSectionPermanentBlueprint *aPerm = GetPerm();
+    LevelSectionPermBlueprint *aPerm = GetPerm();
     
     bool aShift = gKeyDownShift;
     bool aCtrl = gKeyDownCtrl;
@@ -321,7 +321,7 @@ void GamePermanentEditor::KeyDown(int pKey) {
     if (pKey == __KEY__M) {
         if (aShift == false && aCtrl == false && aAlt == false) {
             
-            LevelSectionPermanentBlueprint *aPerm = gEditor->PermGet();
+            LevelSectionPermBlueprint *aPerm = gEditor->PermGet();
             if (aPerm != NULL) {
                 if (aPerm->IsPathPerm() && aPerm->mSelectedSpawnIndex >= 0 && aPerm->mSelectedSpawnIndex < aPerm->mSpawnCount) {
                     OpenMenuMotionForSpawn();
@@ -464,7 +464,7 @@ void GamePermanentEditor::Refresh() {
 void GamePermanentEditor::RefreshSpeed() {
     
     if (gEditor != NULL) {
-        LevelSectionPermanentBlueprint *aPerm = GetPerm();
+        LevelSectionPermBlueprint *aPerm = GetPerm();
         if (aPerm != NULL) {
             aPerm->mPath.mSpeedClass = gEditor->SpeedConvertSegmentToType(mPathSpeedClassIndex);
         }
@@ -472,7 +472,7 @@ void GamePermanentEditor::RefreshSpeed() {
 }
 
 void GamePermanentEditor::BreakConstraintX() {
-    LevelSectionPermanentBlueprint *aPerm = GetPerm();
+    LevelSectionPermBlueprint *aPerm = GetPerm();
     if (aPerm != NULL) {
         mSnapsEnabled = false;
         aPerm->mConstraint.mTypeX = X_CONSTRAINT_NONE;
@@ -481,7 +481,7 @@ void GamePermanentEditor::BreakConstraintX() {
 }
 
 void GamePermanentEditor::BreakConstraintY() {
-    LevelSectionPermanentBlueprint *aPerm = GetPerm();
+    LevelSectionPermBlueprint *aPerm = GetPerm();
     if (aPerm != NULL) {
         mSnapsEnabled = false;
         aPerm->mConstraint.mTypeY = Y_CONSTRAINT_NONE;
@@ -490,7 +490,7 @@ void GamePermanentEditor::BreakConstraintY() {
 }
 
 void GamePermanentEditor::ResetOffsetX() {
-    LevelSectionPermanentBlueprint *aPerm = GetPerm();
+    LevelSectionPermBlueprint *aPerm = GetPerm();
     if (aPerm != NULL) {
         aPerm->mConstraint.mOffsetX = 0.0f;
         Refresh();
@@ -498,7 +498,7 @@ void GamePermanentEditor::ResetOffsetX() {
 }
 
 void GamePermanentEditor::ResetOffsetY() {
-    LevelSectionPermanentBlueprint *aPerm = GetPerm();
+    LevelSectionPermBlueprint *aPerm = GetPerm();
     if (aPerm != NULL) {
         
         aPerm->mConstraint.mOffsetY = 0.0f;
@@ -521,7 +521,7 @@ void GamePermanentEditor::SetOverlay(FCanvas *pCanvas) {
 }
 
 void GamePermanentEditor::OpenPathEditor() {
-    LevelSectionPermanentBlueprint *aPerm = GetPerm();
+    LevelSectionPermBlueprint *aPerm = GetPerm();
     if (aPerm == NULL) {
         Log("No Perm Selected...\n");
         return;
@@ -608,7 +608,7 @@ void GamePermanentEditor::AddPath() {
 }
 
 void GamePermanentEditor::DeletePath() {
-    LevelSectionPermanentBlueprint *aPerm = GetPerm();
+    LevelSectionPermBlueprint *aPerm = GetPerm();
     if (aPerm != NULL) {
         aPerm->DeletePath();
     }
@@ -627,14 +627,14 @@ void GamePermanentEditor::PermSelect(int pIndex) {
 }
 
 void GamePermanentEditor::PermSpawnSelect(int pIndex) {
-    LevelSectionPermanentBlueprint *aPerm = GetPerm();
+    LevelSectionPermBlueprint *aPerm = GetPerm();
     if (aPerm != NULL) {
         aPerm->mSelectedSpawnIndex = pIndex;
     }
 }
 
 int GamePermanentEditor::PermSpawnIndex() {
-    LevelSectionPermanentBlueprint *aPerm = GetPerm();
+    LevelSectionPermBlueprint *aPerm = GetPerm();
     if (aPerm != NULL) {
         if (aPerm->mSelectedSpawnIndex >= 0 && aPerm->mSelectedSpawnIndex < aPerm->mSpawnCount) {
             return aPerm->mSelectedSpawnIndex;
@@ -643,9 +643,9 @@ int GamePermanentEditor::PermSpawnIndex() {
     return -1;
 }
 
-LevelSectionPermanentBlueprint *GamePermanentEditor::GetPerm() {
+LevelSectionPermBlueprint *GamePermanentEditor::GetPerm() {
     if (gEditor != NULL) {
-        LevelSectionPermanentBlueprint *aPerm = gEditor->PermGet();
+        LevelSectionPermBlueprint *aPerm = gEditor->PermGet();
         if (aPerm != NULL) {
             return aPerm;
         }

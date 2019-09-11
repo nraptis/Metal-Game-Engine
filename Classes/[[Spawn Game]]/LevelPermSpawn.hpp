@@ -14,12 +14,12 @@
 #include "LevelMotionController.hpp"
 #include "LevelFormationConfiguration.hpp"
 
-class LevelSectionPermanent;
+class LevelSectionPerm;
 class LevelPath;
 class LevelPermSpawn {
 public:
     
-    LevelPermSpawn(LevelSectionPermanent *pPerm, LevelPath *pPath);
+    LevelPermSpawn(LevelSectionPerm *pPerm, LevelPath *pPath);
     virtual ~LevelPermSpawn();
     
     void                                Spawn();
@@ -41,7 +41,7 @@ public:
     
     LevelMotionController               mMotionController;
     
-    LevelSectionPermanent               *mPerm;
+    LevelSectionPerm               *mPerm;
     LevelPath                           *mPath;
     GameObject                          *mObject;
     LevelFormation                      *mFormation;

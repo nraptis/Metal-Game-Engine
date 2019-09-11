@@ -30,7 +30,7 @@ void LevelSectionBlueprint::Reset() {
     mCurrentWave = NULL;
     
     for (int i=0;i<mPermList.mCount;i++) {
-        LevelSectionPermanentBlueprint *aPerm = (LevelSectionPermanentBlueprint *)mPermList[i];
+        LevelSectionPermBlueprint *aPerm = (LevelSectionPermBlueprint *)mPermList[i];
         mKillPermList.Add(aPerm);
     }
     mPermList.RemoveAll();
@@ -44,7 +44,7 @@ void LevelSectionBlueprint::Update() {
         aWave->Update();
     }
     
-    EnumList(LevelSectionPermanentBlueprint, aPerm, mPermList) {
+    EnumList(LevelSectionPermBlueprint, aPerm, mPermList) {
         aPerm->Update();
     }
     
@@ -65,12 +65,12 @@ void LevelSectionBlueprint::Update() {
     
     
     
-    EnumList(LevelSectionPermanentBlueprint, aPerm, mKillPermList) {
+    EnumList(LevelSectionPermBlueprint, aPerm, mKillPermList) {
         if (mCurrentPerm == aPerm) { mCurrentPerm = NULL; }
         aPerm->mKillTimer--;
         if (aPerm->mKillTimer <= 0) { mDeletePermList.Add(aPerm); }
     }
-    EnumList(LevelSectionPermanentBlueprint, aPerm, mDeletePermList) {
+    EnumList(LevelSectionPermBlueprint, aPerm, mDeletePermList) {
         mKillPermList.Remove(aPerm);
         delete aPerm;
     }
@@ -85,7 +85,7 @@ void LevelSectionBlueprint::Draw() {
     }
     
     for (int i=0;i<mPermList.mCount;i++) {
-        LevelSectionPermanentBlueprint *aPerm = (LevelSectionPermanentBlueprint *)mPermList[i];
+        LevelSectionPermBlueprint *aPerm = (LevelSectionPermBlueprint *)mPermList[i];
         aPerm->Draw(aPerm == mCurrentPerm);
     }
 }
@@ -158,7 +158,7 @@ int LevelSectionBlueprint::WaveCount(int pIndex) {
 
 
 void LevelSectionBlueprint::PermAdd(float pX, float pY) {
-    mCurrentPerm = new LevelSectionPermanentBlueprint();
+    mCurrentPerm = new LevelSectionPermBlueprint();
     mCurrentPerm->mEditorX = pX;
     mCurrentPerm->mEditorY = pY;
     if (gPermEditor != NULL) {
@@ -196,9 +196,9 @@ void LevelSectionBlueprint::PermSelectNext() {
     if ((mWaveList.mCount) > 0 && (mCurrentPerm != NULL)) {
         int aIndex = mPermList.Find(mCurrentPerm) + 1;
         if (aIndex >= mPermList.mCount) aIndex = 0;
-        mCurrentPerm = (LevelSectionPermanentBlueprint *)mPermList.Fetch(aIndex);
+        mCurrentPerm = (LevelSectionPermBlueprint *)mPermList.Fetch(aIndex);
     } else {
-        mCurrentPerm = (LevelSectionPermanentBlueprint *)mPermList.First();
+        mCurrentPerm = (LevelSectionPermBlueprint *)mPermList.First();
     }
     if (gEditor != NULL) { gEditor->RefreshPlayback(); }
 }
@@ -207,9 +207,9 @@ void LevelSectionBlueprint::PermSelectPrev() {
     if ((mPermList.mCount) > 0 && (mCurrentPerm != NULL)) {
         int aIndex = mPermList.Find(mCurrentPerm) - 1;
         if (aIndex < 0) aIndex = mWaveList.mCount - 1;
-        mCurrentPerm = (LevelSectionPermanentBlueprint *)mPermList.Fetch(aIndex);
+        mCurrentPerm = (LevelSectionPermBlueprint *)mPermList.Fetch(aIndex);
     } else {
-        mCurrentPerm = (LevelSectionPermanentBlueprint *)mPermList.Last();
+        mCurrentPerm = (LevelSectionPermBlueprint *)mPermList.Last();
     }
     if (gEditor != NULL) { gEditor->RefreshPlayback(); }
 }
@@ -229,7 +229,7 @@ void LevelSectionBlueprint::PermMoveDown() {
 }
 
 void LevelSectionBlueprint::PermSelect(int pIndex) {
-    mCurrentPerm = (LevelSectionPermanentBlueprint *)mPermList.Fetch(pIndex);
+    mCurrentPerm = (LevelSectionPermBlueprint *)mPermList.Fetch(pIndex);
     if (gEditor != NULL) { gEditor->RefreshPlayback(); }
 }
 
@@ -238,7 +238,7 @@ int LevelSectionBlueprint::PermSelectClosest(float pX, float pY) {
     float aBestDist = 80.0f * 80.0f;
     
     for (int i=0;i<mPermList.mCount;i++) {
-        LevelSectionPermanentBlueprint *aPerm = (LevelSectionPermanentBlueprint *)mPermList[i];
+        LevelSectionPermBlueprint *aPerm = (LevelSectionPermBlueprint *)mPermList[i];
         
         float aPathDist = 80.0f * 80.0f;
         aPerm->mPath.GetClosestIndex(pX, pY, aPathDist);
@@ -256,7 +256,7 @@ int LevelSectionBlueprint::PermSelectClosest(float pX, float pY) {
     }
     
     if (aResult >= 0 && aResult < mPermList.mCount) {
-        mCurrentPerm = (LevelSectionPermanentBlueprint *)mPermList.Fetch(aResult);
+        mCurrentPerm = (LevelSectionPermBlueprint *)mPermList.Fetch(aResult);
     } else {
         mCurrentPerm = NULL;
     }
@@ -271,7 +271,7 @@ void LevelSectionBlueprint::PermRefreshPositions() {
     float aBottom = gEditor->mGameAreaBottom;
     
     for (int i=0;i<mPermList.mCount;i++) {
-        LevelSectionPermanentBlueprint *aPerm = (LevelSectionPermanentBlueprint *)mPermList[i];
+        LevelSectionPermBlueprint *aPerm = (LevelSectionPermBlueprint *)mPermList[i];
         aPerm->mPercentX = ((aPerm->mEditorX - aLeft) / (aRight - aLeft)) * 100.0f;
         aPerm->mPercentY = ((aPerm->mEditorY - aTop) / (aBottom - aTop)) * 100.0f;
     }
@@ -297,8 +297,8 @@ void LevelSectionBlueprint::Build(LevelSection *pSection) {
     }
     
     for (int i=0;i<mPermList.mCount;i++) {
-        LevelSectionPermanentBlueprint *aPermBlueprint = (LevelSectionPermanentBlueprint *)mPermList.mData[i];
-        LevelSectionPermanent *aPerm = new LevelSectionPermanent(pSection);
+        LevelSectionPermBlueprint *aPermBlueprint = (LevelSectionPermBlueprint *)mPermList.mData[i];
+        LevelSectionPerm *aPerm = new LevelSectionPerm(pSection);
         aPermBlueprint->Build(aPerm);
         pSection->AddPerm(aPerm);
     }
@@ -322,7 +322,7 @@ FJSONNode *LevelSectionBlueprint::Save() {
         aExport->AddDictionary("perm_list", aPermArray);
         aPermArray->mNodeType = JSON_NODE_TYPE_ARRAY;
         for (int i=0;i<mPermList.mCount;i++) {
-            LevelSectionPermanentBlueprint *aPerm = (LevelSectionPermanentBlueprint *)mPermList.mData[i];
+            LevelSectionPermBlueprint *aPerm = (LevelSectionPermBlueprint *)mPermList.mData[i];
             aPermArray->AddArray(aPerm->Save());
         }
     }
@@ -346,7 +346,7 @@ void LevelSectionBlueprint::Load(FJSONNode *pNode) {
     FJSONNode *aPermArray = pNode->GetArray("perm_list");
     if (aPermArray != NULL) {
         EnumJSONArray(aPermArray, aPermNode) {
-            LevelSectionPermanentBlueprint *aPerm = new LevelSectionPermanentBlueprint();
+            LevelSectionPermBlueprint *aPerm = new LevelSectionPermBlueprint();
             aPerm->Load(aPermNode);
             mPermList.Add(aPerm);
         }

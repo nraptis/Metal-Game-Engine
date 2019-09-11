@@ -7,7 +7,7 @@
 //
 
 #include "LevelPathBlueprint.hpp"
-#include "LevelSectionPermanentBlueprint.hpp"
+#include "LevelSectionPermBlueprint.hpp"
 #include "os_core_graphics.h"
 #include "FSpline.hpp"
 #include "FPolyPath.hpp"

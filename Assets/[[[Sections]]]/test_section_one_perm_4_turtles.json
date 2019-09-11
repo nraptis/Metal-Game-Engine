@@ -1,0 +1,12 @@
+{
+	"section": true,
+	"wave_list": [],
+	"perm_list": [
+		{
+			"x_con": 500,
+			"y_con": 500,
+			"formation": "form_all_nod_all_tur_grd_rec_3x3_68sph_68spv_44ful_nodes_cfg4xt_snp.json",
+			"formation_config": {}
+		}
+	]
+}

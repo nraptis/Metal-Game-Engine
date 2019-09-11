@@ -164,7 +164,7 @@ void EditorMenuMotion::Update() {
     if (gEditor == NULL) { return; }
     
     LevelPermSpawnBlueprint *aPermSpawn = gEditor->PermSpawnGet();
-    LevelSectionPermanentBlueprint *aPerm = gEditor->PermGet();
+    LevelSectionPermBlueprint *aPerm = gEditor->PermGet();
     LevelWaveSpawnBlueprint *aSpawn = gEditor->SpawnGet();
     
     if (mEditor != NULL) {

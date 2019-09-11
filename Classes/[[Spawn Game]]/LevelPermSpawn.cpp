@@ -8,13 +8,13 @@
 
 #include "LevelPermSpawn.hpp"
 #include "LevelPath.hpp"
-#include "LevelSectionPermanent.hpp"
+#include "LevelSectionPerm.hpp"
 #include "GameLevelController.hpp"
 #include "Game.hpp"
 #include "Balloon.hpp"
 #include "FormationCollection.hpp"
 
-LevelPermSpawn::LevelPermSpawn(LevelSectionPermanent *pPerm, LevelPath *pPath) {
+LevelPermSpawn::LevelPermSpawn(LevelSectionPerm *pPerm, LevelPath *pPath) {
     mPerm = pPerm;
     mPath = pPath;
     mPathIndex = 0;

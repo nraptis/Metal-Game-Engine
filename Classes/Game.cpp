@@ -306,6 +306,7 @@ static int aInitialKludge = 200;
 
 void Game::Update() {
     
+    /*
     if (aInitialKludge > 0) {
         aInitialKludge--;
     } else {
@@ -319,6 +320,7 @@ void Game::Update() {
         }
         
     }
+    */
     
     
     
@@ -1330,184 +1332,39 @@ void Game::Load() {
     //return;
     
     Level aLevel;
-    //aLevel.AddSection("test_section_01");
-    
-    //aLevel.AddSection("test_section_03");
-    //aLevel.AddSection("test_section_02");
-    
+
     /*
-    aLevel.SetAliveTimer(6500);
-    aLevel.AddSection("test_section_perm_only_all_brickheads_landings");
-    aLevel.AddSection("test_section_perm_only_all_brickheads_landings");
-    aLevel.AddSection("test_section_perm_only_all_brickheads");
-    aLevel.AddSection("test_section_perm_only_all_brickheads");
-    aLevel.AddSection("test_section_perm_only_all_brickheads");
+    section_2_turtles_2_bricks_2_balloon_3_waves_turtles_brickcircle_star
+    section_2_turtles_2_bricks_2_waves_1_center_balloon
+    test_section_2_brickhead_waves_with_and_without_balloons
+    test_section_2_tracers_slowslow_speed_all_4_types
+    test_section_all_bricks_2_perms
+    test_section_all_bricks_2_waves
+    test_section_one_perm_4_turtles
+    test_section_one_wave_4_turtles
+     test_section_one_wave_16_turtles
     */
+    
+    
     
     aLevel.SetKillTimer(800);
     
-    aLevel.AddSection("section_2_turtles_2_bricks_2_balloon_3_waves_turtles_brickcircle_star.json");
-    
-    aLevel.AddSection("section_2_turtles_2_bricks_2_waves_1_center_balloon.json");
-    
-    aLevel.AddSection("section_2_turtles_2_bricks_2_waves_1_center_balloon.json");
+    aLevel.AddSection("test_section_one_wave_16_turtles");
     
     aLevel.AddSection("section_2_turtles_2_bricks_2_balloon_3_waves_turtles_brickcircle_star.json");
     
-    
-    aLevel.AddSection("section_2_turtles_2_bricks_2_waves_1_center_balloon.json");
-    
-    aLevel.AddSection("section_2_turtles_2_bricks_2_balloon_3_waves_turtles_brickcircle_star.json");
-    
-    
     aLevel.AddSection("section_2_turtles_2_bricks_2_waves_1_center_balloon.json");
     
     
     
     
     
-    aLevel.SetAliveTimer(400);
-    aLevel.SetKillTimer(400);
-    aLevel.AddSection("test_section_perm_only_all_brickheads.json");
     
-    
-    aLevel.SetAliveTimer(400);
-    aLevel.SetKillTimer(400);
-    
-    aLevel.AddSection("test_section_perm_only_all_balloons.json");
-    
-    aLevel.SetAliveTimer(400);
-    aLevel.SetKillTimer(400);
-    aLevel.AddSection("test_section_perm_only_all_brickheads.json");
-    
-    aLevel.SetAliveTimer(400);
-    aLevel.SetKillTimer(400);
-    aLevel.AddSection("test_section_perm_only_all_balloons.json");
-    
-    aLevel.SetAliveTimer(400);
-    aLevel.SetKillTimer(400);
-    aLevel.AddSection("test_section_perm_only_all_brickheads.json");
-    aLevel.AddSection("test_section_perm_only_all_balloons.json");
-    aLevel.AddSection("test_section_perm_only_all_brickheads.json");
-    
-    //
-    //
-    
-    
-    
-    aLevel.SetAliveTimer(3400);
-    aLevel.AddSection("test_section_bunch_of_turtle_guys.json");
-    
-    /*
-    aLevel.SetKillTimer(1000);
-    aLevel.AddSection("test_section_turtles");
-    
-    aLevel.SetKillTimer(1000);
-    aLevel.AddSection("test_section_turtles");
-    
-    aLevel.SetKillTimer(1000);
-    aLevel.AddSection("test_section_turtles");
-    
-    aLevel.SetKillTimer(1000);
-    aLevel.AddSection("test_section_turtles");
-    
-    aLevel.SetKillTimer(4000);
-    aLevel.AddSection("test_section_perm_only_all_balloons_all_tracers");
-    */
-     
-    aLevel.SetAliveTimer(2800);
-    aLevel.AddSection("test_section_perm_only_all_brickheads");
-    
-    
-    aLevel.SetAliveTimer(800);
-    aLevel.AddSection("test_section_perm_only_all_balloons");
-    
-    aLevel.AddSection("test_section_perm_only_all_balloons");
-    
-    
-    //aLevel.SetKillTimer(100);
-    //aLevel.AddSection("test_section_perm_only_all_brickheads_landings");
-    
-    //aLevel.SetKillTimer(100);
-    //aLevel.AddSection("test_section_perm_only_all_balloons_all_tracers");
-    
-    //aLevel.SetAliveTimer(100);
-    //aLevel.AddSection("test_section_perm_only_all_balloons");
-    
-    //aLevel.SetKillTimer(100);
-    //aLevel.AddSection("test_section_perm_only_all_brickheads");
-    
-    //aLevel.SetKillTimer(100);
-    //aLevel.AddSection("test_section_perm_only_all_balloons_all_tracers");
-    
-    //test_section_three_complex_waves_staggered_only_tracers.json
-    //
-    //
-    //test_section_perm_only_all_balloons_all_tracers.json
-    //test_section_perm_only_all_balloons.json
-    //test_section_perm_only_all_brickheads.json
-    //test_section_perm_only_one_balloon.json
-    //test_section_perm_only_3_scattered_balloons.json
-    //test_section_perm_only_all_balloons_path_tracer_and_formation.json
-    //
-    //
-    
-    /*
-    aLevel.SetAliveTimer(500);
-    aLevel.AddSection("test_section_perm_only_all_brickheads");
-    
-    aLevel.SetKillTimer(500);
-    aLevel.AddSection("test_section_perm_only_all_balloons");
-    
-    
-    aLevel.SetKillTimer(400);
-    aLevel.AddSection("test_section_perm_only_all_balloons_all_tracers");
-    
-    aLevel.ResetAll();
-    aLevel.AddSection("test_section_three_complex_waves_staggered_only_tracers");
-    
-    aLevel.AddSection("test_section_perm_only_all_balloons");
-    */
-    
-    //test_section_three_complex_waves_staggered_only_tracers.json
-    //test_section_one_complex_wave.json
-    //test_section_one_simple_wave.json
-    //test_section_perm_only_all_balloons_all_tracers.json
-    //test_section_perm_only_all_balloons.json
-    //test_section_perm_only_all_brickheads.json
-    //test_section_three_simple_waves_simultaneous.json
-    //test_section_three_simple_waves_staggered.json
-    
-    //test_section_one_complex_wave
-    //test_section_one_simple_wave
-    //test_section_perm_only_all_balloons
-    //test_section_perm_only_all_brickheads
-    //test_section_three_simple_waves_simultaneous
-    //test_section_three_simple_waves_staggered
-    //test_section_perm_only_all_balloons_all_tracers
-    //test_section_three_complex_waves_staggered_only_tracers
     
     //aLevel.AddSection("test_section_04");
     LevelData *aData = aLevel.Build();
     mLevelData = aData;
     mLevelController->Setup(mLevelData);
-    
-    /*
-    LevelSection *aSection = NULL;
-    LevelWave *aWave = NULL;
-    
-    LevelData *aLevel = new LevelData();
-    
-    //Create level section (1 of 2) (A)
-    aSection = new LevelSection();
-    aSection->Load("section_learn_the_game.json");
-    aLevel->AddSection(aSection);
-    
-    aSection->mDelay = 0;
-    
-     mLevelData = aLevel;
-     mLevelController->Setup(mLevelData);
-    */
 }
 
 void Game::LoadEditorTest() {

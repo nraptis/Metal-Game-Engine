@@ -17,8 +17,8 @@
 #include "EditorMenuPermSpawnPicker.hpp"
 #include "EditorMenuPermPicker.hpp"
 #include "EditorMenuMotion.hpp"
-#include "LevelSectionPermanentBlueprint.hpp"
-#include "LevelSectionPermanent.hpp"
+#include "LevelSectionPermBlueprint.hpp"
+#include "LevelSectionPerm.hpp"
 #include "GamePathEditor.hpp"
 #include "GameEditorGrid.hpp"
 
@@ -92,7 +92,7 @@ public:
     int                                         PermSpawnIndex();
     
     
-    LevelSectionPermanentBlueprint              *GetPerm();
+    LevelSectionPermBlueprint              *GetPerm();
     
     bool                                        mSnapsEnabled;
     

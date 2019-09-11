@@ -17,7 +17,7 @@
 #include "LevelPathBlueprint.hpp"
 #include "LevelWaveBlueprint.hpp"
 #include "LevelSectionBlueprint.hpp"
-#include "LevelSectionPermanentBlueprint.hpp"
+#include "LevelSectionPermBlueprint.hpp"
 #include "EditorMenuFormationGrid.hpp"
 #include "GameEditorGrid.hpp"
 
@@ -99,7 +99,7 @@ public:
     void                                        Close();
     
     void                                        SetUp(LevelWaveBlueprint *pWave);
-    void                                        SetUp(LevelSectionPermanentBlueprint *pPerm);
+    void                                        SetUp(LevelSectionPermBlueprint *pPerm);
     
     void                                        SetUpPath(LevelPathBlueprint *pPath);
     
@@ -109,7 +109,7 @@ public:
     
     LevelPathBlueprint                          *mPath;
     LevelWaveBlueprint                          *mWave;
-    LevelSectionPermanentBlueprint              *mPerm;
+    LevelSectionPermBlueprint              *mPerm;
     
 };
 

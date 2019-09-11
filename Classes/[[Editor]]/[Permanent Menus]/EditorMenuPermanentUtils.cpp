@@ -141,7 +141,7 @@ void EditorMenuPermanentUtils::Notify(void *pSender, const char *pNotification) 
 
 void EditorMenuPermanentUtils::Update() {
     
-    LevelSectionPermanentBlueprint *aPerm = NULL;
+    LevelSectionPermBlueprint *aPerm = NULL;
     if (gEditor != NULL) {
         aPerm = gEditor->PermGet();
     }

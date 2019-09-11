@@ -217,7 +217,7 @@ void EditorMenuPanelFormationConfiguration::Update() {
     
     
     /*
-    LevelSectionPermanentBlueprint *aPerm = NULL;
+    LevelSectionPermBlueprint *aPerm = NULL;
     if (gEditor != NULL) {
         aPerm = gEditor->PermGet();
     }

@@ -1,0 +1,84 @@
+{
+	"node_list": [],
+	"tracer_list": [
+		{
+			"object_count": 5,
+			"special_type": 0,
+			"tracer_node_list": [
+				{
+					"x": -29.743471,
+					"y": -17.894733
+				},
+				{
+					"x": -9.860432,
+					"y": -17.894733
+				},
+				{
+					"x": -9.860432,
+					"y": 17.894737
+				},
+				{
+					"x": -29.743471,
+					"y": 17.894737
+				}
+			],
+			"spawn_node_list": [
+				{
+					"type": 1
+				},
+				{
+					"type": 3
+				},
+				{
+					"type": 3
+				},
+				{
+					"type": 3
+				},
+				{}
+			]
+		},
+		{
+			"object_count": 5,
+			"special_type": 0,
+			"tracer_node_list": [
+				{
+					"x": 10.022606,
+					"y": 17.894737
+				},
+				{
+					"x": 10.022606,
+					"y": -17.894733
+				},
+				{
+					"x": 29.905640,
+					"y": -17.894733
+				},
+				{
+					"x": 29.905640,
+					"y": 17.894737
+				}
+			],
+			"spawn_node_list": [
+				{},
+				{
+					"type": 1
+				},
+				{
+					"type": 3
+				},
+				{},
+				{
+					"type": 3
+				}
+			]
+		}
+	],
+	"grid": {
+		"grid_type": 0,
+		"rect_width": 4,
+		"rect_height": 4,
+		"rect_spacing_h": 68,
+		"rect_spacing_v": 68
+	}
+}

@@ -16,7 +16,7 @@
 
 #include "GameObject.hpp"
 #include "LevelWave.hpp"
-#include "LevelSectionPermanent.hpp"
+#include "LevelSectionPerm.hpp"
 
 class LevelSection {
 public:
@@ -74,7 +74,7 @@ public:
     void                                AddWave(LevelWave *pLevelWave);
     FList                               mWaveList;
     
-    void                                AddPerm(LevelSectionPermanent *pPerm);
+    void                                AddPerm(LevelSectionPerm *pPerm);
     FList                               mPermList;
     
     int                                 mCandidateWaveIndex;

@@ -154,7 +154,7 @@ void EditorMenuAttachment::Notify(void *pSender, const char *pNotification) {
             if (aSpawn != NULL) {
                 gEditor->PickFormationForPermSpawnNode();
             } else {
-                LevelSectionPermanentBlueprint *aPerm = gEditor->PermGet();
+                LevelSectionPermBlueprint *aPerm = gEditor->PermGet();
                 if (aPerm != NULL) {
                     gEditor->PickFormationForPerm();
                 }

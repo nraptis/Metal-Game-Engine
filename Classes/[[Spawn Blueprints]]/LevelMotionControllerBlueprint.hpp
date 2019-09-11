@@ -15,7 +15,7 @@
 #include "FJSON.hpp"
 
 class LevelWaveBlueprint;
-class LevelSectionPermanentBlueprint;
+class LevelSectionPermBlueprint;
 
 class LevelMotionControllerBlueprint {
 public:
