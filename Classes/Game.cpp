@@ -794,7 +794,7 @@ void Game::DartMovingInterpolationTurtles(Dart *pDart, float pPercent, bool pEnd
     for (int n=0;n<mTurtleList.mObjectList.mCount;n++) {
         Turtle *aTurtle = (Turtle *)mTurtleList.mObjectList.mData[n];
         //if ((aTurtle->mKill == 0) && (aTurtle->mKnockedDown == false)) {
-        if (aTurtle->mKill == 0) {
+        if ((aTurtle->mKill == 0) && (aTurtle->mKnockedDown == false)) {
             if (aTurtle->WillCollide(pDart->mPrevTipX, pDart->mPrevTipY, pDart->mTipX, pDart->mTipY)) {
                 DartCollideWithTurtle(pDart, aTurtle);
             }
@@ -1111,14 +1111,15 @@ void Game::DisposeObject(GameObject *pObject) {
         return;
     }
     
-    printf("Disposing: %x\n", pObject);
+    
+    printf("Disposing: (%s) %x\n", pObject->TypeString().c() , pObject);
     
     pObject->Kill();
     
     if (pObject->mGameObjectType == GAME_OBJECT_TYPE_TURTLE) {
         Turtle *aTurtle = ((Turtle *)pObject);
         Balloon *aBalloon = aTurtle->mBalloon;
-        if ((aTurtle->mKnockedDown = false) && (aBalloon != NULL)) {
+        if ((aTurtle->mKnockedDown == false) && (aBalloon != NULL)) {
             aTurtle->mBalloon = NULL;
             FlyOffEscape(aBalloon);
         }
@@ -1208,7 +1209,7 @@ void Game::FlyOffEscape(GameObject *pObject) {
     if (pObject->mGameObjectType == GAME_OBJECT_TYPE_TURTLE) {
         Turtle *aTurtle = ((Turtle *)pObject);
         Balloon *aBalloon = aTurtle->mBalloon;
-        if ((aTurtle->mKnockedDown = false) && (aBalloon != NULL)) {
+        if ((aTurtle->mKnockedDown == false) && (aBalloon != NULL)) {
             aTurtle->mBalloon = NULL;
             FlyOffEscape(aBalloon);
         }
@@ -1348,33 +1349,19 @@ void Game::DartCollideWithBrickhead(Dart *pDart, BrickHead *pBrickHead) {
 }
 
 void Game::DartCollideWithTurtle(Dart *pDart, Turtle *pTurtle) {
-    
     if (pDart != NULL) {
         pDart->KnockDown();
-        
         if (pTurtle != NULL) {
-            
             pTurtle->Impact(pDart->mTransform.mRotation);
-            
             gApp->mSoundHitBrickhead.Play();
-            pDart->mStuck = true;
         }
     }
 }
 
 void Game::TurtleDidLoseBalloon(Turtle *pTurtle) {
-    //TODO: This turtle is now "hit", it should turn upside down and fall into the void.
-    //Alternatively, it should slowly drift down into the void...
-    
     if (pTurtle != NULL) {
         pTurtle->mBalloon = NULL;
         pTurtle->KnockDown();
-        
-        
-        
-        //Special note, we do not KILL the turtle here, it
-        //is still going to go through the process of falling...
-        
     }
     
 }
@@ -1520,9 +1507,12 @@ void Game::Load() {
     
     //aLevel.SetKillTimer(800);
     
+    aLevel.AddSection("section_2_turtles_2_bricks_2_balloon_3_waves_turtles_brickcircle_star.json");
+    
+    
     aLevel.AddSection("test_section_one_wave_16_turtles");
     
-    aLevel.AddSection("section_2_turtles_2_bricks_2_balloon_3_waves_turtles_brickcircle_star.json");
+    
     
     aLevel.AddSection("section_2_turtles_2_bricks_2_waves_1_center_balloon.json");
     

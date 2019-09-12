@@ -30,6 +30,12 @@ public:
     
     void                                    KnockDown();
     bool                                    mKnockedDown; //When  we are knocked down, we no longer operate as a blocker.
+    float                                   mKnockedDownColorSin;
+    float                                   mKnockedDownRotationSpeed1;
+    float                                   mKnockedDownRotationSpeed2;
+    float                                   mKnockedDownFallSpeed;
+    
+    
     
     void                                    Impact(float pImpactRotation);
     bool                                    mIsRumbling;

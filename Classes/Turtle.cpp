@@ -43,11 +43,17 @@ Turtle::Turtle() {
     mUniform = &(gGame->mRenderer->mUniformPhongBalloon);
     
     mKnockedDown = false;
+    mKnockedDownColorSin = 0.0f;
+    mKnockedDownRotationSpeed1 = 0.0f;
+    mKnockedDownRotationSpeed2 = 0.0f;
+    mKnockedDownFallSpeed = 0.0f;
+    
+    
     
     
     mIsRumbling = false;
-    mRumbleTime = 140;
-    mRumbleDampenTime = mRumbleTime - 70;
+    mRumbleTime = 80;
+    mRumbleDampenTime = mRumbleTime - 30;
     mRumbleTimer = 0;
     mRumbleColorSin = 0.0f;
     mRumbleDirX = 0.0f;
@@ -66,7 +72,8 @@ Turtle::Turtle() {
     mTransform.mShiftY = 52.0f;
     
     mBalloonOscillationSin = gRand.GetRotation();
-    mBalloonOscillationSinSpeed = gRand.GetFloat(1.4f, 1.8f, true) * 6.0f;
+    mBalloonOscillationSinSpeed = gRand.GetFloat(1.4f, 1.8f, true);
+    
     
     BuildEdgePointListBase();
 }
@@ -79,13 +86,45 @@ void Turtle::Update() {
     
     GameObject::Update();
     
-    mTransform3D.mRotationX += 2.0f;
-    if (mTransform3D.mRotationX >= 360.0f) { mTransform3D.mRotationX -= 360.0f; }
+    //mTransform3D.mRotationX += 2.0f;
+    //if (mTransform3D.mRotationX >= 360.0f) { mTransform3D.mRotationX -= 360.0f; }
+    
     
     
     if (mKnockedDown == true) {
         
         
+        
+        mKnockedDownColorSin += 12.0f;
+        if (mKnockedDownColorSin >= 360.0f) { mKnockedDownColorSin -= 360.0f; }
+        
+        if (mTransform.mScale > 0.8f) {
+            mTransform.mScale *= 0.985f;
+            if (mTransform.mScale <= 0.8f) { mTransform.mScale = 0.8f; }
+        }
+        
+        mTransform3D.mRotationX += mKnockedDownRotationSpeed1;
+        if (mTransform3D.mRotationX >= 360.0f) { mTransform3D.mRotationX -= 360.0f; }
+        
+        
+        mTransform3D.mRotationZ += mKnockedDownRotationSpeed2;
+        if (mTransform3D.mRotationZ >= 360.0f) { mTransform3D.mRotationZ -= 360.0f; }
+        
+        
+        mKnockedDownRotationSpeed1 *= 0.994f;
+        mKnockedDownRotationSpeed2 *= 0.994f;
+        
+        //mTransform.mRotation += DistanceBetweenAngles(mTransform.mRotation, 180.0f) * 0.02125f;
+        mTransform.mY += mKnockedDownFallSpeed;
+        mKnockedDownFallSpeed += gGame->mGravity;
+        
+        
+        
+        float aColorSin = Sin(mKnockedDownColorSin);
+        float aColorPercent = (aColorSin + 1.0f) * 0.5f; //Goes from 0 to 1...
+        mColor.mRed = 0.8f - (aColorPercent * 0.45f);
+        mColor.mGreen = 0.8f - (aColorPercent * 0.65f);
+        mColor.mBlue = 0.8f - (aColorPercent * 0.65f);
     }
     
     if ((mDidSpawnBalloon == false) && (mBalloon == NULL)) {//} && (mKill == 0)) {
@@ -161,7 +200,7 @@ void Turtle::Update() {
             mRumbleColorSin -= 360.0f;
         }
         
-        mRumbleBounceSin += 9.0f;
+        mRumbleBounceSin += 13.0f;
         if (mRumbleBounceSin >= 360.0f) {
             mRumbleBounceSin -= 360.0f;
         }
@@ -169,18 +208,27 @@ void Turtle::Update() {
         float aColorSin = Sin(mRumbleColorSin);
         float aColorPercent = (aColorSin + 1.0f) * 0.5f; //Goes from 0 to 1...
         
-        mColor.mRed = 1.0f - (aColorPercent * 0.55f) * (1.0f - aDampenPercent);
-        mColor.mGreen = 1.0f - (aColorPercent * 0.8f) * (1.0f - aDampenPercent);
-        mColor.mBlue = 1.0f - (aColorPercent * 0.8f) * (1.0f - aDampenPercent);
+        mColor.mRed = 1.0f - (aColorPercent * 0.65f) * (1.0f - aDampenPercent);
+        mColor.mGreen = 1.0f - (aColorPercent * 0.65f) * (1.0f - aDampenPercent);
+        mColor.mBlue = 1.0f - (aColorPercent * 0.65f) * (1.0f - aDampenPercent);
         
-        mRumbleBounceMagnitude = 4.0f * (1.0f - aDampenPercent);
+        mRumbleBounceMagnitude = 3.0f * (1.0f - aDampenPercent);
         float aMag = Cos(mRumbleBounceSin) * mRumbleBounceMagnitude;
         mTransform.mOffsetX = mRumbleDirX * aMag;
         mTransform.mOffsetY = mRumbleDirY * aMag;
+        
+        mTransform3D.mRotationX = aColorPercent * 6.0f;
+        
     } else {
-        mColor.mRed = 1.0f;
-        mColor.mGreen = 1.0f;
-        mColor.mBlue = 1.0f;
+        
+        if (mKnockedDown == false) {
+            mColor.mRed = 1.0f;
+            mColor.mGreen = 1.0f;
+            mColor.mBlue = 1.0f;
+            
+            mTransform3D.mRotationX = 0.0f;
+        }
+        
         mTransform.mOffsetX = 0.0f;
         mTransform.mOffsetY = 0.0f;
     }
@@ -191,6 +239,7 @@ void Turtle::Draw() {
     
     GameObject::Draw();
     
+    /*
     Graphics::PipelineStateSetShape2DAlphaBlending();
     Graphics::SetColor(1.0f, 0.0f, 0.0f, 0.85f);
     
@@ -199,6 +248,7 @@ void Turtle::Draw() {
     
     Graphics::SetColor(1.0f, 0.0f, 0.25f, 0.5f);
     mEdgePointList2D.DrawEdges(2.0f);
+    */
 }
 
 void Turtle::Draw3DPropeller() {
@@ -287,6 +337,14 @@ void Turtle::KnockDown() {
     mKnockedDown = true;
     mModel = &(gWadModels.mTurtleDamaged);
     mSprite = &(gWadModels.mTurtleDamagedMap);
+    
+    
+    mKnockedDownColorSin = 0.0f;
+    mKnockedDownRotationSpeed1 = gRand.GetFloat(3.0f, 4.5f, true);
+    mKnockedDownRotationSpeed2 = gRand.GetFloat(1.5f, 1.75f, true);
+    mKnockedDownFallSpeed = 0.0f;
+    
+    
 }
 
 bool Turtle::WillCollide(float pStartX, float pStartY, float pEndX, float pEndY) {
@@ -375,7 +433,7 @@ void Turtle::Impact(float pImpactRotation) {
     mRumbleDirX = Sin(pImpactRotation);
     mRumbleDirY = -Cos(pImpactRotation);
     
-    mRumbleBounceMagnitude = 12.0f;
+    mRumbleBounceMagnitude = 7.0f;
     mRumbleBounceSin = 0.0f;
 }
 

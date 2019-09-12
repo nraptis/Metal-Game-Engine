@@ -173,9 +173,9 @@ void Dart::Update() {
         float aColorSin = Sin(mKnockedDownColorSin);
         float aColorPercent = (aColorSin + 1.0f) * 0.5f; //Goes from 0 to 1...
         
-        mColor.mRed = 0.8f - (aColorPercent * 0.8f);
-        mColor.mGreen = 0.8f - (aColorPercent * 0.8f);
-        mColor.mBlue = 0.8f - (aColorPercent * 0.8f);
+        mColor.mRed = 1.0f - (aColorPercent * 0.8f);
+        mColor.mGreen = 1.0f - (aColorPercent * 0.8f);
+        mColor.mBlue = 1.0f - (aColorPercent * 0.8f);
         
         if (gGame->IsGameObjectOutsideKillZone(this)) {
             gGame->DisposeObject(this);
@@ -189,9 +189,11 @@ void Dart::Update() {
 void Dart::Draw() {
     GameObject::Draw();
     
+    /*
     Graphics::PipelineStateSetShape2DNoBlending();
     Graphics::SetColor(1.0f, 0.2f, 0.18f, 1.0f);
     Graphics::DrawPoint(mTipX, mTipY, 8.0f);
+    */
 }
 
 void Dart::Draw3D() {

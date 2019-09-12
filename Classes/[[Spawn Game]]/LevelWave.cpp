@@ -187,7 +187,6 @@ void LevelWave::Update() {
         if (aComplete == true) {
             mIsComplete = true;
         }
-        
     }
 }
 
@@ -202,7 +201,6 @@ void LevelWave::Draw() {
 }
 
 void LevelWave::DisposeObject(GameObject *pObject) {
-    
     for (int i=0;i<mSpawnIndex;i++) {
         LevelWaveSpawn *aSpawn = (LevelWaveSpawn *)mSpawnList.Fetch(i);
         aSpawn->DisposeObject(pObject);
@@ -211,35 +209,23 @@ void LevelWave::DisposeObject(GameObject *pObject) {
 
 
 void LevelWave::HandleSpawnComplete(LevelWaveSpawn *pSpawn) {
-    Log("HandleSpawnComplete(%llx)\n", pSpawn);
     
     FList aList;
     if (pSpawn) {
         pSpawn->HandOffAllGameObjects(&aList);
     }
     
-    //TODO: Hand the different disperse types.....
-    
-    // If there is only one object, the disperse
-    // values are 0.0, 0.0, 0.0...
-    
-    //This is for "DISPERSE" only..
-    
-    
     if (mExitType == WAVE_EXIT_TYPE_INSTANT) {
-        Log("WAVE_EXIT_TYPE_INSTANT...\n");
-        
         for (int i=0;i<aList.mCount;i++) {
             GameObject *aObject = ((GameObject *)aList.mData[i]);
             if (gGame != NULL) {
                 gGame->FlyOffEscape(aObject);
             }
         }
-        
     } else { //Default is DISPERSE
-        
-        Log("WAVE_EXIT_TYPE_DISPERSE...\n");
-        
+        if (gGame != NULL) {
+            gGame->mRecentFloatingAwayTick = 4;
+        }
         
         if (aList.mCount > 1) {
             
@@ -293,7 +279,6 @@ void LevelWave::HandleSpawnComplete(LevelWaveSpawn *pSpawn) {
             GameObject *aObject = ((GameObject *)aList.First());
             aObject->Disperse(0.0f, 0.0f, 0.0f);
         }
-        
     }
 }
 
