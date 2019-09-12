@@ -14,6 +14,10 @@ Transform2D::Transform2D() {
     mY = 0.0f;
     mZ = 0.0f;
     
+    mShiftX = 0.0f;
+    mShiftY = 0.0f;
+    mShiftZ = 0.0f;
+    
     mOffsetX = 0.0f;
     mOffsetY = 0.0f;
     mOffsetZ = 0.0f;

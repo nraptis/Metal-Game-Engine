@@ -48,6 +48,8 @@ Balloon::~Balloon() {
 
 void Balloon::Update() {
     
+    GameObject::Update();
+    
     if (mShouldSpawnThread) {
         if (mDidSpawnThread == false) {
             mDidSpawnThread = true;
@@ -55,7 +57,7 @@ void Balloon::Update() {
         }
     }
     
-    GameObject::Update();
+    
     
     mTransform3D.mSpin += mSpinSpeed;
     mTransform3D.mRotationX = mTilt;

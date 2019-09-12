@@ -41,7 +41,7 @@ GFXApp::GFXApp() {
     
 //#ifndef EDITOR_MODE
     
-    //mDarkMode = true;
+    mDarkMode = true;
     
 //#endif
     
@@ -153,13 +153,6 @@ void GFXApp::Load() {
     exit(0);
     */
     
-    
-    
-    mBF.LoadOBJ("butterfly_wings_0.obj");
-    mBFMap.Load("butterfly_map");
-    
-    
-    
     mPalmTrunk.LoadOBJ("palm_tree_trunk_01.obj");
     mPalmTrunkMap.Load("palm_tree_trunk_01_map_1024");
     
@@ -230,7 +223,6 @@ void GFXApp::Load() {
     mSoundSparkle2.Load("sparkle_2");
     
     mSoundXylophone.Load("xylophone");
-    
     
     gFormationCollection.Load();
     

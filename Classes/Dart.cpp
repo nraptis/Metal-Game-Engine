@@ -20,6 +20,9 @@ Dart::Dart() {
     //and are sitting at the lower center of the screen...
     mIdle = true;
     mStuck = false;
+    mKnockedDown = false;
+    
+    mKnockedDownColorSin = 0.0f;
     
     mDeathTimer = 5000;
     mTimer = 0;
@@ -36,7 +39,6 @@ Dart::Dart() {
     
     //mModel = &gWadModels.mDartBat[mStyleIndex];
     //mSprite = &gWadModels.mDartBatMap[mStyleIndex];
-    
     
     //mModel = &gWadModels.mExtraLife;
     //mSprite = &gWadModels.mExtraLifeMap;
@@ -123,7 +125,7 @@ void Dart::Update() {
         }
     }
     
-    if ((mIdle == false) && (mStuck == false)) {
+    if ((mIdle == false) && (mStuck == false) && (mKnockedDown == false)) {
         mTimer++;
         
         mUpdateInterpStartX = mTransform.mX;
@@ -156,6 +158,26 @@ void Dart::Update() {
             gGame->DisposeObject(this);
         }
     }
+    
+    if (mKnockedDown == true) {
+        
+        mKnockedDownColorSin += 5.0f;
+        if (mKnockedDownColorSin >= 360.0f) { mKnockedDownColorSin -= 360.0f; }
+        
+        mTransform.mRotation += DistanceBetweenAngles(mTransform.mRotation, 180.0f) * 0.04125f;
+        mTransform.mY += mVelY;
+        mVelY += gGame->mGravity;
+        
+        float aColorPercent = (mKnockedDownColorSin + 1.0f) * 0.5f; //Goes from 0 to 1...
+        mColor.mRed = 1.0f - (aColorPercent * 0.35f);
+        mColor.mGreen = 1.0f - (aColorPercent * 0.7f);
+        mColor.mBlue = 1.0f - (aColorPercent * 0.7f);
+        
+        if (gGame->IsGameObjectOutsideKillZone(this)) {
+            gGame->DisposeObject(this);
+        }
+    }
+    
     
     FVec2 aTip = GetTipPoint();
     mTipX = aTip.mX;
@@ -228,3 +250,13 @@ void Dart::Fling(float pVelocityX, float pVelocityY) {
     mPrevTipX = aTip.mX;
     mPrevTipY = aTip.mY;
 }
+
+void Dart::KnockDown() {
+    mKnockedDown = true;
+    mKnockedDownColorSin = 0.0f;
+    
+    mVelX = 0.0f;
+    mVelY = 0.0f;
+}
+
+

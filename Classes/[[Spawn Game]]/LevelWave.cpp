@@ -229,9 +229,7 @@ void LevelWave::HandleSpawnComplete(LevelWaveSpawn *pSpawn) {
     if (mExitType == WAVE_EXIT_TYPE_INSTANT) {
         Log("WAVE_EXIT_TYPE_INSTANT...\n");
         
-        
         for (int i=0;i<aList.mCount;i++) {
-            
             GameObject *aObject = ((GameObject *)aList.mData[i]);
             if (gGame != NULL) {
                 gGame->FlyOffEscape(aObject);
@@ -295,7 +293,6 @@ void LevelWave::HandleSpawnComplete(LevelWaveSpawn *pSpawn) {
             GameObject *aObject = ((GameObject *)aList.First());
             aObject->Disperse(0.0f, 0.0f, 0.0f);
         }
-        
         
     }
 }

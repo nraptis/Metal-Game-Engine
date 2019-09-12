@@ -55,7 +55,7 @@ void GameObject::Update() {
         mFloatAwaySpeedY *= 0.987f;
         if (gGame != NULL) {
             if (mTransform.mY <= gGame->mSpawnZoneTop) {
-                gGame->DisposeObject(this);
+                gGame->FlyOffEscape(this);
             }
         }
     }

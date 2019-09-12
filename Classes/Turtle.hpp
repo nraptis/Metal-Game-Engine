@@ -22,11 +22,26 @@ public:
     virtual void                            Update();
     virtual void                            Draw();
     
-    virtual bool                            WillCollide(float pStartX, float pStartY, float pEndX, float pEndY);
-    
     
     void                                    Draw3DPropeller();
     void                                    Draw3DBillboard();
+    
+    virtual bool                            WillCollide(float pStartX, float pStartY, float pEndX, float pEndY);
+    
+    void                                    KnockDown();
+    bool                                    mKnockedDown; //When  we are knocked down, we no longer operate as a blocker.
+    
+    void                                    Impact(float pImpactRotation);
+    bool                                    mIsRumbling;
+    int                                     mRumbleTime;
+    int                                     mRumbleTimer;
+    int                                     mRumbleDampenTime;
+    float                                   mRumbleDirX;
+    float                                   mRumbleDirY;
+    float                                   mRumbleBounceMagnitude;
+    float                                   mRumbleBounceSin;
+    float                                   mRumbleColorSin;
+    
     
     FMatrix                                 mPropellerMatrixModelView;
     FMatrix                                 mPropellerMatrixNormal;
@@ -44,11 +59,6 @@ public:
     float                                   mPropellerBillboardSpin1;
     float                                   mPropellerBillboardSpin2;
     float                                   mPropellerBillboardSpin3;
-    
-    
-    void                                    KnockDown();
-    bool                                    mKnockedDown; //When  we are knocked down, we no longer operate as a blocker.
-    
     
     float                                   mBillboardFrame;
     

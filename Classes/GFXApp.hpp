@@ -121,9 +121,8 @@ public:
     FModelDataPacked                        mMonolith;
     FSprite                                 mMonolithMap;
     
-    FModelDataPacked                        mBF;
-    FSprite                                 mBFMap;
-    
+    //FModelDataPacked                        mBF;
+    //FSprite                                 mBFMap;
     
     FSound                                  mSoundBalloonPop;
     FSound                                  mSoundDartPullback;

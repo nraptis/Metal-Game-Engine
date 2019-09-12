@@ -38,20 +38,14 @@ public:
     
     
     void                                    Rumble(float pRotation);
-    
-    
     bool                                    mIsRumbling;
     int                                     mRumbleTime;
     int                                     mRumbleTimer;
     int                                     mRumbleDampenTime;
-    
     float                                   mRumbleDirX;
     float                                   mRumbleDirY;
-    
     float                                   mRumbleBounceMagnitude;
     float                                   mRumbleBounceSin;
-    
-    
     float                                   mRumbleColorSin;
     
     

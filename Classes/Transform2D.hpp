@@ -23,6 +23,11 @@ public:
     float                                   mOffsetY;
     float                                   mOffsetZ;
     
+    float                                   mShiftX;
+    float                                   mShiftY;
+    float                                   mShiftZ;
+    
+    
     float                                   mScale;
     float                                   mScaleX;
     float                                   mScaleY;

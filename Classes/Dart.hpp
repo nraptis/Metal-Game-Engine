@@ -23,8 +23,14 @@ public:
     void                                    SpawnAnimation();
     void                                    SpawnAnimationForceComplete();
     
-    int                                     mStyleIndex;
     
+    void                                    KnockDown();
+    bool                                    mKnockedDown;
+    float                                   mKnockedDownColorSin;
+    
+    
+    
+    int                                     mStyleIndex;
     
     bool                                    mSpawnAnimation;
     

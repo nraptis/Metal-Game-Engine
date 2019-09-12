@@ -54,18 +54,12 @@ BrickHead::BrickHead() {
     mIsRumbling = false;
     mRumbleTime = 200;
     mRumbleDampenTime = mRumbleTime - 100;
-    
     mRumbleTimer = 0;
-    
     mRumbleColorSin = 0.0f;
-    
     mRumbleDirX = 0.0f;
     mRumbleDirY = -1.0f;
-    
     mRumbleBounceMagnitude = 5.0f;
     mRumbleBounceSin = 0.0f;
-    
-    
     
 }
 
@@ -74,6 +68,9 @@ BrickHead::~BrickHead() {
 }
 
 void BrickHead::Update() {
+    
+    GameObject::Update();
+    
     mTransform3D.mSpin += mSpinSpeed;
     
     mTransform.mX += mVelX;

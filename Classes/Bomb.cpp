@@ -33,6 +33,9 @@ Bomb::~Bomb() {
 }
 
 void Bomb::Update() {
+    
+    GameObject::Update();
+    
     mTransform3D.mSpin += mSpinSpeed;
     
     mTransform.mX += mVelX;
