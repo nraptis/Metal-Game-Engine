@@ -120,6 +120,7 @@ Game::Game() {
     mTrajectoryReleaseVelocity = 0.0f;
     //mTrajectoryList
     
+    mRecentFloatingAwayTick = 0;
     
     mScore = 0;
     
@@ -346,6 +347,8 @@ void Game::Update() {
     
     
     if (mPopSoundDelay > 0) { mPopSoundDelay--; }
+    if (mRecentFloatingAwayTick > 0) { mRecentFloatingAwayTick--; }
+    
     
     if (aShowOverlay) {
         if (mTestOverlay == NULL) {
@@ -391,6 +394,39 @@ void Game::Update() {
         }
     }
     
+    
+    EnumList(Balloon, aBalloon, mBalloonList.mObjectList) {
+        if (aBalloon->mKill == 0) {
+            if (aBalloon->mFloatAway == true) {
+                mRecentFloatingAwayTick = 4;
+            }
+        }
+    }
+    
+    EnumList(Turtle, aTurtle, mTurtleList.mObjectList) {
+        if (aTurtle->mKill == 0) {
+            if (aTurtle->mFloatAway == true) {
+                mRecentFloatingAwayTick = 4;
+            }
+        }
+    }
+    
+    EnumList(BrickHead, aBrickHead, mBrickHeadList.mObjectList) {
+        if (aBrickHead->mKill == 0) {
+            if (aBrickHead->mFloatAway == true) {
+                mRecentFloatingAwayTick = 4;
+            }
+        }
+    }
+    
+    EnumList(Bomb, aBomb, mBombList.mObjectList) {
+        if (aBomb->mKill == 0) {
+            if (aBomb->mFloatAway == true) {
+                mRecentFloatingAwayTick = 4;
+            }
+        }
+    }
+    
     if (mCurrentDart) {
         mCurrentDart->Update();
     } else {
@@ -405,19 +441,19 @@ void Game::Update() {
         }
     }
     
-    
-    //TODO: Remove
-    for (int i=0;i<mBalloonList.mObjectList.mCount;i++) {
-        Balloon *aBalloon = (Balloon *)mBalloonList.mObjectList.mData[i];
-        aBalloon->mTransform.mRotation = mTestBalloonRotZ;
-        aBalloon->mTilt = mTestBalloonRotX;
-    }
-    
-    mBalloonList.Update();
     mDartList.Update();
+    mBalloonList.Update();
     mBrickHeadList.Update();
     mBombList.Update();
     mTurtleList.Update();
+    
+    
+    
+    
+    
+    
+    
+    //
     
     
     //New thing, the dart now moves small increments and tries to collide.
@@ -532,29 +568,46 @@ void Game::Update() {
             
             mTrajectoryReleaseVelocity = mDartReleaseVelocityMin + (mDartReleaseVelocityMax - mDartReleaseVelocityMin) * aReleaseFactor;
             
-            //Compute the entire trajectory itself...
-            //TODO:
-            
-            //1st - gravity
-            
-            //2nd - displacement
-            
             float aTrajectoryX = mCurrentDart->mTransform.mX;
             float aTrajectoryY = mCurrentDart->mTransform.mY;
             
             float aTrajectoryVelocityX = mTrajectoryReleaseDirX * mTrajectoryReleaseVelocity;
             float aTrajectoryVelocityY = mTrajectoryReleaseDirY * mTrajectoryReleaseVelocity;
             
+            float aTrajectoryTargetRotation = FaceTarget(-aTrajectoryVelocityX, -aTrajectoryVelocityY);
+            float aTrajectoryRotation = aTrajectoryTargetRotation;
+            
+            float aAngleDiff = 0.0f;
+            
+            float aTipX = 0.0f;
+            float aTipY = 0.0f;
+            
+            mCurrentDart->GetTipPoint(aTrajectoryX, aTrajectoryY, 1.0f, aTrajectoryRotation, aTipX, aTipY);
+            
             bool aLoop = true;
             
             mTrajectoryList.Reset();
             while (aLoop == true) {
-                mTrajectoryList.Add(aTrajectoryX, aTrajectoryY);
+                mTrajectoryList.Add(aTipX, aTipY);
                 aTrajectoryVelocityY += mGravity;
+                
+                if (fabsf(aTrajectoryVelocityX) > 0.001f || fabsf(aTrajectoryVelocityY) > 0.001f) {
+                    aTrajectoryTargetRotation = FaceTarget(-aTrajectoryVelocityX, -aTrajectoryVelocityY);
+                }
+                
+                aAngleDiff = DistanceBetweenAngles(aTrajectoryRotation, aTrajectoryTargetRotation);
+                if (aAngleDiff > 2.0f) { aTrajectoryRotation += 1.0f; }
+                if (aAngleDiff < -2.0f) { aTrajectoryRotation -= 1.0f; }
+                aAngleDiff = DistanceBetweenAngles(aTrajectoryRotation, aTrajectoryTargetRotation);
+                aTrajectoryRotation += aAngleDiff * 0.035f;
                 aTrajectoryX += aTrajectoryVelocityX;
                 aTrajectoryY += aTrajectoryVelocityY;
                 
-                if ((aTrajectoryX < mKillZoneLeft) || (aTrajectoryX > mKillZoneRight) || (aTrajectoryY < mKillZoneTop) || (aTrajectoryY > mKillZoneBottom)) { break; }
+                mCurrentDart->GetTipPoint(aTrajectoryX, aTrajectoryY, 1.0f, aTrajectoryRotation, aTipX, aTipY);
+                
+                if ((aTrajectoryX < mKillZoneLeft) || (aTrajectoryX > mKillZoneRight) || (aTrajectoryY < mKillZoneTop) || (aTrajectoryY > mKillZoneBottom)) {
+                    break;
+                }
             }
         }
     }
@@ -679,12 +732,9 @@ void Game::DartMovingInterpolationBalloons(Dart *pDart, float pPercent, bool pEn
         + (pDart->mUpdateInterpEndY - pDart->mUpdateInterpStartY) * pPercent;
         pDart->mTransform.mRotation = pDart->mUpdateInterpStartRotation
         + (pDart->mUpdateInterpEndRotation - pDart->mUpdateInterpStartRotation) * pPercent;
-        
     }
     
-    FVec2 aTip = pDart->GetTipPoint();
-    pDart->mTipX = aTip.mX;
-    pDart->mTipY = aTip.mY;
+    pDart->GetTipPoint(pDart->mTipX, pDart->mTipY);
     
     for (int n=0;n<mBalloonList.mObjectList.mCount;n++) {
         Balloon *aBalloon = (Balloon *)mBalloonList.mObjectList.mData[n];
@@ -712,9 +762,7 @@ void Game::DartMovingInterpolationBrickHeads(Dart *pDart, float pPercent, bool p
         + (pDart->mUpdateInterpEndRotation - pDart->mUpdateInterpStartRotation) * pPercent;
     }
     
-    FVec2 aTip = pDart->GetTipPoint();
-    pDart->mTipX = aTip.mX;
-    pDart->mTipY = aTip.mY;
+    pDart->GetTipPoint(pDart->mTipX, pDart->mTipY);
     
     for (int n=0;n<mBrickHeadList.mObjectList.mCount;n++) {
         BrickHead *aBrickHead = (BrickHead *)mBrickHeadList.mObjectList.mData[n];
@@ -741,9 +789,7 @@ void Game::DartMovingInterpolationTurtles(Dart *pDart, float pPercent, bool pEnd
         + (pDart->mUpdateInterpEndRotation - pDart->mUpdateInterpStartRotation) * pPercent;
     }
     
-    FVec2 aTip = pDart->GetTipPoint();
-    pDart->mTipX = aTip.mX;
-    pDart->mTipY = aTip.mY;
+    pDart->GetTipPoint(pDart->mTipX, pDart->mTipY);
     
     for (int n=0;n<mTurtleList.mObjectList.mCount;n++) {
         Turtle *aTurtle = (Turtle *)mTurtleList.mObjectList.mData[n];
@@ -869,22 +915,32 @@ void Game::TouchFlush() {
 
 void Game::KeyDown(int pKey) {
     
-    DisposeAllObjects();
     
-    if (mLevelData != NULL) {
-        if (mLevelController != NULL) {
-            mLevelController->mData = NULL;
-        }
-        delete mLevelData;
-        mLevelData = NULL;
-    }
     
     
     if (gKeyDownCtrl) {
         if (pKey == __KEY__R) {
+            
+            DisposeAllObjects();
+            
+            if (mLevelData != NULL) {
+                if (mLevelController != NULL) {
+                    mLevelController->mData = NULL;
+                }
+                delete mLevelData;
+                mLevelData = NULL;
+            }
+            
             Load();
         }
+    }
+    
+    if (pKey == __KEY__L) {
         
+        if (gKeyDownCtrl) {
+            mLives++;
+            if (gInterfaceOverlay != NULL) { gInterfaceOverlay->NotifyLivesChanged(); }
+        }
     }
     
     
@@ -902,17 +958,28 @@ void Game::Notify(void *pSender, const char *pNotification) {
 
 bool Game::IsWaveClearForSpawn() {
     EnumList (Balloon, aBalloon, mBalloonList.mObjectList) {
-        if ((aBalloon->mKill == 0) && (aBalloon->mWave != NULL)) {
+        if ((aBalloon->mKill == 0) && (aBalloon->mDidOriginateOnWave == true)) {
+            return false;
+        }
+    }
+    EnumList (Turtle, aTurtle, mTurtleList.mObjectList) {
+        if ((aTurtle->mKill == 0) && (aTurtle->mDidOriginateOnWave == true) && (aTurtle->mKnockedDown == false) && (aTurtle->mBalloon != NULL)) {
+            return false;
+        }
+    }
+    EnumList (BrickHead, aBrickHead, mBrickHeadList.mObjectList) {
+        if ((aBrickHead->mKill == 0) && (aBrickHead->mDidOriginateOnWave == true)) {
+            return false;
+        }
+    }
+    EnumList (Bomb, aBomb, mBombList.mObjectList) {
+        if ((aBomb->mKill == 0) && (aBomb->mDidOriginateOnWave == true)) {
             return false;
         }
     }
     
-    EnumList (Turtle, aTurtle, mTurtleList.mObjectList) {
-        if ((aTurtle->mKill == 0) && (aTurtle->mWave != NULL)) {
-            if ((aTurtle->mKnockedDown == false) && (aTurtle->mBalloon != NULL)) {
-                return false;
-            }
-        }
+    if (IsAnyObjectFloatingAway() == true) {
+        return false;
     }
     
     return true;
@@ -936,14 +1003,33 @@ bool Game::IsScreenClearForSpawn(bool pIncludePerms) {
     }
     
     EnumList (Turtle, aTurtle, mTurtleList.mObjectList) {
-        if (aTurtle->mKill == 0) {
-            if ((aTurtle->mKnockedDown == false) && (aTurtle->mBalloon != NULL)) {
-                if (aTurtle->mDidOriginateAsPermanent == true) {
-                    ++aPermCount;
-                }
-                if (aTurtle->mDidOriginateOnWave == true) {
-                    ++aWaveCount;
-                }
+        if ((aTurtle->mKill == 0) && (aTurtle->mKnockedDown == false) && (aTurtle->mBalloon != NULL)) {
+            if (aTurtle->mDidOriginateAsPermanent == true) {
+                ++aPermCount;
+            }
+            if (aTurtle->mDidOriginateOnWave == true) {
+                ++aWaveCount;
+            }
+        }
+    }
+    
+    EnumList (BrickHead, aBrickHead, mBrickHeadList.mObjectList) {
+        if ((aBrickHead->mKill == 0) && (aBrickHead->mDidOriginateOnWave == true)) {
+            if (aBrickHead->mDidOriginateAsPermanent == true) {
+                ++aPermCount;
+            }
+            if (aBrickHead->mDidOriginateOnWave == true) {
+                ++aWaveCount;
+            }
+        }
+    }
+    EnumList (Bomb, aBomb, mBombList.mObjectList) {
+        if ((aBomb->mKill == 0) && (aBomb->mDidOriginateOnWave == true)) {
+            if (aBomb->mDidOriginateAsPermanent == true) {
+                ++aPermCount;
+            }
+            if (aBomb->mDidOriginateOnWave == true) {
+                ++aWaveCount;
             }
         }
     }
@@ -952,6 +1038,10 @@ bool Game::IsScreenClearForSpawn(bool pIncludePerms) {
         if (aPermCount > 0 || aWaveCount > 0) { return false; }
     } else {
         if (aWaveCount > 0) { return false; }
+    }
+    
+    if (IsAnyObjectFloatingAway() == true) {
+        return false;
     }
     
     return true;
@@ -1367,6 +1457,44 @@ bool Game::IsGameObjectOutsideKillZone(GameObject *pObject) {
     }
     return false;
 }
+
+bool Game::IsAnyObjectFloatingAway() {
+    
+    EnumList (Balloon, aBalloon, mBalloonList.mObjectList) {
+        if (aBalloon->mKill == 0) {
+            if (aBalloon->mFloatAway == true) {
+                mRecentFloatingAwayTick = 4;
+            }
+        }
+    }
+    
+    EnumList (Turtle, aTurtle, mTurtleList.mObjectList) {
+        if ((aTurtle->mKill == 0) && (aTurtle->mKnockedDown == false) && (aTurtle->mBalloon != NULL)) {
+            if (aTurtle->mFloatAway == true) {
+                mRecentFloatingAwayTick = 4;
+            }
+        }
+    }
+    
+    EnumList (BrickHead, aBrickHead, mBrickHeadList.mObjectList) {
+        if (aBrickHead->mKill == 0) {
+            if (aBrickHead->mFloatAway == true) {
+                mRecentFloatingAwayTick = 4;
+            }
+        }
+    }
+    
+    EnumList (Bomb, aBomb, mBombList.mObjectList) {
+        if (aBomb->mKill == 0) {
+            if (aBomb->mFloatAway == true) {
+                mRecentFloatingAwayTick = 4;
+            }
+        }
+    }
+    
+    return (mRecentFloatingAwayTick > 0);
+}
+
 
 
 void Game::Load() {

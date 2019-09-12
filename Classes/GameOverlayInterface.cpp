@@ -135,6 +135,13 @@ void GameOverlayInterface::Draw() {
     gWadGameInterface.mFontScoreLarge.Draw(FString("Streak:") + FString(gGame->mScore), 2.0f * gSpriteDrawScale + gSafeAreaInsetLeft, 20.0 * gSpriteDrawScale + gSafeAreaInsetTop);
     
     
+    gWadGameInterface.mFontScoreLarge.Center(FString("BL:") + FString(gGame->mRecentFloatingAwayTick), mWidth2, 12.0 * gSpriteDrawScale + gSafeAreaInsetTop);
+    
+    
+    
+    
+    
+    
     
     Graphics::PipelineStateSetShape2DAlphaBlending();
     
@@ -170,6 +177,7 @@ void GameOverlayInterface::Draw() {
     }
     
     
+    /*
     DrawTransform();
     Graphics::PipelineStateSetSpritePremultipliedBlending();
     Graphics::SetColor();
@@ -188,6 +196,8 @@ void GameOverlayInterface::Draw() {
         
         aY += gWadGameEffects.mSequenceCoin[i].mWidth * 0.6f + 2.0f * gSpriteDrawScale;
     }
+     
+    */
     
 }
 

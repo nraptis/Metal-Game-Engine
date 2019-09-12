@@ -59,6 +59,10 @@ public:
     
     bool                                        IsWaveClearForSpawn();
     bool                                        IsScreenClearForSpawn(bool pIncludePerms);
+    bool                                        IsAnyObjectFloatingAway();
+    int                                         mRecentFloatingAwayTick;
+    
+    
     
     void                                        Convert2DTransformTo3D(Transform2D *p2D, Transform3D *p3D);
     

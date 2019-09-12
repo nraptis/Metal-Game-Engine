@@ -132,9 +132,6 @@ void Dart::Update() {
         mUpdateInterpStartY = mTransform.mY;
         mUpdateInterpStartRotation = mTransform.mRotation;
         
-        //mTransform.mX += mVelX;
-        //mTransform.mY += mVelY;
-        
         mVelY += gGame->mGravity;
         
         if (fabsf(mVelX) > 0.001f || fabsf(mVelY) > 0.001f) {
@@ -161,17 +158,24 @@ void Dart::Update() {
     
     if (mKnockedDown == true) {
         
-        mKnockedDownColorSin += 5.0f;
+        mKnockedDownColorSin += 14.0f;
         if (mKnockedDownColorSin >= 360.0f) { mKnockedDownColorSin -= 360.0f; }
         
-        mTransform.mRotation += DistanceBetweenAngles(mTransform.mRotation, 180.0f) * 0.04125f;
+        if (mTransform.mScale > 0.6f) {
+            mTransform.mScale *= 0.985f;
+            if (mTransform.mScale <= 0.6f) { mTransform.mScale = 0.6f; }
+        }
+        
+        mTransform.mRotation += DistanceBetweenAngles(mTransform.mRotation, 180.0f) * 0.02125f;
         mTransform.mY += mVelY;
         mVelY += gGame->mGravity;
         
-        float aColorPercent = (mKnockedDownColorSin + 1.0f) * 0.5f; //Goes from 0 to 1...
-        mColor.mRed = 1.0f - (aColorPercent * 0.35f);
-        mColor.mGreen = 1.0f - (aColorPercent * 0.7f);
-        mColor.mBlue = 1.0f - (aColorPercent * 0.7f);
+        float aColorSin = Sin(mKnockedDownColorSin);
+        float aColorPercent = (aColorSin + 1.0f) * 0.5f; //Goes from 0 to 1...
+        
+        mColor.mRed = 0.8f - (aColorPercent * 0.8f);
+        mColor.mGreen = 0.8f - (aColorPercent * 0.8f);
+        mColor.mBlue = 0.8f - (aColorPercent * 0.8f);
         
         if (gGame->IsGameObjectOutsideKillZone(this)) {
             gGame->DisposeObject(this);
@@ -179,13 +183,15 @@ void Dart::Update() {
     }
     
     
-    FVec2 aTip = GetTipPoint();
-    mTipX = aTip.mX;
-    mTipY = aTip.mY;
+    GetTipPoint(mTipX, mTipY);
 }
 
 void Dart::Draw() {
     GameObject::Draw();
+    
+    Graphics::PipelineStateSetShape2DNoBlending();
+    Graphics::SetColor(1.0f, 0.2f, 0.18f, 1.0f);
+    Graphics::DrawPoint(mTipX, mTipY, 8.0f);
 }
 
 void Dart::Draw3D() {
@@ -225,14 +231,18 @@ void Dart::SpawnAnimationForceComplete() {
     }
 }
 
-FVec2 Dart::GetTipPoint() {
+void Dart::GetTipPoint(float &pTipX, float &pTipY) {
     float aScale = mTransform.mScale * mTransform.mOffsetScale;
-    float aDistFromCenter = 48.0f * (aScale);
-    FVec2 aDir = AngleToVector(mTransform.mRotation + mTransform.mOffsetRotation);
-    FVec2 aResult;
-    aResult.mX = mTransform.mX + aDir.mX * aDistFromCenter * mTransform.mScaleX;
-    aResult.mY = mTransform.mY + aDir.mY * aDistFromCenter * mTransform.mScaleY;
-    return aResult;
+    float aRotation = mTransform.mRotation + mTransform.mOffsetRotation;
+    GetTipPoint(mTransform.mX, mTransform.mY, aScale, aRotation, pTipX, pTipY);
+}
+
+void Dart::GetTipPoint(float pCenterX, float pCenterY, float pScale, float pRotation, float &pTipX, float &pTipY) {
+    float aDistFromCenter = 48.0f * pScale;
+    float aDirX = Sin(pRotation);
+    float aDirY = -Cos(pRotation);
+    pTipX = pCenterX + aDirX * aDistFromCenter;
+    pTipY = pCenterY + aDirY * aDistFromCenter;
 }
 
 void Dart::Fling(float pVelocityX, float pVelocityY) {
@@ -244,11 +254,13 @@ void Dart::Fling(float pVelocityX, float pVelocityY) {
     mVelX = pVelocityX;
     mVelY = pVelocityY;
     
-    FVec2 aTip = GetTipPoint();
-    mTipX = aTip.mX;
-    mTipY = aTip.mY;
-    mPrevTipX = aTip.mX;
-    mPrevTipY = aTip.mY;
+    mTargetRotation = FaceTarget(-mVelX, -mVelY);
+    mTransform.mRotation = mTargetRotation;
+    
+    
+    GetTipPoint(mTipX, mTipY);
+    mPrevTipX = mTipX;
+    mPrevTipY = mTipY;
 }
 
 void Dart::KnockDown() {

@@ -40,41 +40,48 @@ void LevelData::Update() {
     if (mCurrentSection == NULL) {
         if (mCurrentSectionIndex < mSectionList.mCount) {
             
-            if (mCurrentSectionIndex == 0) {
-                aIsFirstSection = true;
-            }
-            
-            mCurrentSection = (LevelSection *)(mSectionList[mCurrentSectionIndex++]);
-            mCurrentSection->Spawn();
-            
-            if (mPreviousSection != NULL) {
-                //We always fly in - if it's all waves, we still need the delay...
-                if (mFlyInFromRight) {
-                    mCurrentSection->FlyInReset(SECTION_FLY_RIGHT);
-                } else {
-                    mCurrentSection->FlyInReset(SECTION_FLY_LEFT);
-                }
-            } else {
+            if (gGame->IsAnyObjectFloatingAway() == false) {
                 
-                //We have no previous section...
-                //Do we have any perms?
-                if (mCurrentSection->HasAnyPermanents()) {
-                    if (aIsFirstSection) {
-                        mCurrentSection->FlyInReset(SECTION_FLY_TOP);
+                
+                
+                if (mCurrentSectionIndex == 0) {
+                    aIsFirstSection = true;
+                }
+                
+                mCurrentSection = (LevelSection *)(mSectionList[mCurrentSectionIndex++]);
+                mCurrentSection->Spawn();
+                
+                if (mPreviousSection != NULL) {
+                    //We always fly in - if it's all waves, we still need the delay...
+                    if (mFlyInFromRight) {
+                        mCurrentSection->FlyInReset(SECTION_FLY_RIGHT);
                     } else {
-                        
-                        mFlyInFromRight = gRand.GetBool();
-                        if (mFlyInFromRight) {
-                            mCurrentSection->FlyInReset(SECTION_FLY_RIGHT);
+                        mCurrentSection->FlyInReset(SECTION_FLY_LEFT);
+                    }
+                } else {
+                    
+                    //We have no previous section...
+                    //Do we have any perms?
+                    if (mCurrentSection->HasAnyPermanents()) {
+                        if (aIsFirstSection) {
+                            mCurrentSection->FlyInReset(SECTION_FLY_TOP);
                         } else {
-                            mCurrentSection->FlyInReset(SECTION_FLY_LEFT);
+                            
+                            mFlyInFromRight = gRand.GetBool();
+                            if (mFlyInFromRight) {
+                                mCurrentSection->FlyInReset(SECTION_FLY_RIGHT);
+                            } else {
+                                mCurrentSection->FlyInReset(SECTION_FLY_LEFT);
+                            }
                         }
                     }
                 }
-            }
-            
-            if (gGame->mTestOverlay != NULL) {
-                gGame->mTestOverlay->AddBubble(mCurrentSection->mName.c());
+                
+                if (gGame->mTestOverlay != NULL) {
+                    gGame->mTestOverlay->AddBubble(mCurrentSection->mName.c());
+                }
+                
+                
             }
         }
     }

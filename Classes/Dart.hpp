@@ -39,7 +39,11 @@ public:
     int                                     mSpawnAnimationTime;
     int                                     mSpawnAnimationTimer;
     
-    FVec2                                   GetTipPoint();
+    void                                    GetTipPoint(float &pTipX, float &pTipY);
+    void                                    GetTipPoint(float pCenterX, float pCenterY, float pScale, float pRotation, float &pTipX, float &pTipY);
+    
+    
+    
     
     float                                   mPrevTipX;
     float                                   mPrevTipY;
