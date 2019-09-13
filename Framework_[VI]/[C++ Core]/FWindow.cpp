@@ -134,6 +134,7 @@ void FWindow::Update() {
             mLayoutBucket.AddCanvasesToListAndRemoveAll(&mTemp);
             EnumList(FCanvas, aCanvas, mTemp) {
                 RegisterTransformDidUpdate(aCanvas);
+                
                 aCanvas->BaseLayout();
             }
         }
@@ -160,6 +161,7 @@ bool FWindow::TouchDown(float pX, float pY, void *pData) {
     FCanvas *aCollider = mRoot.BaseTouchDown(pX, pY, pX, pY, pData, false, aConsumed);
     if (aCollider) {
         mSelectedCanvas = aCollider;
+        printf("Touched Canvas: %s\n", mSelectedCanvas->mName.c());
         return aConsumed;
     }
     return false;

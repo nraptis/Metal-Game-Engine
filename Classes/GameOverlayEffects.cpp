@@ -22,14 +22,12 @@ GameOverlayEffects *gEffectsOverlay = NULL;
 GameOverlayEffects::GameOverlayEffects() {
     gEffectsOverlay = this;
     mConsumesTouches = false;
-    mName = "[~Game Overlay Effects~]";
+    mName = "GameOverlayEffects";
     
     
     mSeqFrame01 = 0.0f;
     mSeqFrame02 = 0.0f;
     mSeqFrame03 = 0.0f;
-    
-    
 }
 
 GameOverlayEffects::~GameOverlayEffects() {

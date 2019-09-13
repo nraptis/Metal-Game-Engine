@@ -1,4 +1,87 @@
 {
 	"section": true,
-	"wave_list": []
+	"wave_list": [],
+	"perm_list": [
+		{
+			"x_con": 500,
+			"y_con": 400,
+			"motion": {
+				"slice_list": [
+					{
+						"type": 5,
+						"linear_tick": 0,
+						"linear_time": 100,
+						"radius": 46,
+						"pause_1": 60,
+						"pause_2": 60
+					}
+				]
+			},
+			"formation": "form_all_nod_all_bln_grd_rec_6x1_38sph_0spv_sld_nodes_cfg6xb_snp",
+			"formation_config": {}
+		},
+		{
+			"x_con": 500,
+			"y_con": 400,
+			"y_con_offset": 120.000000,
+			"motion": {
+				"slice_list": [
+					{
+						"type": 5,
+						"linear_tick": 0,
+						"linear_time": 100,
+						"radius": 42,
+						"pause_1": 60,
+						"pause_2": 60
+					},
+					{
+						"type": 1
+					}
+				]
+			},
+			"formation": "form_all_nod_all_bln_grd_rec_6x1_38sph_0spv_sld_nodes_cfg6xb_snp",
+			"formation_config": {}
+		},
+		{
+			"x_con": 500,
+			"y_con": 400,
+			"y_con_offset": 240.000000,
+			"motion": {
+				"slice_list": [
+					{
+						"type": 5,
+						"linear_tick": 0,
+						"linear_time": 100,
+						"radius": 42,
+						"pause_1": 60,
+						"pause_2": 60
+					}
+				]
+			},
+			"formation": "form_all_nod_all_bln_grd_rec_6x1_38sph_0spv_sld_nodes_cfg6xb_snp",
+			"formation_config": {}
+		},
+		{
+			"x_con": 500,
+			"y_con": 400,
+			"y_con_offset": 360.000000,
+			"motion": {
+				"slice_list": [
+					{
+						"type": 5,
+						"linear_tick": 0,
+						"linear_time": 100,
+						"radius": 42,
+						"pause_1": 60,
+						"pause_2": 60
+					},
+					{
+						"type": 1
+					}
+				]
+			},
+			"formation": "form_all_nod_all_bln_grd_rec_6x1_38sph_0spv_sld_nodes_cfg6xb_snp",
+			"formation_config": {}
+		}
+	]
 }

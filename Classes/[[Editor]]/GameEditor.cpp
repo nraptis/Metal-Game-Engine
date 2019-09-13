@@ -617,6 +617,11 @@ void GameEditor::Notify(void *pSender, const char *pNotification) {
     }
 }
 
+void GameEditor::DisposeObjectFromLevelData(GameObject *pObject) {
+    
+    
+    
+}
 
 int GameEditor::ClosestXConstraint(float pX) {
     int aResult = X_CONSTRAINT_LEFT_EXIT;

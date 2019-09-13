@@ -88,7 +88,6 @@ Dart::~Dart() {
 
 void Dart::Update() {
     
-    
     if (mStuck) {
         //Once we are stuck, we can NEVER SPIN, EVER AGAIN!!!
         mSpinSpeed = 0;

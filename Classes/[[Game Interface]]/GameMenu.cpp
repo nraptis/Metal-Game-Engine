@@ -151,7 +151,10 @@ void GameMenu::Notify(void *pSender, const char *pNotification) {
     }
     
     if ((pSender == mMainMenuButton) && (mMainMenuButton != NULL)) {
-        gGameContainer->UnpauseAndHideGameMenu();
+        //gGameContainer->UnpauseAndHideGameMenu();
+        if (gApp->TransitionAllowed()) {
+            gApp->TransitionToMainMenu();
+        }
     }
     
 }

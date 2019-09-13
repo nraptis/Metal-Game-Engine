@@ -354,8 +354,8 @@ void LevelSectionBlueprint::Load(FJSONNode *pNode) {
     
     //TODO: Remove
     if (gEditor != NULL) {
-        WaveSelectNext();
-        PermSelectNext();
+        //WaveSelectNext();
+        //PermSelectNext();
     }
 }
 

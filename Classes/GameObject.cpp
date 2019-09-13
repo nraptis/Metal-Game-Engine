@@ -36,6 +36,9 @@ GameObject::GameObject() {
 }
 
 GameObject::~GameObject() {
+    
+    printf("Deleting GO: %x\n", this);
+    
     if (mWaveSpawn != NULL) {
         //mWaveSpawn->DisposeObject(this);
         mWaveSpawn = NULL;

@@ -22,6 +22,10 @@
 		0D113EB82327611900805ABB /* MetalViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D113EB22327611900805ABB /* MetalViewController.mm */; };
 		0D113EB92327611900805ABB /* PlatformGraphicsInterface.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D113EB32327611900805ABB /* PlatformGraphicsInterface.mm */; };
 		0D113EBA2327611900805ABB /* MetalView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D113EB62327611900805ABB /* MetalView.mm */; };
+		0D16CA57232AED6500D2ADE1 /* MainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D16CA55232AED6500D2ADE1 /* MainMenu.cpp */; };
+		0D16CA5A232AEF4500D2ADE1 /* MainMenuPlayButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D16CA58232AEF4500D2ADE1 /* MainMenuPlayButton.cpp */; };
+		0D16CA5D232AF71900D2ADE1 /* Transition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D16CA5B232AF71900D2ADE1 /* Transition.cpp */; };
+		0D16CA60232AFE4400D2ADE1 /* GFXAppNotificationHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D16CA5E232AFE4400D2ADE1 /* GFXAppNotificationHelper.cpp */; };
 		0D23F8B12328C4E1002A6B7B /* fnt_cb_256_font.kern in Resources */ = {isa = PBXBuildFile; fileRef = 0D23F5852328C4E0002A6B7B /* fnt_cb_256_font.kern */; };
 		0D23F8B22328C4E1002A6B7B /* mont_heavy_256_font.kern in Resources */ = {isa = PBXBuildFile; fileRef = 0D23F5862328C4E0002A6B7B /* mont_heavy_256_font.kern */; };
 		0D23F8B32328C4E1002A6B7B /* fnt_mh_256_font.kern in Resources */ = {isa = PBXBuildFile; fileRef = 0D23F5892328C4E0002A6B7B /* fnt_mh_256_font.kern */; };
@@ -1022,6 +1026,14 @@
 		0D113EB52327611900805ABB /* PlatformGraphicsInterface.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PlatformGraphicsInterface.hpp; sourceTree = "<group>"; };
 		0D113EB62327611900805ABB /* MetalView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MetalView.mm; sourceTree = "<group>"; };
 		0D113EB72327611900805ABB /* MetalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetalView.h; sourceTree = "<group>"; };
+		0D16CA55232AED6500D2ADE1 /* MainMenu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MainMenu.cpp; sourceTree = "<group>"; };
+		0D16CA56232AED6500D2ADE1 /* MainMenu.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MainMenu.hpp; sourceTree = "<group>"; };
+		0D16CA58232AEF4500D2ADE1 /* MainMenuPlayButton.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MainMenuPlayButton.cpp; sourceTree = "<group>"; };
+		0D16CA59232AEF4500D2ADE1 /* MainMenuPlayButton.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MainMenuPlayButton.hpp; sourceTree = "<group>"; };
+		0D16CA5B232AF71900D2ADE1 /* Transition.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Transition.cpp; sourceTree = "<group>"; };
+		0D16CA5C232AF71900D2ADE1 /* Transition.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Transition.hpp; sourceTree = "<group>"; };
+		0D16CA5E232AFE4400D2ADE1 /* GFXAppNotificationHelper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GFXAppNotificationHelper.cpp; sourceTree = "<group>"; };
+		0D16CA5F232AFE4400D2ADE1 /* GFXAppNotificationHelper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GFXAppNotificationHelper.hpp; sourceTree = "<group>"; };
 		0D23F5852328C4E0002A6B7B /* fnt_cb_256_font.kern */ = {isa = PBXFileReference; lastKnownFileType = file; path = fnt_cb_256_font.kern; sourceTree = "<group>"; };
 		0D23F5862328C4E0002A6B7B /* mont_heavy_256_font.kern */ = {isa = PBXFileReference; lastKnownFileType = file; path = mont_heavy_256_font.kern; sourceTree = "<group>"; };
 		0D23F5892328C4E0002A6B7B /* fnt_mh_256_font.kern */ = {isa = PBXFileReference; lastKnownFileType = file; path = fnt_mh_256_font.kern; sourceTree = "<group>"; };
@@ -3678,6 +3690,14 @@
 				0D75748123295EB40048EC24 /* [[Wadding]] */,
 				0D75744B23295EB40048EC24 /* Balloon.cpp */,
 				0D75747923295EB40048EC24 /* Balloon.hpp */,
+				0D75744623295EB40048EC24 /* GFXApp.cpp */,
+				0D7574FF23295EB40048EC24 /* GFXApp.hpp */,
+				0D16CA5E232AFE4400D2ADE1 /* GFXAppNotificationHelper.cpp */,
+				0D16CA5F232AFE4400D2ADE1 /* GFXAppNotificationHelper.hpp */,
+				0D16CA5B232AF71900D2ADE1 /* Transition.cpp */,
+				0D16CA5C232AF71900D2ADE1 /* Transition.hpp */,
+				0D16CA55232AED6500D2ADE1 /* MainMenu.cpp */,
+				0D16CA56232AED6500D2ADE1 /* MainMenu.hpp */,
 				0D7574B723295EB40048EC24 /* Bomb.cpp */,
 				0D75743423295EB40048EC24 /* Bomb.hpp */,
 				0D75748F23295EB40048EC24 /* BrickHead.cpp */,
@@ -3714,8 +3734,6 @@
 				0D75749423295EB40048EC24 /* GameTestEditorOverlay.hpp */,
 				0D75749323295EB40048EC24 /* GameTestRunningOverlay.cpp */,
 				0D75747423295EB40048EC24 /* GameTestRunningOverlay.hpp */,
-				0D75744623295EB40048EC24 /* GFXApp.cpp */,
-				0D7574FF23295EB40048EC24 /* GFXApp.hpp */,
 				0D75743823295EB40048EC24 /* HangingThread.cpp */,
 				0D7574B823295EB40048EC24 /* HangingThread.hpp */,
 				0D75747D23295EB40048EC24 /* HangingThreadKnot.cpp */,
@@ -3752,9 +3770,9 @@
 		0D75741D23295EB40048EC24 /* [[Game Interface]] */ = {
 			isa = PBXGroup;
 			children = (
+				0D75742023295EB40048EC24 /* GameMenu.cpp */,
 				0D75741E23295EB40048EC24 /* GameMenu.hpp */,
 				0D75741F23295EB40048EC24 /* LifeIndicator.cpp */,
-				0D75742023295EB40048EC24 /* GameMenu.cpp */,
 				0D75742123295EB40048EC24 /* LifeIndicator.hpp */,
 			);
 			path = "[[Game Interface]]";
@@ -3994,6 +4012,8 @@
 		0D7574F923295EB40048EC24 /* [[Main Menu]] */ = {
 			isa = PBXGroup;
 			children = (
+				0D16CA58232AEF4500D2ADE1 /* MainMenuPlayButton.cpp */,
+				0D16CA59232AEF4500D2ADE1 /* MainMenuPlayButton.hpp */,
 			);
 			path = "[[Main Menu]]";
 			sourceTree = "<group>";
@@ -5003,6 +5023,7 @@
 				0D75756623295EB40048EC24 /* GameEditor.cpp in Sources */,
 				0D75751523295EB40048EC24 /* GFXApp.cpp in Sources */,
 				0D75756323295EB40048EC24 /* GameFormationEditor.cpp in Sources */,
+				0D16CA5A232AEF4500D2ADE1 /* MainMenuPlayButton.cpp in Sources */,
 				0D35939022FB4DE50032E8FC /* os_core_social.mm in Sources */,
 				0D75755E23295EB40048EC24 /* EditorMenuWavesPicker.cpp in Sources */,
 				0D35935922FB4DE50032E8FC /* Util_ScreenFrame.cpp in Sources */,
@@ -5011,6 +5032,7 @@
 				0D35939522FB4DE50032E8FC /* os_core_sound_ios.mm in Sources */,
 				0D113EB02327610700805ABB /* MetalPipeline.mm in Sources */,
 				0D35935322FB4DE50032E8FC /* ToolMenuSectionRow.cpp in Sources */,
+				0D16CA57232AED6500D2ADE1 /* MainMenu.cpp in Sources */,
 				0D75751723295EB40048EC24 /* GameObject.cpp in Sources */,
 				0D35935522FB4DE50032E8FC /* ToolMenuSection.cpp in Sources */,
 				0D75752123295EB40048EC24 /* LevelSectionPermBlueprint.cpp in Sources */,
@@ -5018,6 +5040,7 @@
 				0D75750523295EB40048EC24 /* DiffuseLightMenu.cpp in Sources */,
 				0D35931D22FB4DE50032E8FC /* FTouchManager.cpp in Sources */,
 				0D35935C22FB4DE50032E8FC /* UISlider.cpp in Sources */,
+				0D16CA5D232AF71900D2ADE1 /* Transition.cpp in Sources */,
 				0D75755C23295EB40048EC24 /* EditorMenuMotion.cpp in Sources */,
 				0DEC5AEC2320336C0095E8F4 /* FModelDataPackedSequence.cpp in Sources */,
 				0D35936522FB4DE50032E8FC /* FFile.cpp in Sources */,
@@ -5057,6 +5080,7 @@
 				0D35933422FB4DE50032E8FC /* FResource.cpp in Sources */,
 				0D75756B23295EB40048EC24 /* Game.cpp in Sources */,
 				0D75750F23295EB40048EC24 /* SpotLightSimpleConfiguration.cpp in Sources */,
+				0D16CA60232AFE4400D2ADE1 /* GFXAppNotificationHelper.cpp in Sources */,
 				0D75753123295EB40048EC24 /* WadGlobalConfiguration.cpp in Sources */,
 				0D75755D23295EB40048EC24 /* EditorMenuObjectClearing.cpp in Sources */,
 				0D35932622FB4DE50032E8FC /* FSlider.cpp in Sources */,

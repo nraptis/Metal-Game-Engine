@@ -41,8 +41,10 @@ LevelFormationNode::LevelFormationNode() {
 }
 
 LevelFormationNode::~LevelFormationNode() {
-    if (mObject) {
-        gGame->DisposeObject(mObject);
+    if (mObject != NULL) {
+        if (gGame != NULL) {
+            gGame->DisposeObject(mObject);
+        }
         mObject = NULL;
     }
 }

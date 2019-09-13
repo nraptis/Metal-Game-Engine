@@ -2,6 +2,7 @@
 	"section": true,
 	"wave_list": [
 		{
+			"spawn_spacing": 90,
 			"max_spawn_size": 366,
 			"path": {
 				"node_list": [
@@ -22,6 +23,16 @@
 					"formation_config": {}
 				}
 			]
+		}
+	],
+	"perm_list": [
+		{
+			"x": 77.140457,
+			"y": 20.976547
+		},
+		{
+			"x": 75.431755,
+			"y": 56.496029
 		}
 	]
 }

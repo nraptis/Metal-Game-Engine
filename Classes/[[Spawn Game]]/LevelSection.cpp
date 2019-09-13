@@ -30,7 +30,6 @@ LevelSection::LevelSection() {
     mKillTimer = 0;
     
     mDelay = 0;
-    mKillTimer = 8;
     
     mStartWaveIndex = 0;
     

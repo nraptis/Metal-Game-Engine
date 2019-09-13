@@ -23,7 +23,8 @@
 #include "AssetWadModels.hpp"
 
 #define EDITOR_MODE 1
-#undef EDITOR_MODE
+//#undef EDITOR_MODE
+
 
 #ifdef EDITOR_MODE
 class GameEditor;
@@ -37,6 +38,11 @@ class CameraMenu;
 class SoundConfigMenu;
 class AssetConfigMenu;
 class GameContainer;
+class MainMenu;
+class Transition;
+class GFXAppNotificationHelper;
+
+
 class WorldConfigScene;
 
 class GFXApp : public FApp {
@@ -62,7 +68,34 @@ public:
     virtual void                            TouchUp(float pX, float pY, void *pData) override;
     virtual void                            TouchFlush() override;
     
+    
+    GFXAppNotificationHelper                *mNotificationHelper;
+    
+    FCanvas                                 *mCurrentCanvas;
+    
     GameContainer                           *mGameContainer;
+    MainMenu                                *mMainMenu;
+    
+    Transition                              *mTransition;
+    FCanvas                                 *mTransitionPreviousCanvas;
+    
+    int                                     mTransitionTarget;
+    int                                     mTransitionCooldown;
+    
+    
+    bool                                    TransitionAllowed();
+    
+    //For any transition, this will spawn the transition, and queue out the old current VC..
+    void                                    TransitionPrepare();
+    
+    void                                    TransitionToGame();
+    void                                    TransitionToMainMenu();
+    
+    
+    
+    void                                    NotifyTransitionSwap();
+    void                                    NotifyTransitionComplete();
+    
     
 #ifdef EDITOR_MODE
     GameEditor                              *mEditor;
@@ -142,8 +175,6 @@ public:
     LightConfigurationScene                 *mLightScene;
     WorldConfigScene                        *mWorldScene;
     Util_ScreenFrame                        *mScreenTool;
-    
-    int                                     mLoadGame;
 };
 
 extern GFXApp *gApp;

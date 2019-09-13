@@ -54,6 +54,8 @@ public:
     
     virtual void                                Notify(void *pSender, const char *pNotification) override;
     
+    void                                        DisposeObjectFromLevelData(GameObject *pObject);
+    
     //Everything we BUILD is SECTION...
     //This is the BLUEPRINT, not the actual section...
     LevelSectionBlueprint                       mSection;
@@ -106,7 +108,7 @@ public:
     
     void                                        PermSelect(int pIndex);
     int                                         PermIndex();
-    LevelSectionPermBlueprint              *PermGet();
+    LevelSectionPermBlueprint                   *PermGet();
     LevelPermSpawnBlueprint                     *PermSpawnGet();
     
     LevelFormationConfigurationBlueprint        *FormationConfigurationGet();

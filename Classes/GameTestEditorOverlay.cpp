@@ -17,7 +17,7 @@ GameTestEditorOverlay::GameTestEditorOverlay() {
     
     gGameTestEditorOverlay = this;
     
-    mName = "{{Game TEST Overlay}}";
+    mName = "GameTestEditorOverlay";
 }
 
 GameTestEditorOverlay::~GameTestEditorOverlay() {

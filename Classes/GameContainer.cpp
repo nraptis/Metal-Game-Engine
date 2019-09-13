@@ -17,7 +17,7 @@ GameContainer::GameContainer() {
     
     gGameContainer = this;
     
-    mName = "{{Game Container}}";
+    mName = "GameContainer";
     
     
     mGameTestEditorOverlay = NULL;
@@ -59,7 +59,7 @@ GameContainer::GameContainer() {
     
     
     AddChild(mContainer);
-    mContainer->mName = "{Container}";
+    mContainer->mName = "GameContainer-InnerContainer";
     
     mGame = new Game();
     mContainer->AddChild(mGame);
@@ -83,6 +83,15 @@ GameContainer::GameContainer() {
 
 GameContainer::~GameContainer() {
 
+    if (gGameContainer == this) {
+        gGameContainer = NULL;
+    }
+    
+    if (mGameMenu != NULL) {
+        mGameMenu->Kill();
+        mGameMenu = NULL;
+    }
+    
     if (mGameMenuAnimation != NULL) {
         delete mGameMenuAnimation;
         mGameMenuAnimation = NULL;
@@ -92,6 +101,7 @@ GameContainer::~GameContainer() {
 
 void GameContainer::Layout() {
     
+    SetFrame(0.0f, 0.0f, gAppWidth, gAppHeight);
     
     mInterfaceLeftWidth = gSafeAreaInsetLeft;
     mInterfaceRightWidth = gSafeAreaInsetRight;
@@ -183,7 +193,6 @@ void GameContainer::Update() {
                 }
             }
         }
-        
     }
     
     
@@ -347,8 +356,8 @@ void GameContainer::PauseAndShowGameMenu() {
     
     //mGameMenu->SetTransformTranslate(mWidth2, mHeight2);
     
-    gApp->mWindowModal.AddChild(mGameMenu);
-    
+    //gApp->mWindowModal.AddChild(mGameMenu);
+    gApp->mWindowMain.AddChild(mGameMenu);
     
     //mGameMenu->SetTransformAnchor(1.0f, 1.0f);
     
@@ -364,6 +373,7 @@ void GameContainer::PauseAndShowGameMenu() {
     
     //mGameMenuAnimation->GenerateIn(80);
     mGameMenuAnimation->GenerateIn(76);
+    mGameMenuAnimation->Update();
     
     
     //(ANIMATION_EASE_OUT_ELASTIC, 80);
@@ -407,6 +417,8 @@ void GameContainer::UnpauseAndHideGameMenu() {
     
     //mGameMenuAnimation->GenerateOut(80);
     mGameMenuAnimation->GenerateOut(76);
+    mGameMenuAnimation->Update();
+    
     
 }
 

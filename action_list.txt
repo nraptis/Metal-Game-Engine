@@ -1,30 +1,19 @@
-I1.) BrickHeads have no "dissipate" mechanism. When a wave with brickheads ends, they just sit there on the screen...
 
-I2.) Turtles have no "dissipate" mechanism. When a wave with turtles ends, they just sit there on the screen...
+
+
+I1.) We need an occasional "gleam" / sparkle animation that emminates from the tip of the dart.
 
 H1.) We need TYPES to be bart of FORMATION CONFIGURATION. (Optional) This could also reduce the number of existing formations.
-
-H2.) Every single formation needs to be redone considering that speed is no longer being considered.
-
-H3.) Every single formation needs to have the GRID state it was saved with baked into the file. This way we can re-load formations and switch the types..
-
-H4.) Motion Controller / Animations are not working for WAVE SPAWNS...
 
 H5.) When turtle's balloon is popped, the turtle should be removed from the play area in a clever, animated fashion.
 
 J1.) We need an improved achievement manager which uses hash tables. This can be optional, but nice to have.
 
-J2.) The balloon "pop mark" animation should scale up, linger briefly, and rapidly scale down before disappearing.
-
 J3.) The dart fizzle animation should shoot off small white stars which fade rather quickly and look good.
-
-I1.) We need an occasional "gleam" / sparkle animation that emminates from the tip of the dart.
 
 I2.) We need to make the balloon threads bounce slightly when the balloons stop moving vertically.
 
 I3.) We need to remove the balloon thread from ballons which are being held captive by a turtle.
-
-I4.) We DESPERATELY need a RESTART BUTTON for test-game-from-editor mode.
 
 I5.) We need "restart wave", "back one wave", and "forward one wave" buttons for test-game-from-editor mode.
 
@@ -35,8 +24,6 @@ I7.) We need a reset / clear button for formation picker, which wipes out all fi
 H1.) We have a layout crash when transitioning from editor to TEST game.
 
 H2.) We have lots of garbage / junk buttons in the editor which are not used. We need to remove these because they are distracting.
-
-G1.) We need a swirling BILLBOARD animation for the turtle's spinning propeller.
 
 G2.) We need to attach the spining propeller to the turtle so that the rot / scale are bound to the turtle, but it spins around its axis.
 
@@ -49,12 +36,6 @@ G5.) We need to implement "OUCHIE" artwork for the brickhead FACE, toggle to ouc
 G6.) We need to test out different animations for burting balloon. Possibly a fast-playing particle animation for the ripping plastic?
 
 G7.) We need a trail that can follow the dart as it flies through space.
-
-F1.) There are too many formations, due to variable speed. From now on, a formation's speed should be editable from the SPAWN ATTACH menu. We must make adjustments to the format accordingly.
-
-E1.) Editor crashes when using bombs.
-
-E2.) Editor crashes when using "turtles."
 
 E3.) Editor needs way to print out which formation you are selecting... This will help is organizing...
 
@@ -69,8 +50,6 @@ A2.) We need to keep track of streaks.
 A3.) We need to keep track of particularily good throws. (like 6 balloons with 1 dart)..
 
 A4.) We need to keep track of some achievements!
-
-A5.) We need an "aim arc" which shows where the dart will go.
 
 A8.) We need a level picker screen.
 
@@ -94,8 +73,6 @@ A17.) We need 5 or 6 "ripping plastic" extremely fast 6 frame animations.
 
 A18.) We need a system to organize level sections.
 
-A19.) We need to implement the "turtle" to carry a balloon.
-
 A20.) We need to implement free life balloon.
 
 A21.) We need to implement "prize box".
@@ -113,6 +90,35 @@ A24.) We need to start thinking about how you will earn 1, 2, or 3 stars per lev
 3.) Mock model for "Bomb"
 
 4.) Logic for bomb collisions (Spherical).
+
+
+DONE.) We need a swirling BILLBOARD animation for the turtle's spinning propeller.
+
+DONE.) We need to implement the "turtle" to carry a balloon.
+
+DONE.) We DESPERATELY need a RESTART BUTTON for test-game-from-editor mode.
+
+DONE.) Every single formation needs to be redone considering that speed is no longer being considered.
+
+DONE.) Every single formation needs to have the GRID state it was saved with baked into the file. This way we can re-load formations and switch the types..
+
+DONE.) There are too many formations, due to variable speed. From now on, a formation's speed should be editable from the SPAWN ATTACH menu. We must make adjustments to the format accordingly.
+
+DONE.) Motion Controller / Animations are not working for WAVE SPAWNS...
+
+DONE.) Motion Controller / Animations are not working for Perm (Base)...
+
+DONE.) The balloon "pop mark" animation should scale up, linger briefly, and rapidly scale down before disappearing.
+
+DONE.) Editor crashes when using bombs.
+
+DONE.) Editor crashes when using "turtles."
+
+DONE.) We need an "aim arc" which shows where the dart will go.
+
+DONE.) BrickHeads have no "dissipate" mechanism. When a wave with brickheads ends, they just sit there on the screen...
+
+DONE.) Turtles have no "dissipate" mechanism. When a wave with turtles ends, they just sit there on the screen...
 
 DONE.) We need a new scheme for a SEQUENCE of PACKED model data.
 

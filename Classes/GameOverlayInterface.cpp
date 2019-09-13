@@ -20,7 +20,7 @@ GameOverlayInterface::GameOverlayInterface() {
     
     mPauseButton = NULL;
     mConsumesTouches = false;
-    mName = "[Game Overlay Interface]";
+    mName = "GameOverlayInterface";
     
     mLifeIndicatorCount = 0;
     for (int i=0;i<MAX_LIFE_INDICATOR_COUNT;i++) {

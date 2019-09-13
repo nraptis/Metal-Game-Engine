@@ -8,22 +8,32 @@
 
 //#include "MetalEngine.h"
 
+//1.) Get main menu flow / memory leaks cleaned up.
+//2.) Add prize box EVERYWHERE (all buttons, loops, etc - before it gets out of hand...)
+
 #include "core_app_shell.hpp"
 #include "GFXApp.hpp"
 #include "FormationCollection.hpp"
-
 #include "LevelSelectorScreen.hpp"
 #include "LightConfigurationScene.hpp"
 #include "WorldConfigScene.hpp"
-
+#include "GFXAppNotificationHelper.hpp"
 #include "Balloon.hpp"
 #include "Util_ScreenFrame.h"
 #include "Game.hpp"
 #include "GameContainer.hpp"
+#include "MainMenu.hpp"
+#include "Transition.hpp"
 #include "CameraMenu.hpp"
-
 #include "SoundConfigMenu.hpp"
 #include "AssetConfigMenu.hpp"
+
+
+#define TRANSITION_TARGET_NONE -1
+#define TRANSITION_TARGET_MAIN_MENU 0
+#define TRANSITION_TARGET_GAME 1
+#define TRANSITION_TARGET_LEVEL_SELECT 2
+
 
 #ifdef EDITOR_MODE
 class GameEditor;
@@ -54,6 +64,13 @@ GFXApp::GFXApp() {
 #endif
     
     mGameContainer = NULL;
+    mMainMenu = NULL;
+    mCurrentCanvas = NULL;
+    
+    mTransition = NULL;
+    mTransitionPreviousCanvas = NULL;
+    mNotificationHelper = NULL;
+    
     mLevelSelect = NULL;
     mLightScene = NULL;
     mWorldScene = NULL;
@@ -63,15 +80,22 @@ GFXApp::GFXApp() {
     mSoundMenu = NULL;
     mAssetMenu = NULL;
     
-    mLoadGame = 12;
+    mTransitionCooldown = 0;
+    mTransitionTarget = TRANSITION_TARGET_NONE;
     
     mWadReloadIsEnqueued = false;
     mWadReloadOnNextDraw = false;
     mWadReloadTimer = 0;
     
+    mNotificationHelper = new GFXAppNotificationHelper();
 }
 
 GFXApp::~GFXApp() {
+    
+    if (mNotificationHelper != NULL) {
+        delete mNotificationHelper;
+        mNotificationHelper = NULL;
+    }
     
 }
 
@@ -264,10 +288,23 @@ void GFXApp::LoadComplete() {
      */
     
     //
-    //
-    //
+    
+#ifdef EDITOR_MODE
+    EditorTestSwitchToEditor();
+#else
+    
+    if (mMainMenu == NULL) {
+        mMainMenu = new MainMenu();
+        mWindowMain.AddChild(mMainMenu);
+        mCurrentCanvas = mMainMenu;
+    }
+    
+#endif
     
     
+    
+    
+    /*
     if (mGameContainer == NULL) {
         
 #ifdef EDITOR_MODE
@@ -277,6 +314,8 @@ void GFXApp::LoadComplete() {
         mWindowMain.AddChild(mGameContainer);
 #endif
     }
+    */
+     
     
     /*
      if (mSoundMenu == NULL) {
@@ -318,38 +357,12 @@ void GFXApp::LoadComplete() {
 }
 
 void GFXApp::Update() {
-    if (mIsLoadingComplete) {
-        if (mLoadGame > 0) {
-            --mLoadGame;
-            if (mLoadGame == 0 && mGameContainer != NULL) {
-                
-#ifdef EDITOR_MODE
-                
-                
-                //mEditorSwitchType = 0;
-                //mEditorSwitchTimer = 0;
-                
-                if (mEditorSwitchType == 0) {
-                    mEditor = new GameEditor(mGameContainer->mGame);
-                    mWindowTools.AddChild(mEditor);
-                    mEditor->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
-                } else {
-                    mGameContainer->mGame->LoadEditorTest();
-                    
-                    mGameContainer->OpenEditorTestMenus();
-                    
-                }
-                
-                Log("Preventing Load, Editor Mode...\n");
-                
-#else
-                Log("Loading Game...\n");
-                mGameContainer->mGame->Load();
-#endif
-                
-                mGameContainer->Realize();
-            }
-        }
+    
+    
+    if (mTransitionCooldown > 0) { --mTransitionCooldown; }
+    if (mTransition != NULL) {
+        mTransition->Update();
+        mTransitionCooldown = 4;
     }
     
     mCamera.mRotationPrimary += 0.05f;
@@ -386,16 +399,7 @@ void GFXApp::Draw() {
                                   false, //Clear Color
                                   false); //Clear Depth
         
-        /*
-         
-         Draw2D();
-         if (gRand.Get(14) == 10) {
-         for (int i=0;i<60;i++) {
-         Draw2D();
-         }
-         }
-         
-         */
+
         
         
         Graphics::PipelineStateSetSpriteAlphaBlending();
@@ -603,6 +607,106 @@ void GFXApp::ReevaluateScreenResolution() {
     }
 }
 
+
+bool GFXApp::TransitionAllowed() {
+    
+    if (mTransition != NULL) { return false; }
+    if (mTransitionCooldown > 0) { return false; }
+    
+    return true;
+}
+
+void GFXApp::TransitionPrepare() {
+    
+    if (mCurrentCanvas != NULL) {
+        
+        if (mCurrentCanvas == mGameContainer) {
+            mGameContainer = NULL;
+        }
+        if (mCurrentCanvas == mMainMenu) {
+            mMainMenu = NULL;
+        }
+    }
+    
+    mTransitionPreviousCanvas = mCurrentCanvas;
+    mTransition = new Transition();
+    
+    gNotify.Register(mNotificationHelper, mTransition, "transition_swap");
+    gNotify.Register(mNotificationHelper, mTransition, "transition_complete");
+    mWindowMain.AddChild(mTransition);
+    
+}
+
+void GFXApp::TransitionToGame() {
+    
+    TransitionPrepare();
+    mTransitionTarget = TRANSITION_TARGET_GAME;
+    
+}
+
+void GFXApp::TransitionToMainMenu() {
+    
+    TransitionPrepare();
+    mTransitionTarget = TRANSITION_TARGET_MAIN_MENU;
+    
+}
+
+
+
+
+void GFXApp::NotifyTransitionSwap() {
+    
+    printf("GFXApp::NotifyTransitionSwap()\n\n");
+    
+    if (mTransitionTarget == TRANSITION_TARGET_GAME) {
+        mGameContainer = new GameContainer();
+        mCurrentCanvas = mGameContainer;
+        mWindowMain.AddChild(mGameContainer);
+        mWindowMain.RefreshAll();
+        mGameContainer->mGame->Load();
+    }
+    
+    if (mTransitionTarget == TRANSITION_TARGET_MAIN_MENU) {
+        mMainMenu = new MainMenu();
+        mCurrentCanvas = mMainMenu;
+        mWindowMain.AddChild(mMainMenu);
+        mWindowMain.RefreshAll();
+    }
+    
+    if (mTransition != NULL) {
+        mWindowMain.mRoot.BringChildToFront(mTransition);
+    }
+    
+    if (mTransitionPreviousCanvas != NULL) {
+        mTransitionPreviousCanvas->Kill();
+        mTransitionPreviousCanvas = NULL;
+    }
+    
+}
+
+void GFXApp::NotifyTransitionComplete() {
+    
+    printf("GFXApp::NotifyTransitionComplete()\n\n");
+    
+    if (mTransition != NULL) {
+        mTransition->Kill();
+        mTransition = NULL;
+    }
+    
+}
+
+
+//mTransitionCooldown = 0;
+//mTransitionTarget = TRANSITION_TARGET_NONE;
+
+
+//#define TRANSITION_TARGET_NONE -1
+//#define TRANSITION_TARGET_MAIN_MENU 0
+//#define TRANSITION_TARGET_GAME 1
+//#define TRANSITION_TARGET_LEVEL_SELECT 2
+//
+
+
 #ifdef EDITOR_MODE
 
 void GFXApp::EditorTestSwitchToGame() {
@@ -629,12 +733,19 @@ void GFXApp::EditorTestSwitchToGame() {
         mGameContainer = NULL;
     }
     
+    mWindowMain.Update();
+    mWindowModal.Update();
+    mWindowTools.Update();
     
     mGameContainer = new GameContainer();
     mGameContainer->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
     mWindowMain.AddChild(mGameContainer);
+    mWindowMain.RefreshAll();
     
-    mLoadGame = 4;
+    mGameContainer->mGame->LoadEditorTest();
+    mGameContainer->OpenEditorTestMenus();
+    mGameContainer->Realize();
+    
 }
 
 void GFXApp::EditorTestSwitchToEditor() {
@@ -661,11 +772,20 @@ void GFXApp::EditorTestSwitchToEditor() {
         mGameContainer = NULL;
     }
     
+    mWindowMain.Update();
+    mWindowModal.Update();
+    mWindowTools.Update();
+    
+    
     mGameContainer = new GameContainer();
     mGameContainer->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
     mWindowMain.AddChild(mGameContainer);
+    mWindowMain.RefreshAll();
     
-    mLoadGame = 4;
+    mEditor = new GameEditor(mGameContainer->mGame);
+    mWindowTools.AddChild(mEditor);
+    mEditor->SetFrame(0.0f, 0.0f, gDeviceWidth, gDeviceHeight);
+    mGameContainer->Realize();
 }
 
 #endif

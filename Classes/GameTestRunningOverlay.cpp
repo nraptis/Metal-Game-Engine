@@ -32,7 +32,7 @@ GameTestRunningOverlay::GameTestRunningOverlay() {
     mCameraMenu = NULL;
     mHangingThreadMenu = NULL;
     
-    mName = "{{Game Running Test Overlay}}";
+    mName = "GameTestRunningOverlay";
     
     
     //mTestRunningMenu = new GameTestRunningMainMenu(gGame);

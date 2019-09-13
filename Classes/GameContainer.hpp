@@ -10,16 +10,11 @@
 #define GameContainerContainer_hpp
 
 #include "GFXApp.hpp"
-
 #include "GameTestEditorOverlay.hpp"
 #include "GameTestRunningOverlay.hpp"
-
 #include "GameMenu.hpp"
 #include "GameOverlayEffects.hpp"
 #include "GameOverlayInterface.hpp"
-
-
-
 #include "EditorMenuGameTestUtils.hpp"
 #include "EditorMenuGameTest.hpp"
 
