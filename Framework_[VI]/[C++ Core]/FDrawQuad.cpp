@@ -965,7 +965,7 @@ void FDrawQuadGrid::Generate9x9(FSprite &pSprite, float pX, float pY, float pWid
         for (int n=0;n<4;n++) {
             SetXYZ(i, n, aX[i], aY[i], 0.0f);
             SetUVW(i, n, aU[i], aV[i], 0.0f);
-            SetRGBA(i, n, 1.0f, 1.0f, 1.0f, 1.0f);
+            //SetRGBA(i, n, 1.0f, 1.0f, 1.0f, 1.0f);
         }
     }
 }

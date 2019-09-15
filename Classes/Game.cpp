@@ -1140,8 +1140,7 @@ void Game::DisposeObject(GameObject *pObject) {
         BrickHead *aBrickHead = ((BrickHead *)pObject);
         EnumList(StuckDart, aStuck, aBrickHead->mStuckDartList) {
             if (aStuck->mDart != NULL) {
-                
-                Dart *aDart = (Dart *)pObject;
+                Dart *aDart = aStuck->mDart;
                 aStuck->mDart = NULL;
                 DisposeObject(aDart);
             }
@@ -1516,7 +1515,15 @@ void Game::Load() {
      test_section_one_wave_16_turtles
     */
     
-    //aLevel.SetKillTimer(800);
+    aLevel.SetKillTimer(500);
+    aLevel.SetAliveTimer(444);
+    
+    aLevel.AddSection("test_section_all_bricks_2_perms");
+    aLevel.AddSection("test_section_all_bricks_2_waves");
+    aLevel.AddSection("test_section_2_tracers_slowslow_speed_all_4_types");
+    aLevel.AddSection("section_2_turtles_2_bricks_2_waves_1_center_balloon");
+    
+    
     
     aLevel.AddSection("section_2_turtles_2_bricks_2_balloon_3_waves_turtles_brickcircle_star.json");
     aLevel.AddSection("test_section_one_wave_16_turtles");

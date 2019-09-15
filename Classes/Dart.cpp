@@ -29,16 +29,16 @@ Dart::Dart() {
     
     mHitCount = 0;
     
-    mStyleIndex = gRand.Get(5);
+    mStyleIndex = gRand.Get(6);
     
-    mModel = &gWadModels.mDartRegular[mStyleIndex];
-    mSprite = &gWadModels.mDartRegularMap[mStyleIndex];
+    //mModel = &gWadModels.mDartRegular[mStyleIndex];
+    //mSprite = &gWadModels.mDartRegularMap[mStyleIndex];
     
     //mModel = &gWadModels.mDartMini[mStyleIndex];
     //mSprite = &gWadModels.mDartMiniMap[mStyleIndex];
     
-    //mModel = &gWadModels.mDartBat[mStyleIndex];
-    //mSprite = &gWadModels.mDartBatMap[mStyleIndex];
+    mModel = &gWadModels.mDartBat[mStyleIndex];
+    mSprite = &gWadModels.mDartBatMap[mStyleIndex];
     
     //mModel = &gWadModels.mExtraLife;
     //mSprite = &gWadModels.mExtraLifeMap;

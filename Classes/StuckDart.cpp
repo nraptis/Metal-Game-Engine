@@ -23,6 +23,7 @@ StuckDart::StuckDart() {
     mStartYDiff = 0.0f;
     
     mWaitTimer = 100 + gRand.Get(30);
+    mWaitTimer = 500000;
     
     mFadeoutTime = 20;
     mFadeoutTimer = 0;

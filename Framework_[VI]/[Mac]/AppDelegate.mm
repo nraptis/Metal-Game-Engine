@@ -83,6 +83,7 @@ int kDeviceHeight = 760;
     AppShellSetDeviceSize(kDeviceWidth, kDeviceHeight);
     
     
+    
     AppShellSetImageFileScale(1);
 
     

@@ -90,6 +90,9 @@ public:
 	float mBlue;
 	float mAlpha;
     
+    void Print(const char *pName);
+    
+    
 };
 
 #endif

@@ -539,6 +539,39 @@ void GFXApp::KeyUp(int pKey) {
 }
 
 void GFXApp::SetDeviceSize(int pWidth, int pHeight) {
+    
+    
+#ifndef EDITOR_MODE
+    
+    static int aFixRez = 0;
+    
+    if (aFixRez < 3) {
+        aFixRez++;
+        
+        float aMaxWidth = (int)(pHeight * 0.75f + 0.5f);
+        
+        if (pWidth > aMaxWidth) {
+            
+            float aTop = gSafeAreaInsetTop;
+            float aBottom = pHeight - gSafeAreaInsetBottom;
+            
+            float aHeight = (aBottom - aTop);
+            float aWidth = aHeight * 0.75f;
+            
+            
+            AppShellSetVirtualFrame(pWidth / 2.0f - aWidth / 2.0f, aTop, aWidth, aHeight);
+            
+        }
+        
+    }
+    
+    
+    
+    
+#endif
+    
+    
+    
     if (mGameContainer != NULL) {
         mGameContainer->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
 #ifdef EDITOR_MODE

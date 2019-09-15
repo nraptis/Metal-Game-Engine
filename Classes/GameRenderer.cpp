@@ -80,14 +80,12 @@ void GameRenderer::Draw3D() {
     Graphics::MatrixProjectionSet(aProjection);
     Graphics::MatrixModelViewReset();
     
-    
     Graphics::SetColor();
     Graphics::DepthDisable();
-    Graphics::CullFacesSetBack();
+    Graphics::CullFacesSetDisabled();
+    Graphics::PipelineStateSetShapeNodeNoBlending();
     
     mSky.Draw();
-    
-    
     
     
     Graphics::SetColor();
@@ -95,41 +93,14 @@ void GameRenderer::Draw3D() {
     Graphics::CullFacesSetDisabled();
     Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending();
     
-    /*
-    for (float aX = -mCamera->mDistance;aX <= mCamera->mDistance;aX += 1.25f) {
-        for (float aY = -mCamera->mDistance;aY <= mCamera->mDistance;aY += 3.0f) {
-            FMatrix aProjection = mCamera->GetProjection();
-            Graphics::SetColor();
-            
-            FMatrix aModelView;
-            
-            aModelView.Translate(aX, aY);
-            aModelView.Scale(0.66f);
-            aModelView.RotateX(90.0f);
-            aModelView.RotateZ(mDartSpin);
-            
-            
-            Graphics::UniformBind();
-            
-            
-            mUniformPhong.mModelView.Set(aModelView);
-            Graphics::UniformBind(&mUniformPhong);
-            
-            Graphics::DrawTrianglesIndexedFromPackedBuffers(mDart->mBufferVertex, mDart->mBufferVertexOffset, mDart->mBufferIndex, mDart->mBufferIndexOffset, mDart->mIndexCount, gApp->mDartMap.mTexture);
-        }
-    }
-    */
-    
-    
-    
     //mUniformPhong.mModelView.Set(aModelView);
     //Graphics::UniformBind(&mUniformPhong);
     
     
     //Graphics::PipelineStateSetShape3DAlphaBlending();
     
-    Graphics::MatrixProjectionSet(aProjection);
-    Graphics::MatrixModelViewReset();
+    //Graphics::MatrixProjectionSet(aProjection);
+    //Graphics::MatrixModelViewReset();
     
     //Graphics::DepthDisable();
     //Graphics::CullFacesSetFront();
@@ -249,8 +220,7 @@ void GameRenderer::ScreenBoundaryRefresh() {
         return;
     }
     
-    float aPadding = 3.0f;
-    
+    float aPadding = aWidth * 0.1f;
     mSky.Refresh(aGameAreaTop, aGameAreaRight, aGameAreaBottom, aGameAreaLeft, aPadding);
     
     
