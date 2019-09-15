@@ -132,14 +132,33 @@ void GameEditorGrid::BuildRectGrid() {
     float aLeft = round(aCenterX - (aTotalWidth / 2.0f) + mGridRectSpacingH / 2);
     float aTop = round(aCenterY - (aTotalHeight / 2.0f) + mGridRectSpacingV / 2);
     
+    float aRight = aLeft + aTotalWidth - mGridRectSpacingH;
+    float aBottom = aTop + aTotalHeight - mGridRectSpacingV;
+    
+    
     mOutlineList.RemoveAll();
     
-    mOutlineList.Add(aLeft, aTop);
-    mOutlineList.Add(aLeft + aTotalWidth, aTop);
-    mOutlineList.Add(aLeft + aTotalWidth, aTop + aTotalHeight);
-    mOutlineList.Add(aLeft, aTop + aTotalHeight);
-    
-    
+    if ((mGridRectWidth == 1) && (mGridRectHeight == 1)) {
+        mOutlineList.Add(aLeft, aTop);
+        mOutlineList.Add(aLeft, aTop);
+        mOutlineList.Add(aLeft, aTop);
+        mOutlineList.Add(aLeft, aTop);
+    } else if (mGridRectWidth == 1) {
+        mOutlineList.Add(aLeft, aTop);
+        mOutlineList.Add(aLeft, aBottom);
+        mOutlineList.Add(aLeft, aBottom);
+        mOutlineList.Add(aLeft, aTop);
+    } else if (mGridRectHeight == 1) {
+        mOutlineList.Add(aLeft, aTop);
+        mOutlineList.Add(aRight, aTop);
+        mOutlineList.Add(aRight, aTop);
+        mOutlineList.Add(aLeft, aTop);
+    } else {
+        mOutlineList.Add(aLeft, aTop);
+        mOutlineList.Add(aRight, aTop);
+        mOutlineList.Add(aRight, aBottom);
+        mOutlineList.Add(aLeft, aBottom);
+    }
     
     for (int i=0;i<mGridRectWidth;i++) {
         
@@ -166,14 +185,6 @@ void GameEditorGrid::BuildCircleGrid() {
     
     
     mOutlineList.RemoveAll();
-    
-    
-    //mOutlineList.Add(aLeft + aTotalWidth, aTop);
-    //mOutlineList.Add(aLeft + aTotalWidth, aTop + aTotalHeight);
-    //mOutlineList.Add(aLeft, aTop + aTotalHeight);
-    
-    
-    
     float aArmLength = 0.0f;
     for (int aRing = 1;aRing<=mGridCircleRingCount;aRing++) {
         
@@ -219,6 +230,9 @@ void GameEditorGrid::BuildStarGrid() {
     float aRadInner = ((float)mGridStarInnerRadius);
     
     
+    mOutlineList.RemoveAll();
+    
+    
     for (int i=0;i<mGridStarArmCount;i++) {
         float aPercent1 = ((float)i) / ((float)mGridStarArmCount);
         float aAngle1 = aPercent1 * 360.0f + (float)mGridStarStartRotation;
@@ -247,6 +261,10 @@ void GameEditorGrid::BuildStarGrid() {
         float aInterpDirX2 = aXMid - aX2;
         float aInterpDirY2 = aYMid - aY2;
         float aInterpDist2 = aInterpDirX2 * aInterpDirX2 + aInterpDirY2 * aInterpDirY2;
+        
+        mOutlineList.Add(aX1, aY1);
+        mOutlineList.Add(aXMid, aYMid);
+        mOutlineList.Add(aX2, aY2);
         
         if (aInterpDist1 > SQRT_EPSILON && aInterpDist2 > SQRT_EPSILON) {
             aInterpDist1 = sqrtf(aInterpDist1);
@@ -279,6 +297,8 @@ void GameEditorGrid::BuildNGON1Grid() {
     float aCenterX = mCenterX + ((float)mOffsetX);
     float aCenterY = mCenterY + ((float)mOffsetY);
     
+    mOutlineList.RemoveAll();
+    
     mGridList.RemoveAll();
     mGridList.Add(mCenterX, mCenterY);
     if (mGridNGON1Sides < 3) { mGridNGON1Sides = 3; }
@@ -299,6 +319,11 @@ void GameEditorGrid::BuildNGON1Grid() {
             float aX = aCenterX + aDirX * aArmLength;
             float aY = aCenterY + aDirY * aArmLength;
             aRingList.Add(aX, aY);
+            
+            if (aRing == mGridNGON1RingCount) {
+                mOutlineList.Add(aX, aY);
+            }
+            
         }
         
         float aX1 = aRingList.mX[0];

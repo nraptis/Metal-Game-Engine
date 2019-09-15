@@ -110,7 +110,6 @@ void LevelFormationNode::Draw() {
 
 void LevelFormationNode::DisposeObject(GameObject *pObject) {
     if (mObject != NULL && mObject == pObject) {
-        Log("LevelFormationNode::SUCCESS - DisposeObject(%llx)\n", pObject);
         mObject = NULL;
     }
 }
@@ -134,8 +133,6 @@ void LevelFormationNode::PositionObject() {
                 
                 mX = mTracer->mPath.mX[aPathIndex];
                 mY = mTracer->mPath.mY[aPathIndex];
-                
-                
                 if (mFormation->mRotation != 0.0f) {
                     FVec2 aPoint;
                     aPoint.mX = mX; aPoint.mY = mY;
