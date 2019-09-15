@@ -1331,10 +1331,10 @@
 			isa = PBXGroup;
 			children = (
 				0D1541E2232DC1B40004AE55 /* Classes */,
-				0D8FCDB6225DA8EC00A74580 /* Framework_[VI] */,
 				E1705003222232CF000C5127 /* Crazy Darts 2 Mac */,
-				E1705002222232CF000C5127 /* Products */,
+				0D8FCDB6225DA8EC00A74580 /* Framework_[VI] */,
 				E17054AB222236F9000C5127 /* Frameworks */,
+				E1705002222232CF000C5127 /* Products */,
 			);
 			sourceTree = "<group>";
 		};

@@ -73,12 +73,12 @@ void MainMenu::Draw() {
     
     //DrawTransform();
     Graphics::PipelineStateSetShape2DAlphaBlending();
-    Graphics::SetColor(gRand.GetFloat(0.25f), gRand.GetFloat(0.25f), 0.0f, 0.75f);
+    Graphics::SetColor(gRand.GetFloat(0.03f), gRand.GetFloat(0.03f), 0.65f, 0.75f);
     Graphics::DrawRect(0.0f, 0.0f, mWidth, mHeight);
     Graphics::SetColor();
     
     Graphics::PipelineStateSetSpriteAlphaBlending();
-    gWadModels.mTurtleMap.Center(mWidth2, mHeight2);
+    gWadModels.mDartRegularMap[0].DrawQuadRect(0.0f, 0.0f, mWidth, mHeight);
     
 }
 

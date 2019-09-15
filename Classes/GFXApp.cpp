@@ -818,11 +818,19 @@ void GFXApp::EditorTestSwitchToEditor() {
 }
 
 void GFXApp::EditorTestSwitchToEditorInternal() {
-    float aAspectRatio = 768.0f / 1024.0f;
-    float aVirtualHeight = round(gDeviceHeight * 0.75f);
-    float aVirtualWidth = round(aVirtualHeight * aAspectRatio);
+    
+    float aVirtualWidth = 428.0f;
+    float aVirtualHeight = 570.0f;
+    //float aAspectRatio = 768.0f / 1024.0f;
+    //float aVirtualHeight = round(gDeviceHeight * 0.75f);
+    //float aVirtualWidth = round(aVirtualHeight * aAspectRatio);
     float aVirtualX = round(gDeviceWidth / 2.0f - (aVirtualWidth / 2.0f));
     float aVirtualY = gDeviceHeight - (5.0f + aVirtualHeight);
+    
+    printf("aVirtualWidth = %f\n", aVirtualWidth);
+    printf("aVirtualHeight = %f\n", aVirtualHeight);
+    
+    
     
     //TODO:
     AppShellSetVirtualFrame(aVirtualX, aVirtualY, aVirtualWidth, aVirtualHeight);

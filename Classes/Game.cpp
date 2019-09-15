@@ -1167,7 +1167,7 @@ void Game::DisposeObject(GameObject *pObject) {
         return;
     }
     
-#ifdef EDITOR_MODE
+#ifndef EDITOR_MODE
     printf("Disposing: (%s) %x\n", pObject->TypeString().c() , pObject);
 #endif
     
