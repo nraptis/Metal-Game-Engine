@@ -742,126 +742,71 @@ void FDrawQuadRay::SetWidth(float pWidth)
 }
 
 
-FDrawQuadGrid::FDrawQuadGrid()
-{
+FDrawQuadGrid::FDrawQuadGrid() {
+    mXYZ = NULL;
+    mUVW = NULL;
+    mRGBA = NULL;
     
-    mXYZ = 0;
-    mUVW = 0;
-    mRGBA = 0;
-    
-    mXYZBase = 0;
-    mUVWBase = 0;
-    mRGBABase = 0;
+    mXYZBase = NULL;
+    mUVWBase = NULL;
+    mRGBABase = NULL;
     
     mWidth = 0;
     mHeight = 0;
     
-    mSprite = 0;
-    
-    /*
-     Size(4, 4);
-     
-     float aShiftX = 0.0f;
-     float aShiftY = 0.0f;
-     
-     for(int i=0;i<=4;i++)
-     {
-     if(i > 1)aShiftX = 400.0f;
-     else aShiftX = 0.0f;
-     
-     
-     for(int n=0;n<=4;n++)
-     {
-     if(n > 1)aShiftY = 400.0f;
-     else aShiftY = 0.0f;
-     
-     float aPercentX = (float)i / 4.0f;
-     float aPercentY = (float)n / 4.0f;
-     
-     
-     SetXYZ(i, n, 80.0f + aPercentX * 100.0f + aShiftX, 20.0f + aPercentY * 100.0f + aShiftY, 0.0f);
-     SetUVW(i, n, aPercentX, aPercentY, 1.0f);
-     SetRGBA(i, n, 1.0f, 1.0f, 1.0f, 1.0f);
-     
-     }
-     }
-     */
-    
-    //for(int i=0;)
-    
+    mSprite = NULL;
 }
 
-FDrawQuadGrid::~FDrawQuadGrid()
-{
+FDrawQuadGrid::~FDrawQuadGrid() {
     Clear();
 }
 
-void FDrawQuadGrid::Draw(FSprite *pSprite)
-{
+void FDrawQuadGrid::Draw(FSprite *pSprite) {
     
-    float aShiftY = 0.0f;
-    for(int n=0;n<(mHeight - 1);n++)
-    {
-        //FDrawQuadStrip aStrip;
+    int aHeight1 = (mHeight - 1);
+    
+    for (int n=0;n<aHeight1;n++){
         mNodeList.Reset();
         
         int aWriteIndex = 0;
         
         int aShift3Y1 = n * 3;
-        //int aShift4Y1 = n * 4;
+        int aShift4Y1 = n * 4;
         
         int aShift3Y2 = (n + 1) * 3;
-        //int aShift4Y2 = (n + 1) * 4;
+        int aShift4Y2 = (n + 1) * 4;
         
-        
-        for(int i=0;i<mWidth;i++)
-        {
-            //int aShift = i * 4;
-            
-            mNodeList.SetXYZ(aWriteIndex, mXYZ[i][aShift3Y1], mXYZ[i][aShift3Y1 + 1], mXYZ[i][aShift3Y1 + 2]);
-            mNodeList.SetUVW(aWriteIndex, mUVW[i][aShift3Y1], mUVW[i][aShift3Y1 + 1], mUVW[i][aShift3Y1 + 2]);
-            mNodeList.SetRGBA(aWriteIndex, mRGBA[i][aShift3Y1], mRGBA[i][aShift3Y1 + 1], mRGBA[i][aShift3Y1 + 2], mRGBA[i][aShift3Y1 + 3]);
-            
-            //Graphics::SetColor(1.0f, 0.0f, 0.0f);
-            //Graphics::DrawPoint(mXYZ[i][aShift3Y1], mXYZ[i][aShift3Y1 + 1], 8.0f);
-            
-            aWriteIndex++;
-            
+        for (int i=0;i<mWidth;i++) {
             mNodeList.SetXYZ(aWriteIndex, mXYZ[i][aShift3Y2], mXYZ[i][aShift3Y2 + 1], mXYZ[i][aShift3Y2 + 2]);
             mNodeList.SetUVW(aWriteIndex, mUVW[i][aShift3Y2], mUVW[i][aShift3Y2 + 1], mUVW[i][aShift3Y2 + 2]);
-            mNodeList.SetRGBA(aWriteIndex, mRGBA[i][aShift3Y2], mRGBA[i][aShift3Y2 + 1], mRGBA[i][aShift3Y2 + 2], mRGBA[i][aShift3Y2 + 3]);
-            
+            mNodeList.SetRGBA(aWriteIndex, mRGBA[i][aShift4Y2], mRGBA[i][aShift4Y2 + 1], mRGBA[i][aShift4Y2 + 2], mRGBA[i][aShift4Y2 + 3]);
             aWriteIndex++;
-            
-            //Graphics::DrawPoint(mXYZ[i][aShift3Y2], mXYZ[i][aShift3Y2 + 1], 8.0f);
-            //Graphics::Graphics::SetColor();
-            
-            if(pSprite == 0)
-            {
-                mNodeList.DrawTriStrips();// (pSprite);
-            }
-            else
-            {
-                mNodeList.DrawTriStrips(pSprite);
-            }
-            
-            
+            mNodeList.SetXYZ(aWriteIndex, mXYZ[i][aShift3Y1], mXYZ[i][aShift3Y1 + 1], mXYZ[i][aShift3Y1 + 2]);
+            mNodeList.SetUVW(aWriteIndex, mUVW[i][aShift3Y1], mUVW[i][aShift3Y1 + 1], mUVW[i][aShift3Y1 + 2]);
+            mNodeList.SetRGBA(aWriteIndex, mRGBA[i][aShift4Y1], mRGBA[i][aShift4Y1 + 1], mRGBA[i][aShift4Y1 + 2], mRGBA[i][aShift4Y1 + 3]);
+            aWriteIndex++;
         }
         
-        aShiftY += 8.0f;
+        if (pSprite == 0) {
+            mNodeList.DrawTriStrips();
+        } else {
+            mNodeList.DrawTriStrips(pSprite);
+        }
     }
-    
 }
 
-void FDrawQuadGrid::Draw()
-{
+void FDrawQuadGrid::Draw() {
     Draw(mSprite);
 }
 
-void FDrawQuadGrid::Size(int pWidth, int pHeight)
-{
+void FDrawQuadGrid::Size(int pWidth, int pHeight) {
     
-    if((pWidth == mWidth) && (pHeight == mHeight))return;
+    if ((pWidth == mWidth) && (pHeight == mHeight)) { return; }
+    
+    delete [] mXYZBase;
+    delete [] mUVWBase;
+    delete [] mRGBABase;
+    
     
     delete [] mXYZ;
     delete [] mUVW;
@@ -884,25 +829,21 @@ void FDrawQuadGrid::Size(int pWidth, int pHeight)
     mUVW = new float*[mWidth];
     mRGBA = new float*[mWidth];
     
-    for(int i=0;i<mWidth;i++)
-    {
+    for (int i=0;i<mWidth;i++) {
         mXYZ[i] = aXYZ;
         mUVW[i] = aUVW;
         mRGBA[i] = aRGBA;
-        
         aXYZ += (mHeight * 3);
         aUVW += (mHeight * 3);
         aRGBA += (mHeight * 4);
     }
 }
 
-void FDrawQuadGrid::Reset()
-{
+void FDrawQuadGrid::Reset() {
     Clear();
 }
 
-void FDrawQuadGrid::Clear()
-{
+void FDrawQuadGrid::Clear() {
     delete [] mXYZ;
     delete [] mUVW;
     delete [] mRGBA;
@@ -915,7 +856,6 @@ void FDrawQuadGrid::Clear()
     mHeight = 0;
     
     mRefresh = true;
-    
 }
 
 void FDrawQuadGrid::SetSprite(FSprite *pSprite)
@@ -925,10 +865,9 @@ void FDrawQuadGrid::SetSprite(FSprite *pSprite)
 }
 
 
-void FDrawQuadGrid::SetXYZ(int pGridX, int pGridY, float pX, float pY, float pZ)
-{
-    if((pGridX >= 0) && (pGridY >= 0) && (pGridX < mWidth) && (pGridY < mHeight))
-    {
+void FDrawQuadGrid::SetXYZ(int pGridX, int pGridY, float pX, float pY, float pZ) {
+    
+    if ((pGridX >= 0) && (pGridY >= 0) && (pGridX < mWidth) && (pGridY < mHeight)) {
         int aIndexX = pGridX;
         int aIndexY = pGridY * 3;
         mXYZ[aIndexX][aIndexY + 0] = pX;
@@ -938,10 +877,8 @@ void FDrawQuadGrid::SetXYZ(int pGridX, int pGridY, float pX, float pY, float pZ)
     }
 }
 
-void FDrawQuadGrid::SetUVW(int pGridX, int pGridY, float pU, float pV, float pW)
-{
-    if((pGridX >= 0) && (pGridY >= 0) && (pGridX < mWidth) && (pGridY < mHeight))
-    {
+void FDrawQuadGrid::SetUVW(int pGridX, int pGridY, float pU, float pV, float pW) {
+    if ((pGridX >= 0) && (pGridY >= 0) && (pGridX < mWidth) && (pGridY < mHeight)) {
         int aIndexX = pGridX;
         int aIndexY = pGridY * 3;
         mUVW[aIndexX][aIndexY + 0] = pU;
@@ -951,10 +888,8 @@ void FDrawQuadGrid::SetUVW(int pGridX, int pGridY, float pU, float pV, float pW)
     }
 }
 
-void FDrawQuadGrid::SetRGBA(int pGridX, int pGridY, float pRed, float pGreen, float pBlue, float pAlpha)
-{
-    if((pGridX >= 0) && (pGridY >= 0) && (pGridX < mWidth) && (pGridY < mHeight))
-    {
+void FDrawQuadGrid::SetRGBA(int pGridX, int pGridY, float pRed, float pGreen, float pBlue, float pAlpha) {
+    if ((pGridX >= 0) && (pGridY >= 0) && (pGridX < mWidth) && (pGridY < mHeight)) {
         int aIndexX = pGridX;
         int aIndexY = pGridY * 4;
         mRGBA[aIndexX][aIndexY + 0] = pRed;
@@ -965,13 +900,11 @@ void FDrawQuadGrid::SetRGBA(int pGridX, int pGridY, float pRed, float pGreen, fl
     }
 }
 
-void FDrawQuadGrid::Generate9x9(FSprite &pSprite, float pX, float pY, float pWidth, float pHeight, float pInset)
-{
+void FDrawQuadGrid::Generate9x9(FSprite &pSprite, float pX, float pY, float pWidth, float pHeight, float pInset) {
     Generate9x9(pSprite, pX, pY, pWidth, pHeight, pInset, pInset, pInset, pInset);
 }
 
-void FDrawQuadGrid::Generate9x9(FSprite &pSprite, float pX, float pY, float pWidth, float pHeight, float pInsetTop, float pInsetRight, float pInsetBottom, float pInsetLeft)
-{
+void FDrawQuadGrid::Generate9x9(FSprite &pSprite, float pX, float pY, float pWidth, float pHeight, float pInsetTop, float pInsetRight, float pInsetBottom, float pInsetLeft) {
     SetSprite(&pSprite);
     
     float aX[4];
@@ -1007,7 +940,7 @@ void FDrawQuadGrid::Generate9x9(FSprite &pSprite, float pX, float pY, float pWid
     aX[2] = (aQuadRight - aQuadInsetRight);
     
     aY[0] = pY;
-    aY[1] = pY + aQuadInsetLeft;
+    aY[1] = pY + aQuadInsetTop;
     aY[3] = aQuadBottom;
     aY[2] = (aQuadBottom - aQuadInsetBottom);
     
@@ -1028,20 +961,16 @@ void FDrawQuadGrid::Generate9x9(FSprite &pSprite, float pX, float pY, float pWid
     
     Size(4, 4);
     
-    for(int i=1;i<4;i++)
-    {
-        for(int n=1;n<4;n++)
-        {
-            //SetXYZ(i, n, aX[i], aY[i], 0.0f);
-            //SetUVW(i, n, aU[i], aV[i], 0.0f);
-            //SetRGBA(i, n, 1.0f, 1.0f, 1.0f, 1.0f);
+    for (int i=0;i<4;i++) {
+        for (int n=0;n<4;n++) {
+            SetXYZ(i, n, aX[i], aY[i], 0.0f);
+            SetUVW(i, n, aU[i], aV[i], 0.0f);
+            SetRGBA(i, n, 1.0f, 1.0f, 1.0f, 1.0f);
         }
     }
 }
 
-
-FDrawQuadSnake::FDrawQuadSnake()
-{
+FDrawQuadSnake::FDrawQuadSnake() {
     mCount = 0;
     mSize = 0;
     
@@ -1077,10 +1006,8 @@ FDrawQuadSnake::~FDrawQuadSnake()
 }
 
 
-void FDrawQuadSnake::Draw()
-{
-    if(mRefresh)
-    {
+void FDrawQuadSnake::Draw() {
+    if (mRefresh) {
         Generate();
     }
     

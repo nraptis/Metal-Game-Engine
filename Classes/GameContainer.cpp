@@ -56,28 +56,21 @@ GameContainer::GameContainer() {
     mPauseFade = 0.0f;
     mPauseFadeMax = 0.6f;
     
-    
-    
     AddChild(mContainer);
     mContainer->mName = "GameContainer-InnerContainer";
     
     mGame = new Game();
     mContainer->AddChild(mGame);
     
-    
-#ifndef EDITOR_MODE
-    
     mEffectsOverlay = new GameOverlayEffects();
     mEffectsOverlay->mDrawManual = true;
     AddChild(mEffectsOverlay);
     
+#ifndef EDITOR_MODE
     mInterfaceOverlay = new GameOverlayInterface();
     mInterfaceOverlay->mDrawManual = true;
     AddChild(mInterfaceOverlay);
-    
 #endif
-    
-    
     
 }
 
@@ -365,13 +358,6 @@ void GameContainer::PauseAndShowGameMenu() {
     
     
     mGameMenuAnimation->mStartX = -(gVirtualDevWidth / 2.0f + aWidth / 2.0f);
-    //mGameMenuAnimation->mStartY = mGameMenuAnimation->mStartY + 64.0f * gSpriteDrawScale;
-    //mGameMenuAnimation->mStartScale = 0.0125f;
-    //mGameMenuAnimation->mStartRotation = -15.0f;
-    //mGameMenuAnimation->mStartAnchorX = 1.0f;
-    //mGameMenuAnimation->mStartAnchorY = 1.0f;
-    
-    //mGameMenuAnimation->GenerateIn(80);
     mGameMenuAnimation->GenerateIn(76);
     mGameMenuAnimation->Update();
     
@@ -409,13 +395,6 @@ void GameContainer::UnpauseAndHideGameMenu() {
     
     
     mGameMenuAnimation->mTargetX = gVirtualDevWidth / 2.0f + aWidth / 2.0f;
-    //mGameMenuAnimation->mTargetY = mGameMenuAnimation->mStartY + 64.0f * gSpriteDrawScale;
-    //mGameMenuAnimation->mTargetScale = 0.0125f;
-    //mGameMenuAnimation->mTargetRotation = 31.0f;
-    //mGameMenuAnimation->mTargetAnchorX = 0.0f;
-    //mGameMenuAnimation->mTargetAnchorY = 1.0f;
-    
-    //mGameMenuAnimation->GenerateOut(80);
     mGameMenuAnimation->GenerateOut(76);
     mGameMenuAnimation->Update();
     

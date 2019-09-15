@@ -299,6 +299,8 @@ void GFXApp::LoadComplete() {
         mCurrentCanvas = mMainMenu;
     }
     
+    TransitionToGame();
+    
 #endif
     
     

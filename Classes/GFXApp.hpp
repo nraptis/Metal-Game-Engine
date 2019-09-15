@@ -23,7 +23,7 @@
 #include "AssetWadModels.hpp"
 
 #define EDITOR_MODE 1
-//#undef EDITOR_MODE
+#undef EDITOR_MODE
 
 
 #ifdef EDITOR_MODE

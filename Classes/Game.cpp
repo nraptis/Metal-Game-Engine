@@ -291,12 +291,23 @@ void Game::LayoutTransform() {
     mKillZoneRight = mWidth + aKillZonePaddingSides;
     mKillZoneBottom = mHeight + aKillZonePaddingBottom;
     mKillZoneLeft = -aKillZonePaddingSides;
+    
+    if (mRenderer) {
+        mRenderer->ScreenBoundaryRefresh();
+    }
+    
+    //ScreenBoundaryRefresh()
 }
 
 void Game::Layout() {
     
     //TODO: This is only for build mode.
     
+    
+    if (mRenderer) {
+        //mRenderer->ScreenBoundaryRefresh();
+        
+    }
     
     
 }
@@ -1508,12 +1519,7 @@ void Game::Load() {
     //aLevel.SetKillTimer(800);
     
     aLevel.AddSection("section_2_turtles_2_bricks_2_balloon_3_waves_turtles_brickcircle_star.json");
-    
-    
     aLevel.AddSection("test_section_one_wave_16_turtles");
-    
-    
-    
     aLevel.AddSection("section_2_turtles_2_bricks_2_waves_1_center_balloon.json");
     
     //aLevel.AddSection("test_section_04");

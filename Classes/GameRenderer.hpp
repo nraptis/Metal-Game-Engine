@@ -12,6 +12,7 @@
 #include "FloatingCamera.hpp"
 #include "FModelDataPacked.hpp"
 #include "FUniforms.hpp"
+#include "SkyRenderer.hpp"
 
 class Game;
 class GameRenderer {
@@ -21,11 +22,12 @@ public:
     
     void                                Draw3D();
     void                                DumpLightsToUniforms();
+    void                                ScreenBoundaryRefresh();
     
     Game                                *mGame;
     FloatingCamera                      *mCamera;
     
-    FModelDataPacked                    *mDart;
+    SkyRenderer                         mSky;
     
     float                               mLightDirX;
     float                               mLightDirY;
@@ -42,14 +44,10 @@ public:
     float                               mLightDiffuseBase;
     float                               mLightSpecularBase;
     
-    
     FUniformsLightPhong                 mUniformPhongBalloon;
     FUniformsLightPhong                 mUniformPhong;
     FUniformsLightDiffuse               mUniformDiffuse;
     FUniformsLightAmbient               mUniformAmbient;
-    
-    float                               mDartSpin;
-    
     
 };
 

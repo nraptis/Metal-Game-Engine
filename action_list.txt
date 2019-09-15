@@ -1,7 +1,27 @@
 
+K1.) Since we will have a lot of "Sections" - we need some way to quickly browse and test out sections... This should have some sub-tasks...
 
+K2.) We also need to draw boundary thingies for the sides of the screen, top of the screen, and bottom of the screen. The assumption is that we will always be within certain "perspective" warp-factors. Basically, the stuff looks horrible if the screen is too wide...
 
-I1.) We need an occasional "gleam" / sparkle animation that emminates from the tip of the dart.
+J1.) We need to draw an AIM ARROW, possibly in 3-D
+
+J2.) We need to render trajectory path for dart / possibly tip of dart? Which is preferred? Tip has awkward movement...
+
+J3.) We need to be able to mark nodes as "auto-scatter" - e.g. when all the balloons (kill-ables) are killed, the rest of the objects "scatter" or quickly somehow vanish (falling or going to side)
+
+J4.) We need a simple 2-D arrow image which shows where the dart will go...
+
+I1.) [Editor] We want a method to copy / paste MOTION controllers from one permanent to another.
+
+I2.) [Editor] We want a method to copy / paste MOTION controllers from one permanent spawn node to another.
+
+I3.) [Editor] We want a method to copy / paste MOTION controllers from one wave spawn node to another.
+
+I4.) [Editor] We want a way to move the grid center, reset the grid center.
+
+I5.) [Editor] (Possibly Optional) We need the grid editor to be available for path editor, we need to snap path nodes to grid points...
+
+H6.) We need an occasional "gleam" / sparkle animation that emminates from the tip of the dart.
 
 H1.) We need TYPES to be bart of FORMATION CONFIGURATION. (Optional) This could also reduce the number of existing formations.
 

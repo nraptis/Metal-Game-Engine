@@ -223,8 +223,7 @@ void FDrawNodeList::Size(int pSize)
     }
 }
 
-void FDrawNodeList::Reset()
-{
+void FDrawNodeList::Reset() {
     mCountNodes = 0;
 }
 
@@ -418,12 +417,9 @@ void FDrawNodeList::Set(int pIndex, float pX, float pY, float pZ, float pU, floa
     }
 }
 
-void FDrawNodeList::SetXYZ(int pIndex, float pX, float pY, float pZ)
-{
-    if(pIndex >= 0)
-    {
-        if(pIndex >= mNodeSize)
-        {
+void FDrawNodeList::SetXYZ(int pIndex, float pX, float pY, float pZ) {
+    if (pIndex >= 0) {
+        if (pIndex >= mNodeSize) {
             int aSize = (pIndex + (pIndex / 2) + 2);
             Size(aSize);
         }
@@ -432,16 +428,15 @@ void FDrawNodeList::SetXYZ(int pIndex, float pX, float pY, float pZ)
         mData[pIndex].mY = pY;
         mData[pIndex].mZ = pZ;
         
-        if(pIndex >= mCountNodes)mCountNodes = pIndex + 1;
+        if (pIndex >= mCountNodes) {
+            mCountNodes = pIndex + 1;
+        }
     }
 }
 
-void FDrawNodeList::SetUVW(int pIndex, float pU, float pV, float pW)
-{
-    if(pIndex >= 0)
-    {
-        if(pIndex >= mNodeSize)
-        {
+void FDrawNodeList::SetUVW(int pIndex, float pU, float pV, float pW) {
+    if (pIndex >= 0) {
+        if (pIndex >= mNodeSize) {
             int aSize = (pIndex + (pIndex / 2) + 2);
             Size(aSize);
         }
@@ -450,7 +445,7 @@ void FDrawNodeList::SetUVW(int pIndex, float pU, float pV, float pW)
         mData[pIndex].mV = pV;
         mData[pIndex].mW = pW;
         
-        if(pIndex >= mCountNodes) {
+        if (pIndex >= mCountNodes) {
             mCountNodes = pIndex + 1;
             mIndexList.mCount = mCountNodes;
         }
@@ -459,10 +454,9 @@ void FDrawNodeList::SetUVW(int pIndex, float pU, float pV, float pW)
 
 void FDrawNodeList::SetRGBA(int pIndex, float pRed, float pGreen, float pBlue, float pAlpha)
 {
-    if(pIndex >= 0)
-    {
-        if(pIndex >= mNodeSize)
-        {
+    if (pIndex >= 0) {
+        
+        if (pIndex >= mNodeSize) {
             int aSize = (pIndex + (pIndex / 2) + 2);
             Size(aSize);
         }
@@ -472,7 +466,7 @@ void FDrawNodeList::SetRGBA(int pIndex, float pRed, float pGreen, float pBlue, f
         mData[pIndex].mB = pBlue;
         mData[pIndex].mA = pAlpha;
         
-        if(pIndex >= mCountNodes) {
+        if (pIndex >= mCountNodes) {
             mCountNodes = pIndex + 1;
             mIndexList.mCount = mCountNodes;
         }

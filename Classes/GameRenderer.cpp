@@ -32,7 +32,6 @@ GameRenderer::GameRenderer(Game *pGame, FloatingCamera *pCamera) {
     mLightDirY = -0.758964;
     mLightDirZ = 0.539402;
     
-    mDartSpin = 0.0f;
     
     //FUniformsLightPhong                 mUniformPhong;
     //FUniformsLightDiffuse        mUniformDiffuse;
@@ -76,15 +75,25 @@ void GameRenderer::Draw3D() {
     
     DumpLightsToUniforms();
     
+    
+    FMatrix aProjection = mCamera->GetProjection();
+    Graphics::MatrixProjectionSet(aProjection);
+    Graphics::MatrixModelViewReset();
+    
+    
+    Graphics::SetColor();
+    Graphics::DepthDisable();
+    Graphics::CullFacesSetBack();
+    
+    mSky.Draw();
+    
+    
+    
+    
     Graphics::SetColor();
     Graphics::DepthEnable();
     Graphics::CullFacesSetDisabled();
     Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending();
-    
-    mDartSpin += 0.66f;
-    if (mDartSpin >= 360.0f) {
-        mDartSpin -= 360.0f;
-    }
     
     /*
     for (float aX = -mCamera->mDistance;aX <= mCamera->mDistance;aX += 1.25f) {
@@ -119,8 +128,6 @@ void GameRenderer::Draw3D() {
     
     //Graphics::PipelineStateSetShape3DAlphaBlending();
     
-    
-    FMatrix aProjection = mCamera->GetProjection();
     Graphics::MatrixProjectionSet(aProjection);
     Graphics::MatrixModelViewReset();
     
@@ -217,6 +224,39 @@ void GameRenderer::Draw3D() {
     Graphics::CullFacesSetBack();
 }
 
+
+void GameRenderer::ScreenBoundaryRefresh() {
+    
+    if (mGame == NULL) { return; }
+    if (gGame != mGame) { return; }
+    
+    float aGameAreaTop = mGame->mGameAreaTop;
+    float aGameAreaRight = mGame->mGameAreaRight;
+    float aGameAreaBottom = mGame->mGameAreaBottom;
+    float aGameAreaLeft = mGame->mGameAreaLeft;
+    
+    aGameAreaTop = mGame->Convert2DYTo3D(aGameAreaTop);
+    aGameAreaRight = mGame->Convert2DXTo3D(aGameAreaRight);
+    aGameAreaBottom = mGame->Convert2DYTo3D(aGameAreaBottom);
+    aGameAreaLeft = mGame->Convert2DXTo3D(aGameAreaLeft);
+    
+    float aWidth = (aGameAreaRight - aGameAreaLeft);
+    float aHeight = (aGameAreaBottom - aGameAreaTop);
+    
+    if (aWidth < 0.25f || aHeight < 0.25f) {
+        
+        Log("Play Area Too SMALL [%.2f %.2f %.2f %.2f] (%.2f x %.2f)", aGameAreaTop, aGameAreaRight, aGameAreaBottom, aGameAreaLeft, aWidth, aHeight);
+        return;
+    }
+    
+    float aPadding = 3.0f;
+    
+    mSky.Refresh(aGameAreaTop, aGameAreaRight, aGameAreaBottom, aGameAreaLeft, aPadding);
+    
+    
+    
+    
+}
 
 void GameRenderer::DumpLightsToUniforms() {
     

@@ -1,54 +1,32 @@
 {
 	"section": true,
-	"wave_list": [],
-	"perm_list": [
+	"wave_list": [
 		{
-			"x": 26.563641,
-			"y": 59.267300,
-			"formation": "f_tr_circ_140sz_cfg7xb_spxs.json"
-		},
-		{
-			"spawn_spacing": 470,
-			"x": 81.034126,
-			"y": 13.851418,
+			"spawn_spacing": 90,
+			"max_spawn_size": 195,
 			"path": {
-				"smooth": true,
-				"closed": true,
 				"node_list": [
 					{
-						"x_con": 500,
-						"y_con": 300
-					},
-					{
-						"x_con": 700,
-						"y_con": 300
-					},
-					{
-						"x_con": 700,
-						"y_con": 500
-					},
-					{
-						"x_con": 600,
+						"x_con": 200,
 						"y_con": 500
 					},
 					{
 						"x_con": 500,
-						"x_con_offset": -140.000000,
 						"y_con": 500,
-						"y_con_offset": -100.000000
+						"decel": 200,
+						"accel": 100,
+						"wait": 800
 					},
 					{
-						"x_con": 300,
-						"y_con": 400
+						"x_con": 500,
+						"y_con": 150
 					}
 				]
 			},
 			"spawn": [
 				{
-					"formation": "f_tr_circ_120sz_cfg6xb_spxs.json"
-				},
-				{
-					"formation": "f_grid_hexa_ngon1_6sid_46rngs_1rngc_30pnts_86ful__nodes_cfg6xb_allg.json"
+					"formation": "form_all_nod_mix_bln_brk_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfgrbbbrbbbr_snp",
+					"formation_config": {}
 				}
 			]
 		}
