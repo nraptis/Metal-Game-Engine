@@ -23,25 +23,10 @@ public:
     virtual void                            Update() override;
     
     ToolMenuSectionRow                      *mRowMain1;
-    UIButton                                *mButtonCloseEditor;
-    UIButton                                *mButtonResetPerm;
+    UIButton                                *mButtonClose;
+    UIButton                                *mButtonRestart;
     
-    ToolMenuPanel                           *mMenuPathSpawn;
-    UIStepper                               *mStepperPathSpawnCount;
-    UIStepper                               *mStepperPathSpawnSpacing;
     
-    ToolMenuSectionRow                      *mRowPathSpawn1;
-    UICheckBox                              *mCheckBoxPathSpawnEqualSpacing;
-    
-    ToolMenuPanel                           *mMenusPanel;
-    ToolMenuSectionRow                      *mRowMenus1;
-    UIButton                                *mButtonMenuSpawnPicker;
-    UIButton                                *mButtonMenuPermPicker;
-    
-    ToolMenuSectionRow                      *mRowMenus2;
-    UIButton                                *mButtonMenuAttachment;
-    UIButton                                *mButtonMenuMotionPerm;
-    UIButton                                *mButtonMenuMotionSpawn;
     
     
 };

@@ -90,6 +90,17 @@ GameContainer::~GameContainer() {
         mGameMenuAnimation = NULL;
     }
     
+    
+    if (mEditorMenu != NULL) {
+        mEditorMenu->Kill();
+        mEditorMenu = NULL;
+    }
+    
+    if (mEditorMenuUtils != NULL) {
+        mEditorMenuUtils->Kill();
+        mEditorMenuUtils = NULL;
+    }
+    
 }
 
 void GameContainer::Layout() {

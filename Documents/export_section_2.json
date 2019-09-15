@@ -1,87 +1,232 @@
 {
 	"section": true,
-	"wave_list": [],
-	"perm_list": [
+	"wave_list": [
 		{
-			"x_con": 500,
-			"y_con": 400,
-			"motion": {
-				"slice_list": [
+			"spawn_spacing": 90,
+			"path": {
+				"speed_class": 100,
+				"node_list": [
 					{
-						"type": 5,
-						"linear_tick": 0,
-						"linear_time": 100,
-						"radius": 46,
-						"pause_1": 60,
-						"pause_2": 60
-					}
-				]
-			},
-			"formation": "form_all_nod_all_bln_grd_rec_6x1_38sph_0spv_sld_nodes_cfg6xb_snp",
-			"formation_config": {}
-		},
-		{
-			"x_con": 500,
-			"y_con": 400,
-			"y_con_offset": 120.000000,
-			"motion": {
-				"slice_list": [
-					{
-						"type": 5,
-						"linear_tick": 0,
-						"linear_time": 100,
-						"radius": 42,
-						"pause_1": 60,
-						"pause_2": 60
+						"x_con": 200,
+						"y": 52.743351
 					},
 					{
-						"type": 1
+						"x_con": 500,
+						"y_con": 100,
+						"y_con_target": 0,
+						"decel": 200,
+						"wait": 9999
 					}
 				]
 			},
-			"formation": "form_all_nod_all_bln_grd_rec_6x1_38sph_0spv_sld_nodes_cfg6xb_snp",
-			"formation_config": {}
-		},
-		{
-			"x_con": 500,
-			"y_con": 400,
-			"y_con_offset": 240.000000,
-			"motion": {
-				"slice_list": [
-					{
-						"type": 5,
-						"linear_tick": 0,
-						"linear_time": 100,
-						"radius": 42,
-						"pause_1": 60,
-						"pause_2": 60
+			"spawn": [
+				{
+					"motion": {
+						"slice_list": [
+							{
+								"type": 4,
+								"radius": 7,
+								"pause_1": 10,
+								"pause_2": 10
+							}
+						]
 					}
-				]
-			},
-			"formation": "form_all_nod_all_bln_grd_rec_6x1_38sph_0spv_sld_nodes_cfg6xb_snp",
-			"formation_config": {}
+				}
+			]
 		},
 		{
-			"x_con": 500,
-			"y_con": 400,
-			"y_con_offset": 360.000000,
-			"motion": {
-				"slice_list": [
+			"spawn_spacing": 90,
+			"creation_prev_wave_complete": true,
+			"path": {
+				"speed_class": 100,
+				"node_list": [
 					{
-						"type": 5,
-						"linear_tick": 0,
-						"linear_time": 100,
-						"radius": 42,
-						"pause_1": 60,
-						"pause_2": 60
+						"x_con": 200,
+						"y": 52.614075
 					},
 					{
-						"type": 1
+						"x": 61.078667,
+						"y_con": 100,
+						"y_con_target": 0,
+						"decel": 170,
+						"wait": 9999
 					}
 				]
 			},
-			"formation": "form_all_nod_all_bln_grd_rec_6x1_38sph_0spv_sld_nodes_cfg6xb_snp",
-			"formation_config": {}
+			"spawn": [
+				{
+					"motion": {
+						"slice_list": [
+							{
+								"type": 4,
+								"radius": 8
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"spawn_spacing": 90,
+			"creation_delay": 50,
+			"path": {
+				"speed_class": 100,
+				"node_list": [
+					{
+						"x_con": 200,
+						"y": 45.892151
+					},
+					{
+						"x_con": 500,
+						"y_con": 100,
+						"y_con_target": 0,
+						"decel": 170,
+						"wait": 9999
+					}
+				]
+			},
+			"spawn": [
+				{
+					"motion": {
+						"slice_list": [
+							{
+								"type": 4,
+								"linear_tick": 100,
+								"linear_time": 200,
+								"radius": 6,
+								"pause_1": 10,
+								"pause_2": 10
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"spawn_spacing": 90,
+			"creation_delay": 30,
+			"path": {
+				"node_list": [
+					{
+						"x_con": 200,
+						"y": 56.232853
+					},
+					{
+						"x": 42.257298,
+						"y_con": 100,
+						"y_con_target": 0,
+						"decel": 170,
+						"wait": 9999
+					}
+				]
+			},
+			"spawn": [
+				{
+					"motion": {
+						"slice_list": [
+							{
+								"type": 4,
+								"linear_tick": 85,
+								"linear_time": 170,
+								"radius": 9,
+								"pause_1": 6,
+								"pause_2": 6
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"creation_prev_wave_complete": true,
+			"creation_screen_waves_clear": true,
+			"creation_screen_perms_clear": true,
+			"max_spawn_size": 189,
+			"path": {
+				"speed_class": 200,
+				"node_list": [
+					{
+						"x_con": 500,
+						"y_con": 200
+					},
+					{
+						"x_con": 100,
+						"x_con_target": 0,
+						"y": 43.429596,
+						"decel": 300,
+						"wait": 9999
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "form_all_nod_all_bln_grd_rec_4x3_38sph_48spv_sld_nodes_cfg12xb_snp.json",
+					"formation_config": {},
+					"motion": {
+						"slice_list": [
+							{
+								"type": 3,
+								"linear_tick": 0,
+								"linear_time": 250,
+								"angle_span": 6,
+								"pause_1": 30,
+								"pause_2": 30
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"creation_prev_wave_complete": true,
+			"max_spawn_size": 168,
+			"path": {
+				"speed_class": 200,
+				"node_list": [
+					{
+						"x_con": 200,
+						"y": 48.260437
+					},
+					{
+						"x_con": 400,
+						"y_con": 100,
+						"y_con_target": 0,
+						"decel": 200,
+						"wait": 9999
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "form_all_nod_all_bln_grd_rec_3x3_38sph_48spv_89ful_nodes_cfg8xb_snp.json",
+					"formation_config": {}
+				}
+			]
+		},
+		{
+			"creation_delay": 75,
+			"max_spawn_size": 195,
+			"path": {
+				"node_list": [
+					{
+						"x_con": 800,
+						"y": 49.899685
+					},
+					{
+						"x_con": 600,
+						"y_con": 100,
+						"y_con_target": 0,
+						"decel": 170,
+						"wait": 9999
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "form_all_nod_all_bln_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfg9xb_snp",
+					"formation_config": {}
+				}
+			]
 		}
 	]
 }

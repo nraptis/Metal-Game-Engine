@@ -41,14 +41,14 @@ HangingThreadTestMenu::HangingThreadTestMenu(Game *pGame) : ToolMenu() {
     //
     mSliderTestAxisX = new UISlider();
     mSliderTestAxisX->SetText("R-X");
-    mSliderTestAxisX->SetTarget(&pGame->mTestBalloonRotX);
+    //mSliderTestAxisX->SetTarget(&pGame->mTestBalloonRotX);
     //mSliderViewRotationPrimary->SetRange(-180.0f, 360.0f);
     mSliderTestAxisX->SetRange(-60.0f, 60.0f);
     mPanelTestAxis->AddSection(mSliderTestAxisX);
     
     mSliderTestAxisY = new UISlider();
     mSliderTestAxisY->SetText("R-Z");
-    mSliderTestAxisY->SetTarget(&pGame->mTestBalloonRotZ);
+    //mSliderTestAxisY->SetTarget(&pGame->mTestBalloonRotZ);
     //mSliderTestAxisY->SetTarget(&pGame->mHangingThreatTestAxisEndOffsetY);
     mSliderTestAxisY->SetRange(-60.0f, 60.0f);
     mPanelTestAxis->AddSection(mSliderTestAxisY);

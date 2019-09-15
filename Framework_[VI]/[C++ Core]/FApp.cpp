@@ -232,8 +232,6 @@ void FApp::BaseUpdate() {
     gTouch.Update();
     InterfaceUnlock();
     
-    
-    
     Update();
     
     mWindowMain.Update();

@@ -57,6 +57,9 @@ public:
     
     virtual void                                Notify(void *pSender, const char *pNotification) override;
     
+    
+    void                                        Clear();
+    
     bool                                        IsWaveClearForSpawn();
     bool                                        IsScreenClearForSpawn(bool pIncludePerms);
     bool                                        IsAnyObjectFloatingAway();
@@ -237,10 +240,6 @@ public:
     int                                         mThrownMissedCount;
     
     int                                         mEscapedCount;
-    
-    float                                       mTestBalloonRotX;
-    float                                       mTestBalloonRotY;
-    float                                       mTestBalloonRotZ;
     
     int                                         mPopSoundDelay;
     

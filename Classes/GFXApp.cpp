@@ -58,8 +58,10 @@ GFXApp::GFXApp() {
 #ifdef EDITOR_MODE
     mEditor = NULL;
     
-    mEditorSwitchType = 0;
-    mEditorSwitchTimer = 0;
+    mEditorTestSwitchToGameEnqueue = 0;
+    mEditorTestSwitchToEditorEnqueue = 0;
+    
+    
     
 #endif
     
@@ -299,7 +301,8 @@ void GFXApp::LoadComplete() {
         mCurrentCanvas = mMainMenu;
     }
     
-    TransitionToGame();
+    //TransitionToGame();
+    
     
 #endif
     
@@ -371,6 +374,27 @@ void GFXApp::Update() {
     if (mCamera.mRotationPrimary >= 360.0f) {
         mCamera.mRotationPrimary -= 360.0f;
     }
+    
+    
+    
+#ifdef EDITOR_MODE
+    
+    if (mEditorTestSwitchToGameEnqueue > 0) {
+        mEditorTestSwitchToGameEnqueue--;
+        if (mEditorTestSwitchToGameEnqueue == 0) {
+            EditorTestSwitchToGameInternal();
+        }
+    }
+    
+    if (mEditorTestSwitchToEditorEnqueue > 0) {
+        mEditorTestSwitchToEditorEnqueue--;
+        if (mEditorTestSwitchToEditorEnqueue == 0) {
+            EditorTestSwitchToEditorInternal();
+        }
+    }
+    
+#endif
+    
 }
 
 void GFXApp::Draw() {
@@ -545,30 +569,22 @@ void GFXApp::SetDeviceSize(int pWidth, int pHeight) {
     
     static int aFixRez = 0;
     
-    if (aFixRez < 3) {
+    float aTop = gSafeAreaInsetTop;
+    float aBottom = pHeight - gSafeAreaInsetBottom;
+    
+    float aHeight = (aBottom - aTop);
+    float aWidth = aHeight * 0.75f;
+    
+    if (aFixRez < 2) {
         aFixRez++;
-        
         float aMaxWidth = (int)(pHeight * 0.75f + 0.5f);
-        
         if (pWidth > aMaxWidth) {
-            
-            float aTop = gSafeAreaInsetTop;
-            float aBottom = pHeight - gSafeAreaInsetBottom;
-            
-            float aHeight = (aBottom - aTop);
-            float aWidth = aHeight * 0.75f;
-            
-            
             AppShellSetVirtualFrame(pWidth / 2.0f - aWidth / 2.0f, aTop, aWidth, aHeight);
-            
         }
-        
     }
-    
-    
-    
-    
 #endif
+    
+    
     
     
     
@@ -746,6 +762,15 @@ void GFXApp::NotifyTransitionComplete() {
 
 void GFXApp::EditorTestSwitchToGame() {
     
+    mEditorTestSwitchToGameEnqueue = 1;
+    
+    
+    
+    
+    
+}
+
+void GFXApp::EditorTestSwitchToGameInternal() {
     float aAspectRatio = 768.0f / 1024.0f;
     float aPadding = 5.0f;
     float aVirtualHeight = round(gDeviceHeight - (aPadding * 2.0f));
@@ -757,8 +782,6 @@ void GFXApp::EditorTestSwitchToGame() {
     AppShellSetVirtualFrame(aVirtualX, aVirtualY, aVirtualWidth, aVirtualHeight);
     
     
-    mEditorSwitchType = 1;
-    
     if (mEditor != NULL) {
         mEditor->Kill();
         mEditor = NULL;
@@ -768,9 +791,11 @@ void GFXApp::EditorTestSwitchToGame() {
         mGameContainer = NULL;
     }
     
-    mWindowMain.Update();
-    mWindowModal.Update();
+    
     mWindowTools.Update();
+    mWindowModal.Update();
+    mWindowMain.Update();
+    
     
     mGameContainer = new GameContainer();
     mGameContainer->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
@@ -780,12 +805,19 @@ void GFXApp::EditorTestSwitchToGame() {
     mGameContainer->mGame->LoadEditorTest();
     mGameContainer->OpenEditorTestMenus();
     mGameContainer->Realize();
-    
 }
+
+
+
 
 void GFXApp::EditorTestSwitchToEditor() {
     
+    mEditorTestSwitchToEditorEnqueue = 1;
     
+    
+}
+
+void GFXApp::EditorTestSwitchToEditorInternal() {
     float aAspectRatio = 768.0f / 1024.0f;
     float aVirtualHeight = round(gDeviceHeight * 0.75f);
     float aVirtualWidth = round(aVirtualHeight * aAspectRatio);
@@ -794,9 +826,6 @@ void GFXApp::EditorTestSwitchToEditor() {
     
     //TODO:
     AppShellSetVirtualFrame(aVirtualX, aVirtualY, aVirtualWidth, aVirtualHeight);
-    
-    
-    mEditorSwitchType = 0;
     
     if (mEditor != NULL) {
         mEditor->Kill();
@@ -807,10 +836,9 @@ void GFXApp::EditorTestSwitchToEditor() {
         mGameContainer = NULL;
     }
     
-    mWindowMain.Update();
-    mWindowModal.Update();
     mWindowTools.Update();
-    
+    mWindowModal.Update();
+    mWindowMain.Update();
     
     mGameContainer = new GameContainer();
     mGameContainer->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);

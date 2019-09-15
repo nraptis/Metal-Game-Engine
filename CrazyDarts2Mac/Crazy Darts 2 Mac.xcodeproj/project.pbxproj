@@ -1034,9 +1034,9 @@
 			isa = PBXGroup;
 			children = (
 				0D1542B7232DC1B40004AE55 /* EditorMenuGameTest.cpp */,
-				0D1542B8232DC1B40004AE55 /* EditorMenuGameTestUtils.hpp */,
 				0D1542B9232DC1B40004AE55 /* EditorMenuGameTest.hpp */,
 				0D1542BA232DC1B40004AE55 /* EditorMenuGameTestUtils.cpp */,
+				0D1542B8232DC1B40004AE55 /* EditorMenuGameTestUtils.hpp */,
 			);
 			path = "[[Game Test Menus]]";
 			sourceTree = "<group>";

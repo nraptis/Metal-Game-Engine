@@ -23,9 +23,15 @@ void FList::Size(int pSize) {
 		Clear();
 	} else if(pSize != mSize) {
 		void **aNewData = new void*[pSize];
-		if (mCount>pSize) mCount = pSize;
-		for (int i = 0; i < mCount; i++) aNewData[i] = mData[i];
-		for (int i = mCount; i < mSize; i++) aNewData[i] = 0;
+        if (mCount > pSize) {
+            mCount = pSize;
+        }
+        for (int i=0;i<mCount;i++) {
+            aNewData[i] = mData[i];
+        }
+        for (int i=mCount;i<mSize;i++) {
+            aNewData[i] = NULL;
+        }
 		mSize = pSize;
 		delete[] mData;
 		mData = aNewData;

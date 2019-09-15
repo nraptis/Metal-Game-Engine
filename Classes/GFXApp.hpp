@@ -101,10 +101,19 @@ public:
     GameEditor                              *mEditor;
     
     void                                    EditorTestSwitchToGame();
-    void                                    EditorTestSwitchToEditor();
+    void                                    EditorTestSwitchToGameInternal();
     
-    int                                     mEditorSwitchType;
-    int                                     mEditorSwitchTimer;
+    void                                    EditorTestSwitchToEditor();
+    void                                    EditorTestSwitchToEditorInternal();
+    
+    
+    
+    
+    int                                     mEditorTestSwitchToGameEnqueue;
+    int                                     mEditorTestSwitchToEditorEnqueue;
+    
+    
+    
     
 #endif
     

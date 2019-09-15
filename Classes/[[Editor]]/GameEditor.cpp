@@ -96,22 +96,12 @@ GameEditor::GameEditor(Game *pGame) {
     OpenSpawnPickerMenu();
     OpenAttachmentMenu();
     
-    
-    
-    
-    
 }
 
 GameEditor::~GameEditor() {
     if (gEditor == this) {
         gEditor = NULL;
     }
-    
-    //LevelSection                                mEditorSection;
-    
-    //LevelWave                                   mEditorWave;
-    
-    
 }
 
 void GameEditor::Layout() {

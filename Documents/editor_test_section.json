@@ -2,31 +2,134 @@
 	"section": true,
 	"wave_list": [
 		{
-			"spawn_spacing": 90,
-			"max_spawn_size": 195,
 			"path": {
+				"speed_class": 100,
 				"node_list": [
 					{
 						"x_con": 200,
-						"y_con": 500
+						"y": 52.743351
 					},
 					{
 						"x_con": 500,
-						"y_con": 500,
+						"y_con": 100,
+						"y_con_target": 0,
 						"decel": 200,
-						"accel": 100,
-						"wait": 800
-					},
-					{
-						"x_con": 500,
-						"y_con": 150
+						"wait": 9999
 					}
 				]
 			},
 			"spawn": [
 				{
-					"formation": "form_all_nod_mix_bln_brk_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfgrbbbrbbbr_snp",
-					"formation_config": {}
+					"motion": {
+						"slice_list": [
+							{
+								"type": 4,
+								"radius": 7,
+								"pause_1": 10,
+								"pause_2": 10
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"creation_prev_wave_complete": true,
+			"path": {
+				"speed_class": 100,
+				"node_list": [
+					{
+						"x_con": 200,
+						"y": 52.614075
+					},
+					{
+						"x": 61.078667,
+						"y_con": 100,
+						"y_con_target": 0,
+						"decel": 170,
+						"wait": 9999
+					}
+				]
+			},
+			"spawn": [
+				{
+					"motion": {
+						"slice_list": [
+							{
+								"type": 4,
+								"radius": 8
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"creation_delay": 50,
+			"path": {
+				"speed_class": 100,
+				"node_list": [
+					{
+						"x_con": 200,
+						"y": 45.892151
+					},
+					{
+						"x_con": 500,
+						"y_con": 100,
+						"y_con_target": 0,
+						"decel": 170,
+						"wait": 9999
+					}
+				]
+			},
+			"spawn": [
+				{
+					"motion": {
+						"slice_list": [
+							{
+								"type": 4,
+								"linear_tick": 100,
+								"linear_time": 200,
+								"radius": 6,
+								"pause_1": 10,
+								"pause_2": 10
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"creation_delay": 30,
+			"path": {
+				"node_list": [
+					{
+						"x_con": 200,
+						"y": 56.232853
+					},
+					{
+						"x": 42.257294,
+						"y_con": 100,
+						"y_con_target": 0,
+						"decel": 170,
+						"wait": 9999
+					}
+				]
+			},
+			"spawn": [
+				{
+					"motion": {
+						"slice_list": [
+							{
+								"type": 4,
+								"linear_tick": 85,
+								"linear_time": 170,
+								"radius": 9,
+								"pause_1": 6,
+								"pause_2": 6
+							}
+						]
+					}
 				}
 			]
 		}

@@ -32,27 +32,20 @@ int kDeviceHeight = 760;
     float aMonitorWidth = [NSScreen mainScreen].frame.size.width;
     float aMonitorHeight = [NSScreen mainScreen].frame.size.height;
     
-    float aMaxWidth = (int)(aMonitorWidth * 0.95f);
-    float aMaxHeight = (int)(aMonitorHeight * 0.85f);
+    //Pick the smallest screen?
+    for (NSScreen *aScreen in [NSScreen screens]) {
+        if (aScreen.frame.size.width < aMonitorWidth) { aMonitorWidth = aScreen.frame.size.width; }
+        if (aScreen.frame.size.height < aMonitorHeight) { aMonitorHeight = aScreen.frame.size.height; }
+    }
     
-    //TODO: Sometimes we want to restrict this size, heh...
-    //if (kDeviceWidth > aMaxWidth) kDeviceWidth = aMaxWidth;
-    //if (kDeviceHeight > aMaxHeight) kDeviceHeight = aMaxHeight;
+    kDeviceWidth = aMonitorWidth - 64;
+    kDeviceHeight = aMonitorHeight - 180; // Account for the DOC...
     
     NSLog(@"Monitor Size: %d x %d\n", (int)aMonitorWidth, (int)aMonitorHeight);
-     
-    //float aOSVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
-    //bool aIsTablet = false;
-    
-    //kDeviceWidth = [UIScreen mainScreen].bounds.size.width + 0.5f;
-    //kDeviceHeight = [UIScreen mainScreen].bounds.size.height + 0.5f;
     
     char aBundlePath[2048];
-    
     getcwd(aBundlePath, sizeof(aBundlePath));
     strcat(aBundlePath, "/Assets/");
-    
-    NSLog(@"Read Bundle Directory: %s", aBundlePath);
     AppShellSetDirectoryBundle(aBundlePath);
     
     char aDocPath[2048];
@@ -60,40 +53,19 @@ int kDeviceHeight = 760;
     strcat(aDocPath, "/Documents/");
     AppShellSetDirectoryDocuments(aDocPath);
     
-    NSLog(@"Read Docs Directory: %s", aBundlePath);
-    
-    
-    
     char aExportPath[2048];
     getcwd(aExportPath, sizeof(aExportPath));
     strcat(aExportPath, "/Exports/");
     AppShellSetDirectoryExport(aExportPath);
     
-    NSLog(@"Read Exports Directory: %s", aExportPath);
-    
-    //
-    
-    
-    
-    
     AppShellInitialize(ENV_MAC);
-    
     AppShellSetDeviceSize(kDeviceWidth, kDeviceHeight);
     AppShellSetVirtualFrame(0, 0, kDeviceWidth, kDeviceHeight);
-    AppShellSetDeviceSize(kDeviceWidth, kDeviceHeight);
-    
-    
-    
-    AppShellSetImageFileScale(1);
-
-    
     
     _rootViewController = [[RootViewController alloc] init];
     
-    CGSize screenSize = [[NSScreen mainScreen] frame].size;
-    
     NSWindowStyleMask aWindowStyle = NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable | NSWindowStyleMaskResizable;
-    NSRect aWindowFrame = NSMakeRect(14.0, screenSize.height / 2.0 - kDeviceHeight / 2.0 - 14, kDeviceWidth, kDeviceHeight);
+    NSRect aWindowFrame = NSMakeRect(32.0, aMonitorHeight / 2.0 - kDeviceHeight / 2.0, kDeviceWidth, kDeviceHeight);
     
     _window = [[NSWindow alloc] initWithContentRect: aWindowFrame styleMask: aWindowStyle backing: NSBackingStoreBuffered defer: NO];
     [_window setTitle:@"App Window"];
@@ -104,6 +76,7 @@ int kDeviceHeight = 760;
     
     NSColor *aColor = [NSColor colorWithCalibratedRed: 0.0f green: 0.0f blue: 0.0f alpha: 1.0];
     [_window setBackgroundColor: aColor];
+    
     [_window makeKeyAndOrderFront: NSApp];
     
     if ([_rootViewController isViewLoaded] == false) {

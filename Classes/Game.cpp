@@ -141,24 +141,38 @@ Game::Game() {
     mSlowMoTimer = 0;
     
     mPopSoundDelay = 0;
-    
-    mTestBalloonRotX = 0.0f;
-    mTestBalloonRotY = 0.0f;
-    mTestBalloonRotZ = 0.0f;
 }
 
 Game::~Game() {
     if (gGame == this) {
         gGame = NULL;
     }
-    if (mCurrentDart) {
-        delete mCurrentDart;
-        mCurrentDart = NULL;
+    
+    if (mCamera != NULL) {
+        delete mCamera;
+        mCamera = NULL;
     }
+    
+    if (mRenderer != NULL) {
+        delete mRenderer;
+        mRenderer = NULL;
+    }
+    
+    if (mLevelController != NULL) {
+        delete mLevelController;
+        mLevelController = NULL;
+    }
+    
+    Clear();
+    
     mDartList.Free();
     mBalloonList.Free();
     mBrickHeadList.Free();
+    mTurtleList.Free();
+    mBombList.Free();
 }
+
+
 
 void Game::SetFrame(float pX, float pY, float pWidth, float pHeight) {
     FCanvas::SetFrame(pX, pY, pWidth, pHeight);
@@ -722,13 +736,44 @@ void Game::Draw() {
      */
     
     Graphics::PipelineStateSetShape2DAlphaBlending();
-    Graphics::SetColor(1.0f, 1.0f, 1.0f);
+    
+    if (gApp->mDarkMode) {
+        Graphics::SetColor(1.0f, 1.0f, 1.0f);
+    } else {
+        Graphics::SetColor(1.0f, 1.0f, 0.20f);
+    }
+    
+    
     for (int i=0;i<mTrajectoryList.mCount;i++) {
         float aX = mTrajectoryList.mX[i];
         float aY = mTrajectoryList.mY[i];
         Graphics::DrawPoint(aX, aY, 3.0f);
     }
 }
+
+
+void Game::Clear() {
+    
+    if (mCurrentDart) {
+        delete mCurrentDart;
+        mCurrentDart = NULL;
+    }
+    
+    DisposeAllObjects();
+    
+    mTrajectoryList.Reset();
+    
+    if (mLevelController != NULL) {
+        mLevelController->mData = NULL;
+    }
+    
+    if (mLevelData != NULL) {
+        delete mLevelData;
+        mLevelData = NULL;
+    }
+    
+}
+
 
 void Game::DartMovingInterpolationBalloons(Dart *pDart, float pPercent, bool pEnd) {
     
@@ -1122,8 +1167,9 @@ void Game::DisposeObject(GameObject *pObject) {
         return;
     }
     
-    
+#ifdef EDITOR_MODE
     printf("Disposing: (%s) %x\n", pObject->TypeString().c() , pObject);
+#endif
     
     pObject->Kill();
     
@@ -1182,6 +1228,14 @@ void Game::DisposeObject(GameObject *pObject) {
             mLevelData->DisposeObject(pObject);
         }
     }
+    
+#ifdef EDITOR_MODE
+    if (gEditor != NULL) {
+        gEditor->mEditorSection.DisposeObject(pObject);
+        gEditor->mEditorWave.DisposeObject(pObject);
+    }
+#endif
+    
 }
 
 void Game::DisposeObjectFromLevelData(GameObject *pObject) {
@@ -1496,6 +1550,8 @@ bool Game::IsAnyObjectFloatingAway() {
 
 void Game::Load() {
     
+    Clear();
+    
     Log("Game::Load()\n");
     
     //TODO: Remove...
@@ -1515,10 +1571,15 @@ void Game::Load() {
      test_section_one_wave_16_turtles
     */
     
-    aLevel.SetKillTimer(500);
-    aLevel.SetAliveTimer(444);
+    //aLevel.SetKillTimer(500);
+    //aLevel.SetAliveTimer(444);
     
-    aLevel.AddSection("test_section_all_bricks_2_perms");
+    aLevel.AddSection("section_start");
+    
+    
+    
+    //aLevel.AddSection("test_section_all_bricks_2_perms");
+    
     aLevel.AddSection("test_section_all_bricks_2_waves");
     aLevel.AddSection("test_section_2_tracers_slowslow_speed_all_4_types");
     aLevel.AddSection("section_2_turtles_2_bricks_2_waves_1_center_balloon");
@@ -1536,6 +1597,12 @@ void Game::Load() {
 }
 
 void Game::LoadEditorTest() {
+    
+    
+    //DisposeAllObjects();
+    Clear();
+    
+    
     
     LevelSection *aSection = NULL;
     LevelData *aLevel = new LevelData();
