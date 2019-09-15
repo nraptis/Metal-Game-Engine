@@ -153,6 +153,21 @@ void FormationCollection::Load() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Triangle
     
+    //mNameList.Add(new FString(""));
+    
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_tri_ng2_34rad_0ofy_46sph_40spv_stg_sld_nodes_cfg3xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_tri_ng2_34rad_0ofy_46sph_40spv_stgodd_180ros_sld_nodes_cfg3xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_tri_ng2_64rad_0ofy_46sph_40spv_stg_sld_nodes_cfg6xb_snp.json"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_tri_ng2_64rad_0ofy_46sph_40spv_stg_180ros_sld_nodes_cfg6xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_tri_ng2_88rad_0ofy_46sph_40spv_stg_sld_nodes_cfg10xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_tri_ng2_88rad_0ofy_46sph_40spv_stgodd_180ros_sld_nodes_cfg10xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_tri_ng2_117rad_0ofy_46sph_40spv_stg_sld_nodes_cfg15xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_tri_ng2_117rad_0ofy_46sph_40spv_stg_180ros_sld_nodes_cfg15xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_tri_ng2_144rad_0ofy_46sph_40spv_stg_sld_nodes_cfg21xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_tri_ng2_144rad_0ofy_46sph_40spv_stgodd_180ros_sld_nodes_cfg21xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_tri_ng2_172rad_0ofy_46sph_40spv_stg_sld_nodes_cfg28xb_snp"));
+    mNameList.Add(new FString("form_all_nod_all_bln_grd_tri_ng2_172rad_0ofy_46sph_40spv_stg_180ros_sld_nodes_cfg28xb_snp"));
+    
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Tracers - Circle
     

@@ -976,18 +976,18 @@
 		0D154288232DC1B40004AE55 /* [Formation Menus] */ = {
 			isa = PBXGroup;
 			children = (
-				0D154289232DC1B40004AE55 /* EditorMenuFormationPicker.cpp */,
-				0D15428A232DC1B40004AE55 /* EditorMenuFormationUtilities.cpp */,
-				0D15428B232DC1B40004AE55 /* EditorMenuFormationGrid.hpp */,
-				0D15428C232DC1B40004AE55 /* EditorMenuFormationPickerCell.cpp */,
-				0D15428D232DC1B40004AE55 /* EditorMenuFormationSpawnPicker.cpp */,
 				0D15428E232DC1B40004AE55 /* EditorMenuFormation.cpp */,
-				0D15428F232DC1B40004AE55 /* EditorMenuFormationSpawnPicker.hpp */,
 				0D154290232DC1B40004AE55 /* EditorMenuFormation.hpp */,
-				0D154291232DC1B40004AE55 /* EditorMenuFormationPicker.hpp */,
-				0D154292232DC1B40004AE55 /* EditorMenuFormationUtilities.hpp */,
 				0D154293232DC1B40004AE55 /* EditorMenuFormationGrid.cpp */,
+				0D15428B232DC1B40004AE55 /* EditorMenuFormationGrid.hpp */,
+				0D154289232DC1B40004AE55 /* EditorMenuFormationPicker.cpp */,
+				0D154291232DC1B40004AE55 /* EditorMenuFormationPicker.hpp */,
+				0D15428C232DC1B40004AE55 /* EditorMenuFormationPickerCell.cpp */,
 				0D154294232DC1B40004AE55 /* EditorMenuFormationPickerCell.hpp */,
+				0D15428D232DC1B40004AE55 /* EditorMenuFormationSpawnPicker.cpp */,
+				0D15428F232DC1B40004AE55 /* EditorMenuFormationSpawnPicker.hpp */,
+				0D15428A232DC1B40004AE55 /* EditorMenuFormationUtilities.cpp */,
+				0D154292232DC1B40004AE55 /* EditorMenuFormationUtilities.hpp */,
 			);
 			path = "[Formation Menus]";
 			sourceTree = "<group>";
@@ -1010,22 +1010,22 @@
 		0D1542A3232DC1B40004AE55 /* [Home Menus] */ = {
 			isa = PBXGroup;
 			children = (
-				0D1542A4232DC1B40004AE55 /* EditorMenuAttachment.hpp */,
-				0D1542A5232DC1B40004AE55 /* EditorMenuSpawnPicker.cpp */,
-				0D1542A6232DC1B40004AE55 /* EditorMenuMotion.cpp */,
-				0D1542A7232DC1B40004AE55 /* EditorMenuObjectClearing.cpp */,
-				0D1542A8232DC1B40004AE55 /* EditorMenuWavesPicker.cpp */,
-				0D1542A9232DC1B40004AE55 /* EditorMenuSpawn.cpp */,
-				0D1542AA232DC1B40004AE55 /* EditorMenuSections.cpp */,
-				0D1542AB232DC1B40004AE55 /* EditorMenuMotionTypePanel.hpp */,
-				0D1542AC232DC1B40004AE55 /* EditorMenuObjectClearing.hpp */,
-				0D1542AD232DC1B40004AE55 /* EditorMenuWavesPicker.hpp */,
-				0D1542AE232DC1B40004AE55 /* EditorMenuSpawn.hpp */,
-				0D1542AF232DC1B40004AE55 /* EditorMenuSections.hpp */,
-				0D1542B0232DC1B40004AE55 /* EditorMenuMotionTypePanel.cpp */,
 				0D1542B1232DC1B40004AE55 /* EditorMenuAttachment.cpp */,
+				0D1542A4232DC1B40004AE55 /* EditorMenuAttachment.hpp */,
+				0D1542A6232DC1B40004AE55 /* EditorMenuMotion.cpp */,
 				0D1542B2232DC1B40004AE55 /* EditorMenuMotion.hpp */,
+				0D1542B0232DC1B40004AE55 /* EditorMenuMotionTypePanel.cpp */,
+				0D1542AB232DC1B40004AE55 /* EditorMenuMotionTypePanel.hpp */,
+				0D1542A7232DC1B40004AE55 /* EditorMenuObjectClearing.cpp */,
+				0D1542AC232DC1B40004AE55 /* EditorMenuObjectClearing.hpp */,
+				0D1542AA232DC1B40004AE55 /* EditorMenuSections.cpp */,
+				0D1542AF232DC1B40004AE55 /* EditorMenuSections.hpp */,
+				0D1542A9232DC1B40004AE55 /* EditorMenuSpawn.cpp */,
+				0D1542AE232DC1B40004AE55 /* EditorMenuSpawn.hpp */,
+				0D1542A5232DC1B40004AE55 /* EditorMenuSpawnPicker.cpp */,
 				0D1542B3232DC1B40004AE55 /* EditorMenuSpawnPicker.hpp */,
+				0D1542A8232DC1B40004AE55 /* EditorMenuWavesPicker.cpp */,
+				0D1542AD232DC1B40004AE55 /* EditorMenuWavesPicker.hpp */,
 			);
 			path = "[Home Menus]";
 			sourceTree = "<group>";

@@ -67,7 +67,7 @@ void GamePathEditor::Init() {
     
     mMenuGrid = new EditorMenuFormationGrid(&mGrid);
     AddChild(mMenuGrid);
-    mMenuGrid->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f + 60.0f), gSafeAreaInsetTop + 20.0f + 200.0f, 400.0f, 736.0f - 200.0f);
+    mMenuGrid->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f + 60.0f), gSafeAreaInsetTop + 20.0f + 200.0f, 400.0f, 736.0f - 100.0f);
     
 }
 

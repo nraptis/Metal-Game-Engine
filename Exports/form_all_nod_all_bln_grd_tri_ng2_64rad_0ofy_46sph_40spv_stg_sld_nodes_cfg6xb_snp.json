@@ -1,0 +1,39 @@
+{
+	"node_list": [
+		{
+			"x": 0.081093,
+			"y": -9.473679
+		},
+		{
+			"x": -6.644051,
+			"y": -2.456135
+		},
+		{
+			"x": 6.806244,
+			"y": -2.456135
+		},
+		{
+			"x": -13.369198,
+			"y": 4.561405
+		},
+		{
+			"x": 0.081093,
+			"y": 4.561405
+		},
+		{
+			"x": 13.531387,
+			"y": 4.561405
+		}
+	],
+	"grid": {
+		"grid_type": 5,
+		"ngon2_sides": 3,
+		"ngon2_radius": 64,
+		"ngon2_offset_y": 0,
+		"ngon2_spacing_v": 40,
+		"ngon2_spacing_h": 46,
+		"ngon2_start_rotation": 0,
+		"ngon2_stagger": true,
+		"ngon2_stagger_odd": false
+	}
+}

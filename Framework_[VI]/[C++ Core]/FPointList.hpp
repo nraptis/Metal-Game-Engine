@@ -28,13 +28,10 @@ public:
     void                    Reset() { mCount = 0; }
     void                    RemoveAll() { mCount = 0; }
     
-    
-    
     void                    Add(FPointList *pList);
     void                    Add(float pX, float pY);
     void                    Set(int pIndex, float pX, float pY);
     int                     Remove(int pIndex);
-    
     
     float                   GetX(int pIndex);
     float                   GetY(int pIndex);
@@ -48,8 +45,10 @@ public:
 	void					FlipH();
 	void					FlipV();
 
-    void                    AddValues(int pCount, float pX1, float pY1, float pX2=0.0f, float pY2=0.0f, float pX3=0.0f, float pY3=0.0f, float pX4=0.0f, float pY4=0.0f, float pX5=0.0f, float pY5=0.0f, float pX6=0.0f, float pY6=0.0f, float pX7=0.0f, float pY7=0.0f, float pX8=0.0f, float pY8=0.0f);
-    void                    AddValuesReset(int pCount, float pX1, float pY1, float pX2=0.0f, float pY2=0.0f, float pX3=0.0f, float pY3=0.0f, float pX4=0.0f, float pY4=0.0f, float pX5=0.0f, float pY5=0.0f, float pX6=0.0f, float pY6=0.0f, float pX7=0.0f, float pY7=0.0f, float pX8=0.0f, float pY8=0.0f);
+    //void                    (int pCount, float pX1, float pY1, float pX2=0.0f, float pY2=0.0f, float pX3=0.0f, float pY3=0.0f, float pX4=0.0f, float pY4=0.0f, float pX5=0.0f, float pY5=0.0f, float pX6=0.0f, float pY6=0.0f, float pX7=0.0f, float pY7=0.0f, float pX8=0.0f, float pY8=0.0f);
+    //void                    AddValuesReset(int pCount, float pX1, float pY1, float pX2=0.0f, float pY2=0.0f, float pX3=0.0f, float pY3=0.0f, float pX4=0.0f, float pY4=0.0f, float pX5=0.0f, float pY5=0.0f, float pX6=0.0f, float pY6=0.0f, float pX7=0.0f, float pY7=0.0f, float pX8=0.0f, float pY8=0.0f);
+    
+    
     void                    AddEdge(float pX1, float pY1, float pX2, float pY2);
     
     
@@ -68,23 +67,15 @@ public:
     float                   LoopAngleBetween(int pIndex);
     float                   LoopAngleBetweenInside(int pIndex);
     
-    
-    
-    
     void                    ValueAdd(float pAddX, float pAddY);
     void                    ValueMultiply(float pFactorX, float pFactorY);
     void                    ValueDivide(float pFactorX, float pFactorY);
-    
-    
     
     inline void             ValueAdd(float pAdd){ValueAdd(pAdd, pAdd);}
     inline void             ValueMultiply(float pFactor){ValueMultiply(pFactor, pFactor);}
     inline void             ValueDivide(float pFactor){ValueDivide(pFactor, pFactor);}
     
-
-
-	void					DrawTriangleList(GFX_MODEL_INDEX_TYPE *pIndex, int pCount);
-
+    void					DrawTriangleList(GFX_MODEL_INDEX_TYPE *pIndex, int pCount);
 
     void                    DrawPoints(float pSize = 5.0f);
     void                    OutlinePoints(float pSize = 8.0f, float pBorderWidth = 1.0f);
@@ -162,17 +153,16 @@ public:
     void                    Load(FFile *pFile);
     
     
-    //void                    Load(float pX[], float pY[], int pCount);
-    //void                    Print
-    
-    //FString                 GetArrayStringX(int pValuesPerLine = 6, int pTabs = 2);
-    //FString                 GetArrayStringY(int pValuesPerLine = 6, int pTabs = 2);
-    //FString                 GetArrayString(float *pArray, int pValuesPerLine = 6, int pTabs = 2);
+    float                   GetMinX();
+    float                   GetMaxX();
+    float                   GetMinY();
+    float                   GetMaxY();
     
     
-    int                     GetPrintLineCount();
-    FString                 GetPrintLine(int pLineNumber);
-    FString                 GetPrintString(const char *pVariableName);
+    float                   GetCenterX();
+    float                   GetCenterY();
+    
+    
 };
 
 #endif /* defined(___015_Fleet_XP__FFloatList__) */

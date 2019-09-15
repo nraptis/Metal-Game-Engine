@@ -49,7 +49,7 @@ void FPointList::Add(FPointList *pList) {
 
 
 
-
+/*
 void FPointList::AddValues(int pCount, float pX1, float pY1, float pX2, float pY2, float pX3, float pY3, float pX4, float pY4, float pX5, float pY5, float pX6, float pY6, float pX7, float pY7, float pX8, float pY8)
 {
     if(pCount >= 8)
@@ -70,39 +70,29 @@ void FPointList::AddValuesReset(int pCount, float pX1, float pY1, float pX2, flo
     mCount = 0;
     AddValues(pCount, pX1, pY1, pX2, pY2, pX3, pY3, pX4, pY4, pX5, pY5, pX6, pY6, pX7, pY7, pX8, pY8);
 }
+*/
 
-
-void FPointList::AddEdge(float pX1, float pY1, float pX2, float pY2)
-{
-    if(mCount == 0)
-    {
+void FPointList::AddEdge(float pX1, float pY1, float pX2, float pY2) {
+    if (mCount == 0) {
         Add(pX1, pY1);
         Add(pX2, pY2);
-    }
-    else
-    {
+    } else {
         float aFirstX = mX[0];
         float aFirstY = mY[0];
-        
         
         float aLastX = mX[mCount - 1];
         float aLastY = mY[mCount - 1];
         
-        //float aDi
-        
         float aD1_1 = DistanceSquared(pX1, pY1, aLastX, aLastY);
         float aD1_2 = DistanceSquared(pX1, pY1, aFirstX, aFirstY);
-        
         float aD2_1 = DistanceSquared(pX2, pY2, aLastX, aLastY);
         float aD2_2 = DistanceSquared(pX2, pY2, aFirstX, aFirstY);
         
-        if((aD1_1 >= 1.0f) && (aD1_2 >= 1.0f))
-        {
+        if ((aD1_1 >= 1.0f) && (aD1_2 >= 1.0f)) {
             Add(pX1, pY1);
         }
         
-        if((aD2_1 >= 1.0f) && (aD2_2 >= 1.0f))
-        {
+        if ((aD2_1 >= 1.0f) && (aD2_2 >= 1.0f)) {
             Add(pX2, pY2);
         }
     }
@@ -1058,143 +1048,80 @@ float FPointList::GetY(int pIndex) {
     return ((pIndex >= 0) && (pIndex < mCount)) ? mY[pIndex] : 0.0f;
 }
 
-
-int FPointList::GetPrintLineCount() {
-    int aLineCount = 0;
+float FPointList::GetMinX() {
+    float aResult = 0.0f;
+    
     if (mCount > 0) {
-    int aIndex = 0;
-    bool aDone = false;
-    while(aDone == false)
-    {
-        aLineCount++;
-        aIndex += 8;
-        if(aIndex >= mCount)aDone = true;
-    }
-    }
-    return aLineCount;
-}
-
-
-FString FPointList::GetPrintLine(int pLineNumber)
-{
-    FString aResult = "AddValues(";
-    
-    if(pLineNumber == 0)aResult = "AddValuesReset(";
-    
-    
-    int aStartIndex = pLineNumber * 8;
-    int aEndIndex = (aStartIndex + 8);
-    
-    bool aFinish = false;
-    
-    if(aEndIndex >= mCount)
-    {
-        aFinish = true;
-        aEndIndex = mCount;
-    }
-    
-    int aLineCount = (aEndIndex - aStartIndex);
-    if(aLineCount <= 0)aLineCount = 0;
-    
-    FString aLineCountString = FString(aLineCount);
-    if(aLineCountString.mLength <= 1)aLineCountString += " ";
-    
-    aResult += aLineCountString;
-    aResult += ", ";
-    
-    while(aLineCount > 0)
-    {
-        float aX = GetX(aStartIndex);
-        float aY = GetY(aStartIndex);
-        
-        int aDeci = 4;
-        
-        FString aStringX = FString(aX, aDeci);
-        FString aStringY = FString(aY, aDeci);
-        
-        if(aStringX.Contains('.'))
-        {
-            aStringX += "f";
-            aStringX.Replace("00f", "0f");
-            aStringX.Replace("001f", "0f");
-            aStringX.Replace("00f", "0f");
-            aStringX.Replace("001f", "0f");
-            aStringX.Replace("00f", "0f");
-            aStringX.Replace("001f", "0f");
-            aStringX.Replace("00f", "0f");
-            aStringX.Replace("001f", "0f");
-        }
-        
-        if(aStringY.Contains('.'))
-        {
-            aStringY += "f";
-            aStringY.Replace("00f", "0f");
-            aStringY.Replace("001f", "0f");
-            aStringY.Replace("00f", "0f");
-            aStringY.Replace("001f", "0f");
-            aStringY.Replace("00f", "0f");
-            aStringY.Replace("001f", "0f");
-            aStringY.Replace("00f", "0f");
-            aStringY.Replace("001f", "0f");
-        }
-        
-        aResult += aStringX;
-        aResult += FString(", ");
-        aResult += aStringY;
-        
-        aStartIndex++;
-        aLineCount--;
-        
-        if(aLineCount > 0)
-        {
-            aResult += FString(", ");
-        }
-        else
-        {
-            aResult += FString(")");
+        aResult = mX[0];
+        for (int i=1;i<mCount;i++) {
+            if (mX[i] < aResult) {
+                aResult = mX[i];
+            }
         }
     }
-    
-    
-    //aEndIndex = mCount;
-    //aResult += ;
-    //aResult += ")";
-    
-
     return aResult;
 }
 
-FString FPointList::GetPrintString(const char *pVariableName)
-{
-    //FString aResult = FString("FPointList ") + FString(pVariableName) + FString(";\n");
+float FPointList::GetMaxX() {
+    float aResult = 0.0f;
     
-    FString aResult = "";
-    
-    int aLineCount = GetPrintLineCount();
-    for(int i=0;i<aLineCount;i++)
-    {
-        FString aLine = GetPrintLine(i);
-        aLine = FString(FString(pVariableName) + FString(".") + FString(aLine.c()) + FString(";\n")).c();
-        aResult += aLine;
+    if (mCount > 0) {
+        aResult = mX[0];
+        for (int i=1;i<mCount;i++) {
+            if (mX[i] > aResult) {
+                aResult = mX[i];
+            }
+        }
     }
-    
     return aResult;
 }
 
+float FPointList::GetMinY() {
+    float aResult = 0.0f;
+    if (mCount > 0) {
+        aResult = mY[0];
+        for (int i=1;i<mCount;i++) {
+            if (mY[i] < aResult) {
+                aResult = mY[i];
+            }
+        }
+    }
+    return aResult;
+}
 
+float FPointList::GetMaxY() {
+    float aResult = 0.0f;
+    if (mCount > 0) {
+        aResult = mY[0];
+        for (int i=1;i<mCount;i++) {
+            if (mY[i] > aResult) {
+                aResult = mY[i];
+            }
+        }
+    }
+    return aResult;
+}
 
+float FPointList::GetCenterX() {
+    float aResult = 0.0f;
+    if (mCount > 0) {
+        aResult = 0.0f;
+        for (int i=0;i<mCount;i++) {
+            aResult += mX[i];
+        }
+        aResult /= ((float)mCount);
+    }
+    return aResult;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+float FPointList::GetCenterY() {
+    float aResult = 0.0f;
+    if (mCount > 0) {
+        aResult = 0.0f;
+        for (int i=0;i<mCount;i++) {
+            aResult += mY[i];
+        }
+        aResult /= ((float)mCount);
+    }
+    return aResult;
+}

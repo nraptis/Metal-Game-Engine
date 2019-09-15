@@ -33,6 +33,10 @@ public:
     ToolMenuSectionRow                      *mRowGrid1;
     UICheckBox                              *mCheckBoxGridEnabled;
     UICheckBox                              *mCheckBoxGridDisplay;
+    UIStepper                               *mStepperGridOffsetX;
+    UIStepper                               *mStepperGridOffsetY;
+    
+    
     
     UIStepper                               *mStepperRectGridWidth;
     UIStepper                               *mStepperRectGridHeight;
@@ -61,6 +65,20 @@ public:
     UIStepper                               *mStepperNGON1PointSpacing;
     UIStepper                               *mStepperNGON1StartRotation;
     
+    
+    
+    
+    ToolMenuPanel                           *mPanelNGON2Grid;
+    UIStepper                               *mStepperNGON2Sides;
+    UIStepper                               *mStepperNGON2Radius;
+    ToolMenuSectionRow                      *mRowNGON21;
+    UICheckBox                              *mCheckBoxNGON2Stagger;
+    UICheckBox                              *mCheckBoxNGON2StaggerOdd;
+    
+    UIStepper                               *mStepperNGON2ScanLineOffsetY;
+    UIStepper                               *mStepperNGON2ScanLineSpacingH;
+    UIStepper                               *mStepperNGON2ScanLineSpacingV;
+    UIStepper                               *mStepperNGON2StartRotation;
     
     
     

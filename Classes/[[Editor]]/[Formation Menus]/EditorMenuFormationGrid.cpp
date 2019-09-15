@@ -36,6 +36,20 @@ EditorMenuFormationGrid::EditorMenuFormationGrid(GameEditorGrid *pGrid) : ToolMe
     //mCheckBoxGridDisplay->SetTarget(&mGrid->mMarkersDisplay);
     mRowGrid1->AddCheckBox(mCheckBoxGridDisplay);
     
+    
+    mStepperGridOffsetX = new UIStepper();
+    mStepperGridOffsetX->SetText("Offset X:");
+    mStepperGridOffsetX->SetTarget(&mGrid->mOffsetX);
+    mPanelGrid->AddSection(mStepperGridOffsetX);
+    
+    mStepperGridOffsetY = new UIStepper();
+    mStepperGridOffsetY->SetText("Offset Y:");
+    mStepperGridOffsetY->SetTarget(&mGrid->mOffsetY);
+    mPanelGrid->AddSection(mStepperGridOffsetY);
+    
+    
+    
+    
     mSegmentGridType = new UISegment();
     mSegmentGridType->SetSegmentCount(6);
     mSegmentGridType->SetTitles("RECT", "CIRC", "STAR", "TRI", "NGON1", "NGON2");
@@ -157,6 +171,65 @@ EditorMenuFormationGrid::EditorMenuFormationGrid(GameEditorGrid *pGrid) : ToolMe
     
     
     
+    
+    
+    
+    
+    
+    mPanelNGON2Grid = new ToolMenuPanel();
+    mPanelNGON2Grid->SetTitle("NGON-2");
+    mPanelGrid->AddSection(mPanelNGON2Grid);
+    
+    
+    mStepperNGON2Sides = new UIStepper();
+    mStepperNGON2Sides->SetText("Sides:");
+    mStepperNGON2Sides->SetTarget(&mGrid->mGridNGON2Sides);
+    mPanelNGON2Grid->AddSection(mStepperNGON2Sides);
+    
+    mStepperNGON2Radius = new UIStepper();
+    mStepperNGON2Radius->SetText("Radius:");
+    mStepperNGON2Radius->SetTarget(&mGrid->mGridNGON2Radius);
+    mPanelNGON2Grid->AddSection(mStepperNGON2Radius);
+    
+    mRowNGON21 = new ToolMenuSectionRow();
+    mPanelNGON2Grid->AddSection(mRowNGON21);
+    
+    mCheckBoxNGON2Stagger = new UICheckBox();
+    mCheckBoxNGON2Stagger->SetText("Stagger");
+    mCheckBoxNGON2Stagger->SetTarget(&mGrid->mGridNGON2ScanLineStagger);
+    mRowNGON21->AddCheckBox(mCheckBoxNGON2Stagger);
+    
+    
+    mCheckBoxNGON2StaggerOdd = new UICheckBox();
+    mCheckBoxNGON2StaggerOdd->SetText("Odd");
+    mCheckBoxNGON2StaggerOdd->SetTarget(&mGrid->mGridNGON2ScanLineStaggerOdd);
+    mRowNGON21->AddCheckBox(mCheckBoxNGON2StaggerOdd);
+    
+    
+    
+    mStepperNGON2ScanLineOffsetY = new UIStepper();
+    mStepperNGON2ScanLineOffsetY->SetText("Scan-Off-Y:");
+    mStepperNGON2ScanLineOffsetY->SetTarget(&mGrid->mGridNGON2ScanLineOffsetY);
+    mPanelNGON2Grid->AddSection(mStepperNGON2ScanLineOffsetY);
+    
+    
+    mStepperNGON2ScanLineSpacingH = new UIStepper();
+    mStepperNGON2ScanLineSpacingH->SetText("SPC-V:");
+    mStepperNGON2ScanLineSpacingH->SetTarget(&mGrid->mGridNGON2ScanLineSpacingV);
+    mPanelNGON2Grid->AddSection(mStepperNGON2ScanLineSpacingH);
+    
+    mStepperNGON2ScanLineSpacingV = new UIStepper();
+    mStepperNGON2ScanLineSpacingV->SetText("SPC-H:");
+    mStepperNGON2ScanLineSpacingV->SetTarget(&mGrid->mGridNGON2ScanLineSpacingH);
+    mPanelNGON2Grid->AddSection(mStepperNGON2ScanLineSpacingV);
+    
+    mStepperNGON2StartRotation = new UIStepper();
+    mStepperNGON2StartRotation->SetText("Rot-Off:");
+    mStepperNGON2StartRotation->SetTarget(&mGrid->mGridNGON2StartRotation);
+    mPanelNGON2Grid->AddSection(mStepperNGON2StartRotation);
+    
+    
+    
     DeactivateCloseButton();
     RefreshGridPanels();
 }
@@ -194,6 +267,11 @@ void EditorMenuFormationGrid::Notify(void *pSender, const char *pNotification) {
     if (mGrid == NULL) { return; }
     
     if (pSender == mSegmentGridType) { RefreshGridPanels();mGrid->BuildGrid(); }
+    if (pSender == mStepperGridOffsetX) { RefreshGridPanels();mGrid->BuildGrid(); }
+    if (pSender == mStepperGridOffsetY) { RefreshGridPanels();mGrid->BuildGrid(); }
+    
+    
+    
     
     if (pSender == mStepperRectGridWidth) { mGrid->BuildGrid(); }
     if (pSender == mStepperRectGridHeight) { mGrid->BuildGrid(); }
@@ -216,6 +294,18 @@ void EditorMenuFormationGrid::Notify(void *pSender, const char *pNotification) {
     if (pSender == mStepperNGON1RingSpacing) { mGrid->BuildGrid(); }
     if (pSender == mStepperNGON1PointSpacing) { mGrid->BuildGrid(); }
     if (pSender == mStepperNGON1StartRotation) { mGrid->BuildGrid(); }
+    
+    
+    
+    
+    if (pSender == mStepperNGON2Sides) { mGrid->BuildGrid(); }
+    if (pSender == mStepperNGON2Radius) { mGrid->BuildGrid(); }
+    if (pSender == mCheckBoxNGON2Stagger) { mGrid->BuildGrid(); }
+    if (pSender == mCheckBoxNGON2StaggerOdd) { mGrid->BuildGrid(); }
+    if (pSender == mStepperNGON2ScanLineOffsetY) { mGrid->BuildGrid(); }
+    if (pSender == mStepperNGON2ScanLineSpacingH) { mGrid->BuildGrid(); }
+    if (pSender == mStepperNGON2ScanLineSpacingV) { mGrid->BuildGrid(); }
+    if (pSender == mStepperNGON2StartRotation) { mGrid->BuildGrid(); }
     
 }
 
@@ -250,7 +340,7 @@ void EditorMenuFormationGrid::RefreshGridPanels() {
         }
     }
     
-    if (aGridType == SNAP_GRID_TYPE_TRIANGLE) {
+    if (aGridType == SNAP_GRID_TYPE_TRAPEZOID) {
         
     } else {
         
@@ -263,5 +353,17 @@ void EditorMenuFormationGrid::RefreshGridPanels() {
             mPanelNGON1Grid->Deactivate();
         }
     }
+    
+    if (mPanelNGON2Grid != NULL) {
+        if (aGridType == SNAP_GRID_TYPE_NGON2) {
+            mPanelNGON2Grid->Activate();
+        } else {
+            mPanelNGON2Grid->Deactivate();
+        }
+    }
+    
+    
+    
+    
     
 }

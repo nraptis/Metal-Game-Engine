@@ -77,7 +77,7 @@ GameFormationEditor::GameFormationEditor(GameEditor *pEditor) {
     
     mMenuGrid = new EditorMenuFormationGrid(&mGrid);
     AddChild(mMenuGrid);
-    mMenuGrid->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f + 60.0f), gSafeAreaInsetTop + 20.0f + 200.0f, 400.0f, 736.0f - 200.0f);
+    mMenuGrid->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f + 60.0f), gSafeAreaInsetTop + 20.0f + 200.0f, 400.0f, 736.0f - 100.0f);
     
     
     mMenuSpawn = new EditorMenuFormationSpawnPicker(this);
@@ -911,10 +911,16 @@ FString GameFormationEditor::GenerateGridName() {
         aChunkList.Add(new FString("rec"));
         FString aSizeString = FString(mGrid.mGridRectWidth) + "x" + FString(mGrid.mGridRectHeight);
         aChunkList.Add(new FString(aSizeString.c()));
-        FString aSpacingString1 = FString(mGrid.mGridRectSpacingH) + "sph";
-        aChunkList.Add(new FString(aSpacingString1.c()));
-        FString aSpacingString2 = FString(mGrid.mGridRectSpacingV) + "spv";
-        aChunkList.Add(new FString(aSpacingString2.c()));
+        
+        if (mGrid.mGridRectSpacingH != 0) {
+            FString aSpacingString1 = FString(mGrid.mGridRectSpacingH) + "sph";
+            aChunkList.Add(new FString(aSpacingString1.c()));
+        }
+        
+        if (mGrid.mGridRectSpacingV != 0) {
+            FString aSpacingString2 = FString(mGrid.mGridRectSpacingV) + "spv";
+            aChunkList.Add(new FString(aSpacingString2.c()));
+        }
     }
     
     if (mGrid.mGridType == SNAP_GRID_TYPE_CIRCLE) {
@@ -961,8 +967,6 @@ FString GameFormationEditor::GenerateGridName() {
         if (mGrid.mGridNGON1Sides == 10) { aChunkList.Add(new FString("dec")); }
         
         aChunkList.Add(new FString("ng1"));
-        FString aSidesString = FString(mGrid.mGridNGON1Sides) + "sid";
-        aChunkList.Add(new FString(aSidesString.c()));
         FString aSpacingString = FString(mGrid.mGridNGON1RingSpacing) + "rsp";
         aChunkList.Add(new FString(aSpacingString.c()));
         FString aCountString = FString(mGrid.mGridNGON1RingCount) + "rct";
@@ -971,6 +975,47 @@ FString GameFormationEditor::GenerateGridName() {
         aChunkList.Add(new FString(aPointSpacingString.c()));
         if (mGrid.mGridNGON1StartRotation != 0) {
             FString aStartRotationString = FString(mGrid.mGridNGON1StartRotation) + "ros";
+            aChunkList.Add(new FString(aStartRotationString.c()));
+        }
+    }
+    
+    if (mGrid.mGridType == SNAP_GRID_TYPE_NGON2) {
+        
+        if (mGrid.mGridNGON2Sides == 3) { aChunkList.Add(new FString("tri")); }
+        if (mGrid.mGridNGON2Sides == 4) { aChunkList.Add(new FString("qud")); }
+        if (mGrid.mGridNGON2Sides == 5) { aChunkList.Add(new FString("pen")); }
+        if (mGrid.mGridNGON2Sides == 6) { aChunkList.Add(new FString("hex")); }
+        if (mGrid.mGridNGON2Sides == 7) { aChunkList.Add(new FString("hep")); }
+        if (mGrid.mGridNGON2Sides == 8) { aChunkList.Add(new FString("oct")); }
+        if (mGrid.mGridNGON2Sides == 9) { aChunkList.Add(new FString("non")); }
+        if (mGrid.mGridNGON2Sides == 10) { aChunkList.Add(new FString("dec")); }
+        
+        aChunkList.Add(new FString("ng2"));
+        
+        FString aRadiusString = FString(mGrid.mGridNGON2Radius) + "rad";
+        aChunkList.Add(new FString(aRadiusString.c()));
+        
+        if (mGrid.mGridNGON2ScanLineOffsetY != 0) {
+            FString aOffsetString = FString(mGrid.mGridNGON2ScanLineOffsetY) + "ofy";
+            aChunkList.Add(new FString(aOffsetString.c()));
+        }
+        
+        FString aSpacingHString = FString(mGrid.mGridNGON2ScanLineSpacingH) + "sph";
+        aChunkList.Add(new FString(aSpacingHString.c()));
+        
+        FString aSpacingVString = FString(mGrid.mGridNGON2ScanLineSpacingV) + "spv";
+        aChunkList.Add(new FString(aSpacingVString.c()));
+        
+        if (mGrid.mGridNGON2ScanLineStagger != false) {
+            FString aStaggerString = FString("stg");
+            if (mGrid.mGridNGON2ScanLineStaggerOdd != false) {
+                aStaggerString.Append("odd");
+            }
+            aChunkList.Add(new FString(aStaggerString.c()));
+        }
+        
+        if (mGrid.mGridNGON2StartRotation != 0) {
+            FString aStartRotationString = FString(mGrid.mGridNGON2StartRotation) + "ros";
             aChunkList.Add(new FString(aStartRotationString.c()));
         }
     }
