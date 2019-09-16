@@ -42,8 +42,10 @@ public:
 	void							Free();
 	void							Clear();
 
-	void						    Truncate(int pSize);
-
+    void                            Truncate(int pSize);
+    
+    void                            RemoveBeforeIndex(int pIndex);
+    
 
 	
 

@@ -772,10 +772,22 @@ bool FormationCollection::Load(const char *pName) {
     return false;
 }
 
+FString cFormationLoadString;
 LevelFormation *FormationCollection::Get(const char *pName) {
-    LevelFormation *aFormation = (LevelFormation *)mMap.Get(pName);
+    
+    cFormationLoadString.Reset();
+    cFormationLoadString.Append(pName);
+    cFormationLoadString.RemoveExtension();
+    cFormationLoadString.RemovePath();
+    
+    LevelFormation *aFormation = (LevelFormation *)mMap.Get(cFormationLoadString.c());
+    
+    printf("Getting Formation: %s\n", cFormationLoadString.c());
+    
     if (aFormation != NULL) {
         return aFormation->Clone();
+    } else {
+        
     }
     return NULL;
 }

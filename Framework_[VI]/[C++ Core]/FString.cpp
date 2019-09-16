@@ -335,12 +335,34 @@ void FString::Set(FString &pString) {
 
 void FString::Truncate(int pSize) {
 	if (pSize <= 0) {
-		Clear();
+        Reset();
 	} else if (pSize < mLength) {
 		mLength = pSize;
         mData[mLength] = 0;
 	}
 }
+
+void FString::RemoveBeforeIndex(int pIndex) {
+    
+    if (pIndex <= 0) {
+        
+    } else if (pIndex >= mLength) {
+        Reset();
+        return;
+    } else {
+        
+        for (int i=pIndex;i<mLength;i++) {
+            mData[i - pIndex] = mData[i];
+        }
+        int aNewLen = mLength - pIndex;
+        mData[aNewLen] = 0;
+        mLength = aNewLen;
+    }
+    
+    
+    
+}
+
 
 char *FString::GetCharArray() {
     int aLength = mLength;
@@ -560,24 +582,23 @@ FString FString::ChopExtension()
 }
 
 void FString::RemovePath() {
-    int aIndex = GetPathIndex();
-    if((aIndex >= 0) && (aIndex < mLength)) {
-        *this = GetSubString(aIndex, (mLength - aIndex));
-    }
+    RemoveBeforeIndex(GetPathIndex());
 }
 
-void FString::RemoveExtension()
-{
+void FString::RemoveExtension() {
     int aIndex = GetExtensionIndex();
-    
     if ((aIndex >= 0) && (aIndex < mLength)) {
 		Delete(aIndex);
-        //Truncate(aIndex);
     }
 }
 
 void FString::RemovePathAndExtension()
 {
+    
+    RemovePath();
+    RemoveExtension();
+    
+    /*
     int aExtensionIndex = GetExtensionIndex() - 1;
     int aPathIndex = GetPathIndex();
     
@@ -596,14 +617,11 @@ void FString::RemovePathAndExtension()
     {
         *this = GetSubString(aPathIndex, (mLength - aPathIndex));
     }
-    
+    */
 }
 
-void FString::RemoveLastNumber()
-{
-    
-    if(mLength > 0)
-    {
+void FString::RemoveLastNumber() {
+    if (mLength > 0) {
         int aNumberIndex = mLength - 1;
         
         while(aNumberIndex >= 0)
@@ -638,12 +656,9 @@ int FString::GetExtensionIndex() {
     return aResult;
 }
 
-int FString::GetPathIndex()
-{
+int FString::GetPathIndex() {
     int aResult = -1;
-    
-    for(int aIndex=mLength-1;((aIndex>=0) && (aResult == -1));aIndex--)
-    {
+    for (int aIndex = mLength-1;((aIndex>=0) && (aResult == -1));aIndex--) {
         if(mData[aIndex] == '/')aResult = aIndex;
         if(mData[aIndex] == '\\')aResult = aIndex;
     }
