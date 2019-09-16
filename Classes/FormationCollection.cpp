@@ -778,7 +778,7 @@ LevelFormation *FormationCollection::Get(const char *pName) {
     cFormationLoadString.Reset();
     cFormationLoadString.Append(pName);
     cFormationLoadString.RemoveExtension();
-    cFormationLoadString.RemovePath();
+    //cFormationLoadString.RemovePath();
     
     LevelFormation *aFormation = (LevelFormation *)mMap.Get(cFormationLoadString.c());
     
