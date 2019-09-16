@@ -518,7 +518,6 @@ int LevelPathBlueprint::GetExitType() {
     return WAVE_EXIT_TYPE_DISPERSE;
 }
 
-
 void LevelPathBlueprint::Build(LevelPath *pPath) {
     
     if (pPath == NULL) { return; }
@@ -579,7 +578,7 @@ void LevelPathBlueprint::Build(LevelPath *pPath) {
         }
     }
     
-    for (int aLoops = 0;aLoops<20;aLoops++) {
+    for (int aLoops = 0;aLoops<8;aLoops++) {
         for (int i=0;i<mNodeList.mCount;i++) {
             LevelPathNodeBlueprint *aNode = (LevelPathNodeBlueprint *)mNodeList.mData[i];
             if (aNode->mConstraint.mTypeX == X_CONSTRAINT_TARGET) {

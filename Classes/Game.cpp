@@ -1574,8 +1574,11 @@ void Game::Load() {
     //aLevel.SetKillTimer(500);
     //aLevel.SetAliveTimer(444);
     
-    aLevel.AddSection("section_start");
+    aLevel.AddSection("section_learning_start");
+    aLevel.AddSection("section_learning_3_groups_lineshot_all_balloons.json");
     
+    //section_learning_start
+    //
     
     
     //aLevel.AddSection("test_section_all_bricks_2_perms");

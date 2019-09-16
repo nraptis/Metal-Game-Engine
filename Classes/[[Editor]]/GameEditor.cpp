@@ -314,6 +314,12 @@ void GameEditor::Draw() {
     Graphics::SetColor();
     if (mEditorWave.mPath.mNodeList.mCount > 0) {
         mEditorWave.mPath.Draw();
+    } else {
+        
+        LevelWave *aWave = ((LevelWave *)mEditorSection.mWaveList.Fetch(WaveIndex()));
+        if (aWave != NULL) {
+            aWave->mPath.Draw();
+        }
     }
     mEditorWave.Draw();
     
@@ -328,14 +334,14 @@ void GameEditor::Draw() {
     Graphics::PipelineStateSetShape2DAlphaBlending();
     
     if (aIsOnMainTools || aIsOnPathTools || aIsOnPermTools) {
-        Graphics::SetColor(0.0125f, 0.0125f, 0.0125f, 0.65f);
+        Graphics::SetColor(0.0125f, 0.0125f, 0.0125f, 0.40f);
         Graphics::DrawRect(0.0f, 0.0f, mGameAreaLeft, gDeviceHeight);
         Graphics::DrawRect(mGameAreaLeft, 0.0f, mGameAreaRight - mGameAreaLeft, mGameAreaTop);
         Graphics::DrawRect(mGameAreaLeft, mGameAreaBottom, mGameAreaRight - mGameAreaLeft, gDeviceHeight - mGameAreaBottom);
         Graphics::DrawRect(mGameAreaLeft + (mGameAreaRight - mGameAreaLeft), 0.0f, gDeviceWidth - (mGameAreaLeft + (mGameAreaRight - mGameAreaLeft)), gDeviceHeight);
         
-        float aMarkerMult = 1.0f;
-        float aMarkerOpacity = 0.65f;
+        float aMarkerMult = 0.6f;
+        float aMarkerOpacity = 0.35f;
         
         Graphics::SetColor(0.125f * aMarkerMult, 1.0f * aMarkerMult, 0.056f * aMarkerMult, aMarkerOpacity);
         Graphics::DrawLine(mSpawnZoneLeft, mSpawnZoneTop, mSpawnZoneRight, mSpawnZoneTop);
@@ -500,6 +506,15 @@ void GameEditor::KeyDown(int pKey) {
         if (aShift == false && aCtrl == true && aAlt == false) {
             WaveAdd();
         }
+    }
+    
+    if (pKey == __KEY__O) {
+        LevelWaveSpawnBlueprint *aSpawn = SpawnGet();
+            Log("Formation Selected for WAVE SPAWN [%llx]\n", aSpawn);
+            if (aSpawn != NULL) {
+                PickFormationForSpawnNode();
+            }
+        
     }
     
     if (pKey == __KEY__DELETE) {
