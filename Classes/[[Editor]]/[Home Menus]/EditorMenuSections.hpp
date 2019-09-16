@@ -60,6 +60,16 @@ public:
     UIButton                                *mButtonMoveWaveUp;
     UIButton                                *mButtonMoveWaveDown;
     
+    
+    ToolMenuSectionRow                      *mRowWave3;
+    UIButton                                *mButtonCopyWave;
+    UIButton                                *mButtonPasteWaveEOL;
+    UIButton                                *mButtonPasteWaveINS;
+    UIButton                                *mButtonFlipWaveH;
+    
+    
+    
+    
     ToolMenuPanel                           *mPlaybackPanel;
     ToolMenuSectionRow                      *mRowPlayback1;
     UICheckBox                              *mCheckBoxPlaybackEnabled;

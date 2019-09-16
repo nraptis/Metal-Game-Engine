@@ -98,6 +98,22 @@ void LevelSectionBlueprint::WaveAdd() {
     }
 }
 
+void LevelSectionBlueprint::WaveInsert() {
+    
+    int aIndex = mWaveList.Find(mCurrentWave);
+    if (aIndex == -1) {
+        aIndex = mWaveList.mCount;
+    } else {
+        aIndex += 1;
+    }
+    
+    mCurrentWave = new LevelWaveBlueprint();
+    mWaveList.Insert(mCurrentWave, aIndex);
+    if (mCurrentWave != NULL) {
+        mCurrentWave->Build();
+    }
+}
+
 void LevelSectionBlueprint::WaveRemove() {
     if (mCurrentWave != NULL) {
         mWaveList.Remove(mCurrentWave);

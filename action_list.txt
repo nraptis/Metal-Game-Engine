@@ -109,10 +109,12 @@ A24.) We need to start thinking about how you will earn 1, 2, or 3 stars per lev
 
 2.) Losing lives when balloons fly offscreen.
 
-3.) Mock model for "Bomb"
-
 4.) Logic for bomb collisions (Spherical).
 
+
+
+
+DONE.) Mock model for "Bomb"
 
 DONE.) We need a swirling BILLBOARD animation for the turtle's spinning propeller.
 

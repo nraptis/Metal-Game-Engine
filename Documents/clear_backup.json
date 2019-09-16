@@ -1,34 +1,4 @@
 {
 	"section": true,
-	"wave_list": [
-		{
-			"spawn_spacing": 90,
-			"max_spawn_size": 195,
-			"path": {
-				"node_list": [
-					{
-						"x_con": 200,
-						"y_con": 500
-					},
-					{
-						"x_con": 500,
-						"y_con": 500,
-						"decel": 200,
-						"accel": 100,
-						"wait": 800
-					},
-					{
-						"x_con": 500,
-						"y_con": 150
-					}
-				]
-			},
-			"spawn": [
-				{
-					"formation": "form_all_nod_mix_bln_brk_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfgrbbbrbbbr_snp",
-					"formation_config": {}
-				}
-			]
-		}
-	]
+	"wave_list": []
 }

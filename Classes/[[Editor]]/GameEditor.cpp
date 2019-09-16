@@ -613,6 +613,35 @@ void GameEditor::DisposeObjectFromLevelData(GameObject *pObject) {
     
 }
 
+bool GameEditor::XConstraintInvertAllowed(int pConstraint) {
+    
+    if (pConstraint == X_CONSTRAINT_LEFT_EXIT) { return true; }
+    if (pConstraint == X_CONSTRAINT_LEFT_SPAWN) { return true; }
+    if (pConstraint == X_CONSTRAINT_LEFT_PEEK) { return true; }
+    if (pConstraint == X_CONSTRAINT_LEFT_QUARTER) { return true; }
+    if (pConstraint == X_CONSTRAINT_CENTER) { return true; }
+    if (pConstraint == X_CONSTRAINT_RIGHT_QUARTER) { return true; }
+    if (pConstraint == X_CONSTRAINT_RIGHT_PEEK) { return true; }
+    if (pConstraint == X_CONSTRAINT_RIGHT_SPAWN) { return true; }
+    if (pConstraint == X_CONSTRAINT_RIGHT_EXIT) { return true; }
+    
+    return false;
+}
+
+int GameEditor::XConstraintInvert(int pConstraint) {
+    if (pConstraint == X_CONSTRAINT_LEFT_EXIT) { return X_CONSTRAINT_RIGHT_EXIT; }
+    if (pConstraint == X_CONSTRAINT_LEFT_SPAWN) { return X_CONSTRAINT_RIGHT_SPAWN; }
+    if (pConstraint == X_CONSTRAINT_LEFT_PEEK) { return X_CONSTRAINT_RIGHT_PEEK; }
+    if (pConstraint == X_CONSTRAINT_LEFT_QUARTER) { return X_CONSTRAINT_RIGHT_QUARTER; }
+    if (pConstraint == X_CONSTRAINT_CENTER) { return X_CONSTRAINT_CENTER; }
+    if (pConstraint == X_CONSTRAINT_RIGHT_QUARTER) { return X_CONSTRAINT_LEFT_QUARTER; }
+    if (pConstraint == X_CONSTRAINT_RIGHT_PEEK) { return X_CONSTRAINT_LEFT_PEEK; }
+    if (pConstraint == X_CONSTRAINT_RIGHT_SPAWN) { return X_CONSTRAINT_LEFT_SPAWN; }
+    if (pConstraint == X_CONSTRAINT_RIGHT_EXIT) { return X_CONSTRAINT_LEFT_EXIT; }
+    
+    return X_CONSTRAINT_NONE;
+}
+
 int GameEditor::ClosestXConstraint(float pX) {
     int aResult = X_CONSTRAINT_LEFT_EXIT;
     float aBestDist = fabsf(mExitZoneLeft - pX);
@@ -955,6 +984,14 @@ void GameEditor::WaveSelect(int pIndex) {
     }
 }
 
+void GameEditor::WaveFlipH() {
+    if (mSection.mCurrentWave != NULL) {
+        mSection.mCurrentWave->FlipH();
+        RefreshPlayback();
+    }
+    
+}
+
 int GameEditor::WaveCount(int pIndex) {
     return mSection.WaveCount(pIndex);
 }
@@ -1157,21 +1194,19 @@ void GameEditor::OpenFormationEditor(LevelFormation *pFormation) {
     mFormationEditor->mName = "{Form Editor}";
     AddChild(mFormationEditor);
     
-    LevelFormationBlueprint *aBBB = NULL;
+    LevelFormationBlueprint *aFormationBlueprint = NULL;
     if (pFormation != NULL) {
-        
-        aBBB = new LevelFormationBlueprint();
-        
+        aFormationBlueprint = new LevelFormationBlueprint();
         FJSON aJSON;
         aJSON.Load(pFormation->mID.c());
-        aBBB->Load(aJSON.mRoot, pFormation->mID);
-        if (aBBB->IsValid() == false) {
-            delete aBBB;
-            aBBB = NULL;
+        aFormationBlueprint->Load(aJSON.mRoot, pFormation->mID);
+        if (aFormationBlueprint->IsValid() == false) {
+            delete aFormationBlueprint;
+            aFormationBlueprint = NULL;
         }
     }
     
-    mFormationEditor->SetUp(aBBB);
+    mFormationEditor->SetUp(aFormationBlueprint);
     SetOverlay(mFormationEditor);
 }
 
@@ -1460,4 +1495,75 @@ void GameEditor::EditorRestartWave() {
 
 void GameEditor::EditorRestartSection() {
     
+}
+
+
+void GameEditor::CopyWave() {
+    LevelWaveBlueprint *aWave = mSection.mCurrentWave;
+    if (aWave == NULL) {
+        printf("Cannot CopyWave()\n");
+        return;
+    }
+    
+    FString aPath = gDirDocuments + FString("editor_pasteboard_wave.json");
+    FJSON aJSON;
+    aJSON.mRoot = aWave->Save();
+    aJSON.Save(aPath.c());
+}
+
+void GameEditor::CopyWaveSpawn() {
+    
+}
+
+void GameEditor::CopyPerm() {
+    
+}
+
+void GameEditor::CopyPermSpawn() {
+    
+}
+
+void GameEditor::CopyMotion() {
+    
+}
+
+
+void GameEditor::PasteWave(LevelWaveBlueprint *pWave) {
+    
+    if (pWave == NULL) {
+        printf("Cannot Post Wave... Wave Doesn't Exist..\n");
+        return;
+    }
+    
+    FString aPath = gDirDocuments + FString("editor_pasteboard_wave.json");
+    FJSON aJSON;
+    aJSON.Load(aPath);
+    pWave->Load(aJSON.mRoot);
+    RefreshPlayback();
+}
+
+void GameEditor::PasteWaveSpawn(LevelWaveSpawnBlueprint *pSpawn) {
+    
+}
+
+void GameEditor::PastePerm(LevelSectionPermBlueprint *pPerm) {
+    
+}
+
+void GameEditor::PastePermSpawn(LevelPermSpawnBlueprint *pSpawn) {
+    
+}
+
+void GameEditor::PasteMotion(LevelMotionControllerBlueprint *pMotion) {
+    
+}
+
+void GameEditor::PasteWaveAtEndOfList() {
+    mSection.WaveAdd();
+    PasteWave(mSection.mCurrentWave);
+}
+
+void GameEditor::PasteWaveAfterCurrentWave() {
+    mSection.WaveInsert();
+    PasteWave(mSection.mCurrentWave);
 }

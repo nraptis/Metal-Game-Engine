@@ -40,13 +40,15 @@ public:
     bool                                        mCreationRequiresScreenWavesClear;
     bool                                        mCreationRequiresScreenPermsClear;
     
-    
     int                                         mCreationDelay;
     
     void                                        ApplyEditorConstraints();
     
     void                                        FindLargestSpawnSize();
     int                                         mMaxSpawnSize;
+    
+    void                                        FlipH();
+    void                                        FlipV();
     
     //Note: BUILD should have NO TIE-IN TO EDITOR...
     //This HAS to work WITHOUT EDITOR for GAME......

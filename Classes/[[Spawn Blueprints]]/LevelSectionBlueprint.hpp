@@ -25,6 +25,7 @@ public:
     void                                        Draw();
     
     void                                        WaveAdd();
+    void                                        WaveInsert();
     void                                        WaveRemove();
     void                                        WaveSelectNext();
     void                                        WaveSelectPrev();

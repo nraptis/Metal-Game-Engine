@@ -59,7 +59,7 @@ public:
     ~LevelPathBlueprint();
     
     LevelWaveBlueprint                          *mWave;
-    LevelSectionPermBlueprint              *mPerm;
+    LevelSectionPermBlueprint                   *mPerm;
     
     void                                        Update();
     void                                        Reset();
@@ -98,6 +98,9 @@ public:
     
     int                                         mMaxSpawnSize;
     
+    
+    void                                        FlipH();
+    void                                        FlipV();
     
     //
     //

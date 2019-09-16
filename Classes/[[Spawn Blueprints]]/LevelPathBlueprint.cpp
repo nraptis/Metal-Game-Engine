@@ -219,11 +219,11 @@ void LevelPathBlueprint::Draw(bool pSelected) {
         
         
         if (pSelected) {
-            Graphics::SetColor(0.75f, 0.75f, 0.75f, 0.25f);
+            Graphics::SetColor(0.75f, 0.35f, 0.35f, 0.35f);
             Graphics::DrawLine(aX1, aY1, aX2, aY2, 1.5f);
             
         } else {
-            Graphics::SetColor(0.45f, 0.45f, 0.45f, 0.25f);
+            Graphics::SetColor(0.35f, 0.35f, 0.35f, 0.35f);
             Graphics::DrawLine(aX1, aY1, aX2, aY2, 1.0f);
         }
     }
@@ -662,6 +662,28 @@ void LevelPathBlueprint::Build(LevelPath *pPath) {
             pPath->AddMove(aNode->mGameX, aNode->mGameY, aNode->mAccelDistance, aNode->mDecelDistance, aNode->mWaitTimer);
         }
     }
+}
+
+void LevelPathBlueprint::FlipH() {
+    float aLeft = gEditor->mGameAreaLeft;
+    float aRight = gEditor->mGameAreaRight;
+    float aCenterX = (aLeft + aRight) / 2.0f;
+    for (int i=0;i<mNodeList.mCount;i++) {
+        LevelPathNodeBlueprint *aNode = (LevelPathNodeBlueprint *)mNodeList.mData[i];
+        if (gEditor->XConstraintInvertAllowed(aNode->mConstraint.mTypeX)) {
+            aNode->mConstraint.mTypeX = gEditor->XConstraintInvert(aNode->mConstraint.mTypeX);
+        } else {
+            if (aNode->mConstraint.mTypeX == X_CONSTRAINT_NONE) {
+                aNode->mEditorX = aCenterX + (aCenterX - aNode->mEditorX);
+            }
+        }
+        aNode->mConstraint.mOffsetX = -(aNode->mConstraint.mOffsetX);
+    }
+    RefreshNodePositions();
+    ApplyEditorConstraints();
+}
+
+void LevelPathBlueprint::FlipV() {
     
 }
 
@@ -681,7 +703,6 @@ FJSONNode *LevelPathBlueprint::Save() {
     if (mSpeedClass != SPEED_CLASS_MEDIUM) {
         aExport->AddDictionaryInt("speed_class", mSpeedClass);
     }
-    
     
     FJSONNode *aNodeListNode = new FJSONNode();
     aNodeListNode->mNodeType = JSON_NODE_TYPE_ARRAY;

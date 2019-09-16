@@ -70,6 +70,11 @@ public:
     void                                        SetOverlay(FCanvas *pCanvas);
     void                                        SelectClosestObject(float pX, float pY);
     
+    
+    bool                                        XConstraintInvertAllowed(int pConstraint);
+    int                                         XConstraintInvert(int pConstraint);
+    
+    
     int                                         ClosestXConstraint(float pX);
     int                                         ClosestYConstraint(float pY);
     
@@ -90,6 +95,7 @@ public:
     void                                        WaveDeselect();
     void                                        WaveMoveUp();
     void                                        WaveMoveDown();
+    void                                        WaveFlipH();
     void                                        WaveSelect(int pIndex);
     int                                         WaveCount(int pIndex);
     int                                         WaveIndex();
@@ -110,7 +116,6 @@ public:
     int                                         PermIndex();
     LevelSectionPermBlueprint                   *PermGet();
     LevelPermSpawnBlueprint                     *PermSpawnGet();
-    
     LevelFormationConfigurationBlueprint        *FormationConfigurationGet();
     
     void                                        PermDelete();
@@ -141,6 +146,10 @@ public:
     int                                         mPickFormationReason;
     
     
+    
+    
+    
+    
     void                                        OpenSpawnMenu();
     void                                        OpenWavePickerMenu();
     void                                        OpenSpawnPickerMenu();
@@ -164,6 +173,23 @@ public:
     
     
     
+    void                                        CopyWave();
+    void                                        CopyWaveSpawn();
+    void                                        CopyPerm();
+    void                                        CopyPermSpawn();
+    void                                        CopyMotion();
+    
+    
+    void                                        PasteWave(LevelWaveBlueprint *pWave);
+    void                                        PasteWaveSpawn(LevelWaveSpawnBlueprint *pSpawn);
+    void                                        PastePerm(LevelSectionPermBlueprint *pPerm);
+    void                                        PastePermSpawn(LevelPermSpawnBlueprint *pSpawn);
+    void                                        PasteMotion(LevelMotionControllerBlueprint *pMotion);
+    
+    void                                        PasteWaveAtEndOfList();
+    void                                        PasteWaveAfterCurrentWave();
+    
+
     FCanvas                                     *mOverlay;
     
     Game                                        *mGame;

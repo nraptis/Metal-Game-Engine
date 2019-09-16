@@ -146,12 +146,30 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     mRowWave2->AddButton(mButtonMoveWaveDown);
     
     
+    mRowWave3 = new ToolMenuSectionRow();
+    mWavePanel->AddSection(mRowWave3);
+    
+    
+    mButtonCopyWave = new UIButton();
+    mButtonCopyWave->SetText("Copy");
+    mRowWave3->AddButton(mButtonCopyWave);
+    
+    mButtonPasteWaveEOL = new UIButton();
+    mButtonPasteWaveEOL->SetText("Pst-EOL");
+    mRowWave3->AddButton(mButtonPasteWaveEOL);
+    
+    mButtonPasteWaveINS = new UIButton();
+    mButtonPasteWaveINS->SetText("Pst-INS");
+    mRowWave3->AddButton(mButtonPasteWaveINS);
+    
+    
+    mButtonFlipWaveH = new UIButton();
+    mButtonFlipWaveH->SetText("Inv-H");
+    mRowWave3->AddButton(mButtonFlipWaveH);
     
     
     
     
-    
-
     
     mPlaybackPanel = new ToolMenuPanel();
     mPlaybackPanel->SetTitle("Playback");
@@ -238,6 +256,17 @@ void EditorMenuSections::Notify(void *pSender, const char *pNotification) {
     
     if (pSender == mButtonMoveWaveUp) { mEditor->WaveMoveUp(); }
     if (pSender == mButtonMoveWaveDown) { mEditor->WaveMoveDown(); }
+    
+    
+    if (pSender == mButtonCopyWave) { mEditor->CopyWave(); }
+    if (pSender == mButtonPasteWaveEOL) { mEditor->PasteWaveAtEndOfList(); }
+    if (pSender == mButtonPasteWaveINS) { mEditor->PasteWaveAfterCurrentWave(); }
+    
+    if (pSender == mButtonFlipWaveH) { mEditor->WaveFlipH(); }
+    
+    
+    
+    
     
     if (pSender == mButtonTest) { mEditor->Test(); }
     if (pSender == mButtonClear) { mEditor->Clear(); }

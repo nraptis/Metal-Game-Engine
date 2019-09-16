@@ -94,7 +94,7 @@ void LevelWaveBlueprint::Draw(bool pSelected) {
                 aX = aLast->mEditorX;
                 aY = aLast->mEditorY;
                 
-                Graphics::SetColor(0.35f, 0.85f, 0.35f, 0.85f);
+                Graphics::SetColor(0.35f, 0.85f, 0.35f, 0.25f);
                 Graphics::OutlineRect(aX - aSize2, aY - aSize2, aSize, aSize, 2.0f);
             }
         }
@@ -154,6 +154,16 @@ void LevelWaveBlueprint::FindLargestSpawnSize() {
     
     mMaxSpawnSize = (int)(round(aRadius));
     mMaxSpawnSize += 60;
+}
+
+void LevelWaveBlueprint::FlipH() {
+    mPath.FlipH();
+    Build();
+}
+
+void LevelWaveBlueprint::FlipV() {
+    mPath.FlipV();
+    Build();
 }
 
 void LevelWaveBlueprint::Build() {

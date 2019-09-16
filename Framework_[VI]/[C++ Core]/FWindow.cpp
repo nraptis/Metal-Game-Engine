@@ -218,23 +218,21 @@ void FWindow::KeyUp(int pKey) {
 }
 
 void FWindow::Active() {
-    //mRoot.BaseActive();
-
+    
 }
 
 void FWindow::Inactive() {
-
+    
 }
 
 void FWindow::MemoryWarning(bool pSevere) {
+    
     
 }
 
 void FWindow::SetDeviceSize(int pWidth, int pHeight) {
     mDeviceWidth = pWidth;
     mDeviceHeight = pHeight;
-    //RegisterTransformDidUpdate(&mRoot);
-    //RegisterFrameDidUpdate(&mRoot);
     RefreshAll();
 }
 
@@ -273,7 +271,6 @@ void FWindow::SetSafeAreaInsets(int pInsetUp, int pInsetRight, int pInsetDown, i
         mSafeAreaInsetRight = pInsetRight;
         mSafeAreaInsetBottom = pInsetDown;
         mSafeAreaInsetLeft = pInsetLeft;
-        //RegisterFrameDidUpdate(&mRoot);
         RefreshAll();
     }
 }
@@ -323,7 +320,6 @@ void FWindow::RegisterFrameDidUpdate(FCanvas *pCanvas) {
     //The children's parent has updated its frame..
     EnumList(FCanvas, aChild, pCanvas->mChildren) {
         mLayoutBucket.Add(aChild);
-        //RegisterParentDidUpdate(aChild);
     }
     RegisterTransformDidUpdate(pCanvas);
 }
