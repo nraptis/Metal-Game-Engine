@@ -58,6 +58,14 @@ public:
     UIButton                                *mButtonAddPath;
     UIButton                                *mButtonDeletePath;
     
+    
+    
+    ToolMenuPanel                           *mPermOperationPanel;
+    ToolMenuSectionRow                      *mRowPermOperation1;
+    UIButton                                *mButtonCopy;
+    UIButton                                *mButtonPaste;
+    
+    
 };
 
 #endif /* EditorMenuPermanent_hpp */

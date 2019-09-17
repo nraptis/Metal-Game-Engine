@@ -50,53 +50,53 @@ void FormationCollection::Load() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Rectangle
     
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_2x2_38sph_48spv_sld_nodes_cfg4xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_3x2_38sph_48spv_sld_nodes_cfg6xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_2x3_38sph_48spv_sld_nodes_cfg6xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_3x3_38sph_48spv_89ful_nodes_cfg8xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_3x3_38sph_48spv_sld_nodes_cfg9xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_4x3_38sph_48spv_sld_nodes_cfg12xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_3x4_38sph_48spv_sld_nodes_cfg12xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_2x4_38sph_48spv_sld_nodes_cfg8xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_4x2_38sph_48spv_sld_nodes_cfg8xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_5x2_38sph_48spv_sld_nodes_cfg10xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_5x3_38sph_48spv_sld_nodes_cfg15xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_3x5_38sph_48spv_sld_nodes_cfg15xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_4x5_38sph_48spv_sld_nodes_cfg20xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_5x4_38sph_48spv_sld_nodes_cfg20xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_5x5_38sph_48spv_sld_nodes_cfg25xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_6x6_38sph_48spv_sld_nodes_cfg36xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_7x6_38sph_48spv_sld_nodes_cfg42xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_7x6_38sph_48spv_52ful_nodes_cfg22xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_7x6_38sph_48spv_67ful_nodes_cfg28xb_snp"));
+    Add("form_all_nod_all_bln_grd_rec_2x2_38sph_48spv_sld_nodes_cfg4xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_3x2_38sph_48spv_sld_nodes_cfg6xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_2x3_38sph_48spv_sld_nodes_cfg6xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_3x3_38sph_48spv_89ful_nodes_cfg8xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_3x3_38sph_48spv_sld_nodes_cfg9xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_4x3_38sph_48spv_sld_nodes_cfg12xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_3x4_38sph_48spv_sld_nodes_cfg12xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_2x4_38sph_48spv_sld_nodes_cfg8xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_4x2_38sph_48spv_sld_nodes_cfg8xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_5x2_38sph_48spv_sld_nodes_cfg10xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_5x3_38sph_48spv_sld_nodes_cfg15xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_3x5_38sph_48spv_sld_nodes_cfg15xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_4x5_38sph_48spv_sld_nodes_cfg20xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_5x4_38sph_48spv_sld_nodes_cfg20xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_5x5_38sph_48spv_sld_nodes_cfg25xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_6x6_38sph_48spv_sld_nodes_cfg36xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_7x6_38sph_48spv_sld_nodes_cfg42xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_7x6_38sph_48spv_52ful_nodes_cfg22xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_7x6_38sph_48spv_67ful_nodes_cfg28xb_snp");
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Circle
     
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_28rsp_1rct_3rdc_75ful_nodes_cfg3xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_34rsp_1rct_4rdc_80ful_nodes_cfg4xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_40rsp_1rct_5rdc_83ful_nodes_cfg5xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_46rsp_1rct_6rdc_86ful_nodes_cfg6xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_46rsp_1rct_6rdc_sld_nodes_cfg7xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_54rsp_1rct_7rdc_88ful_nodes_cfg7xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_54rsp_1rct_7rdc_sld_nodes_cfg8xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_60rsp_1rct_8rdc_89ful_nodes_cfg8xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfg9xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_60rsp_2rct_16rdc_48ful_nodes_cfg16xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_60rsp_2rct_16rdc_73ful_nodes_cfg24xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_60rsp_2rct_16rdc_76ful_nodes_cfg25xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_66rsp_1rct_9rdc_90ful_nodes_cfg9xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_66rsp_1rct_9rdc_sld_nodes_cfg10xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_72rsp_1rct_10rdc_91ful_nodes_cfg10xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_72rsp_1rct_10rdc_sld_nodes_cfg11xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_72rsp_2rct_20rdc_49ful_nodes_cfg20xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_72rsp_2rct_20rdc_73ful_nodes_cfg30xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_72rsp_2rct_20rdc_76ful_nodes_cfg31xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_88rsp_1rct_12rdc_92ful_nodes_cfg12xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_96rsp_1rct_12rdc_92ful_nodes_cfg12xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_96rsp_1rct_12rdc_92ful_nodes_cfg16xb12on4of"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_96rsp_1rct_12rdc_92ful_nodes_cfg18xb12on6of"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_96rsp_1rct_12rdc_sld_nodes_cfg19xb13on6of"));
+    Add("form_all_nod_all_bln_grd_cir_28rsp_1rct_3rdc_75ful_nodes_cfg3xb_snp");
+    Add("form_all_nod_all_bln_grd_cir_34rsp_1rct_4rdc_80ful_nodes_cfg4xb_snp");
+    Add("form_all_nod_all_bln_grd_cir_40rsp_1rct_5rdc_83ful_nodes_cfg5xb_snp");
+    Add("form_all_nod_all_bln_grd_cir_46rsp_1rct_6rdc_86ful_nodes_cfg6xb_snp");
+    Add("form_all_nod_all_bln_grd_cir_46rsp_1rct_6rdc_sld_nodes_cfg7xb_snp");
+    Add("form_all_nod_all_bln_grd_cir_54rsp_1rct_7rdc_88ful_nodes_cfg7xb_snp");
+    Add("form_all_nod_all_bln_grd_cir_54rsp_1rct_7rdc_sld_nodes_cfg8xb_snp");
+    Add("form_all_nod_all_bln_grd_cir_60rsp_1rct_8rdc_89ful_nodes_cfg8xb_snp");
+    Add("form_all_nod_all_bln_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfg9xb_snp");
+    Add("form_all_nod_all_bln_grd_cir_60rsp_2rct_16rdc_48ful_nodes_cfg16xb_snp");
+    Add("form_all_nod_all_bln_grd_cir_60rsp_2rct_16rdc_73ful_nodes_cfg24xb_snp");
+    Add("form_all_nod_all_bln_grd_cir_60rsp_2rct_16rdc_76ful_nodes_cfg25xb_snp");
+    Add("form_all_nod_all_bln_grd_cir_66rsp_1rct_9rdc_90ful_nodes_cfg9xb_snp");
+    Add("form_all_nod_all_bln_grd_cir_66rsp_1rct_9rdc_sld_nodes_cfg10xb_snp");
+    Add("form_all_nod_all_bln_grd_cir_72rsp_1rct_10rdc_91ful_nodes_cfg10xb_snp");
+    Add("form_all_nod_all_bln_grd_cir_72rsp_1rct_10rdc_sld_nodes_cfg11xb_snp");
+    Add("form_all_nod_all_bln_grd_cir_72rsp_2rct_20rdc_49ful_nodes_cfg20xb_snp");
+    Add("form_all_nod_all_bln_grd_cir_72rsp_2rct_20rdc_73ful_nodes_cfg30xb_snp");
+    Add("form_all_nod_all_bln_grd_cir_72rsp_2rct_20rdc_76ful_nodes_cfg31xb_snp");
+    Add("form_all_nod_all_bln_grd_cir_88rsp_1rct_12rdc_92ful_nodes_cfg12xb_snp");
+    Add("form_all_nod_all_bln_grd_cir_96rsp_1rct_12rdc_92ful_nodes_cfg12xb_snp");
+    Add("form_all_nod_all_bln_grd_cir_96rsp_1rct_12rdc_92ful_nodes_cfg16xb12on4of");
+    Add("form_all_nod_all_bln_grd_cir_96rsp_1rct_12rdc_92ful_nodes_cfg18xb12on6of");
+    Add("form_all_nod_all_bln_grd_cir_96rsp_1rct_12rdc_sld_nodes_cfg19xb13on6of");
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Arcs
@@ -111,21 +111,21 @@ void FormationCollection::Load() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Lines
     
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_1x6_0sph_46spv_sld_nodes_cfg6xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_1x5_0sph_46spv_sld_nodes_cfg5xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_1x4_0sph_46spv_sld_nodes_cfg4xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_1x3_0sph_46spv_sld_nodes_cfg3xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_1x2_0sph_46spv_sld_nodes_cfg2xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_6x1_38sph_0spv_sld_nodes_cfg6xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_5x1_38sph_0spv_sld_nodes_cfg5xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_4x1_38sph_0spv_sld_nodes_cfg4xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_3x1_38sph_0spv_sld_nodes_cfg3xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_rec_2x1_38sph_0spv_sld_nodes_cfg2xb_snp"));
+    Add("form_all_nod_all_bln_grd_rec_1x6_0sph_46spv_sld_nodes_cfg6xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_1x5_0sph_46spv_sld_nodes_cfg5xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_1x4_0sph_46spv_sld_nodes_cfg4xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_1x3_0sph_46spv_sld_nodes_cfg3xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_1x2_0sph_46spv_sld_nodes_cfg2xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_6x1_38sph_0spv_sld_nodes_cfg6xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_5x1_38sph_0spv_sld_nodes_cfg5xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_4x1_38sph_0spv_sld_nodes_cfg4xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_3x1_38sph_0spv_sld_nodes_cfg3xb_snp");
+    Add("form_all_nod_all_bln_grd_rec_2x1_38sph_0spv_sld_nodes_cfg2xb_snp");
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Octogon
     
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_cir_96rsp_1rct_12rdc_sld_nodes_cfg19xb13on6of"));
+    Add("form_all_nod_all_bln_grd_cir_96rsp_1rct_12rdc_sld_nodes_cfg19xb13on6of");
     
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -139,14 +139,14 @@ void FormationCollection::Load() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Star
     
-    //mNameList.Add(new FString(""));
+    //Add("");
     
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_sta_91rdi_140rdo_3ptc_5arc_180ros_49ful_nodes_cfg20xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_sta_50rdi_90rdo_3ptc_5arc_27ful_nodes_cfg11xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_sta_150rdi_80rdo_1ptc_5arc_180ros_95ful_nodes_cfg20xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_sta_150rdi_80rdo_1ptc_5arc_180ros_95ful_nodes_cfg25xb20on5of"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_sta_150rdi_80rdo_1ptc_5arc_180ros_sld_nodes_cfg26xb21on5of"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_sta_74rdi_140rdo_1ptc_4arc_94ful_nodes_cfg24xb16on8of"));
+    Add("form_all_nod_all_bln_grd_sta_91rdi_140rdo_3ptc_5arc_180ros_49ful_nodes_cfg20xb_snp");
+    Add("form_all_nod_all_bln_grd_sta_50rdi_90rdo_3ptc_5arc_27ful_nodes_cfg11xb_snp");
+    Add("form_all_nod_all_bln_grd_sta_150rdi_80rdo_1ptc_5arc_180ros_95ful_nodes_cfg20xb_snp");
+    Add("form_all_nod_all_bln_grd_sta_150rdi_80rdo_1ptc_5arc_180ros_95ful_nodes_cfg25xb20on5of");
+    Add("form_all_nod_all_bln_grd_sta_150rdi_80rdo_1ptc_5arc_180ros_sld_nodes_cfg26xb21on5of");
+    Add("form_all_nod_all_bln_grd_sta_74rdi_140rdo_1ptc_4arc_94ful_nodes_cfg24xb16on8of");
     
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -155,20 +155,20 @@ void FormationCollection::Load() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Triangle
     
-    //mNameList.Add(new FString(""));
+    //Add("");
     
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_tri_ng2_34rad_0ofy_46sph_40spv_stg_sld_nodes_cfg3xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_tri_ng2_34rad_0ofy_46sph_40spv_stgodd_180ros_sld_nodes_cfg3xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_tri_ng2_64rad_0ofy_46sph_40spv_stg_sld_nodes_cfg6xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_tri_ng2_64rad_0ofy_46sph_40spv_stg_180ros_sld_nodes_cfg6xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_tri_ng2_88rad_0ofy_46sph_40spv_stg_sld_nodes_cfg10xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_tri_ng2_88rad_0ofy_46sph_40spv_stgodd_180ros_sld_nodes_cfg10xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_tri_ng2_117rad_0ofy_46sph_40spv_stg_sld_nodes_cfg15xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_tri_ng2_117rad_0ofy_46sph_40spv_stg_180ros_sld_nodes_cfg15xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_tri_ng2_144rad_0ofy_46sph_40spv_stg_sld_nodes_cfg21xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_tri_ng2_144rad_0ofy_46sph_40spv_stgodd_180ros_sld_nodes_cfg21xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_tri_ng2_172rad_0ofy_46sph_40spv_stg_sld_nodes_cfg28xb_snp"));
-    mNameList.Add(new FString("form_all_nod_all_bln_grd_tri_ng2_172rad_0ofy_46sph_40spv_stg_180ros_sld_nodes_cfg28xb_snp"));
+    Add("form_all_nod_all_bln_grd_tri_ng2_34rad_0ofy_46sph_40spv_stg_sld_nodes_cfg3xb_snp");
+    Add("form_all_nod_all_bln_grd_tri_ng2_34rad_0ofy_46sph_40spv_stgodd_180ros_sld_nodes_cfg3xb_snp");
+    Add("form_all_nod_all_bln_grd_tri_ng2_64rad_0ofy_46sph_40spv_stg_sld_nodes_cfg6xb_snp");
+    Add("form_all_nod_all_bln_grd_tri_ng2_64rad_0ofy_46sph_40spv_stg_180ros_sld_nodes_cfg6xb_snp");
+    Add("form_all_nod_all_bln_grd_tri_ng2_88rad_0ofy_46sph_40spv_stg_sld_nodes_cfg10xb_snp");
+    Add("form_all_nod_all_bln_grd_tri_ng2_88rad_0ofy_46sph_40spv_stgodd_180ros_sld_nodes_cfg10xb_snp");
+    Add("form_all_nod_all_bln_grd_tri_ng2_117rad_0ofy_46sph_40spv_stg_sld_nodes_cfg15xb_snp");
+    Add("form_all_nod_all_bln_grd_tri_ng2_117rad_0ofy_46sph_40spv_stg_180ros_sld_nodes_cfg15xb_snp");
+    Add("form_all_nod_all_bln_grd_tri_ng2_144rad_0ofy_46sph_40spv_stg_sld_nodes_cfg21xb_snp");
+    Add("form_all_nod_all_bln_grd_tri_ng2_144rad_0ofy_46sph_40spv_stgodd_180ros_sld_nodes_cfg21xb_snp");
+    Add("form_all_nod_all_bln_grd_tri_ng2_172rad_0ofy_46sph_40spv_stg_sld_nodes_cfg28xb_snp");
+    Add("form_all_nod_all_bln_grd_tri_ng2_172rad_0ofy_46sph_40spv_stg_180ros_sld_nodes_cfg28xb_snp");
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Tracers - Circle
@@ -177,12 +177,12 @@ void FormationCollection::Load() {
     //Tracers - Custom
     
    
-    //mNameList.Add(new FString(""));
-    //mNameList.Add(new FString(""));
-    mNameList.Add(new FString("form_all_trc_all_bln_grd_rec_6x6_60sph_60spv_0ful_tra_4ply_cfg4xb_tra_4ply_cfg4xb_tra_4ply_cfg4xb_tra_4ply_cfg4xb_tra_4ply_cfg4xb_tra_4ply_cfg4xb"));
-    mNameList.Add(new FString("form_all_trc_all_bln_grd_rec_6x6_60sph_60spv_0ful_tra_12ply_cfg28xb"));
-    mNameList.Add(new FString("form_all_trc_all_bln_grd_hex_ng1_135rsp_1rct_30pts_0ful_tra_6ply_cfg12xb"));
-    mNameList.Add(new FString("form_all_trc_all_bln_grd_hex_ng1_135rsp_1rct_30pts_0ful_tra_6ply_cfg14xb_tra_cir_155rad_cfg7xb"));
+    //Add("");
+    //Add("");
+    Add("form_all_trc_all_bln_grd_rec_6x6_60sph_60spv_0ful_tra_4ply_cfg4xb_tra_4ply_cfg4xb_tra_4ply_cfg4xb_tra_4ply_cfg4xb_tra_4ply_cfg4xb_tra_4ply_cfg4xb");
+    Add("form_all_trc_all_bln_grd_rec_6x6_60sph_60spv_0ful_tra_12ply_cfg28xb");
+    Add("form_all_trc_all_bln_grd_hex_ng1_135rsp_1rct_30pts_0ful_tra_6ply_cfg12xb");
+    Add("form_all_trc_all_bln_grd_hex_ng1_135rsp_1rct_30pts_0ful_tra_6ply_cfg14xb_tra_cir_155rad_cfg7xb");
     
     
     
@@ -193,17 +193,17 @@ void FormationCollection::Load() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Tracers - Rounded Rect
     
-    //mNameList.Add(new FString(""));
-    mNameList.Add(new FString("form_all_trc_all_bln_tra_rrc_505siz_110crd_cfg13xb"));
-    mNameList.Add(new FString("form_nod_trc_all_bln_grd_rec_1x1_60sph_60spv_sld_nodes_cfg1xb_snp_tra_rrc_505siz_110crd_cfg14xb_tra_rrc_275siz_54crd_cfg7xb"));
+    //Add("");
+    Add("form_all_trc_all_bln_tra_rrc_505siz_110crd_cfg13xb");
+    Add("form_nod_trc_all_bln_grd_rec_1x1_60sph_60spv_sld_nodes_cfg1xb_snp_tra_rrc_505siz_110crd_cfg14xb_tra_rrc_275siz_54crd_cfg7xb");
     
     //////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     
-    //mNameList.Add(new FString(""));
-    //mNameList.Add(new FString(""));
+    //Add("");
+    //Add("");
     
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -218,11 +218,11 @@ void FormationCollection::Load() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Circle
 
-    mNameList.Add(new FString("form_all_nod_all_brk_grd_cir_34rsp_1rct_4rdc_80ful_nodes_cfg4xr_snp"));
-    mNameList.Add(new FString("form_all_nod_all_brk_grd_cir_40rsp_1rct_5rdc_83ful_nodes_cfg5xr_snp"));
-    mNameList.Add(new FString("form_all_nod_all_brk_grd_cir_46rsp_1rct_6rdc_86ful_nodes_cfg6xr_snp"));
-    //mNameList.Add(new FString(""));
-    //mNameList.Add(new FString(""));
+    Add("form_all_nod_all_brk_grd_cir_34rsp_1rct_4rdc_80ful_nodes_cfg4xr_snp");
+    Add("form_all_nod_all_brk_grd_cir_40rsp_1rct_5rdc_83ful_nodes_cfg5xr_snp");
+    Add("form_all_nod_all_brk_grd_cir_46rsp_1rct_6rdc_86ful_nodes_cfg6xr_snp");
+    //Add("");
+    //Add("");
 
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -286,11 +286,11 @@ void FormationCollection::Load() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Rectangle
     
-    //mNameList.Add(new FString(""));
-    mNameList.Add(new FString("form_all_nod_all_tur_grd_rec_3x3_68sph_68spv_44ful_nodes_cfg4xt_snp"));
-    mNameList.Add(new FString("form_all_nod_all_tur_grd_rec_5x4_68sph_68spv_80ful_nodes_cfg16xt_snp"));
+    //Add("");
+    Add("form_all_nod_all_tur_grd_rec_3x3_68sph_68spv_44ful_nodes_cfg4xt_snp");
+    Add("form_all_nod_all_tur_grd_rec_5x4_68sph_68spv_80ful_nodes_cfg16xt_snp");
     
-    //mNameList.Add(new FString(""));
+    //Add("");
     
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -357,8 +357,8 @@ void FormationCollection::Load() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Rectangle
     
-    //mNameList.Add(new FString(""));
-    mNameList.Add(new FString("form_all_nod_all_bom_grd_rec_5x4_68sph_68spv_sld_nodes_cfg20xm_snp"));
+    //Add("");
+    Add("form_all_nod_all_bom_grd_rec_5x4_68sph_68spv_sld_nodes_cfg20xm_snp");
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Arcs
@@ -427,15 +427,15 @@ void FormationCollection::Load() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Circle
     
-    //mNameList.Add(new FString(""));
-    //mNameList.Add(new FString(""));
+    //Add("");
+    //Add("");
     
-    mNameList.Add(new FString("form_all_nod_mix_bln_brk_grd_cir_46rsp_1rct_6rdc_sld_nodes_cfgbbbrbbb_snp"));
-    mNameList.Add(new FString("form_all_nod_mix_bln_brk_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfgbbbbrbbbb_snp"));
-    mNameList.Add(new FString("form_all_nod_mix_bln_brk_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfgbrrbbbrrb_snp"));
-    mNameList.Add(new FString("form_all_nod_mix_bln_brk_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfgrbbbbbbbr_snp"));
-    mNameList.Add(new FString("form_all_nod_mix_bln_brk_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfgrbbbrbbbr_snp"));
-    mNameList.Add(new FString("form_all_nod_mix_bln_brk_grd_cir_72rsp_1rct_10rdc_sld_nodes_cfgbrrbbbrrbbr_snp"));
+    Add("form_all_nod_mix_bln_brk_grd_cir_46rsp_1rct_6rdc_sld_nodes_cfgbbbrbbb_snp");
+    Add("form_all_nod_mix_bln_brk_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfgbbbbrbbbb_snp");
+    Add("form_all_nod_mix_bln_brk_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfgbrrbbbrrb_snp");
+    Add("form_all_nod_mix_bln_brk_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfgrbbbbbbbr_snp");
+    Add("form_all_nod_mix_bln_brk_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfgrbbbrbbbr_snp");
+    Add("form_all_nod_mix_bln_brk_grd_cir_72rsp_1rct_10rdc_sld_nodes_cfgbrrbbbrrbbr_snp");
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Heptagon
@@ -473,24 +473,24 @@ void FormationCollection::Load() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Tracers - Custom
     
-    //mNameList.Add(new FString(""));
-    mNameList.Add(new FString("form_all_trc_mix_bln_brk_grd_rec_6x6_60sph_60spv_0ful_tra_12ply_cfgrbbbbbbbbbbbbbrbbbbbbbbbbbbb"));
-    mNameList.Add(new FString("form_all_trc_mix_bln_brk_grd_rec_6x6_60sph_60spv_0ful_tra_12ply_cfgrbbbbbbrbbbbbbrbbbbbbrbbbbbb"));
-    mNameList.Add(new FString("form_all_trc_mix_bln_brk_grd_cir_115rsp_1rct_8rdc_0ful_tra_12ply_cfgrbbbbbbrbbbbbbrbbbbbbrbbbbbb_tra_cir_90rad_cfg4xb_tra_cir_90rad_cfg4xb"));
+    //Add("");
+    Add("form_all_trc_mix_bln_brk_grd_rec_6x6_60sph_60spv_0ful_tra_12ply_cfgrbbbbbbbbbbbbbrbbbbbbbbbbbbb");
+    Add("form_all_trc_mix_bln_brk_grd_rec_6x6_60sph_60spv_0ful_tra_12ply_cfgrbbbbbbrbbbbbbrbbbbbbrbbbbbb");
+    Add("form_all_trc_mix_bln_brk_grd_cir_115rsp_1rct_8rdc_0ful_tra_12ply_cfgrbbbbbbrbbbbbbrbbbbbbrbbbbbb_tra_cir_90rad_cfg4xb_tra_cir_90rad_cfg4xb");
     
-    mNameList.Add(new FString("form_all_trc_mix_bln_brk_grd_cir_115rsp_1rct_8rdc_0ful_tra_12ply_cfgrbbbbbbrbbbbbbrbbbbbbrbbbbbb_tra_cir_90rad_cfgrbbb_tra_cir_90rad_cfgbbrb"));
+    Add("form_all_trc_mix_bln_brk_grd_cir_115rsp_1rct_8rdc_0ful_tra_12ply_cfgrbbbbbbrbbbbbbrbbbbbbrbbbbbb_tra_cir_90rad_cfgrbbb_tra_cir_90rad_cfgbbrb");
     
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Tracers - Rect
     
-    //mNameList.Add(new FString(""));
+    //Add("");
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Tracers - Rounded Rect
     
-    mNameList.Add(new FString("form_all_trc_mix_bln_brk_tra_rrc_505siz_110crd_cfgrbbbrbbbrbbbb"));
-    mNameList.Add(new FString("form_all_trc_mix_bln_brk_tra_rrc_505siz_110crd_cfgrbrbrbrbrbrbb"));
-    mNameList.Add(new FString("form_nod_trc_all_bln_grd_rec_1x1_60sph_60spv_sld_nodes_cfg1xb_snp_tra_rrc_505siz_110crd_cfgbbbbrbbbrbbbr_tra_rrc_275siz_54crd_cfg7xb"));
+    Add("form_all_trc_mix_bln_brk_tra_rrc_505siz_110crd_cfgrbbbrbbbrbbbb");
+    Add("form_all_trc_mix_bln_brk_tra_rrc_505siz_110crd_cfgrbrbrbrbrbrbb");
+    Add("form_nod_trc_all_bln_grd_rec_1x1_60sph_60spv_sld_nodes_cfg1xb_snp_tra_rrc_505siz_110crd_cfgbbbbrbbbrbbbr_tra_rrc_275siz_54crd_cfg7xb");
     
     
     
@@ -512,13 +512,13 @@ void FormationCollection::Load() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Circle
     
-    mNameList.Add(new FString("form_all_nod_mix_bln_tur_grd_cir_75rsp_1rct_6rdc_86ful_nodes_cfgbbttbb_snp"));
-    mNameList.Add(new FString("form_all_nod_mix_bln_tur_grd_cir_75rsp_1rct_6rdc_sld_nodes_cfgbbtbtbb_snp"));
-    mNameList.Add(new FString("form_all_nod_mix_bln_tur_grd_cir_85rsp_1rct_8rdc_89ful_nodes_cfgbbbttbbb_snp"));
-    mNameList.Add(new FString("form_all_nod_mix_bln_tur_grd_cir_85rsp_1rct_8rdc_sld_nodes_cfgbbbtbtbbb_snp"));
-    mNameList.Add(new FString("form_all_nod_mix_bln_tur_grd_cir_85rsp_1rct_8rdc_sld_nodes_cfgbttbbbttb_snp"));
-    mNameList.Add(new FString("form_all_nod_mix_bln_tur_grd_cir_85rsp_1rct_12rdc_62ful_nodes_cfgbbbttbbb_snp"));
-    mNameList.Add(new FString("form_all_nod_mix_bln_tur_grd_cir_115rsp_1rct_16rdc_71ful_nodes_cfgbbbbbttbbbbb_snp"));
+    Add("form_all_nod_mix_bln_tur_grd_cir_75rsp_1rct_6rdc_86ful_nodes_cfgbbttbb_snp");
+    Add("form_all_nod_mix_bln_tur_grd_cir_75rsp_1rct_6rdc_sld_nodes_cfgbbtbtbb_snp");
+    Add("form_all_nod_mix_bln_tur_grd_cir_85rsp_1rct_8rdc_89ful_nodes_cfgbbbttbbb_snp");
+    Add("form_all_nod_mix_bln_tur_grd_cir_85rsp_1rct_8rdc_sld_nodes_cfgbbbtbtbbb_snp");
+    Add("form_all_nod_mix_bln_tur_grd_cir_85rsp_1rct_8rdc_sld_nodes_cfgbttbbbttb_snp");
+    Add("form_all_nod_mix_bln_tur_grd_cir_85rsp_1rct_12rdc_62ful_nodes_cfgbbbttbbb_snp");
+    Add("form_all_nod_mix_bln_tur_grd_cir_115rsp_1rct_16rdc_71ful_nodes_cfgbbbbbttbbbbb_snp");
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Heptagon
@@ -526,7 +526,7 @@ void FormationCollection::Load() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Hexagon
     
-    //mNameList.Add(new FString(""));
+    //Add("");
     
     
     
@@ -542,12 +542,12 @@ void FormationCollection::Load() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Rectangle
     
-    //mNameList.Add(new FString(""));
-    //mNameList.Add(new FString(""));
+    //Add("");
+    //Add("");
     
-    mNameList.Add(new FString("form_all_nod_mix_bln_tur_grd_rec_4x2_38sph_48spv_50ful_nodes_cfgbbttbb4on2of"));
-    mNameList.Add(new FString("form_all_nod_mix_bln_tur_grd_rec_5x3_38sph_48spv_73ful_nodes_cfgbbbtbbbtbbb_snp"));
-    mNameList.Add(new FString("form_all_nod_mix_bln_tur_grd_rec_3x3_68sph_68spv_sld_nodes_cfgtbtbbbtbt_snp"));
+    Add("form_all_nod_mix_bln_tur_grd_rec_4x2_38sph_48spv_50ful_nodes_cfgbbttbb4on2of");
+    Add("form_all_nod_mix_bln_tur_grd_rec_5x3_38sph_48spv_73ful_nodes_cfgbbbtbbbtbbb_snp");
+    Add("form_all_nod_mix_bln_tur_grd_rec_3x3_68sph_68spv_sld_nodes_cfgtbtbbbtbt_snp");
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Staggered
@@ -555,8 +555,8 @@ void FormationCollection::Load() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Star
     
-    mNameList.Add(new FString("form_all_nod_mix_bln_tur_grd_sta_74rdi_140rdo_1ptc_4arc_94ful_nodes_cfgbbbbbbbbttbbbbbbbb16on2of"));
-    mNameList.Add(new FString("form_all_nod_mix_bln_tur_grd_sta_74rdi_140rdo_1ptc_4arc_sld_nodes_cfgbbbbbbbbtbbbbbbbb_snp"));
+    Add("form_all_nod_mix_bln_tur_grd_sta_74rdi_140rdo_1ptc_4arc_94ful_nodes_cfgbbbbbbbbttbbbbbbbb16on2of");
+    Add("form_all_nod_mix_bln_tur_grd_sta_74rdi_140rdo_1ptc_4arc_sld_nodes_cfgbbbbbbbbtbbbbbbbb_snp");
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Trapezoid
@@ -564,8 +564,8 @@ void FormationCollection::Load() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Triangle
     
-    mNameList.Add(new FString("form_all_nod_mix_bln_tur_grd_tri_ng2_172rad_46sph_40spv_stg_180ros_86ful_nodes_cfgbbbbbbbbtbbtbbbbbbbbbbbb_snp"));
-    //mNameList.Add(new FString(""));
+    Add("form_all_nod_mix_bln_tur_grd_tri_ng2_172rad_46sph_40spv_stg_180ros_86ful_nodes_cfgbbbbbbbbtbbtbbbbbbbbbbbb_snp");
+    //Add("");
     
     
     
@@ -575,8 +575,8 @@ void FormationCollection::Load() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Tracers - Custom
     
-    mNameList.Add(new FString("form_all_trc_mix_bln_tur_grd_rec_6x6_60sph_60spv_0ful_tra_4ply_cfgtbbb_tra_4ply_cfgtbbb_tra_4ply_cfgtbbb_tra_4ply_cfgtbbb_tra_4ply_cfg4xb_tra_4ply_cfg4xb"));
-    mNameList.Add(new FString("form_all_trc_all_bln_grd_hex_ng1_135rsp_1rct_30pts_0ful_tra_6ply_cfg14xb_tra_cir_155rad_cfgrbbrbb"));
+    Add("form_all_trc_mix_bln_tur_grd_rec_6x6_60sph_60spv_0ful_tra_4ply_cfgtbbb_tra_4ply_cfgtbbb_tra_4ply_cfgtbbb_tra_4ply_cfgtbbb_tra_4ply_cfg4xb_tra_4ply_cfg4xb");
+    Add("form_all_trc_all_bln_grd_hex_ng1_135rsp_1rct_30pts_0ful_tra_6ply_cfg14xb_tra_cir_155rad_cfgrbbrbb");
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Tracers - Rect
@@ -599,7 +599,7 @@ void FormationCollection::Load() {
     //////    Balloon + Brick + Turtle
     //////
     
-    //mNameList.Add(new FString(""));
+    //Add("");
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Arcs
     
@@ -642,8 +642,8 @@ void FormationCollection::Load() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Tracers - Custom
     
-    //mNameList.Add(new FString(""));
-    mNameList.Add(new FString("form_all_trc_mix_bln_tur_grd_rec_6x6_60sph_60spv_0ful_tra_4ply_cfgtbbb_tra_4ply_cfgtbbb_tra_4ply_cfgtbbb_tra_4ply_cfgtbbb_tra_4ply_cfgrbbb_tra_4ply_cfgrbbb"));
+    //Add("");
+    Add("form_all_trc_mix_bln_tur_grd_rec_6x6_60sph_60spv_0ful_tra_4ply_cfgtbbb_tra_4ply_cfgtbbb_tra_4ply_cfgtbbb_tra_4ply_cfgtbbb_tra_4ply_cfgrbbb_tra_4ply_cfgrbbb");
     
     
     
@@ -658,7 +658,7 @@ void FormationCollection::Load() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Tracers - Rounded Rect
     
-    mNameList.Add(new FString("form_nod_trc_all_bln_grd_rec_1x1_60sph_60spv_sld_nodes_cfg1xb_snp_tra_rrc_570siz_110crd_cfgbbbbrbbbrbbbr_tra_rrc_275siz_54crd_cfgtbbtbb"));
+    Add("form_nod_trc_all_bln_grd_rec_1x1_60sph_60spv_sld_nodes_cfg1xb_snp_tra_rrc_570siz_110crd_cfgbbbbrbbbrbbbr_tra_rrc_275siz_54crd_cfgtbbtbb");
     
     
     
@@ -676,7 +676,7 @@ void FormationCollection::Load() {
     //////    All Template
     //////
     
-    //mNameList.Add(new FString(""));
+    //Add("");
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Arcs
@@ -730,15 +730,12 @@ void FormationCollection::Load() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    
-    
     //[All Balloon] Rect Grid Types...
-    //mNameList.Add(new FString("f_grid_rect_1x4_46spc_solid__nodes_cfg4xb_allg"));
+    //Add("f_grid_rect_1x4_46spc_solid__nodes_cfg4xb_allg");
 
-    
     //Super mixed up:
-    mNameList.Add(new FString("form_all_trc_mix_bln_brk_grd_rec_4x4_68sph_68spv_0ful_tra_4ply_cfgrtttb_tra_4ply_cfgbrtbt"));
-    mNameList.Add(new FString("form_all_trc_mix_bln_brk_bom_tur_tra_cir_115rad_cfg5xm_tra_cir_115rad_cfg5xr_tra_cir_115rad_cfg5xt_tra_cir_115rad_cfg5xb"));
+    Add("form_all_trc_mix_bln_brk_grd_rec_4x4_68sph_68spv_0ful_tra_4ply_cfgrtttb_tra_4ply_cfgbrtbt");
+    Add("form_all_trc_mix_bln_brk_bom_tur_tra_cir_115rad_cfg5xm_tra_cir_115rad_cfg5xr_tra_cir_115rad_cfg5xt_tra_cir_115rad_cfg5xb");
     
     //
     EnumList(FString, aString, mNameList) {
@@ -748,8 +745,10 @@ void FormationCollection::Load() {
             Log("FAILED to Load Formation [%s]\n", aString->c());
         }
     }
-    
-    
+}
+
+void FormationCollection::Add(const char *pName) {
+    mNameList.Add(new FString(pName));
 }
 
 bool FormationCollection::Load(const char *pName) {
@@ -778,16 +777,14 @@ LevelFormation *FormationCollection::Get(const char *pName) {
     cFormationLoadString.Reset();
     cFormationLoadString.Append(pName);
     cFormationLoadString.RemoveExtension();
-    //cFormationLoadString.RemovePath();
     
     LevelFormation *aFormation = (LevelFormation *)mMap.Get(cFormationLoadString.c());
     
-    printf("Getting Formation: %s\n", cFormationLoadString.c());
+    //printf("Getting Formation: %s\n", cFormationLoadString.c());
     
     if (aFormation != NULL) {
         return aFormation->Clone();
-    } else {
-        
     }
+    
     return NULL;
 }

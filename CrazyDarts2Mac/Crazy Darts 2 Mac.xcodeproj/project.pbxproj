@@ -996,13 +996,13 @@
 			isa = PBXGroup;
 			children = (
 				0D154298232DC1B40004AE55 /* EditorMenuPermanent.cpp */,
-				0D154299232DC1B40004AE55 /* EditorMenuPermSpawnPicker.cpp */,
-				0D15429A232DC1B40004AE55 /* EditorMenuPermPicker.hpp */,
-				0D15429B232DC1B40004AE55 /* EditorMenuPermanentUtils.hpp */,
-				0D15429C232DC1B40004AE55 /* EditorMenuPermanentUtils.cpp */,
 				0D15429D232DC1B40004AE55 /* EditorMenuPermanent.hpp */,
-				0D15429E232DC1B40004AE55 /* EditorMenuPermSpawnPicker.hpp */,
+				0D15429C232DC1B40004AE55 /* EditorMenuPermanentUtils.cpp */,
+				0D15429B232DC1B40004AE55 /* EditorMenuPermanentUtils.hpp */,
 				0D15429F232DC1B40004AE55 /* EditorMenuPermPicker.cpp */,
+				0D15429A232DC1B40004AE55 /* EditorMenuPermPicker.hpp */,
+				0D154299232DC1B40004AE55 /* EditorMenuPermSpawnPicker.cpp */,
+				0D15429E232DC1B40004AE55 /* EditorMenuPermSpawnPicker.hpp */,
 			);
 			path = "[Permanent Menus]";
 			sourceTree = "<group>";

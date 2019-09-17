@@ -128,6 +128,10 @@ public:
     void                                        ResetOffsetY();
 
     
+    void                                        PastePerm();
+    void                                        PastePermSpawnAtEndOfList();
+    void                                        PastePermSpawnAfterCurrent();
+    
     
     
     int                                         mPathSpeedClassIndex;

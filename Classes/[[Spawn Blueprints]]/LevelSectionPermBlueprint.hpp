@@ -15,7 +15,7 @@
 #include "LevelFormationConfigurationBlueprint.hpp"
 
 
-#define PERM_MAX_SPAWN_COUNT 6
+#define PERM_MAX_SPAWN_COUNT 12
 
 class LevelSectionPerm;
 class LevelSectionPermBlueprint {
@@ -63,10 +63,13 @@ public:
     int                                         mSpawnSpacing;
     
     
+    
     FString                                     mFormationID;
     LevelFormationConfigurationBlueprint        mFormationConfiguration;
     
     int                                         mObjectType;
+    
+    void                                        ShiftSpawnFromIndex(int pIndex);
     
     //Note: BUILD should have NO TIE-IN TO EDITOR...
     //This HAS to work WITHOUT EDITOR for GAME......

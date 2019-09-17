@@ -35,6 +35,12 @@ public:
     UICheckBox                              *mCheckBoxPathSpawnEqualSpacing;
     
     
+    ToolMenuPanel                           *mPermOperationPanel;
+    ToolMenuSectionRow                      *mRowPermOperation1;
+    UIButton                                *mButtonCopy;
+    UIButton                                *mButtonPasteEOL;
+    UIButton                                *mButtonPasteINS;
+    
     
     ToolMenuPanel                           *mMenusPanel;
     ToolMenuSectionRow                      *mRowMenus1;

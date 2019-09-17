@@ -147,7 +147,7 @@ void EditorMenuSpawn::Notify(void *pSender, const char *pNotification) {
     
     if (pSender == mButtonCopy) { gEditor->CopyWaveSpawn(); }
     if (pSender == mButtonPasteEOL) { gEditor->PasteWaveSpawnEndOfList(); }
-    if (pSender == mButtonPasteINS) { gEditor->PasteWaveSpawnAfterCurrentWave(); }
+    if (pSender == mButtonPasteINS) { gEditor->PasteWaveSpawnAfterCurrent(); }
     
     if (pSender == mCheckBoxCreationRequiresPrevWaveStart) { gEditor->RefreshPlayback(); }
     if (pSender == mCheckBoxCreationRequiresPrevWaveComplete) { gEditor->RefreshPlayback(); }

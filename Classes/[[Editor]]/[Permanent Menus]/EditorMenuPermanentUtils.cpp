@@ -66,6 +66,11 @@ EditorMenuPermanentUtils::EditorMenuPermanentUtils(GamePermanentEditor *pEditor)
     
     
     
+    
+    
+    
+    
+    
     mMenusPanel = new ToolMenuPanel();
     mMenusPanel->SetTitle("Menus");
     AddSection(mMenusPanel);
@@ -99,6 +104,31 @@ EditorMenuPermanentUtils::EditorMenuPermanentUtils(GamePermanentEditor *pEditor)
     mButtonMenuMotionSpawn = new UIButton();
     mButtonMenuMotionSpawn->SetText("Mot-Spawn");
     mRowMenus2->AddButton(mButtonMenuMotionSpawn);
+    
+    
+    
+    
+    mPermOperationPanel = new ToolMenuPanel();
+    mPermOperationPanel->SetTitle("Operations (SPAWN)");
+    AddSection(mPermOperationPanel);
+    
+    mRowPermOperation1 = new ToolMenuSectionRow();
+    mPermOperationPanel->AddSection(mRowPermOperation1);
+    
+    mButtonCopy = new UIButton();
+    mButtonCopy->SetText("Copy");
+    mRowPermOperation1->AddButton(mButtonCopy);
+    
+    mButtonPasteEOL = new UIButton();
+    mButtonPasteEOL->SetText("Pas-EOL");
+    mRowPermOperation1->AddButton(mButtonPasteEOL);
+    
+    mButtonPasteINS = new UIButton();
+    mButtonPasteINS->SetText("Pas-INS");
+    mRowPermOperation1->AddButton(mButtonPasteINS);
+    
+    
+    
     
     DeactivateCloseButton();
 }
@@ -137,6 +167,9 @@ void EditorMenuPermanentUtils::Notify(void *pSender, const char *pNotification) 
     if (pSender == mCheckBoxPathSpawnEqualSpacing) { gEditor->RefreshPlayback(); }
     if (pSender == mStepperPathSpawnSpacing) { gEditor->RefreshPlayback(); }
     
+    if (pSender == mButtonCopy) { gEditor->CopyPermSpawn(); }
+    if (pSender == mButtonPasteEOL) { mEditor->PastePermSpawnAtEndOfList(); }
+    if (pSender == mButtonPasteINS) { mEditor->PastePermSpawnAfterCurrent(); }
 }
 
 void EditorMenuPermanentUtils::Update() {

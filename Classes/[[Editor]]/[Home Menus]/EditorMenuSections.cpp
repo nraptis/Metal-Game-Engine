@@ -260,7 +260,7 @@ void EditorMenuSections::Notify(void *pSender, const char *pNotification) {
     
     if (pSender == mButtonCopyWave) { mEditor->CopyWave(); }
     if (pSender == mButtonPasteWaveEOL) { mEditor->PasteWaveAtEndOfList(); }
-    if (pSender == mButtonPasteWaveINS) { mEditor->PasteWaveAfterCurrentWave(); }
+    if (pSender == mButtonPasteWaveINS) { mEditor->PasteWaveAfterCurrent(); }
     
     if (pSender == mButtonFlipWaveH) { mEditor->WaveFlipH(); }
     

@@ -1570,7 +1570,6 @@ void GameEditor::CopyMotion() {
     
 }
 
-
 void GameEditor::PasteWave(LevelWaveBlueprint *pWave) {
     if (pWave == NULL) {
         printf("Cannot Post Wave... Wave Doesn't Exist..\n");
@@ -1584,7 +1583,6 @@ void GameEditor::PasteWave(LevelWaveBlueprint *pWave) {
 }
 
 void GameEditor::PasteWaveSpawn(LevelWaveSpawnBlueprint *pSpawn) {
-    
     if (pSpawn == NULL) {
         printf("Cannot Post Wave... Wave Doesn't Exist..\n");
         return;
@@ -1597,8 +1595,6 @@ void GameEditor::PasteWaveSpawn(LevelWaveSpawnBlueprint *pSpawn) {
 }
 
 void GameEditor::PastePerm(LevelSectionPermBlueprint *pPerm) {
-    
-    
     if (pPerm == NULL) {
         printf("Cannot Post Wave... Wave Doesn't Exist..\n");
         return;
@@ -1624,25 +1620,22 @@ void GameEditor::PasteWaveAtEndOfList() {
     PasteWave(mSection.mCurrentWave);
 }
 
-void GameEditor::PasteWaveAfterCurrentWave() {
+void GameEditor::PasteWaveAfterCurrent() {
     mSection.WaveInsert();
     PasteWave(mSection.mCurrentWave);
 }
 
-
 void GameEditor::PasteWaveSpawnEndOfList() {
-    
     LevelWaveBlueprint *aWave = mSection.mCurrentWave;
     if (aWave == NULL) { return; }
     if (aWave->mSpawnCount >= WAVE_MAX_SPAWN_COUNT) { return; }
-    
     int aPasteIndex = aWave->mSpawnCount;
     aWave->mSpawnCount++;
     aWave->mSelectedSpawnIndex = aPasteIndex;
     PasteWaveSpawn(&(aWave->mSpawn[aPasteIndex]));
 }
 
-void GameEditor::PasteWaveSpawnAfterCurrentWave() {
+void GameEditor::PasteWaveSpawnAfterCurrent() {
     LevelWaveBlueprint *aWave = mSection.mCurrentWave;
     if (aWave == NULL) { return; }
     if (aWave->mSpawnCount >= WAVE_MAX_SPAWN_COUNT) { return; }

@@ -136,6 +136,24 @@ EditorMenuPermanent::EditorMenuPermanent(GamePermanentEditor *pEditor) : ToolMen
     
     
     
+    
+    mPermOperationPanel = new ToolMenuPanel();
+    mPermOperationPanel->SetTitle("Operations");
+    AddSection(mPermOperationPanel);
+    
+    mRowPermOperation1 = new ToolMenuSectionRow();
+    mPermOperationPanel->AddSection(mRowPermOperation1);
+    
+    mButtonCopy = new UIButton();
+    mButtonCopy->SetText("Copy");
+    mRowPermOperation1->AddButton(mButtonCopy);
+    
+    mButtonPaste = new UIButton();
+    mButtonPaste->SetText("Pas-EOL");
+    mRowPermOperation1->AddButton(mButtonPaste);
+    
+    
+    
     DeactivateCloseButton();
 }
 
@@ -177,8 +195,8 @@ void EditorMenuPermanent::Notify(void *pSender, const char *pNotification) {
     
     if (pSender == mSegmentPathSpeed) { mEditor->RefreshSpeed(); gEditor->RefreshPlayback(); }
     
-    
-    
+    if (pSender == mButtonCopy) { gEditor->CopyPerm(); }
+    if (pSender == mButtonPaste) { mEditor->PastePerm(); }
     
 }
 

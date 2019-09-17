@@ -1,198 +1,42 @@
 {
 	"section": true,
-	"wave_list": [
+	"wave_list": [],
+	"perm_list": [
 		{
-			"spawn_spacing": 90,
-			"max_spawn_size": 318,
-			"path": {
-				"speed_class": 200,
-				"node_list": [
+			"x": 76.065651,
+			"y": 32.068230,
+			"motion": {
+				"slice_list": [
 					{
-						"x_con": 200,
-						"y": 44.811474
+						"type": 2,
+						"speed_class": 300
 					},
 					{
-						"x": 20.414207,
-						"y_con": 100,
-						"y_con_target": 0,
-						"decel": 250,
-						"wait": 1900
-					},
-					{
-						"x_con": 150,
-						"y_con": 100,
-						"y_con_target": 0
+						"type": 5,
+						"radius": 232
 					}
 				]
 			},
-			"spawn": [
-				{
-					"formation": "form_all_nod_all_bln_grd_rec_1x6_0sph_46spv_sld_nodes_cfg6xb_snp",
-					"formation_config": {},
-					"motion": {
-						"slice_list": [
-							{
-								"type": 3,
-								"linear_tick": 0,
-								"linear_time": 120,
-								"angle_span": 56,
-								"pause_2": 40
-							}
-						]
-					}
-				}
-			]
+			"formation": "form_all_trc_mix_bln_brk_grd_cir_115rsp_1rct_8rdc_0ful_tra_12ply_cfgrbbbbbbrbbbbbbrbbbbbbrbbbbbb_tra_cir_90rad_cfgrbbb_tra_cir_90rad_cfgbbrb",
+			"formation_config": {}
 		},
 		{
-			"spawn_spacing": 90,
-			"max_spawn_size": 318,
-			"path": {
-				"speed_class": 200,
-				"node_list": [
+			"x": 16.407375,
+			"y": 28.111261,
+			"motion": {
+				"slice_list": [
 					{
-						"x_con": 800,
-						"y": 44.811474
+						"type": 2,
+						"speed_class": 300
 					},
 					{
-						"x": 79.585793,
-						"y_con": 100,
-						"y_con_target": 0,
-						"decel": 250,
-						"wait": 1900
-					},
-					{
-						"x_con": 850,
-						"y_con": 100,
-						"y_con_target": 0
+						"type": 5,
+						"radius": 232
 					}
 				]
 			},
-			"spawn": [
-				{
-					"formation": "form_all_nod_all_bln_grd_rec_1x6_0sph_46spv_sld_nodes_cfg6xb_snp",
-					"formation_config": {},
-					"motion": {
-						"slice_list": [
-							{
-								"type": 3,
-								"linear_tick": 0,
-								"linear_time": 120,
-								"angle_span": 56,
-								"pause_2": 40
-							},
-							{
-								"type": 1
-							}
-						]
-					}
-				}
-			]
-		},
-		{
-			"spawn_spacing": 90,
-			"creation_screen_waves_clear": true,
-			"max_spawn_size": 318,
-			"path": {
-				"speed_class": 300,
-				"node_list": [
-					{
-						"x_con": 500,
-						"y_con": 200
-					},
-					{
-						"x_con": 500,
-						"y_con": 500,
-						"decel": 300,
-						"wait": 1590
-					}
-				]
-			},
-			"spawn": [
-				{
-					"formation": "form_all_nod_all_bln_grd_rec_1x6_0sph_46spv_sld_nodes_cfg6xb_snp",
-					"formation_config": {},
-					"motion": {
-						"slice_list": [
-							{
-								"type": 2
-							}
-						]
-					}
-				}
-			]
-		},
-		{
-			"spawn_spacing": 90,
-			"creation_screen_waves_clear": true,
-			"max_spawn_size": 318,
-			"path": {
-				"speed_class": 300,
-				"node_list": [
-					{
-						"x": 30.917662,
-						"y_con": 200
-					},
-					{
-						"x_con": 100,
-						"x_con_target": 0,
-						"y": 36.104729,
-						"decel": 300,
-						"wait": 1800
-					}
-				]
-			},
-			"spawn": [
-				{
-					"formation": "form_all_nod_all_bln_grd_rec_1x6_0sph_46spv_sld_nodes_cfg6xb_snp",
-					"formation_config": {},
-					"motion": {
-						"slice_list": [
-							{
-								"type": 5,
-								"radius": 144,
-								"pause_1": 70,
-								"pause_2": 70
-							}
-						]
-					}
-				}
-			]
-		},
-		{
-			"spawn_spacing": 90,
-			"max_spawn_size": 318,
-			"path": {
-				"speed_class": 300,
-				"node_list": [
-					{
-						"x": 69.082336,
-						"y_con": 200
-					},
-					{
-						"x_con": 100,
-						"x_con_target": 0,
-						"y": 36.149956,
-						"decel": 300,
-						"wait": 1800
-					}
-				]
-			},
-			"spawn": [
-				{
-					"formation": "form_all_nod_all_bln_grd_rec_1x6_0sph_46spv_sld_nodes_cfg6xb_snp",
-					"formation_config": {},
-					"motion": {
-						"slice_list": [
-							{
-								"type": 5,
-								"radius": 144,
-								"pause_1": 70,
-								"pause_2": 70
-							}
-						]
-					}
-				}
-			]
+			"formation": "form_all_trc_mix_bln_brk_grd_cir_115rsp_1rct_8rdc_0ful_tra_12ply_cfgrbbbbbbrbbbbbbrbbbbbbrbbbbbb_tra_cir_90rad_cfgrbbb_tra_cir_90rad_cfgbbrb",
+			"formation_config": {}
 		}
 	]
 }

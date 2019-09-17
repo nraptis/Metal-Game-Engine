@@ -187,10 +187,10 @@ public:
     void                                        PasteMotion(LevelMotionControllerBlueprint *pMotion);
     
     void                                        PasteWaveAtEndOfList();
-    void                                        PasteWaveAfterCurrentWave();
+    void                                        PasteWaveAfterCurrent();
     
     void                                        PasteWaveSpawnEndOfList();
-    void                                        PasteWaveSpawnAfterCurrentWave();
+    void                                        PasteWaveSpawnAfterCurrent();
     
     
 

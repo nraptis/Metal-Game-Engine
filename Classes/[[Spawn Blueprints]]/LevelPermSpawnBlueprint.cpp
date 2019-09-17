@@ -28,7 +28,6 @@ LevelPermSpawnBlueprint::~LevelPermSpawnBlueprint() {
 void LevelPermSpawnBlueprint::Reset() {
     mMotionController.Reset();
     mFormationConfiguration.Reset();
-    
 }
 
 FJSONNode *LevelPermSpawnBlueprint::Save() {

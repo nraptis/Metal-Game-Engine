@@ -652,3 +652,44 @@ LevelSectionPermBlueprint *GamePermanentEditor::GetPerm() {
     }
     return NULL;
 }
+
+
+void GamePermanentEditor::PastePerm() {
+    gEditor->mSection.PermAdd(mWidth2, mHeight2);
+    LevelSectionPermBlueprint *aPerm = gEditor->PermGet();
+    if (aPerm != NULL) {
+        gEditor->PastePerm(aPerm);
+    }
+}
+
+void GamePermanentEditor::PastePermSpawnAtEndOfList() {
+    
+    
+}
+
+void GamePermanentEditor::PastePermSpawnAfterCurrent() {
+    
+}
+
+/*
+void GameEditor::PasteWaveSpawnEndOfList() {
+    LevelWaveBlueprint *aWave = mSection.mCurrentWave;
+    if (aWave == NULL) { return; }
+    if (aWave->mSpawnCount >= WAVE_MAX_SPAWN_COUNT) { return; }
+    int aPasteIndex = aWave->mSpawnCount;
+    aWave->mSpawnCount++;
+    aWave->mSelectedSpawnIndex = aPasteIndex;
+    PasteWaveSpawn(&(aWave->mSpawn[aPasteIndex]));
+}
+
+void GameEditor::PasteWaveSpawnAfterCurrent() {
+    LevelWaveBlueprint *aWave = mSection.mCurrentWave;
+    if (aWave == NULL) { return; }
+    if (aWave->mSpawnCount >= WAVE_MAX_SPAWN_COUNT) { return; }
+    if ((aWave->mSelectedSpawnIndex < 0) || (aWave->mSelectedSpawnIndex >= aWave->mSpawnCount)) { return; }
+    int aPasteIndex = aWave->mSelectedSpawnIndex;
+    aWave->ShiftSpawnFromIndex(aPasteIndex);
+    aWave->mSelectedSpawnIndex = (aPasteIndex + 1);
+    PasteWaveSpawn(&(aWave->mSpawn[aPasteIndex + 1]));
+}
+*/

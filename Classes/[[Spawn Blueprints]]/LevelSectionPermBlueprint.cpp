@@ -144,6 +144,18 @@ void LevelSectionPermBlueprint::ShiftY(float pShiftY) {
     }
 }
 
+void LevelSectionPermBlueprint::ShiftSpawnFromIndex(int pIndex) {
+    if (mSpawnCount >= PERM_MAX_SPAWN_COUNT) { return; }
+    if (pIndex >= (mSpawnCount)) { return; }
+    if (pIndex < 0) { pIndex = 0; }
+    for (int i=mSpawnCount;i>pIndex;i--) {
+        FJSONNode *aSave = mSpawn[i-1].Save();
+        mSpawn[i].Load(aSave);
+        delete aSave;
+    }
+    mSpawnCount++;
+}
+
 void LevelSectionPermBlueprint::DeletePath() {
     mPath.Reset();
 }

@@ -23,6 +23,8 @@ public:
     void                                Load();
     bool                                Load(const char *pName);
     
+    void                                Add(const char *pName);
+    
     LevelFormation                      *Get(const char *pName);
     
     FList                               mNameList;
