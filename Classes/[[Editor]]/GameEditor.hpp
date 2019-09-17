@@ -277,13 +277,6 @@ public:
     bool                                        mEditorPlaybackWaveOnly;
     bool                                        mEditorPlaybackFromCurrentWave;
     
-    bool                                        mEditorPlaybackFromOffScreen;
-    int                                         mEditorPlaybackFromOffScreenType; //left, right, or top... [probably left...]
-    
-    
-    
-    
-    
     bool                                        mIsRefreshingPlayback;
     
     LevelSection                                mEditorSection;

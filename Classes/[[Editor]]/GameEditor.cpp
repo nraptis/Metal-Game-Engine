@@ -23,9 +23,6 @@ GameEditor::GameEditor(Game *pGame) {
     mEditorPlaybackFromCurrentWave = true;
     mEditorPlaybackEnabled = true;
     
-    mEditorPlaybackFromOffScreen = false;
-    mEditorPlaybackFromOffScreenType = 0; //left, right, or top... [probably left...]
-    
     mRandomSeed = os_system_time() ^ gRand.Get(999999);
     
     mSpeedClassIndex = SPEED_CLASS_MEDIUM;
@@ -75,7 +72,7 @@ GameEditor::GameEditor(Game *pGame) {
     
     mMenuSections = new EditorMenuSections(this);
     mToolContainer->AddChild(mMenuSections);
-    mMenuSections->SetFrame(gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 20.0f, 400.0f, 730.0f);
+    mMenuSections->SetFrame(gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 20.0f, 400.0f, 780.0f);
     
     mExportIndex = 0;
     
@@ -852,17 +849,10 @@ void GameEditor::RefreshPlayback() {
         mSection.Build();
     }
     
-    if (mEditorPlaybackFromOffScreen == true) {
-        if (mEditorPlaybackFromOffScreenType == 1) {
-            mEditorSection.FlyInReset(SECTION_FLY_TOP);
-        } else if (mEditorPlaybackFromOffScreenType == 2) {
-            mEditorSection.FlyInReset(SECTION_FLY_RIGHT);
-        } else {
-            mEditorSection.FlyInReset(SECTION_FLY_LEFT);
-        }
-    } else {
-        mEditorSection.FlyInReset(SECTION_FLY_NONE);
-    }
+
+    
+    //    mEditorSection.FlyInReset(SECTION_FLY_NONE);
+    
     
     mEditorSection.Spawn();
     

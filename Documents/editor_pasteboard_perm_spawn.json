@@ -1,11 +1,4 @@
 {
-	"formation": "form_all_nod_all_brk_grd_cir_34rsp_1rct_4rdc_80ful_nodes_cfg4xr_snp",
-	"formation_config": {},
-	"motion": {
-		"slice_list": [
-			{
-				"type": 2
-			}
-		]
-	}
+	"formation": "form_all_nod_all_bln_grd_cir_40rsp_1rct_5rdc_83ful_nodes_cfg5xb_snp",
+	"formation_config": {}
 }

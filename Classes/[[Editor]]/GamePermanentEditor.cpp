@@ -260,6 +260,7 @@ void GamePermanentEditor::KeyDown(int pKey) {
     }
     
     LevelSectionPermBlueprint *aPerm = GetPerm();
+    LevelPermSpawnBlueprint *aSpawn = gEditor->PermSpawnGet();
     
     bool aShift = gKeyDownShift;
     bool aCtrl = gKeyDownCtrl;
@@ -294,6 +295,18 @@ void GamePermanentEditor::KeyDown(int pKey) {
             Refresh();
         }
     }
+    
+    
+    if (pKey == __KEY__O) {
+        if (aPerm != NULL) {
+            if (aSpawn != NULL) {
+                gEditor->PickFormationForPermSpawnNode();
+            } else {
+                gEditor->PickFormationForPerm();
+            }
+        }
+    }
+    
     
     if (pKey == __KEY__A) {
         mPermMode = PERMANENT_MODE_ADD;

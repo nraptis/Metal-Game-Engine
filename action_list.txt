@@ -9,9 +9,15 @@ L4.) We need a grid type TRAPEZOID-1.
 
 L5.) We need a grid type TRAPEZOID-2.
 
-L5.) We need a grid type ARC.
+L6.) We need a grid type ARC.
 
-L5.) We need a grid type SPIRAL.
+L7.) We need a grid type SPIRAL.
+
+L8.) We need to implement CTRL+C, CTRL+V copy + pastr.
+
+L9.) We need to be able to DELETE a WAVE SPAWN (Selected)
+
+L10.) We need to be able to DELETE a PERM SPAWN (Selected)
 
 K1.) Since we will have a lot of "Sections" - we need some way to quickly browse and test out sections... This should have some sub-tasks...
 
@@ -33,15 +39,9 @@ I2.) [Editor] We want a method to copy / paste MOTION controllers from one perma
 
 I3.) [Editor] We want a method to copy / paste MOTION controllers from one wave spawn node to another.
 
-I4.) [Editor] We want a way to move the grid center, reset the grid center.
-
-I5.) [Editor] (Possibly Optional) We need the grid editor to be available for path editor, we need to snap path nodes to grid points...
-
 H6.) We need an occasional "gleam" / sparkle animation that emminates from the tip of the dart.
 
 H1.) We need TYPES to be bart of FORMATION CONFIGURATION. (Optional) This could also reduce the number of existing formations.
-
-H5.) When turtle's balloon is popped, the turtle should be removed from the play area in a clever, animated fashion.
 
 J1.) We need an improved achievement manager which uses hash tables. This can be optional, but nice to have.
 
@@ -53,19 +53,7 @@ I3.) We need to remove the balloon thread from ballons which are being held capt
 
 I5.) We need "restart wave", "back one wave", and "forward one wave" buttons for test-game-from-editor mode.
 
-I6.) We need to SAVE all filters, search terms, and scroll offset from FORMATION PICKER. There are just too many of them. To quickly try out several, we need to open and close this thing many times.
-
-I7.) We need a reset / clear button for formation picker, which wipes out all filters and scrolls back to home position...
-
-H1.) We have a layout crash when transitioning from editor to TEST game.
-
-H2.) We have lots of garbage / junk buttons in the editor which are not used. We need to remove these because they are distracting.
-
-G2.) We need to attach the spining propeller to the turtle so that the rot / scale are bound to the turtle, but it spins around its axis.
-
-G3.) We need to come up with a collision mechanism for the turtle. The dart should not get stuck in the propeller or top of the "cup" - therefore the dart should somehow "die and fall down" possibly flashing, spinning. and falling.
-
-G4.) We need to implement original artwork for the brickhead FACE.
+I6.) We need to improve the brickhead FACE + HIT FACE...
 
 G5.) We need to implement "OUCHIE" artwork for the brickhead FACE, toggle to ouchie face when it gets hit.
 
@@ -126,7 +114,27 @@ A24.) We need to start thinking about how you will earn 1, 2, or 3 stars per lev
 4.) Logic for bomb collisions (Spherical).
 
 
+DONE.) [Editor] (Possibly Optional) We need the grid editor to be available for path editor, we need to snap path nodes to grid points...
 
+DONE.) We need to implement original artwork for the brickhead FACE.
+
+DONE.) We need to attach the spining propeller to the turtle so that the rot / scale are bound to the turtle, but it spins around its axis.
+
+DONE.) We need to come up with a collision mechanism for the turtle. The dart should not get stuck in the propeller or top of the "cup" - therefore the dart should somehow "die and fall down" possibly flashing, spinning. and falling.
+
+DONE.) We need to SAVE all filters, search terms, and scroll offset from FORMATION PICKER. There are just too many of them. To quickly try out several, we need to open and close this thing many times.
+
+DONE.) We need a reset / clear button for formation picker, which wipes out all filters and scrolls back to home position...
+
+DONE.) We have a layout crash when transitioning from editor to TEST game.
+
+DONE.) We have lots of garbage / junk buttons in the editor which are not used. We need to remove these because they are distracting.
+
+DONE.) When turtle's balloon is popped, the turtle should be removed from the play area in a clever, animated fashion.
+
+DONE.) [Editor] We want a way to move the grid center, reset the grid center.
+
+DONE.) Implement NGON-2 grid method using scanlines + staggering...
 
 DONE.) Mock model for "Bomb"
 
@@ -200,8 +208,7 @@ DONE.) Section enter / leave should randomly pick between right and left.
 
 DONE.) First section should enter from the TOP, unless it contains no permanents.
 
-DONE.) Sections need timer. When all waves have passed and only "perms" are left, sections need timer for
-    when all sections fly away...
+DONE.) Sections need timer. When all waves have passed and only "perms" are left, sections need timer for when all sections fly away...
 
 DONE.) Need way to synchronize the fly-out direction and fly-in direction.
 

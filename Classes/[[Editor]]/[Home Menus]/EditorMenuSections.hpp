@@ -79,14 +79,6 @@ public:
     UICheckBox                              *mCheckBoxCurrentWaveOnly;
     UICheckBox                              *mCheckBoxPlaybackStartAtSelectedWave;
     
-    ToolMenuSectionRow                      *mRowPlayback3;
-    
-    UICheckBox                              *mCheckBoxPlaybackFromOffScreen;
-    UISegment                               *mSegmentPlaybackFromOffScreenType;
-    
-    
-    
-    
     
     
     

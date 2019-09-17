@@ -210,26 +210,6 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     mCheckBoxCurrentWaveOnly->SetTarget(&mEditor->mEditorPlaybackWaveOnly);
     mRowPlayback2->AddCheckBox(mCheckBoxCurrentWaveOnly);
     
-    mRowPlayback3 = new ToolMenuSectionRow();
-    mPlaybackPanel->AddSection(mRowPlayback3);
-    
-    
-    //mRowPlayback3
-    
-    mCheckBoxPlaybackFromOffScreen = new UICheckBox();
-    mCheckBoxPlaybackFromOffScreen->SetText("Off Screen");
-    mCheckBoxPlaybackFromOffScreen->SetTarget(&mEditor->mEditorPlaybackFromOffScreen);
-    mRowPlayback3->AddCheckBox(mCheckBoxPlaybackFromOffScreen);
-    
-    
-    mSegmentPlaybackFromOffScreenType = new UISegment();
-    mSegmentPlaybackFromOffScreenType->SetSegmentCount(3);
-    mSegmentPlaybackFromOffScreenType->SetTitles("Left", "Top", "Right");
-    if (gEditor) {
-        mSegmentPlaybackFromOffScreenType->SetTarget(&gEditor->mEditorPlaybackFromOffScreenType);
-    }
-    mPlaybackPanel->AddSection(mSegmentPlaybackFromOffScreenType);
-    
     
     DeactivateCloseButton();
 }
@@ -285,18 +265,9 @@ void EditorMenuSections::Notify(void *pSender, const char *pNotification) {
     if (pSender == mButtonShowMotionEditor) { mEditor->OpenMotionMenu(); }
     if (pSender == mButtonShowObjectClearer) { mEditor->OpenObjectClearingMenu(); }
     
-    
-    
-    
     if (pSender == mCheckBoxCurrentWaveOnly) { mEditor->RefreshPlayback(); }
     if (pSender == mButtonPlaybackRestart) { mEditor->RefreshPlayback(); }
     if (pSender == mCheckBoxPlaybackStartAtSelectedWave) { mEditor->RefreshPlayback(); }
-    
-    if (pSender == mSegmentPlaybackFromOffScreenType) { mEditor->RefreshPlayback(); }
-    if (pSender == mCheckBoxPlaybackFromOffScreen) { mEditor->RefreshPlayback(); }
-    
-    
-    
     
 }
 
