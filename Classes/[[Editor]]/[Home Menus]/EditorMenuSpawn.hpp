@@ -27,9 +27,14 @@ public:
     UISegment                               *mSegmentSpeed;
     UIStepper                               *mStepperSpawnCount;
     UIStepper                               *mStepperSpacing;
+    ToolMenuSectionRow                      *mGenerationRow1;
+    UIButton                                *mButtonCopy;
+    UIButton                                *mButtonPasteEOL;
+    UIButton                                *mButtonPasteINS;
+    
+    
     
     ToolMenuPanel                           *mTimingPanel;
-    //UISegment                               *mStepperCreationType;
     UIStepper                               *mStepperCreationDelay;
     
     ToolMenuSectionRow                      *mTimingRow1;

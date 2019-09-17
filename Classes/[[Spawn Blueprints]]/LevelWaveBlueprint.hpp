@@ -33,6 +33,7 @@ public:
     
     int                                         mSpawnSpacing;
     
+    
     //int                                         mCreationType;
     
     bool                                        mCreationRequiresPrevWaveStart;
@@ -47,8 +48,12 @@ public:
     void                                        FindLargestSpawnSize();
     int                                         mMaxSpawnSize;
     
+    void                                        ShiftSpawnFromIndex(int pIndex);
+    
     void                                        FlipH();
     void                                        FlipV();
+    
+    
     
     //Note: BUILD should have NO TIE-IN TO EDITOR...
     //This HAS to work WITHOUT EDITOR for GAME......

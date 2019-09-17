@@ -189,6 +189,10 @@ public:
     void                                        PasteWaveAtEndOfList();
     void                                        PasteWaveAfterCurrentWave();
     
+    void                                        PasteWaveSpawnEndOfList();
+    void                                        PasteWaveSpawnAfterCurrentWave();
+    
+    
 
     FCanvas                                     *mOverlay;
     

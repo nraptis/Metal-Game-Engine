@@ -156,6 +156,23 @@ void LevelWaveBlueprint::FindLargestSpawnSize() {
     mMaxSpawnSize += 60;
 }
 
+void LevelWaveBlueprint::ShiftSpawnFromIndex(int pIndex) {
+    
+    if (mSpawnCount >= WAVE_MAX_SPAWN_COUNT) { return; }
+    if (pIndex >= (mSpawnCount)) { return; }
+    if (pIndex < 0) { pIndex = 0; }
+    
+    //if (mSpawnCount >= WAVE_MAX_SPAWN_COUNT) { return; }
+    
+    for (int i=mSpawnCount;i>pIndex;i--) {
+        FJSONNode *aSave = mSpawn[i-1].Save();
+        mSpawn[i].Load(aSave);
+        delete aSave;
+    }
+    
+    mSpawnCount++;
+}
+
 void LevelWaveBlueprint::FlipH() {
     mPath.FlipH();
     Build();

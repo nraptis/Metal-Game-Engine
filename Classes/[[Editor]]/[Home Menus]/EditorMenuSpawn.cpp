@@ -47,6 +47,25 @@ EditorMenuSpawn::EditorMenuSpawn(GameEditor *pEditor) : ToolMenu() {
     mStepperSpacing->mMax = 1000;
     mGenerationPanel->AddSection(mStepperSpacing);
     
+    mGenerationRow1 = new ToolMenuSectionRow();
+    mGenerationPanel->AddSection(mGenerationRow1);
+    
+    mButtonCopy = new UIButton();
+    mButtonCopy->SetText("Copy");
+    mGenerationRow1->AddButton(mButtonCopy);
+    
+    
+    mButtonPasteEOL = new UIButton();
+    mButtonPasteEOL->SetText("Past-EOL");
+    mGenerationRow1->AddButton(mButtonPasteEOL);
+    
+    
+    mButtonPasteINS = new UIButton();
+    mButtonPasteINS->SetText("Past-INS");
+    mGenerationRow1->AddButton(mButtonPasteINS);
+    
+    
+    
     
     
     mTimingPanel = new ToolMenuPanel();
@@ -123,8 +142,12 @@ void EditorMenuSpawn::Notify(void *pSender, const char *pNotification) {
     }
     if (pSender == mStepperSpawnCount) { gEditor->RefreshPlayback(); }
     if (pSender == mStepperSpacing) { gEditor->RefreshPlayback(); }
-    
     if (pSender == mStepperCreationDelay) { gEditor->RefreshPlayback(); }
+    
+    
+    if (pSender == mButtonCopy) { gEditor->CopyWaveSpawn(); }
+    if (pSender == mButtonPasteEOL) { gEditor->PasteWaveSpawnEndOfList(); }
+    if (pSender == mButtonPasteINS) { gEditor->PasteWaveSpawnAfterCurrentWave(); }
     
     if (pSender == mCheckBoxCreationRequiresPrevWaveStart) { gEditor->RefreshPlayback(); }
     if (pSender == mCheckBoxCreationRequiresPrevWaveComplete) { gEditor->RefreshPlayback(); }

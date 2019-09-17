@@ -5266,23 +5266,23 @@
 		0D851B0C232D70B0005E880C /* [[Editor]] */ = {
 			isa = PBXGroup;
 			children = (
-				0D851B0D232D70B0005E880C /* [Formation Menus] */,
-				0D851B1A232D70B0005E880C /* GameEditorGrid.cpp */,
-				0D851B1B232D70B0005E880C /* GamePathEditor.cpp */,
-				0D851B1C232D70B0005E880C /* [Permanent Menus] */,
-				0D851B25232D70B0005E880C /* EditorMenuPanelFormationConfiguration.hpp */,
-				0D851B26232D70B0005E880C /* GamePermanentEditor.hpp */,
-				0D851B27232D70B0005E880C /* GameFormationEditor.hpp */,
-				0D851B28232D70B0005E880C /* [Home Menus] */,
-				0D851B39232D70B0005E880C /* GameEditor.hpp */,
-				0D851B3A232D70B0005E880C /* GameFormationEditor.cpp */,
 				0D851B3B232D70B0005E880C /* [[Game Test Menus]] */,
-				0D851B40232D70B0005E880C /* GameEditor.cpp */,
-				0D851B41232D70B0005E880C /* GameEditorGrid.hpp */,
-				0D851B42232D70B0005E880C /* GamePathEditor.hpp */,
-				0D851B43232D70B0005E880C /* EditorMenuPanelFormationConfiguration.cpp */,
-				0D851B44232D70B0005E880C /* GamePermanentEditor.cpp */,
+				0D851B0D232D70B0005E880C /* [Formation Menus] */,
+				0D851B28232D70B0005E880C /* [Home Menus] */,
 				0D851B45232D70B0005E880C /* [Path Menus] */,
+				0D851B1C232D70B0005E880C /* [Permanent Menus] */,
+				0D851B43232D70B0005E880C /* EditorMenuPanelFormationConfiguration.cpp */,
+				0D851B25232D70B0005E880C /* EditorMenuPanelFormationConfiguration.hpp */,
+				0D851B40232D70B0005E880C /* GameEditor.cpp */,
+				0D851B39232D70B0005E880C /* GameEditor.hpp */,
+				0D851B1A232D70B0005E880C /* GameEditorGrid.cpp */,
+				0D851B41232D70B0005E880C /* GameEditorGrid.hpp */,
+				0D851B3A232D70B0005E880C /* GameFormationEditor.cpp */,
+				0D851B27232D70B0005E880C /* GameFormationEditor.hpp */,
+				0D851B1B232D70B0005E880C /* GamePathEditor.cpp */,
+				0D851B42232D70B0005E880C /* GamePathEditor.hpp */,
+				0D851B44232D70B0005E880C /* GamePermanentEditor.cpp */,
+				0D851B26232D70B0005E880C /* GamePermanentEditor.hpp */,
 			);
 			path = "[[Editor]]";
 			sourceTree = "<group>";

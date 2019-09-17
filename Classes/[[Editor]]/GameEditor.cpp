@@ -1285,7 +1285,7 @@ void GameEditor::OpenSpawnMenu() {
         mMenuSpawn = new EditorMenuSpawn(this);
         mToolContainer->AddChild(mMenuSpawn);
         mMenuSpawn->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f),
-                             gSafeAreaInsetTop, 400.0f, 466.0f);
+                             gSafeAreaInsetTop, 400.0f, 520.0f);
     }
 }
 
@@ -1527,14 +1527,42 @@ void GameEditor::CopyWave() {
 }
 
 void GameEditor::CopyWaveSpawn() {
+    LevelWaveSpawnBlueprint *aSpawn = SpawnGet();
+    if (aSpawn == NULL) {
+        printf("Cannot CopyWaveSpawn()\n");
+        return;
+    }
     
+    FString aPath = gDirDocuments + FString("editor_pasteboard_wave_spawn.json");
+    FJSON aJSON;
+    aJSON.mRoot = aSpawn->Save();
+    aJSON.Save(aPath.c());
 }
 
 void GameEditor::CopyPerm() {
+    LevelSectionPermBlueprint *aPerm = PermGet();
+    if (aPerm == NULL) {
+        printf("Cannot CopyPerm()\n");
+        return;
+    }
+    
+    FString aPath = gDirDocuments + FString("editor_pasteboard_perm.json");
+    FJSON aJSON;
+    aJSON.mRoot = aPerm->Save();
+    aJSON.Save(aPath.c());
     
 }
 
 void GameEditor::CopyPermSpawn() {
+    
+    LevelPermSpawnBlueprint *aSpawn = PermSpawnGet();
+    if (aSpawn == NULL) {
+        printf("Cannot CopyPermSpawn()\n");
+        return;
+    }
+    
+    
+    
     
 }
 
@@ -1544,12 +1572,10 @@ void GameEditor::CopyMotion() {
 
 
 void GameEditor::PasteWave(LevelWaveBlueprint *pWave) {
-    
     if (pWave == NULL) {
         printf("Cannot Post Wave... Wave Doesn't Exist..\n");
         return;
     }
-    
     FString aPath = gDirDocuments + FString("editor_pasteboard_wave.json");
     FJSON aJSON;
     aJSON.Load(aPath);
@@ -1559,9 +1585,29 @@ void GameEditor::PasteWave(LevelWaveBlueprint *pWave) {
 
 void GameEditor::PasteWaveSpawn(LevelWaveSpawnBlueprint *pSpawn) {
     
+    if (pSpawn == NULL) {
+        printf("Cannot Post Wave... Wave Doesn't Exist..\n");
+        return;
+    }
+    FString aPath = gDirDocuments + FString("editor_pasteboard_wave_spawn.json");
+    FJSON aJSON;
+    aJSON.Load(aPath);
+    pSpawn->Load(aJSON.mRoot);
+    RefreshPlayback();
 }
 
 void GameEditor::PastePerm(LevelSectionPermBlueprint *pPerm) {
+    
+    
+    if (pPerm == NULL) {
+        printf("Cannot Post Wave... Wave Doesn't Exist..\n");
+        return;
+    }
+    FString aPath = gDirDocuments + FString("editor_pasteboard_perm.json");
+    FJSON aJSON;
+    aJSON.Load(aPath);
+    pPerm->Load(aJSON.mRoot);
+    RefreshPlayback();
     
 }
 
@@ -1581,4 +1627,28 @@ void GameEditor::PasteWaveAtEndOfList() {
 void GameEditor::PasteWaveAfterCurrentWave() {
     mSection.WaveInsert();
     PasteWave(mSection.mCurrentWave);
+}
+
+
+void GameEditor::PasteWaveSpawnEndOfList() {
+    
+    LevelWaveBlueprint *aWave = mSection.mCurrentWave;
+    if (aWave == NULL) { return; }
+    if (aWave->mSpawnCount >= WAVE_MAX_SPAWN_COUNT) { return; }
+    
+    int aPasteIndex = aWave->mSpawnCount;
+    aWave->mSpawnCount++;
+    aWave->mSelectedSpawnIndex = aPasteIndex;
+    PasteWaveSpawn(&(aWave->mSpawn[aPasteIndex]));
+}
+
+void GameEditor::PasteWaveSpawnAfterCurrentWave() {
+    LevelWaveBlueprint *aWave = mSection.mCurrentWave;
+    if (aWave == NULL) { return; }
+    if (aWave->mSpawnCount >= WAVE_MAX_SPAWN_COUNT) { return; }
+    if ((aWave->mSelectedSpawnIndex < 0) || (aWave->mSelectedSpawnIndex >= aWave->mSpawnCount)) { return; }
+    int aPasteIndex = aWave->mSelectedSpawnIndex;
+    aWave->ShiftSpawnFromIndex(aPasteIndex);
+    aWave->mSelectedSpawnIndex = (aPasteIndex + 1);
+    PasteWaveSpawn(&(aWave->mSpawn[aPasteIndex + 1]));
 }
