@@ -1,0 +1,17 @@
+{
+	"x": 36.250637,
+	"y": 29.270369,
+	"motion": {
+		"slice_list": [
+			{
+				"type": 4,
+				"linear_tick": 100,
+				"linear_time": 200
+			},
+			{
+				"type": 2,
+				"speed_class": 300
+			}
+		]
+	}
+}

@@ -1554,20 +1554,27 @@ void GameEditor::CopyPerm() {
 }
 
 void GameEditor::CopyPermSpawn() {
-    
     LevelPermSpawnBlueprint *aSpawn = PermSpawnGet();
     if (aSpawn == NULL) {
         printf("Cannot CopyPermSpawn()\n");
         return;
     }
     
-    
-    
-    
+    FString aPath = gDirDocuments + FString("editor_pasteboard_perm_spawn.json");
+    FJSON aJSON;
+    aJSON.mRoot = aSpawn->Save();
+    aJSON.Save(aPath.c());
 }
 
-void GameEditor::CopyMotion() {
-    
+void GameEditor::CopyMotion(LevelMotionControllerBlueprint *pMotion) {
+    if (pMotion == NULL) {
+        printf("Cannot Copy Motion... Motion Doesn't Exist..\n");
+        return;
+    }
+    FString aPath = gDirDocuments + FString("editor_pasteboard_motion.json");
+    FJSON aJSON;
+    aJSON.mRoot = pMotion->Save();
+    aJSON.Save(aPath.c());
 }
 
 void GameEditor::PasteWave(LevelWaveBlueprint *pWave) {
@@ -1608,11 +1615,27 @@ void GameEditor::PastePerm(LevelSectionPermBlueprint *pPerm) {
 }
 
 void GameEditor::PastePermSpawn(LevelPermSpawnBlueprint *pSpawn) {
-    
+    if (pSpawn == NULL) {
+        printf("Cannot Post Wave... Wave Doesn't Exist..\n");
+        return;
+    }
+    FString aPath = gDirDocuments + FString("editor_pasteboard_perm_spawn.json");
+    FJSON aJSON;
+    aJSON.Load(aPath);
+    pSpawn->Load(aJSON.mRoot);
+    RefreshPlayback();
 }
 
 void GameEditor::PasteMotion(LevelMotionControllerBlueprint *pMotion) {
-    
+    if (pMotion == NULL) {
+        printf("Cannot Paste Motion... Motion Doesn't Exist..\n");
+        return;
+    }
+    FString aPath = gDirDocuments + FString("editor_pasteboard_motion.json");
+    FJSON aJSON;
+    aJSON.Load(aPath);
+    pMotion->Load(aJSON.mRoot);
+    RefreshPlayback();
 }
 
 void GameEditor::PasteWaveAtEndOfList() {

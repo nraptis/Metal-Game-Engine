@@ -62,7 +62,8 @@ FCanvas::FCanvas() {
 }
 
 FCanvas::~FCanvas() {
-    Log("Dealloc[%s :: %LX]\n", mName.c(), this);
+    
+    //Log("Dealloc[%s :: %LX]\n", mName.c(), this);
     
     gNotify.Unregister(this);
     if (mWindow) {

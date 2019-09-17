@@ -177,7 +177,7 @@ public:
     void                                        CopyWaveSpawn();
     void                                        CopyPerm();
     void                                        CopyPermSpawn();
-    void                                        CopyMotion();
+    void                                        CopyMotion(LevelMotionControllerBlueprint *pMotion);
     
     
     void                                        PasteWave(LevelWaveBlueprint *pWave);

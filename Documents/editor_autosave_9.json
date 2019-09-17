@@ -3,40 +3,89 @@
 	"wave_list": [],
 	"perm_list": [
 		{
-			"x": 76.065643,
-			"y": 32.068230,
+			"x": 63.443260,
+			"y": 29.451290,
 			"motion": {
 				"slice_list": [
 					{
-						"type": 2,
-						"speed_class": 300
+						"type": 4,
+						"linear_tick": 100,
+						"linear_time": 200
 					},
 					{
-						"type": 5,
-						"radius": 232
+						"type": 2,
+						"speed_class": 300
 					}
 				]
-			},
-			"formation": "form_all_trc_mix_bln_brk_grd_cir_115rsp_1rct_8rdc_0ful_tra_12ply_cfgrbbbbbbrbbbbbbrbbbbbbrbbbbbb_tra_cir_90rad_cfgrbbb_tra_cir_90rad_cfgbbrb",
-			"formation_config": {}
+			}
 		},
 		{
-			"x": 16.407372,
-			"y": 28.111267,
+			"x": 27.753061,
+			"y": 44.962078,
 			"motion": {
 				"slice_list": [
 					{
-						"type": 2,
-						"speed_class": 300
+						"type": 4,
+						"linear_tick": 100,
+						"linear_time": 200
 					},
 					{
-						"type": 5,
-						"radius": 232
+						"type": 2,
+						"speed_class": 300
 					}
 				]
-			},
-			"formation": "form_all_trc_mix_bln_brk_grd_cir_115rsp_1rct_8rdc_0ful_tra_12ply_cfgrbbbbbbrbbbbbbrbbbbbbrbbbbbb_tra_cir_90rad_cfgrbbb_tra_cir_90rad_cfgbbrb",
-			"formation_config": {}
+			}
+		},
+		{
+			"x": 50.000000,
+			"y": 54.660080,
+			"motion": {
+				"slice_list": [
+					{
+						"type": 4,
+						"linear_tick": 100,
+						"linear_time": 200
+					},
+					{
+						"type": 2,
+						"speed_class": 300
+					}
+				]
+			}
+		},
+		{
+			"x": 72.397705,
+			"y": 44.962067,
+			"motion": {
+				"slice_list": [
+					{
+						"type": 4,
+						"linear_tick": 100,
+						"linear_time": 200
+					},
+					{
+						"type": 2,
+						"speed_class": 300
+					}
+				]
+			}
+		},
+		{
+			"x": 36.739487,
+			"y": 29.512978,
+			"motion": {
+				"slice_list": [
+					{
+						"type": 4,
+						"linear_tick": 100,
+						"linear_time": 200
+					},
+					{
+						"type": 2,
+						"speed_class": 300
+					}
+				]
+			}
 		}
 	]
 }
