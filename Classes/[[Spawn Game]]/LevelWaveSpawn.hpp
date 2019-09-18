@@ -38,6 +38,9 @@ public:
     bool                                IsClear(); //all of the objects are either null or "un-killable" types
     
     LevelMotionController               mMotionController;
+    bool                                mIsPlayingEnter;
+    bool                                mIsPlayingExit;
+    
     
     LevelWave                           *mWave;
     LevelPath                           *mPath;

@@ -44,7 +44,6 @@ public:
     int                                 mDecelDistance;
     int                                 mAccelDistance;
     
-    
     int                                 mKillTimer;
 };
 
@@ -85,6 +84,13 @@ public:
     FPointList                          mPath;
     FFloatList                          mDist;
     FIntList                            mWait;
+    
+    FIntList                            mPlayEnter;
+    FIntList                            mPlayExit;
+    
+    bool                                mContainsEnterAndExit;
+    int                                 mEnterIndex;
+    int                                 mExitIndex;
     
     
     int                                 mStartConstraintTypeX;

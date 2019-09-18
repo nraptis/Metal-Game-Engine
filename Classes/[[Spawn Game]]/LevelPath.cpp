@@ -52,6 +52,13 @@ LevelPath::LevelPath() {
     mDrawOffsetX = 0.0f;
     mDrawOffsetY = 0.0f;
     
+    
+    mContainsEnterAndExit = false;
+    
+    mEnterIndex = -1;
+    mExitIndex = -1;
+    
+    
     /*
      #define X_CONSTRAINT_LEFT_EXIT 150
      #define X_CONSTRAINT_LEFT_SPAWN 200
@@ -132,6 +139,10 @@ void LevelPath::Finalize() {
     mPath.RemoveAll();
     mDist.RemoveAll();
     mWait.RemoveAll();
+    mPlayEnter.RemoveAll();
+    mPlayExit.RemoveAll();
+    
+    
     mDidFailFinalize = false;
     
     if (mSpeed < 0.4f) {
@@ -142,6 +153,30 @@ void LevelPath::Finalize() {
         mDidFailFinalize = true;
         return;
     }
+    
+    
+    
+    mContainsEnterAndExit = false;
+    mEnterIndex = -1;
+    mExitIndex = -1;
+    
+    if (mClosed == false) {
+        for (int i=0;(i<mNodeList.mCount) && (mEnterIndex == -1);i++) {
+            LevelPathNode *aNode = ((LevelPathNode *)mNodeList.mData[i]);
+            if (aNode->mWaitTimer > 0) {
+                mEnterIndex = i;
+            }
+        }
+        for (int i=(mNodeList.mCount - 1);(i>=0) && (mExitIndex == -1);i--) {
+            LevelPathNode *aNode = ((LevelPathNode *)mNodeList.mData[i]);
+            if (aNode->mWaitTimer > 0) {
+                mExitIndex = i;
+            }
+        }
+    }
+    
+    if (mEnterIndex != -1) { mContainsEnterAndExit = true; }
+    
     
     LevelPathNode *aFirstNode = ((LevelPathNode *)mNodeList.First());
     float aStartX = aFirstNode->mX;
@@ -170,6 +205,9 @@ void LevelPath::Finalize() {
         if (aNode->mWaitTimer > 0) {
             if (mWait.mCount > 0) {
                 mWait.mData[mWait.mCount - 1] = aNode->mWaitTimer;
+                
+                mPlayEnter.mData[mPlayEnter.mCount - 1] = 0;
+                mPlayExit.mData[mPlayExit.mCount - 1] = 0;
             }
         }
         
@@ -198,6 +236,17 @@ void LevelPath::AddSegmentBacktrackingFrom(int pIndex) {
             --aStartIndex;
         }
     }
+    
+    int aPlayEnter = 0;
+    int aPlayExit = 0;
+    
+    if (mContainsEnterAndExit == true) {
+        
+        if (aStartIndex < mEnterIndex) { aPlayEnter = 1; }
+        if (pIndex > mExitIndex) { aPlayExit = 1; }
+        
+    }
+    
     
     LevelPathNode *aPrev = ((LevelPathNode *)mNodeList.mData[aStartIndex]);
     
@@ -312,6 +361,9 @@ void LevelPath::AddSegmentBacktrackingFrom(int pIndex) {
     cSegmentList.Add(cDumpList.mX[0], cDumpList.mY[0]);
     mDist.Add(mTempDist);
     mWait.Add(0);
+    mPlayEnter.Add(aPlayEnter);
+    mPlayExit.Add(aPlayExit);
+    
     
     float aCurrentDist = 0.00f;
     while (aSpeed > 0.05f && aCurrentDist < cPolyPath.mLength) {
@@ -335,6 +387,9 @@ void LevelPath::AddSegmentBacktrackingFrom(int pIndex) {
         cSegmentList.Add(aInterpX, aInterpY);
         mDist.Add(mTempDist + aCurrentDist);
         mWait.Add(0);
+        mPlayEnter.Add(aPlayEnter);
+        mPlayExit.Add(aPlayExit);
+        
     }
     
     float aLastX = cDumpList.mX[cDumpList.mCount - 1];
@@ -352,6 +407,9 @@ void LevelPath::AddSegmentBacktrackingFrom(int pIndex) {
         cSegmentList.Add(aLastX, aLastY);
         mDist.Add(aCurrentDist + cPolyPath.mLength);
         mWait.Add(0);
+        mPlayEnter.Add(aPlayEnter);
+        mPlayExit.Add(aPlayExit);
+        
     } else {
         cSegmentList.mX[cSegmentList.mCount - 1] = aLastX;
         cSegmentList.mY[cSegmentList.mCount - 1] = aLastY;
@@ -411,13 +469,23 @@ void LevelPath::Draw() {
         }
     }
     
-    Graphics::SetColor(0.65f, 0.25f, 0.25f, 0.65f);
+    
     //mPath.DrawEdgesOpen();
     
     if (mPath.mCount > 0) {
         float aLastX = mPath.mX[0] + mDrawOffsetX, aLastY = mPath.mY[0] + mDrawOffsetY;
         float aX = 0.0f, aY = 0.0f;
         for (int i=1;i<mPath.mCount;i++) {
+            
+            float aRed = 1.0f;
+            float aGreen = 1.0f;
+            
+            if (mPlayEnter.mData[i] != 0) { aRed = 0.25f; }
+            if (mPlayExit.mData[i] != 0) { aGreen = 0.25f; }
+            
+            Graphics::SetColor(aRed, aGreen, 0.5f, 1.0f);
+            
+            
             aX = mPath.mX[i] + mDrawOffsetX;
             aY = mPath.mY[i] + mDrawOffsetY;
             Graphics::DrawLine(aLastX, aLastY, aX, aY, 1.0f);

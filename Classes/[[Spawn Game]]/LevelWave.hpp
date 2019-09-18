@@ -53,7 +53,6 @@ public:
     bool                                mCreationRequiresScreenWavesClear;
     bool                                mCreationRequiresScreenPermsClear;
     
-    
     int                                 mCreationDelay;
     
     FList                               mSpawnList;

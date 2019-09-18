@@ -25,6 +25,9 @@ LevelWaveSpawn::LevelWaveSpawn(LevelWave *pWave, LevelPath *pPath) {
     mDidSpawn = false;
     mDidUpdateAfterSpawn = false;
     
+    mIsPlayingEnter = false;
+    mIsPlayingExit = false;
+    
     mOffsetSpawnDistance = 0.0f;
     mBaseX = 0.0f;
     mBaseY = 0.0f;
@@ -201,14 +204,21 @@ void LevelWaveSpawn::Update() {
         mBaseX = mPath->mPath.mX[mPathIndex];
         mBaseY = mPath->mPath.mY[mPathIndex];
         mDistanceTraveled = mPath->mDist.mData[mPathIndex];
+        mIsPlayingEnter = mPath->mPlayEnter.mData[mPathIndex];
+        mIsPlayingExit = mPath->mPlayExit.mData[mPathIndex];
     } else {
         if (mPath->mPath.mCount > 0 && mPathIndex > 0) {
             mBaseX = mPath->mPath.mX[mPath->mPath.mCount - 1];
             mBaseY = mPath->mPath.mY[mPath->mPath.mCount - 1];
             mDistanceTraveled = mPath->mDist.mData[mPath->mDist.mCount - 1];
+            mIsPlayingEnter = mPath->mPlayEnter.mData[mPath->mPlayEnter.mCount - 1];
+            mIsPlayingExit = mPath->mPlayExit.mData[mPath->mPlayExit.mCount - 1];
         }
     }
     
+    mMotionController.mSkipUpdate = false;
+    if (mIsPlayingEnter && (mMotionController.mPlayOnEnter == false)) { mMotionController.mSkipUpdate = true; }
+    if (mIsPlayingExit && (mMotionController.mPlayOnExit == false)) { mMotionController.mSkipUpdate = true; }
     mMotionController.Update();
     
     if (mObject != NULL) {
@@ -231,7 +241,6 @@ void LevelWaveSpawn::Update() {
 }
 
 void LevelWaveSpawn::Draw() {
-    
     
     if (mPathIndex >= 0 && mPathIndex < mPath->mPath.mCount) {
         
