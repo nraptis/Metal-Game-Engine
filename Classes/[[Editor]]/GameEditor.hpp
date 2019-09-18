@@ -169,7 +169,7 @@ public:
     void                                        KillAllBalloons();
     void                                        KillAllNonBalloons();
     void                                        KillAllPerms();
-    void                                        KillAllWave();
+    void                                        KillAllWaves();
     
     
     

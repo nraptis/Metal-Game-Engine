@@ -11,8 +11,9 @@
 LevelNode::LevelNode(const char *pSectionName) {
     mSectionName = pSectionName;
     
-    mAliveTimer = 0;
-    mKillTimer = 0;
+    mKeepAliveTimer = 0;
+    mForceKillTimer = 0;
+    
 }
 
 //Fly-in-speed?

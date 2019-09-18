@@ -107,6 +107,21 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     mRowMenus3->AddButton(mButtonShowObjectClearer);
     
     
+    mTimingPanel = new ToolMenuPanel();
+    mTimingPanel->SetTitle("Timing Panel");
+    AddSection(mTimingPanel);
+    
+    mStepperAliveTimer = new UIStepper();
+    mStepperAliveTimer->SetTarget(&(gEditor->mSection.mKeepAliveTimer));
+    mTimingPanel->AddSection(mStepperAliveTimer);
+    
+    mStepperKillTimer = new UIStepper();
+    mStepperKillTimer->SetTarget(&(gEditor->mSection.mForceKillTimer));
+    mTimingPanel->AddSection(mStepperKillTimer);
+    
+    
+    
+    
     mWavePanel = new ToolMenuPanel();
     mWavePanel->SetTitle("Wave Panel");
     AddSection(mWavePanel);

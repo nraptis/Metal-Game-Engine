@@ -47,6 +47,10 @@ public:
     UIButton                                *mButtonShowObjectClearer;
     
     
+    ToolMenuPanel                           *mTimingPanel;
+    UIStepper                               *mStepperAliveTimer;
+    UIStepper                               *mStepperKillTimer;
+    
     
     
     ToolMenuPanel                           *mWavePanel;

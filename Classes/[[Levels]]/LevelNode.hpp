@@ -19,10 +19,12 @@ public:
     
     FString                             mSectionName; //"section_1.json" or "section_1"
     
-    int                                 mAliveTimer;
+    int                                 mKeepAliveTimer;
+    int                                 mForceKillTimer;
     
-    int                                 mKillTimer;
     
+    // = 0;
+    // = 0;
     
     //Fly-in-speed?
     //Mirror-able?

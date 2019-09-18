@@ -84,7 +84,7 @@ void EditorMenuObjectClearing::Notify(void *pSender, const char *pNotification) 
     if (pSender == mButtonKillAllBalloons) { mEditor->KillAllBalloons(); }
     if (pSender == mButtonKillAllNonBalloons) { mEditor->KillAllNonBalloons(); }
     if (pSender == mButtonKillPerms) { mEditor->KillAllPerms(); }
-    if (pSender == mButtonKillWaves) { mEditor->KillAllWave(); }
+    if (pSender == mButtonKillWaves) { mEditor->KillAllWaves(); }
     
 }
 

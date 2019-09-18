@@ -41,7 +41,6 @@ class MainMenu;
 class Transition;
 class GFXAppNotificationHelper;
 
-
 class WorldConfigScene;
 
 class GFXApp : public FApp {

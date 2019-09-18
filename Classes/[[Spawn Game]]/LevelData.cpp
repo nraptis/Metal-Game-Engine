@@ -103,21 +103,21 @@ void LevelData::Update() {
             mCurrentSection->mFlyOutType == SECTION_FLY_NONE &&
             mCurrentSection->mAllWavesComplete == true) {
             
-            if (mCurrentSection->mKillTimer > 0) {
-                mCurrentSection->mKillTimer--;
-                if (mCurrentSection->mKillTimer <= 0) {
+            if (mCurrentSection->mForceKillTimer > 0) {
+                mCurrentSection->mForceKillTimer--;
+                if (mCurrentSection->mForceKillTimer <= 0) {
                     aForceKill = true;
                 }
             }
             
-            if (mCurrentSection->mAliveTimer > 0) {
-                mCurrentSection->mAliveTimer--;
-                if (mCurrentSection->mAliveTimer > 0) {
+            if (mCurrentSection->mKeepAliveTimer > 0) {
+                mCurrentSection->mKeepAliveTimer--;
+                if (mCurrentSection->mKeepAliveTimer > 0) {
                     aKeepAlive = true;
                 }
             }
         } else {
-            if (mCurrentSection->mAliveTimer > 0) {
+            if (mCurrentSection->mKeepAliveTimer > 0) {
                 aKeepAlive = true;
             }
         }

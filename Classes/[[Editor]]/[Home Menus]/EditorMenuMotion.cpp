@@ -50,6 +50,9 @@ void EditorMenuMotion::Init() {
     mRowMain3 = new ToolMenuSectionRow();
     mPanelMainControls->AddSection(mRowMain3);
     
+    mRowMain4 = new ToolMenuSectionRow();
+    mPanelMainControls->AddSection(mRowMain4);
+    
     
     
     mButtonAddNegate = new UIButton();
@@ -88,6 +91,18 @@ void EditorMenuMotion::Init() {
     mButtonRemoveLast = new UIButton();
     mButtonRemoveLast->SetText("Del Last");
     mRowMain3->AddButton(mButtonRemoveLast);
+    
+    
+    
+    mCheckBoxPlayOnEnter = new UICheckBox();
+    mCheckBoxPlayOnEnter->SetText("On-Enter");
+    mRowMain4->AddCheckBox(mCheckBoxPlayOnEnter);
+    
+    
+    mCheckBoxPlayOnExit = new UICheckBox();
+    mCheckBoxPlayOnExit->SetText("On-Exit");
+    mRowMain4->AddCheckBox(mCheckBoxPlayOnExit);
+    
     
     
     mPanelTypes = new ToolMenuPanel();
@@ -183,6 +198,23 @@ void EditorMenuMotion::Update() {
             } else {
                 mMotionController = &(aPerm->mMotionController);
             }
+        }
+    }
+    
+    
+    if (mCheckBoxPlayOnEnter != NULL) {
+        if (mMotionController != NULL) {
+            mCheckBoxPlayOnEnter->SetTarget(&(mMotionController->mPlayOnEnter));
+        } else {
+            mCheckBoxPlayOnEnter->SetTarget(NULL);
+        }
+    }
+    
+    if (mCheckBoxPlayOnExit != NULL) {
+        if (mMotionController != NULL) {
+            mCheckBoxPlayOnExit->SetTarget(&(mMotionController->mPlayOnExit));
+        } else {
+            mCheckBoxPlayOnExit->SetTarget(NULL);
         }
     }
     

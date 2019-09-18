@@ -23,6 +23,12 @@
 #include "Balloon.hpp"
 
 LevelMotionController::LevelMotionController() {
+    
+    mPlayOnEnter = true;
+    mPlayOnExit = true;
+    
+    mSkipUpdate = false;
+    
     mKillTimer = 8;
 }
 
@@ -40,8 +46,10 @@ void LevelMotionController::Reset() {
 
 void LevelMotionController::Update() {
     
-    EnumList(LevelMotionControllerSlice, aSlice, mSliceList) {
-        aSlice->Update();
+    if (mSkipUpdate == false) {
+        EnumList(LevelMotionControllerSlice, aSlice, mSliceList) {
+            aSlice->Update();
+        }
     }
     
     EnumList(LevelMotionControllerSlice, aSlice, mKillList) {
@@ -53,7 +61,6 @@ void LevelMotionController::Update() {
         delete aSlice;
     }
     mDeleteList.RemoveAll();
-    
 }
 
 void LevelMotionController::Draw() {
@@ -62,45 +69,14 @@ void LevelMotionController::Draw() {
 
 void LevelMotionController::Apply(float pReferenceX, float pReferenceY, float *pX, float *pY) {
     
-    
 }
 
-
 void LevelMotionController::Apply(float pReferenceX, float pReferenceY, GameObject *pObject) {
-    
-    
     if (pObject != NULL) {
         EnumList(LevelMotionControllerSlice, aSlice, mSliceList) {
             aSlice->Apply(pReferenceX, pReferenceY, &pObject->mTransform.mX, &pObject->mTransform.mY);
         }
     }
-    
-    
-    /*
-     if (pObject != NULL && pObject->mKill == 0) {
-     
-     
-     FVec2 aPos = FVec2(pObject->mTransform.mX, pObject->mTransform.mY);
-     FVec2 aCenter = FVec2(pReferenceX, pReferenceY);
-     
-     aPos = PivotPoint(aPos, mTestRotation, aCenter);
-     
-     pObject->mTransform.mX = aPos.mX;
-     pObject->mTransform.mY = aPos.mY;
-     
-     //PivotPoint(<#FVec2 pPoint#>, <#float pDegrees#>, <#FVec2 pCenter#>, <#float pScaleX#>, <#float pScaleY#>)
-     
-     
-     //pObject->mTransform.mY += 60.0f;
-     
-     
-     
-     
-     }
-     */
-    
-    
-    
 }
 
 

@@ -40,8 +40,10 @@ public:
     void                                SetObjectPosition();
     
     LevelMotionController               mMotionController;
+    bool                                mIsPlayingEnter;
+    bool                                mIsPlayingExit;
     
-    LevelSectionPerm               *mPerm;
+    LevelSectionPerm                    *mPerm;
     LevelPath                           *mPath;
     GameObject                          *mObject;
     LevelFormation                      *mFormation;

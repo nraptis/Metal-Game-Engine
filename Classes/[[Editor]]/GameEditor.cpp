@@ -167,28 +167,6 @@ void GameEditor::Layout() {
 
 void GameEditor::Update() {
     
-    /*
-    if (gRand.Get(20) == 2) {
-        OpenPathEditorForWave();
-    }
-    
-    if (gRand.Get(20) == 2) {
-        OpenPathEditorForWave();
-    }
-    
-    if (gRand.Get(20) == 3) {
-        ClosePathEditor();
-    }
-    
-    if (gRand.Get(20) == 3) {
-        CloseFormationEditor();
-    }
-    
-    if (gRand.Get(20) == 3) {
-        RefreshPlayback();
-    }
-    */
-    
     mSection.Update();
     
     if (mSection.mCurrentWave) {
@@ -920,7 +898,7 @@ void GameEditor::KillAllPerms() {
     }
 }
 
-void GameEditor::KillAllWave() {
+void GameEditor::KillAllWaves() {
     if (gGame != NULL) {
         EnumList(GameObject, aObject, gGame->mBalloonList.mObjectList) {
             if (aObject->mDidOriginateOnWave == true) {

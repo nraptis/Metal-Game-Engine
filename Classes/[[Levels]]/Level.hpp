@@ -41,11 +41,11 @@ public:
     
     //What this means, we keep the section on the screen for "ticks" no matter what...
     void                                    SetAliveTimer(int pTicks);
-    int                                     mAliveTimer;
+    int                                     mKeepAliveTimer;
     
     //What this means, after ticks counts down, we evacuate the section no matter what...
     void                                    SetKillTimer(int pTicks);
-    int                                     mKillTimer;
+    int                                     mForceKillTimer;
     
     void                                    ResetAll();
     

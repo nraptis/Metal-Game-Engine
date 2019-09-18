@@ -27,8 +27,10 @@ public:
     
     void                                Apply(float pReferenceX, float pReferenceY, float *pX, float *pY);
     
+    bool                                mPlayOnEnter;
+    bool                                mPlayOnExit;
     
-    
+    bool                                mSkipUpdate;
     
     int                                 mKillTimer;
     

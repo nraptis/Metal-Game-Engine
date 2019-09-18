@@ -14,6 +14,10 @@ LevelSectionBlueprint::LevelSectionBlueprint() {
     mCurrentWave = NULL;
     mCurrentPerm = NULL;
     
+    mKeepAliveTimer = 0;
+    mForceKillTimer = 0;
+    
+    
 }
 
 LevelSectionBlueprint::~LevelSectionBlueprint() {
@@ -305,6 +309,9 @@ void LevelSectionBlueprint::Build(LevelSection *pSection) {
     
     pSection->Reset();
     
+    pSection->mKeepAliveTimer = mKeepAliveTimer;
+    pSection->mForceKillTimer = mForceKillTimer;
+    
     for (int i=0;i<mWaveList.mCount;i++) {
         LevelWaveBlueprint *aWaveBlueprint = (LevelWaveBlueprint *)mWaveList[i];
         LevelWave *aWave = new LevelWave();
@@ -323,6 +330,14 @@ void LevelSectionBlueprint::Build(LevelSection *pSection) {
 FJSONNode *LevelSectionBlueprint::Save() {
     FJSONNode *aExport = new FJSONNode();
     aExport->AddDictionaryBool("section", true);
+    
+    if (mKeepAliveTimer != 0) {
+        aExport->AddDictionaryInt("keep_alive_timer", mKeepAliveTimer);
+    }
+    if (mForceKillTimer != 0) {
+        aExport->AddDictionaryInt("force_kill_timer", mForceKillTimer);
+    }
+    
     
     FJSONNode *aWaveArray = new FJSONNode();
     aExport->AddDictionary("wave_list", aWaveArray);
@@ -349,6 +364,9 @@ FJSONNode *LevelSectionBlueprint::Save() {
 void LevelSectionBlueprint::Load(FJSONNode *pNode) {
     Reset();
     if (pNode == NULL) { return; }
+    
+    mKeepAliveTimer = pNode->GetInt("keep_alive_timer", 0);
+    mForceKillTimer = pNode->GetInt("force_kill_timer", 0);
     
     FJSONNode *aWaveArray = pNode->GetArray("wave_list");
     if (aWaveArray != NULL) {

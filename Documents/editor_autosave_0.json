@@ -1,48 +1,99 @@
 {
 	"section": true,
-	"wave_list": [
+	"keep_alive_timer": 150,
+	"force_kill_timer": 500,
+	"wave_list": [],
+	"perm_list": [
 		{
+			"x_con": 300,
+			"y_con": 800,
+			"motion": {
+				"play_on_enter": false,
+				"play_on_exit": false,
+				"slice_list": [
+					{
+						"type": 2,
+						"speed_class": 300
+					}
+				]
+			},
+			"formation": "form_all_nod_all_bln_grd_cir_96rsp_1rct_12rdc_sld_nodes_cfg19xb13on6of",
+			"formation_config": {}
+		},
+		{
+			"x_con": 400,
+			"y_con": 400,
 			"path": {
+				"closed": true,
 				"node_list": [
 					{
-						"x_con": 200,
-						"y_con": 600
+						"x_con": 700,
+						"y_con": 500
 					},
 					{
-						"x_con": 400,
-						"y_con": 600
+						"x_con": 500,
+						"y_con": 800
 					},
 					{
-						"x_con": 600,
-						"y_con": 600
+						"x_con": 500,
+						"y_con": 500
+					},
+					{
+						"x_con": 700,
+						"y_con": 300
 					}
 				]
 			},
 			"spawn": [
-				{}
+				{
+					"formation": "form_all_nod_all_bln_grd_cir_46rsp_1rct_6rdc_86ful_nodes_cfg6xb_snp",
+					"formation_config": {},
+					"motion": {
+						"slice_list": [
+							{
+								"type": 2,
+								"speed_class": 300
+							}
+						]
+					}
+				},
+				{
+					"formation": "form_all_nod_all_bln_grd_cir_40rsp_1rct_5rdc_83ful_nodes_cfg5xb_snp",
+					"formation_config": {},
+					"motion": {
+						"play_on_exit": false,
+						"slice_list": [
+							{
+								"type": 2,
+								"speed_class": 300
+							},
+							{
+								"type": 1
+							}
+						]
+					}
+				},
+				{
+					"formation": "form_all_nod_all_bln_grd_cir_40rsp_1rct_5rdc_83ful_nodes_cfg5xb_snp",
+					"formation_config": {},
+					"motion": {
+						"play_on_enter": false,
+						"slice_list": [
+							{
+								"type": 2,
+								"speed_class": 300
+							},
+							{
+								"type": 1
+							}
+						]
+					}
+				}
 			]
-		}
-	],
-	"perm_list": [
-		{
-			"x": 8.204268,
-			"y": 75.958755,
-			"formation": "form_all_nod_all_bln_grd_rec_2x1_38sph_0spv_sld_nodes_cfg2xb_snp",
-			"formation_config": {}
 		},
 		{
-			"x": 48.576847,
-			"y": 78.218910
-		},
-		{
-			"x": 79.829132,
-			"y": 75.773033,
-			"formation": "form_all_nod_all_brk_grd_cir_46rsp_1rct_6rdc_86ful_nodes_cfg6xr_snp",
-			"formation_config": {}
-		},
-		{
-			"x": 50.274120,
-			"y": 19.453129,
+			"x_con": 300,
+			"y_con": 300,
 			"path": {
 				"closed": true,
 				"node_list": [
@@ -51,12 +102,12 @@
 						"y_con": 300
 					},
 					{
-						"x_con": 700,
+						"x_con": 500,
 						"y_con": 300
 					},
 					{
-						"x_con": 700,
-						"y_con": 500
+						"x_con": 500,
+						"y_con": 400
 					},
 					{
 						"x_con": 300,
@@ -66,20 +117,48 @@
 			},
 			"spawn": [
 				{
-					"formation": "form_all_nod_all_bln_grd_cir_40rsp_1rct_5rdc_83ful_nodes_cfg5xb_snp",
-					"formation_config": {}
+					"formation": "form_all_nod_all_bln_grd_cir_46rsp_1rct_6rdc_86ful_nodes_cfg6xb_snp",
+					"formation_config": {},
+					"motion": {
+						"play_on_exit": false,
+						"slice_list": [
+							{
+								"type": 2,
+								"speed_class": 300
+							}
+						]
+					}
 				},
 				{
 					"formation": "form_all_nod_all_bln_grd_cir_40rsp_1rct_5rdc_83ful_nodes_cfg5xb_snp",
-					"formation_config": {}
+					"formation_config": {},
+					"motion": {
+						"play_on_enter": false,
+						"slice_list": [
+							{
+								"type": 2,
+								"speed_class": 300
+							},
+							{
+								"type": 1
+							}
+						]
+					}
 				},
 				{
 					"formation": "form_all_nod_all_bln_grd_cir_40rsp_1rct_5rdc_83ful_nodes_cfg5xb_snp",
-					"formation_config": {}
-				},
-				{
-					"formation": "form_all_nod_all_bln_grd_cir_40rsp_1rct_5rdc_83ful_nodes_cfg5xb_snp",
-					"formation_config": {}
+					"formation_config": {},
+					"motion": {
+						"slice_list": [
+							{
+								"type": 2,
+								"speed_class": 300
+							},
+							{
+								"type": 1
+							}
+						]
+					}
 				}
 			]
 		}

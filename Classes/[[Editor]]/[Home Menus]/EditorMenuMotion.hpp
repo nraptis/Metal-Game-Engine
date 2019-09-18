@@ -43,12 +43,16 @@ public:
     ToolMenuSectionRow                      *mRowMain1;
     ToolMenuSectionRow                      *mRowMain2;
     ToolMenuSectionRow                      *mRowMain3;
+    ToolMenuSectionRow                      *mRowMain4;
     
     UIButton                                *mButtonAddNegate;
     UIButton                                *mButtonAddRotate;
     UIButton                                *mButtonAddOscillateV;
     UIButton                                *mButtonAddOscillateH;
     UIButton                                *mButtonAddOscillateRotation;
+    UICheckBox                              *mCheckBoxPlayOnEnter;
+    UICheckBox                              *mCheckBoxPlayOnExit;
+    
     
     
     UIButton                                *mButtonRemoveAll;

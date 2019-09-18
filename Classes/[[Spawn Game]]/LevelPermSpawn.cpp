@@ -21,6 +21,10 @@ LevelPermSpawn::LevelPermSpawn(LevelSectionPerm *pPerm, LevelPath *pPath) {
     mObject = NULL;
     mFormation = NULL;
     
+    mIsPlayingEnter = false;
+    mIsPlayingExit = false;
+    
+    
     mDidSpawn = false;
     mDidUpdateAfterSpawn = false;
     
@@ -215,6 +219,10 @@ void LevelPermSpawn::Update() {
         }
     }
     
+    
+    mMotionController.mSkipUpdate = false;
+    if (mIsPlayingEnter && (mMotionController.mPlayOnEnter == false)) { mMotionController.mSkipUpdate = true; }
+    if (mIsPlayingExit && (mMotionController.mPlayOnExit == false)) { mMotionController.mSkipUpdate = true; }
     mMotionController.Update();
     
     SetObjectPosition();

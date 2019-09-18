@@ -1,5 +1,6 @@
 {
-	"grid_type": 2,
+	"grid_type": 0,
+	"grid_offset_y": -7,
 	"rect_width": 6,
 	"rect_height": 6,
 	"rect_spacing_h": 60,
@@ -17,12 +18,12 @@
 	"ngon1_ring_count": 1,
 	"ngon1_point_spacing": 30,
 	"ngon1_start_rotation": 0,
-	"ngon2_sides": 5,
+	"ngon2_sides": 3,
 	"ngon2_radius": 172,
 	"ngon2_offset_y": 0,
 	"ngon2_spacing_v": 40,
 	"ngon2_spacing_h": 46,
 	"ngon2_start_rotation": 180,
-	"ngon2_stagger": true,
+	"ngon2_stagger": false,
 	"ngon2_stagger_odd": true
 }

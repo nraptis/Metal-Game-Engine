@@ -27,6 +27,8 @@ LevelSectionPerm::LevelSectionPerm(LevelSection *pSection) {
     mSpawnEqualSpacing = true;
     mSpawnSpacing = 120;
     
+    mIsPlayingEnter = false;
+    mIsPlayingExit = false;
     
     mBaseX = 0.0f;
     mBaseY = 0.0f;
@@ -211,9 +213,11 @@ void LevelSectionPerm::Update() {
     //
     //////
     
-    mMotionController.Update();
+    
     
     EnumList(LevelPermSpawn, aSpawn, mSpawnList) {
+        aSpawn->mIsPlayingEnter = mIsPlayingEnter;
+        aSpawn->mIsPlayingExit = mIsPlayingExit;
         aSpawn->Update();
     }
     
@@ -225,13 +229,15 @@ void LevelSectionPerm::Update() {
     
     mPath.Update();
     
-    if (mPath.mDidFinalize == true && mPath.mDidFailFinalize == false && mPath.mPath.mCount > 0) {
-        
-    }
+    //if (mPath.mDidFinalize == true && mPath.mDidFailFinalize == false && mPath.mPath.mCount > 0) {
+    //}
     
+    mMotionController.mSkipUpdate = false;
+    if (mIsPlayingEnter && (mMotionController.mPlayOnEnter == false)) { mMotionController.mSkipUpdate = true; }
+    if (mIsPlayingExit && (mMotionController.mPlayOnExit == false)) { mMotionController.mSkipUpdate = true; }
+    mMotionController.Update();
     
     PositionObject();
-    
     
     if (mFormation != NULL) {
         mFormation->Update(&mMotionController);

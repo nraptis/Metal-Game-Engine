@@ -61,8 +61,8 @@ public:
     //
     //                    Externally controlled...
     //
-    int                                 mAliveTimer;
-    int                                 mKillTimer;
+    int                                 mKeepAliveTimer;
+    int                                 mForceKillTimer;
     //
     //
     ////////////////////////////////////////////////////////////////////////////

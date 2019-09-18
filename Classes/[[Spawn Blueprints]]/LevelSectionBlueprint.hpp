@@ -50,13 +50,17 @@ public:
     void                                        PermRefreshPositions();
     
     FList                                       mPermList;
-    LevelSectionPermBlueprint              *mCurrentPerm;
+    LevelSectionPermBlueprint                   *mCurrentPerm;
     
     void                                        Build();
     void                                        Build(LevelSection *pSection);
     
     FJSONNode                                   *Save();
     void                                        Load(FJSONNode *pNode);
+    
+    int                                         mKeepAliveTimer;
+    int                                         mForceKillTimer;
+    
     
     FList                                       mKillWaveList;
     FList                                       mDeleteWaveList;

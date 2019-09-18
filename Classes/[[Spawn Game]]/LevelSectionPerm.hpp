@@ -73,6 +73,8 @@ public:
     LevelPath                           mPath;
     
     LevelMotionController               mMotionController;
+    bool                                mIsPlayingEnter;
+    bool                                mIsPlayingExit;
     
     FList                               mSpawnList; //of LevelPermSpawn
     bool                                mSpawnEqualSpacing;

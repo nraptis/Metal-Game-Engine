@@ -26,8 +26,8 @@ LevelSection::LevelSection() {
     
     mDidSpawn = false;
     
-    mAliveTimer = 0;
-    mKillTimer = 0;
+    mKeepAliveTimer = 0;
+    mForceKillTimer = 0;
     
     mDelay = 0;
     
@@ -39,10 +39,13 @@ LevelSection::LevelSection() {
     mFlyInType = SECTION_FLY_NONE;
     mFlyInTimer = 0;
     mFlyInTime = 160;
+    mFlyInTime = 999;
+    
     
     mFlyOutType = SECTION_FLY_NONE;
     mFlyOutTimer = 0;
     mFlyOutTime = 160;
+    mFlyOutTime = 999;
     
     mName = "???";
 }
@@ -101,6 +104,13 @@ void LevelSection::Spawn() {
 void LevelSection::Update() {
     
     bool aBlockWaves = false;
+    
+    
+    EnumList(LevelSectionPerm, aPerm, mPermList) {
+        aPerm->mIsPlayingEnter = false;
+        aPerm->mIsPlayingExit = false;
+    }
+    
     
     if (mFlyInType != SECTION_FLY_NONE) {
         
@@ -180,6 +190,22 @@ void LevelSection::Update() {
             
             mX = aStartX + (aEndX - aStartX) * aPercent;
             mY = aStartY + (aEndY - aStartY) * aPercent;
+        }
+    }
+    
+    
+    
+    
+    
+    if (mFlyInType != SECTION_FLY_NONE) {
+        EnumList(LevelSectionPerm, aPerm, mPermList) {
+            aPerm->mIsPlayingEnter = true;
+        }
+    }
+    
+    if (mFlyOutType != SECTION_FLY_NONE) {
+        EnumList(LevelSectionPerm, aPerm, mPermList) {
+            aPerm->mIsPlayingExit = true;
         }
     }
     

@@ -39,6 +39,9 @@ public:
     void                                        AddSliceOscillateV();
     void                                        AddSliceOscillateH();
     
+    bool                                        mPlayOnEnter;
+    bool                                        mPlayOnExit;
+    
     FList                                       mSliceList;
     //LevelMotionControllerSliceBlueprint
     

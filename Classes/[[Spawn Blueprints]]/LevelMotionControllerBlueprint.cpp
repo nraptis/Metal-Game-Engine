@@ -6,7 +6,6 @@
 //  Copyright © 2019 Froggy Studios. All rights reserved.
 //
 
-\
 #include "LevelMotionControllerBlueprint.hpp"
 #include "os_core_graphics.h"
 #include "core_includes.h"
@@ -14,6 +13,10 @@
 
 LevelMotionControllerBlueprint::LevelMotionControllerBlueprint() {
 
+    mPlayOnEnter = true;
+    mPlayOnExit = true;
+    
+    
 }
 
 LevelMotionControllerBlueprint::~LevelMotionControllerBlueprint() {
@@ -105,6 +108,9 @@ void LevelMotionControllerBlueprint::Build(LevelMotionController *pMotionControl
     
     pMotionController->Reset();
     
+    pMotionController->mPlayOnEnter = mPlayOnEnter;
+    pMotionController->mPlayOnExit = mPlayOnExit;
+    
     EnumList(LevelMotionControllerSliceBlueprint, aSliceBlueprint, mSliceList) {
     
         if (aSliceBlueprint->mType == LEVEL_MOTION_SLICE_TYPE_NONE) {
@@ -155,6 +161,15 @@ FJSONNode *LevelMotionControllerBlueprint::Save() {
     FJSONNode *aExport = new FJSONNode();
     aExport->mNodeType = JSON_NODE_TYPE_DICTIONARY;
     
+    
+    if (mPlayOnEnter == false) {
+        aExport->AddDictionaryBool("play_on_enter", mPlayOnEnter);
+    }
+    
+    if (mPlayOnExit == false) {
+        aExport->AddDictionaryBool("play_on_exit", mPlayOnExit);
+    }
+    
 
     FJSONNode *aSliceListNode = new FJSONNode();
     aSliceListNode->mNodeType = JSON_NODE_TYPE_ARRAY;
@@ -172,6 +187,9 @@ void LevelMotionControllerBlueprint::Load(FJSONNode *pNode) {
     Reset();
     if (pNode == NULL) { return; }
     
+    
+    mPlayOnEnter = pNode->GetBool("play_on_enter", true);
+    mPlayOnExit = pNode->GetBool("play_on_exit", true);
     
     FJSONNode *aSliceListNode = pNode->GetArray("slice_list");
     
