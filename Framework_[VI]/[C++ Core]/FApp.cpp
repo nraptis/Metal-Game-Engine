@@ -353,6 +353,11 @@ void FApp::BaseLoad() {
         BaseInitialize();
     }
     
+    BaseSetDeviceSize(gDeviceWidth, gDeviceHeight);
+    BaseSetVirtualFrame(gVirtualDevX, gVirtualDevY, gVirtualDevWidth, gVirtualDevHeight);
+    BaseSetSafeAreaInsets(gSafeAreaInsetTop, gSafeAreaInsetRight, gSafeAreaInsetBottom, gSafeAreaInsetLeft);
+    
+    
     mIsLoading = true;
     
     //os_getAssetScale()
@@ -440,10 +445,10 @@ void FApp::BaseLoadComplete() {
     
     LoadComplete();
     
+    //BaseSetDeviceSize(gDeviceWidth, gDeviceHeight);
+    //BaseSetVirtualFrame(gVirtualDevX, gVirtualDevY, gVirtualDevWidth, gVirtualDevHeight);
+    //BaseSetSafeAreaInsets(gSafeAreaInsetTop, gSafeAreaInsetRight, gSafeAreaInsetBottom, gSafeAreaInsetLeft);
     
-    BaseSetDeviceSize(gDeviceWidth, gDeviceHeight);
-    BaseSetVirtualFrame(gVirtualDevX, gVirtualDevY, gVirtualDevWidth, gVirtualDevHeight);
-    BaseSetSafeAreaInsets(gSafeAreaInsetTop, gSafeAreaInsetRight, gSafeAreaInsetBottom, gSafeAreaInsetLeft);
     
 }
 

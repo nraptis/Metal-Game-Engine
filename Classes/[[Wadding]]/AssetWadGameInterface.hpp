@@ -48,6 +48,59 @@ public:
     
     
     
+    
+    
+    
+    FSprite                                         mComboTextOrangeAdd5;
+    FSprite                                         mComboTextOrangeAdd10;
+    FSprite                                         mComboTextOrangeAdd25;
+    FSprite                                         mComboTextOrangeAdd50;
+    FSprite                                         mComboTextOrangeAdd75;
+    FSprite                                         mComboTextOrangeAdd100;
+    FSprite                                         mComboTextOrangeAdd200;
+    FSprite                                         mComboTextOrangeAdd300;
+    FSprite                                         mComboTextOrangeAdd400;
+    FSprite                                         mComboTextOrangeAdd500;
+    FSprite                                         mComboTextOrangeAdd750;
+    FSprite                                         mComboTextOrangeAdd1000;
+    
+    FSprite                                         mComboTextOrangeMult2;
+    FSprite                                         mComboTextOrangeMult3;
+    FSprite                                         mComboTextOrangeMult4;
+    FSprite                                         mComboTextOrangeMult5;
+    FSprite                                         mComboTextOrangeMult6;
+    FSprite                                         mComboTextOrangeMult7;
+    FSprite                                         mComboTextOrangeMult8;
+    FSprite                                         mComboTextOrangeMult9;
+    FSprite                                         mComboTextOrangeMult10;
+    
+    
+    FSprite                                         mComboTextBlueAdd5;
+    FSprite                                         mComboTextBlueAdd10;
+    FSprite                                         mComboTextBlueAdd25;
+    FSprite                                         mComboTextBlueAdd50;
+    FSprite                                         mComboTextBlueAdd75;
+    FSprite                                         mComboTextBlueAdd100;
+    FSprite                                         mComboTextBlueAdd200;
+    FSprite                                         mComboTextBlueAdd300;
+    FSprite                                         mComboTextBlueAdd400;
+    FSprite                                         mComboTextBlueAdd500;
+    FSprite                                         mComboTextBlueAdd750;
+    FSprite                                         mComboTextBlueAdd1000;
+    
+    FSprite                                         mComboTextBlueMult2;
+    FSprite                                         mComboTextBlueMult3;
+    FSprite                                         mComboTextBlueMult4;
+    FSprite                                         mComboTextBlueMult5;
+    FSprite                                         mComboTextBlueMult6;
+    FSprite                                         mComboTextBlueMult7;
+    FSprite                                         mComboTextBlueMult8;
+    FSprite                                         mComboTextBlueMult9;
+    FSprite                                         mComboTextBlueMult10;
+    
+    
+    
+    
     //candy_beans_256_font.kern
     //fnt_cb_256_font.kern
     //fnt_mh_256_font.kern

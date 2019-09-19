@@ -120,7 +120,7 @@ public:
     bool                            mAutoBundle;
     bool                            mMultiRez;
 
-    bool                            mSeamlessBorders;
+    bool                            mKeepAllAlpha;
 	
     //int                             mImageWidth;
     //int                             mImageHeight;

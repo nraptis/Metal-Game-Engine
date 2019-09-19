@@ -1,0 +1,92 @@
+{
+	"width": 512,
+	"height": 512,
+	"border": 2,
+	"edge": 2,
+	"node_list": [
+		{
+			"name": "game_menu_back",
+			"inset": 0,
+			"image_width": 327,
+			"image_height": 437,
+			"offset_x": 0,
+			"offset_y": 8,
+			"rect_x": 4,
+			"rect_y": 4,
+			"rect_width": 324,
+			"rect_height": 428
+		},
+		{
+			"name": "menu_button_text_main_menu",
+			"inset": 0,
+			"image_width": 279,
+			"image_height": 97,
+			"offset_x": 44,
+			"offset_y": 31,
+			"rect_x": 224,
+			"rect_y": 436,
+			"rect_width": 190,
+			"rect_height": 33
+		},
+		{
+			"name": "menu_button_text_level_select",
+			"inset": 0,
+			"image_width": 279,
+			"image_height": 97,
+			"offset_x": 31,
+			"offset_y": 30,
+			"rect_x": 4,
+			"rect_y": 436,
+			"rect_width": 217,
+			"rect_height": 34
+		},
+		{
+			"name": "menu_button_text_okay",
+			"inset": 0,
+			"image_width": 279,
+			"image_height": 97,
+			"offset_x": 88,
+			"offset_y": 30,
+			"rect_x": 332,
+			"rect_y": 88,
+			"rect_width": 102,
+			"rect_height": 44
+		},
+		{
+			"name": "menu_button_text_cancel",
+			"inset": 0,
+			"image_width": 279,
+			"image_height": 97,
+			"offset_x": 79,
+			"offset_y": 30,
+			"rect_x": 332,
+			"rect_y": 136,
+			"rect_width": 121,
+			"rect_height": 34
+		},
+		{
+			"name": "menu_button_text_options",
+			"inset": 0,
+			"image_width": 279,
+			"image_height": 97,
+			"offset_x": 68,
+			"offset_y": 30,
+			"rect_x": 332,
+			"rect_y": 4,
+			"rect_width": 142,
+			"rect_height": 44
+		},
+		{
+			"name": "menu_button_text_resume",
+			"inset": 0,
+			"image_width": 279,
+			"image_height": 97,
+			"offset_x": 71,
+			"offset_y": 30,
+			"rect_x": 332,
+			"rect_y": 52,
+			"rect_width": 136,
+			"rect_height": 34
+		}
+	]
+}

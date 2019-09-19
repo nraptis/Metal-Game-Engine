@@ -24,7 +24,7 @@ FImageBundler::FImageBundler() {
     
     mAutoBundle=false;
 
-    mSeamlessBorders = false;
+    mKeepAllAlpha = false;
     mBundleWidth = 0;
     mBundleHeight = 0;
     mBundleScale = 1.0f;
@@ -193,7 +193,7 @@ void FImageBundler::AddImage(const char*pImagePath) {
     int aLeft, aRight, aTop, aBottom, aWidth, aHeight;
     aImage.GetEdges(aLeft,aRight,aTop,aBottom);
 
-    if (mSeamlessBorders) {
+    if (mKeepAllAlpha) {
         aWidth = aImage.mWidth;
         aHeight = aImage.mHeight;
         aLeft = 0;
@@ -212,7 +212,7 @@ void FImageBundler::AddImage(const char*pImagePath) {
     aNode->mOffsetY = aTop;
 
     FImage *aNewImage = 0;
-    if (mSeamlessBorders) {
+    if (mKeepAllAlpha) {
         aNewImage = aImage.Clone();
     } else {
         aNewImage = aImage.Crop(aLeft,aTop,aWidth,aHeight);

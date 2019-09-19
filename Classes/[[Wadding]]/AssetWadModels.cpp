@@ -35,11 +35,11 @@ void AssetWadModels::Load() {
     
     
     
-    gImageBundler.mSeamlessBorders = true;
+    gImageBundler.mKeepAllAlpha = true;
     gImageBundler.StartBundle("bndl_turt_prop_billboard");
     mTurtlePropellerBillboardMapSequence.Load("propeller_whirl_", 0, 14);
     gImageBundler.EndBundle();
-    gImageBundler.mSeamlessBorders = false;
+    gImageBundler.mKeepAllAlpha = false;
     
     
     gImageBundler.StartBundle("bndl_model_maps_01");

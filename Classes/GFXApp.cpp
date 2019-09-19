@@ -223,12 +223,7 @@ void GFXApp::Load() {
     ExecuteWadReload();
     
     
-    mSoundBalloonPop.Load("balloon_pop_1", 3);
-    //balloon_pop_1
-    //balloon_pop_2
-    //balloon_pop_3
-    //balloon_pop_4
-    //balloon_pop_5
+    mSoundBalloonPop.Load("balloon_pop_1", 8);
     
     mSoundDartPullback.Load("pullback");
     mSoundDartRelease.Load("release_dart_01", 3);
@@ -240,10 +235,10 @@ void GFXApp::Load() {
     //release_dart_06
     
     
-    mSoundHitBrickhead.Load("hit_brickhead");
-    mSoundHitTurtle.Load("hit_turtle");
+    mSoundHitBrickhead.Load("hit_brickhead", 2);
+    mSoundHitTurtle.Load("hit_turtle", 2);
     
-    mSoundFreeLife.Load("free_life");
+    mSoundFreeLife.Load("free_life", 2);
     
     mSoundSparkle1.Load("sparkle_1");
     mSoundSparkle2.Load("sparkle_2");
