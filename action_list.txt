@@ -112,8 +112,23 @@
 
 57.) [Editor] We want a method to copy / paste MOTION controllers from one wave spawn node to another.
 
+58.) Game Test Editor. We need speed control for test game.
 
+59.) Game Test Editor. Require a way to KILL CURRENT WAVE in TEST MODE.
 
+60.) We need to change the rotation behavior for extremely tight arcs.
+
+61.) We need a graphic for "+25", "+50", "+75", "+100", "+200", "+300", "+400", "+500"
+
+62.) Chaining?
+
+63.) We need to build out 5 "medium" sections which use ONLY BALLOONS
+
+64.) We need to build out 5 "medium" sections which use Balloons + Bricks (sparringly)
+
+65.) We need to build out 5 "medium" sections which use Balloons + Turtles (sparringly)
+
+66.) We need to memory leak test several scenarios.
 
 
 
