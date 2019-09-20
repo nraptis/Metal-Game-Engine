@@ -36,6 +36,8 @@ GameEditor::GameEditor(Game *pGame) {
     mMenuObjectClearing = NULL;
     mMenuMotion = NULL;
     
+    mMenuStyle = NULL;
+    
     
     mTestIndex = 0;
     mTestMode = false;
@@ -72,7 +74,7 @@ GameEditor::GameEditor(Game *pGame) {
     
     mMenuSections = new EditorMenuSections(this);
     mToolContainer->AddChild(mMenuSections);
-    mMenuSections->SetFrame(gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 20.0f, 400.0f, 780.0f);
+    mMenuSections->SetFrame(gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 10.0f, 400.0f, mHeight - (gSafeAreaInsetBottom + gSafeAreaInsetTop + 20.0f));
     
     mExportIndex = 0;
     
@@ -420,7 +422,11 @@ void GameEditor::KeyDown(int pKey) {
         if (pKey == __KEY__9) { mExportIndex = 9; SaveConfig(); }
     }
     
-    
+    if (pKey == __KEY__Q) {
+        if (aShift == false && aCtrl == true && aAlt == false) {
+            Clear();
+        }
+    }
     
     if (pKey == __KEY__ENTER) {
         if (aShift == false && aCtrl == true && aAlt == false) {
@@ -1280,7 +1286,7 @@ void GameEditor::OpenAttachmentMenu() {
         mMenuAttachment = new EditorMenuAttachment(this);
         mToolContainer->AddChild(mMenuAttachment);
         mMenuAttachment->SetFrame(gDeviceWidth2 + 200.0f,
-                                  (gDeviceHeight - gSafeAreaInsetBottom) - 600.0f - 2.0f, 400.0f, 600.0f);
+                                  (gDeviceHeight - gSafeAreaInsetBottom) - 740.0f - 2.0f, 400.0f, 740.0f);
     }
 }
 
@@ -1301,6 +1307,18 @@ void GameEditor::OpenMotionMenu() {
         mMenuMotion->SetFrame(gDeviceWidth2 / 2.0f - 420.0f / 2.0f, 130.0f, 420.0f, 600.0f);
     }
 }
+
+void GameEditor::OpenStyleMenu() {
+    if (mMenuStyle == NULL) {
+        mMenuStyle = new EditorMenuStyle(this);
+        mToolContainer->AddChild(mMenuStyle);
+        mMenuStyle->SetFrame(gDeviceWidth2 / 2.0f - 280.0f / 2.0f, 160.0f, 420.0f, 500.0f);
+    }
+}
+
+
+
+
 
 void GameEditor::Test() {
     Autosave();

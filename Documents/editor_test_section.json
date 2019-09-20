@@ -5,47 +5,10 @@
 	"wave_list": [],
 	"perm_list": [
 		{
-			"x": 48.792717,
-			"y": 19.016579,
-			"path": {
-				"smooth": true,
-				"closed": true,
-				"node_list": [
-					{
-						"x_con": 300,
-						"y_con": 300
-					},
-					{
-						"x_con": 700,
-						"y_con": 300
-					},
-					{
-						"x_con": 600,
-						"y_con": 600
-					},
-					{
-						"x_con": 400,
-						"y_con": 600
-					}
-				]
-			},
-			"spawn": [
-				{
-					"formation": "form_all_nod_mix_bln_brk_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfgbbbbrbbbb_snp",
-					"formation_config": {},
-					"motion": {
-						"play_on_enter": false,
-						"play_on_exit": false,
-						"slice_list": [
-							{
-								"type": 3,
-								"linear_tick": 40,
-								"linear_time": 80
-							}
-						]
-					}
-				}
-			]
+			"x": 49.761284,
+			"y": 41.837994,
+			"formation": "form_all_trc_mix_bln_tur_grd_rec_6x6_60sph_60spv_0ful_tra_4ply_cfgtbbb_tra_4ply_cfgtbbb_tra_4ply_cfgtbbb_tra_4ply_cfgtbbb_tra_4ply_cfg4xb_tra_4ply_cfg4xb",
+			"formation_config": {}
 		}
 	]
 }

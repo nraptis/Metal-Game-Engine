@@ -7,7 +7,6 @@
 //
 
 #include "EditorMenuSections.hpp"
-#include "LightConfigurationScene.hpp"
 #include "EditorMenuSections.hpp"
 #include "GameEditor.hpp"
 #include "EditorMenuFormationPicker.hpp"
@@ -68,19 +67,24 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     mRowMenus1->AddButton(mButtonShowSpawn);
     
     mButtonShowWavePicker = new UIButton();
-    mButtonShowWavePicker->SetText("Wave Picker");
+    mButtonShowWavePicker->SetText("Picker-W");
     mRowMenus1->AddButton(mButtonShowWavePicker);
     
     mButtonShowSpawnPicker = new UIButton();
-    mButtonShowSpawnPicker->SetText("Spawn Picker");
+    mButtonShowSpawnPicker->SetText("Picker-S");
     mRowMenus1->AddButton(mButtonShowSpawnPicker);
     
     mButtonShowAttachments = new UIButton();
-    mButtonShowAttachments->SetText("Attachments");
+    mButtonShowAttachments->SetText("Atch");
     mRowMenus1->AddButton(mButtonShowAttachments);
     
     mRowMenus2 = new ToolMenuSectionRow();
     mMenusPanel->AddSection(mRowMenus2);
+    
+    
+    mButtonShowStyleChooser = new UIButton();
+    mButtonShowStyleChooser->SetText("Style");
+    mRowMenus2->AddButton(mButtonShowStyleChooser);
     
     mButtonShowPermanentEditor = new UIButton();
     mButtonShowPermanentEditor->SetText("Perms");
@@ -272,6 +276,10 @@ void EditorMenuSections::Notify(void *pSender, const char *pNotification) {
     if (pSender == mButtonShowSpawnPicker) { mEditor->OpenSpawnPickerMenu(); }
     
     if (pSender == mButtonShowAttachments) { mEditor->OpenAttachmentMenu(); }
+    
+    if (pSender == mButtonShowStyleChooser) { mEditor->OpenStyleMenu(); }
+    
+    
     
     if (pSender == mButtonShowFormationEditor) { mEditor->OpenFormationEditor(NULL); }
     if (pSender == mButtonShowFormationPicker) { mEditor->PickFormationForFormationEditor(); }

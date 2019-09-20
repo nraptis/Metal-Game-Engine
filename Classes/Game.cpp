@@ -971,14 +971,9 @@ void Game::TouchFlush() {
 
 void Game::KeyDown(int pKey) {
     
-    
-    
-    
     if (gKeyDownCtrl) {
         if (pKey == __KEY__R) {
-            
             DisposeAllObjects();
-            
             if (mLevelData != NULL) {
                 if (mLevelController != NULL) {
                     mLevelController->mData = NULL;
@@ -986,21 +981,20 @@ void Game::KeyDown(int pKey) {
                 delete mLevelData;
                 mLevelData = NULL;
             }
-            
-            Load();
+#ifndef EDITOR_MODE
+             Load();
+#else
+            LoadEditorTest();
+#endif
         }
     }
     
     if (pKey == __KEY__L) {
-        
         if (gKeyDownCtrl) {
             mLives++;
             if (gInterfaceOverlay != NULL) { gInterfaceOverlay->NotifyLivesChanged(); }
         }
     }
-    
-    
-    
     
 }
 

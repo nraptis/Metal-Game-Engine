@@ -7,7 +7,6 @@
 //
 
 #include "EditorMenuWavesPicker.hpp"
-#include "LightConfigurationScene.hpp"
 #include "EditorMenuWavesPicker.hpp"
 #include "GameEditor.hpp"
 #include "FApp.hpp"

@@ -7,7 +7,6 @@
 //
 
 #include "EditorMenuFormationSpawnPicker.hpp"
-#include "LightConfigurationScene.hpp"
 #include "GameFormationEditor.hpp"
 #include "FApp.hpp"
 

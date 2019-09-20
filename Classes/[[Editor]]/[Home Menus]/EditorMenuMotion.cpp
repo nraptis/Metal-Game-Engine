@@ -7,7 +7,6 @@
 //
 
 #include "EditorMenuMotion.hpp"
-#include "LightConfigurationScene.hpp"
 #include "EditorMenuMotion.hpp"
 #include "GameEditor.hpp"
 #include "GamePermanentEditor.hpp"

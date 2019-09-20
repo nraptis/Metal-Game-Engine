@@ -177,6 +177,7 @@ void GameOverlayInterface::Draw() {
     
     
     
+    /*
     DrawTransform();
     Graphics::PipelineStateSetShape2DAlphaBlending();
     
@@ -187,8 +188,12 @@ void GameOverlayInterface::Draw() {
         
         float aPercent = ((float)i) / ((float)mTextBubbleExploreList.mCount);
         
-        float aX = mTextBubbleExploreList.mX[i];
-        float aY = mTextBubbleExploreList.mY[i];
+        aPercent = (1.0f - aPercent);
+        aPercent = (aPercent * aPercent);
+        aPercent = (1.0f - aPercent);
+        
+        float aX = mTextBubbleExploreList.mX[i] * gSpriteDrawScale;
+        float aY = mTextBubbleExploreList.mY[i] * gSpriteDrawScale;
         
         aX += mWidth2;
         aY += mHeight2;
@@ -197,6 +202,7 @@ void GameOverlayInterface::Draw() {
         Graphics::DrawPoint(aX, aY, 6.0f);
         
     }
+    */
     
     
     /*

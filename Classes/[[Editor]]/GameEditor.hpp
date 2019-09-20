@@ -21,6 +21,7 @@
 #include "EditorMenuFormationPicker.hpp"
 #include "EditorMenuObjectClearing.hpp"
 #include "EditorMenuMotion.hpp"
+#include "EditorMenuStyle.hpp"
 
 #include "GamePathEditor.hpp"
 #include "GameFormationEditor.hpp"
@@ -156,6 +157,7 @@ public:
     void                                        OpenAttachmentMenu();
     void                                        OpenObjectClearingMenu();
     void                                        OpenMotionMenu();
+    void                                        OpenStyleMenu();
     
     
     void                                        Test();
@@ -209,6 +211,7 @@ public:
     EditorMenuAttachment                        *mMenuAttachment;
     EditorMenuObjectClearing                    *mMenuObjectClearing;
     EditorMenuMotion                            *mMenuMotion;
+    EditorMenuStyle                             *mMenuStyle;
     
     
     FCanvas                                     *mToolContainer;

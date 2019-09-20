@@ -7,7 +7,6 @@
 //
 
 #include "EditorMenuPermanentUtils.hpp"
-#include "LightConfigurationScene.hpp"
 #include "EditorMenuPermanentUtils.hpp"
 #include "GameEditor.hpp"
 #include "GamePermanentEditor.hpp"
@@ -78,12 +77,21 @@ EditorMenuPermanentUtils::EditorMenuPermanentUtils(GamePermanentEditor *pEditor)
     mRowMenus1 = new ToolMenuSectionRow();
     mMenusPanel->AddSection(mRowMenus1);
     
+    
+    mButtonMenuStylePerm = new UIButton();
+    mButtonMenuStylePerm->SetText("Sty-Perm");
+    mRowMenus1->AddButton(mButtonMenuStylePerm);
+    
+    mButtonMenuStyleSpawn = new UIButton();
+    mButtonMenuStyleSpawn->SetText("Sty-Spwn");
+    mRowMenus1->AddButton(mButtonMenuStyleSpawn);
+    
     mButtonMenuSpawnPicker = new UIButton();
-    mButtonMenuSpawnPicker->SetText("Spawn Picker");
+    mButtonMenuSpawnPicker->SetText("Spwn-Pck");
     mRowMenus1->AddButton(mButtonMenuSpawnPicker);
     
     mButtonMenuPermPicker = new UIButton();
-    mButtonMenuPermPicker->SetText("Perm Picker");
+    mButtonMenuPermPicker->SetText("Perm-Pck");
     mRowMenus1->AddButton(mButtonMenuPermPicker);
     
     
@@ -92,7 +100,7 @@ EditorMenuPermanentUtils::EditorMenuPermanentUtils(GamePermanentEditor *pEditor)
     mMenusPanel->AddSection(mRowMenus2);
     
     mButtonMenuAttachment = new UIButton();
-    mButtonMenuAttachment->SetText("Attachments");
+    mButtonMenuAttachment->SetText("Atch");
     mRowMenus2->AddButton(mButtonMenuAttachment);
     
     
@@ -163,6 +171,13 @@ void EditorMenuPermanentUtils::Notify(void *pSender, const char *pNotification) 
     if (pSender == mButtonMenuMotionPerm) { mEditor->OpenMenuMotionForPerm(); }
     if (pSender == mButtonMenuMotionSpawn) { mEditor->OpenMenuMotionForSpawn(); }
     
+    
+    if (pSender == mButtonMenuStylePerm) { mEditor->OpenMenuStyleForPerm(); }
+    if (pSender == mButtonMenuStyleSpawn) { mEditor->OpenMenuStyleForSpawn(); }
+    
+    
+    //mButtonMenuStylePicker
+    
     if (pSender == mStepperPathSpawnCount) { gEditor->RefreshPlayback(); }
     if (pSender == mCheckBoxPathSpawnEqualSpacing) { gEditor->RefreshPlayback(); }
     if (pSender == mStepperPathSpawnSpacing) { gEditor->RefreshPlayback(); }
@@ -190,7 +205,6 @@ void EditorMenuPermanentUtils::Update() {
         }
     }
     
-    
     if (mStepperPathSpawnSpacing != NULL) {
         bool aUnlink = true;
         if (aPerm != NULL) {
@@ -212,53 +226,5 @@ void EditorMenuPermanentUtils::Update() {
             mCheckBoxPathSpawnEqualSpacing->SetTarget(NULL);
         }
     }
-    
-    /*
-    
-    */
-    
-    /*
-    LevelWaveBlueprint *aWave = NULL;
-    if (gEditor) {
-        aWave = gEditor->mSection.mCurrentWave;
-    }
-    
-    
-    
-    if (mStepperSpacing != NULL) {
-        bool aUnlink = true;
-        if (aWave != NULL) {
-            aUnlink = false;
-            mStepperSpacing->SetTarget(&(aWave->mSpawnSpacing));
-        }
-        if (aUnlink) {
-            mStepperSpacing->SetTarget(NULL);
-        }
-    }
-    
-    
-    if (mStepperCreationType != NULL) {
-        bool aUnlink = true;
-        if (aWave != NULL) {
-            aUnlink = false;
-            mStepperCreationType->SetTarget(&(aWave->mCreationType));
-        }
-        if (aUnlink) {
-            mStepperCreationType->SetTarget(NULL);
-        }
-    }
-    
-    if (mStepperCreationDelay != NULL) {
-        bool aUnlink = true;
-        if (aWave != NULL) {
-            aUnlink = false;
-            mStepperCreationDelay->SetTarget(&(aWave->mCreationDelay));
-        }
-        if (aUnlink) {
-            mStepperCreationDelay->SetTarget(NULL);
-        }
-    }
-    
-    */
     
 }

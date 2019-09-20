@@ -32,6 +32,7 @@ GamePermanentEditor::GamePermanentEditor(GameEditor *pEditor) {
     mMenuSpawnPicker = NULL;
     mMenuPermPicker = NULL;
     mMenuMotion = NULL;
+    mMenuStyle = NULL;
     mMenuGrid = NULL;
     
     
@@ -295,7 +296,6 @@ void GamePermanentEditor::KeyDown(int pKey) {
             Refresh();
         }
     }
-    
     
     if (pKey == __KEY__O) {
         if (aPerm != NULL) {
@@ -599,6 +599,23 @@ void GamePermanentEditor::OpenMenuMotionForSpawn() {
     }
 }
 
+void GamePermanentEditor::OpenMenuStyleForPerm() {
+    if (mMenuStyle == NULL) {
+        mMenuStyle = new EditorMenuStyle(this);
+        mMenuStyle->mIsForPermSpawn = false;
+        mToolContainer->AddChild(mMenuStyle);
+        mMenuStyle->SetFrame(gDeviceWidth2 / 2.0f - 300.0f / 2.0f, 220.0f, 420.0f, 400.0f);
+    }
+}
+
+void GamePermanentEditor::OpenMenuStyleForSpawn() {
+    if (mMenuStyle == NULL) {
+        mMenuStyle = new EditorMenuStyle(this);
+        mMenuStyle->mIsForPermSpawn = true;
+        mToolContainer->AddChild(mMenuStyle);
+        mMenuStyle->SetFrame(gDeviceWidth2 / 2.0f - 300.0f / 2.0f, 220.0f, 420.0f, 400.0f);
+    }
+}
 
 void GamePermanentEditor::AddPath() {
     OpenPathEditor();

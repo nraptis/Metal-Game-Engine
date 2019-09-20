@@ -17,6 +17,7 @@
 #include "EditorMenuPermSpawnPicker.hpp"
 #include "EditorMenuPermPicker.hpp"
 #include "EditorMenuMotion.hpp"
+#include "EditorMenuStyle.hpp"
 #include "LevelSectionPermBlueprint.hpp"
 #include "LevelSectionPerm.hpp"
 #include "GamePathEditor.hpp"
@@ -57,6 +58,7 @@ public:
     EditorMenuPermSpawnPicker                   *mMenuSpawnPicker;
     EditorMenuAttachment                        *mMenuAttachment;
     EditorMenuMotion                            *mMenuMotion;
+    EditorMenuStyle                             *mMenuStyle;
     EditorMenuFormationGrid                     *mMenuGrid;
     
     void                                        SetOverlay(FCanvas *pCanvas);
@@ -74,8 +76,8 @@ public:
     void                                        OpenMenuAttachment();
     void                                        OpenMenuMotionForPerm();
     void                                        OpenMenuMotionForSpawn();
-    
-    
+    void                                        OpenMenuStyleForPerm();
+    void                                        OpenMenuStyleForSpawn();
     
     
     
@@ -92,7 +94,7 @@ public:
     int                                         PermSpawnIndex();
     
     
-    LevelSectionPermBlueprint              *GetPerm();
+    LevelSectionPermBlueprint                   *GetPerm();
     
     bool                                        mSnapsEnabled;
     

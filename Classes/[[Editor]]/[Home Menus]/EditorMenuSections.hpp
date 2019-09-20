@@ -39,10 +39,10 @@ public:
     UIButton                                *mButtonShowWavePicker;
     UIButton                                *mButtonShowSpawnPicker;
     UIButton                                *mButtonShowAttachments;
+    UIButton                                *mButtonShowStyleChooser;
     UIButton                                *mButtonShowFormationEditor;
     UIButton                                *mButtonShowFormationPicker;
     UIButton                                *mButtonShowPermanentEditor;
-    
     UIButton                                *mButtonShowMotionEditor;
     UIButton                                *mButtonShowObjectClearer;
     

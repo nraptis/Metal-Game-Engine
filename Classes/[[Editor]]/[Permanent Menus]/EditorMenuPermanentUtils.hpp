@@ -48,9 +48,14 @@ public:
     UIButton                                *mButtonMenuPermPicker;
     
     ToolMenuSectionRow                      *mRowMenus2;
+    
     UIButton                                *mButtonMenuAttachment;
     UIButton                                *mButtonMenuMotionPerm;
     UIButton                                *mButtonMenuMotionSpawn;
+    
+    UIButton                                *mButtonMenuStylePerm;
+    UIButton                                *mButtonMenuStyleSpawn;
+    
     
     
 };

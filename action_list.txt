@@ -1,3 +1,10 @@
+
+A.) We need a way to turn threads on and off for wave spawns, perms, and perm spawns.
+
+B.) We need a generic styling mechanism (style controller) blueprint and object. 
+
+C.) We need a "start from pause start" and "start from pause end" option for several of the motion controllers.
+
 01.) Win condition? We need to capture the win condition.
 
 02.) Losing lives when balloons fly offscreen.

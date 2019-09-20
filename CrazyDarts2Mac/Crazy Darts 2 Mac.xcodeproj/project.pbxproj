@@ -120,6 +120,9 @@
 		0D154341232DC1B40004AE55 /* EditorMenuPathControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D1542C4232DC1B40004AE55 /* EditorMenuPathControl.cpp */; };
 		0D154342232DC1B40004AE55 /* MainMenuPlayButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D1542C8232DC1B40004AE55 /* MainMenuPlayButton.cpp */; };
 		0D154343232DC1B40004AE55 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D1542D2232DC1B40004AE55 /* Game.cpp */; };
+		0D4236F723348055003CB4A0 /* LevelStyleControllerBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D4236F523348055003CB4A0 /* LevelStyleControllerBlueprint.cpp */; };
+		0D4236FA23348199003CB4A0 /* LevelStyleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D4236F823348199003CB4A0 /* LevelStyleController.cpp */; };
+		0D4236FD233487E8003CB4A0 /* EditorMenuStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D4236FB233487E8003CB4A0 /* EditorMenuStyle.cpp */; };
 		0D511DB82320B14F00EB57D1 /* FModelDataPackedSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D511DB62320B14F00EB57D1 /* FModelDataPackedSequence.cpp */; };
 		0D8FCF18225DA8ED00A74580 /* BufferBindingWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDB8225DA8EC00A74580 /* BufferBindingWrapper.mm */; };
 		0D8FCF19225DA8ED00A74580 /* os_core_graphics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDB9225DA8EC00A74580 /* os_core_graphics.mm */; };
@@ -468,6 +471,12 @@
 		0D1542D0232DC1B40004AE55 /* Dart.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dart.hpp; sourceTree = "<group>"; };
 		0D1542D1232DC1B40004AE55 /* GFXApp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GFXApp.hpp; sourceTree = "<group>"; };
 		0D1542D2232DC1B40004AE55 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
+		0D4236F523348055003CB4A0 /* LevelStyleControllerBlueprint.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelStyleControllerBlueprint.cpp; sourceTree = "<group>"; };
+		0D4236F623348055003CB4A0 /* LevelStyleControllerBlueprint.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelStyleControllerBlueprint.hpp; sourceTree = "<group>"; };
+		0D4236F823348199003CB4A0 /* LevelStyleController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelStyleController.cpp; sourceTree = "<group>"; };
+		0D4236F923348199003CB4A0 /* LevelStyleController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LevelStyleController.hpp; sourceTree = "<group>"; };
+		0D4236FB233487E8003CB4A0 /* EditorMenuStyle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMenuStyle.cpp; sourceTree = "<group>"; };
+		0D4236FC233487E8003CB4A0 /* EditorMenuStyle.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuStyle.hpp; sourceTree = "<group>"; };
 		0D511DB62320B14F00EB57D1 /* FModelDataPackedSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FModelDataPackedSequence.cpp; sourceTree = "<group>"; };
 		0D511DB72320B14F00EB57D1 /* FModelDataPackedSequence.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FModelDataPackedSequence.hpp; sourceTree = "<group>"; };
 		0D8FCDB8225DA8EC00A74580 /* BufferBindingWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BufferBindingWrapper.mm; sourceTree = "<group>"; };
@@ -882,6 +891,8 @@
 				0D154227232DC1B40004AE55 /* LevelWaveBlueprint.hpp */,
 				0D154222232DC1B40004AE55 /* LevelWaveSpawnBlueprint.cpp */,
 				0D154226232DC1B40004AE55 /* LevelWaveSpawnBlueprint.hpp */,
+				0D4236F523348055003CB4A0 /* LevelStyleControllerBlueprint.cpp */,
+				0D4236F623348055003CB4A0 /* LevelStyleControllerBlueprint.hpp */,
 			);
 			path = "[[Spawn Blueprints]]";
 			sourceTree = "<group>";
@@ -945,6 +956,8 @@
 				0D154277232DC1B40004AE55 /* LevelWave.hpp */,
 				0D154276232DC1B40004AE55 /* LevelWaveSpawn.cpp */,
 				0D154270232DC1B40004AE55 /* LevelWaveSpawn.hpp */,
+				0D4236F823348199003CB4A0 /* LevelStyleController.cpp */,
+				0D4236F923348199003CB4A0 /* LevelStyleController.hpp */,
 			);
 			path = "[[Spawn Game]]";
 			sourceTree = "<group>";
@@ -1026,6 +1039,8 @@
 				0D1542B3232DC1B40004AE55 /* EditorMenuSpawnPicker.hpp */,
 				0D1542A8232DC1B40004AE55 /* EditorMenuWavesPicker.cpp */,
 				0D1542AD232DC1B40004AE55 /* EditorMenuWavesPicker.hpp */,
+				0D4236FB233487E8003CB4A0 /* EditorMenuStyle.cpp */,
+				0D4236FC233487E8003CB4A0 /* EditorMenuStyle.hpp */,
 			);
 			path = "[Home Menus]";
 			sourceTree = "<group>";
@@ -1486,6 +1501,7 @@
 				0D8FCF4F225DA8ED00A74580 /* FXML.cpp in Sources */,
 				0D1542E8232DC1B40004AE55 /* LevelNode.cpp in Sources */,
 				0D1542D5232DC1B40004AE55 /* PhongLightMenu.cpp in Sources */,
+				0D4236FD233487E8003CB4A0 /* EditorMenuStyle.cpp in Sources */,
 				0D8FCF4E225DA8ED00A74580 /* FLight.cpp in Sources */,
 				0D8FCF26225DA8ED00A74580 /* FModelData.cpp in Sources */,
 				0D154325232DC1B40004AE55 /* LightConfigurationScene.cpp in Sources */,
@@ -1535,6 +1551,7 @@
 				0D8FCF31225DA8ED00A74580 /* FMatrix.cpp in Sources */,
 				0D8FCF35225DA8ED00A74580 /* FSlider.cpp in Sources */,
 				0D8FCF79225DA8ED00A74580 /* FString.cpp in Sources */,
+				0D4236F723348055003CB4A0 /* LevelStyleControllerBlueprint.cpp in Sources */,
 				0D154330232DC1B40004AE55 /* EditorMenuPermanentUtils.cpp in Sources */,
 				0D8FCF50225DA8ED00A74580 /* FParticle.cpp in Sources */,
 				0D8FCF1D225DA8ED00A74580 /* Shape2DShaders.metal in Sources */,
@@ -1549,6 +1566,7 @@
 				0D154337232DC1B40004AE55 /* EditorMenuSections.cpp in Sources */,
 				0D154308232DC1B40004AE55 /* WadGlobalConfiguration.cpp in Sources */,
 				0D8FCF66225DA8ED00A74580 /* UIRoundedRect.cpp in Sources */,
+				0D4236FA23348199003CB4A0 /* LevelStyleController.cpp in Sources */,
 				0D8FCF4A225DA8ED00A74580 /* FVec2.cpp in Sources */,
 				0D15430E232DC1B40004AE55 /* WindSpeedSimulator.cpp in Sources */,
 				0D8FCF33225DA8ED00A74580 /* FSound.cpp in Sources */,
