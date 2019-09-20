@@ -44,20 +44,13 @@ void FIndexList::Add(GFX_MODEL_INDEX_TYPE pIndex)
     mCount++;
 }
 
-void FIndexList::Add(FIndexList *pList)
-{
-    if(pList)
-    {
-        
-        if(pList->mCount > mSize)
-        {
-            Size(pList->mCount);
+void FIndexList::Add(FIndexList *pList) {
+    if (pList) {
+        if ((pList->mCount + mCount) > mSize) {
+            Size(pList->mCount + mCount);
         }
-        
-        for(int i = 0; i<pList->mCount; i++)
-        {
+        for (int i = 0; i<pList->mCount; i++) {
             Add(pList->mIndex[i]);
-            //Add(pList->mX[i], pList->mY[i]);
         }
         
     }

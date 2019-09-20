@@ -221,7 +221,6 @@ void GameContainer::Update() {
             }
         }
     }
-    
 }
 
 void GameContainer::Draw() {

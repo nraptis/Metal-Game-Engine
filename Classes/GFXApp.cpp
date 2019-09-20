@@ -290,11 +290,22 @@ void GFXApp::LoadComplete() {
     EditorTestSwitchToEditor();
 #else
     
+    /*
     if (mMainMenu == NULL) {
         mMainMenu = new MainMenu();
         mWindowMain.AddChild(mMainMenu);
         mCurrentCanvas = mMainMenu;
     }
+    */
+    
+    if (mGameContainer == NULL) {
+    mGameContainer = new GameContainer();
+    mCurrentCanvas = mGameContainer;
+    mWindowMain.AddChild(mGameContainer);
+    mWindowMain.RefreshAll();
+    mGameContainer->mGame->Load();
+    }
+    
     
     //TransitionToGame();
     

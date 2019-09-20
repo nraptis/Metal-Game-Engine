@@ -12,8 +12,12 @@
 #include "GFXApp.hpp"
 #include "FButton.hpp"
 #include "LifeIndicator.hpp"
+#include "FPointList.hpp"
 
 #define MAX_LIFE_INDICATOR_COUNT 16
+
+#define TEXT_BUBBLE_EXPLORE_GRID_RADIUS 18
+#define TEXT_BUBBLE_EXPLORE_GRID_STEP_SIZE 8.0f
 
 class Game;
 class GameOverlayInterface : public FCanvas {
@@ -41,10 +45,11 @@ public:
     void                                        RefreshLifeIndicators();
     void                                        RefreshLifeIndicatorFrames();
     
-    
     float                                       mCoinFrame[5];
     
+    void                                        BuildTextBubbleExploreGrid();
     
+    FPointList                                  mTextBubbleExploreList;
     
 };
 

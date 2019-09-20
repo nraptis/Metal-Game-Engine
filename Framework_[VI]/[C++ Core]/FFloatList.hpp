@@ -36,9 +36,6 @@ public:
     
     void                    Reverse();
     
-    void                    AddValues(int pCount, float pFloat1 = 0.0f, float pFloat2 = 0.0f, float pFloat3 = 0.0f, float pFloat4 = 0.0f, float pFloat5 = 0.0f, float pFloat6 = 0.0f, float pFloat7 = 0.0f, float pFloat8 = 0.0f, float pFloat9 = 0.0f, float pFloat10 = 0.0f, float pFloat11 = 0.0f, float pFloat12 = 0.0f, float pFloat13 = 0.0f, float pFloat14 = 0.0f, float pFloat15 = 0.0f);
-    void                    AddValuesReset(int pCount, float pFloat1 = 0.0f, float pFloat2 = 0.0f, float pFloat3 = 0.0f, float pFloat4 = 0.0f, float pFloat5 = 0.0f, float pFloat6 = 0.0f, float pFloat7 = 0.0f, float pFloat8 = 0.0f, float pFloat9 = 0.0f, float pFloat10 = 0.0f, float pFloat11 = 0.0f, float pFloat12 = 0.0f, float pFloat13 = 0.0f, float pFloat14 = 0.0f, float pFloat15 = 0.0f);
-    
     void                    Size(int pSize);
     inline void             SetSize(int pSize){ Size(pSize); }
     
@@ -47,10 +44,6 @@ public:
     
     void                    Save(FFile *pFile);
     void                    Load(FFile *pFile);
-    
-    int                     GetPrintLineCount();
-    FString                 GetPrintLine(int pLineNumber);
-    FString                 GetPrintString(const char *pVariableName);
 };
 
 

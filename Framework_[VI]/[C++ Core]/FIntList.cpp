@@ -35,8 +35,8 @@ void FIntList::Add(int pIndex) {
 
 void FIntList::Add(FIntList *pList) {
     if (pList) {
-        if(pList->mCount > mSize) {
-            Size(pList->mCount);
+        if((pList->mCount + mCount) > mSize) {
+            Size(pList->mCount + mCount);
         }
         for (int i = 0; i<pList->mCount; i++) {
             Add(pList->mData[i]);

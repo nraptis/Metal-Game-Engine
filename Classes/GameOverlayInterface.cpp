@@ -43,8 +43,7 @@ GameOverlayInterface::GameOverlayInterface() {
     mCoinFrame[3] = 0.0f;
     mCoinFrame[4] = 0.0f;
     
-    
-    
+    BuildTextBubbleExploreGrid();
 }
 
 GameOverlayInterface::~GameOverlayInterface() {
@@ -177,6 +176,29 @@ void GameOverlayInterface::Draw() {
     }
     
     
+    
+    DrawTransform();
+    Graphics::PipelineStateSetShape2DAlphaBlending();
+    
+    Graphics::SetColor(0.125f, 0.125f, 0.125f, 1.0f);
+    Graphics::DrawRect(0.0f, 0.0f, mWidth, mHeight);
+    
+    for (int i=0;i<mTextBubbleExploreList.mCount;i++) {
+        
+        float aPercent = ((float)i) / ((float)mTextBubbleExploreList.mCount);
+        
+        float aX = mTextBubbleExploreList.mX[i];
+        float aY = mTextBubbleExploreList.mY[i];
+        
+        aX += mWidth2;
+        aY += mHeight2;
+        
+        Graphics::SetColor(aPercent, 0.5f, 0.5f, 0.85f);
+        Graphics::DrawPoint(aX, aY, 6.0f);
+        
+    }
+    
+    
     /*
     DrawTransform();
     Graphics::PipelineStateSetSpritePremultipliedBlending();
@@ -289,3 +311,86 @@ void GameOverlayInterface::RefreshLifeIndicatorFrames() {
         }
     }
 }
+
+void GameOverlayInterface::BuildTextBubbleExploreGrid() {
+    
+    //TEXT_BUBBLE_EXPLORE_GRID_RADIUS
+    //TEXT_BUBBLE_EXPLORE_GRID_STEP_SIZE
+    
+    int aGridSize = ((TEXT_BUBBLE_EXPLORE_GRID_RADIUS - 1) + (TEXT_BUBBLE_EXPLORE_GRID_RADIUS - 1) + 1);
+    
+    float aExploreGridX[aGridSize][aGridSize];
+    float aExploreGridY[aGridSize][aGridSize];
+    float aExploreEuropeanDistance[aGridSize][aGridSize];
+    
+    int aGridOffset = (TEXT_BUBBLE_EXPLORE_GRID_RADIUS - 1);
+    
+    float aX = 0.0f;
+    float aY = 0.0f;
+    float aDist = 0.0f;
+    int aListCount = 0;
+    
+    float aHopSize = TEXT_BUBBLE_EXPLORE_GRID_STEP_SIZE;
+    for (int i=(-(TEXT_BUBBLE_EXPLORE_GRID_RADIUS - 1));i<TEXT_BUBBLE_EXPLORE_GRID_RADIUS;i++) {
+        aX = ((float)i) * aHopSize;
+        for (int n=(-(TEXT_BUBBLE_EXPLORE_GRID_RADIUS - 1));n<TEXT_BUBBLE_EXPLORE_GRID_RADIUS;n++) {
+            aY = ((float)n) * aHopSize;
+            aExploreGridX[i + aGridOffset][n + aGridOffset] = aX;
+            aExploreGridY[i + aGridOffset][n + aGridOffset] = aY;
+            aDist = aX * aX + aY * aY;
+            aExploreEuropeanDistance[i + aGridOffset][n + aGridOffset] = aDist;
+            
+            aListCount += 1;
+        }
+    }
+    
+    float aListX[aListCount];
+    float aListY[aListCount];
+    float aListDist[aListCount];
+    int aIndex = 0;
+    
+    for (int i=0;i<aGridSize;i++) {
+        for (int n=0;n<aGridSize;n++) {
+            aListX[aIndex] = aExploreGridX[i][n];
+            aListY[aIndex] = aExploreGridY[i][n];
+            aListDist[aIndex] = aExploreEuropeanDistance[i][n];
+            
+            aIndex++;
+        }
+    }
+    
+    float aHoldX = 0.0f;
+    float aHoldY = 0.0f;
+    float aHoldDist = 0.0f;
+    
+    int i = 0;
+    int j = 0;
+    
+    for (i=1;i<aListCount;i++) {
+        aHoldDist = aListDist[i];
+        aHoldX = aListX[i];
+        aHoldY = aListY[i];
+        
+        j = i;
+        while ((j>0) && ((aListDist[j-1]<aHoldDist))) {
+            aListDist[j] = aListDist[j - 1];
+            aListX[j] = aListX[j - 1];
+            aListY[j] = aListY[j - 1];
+            
+            j--;
+        }
+        aListDist[j] = aHoldDist;
+        aListX[j] = aHoldX;
+        aListY[j] = aHoldY;
+    }
+    
+    mTextBubbleExploreList.RemoveAll();
+    for (int i=0;i<aListCount;i++) {
+        mTextBubbleExploreList.Add(aListX[i], aListY[i]);
+    }
+    
+    printf("Explore Point Count: %d\n", mTextBubbleExploreList.mCount);
+    
+}
+
+

@@ -38,8 +38,8 @@ void FPointList::Add(float pX, float pY)
 
 void FPointList::Add(FPointList *pList) {
     if (pList) {
-        if (pList->mCount > mSize) {
-            Size(pList->mCount);
+        if((pList->mCount + mCount) > mSize) {
+            Size(pList->mCount + mCount);
         }
         for (int i=0;i<pList->mCount;i++) {
             Add(pList->mX[i], pList->mY[i]);
