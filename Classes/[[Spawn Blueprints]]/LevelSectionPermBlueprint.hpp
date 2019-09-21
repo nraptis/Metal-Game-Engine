@@ -12,6 +12,7 @@
 #include "LevelPathBlueprint.hpp"
 #include "LevelPermSpawnBlueprint.hpp"
 #include "LevelMotionControllerBlueprint.hpp"
+#include "LevelStyleControllerBlueprint.hpp"
 #include "LevelFormationConfigurationBlueprint.hpp"
 
 
@@ -53,6 +54,7 @@ public:
     
     
     LevelMotionControllerBlueprint              mMotionController;
+    LevelStyleControllerBlueprint               mStyleController;
     
     LevelPermSpawnBlueprint                     mSpawn[PERM_MAX_SPAWN_COUNT + 1];
     

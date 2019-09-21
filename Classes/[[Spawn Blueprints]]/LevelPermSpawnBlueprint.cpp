@@ -54,6 +54,10 @@ FJSONNode *LevelPermSpawnBlueprint::Save() {
         aExport->AddDictionary("motion", mMotionController.Save());
     }
     
+    if (mStyleController.ShouldSave() == true) {
+        aExport->AddDictionary("style", mStyleController.Save());
+    }
+    
     return aExport;
 }
 
@@ -79,5 +83,8 @@ void LevelPermSpawnBlueprint::Load(FJSONNode *pNode) {
 
     FJSONNode *aMotionNode = pNode->GetDictionary("motion");
     mMotionController.Load(aMotionNode);
+    
+    FJSONNode *aStyleNode = pNode->GetDictionary("style");
+    mStyleController.Load(aStyleNode);
     
 }

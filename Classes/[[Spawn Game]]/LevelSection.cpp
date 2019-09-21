@@ -38,14 +38,14 @@ LevelSection::LevelSection() {
     
     mFlyInType = SECTION_FLY_NONE;
     mFlyInTimer = 0;
-    mFlyInTime = 160;
-    mFlyInTime = 999;
+    mFlyInTime = 145;
+    //mFlyInTime = 999;
     
     
     mFlyOutType = SECTION_FLY_NONE;
     mFlyOutTimer = 0;
-    mFlyOutTime = 160;
-    mFlyOutTime = 999;
+    mFlyOutTime = 145;
+    //mFlyOutTime = 999;
     
     mName = "???";
 }

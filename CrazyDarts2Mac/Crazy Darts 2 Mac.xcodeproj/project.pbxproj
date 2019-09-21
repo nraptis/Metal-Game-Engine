@@ -125,6 +125,7 @@
 		0D4236FD233487E8003CB4A0 /* EditorMenuStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D4236FB233487E8003CB4A0 /* EditorMenuStyle.cpp */; };
 		0D511DB82320B14F00EB57D1 /* FModelDataPackedSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D511DB62320B14F00EB57D1 /* FModelDataPackedSequence.cpp */; };
 		0D8EB4992335BBD400B14ACA /* FreeLife.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8EB4972335BBD300B14ACA /* FreeLife.cpp */; };
+		0D8EB49C2335E6E800B14ACA /* SpeedControlMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8EB49A2335E6E800B14ACA /* SpeedControlMenu.cpp */; };
 		0D8FCF18225DA8ED00A74580 /* BufferBindingWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDB8225DA8EC00A74580 /* BufferBindingWrapper.mm */; };
 		0D8FCF19225DA8ED00A74580 /* os_core_graphics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDB9225DA8EC00A74580 /* os_core_graphics.mm */; };
 		0D8FCF1A225DA8ED00A74580 /* Shape3DShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDBD225DA8EC00A74580 /* Shape3DShaders.metal */; };
@@ -482,6 +483,8 @@
 		0D511DB72320B14F00EB57D1 /* FModelDataPackedSequence.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FModelDataPackedSequence.hpp; sourceTree = "<group>"; };
 		0D8EB4972335BBD300B14ACA /* FreeLife.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FreeLife.cpp; sourceTree = "<group>"; };
 		0D8EB4982335BBD300B14ACA /* FreeLife.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FreeLife.hpp; sourceTree = "<group>"; };
+		0D8EB49A2335E6E800B14ACA /* SpeedControlMenu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SpeedControlMenu.cpp; sourceTree = "<group>"; };
+		0D8EB49B2335E6E800B14ACA /* SpeedControlMenu.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SpeedControlMenu.hpp; sourceTree = "<group>"; };
 		0D8FCDB8225DA8EC00A74580 /* BufferBindingWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BufferBindingWrapper.mm; sourceTree = "<group>"; };
 		0D8FCDB9225DA8EC00A74580 /* os_core_graphics.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = os_core_graphics.mm; sourceTree = "<group>"; };
 		0D8FCDBA225DA8EC00A74580 /* TextureBindingWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureBindingWrapper.h; sourceTree = "<group>"; };
@@ -854,6 +857,8 @@
 				0D1541F4232DC1B40004AE55 /* SimpleSpotLightMenu.hpp */,
 				0D1541EE232DC1B40004AE55 /* SoundConfigMenu.cpp */,
 				0D1541F5232DC1B40004AE55 /* SoundConfigMenu.hpp */,
+				0D8EB49A2335E6E800B14ACA /* SpeedControlMenu.cpp */,
+				0D8EB49B2335E6E800B14ACA /* SpeedControlMenu.hpp */,
 			);
 			path = "[[[Config Menus]]]";
 			sourceTree = "<group>";
@@ -1573,6 +1578,7 @@
 				0D8FCF66225DA8ED00A74580 /* UIRoundedRect.cpp in Sources */,
 				0D4236FA23348199003CB4A0 /* LevelStyleController.cpp in Sources */,
 				0D8FCF4A225DA8ED00A74580 /* FVec2.cpp in Sources */,
+				0D8EB49C2335E6E800B14ACA /* SpeedControlMenu.cpp in Sources */,
 				0D15430E232DC1B40004AE55 /* WindSpeedSimulator.cpp in Sources */,
 				0D8FCF33225DA8ED00A74580 /* FSound.cpp in Sources */,
 				0D8FCF42225DA8ED00A74580 /* FRandomizer.cpp in Sources */,

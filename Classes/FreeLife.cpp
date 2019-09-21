@@ -46,6 +46,7 @@ void FreeLife::Draw() {
     Graphics::SetColor(1.0f, 0.0f, 0.25f, 1.0f);
     mEdgePointList2D.DrawEdges(2.0f);
     */
+    
 }
 
 bool FreeLife::WillCollide(float pStartX, float pStartY, float pEndX, float pEndY) {
@@ -60,10 +61,8 @@ bool FreeLife::WillCollide(float pStartX, float pStartY, float pEndX, float pEnd
 void FreeLife::BuildEdgePointListBase() {
     mEdgePointList3DBase.RemoveAll();
     
-    
     float aTopY = -1.80f;
     float aBottomY = 2.15f;
-    
     
     float aRightX = 2.2f;
     float aRightCenterX = aRightX / 2.0f;

@@ -109,6 +109,12 @@ void SkyRenderer::Refresh(float pTop, float pRight, float pBottom, float pLeft, 
     aSeedColorB[4] = 0.921569f;
     aSeedColorB[5] = 0.917647f;
     
+    for (int i=0;i<6;i++) {
+        aSeedColorR[i] *= 0.50f;
+        aSeedColorG[i] *= 0.55f;
+        aSeedColorB[i] *= 0.65f;
+    }
+    
     for (int n=0;n<aGridHeight;n++) {
         for (int i=0;i<aGridWidth;i++) {
             

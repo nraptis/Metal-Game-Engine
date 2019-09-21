@@ -223,6 +223,8 @@ void LevelWaveBlueprint::Build(LevelWave *pWave) {
             mSpawn[i].mMotionController.Build(&(aSpawn->mMotionController));
         }
         
+        mSpawn[i].mStyleController.Build(&(aSpawn->mStyleController));
+        
         if (mSpawn[i].mFormationID.mLength > 0) {
             mSpawn[i].mFormationConfiguration.Build(&(aSpawn->mFormationConfiguration));
         }

@@ -263,6 +263,17 @@ void GamePermanentEditor::KeyDown(int pKey) {
     LevelSectionPermBlueprint *aPerm = GetPerm();
     LevelPermSpawnBlueprint *aSpawn = gEditor->PermSpawnGet();
     
+    
+    bool aForSpawn = false;
+    
+    if (aPerm != NULL) {
+        if (aPerm->IsPathPerm() && aPerm->mSelectedSpawnIndex >= 0 && aPerm->mSelectedSpawnIndex < aPerm->mSpawnCount) {
+            aForSpawn = true;
+        } else {
+            aForSpawn = false;
+        }
+    }
+    
     bool aShift = gKeyDownShift;
     bool aCtrl = gKeyDownCtrl;
     bool aAlt = gKeyDownAlt;
@@ -333,29 +344,27 @@ void GamePermanentEditor::KeyDown(int pKey) {
     
     if (pKey == __KEY__M) {
         if (aShift == false && aCtrl == false && aAlt == false) {
-            
-            LevelSectionPermBlueprint *aPerm = gEditor->PermGet();
-            if (aPerm != NULL) {
-                if (aPerm->IsPathPerm() && aPerm->mSelectedSpawnIndex >= 0 && aPerm->mSelectedSpawnIndex < aPerm->mSpawnCount) {
-                    OpenMenuMotionForSpawn();
-                } else {
-                    OpenMenuMotionForPerm();
-                }
+            if (aForSpawn) {
+                OpenMenuMotionForSpawn();
+            } else {
+                OpenMenuMotionForPerm();
             }
         }
-        
-        if (aShift == false && aCtrl == true && aAlt == false) {
-            
+    }
+    
+    if (pKey == __KEY__Y) {
+        if (aShift == false && aCtrl == false && aAlt == false) {
+            if (aForSpawn) {
+                OpenMenuStyleForSpawn();
+            } else {
+                OpenMenuStyleForPerm();
+            }
         }
     }
     
     if (pKey == __KEY__T) {
         if (aShift == false && aCtrl == false && aAlt == false) {
             OpenMenuAttachment();
-        }
-        
-        if (aShift == false && aCtrl == true && aAlt == false) {
-            
         }
     }
     
@@ -370,23 +379,11 @@ void GamePermanentEditor::KeyDown(int pKey) {
         if (aShift == false && aCtrl == false && aAlt == false) {
             //mFormation.Remove(mFormation.mSelectedNodeIndex);
         }
-        
-        if (aShift == false && aCtrl == true && aAlt == false) {
-            
-            
-            //for (int i=mFormation.mNodeList.mCount - 1;i>=0;i--) {
-            //    mFormation.Remove(i);
-            //}
-            
-        }
     }
     
     if (pKey == __KEY__ESCAPE) {
         if (aShift == false && aCtrl == false && aAlt == false) { Close(); }
     }
-    
-    
-    
     
     if (aPerm != NULL) {
         if (pKey == __KEY__LEFT) {

@@ -172,7 +172,8 @@ void BrickHead::Update() {
     
     
     
-    float aSize = 1.42f;
+    //float aSize = 1.42f;
+    float aSize = 1.46f;
     
     gGame->Convert2DTransformTo3D(&mTransform, &mTransform3D);
     
@@ -230,8 +231,7 @@ void BrickHead::Draw() {
     
     GameObject::Draw();
     
-    /*
-    
+
     Graphics::SetColor(1.0f, 0.15f, 0.15f, 0.75f);
     Graphics::PipelineStateSetShape2DAlphaBlending();
     
@@ -239,8 +239,6 @@ void BrickHead::Draw() {
     Graphics::DrawLine(mCornerPoint2.mX, mCornerPoint2.mY, mCornerPoint3.mX, mCornerPoint3.mY);
     Graphics::DrawLine(mCornerPoint3.mX, mCornerPoint3.mY, mCornerPoint4.mX, mCornerPoint4.mY);
     Graphics::DrawLine(mCornerPoint4.mX, mCornerPoint4.mY, mCornerPoint1.mX, mCornerPoint1.mY);
-    
-    */
     
     
     

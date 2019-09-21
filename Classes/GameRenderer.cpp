@@ -10,7 +10,6 @@
 #include "Game.hpp"
 #include "GameEditor.hpp"
 
-
 GameRenderer::GameRenderer(Game *pGame, FloatingCamera *pCamera) {
     mGame = pGame;
     mCamera = pCamera;
@@ -110,6 +109,11 @@ void GameRenderer::Draw3D() {
     EnumList (Balloon, aBalloon, mGame->mBalloonList.mObjectList) {
         if (aBalloon->mKill == 0) {
             aBalloon->Draw3DThread();
+        }
+    }
+    EnumList (FreeLife, aFreeLife, mGame->mFreeLifeList.mObjectList) {
+        if (aFreeLife->mKill == 0) {
+            aFreeLife->Draw3DThread();
         }
     }
     //Graphics::DepthEnable();
@@ -290,5 +294,4 @@ void GameRenderer::DumpLightsToUniforms() {
     mUniformDiffuse.mLight.mDiffuseIntensity = aLightDiffuse;
     mUniformDiffuse.mColor = FColor(1.0f, 1.0f, 1.0f, 1.0f);
     mUniformDiffuse.mProjection.Set(aProjection);
-    
 }

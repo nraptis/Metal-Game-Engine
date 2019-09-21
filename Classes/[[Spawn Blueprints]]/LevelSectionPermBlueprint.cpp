@@ -223,6 +223,8 @@ void LevelSectionPermBlueprint::Build(LevelSectionPerm *pPerm) {
                 mSpawn[i].mMotionController.Build(&(aSpawn->mMotionController));
             }
             
+            mSpawn[i].mStyleController.Build(&(aSpawn->mStyleController));
+            
             if (mSpawn[i].mFormationID.mLength > 0) {
                 mSpawn[i].mFormationConfiguration.Build(&(aSpawn->mFormationConfiguration));
             }
@@ -235,6 +237,7 @@ void LevelSectionPermBlueprint::Build(LevelSectionPerm *pPerm) {
             mMotionController.Build(&pPerm->mMotionController);
         }
         
+        mStyleController.Build(&(pPerm->mStyleController));
         
         if (mFormationID.mLength > 0) {
             mFormationConfiguration.Build(&(pPerm->mFormationConfiguration));
@@ -303,10 +306,15 @@ FJSONNode *LevelSectionPermBlueprint::Save() {
             aSpawnList->AddArray(mSpawn[i].Save());
         }
         aExport->AddDictionary("spawn", aSpawnList);
-    }
-    
-    if (mMotionController.IsEmpty() == false) {
-        aExport->AddDictionary("motion", mMotionController.Save());
+    } else {
+     
+        if (mMotionController.IsEmpty() == false) {
+            aExport->AddDictionary("motion", mMotionController.Save());
+        }
+        if (mStyleController.ShouldSave() == true) {
+            aExport->AddDictionary("style", mStyleController.Save());
+        }
+        
     }
     
     
@@ -373,9 +381,14 @@ void LevelSectionPermBlueprint::Load(FJSONNode *pNode) {
     if (mSpawnCount <= 0) { mSpawnCount = 1; }
     if (mSpawnCount > WAVE_MAX_SPAWN_COUNT) { mSpawnCount = WAVE_MAX_SPAWN_COUNT; }
     
-    FJSONNode *aMotionNode = pNode->GetDictionary("motion");
-    mMotionController.Load(aMotionNode);
     
+    if (mSpawnCount == 0) {
+        FJSONNode *aMotionNode = pNode->GetDictionary("motion");
+        mMotionController.Load(aMotionNode);
+        
+        FJSONNode *aStyleNode = pNode->GetDictionary("style");
+        mStyleController.Load(aStyleNode);
+    }
     
     mFormationID = pNode->GetString("formation", mFormationID);
     

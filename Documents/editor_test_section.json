@@ -1,14 +1,48 @@
 {
 	"section": true,
-	"keep_alive_timer": 150,
-	"force_kill_timer": 500,
 	"wave_list": [],
 	"perm_list": [
 		{
-			"x": 49.761284,
-			"y": 41.837994,
-			"formation": "form_all_trc_mix_bln_tur_grd_rec_6x6_60sph_60spv_0ful_tra_4ply_cfgtbbb_tra_4ply_cfgtbbb_tra_4ply_cfgtbbb_tra_4ply_cfgtbbb_tra_4ply_cfg4xb_tra_4ply_cfg4xb",
-			"formation_config": {}
+			"x_con": 300,
+			"x_con_offset": 25.000000,
+			"y_con": 800,
+			"y_con_offset": -195.000000,
+			"type": 3
+		},
+		{
+			"x_con": 400,
+			"x_con_offset": -5.000000,
+			"y_con": 800,
+			"y_con_offset": -165.000000,
+			"type": 1
+		},
+		{
+			"x_con": 600,
+			"x_con_offset": 5.000000,
+			"y_con": 800,
+			"y_con_offset": -165.000000,
+			"type": 1
+		},
+		{
+			"x_con": 700,
+			"x_con_offset": -25.000000,
+			"y_con": 800,
+			"y_con_offset": -195.000000,
+			"type": 3
+		},
+		{
+			"x_con": 400,
+			"x_con_offset": -5.000000,
+			"y_con": 600,
+			"y_con_offset": -2.000000,
+			"type": 1
+		},
+		{
+			"x_con": 600,
+			"x_con_offset": 5.000000,
+			"y_con": 600,
+			"y_con_offset": -2.000000,
+			"type": 1
 		}
 	]
 }

@@ -23,6 +23,9 @@
 #include "EditorMenuMotion.hpp"
 #include "EditorMenuStyle.hpp"
 
+#include "SpeedControlMenu.hpp"
+
+
 #include "GamePathEditor.hpp"
 #include "GameFormationEditor.hpp"
 #include "GamePermanentEditor.hpp"
@@ -204,7 +207,9 @@ public:
     GameFormationEditor                         *mFormationEditor;
     GamePermanentEditor                         *mPermEditor;
     
+    
     EditorMenuSections                          *mMenuSections;
+    SpeedControlMenu                            *mMenuSpeed;
     EditorMenuSpawn                             *mMenuSpawn;
     EditorMenuWavesPicker                       *mMenuWavesPicker;
     EditorMenuSpawnPicker                       *mMenuSpawnPicker;

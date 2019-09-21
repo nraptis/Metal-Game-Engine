@@ -107,39 +107,47 @@ void EditorMenuStyle::Update() {
     LevelSectionPermBlueprint *aPerm = gEditor->PermGet();
     LevelWaveSpawnBlueprint *aSpawn = gEditor->SpawnGet();
     
+    mStyleController = NULL;
     if (mEditor != NULL) {
         if (aSpawn != NULL) {
-            //mMotionController = &(aSpawn->mMotionController);
-            //mStyleController
-            
+            mStyleController = &(aSpawn->mStyleController);
         }
     }
     
     if (mPermEditor != NULL) {
-        
         if (aPerm != NULL) {
             if (aPerm->IsPathPerm()) {
                 if (aPermSpawn != NULL) {
-                    //mMotionController = &(aPermSpawn->mMotionController);
-                    //mStyleController
-                    
+                    mStyleController = &(aPermSpawn->mStyleController);
                 }
             } else {
-                //mMotionController = &(aPerm->mMotionController);
-                //mStyleController
-                
+                mStyleController = &(aPerm->mStyleController);
             }
         }
     }
     
-    /*
-    if (mCheckBoxPlayOnEnter != NULL) {
-        if (mMotionController != NULL) {
-            mCheckBoxPlayOnEnter->SetTarget(&(mMotionController->mPlayOnEnter));
+    if (mCheckBoxThreadsDisable != NULL) {
+        if (mStyleController != NULL) {
+            mCheckBoxThreadsDisable->SetTarget(&(mStyleController->mDisableThreads));
         } else {
-            mCheckBoxPlayOnEnter->SetTarget(NULL);
+            mCheckBoxThreadsDisable->SetTarget(NULL);
         }
     }
-    */
+    
+    if (mCheckBoxBobbleEnable != NULL) {
+        if (mStyleController != NULL) {
+            mCheckBoxBobbleEnable->SetTarget(&(mStyleController->mEnableBobbleMode));
+        } else {
+            mCheckBoxBobbleEnable->SetTarget(NULL);
+        }
+    }
+    
+    if (mCheckBoxRandomizeSpin != NULL) {
+        if (mStyleController != NULL) {
+            mCheckBoxRandomizeSpin->SetTarget(&(mStyleController->mRandomizeSpin));
+        } else {
+            mCheckBoxRandomizeSpin->SetTarget(NULL);
+        }
+    }
     
 }

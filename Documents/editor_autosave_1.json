@@ -2,6 +2,7 @@
 	"section": true,
 	"wave_list": [
 		{
+			"spawn_spacing": 90,
 			"path": {
 				"speed_class": 100,
 				"node_list": [
@@ -34,6 +35,7 @@
 			]
 		},
 		{
+			"spawn_spacing": 90,
 			"creation_prev_wave_complete": true,
 			"path": {
 				"speed_class": 100,
@@ -65,13 +67,14 @@
 			]
 		},
 		{
+			"spawn_spacing": 90,
 			"creation_delay": 50,
 			"path": {
 				"speed_class": 100,
 				"node_list": [
 					{
 						"x_con": 200,
-						"y": 45.892151
+						"y": 45.892159
 					},
 					{
 						"x_con": 500,
@@ -100,6 +103,7 @@
 			]
 		},
 		{
+			"spawn_spacing": 90,
 			"creation_delay": 30,
 			"path": {
 				"node_list": [
@@ -108,7 +112,7 @@
 						"y": 56.232853
 					},
 					{
-						"x": 42.257294,
+						"x": 42.257298,
 						"y_con": 100,
 						"y_con_target": 0,
 						"decel": 170,
@@ -127,6 +131,156 @@
 								"radius": 9,
 								"pause_1": 6,
 								"pause_2": 6
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"spawn_spacing": 90,
+			"creation_prev_wave_complete": true,
+			"creation_screen_waves_clear": true,
+			"creation_screen_perms_clear": true,
+			"max_spawn_size": 189,
+			"path": {
+				"speed_class": 200,
+				"node_list": [
+					{
+						"x_con": 500,
+						"y_con": 200
+					},
+					{
+						"x_con": 100,
+						"x_con_target": 0,
+						"y": 43.429592,
+						"decel": 300,
+						"wait": 9999
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "form_all_nod_all_bln_grd_rec_4x3_38sph_48spv_sld_nodes_cfg12xb_snp.json",
+					"formation_config": {},
+					"motion": {
+						"slice_list": [
+							{
+								"type": 3,
+								"linear_tick": 0,
+								"linear_time": 250,
+								"angle_span": 6,
+								"pause_1": 30,
+								"pause_2": 30
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"spawn_spacing": 90,
+			"creation_prev_wave_complete": true,
+			"max_spawn_size": 168,
+			"path": {
+				"speed_class": 200,
+				"node_list": [
+					{
+						"x_con": 200,
+						"y": 48.260437
+					},
+					{
+						"x_con": 400,
+						"y_con": 100,
+						"y_con_target": 0,
+						"decel": 200,
+						"wait": 9999
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "form_all_nod_all_bln_grd_rec_3x3_38sph_48spv_89ful_nodes_cfg8xb_snp.json",
+					"formation_config": {},
+					"motion": {
+						"slice_list": [
+							{
+								"type": 3,
+								"linear_tick": 120,
+								"linear_time": 240,
+								"angle_span": 40,
+								"pause_1": 10,
+								"pause_2": 10
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"spawn_spacing": 90,
+			"creation_delay": 55,
+			"max_spawn_size": 195,
+			"path": {
+				"speed_class": 200,
+				"node_list": [
+					{
+						"x_con": 800,
+						"y": 49.899681
+					},
+					{
+						"x_con": 600,
+						"y_con": 100,
+						"y_con_target": 0,
+						"decel": 170,
+						"wait": 9999
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "form_all_nod_all_bln_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfg9xb_snp",
+					"formation_config": {},
+					"motion": {
+						"slice_list": [
+							{
+								"type": 2,
+								"speed_class": -200,
+								"negate": true
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"spawn_spacing": 90,
+			"creation_delay": 90,
+			"max_spawn_size": 189,
+			"path": {
+				"speed_class": 200,
+				"node_list": [
+					{
+						"x_con": 500,
+						"y_con": 200
+					},
+					{
+						"x_con": 500,
+						"y_con": 400,
+						"decel": 200,
+						"wait": 9999
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "form_all_nod_all_bln_grd_rec_4x1_38sph_0spv_sld_nodes_cfg4xb_snp",
+					"formation_config": {},
+					"motion": {
+						"slice_list": [
+							{
+								"type": 5,
+								"linear_tick": 80
 							}
 						]
 					}

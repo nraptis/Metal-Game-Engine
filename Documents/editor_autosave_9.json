@@ -1,91 +1,179 @@
 {
 	"section": true,
-	"wave_list": [],
-	"perm_list": [
+	"wave_list": [
 		{
-			"x": 63.443260,
-			"y": 29.451279,
-			"motion": {
-				"slice_list": [
+			"spawn_spacing": 90,
+			"path": {
+				"speed_class": 100,
+				"node_list": [
 					{
-						"type": 4,
-						"linear_tick": 100,
-						"linear_time": 200
+						"x_con": 200,
+						"y": 52.743351
 					},
 					{
-						"type": 2,
-						"speed_class": 300
+						"x_con": 500,
+						"y_con": 100,
+						"y_con_target": 0,
+						"decel": 200,
+						"wait": 9999
 					}
 				]
-			}
+			},
+			"spawn": [
+				{
+					"motion": {
+						"slice_list": [
+							{
+								"type": 4,
+								"radius": 7,
+								"pause_1": 10,
+								"pause_2": 10
+							}
+						]
+					}
+				}
+			]
 		},
 		{
-			"x": 27.753061,
-			"y": 44.962059,
-			"motion": {
-				"slice_list": [
+			"spawn_spacing": 90,
+			"creation_prev_wave_complete": true,
+			"path": {
+				"speed_class": 100,
+				"node_list": [
 					{
-						"type": 4,
-						"linear_tick": 100,
-						"linear_time": 200
+						"x_con": 200,
+						"y": 52.614075
 					},
 					{
-						"type": 2,
-						"speed_class": 300
+						"x": 61.078667,
+						"y_con": 100,
+						"y_con_target": 0,
+						"decel": 170,
+						"wait": 9999
 					}
 				]
-			}
+			},
+			"spawn": [
+				{
+					"motion": {
+						"slice_list": [
+							{
+								"type": 4,
+								"radius": 8
+							}
+						]
+					}
+				}
+			]
 		},
 		{
-			"x": 50.000000,
-			"y": 54.660065,
-			"motion": {
-				"slice_list": [
+			"spawn_spacing": 90,
+			"creation_delay": 50,
+			"path": {
+				"speed_class": 100,
+				"node_list": [
 					{
-						"type": 4,
-						"linear_tick": 100,
-						"linear_time": 200
+						"x_con": 200,
+						"y": 45.892159
 					},
 					{
-						"type": 2,
-						"speed_class": 300
+						"x_con": 500,
+						"y_con": 100,
+						"y_con_target": 0,
+						"decel": 170,
+						"wait": 9999
 					}
 				]
-			}
+			},
+			"spawn": [
+				{
+					"motion": {
+						"slice_list": [
+							{
+								"type": 4,
+								"linear_tick": 100,
+								"linear_time": 200,
+								"radius": 6,
+								"pause_1": 10,
+								"pause_2": 10
+							}
+						]
+					}
+				}
+			]
 		},
 		{
-			"x": 72.397705,
-			"y": 44.962051,
-			"motion": {
-				"slice_list": [
+			"spawn_spacing": 90,
+			"creation_delay": 30,
+			"path": {
+				"node_list": [
 					{
-						"type": 4,
-						"linear_tick": 100,
-						"linear_time": 200
+						"x_con": 200,
+						"y": 56.232853
 					},
 					{
-						"type": 2,
-						"speed_class": 300
+						"x": 42.257298,
+						"y_con": 100,
+						"y_con_target": 0,
+						"decel": 170,
+						"wait": 9999
 					}
 				]
-			}
+			},
+			"spawn": [
+				{
+					"motion": {
+						"slice_list": [
+							{
+								"type": 4,
+								"linear_tick": 85,
+								"linear_time": 170,
+								"radius": 9,
+								"pause_1": 6,
+								"pause_2": 6
+							}
+						]
+					}
+				}
+			]
 		},
 		{
-			"x": 36.739487,
-			"y": 29.512966,
-			"motion": {
-				"slice_list": [
+			"spawn_spacing": 90,
+			"max_spawn_size": 189,
+			"path": {
+				"speed_class": 200,
+				"node_list": [
 					{
-						"type": 4,
-						"linear_tick": 100,
-						"linear_time": 200
+						"x_con": 500,
+						"y_con": 200
 					},
 					{
-						"type": 2,
-						"speed_class": 300
+						"x_con": 100,
+						"x_con_target": 0,
+						"y": 43.429592,
+						"decel": 300,
+						"wait": 9999
 					}
 				]
-			}
+			},
+			"spawn": [
+				{
+					"formation": "form_all_nod_all_bln_grd_rec_4x3_38sph_48spv_sld_nodes_cfg12xb_snp.json",
+					"formation_config": {},
+					"motion": {
+						"slice_list": [
+							{
+								"type": 3,
+								"linear_tick": 0,
+								"linear_time": 250,
+								"angle_span": 6,
+								"pause_1": 30,
+								"pause_2": 30
+							}
+						]
+					}
+				}
+			]
 		}
 	]
 }

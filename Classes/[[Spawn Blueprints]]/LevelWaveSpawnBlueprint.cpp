@@ -25,6 +25,7 @@ LevelWaveSpawnBlueprint::~LevelWaveSpawnBlueprint() {
 
 void LevelWaveSpawnBlueprint::Reset() {
     mMotionController.Reset();
+    mStyleController.Reset();
 }
 
 FJSONNode *LevelWaveSpawnBlueprint::Save() {
@@ -34,6 +35,7 @@ FJSONNode *LevelWaveSpawnBlueprint::Save() {
     if (mSpawnSpacingOffset != 0) {
         aExport->AddDictionaryInt("spacing_offset", mSpawnSpacingOffset);
     }
+    
     
     if (mFormationID.mLength > 0) {
         //Possibility 1.) We have a formation...
@@ -48,6 +50,10 @@ FJSONNode *LevelWaveSpawnBlueprint::Save() {
     
     if (mMotionController.IsEmpty() == false) {
         aExport->AddDictionary("motion", mMotionController.Save());
+    }
+    
+    if (mStyleController.ShouldSave() == true) {
+        aExport->AddDictionary("style", mStyleController.Save());
     }
     
     return aExport;
@@ -74,5 +80,8 @@ void LevelWaveSpawnBlueprint::Load(FJSONNode *pNode) {
     
     FJSONNode *aMotionNode = pNode->GetDictionary("motion");
     mMotionController.Load(aMotionNode);
+    
+    FJSONNode *aStyleNode = pNode->GetDictionary("style");
+    mStyleController.Load(aStyleNode);
     
 }

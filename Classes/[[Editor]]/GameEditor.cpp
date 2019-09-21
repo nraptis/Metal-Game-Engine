@@ -23,11 +23,17 @@ GameEditor::GameEditor(Game *pGame) {
     mEditorPlaybackFromCurrentWave = true;
     mEditorPlaybackEnabled = true;
     
+    
+    
     mRandomSeed = os_system_time() ^ gRand.Get(999999);
     
     mSpeedClassIndex = SPEED_CLASS_MEDIUM;
     mSpawnRotationSpeedClassIndex = SPEED_CLASS_MEDIUM;
     
+    
+    
+    
+    mMenuSpeed = NULL;
     mMenuAttachment = NULL;
     mMenuSpawnPicker = NULL;
     mMenuWavesPicker = NULL;
@@ -75,6 +81,17 @@ GameEditor::GameEditor(Game *pGame) {
     mMenuSections = new EditorMenuSections(this);
     mToolContainer->AddChild(mMenuSections);
     mMenuSections->SetFrame(gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 10.0f, 400.0f, mHeight - (gSafeAreaInsetBottom + gSafeAreaInsetTop + 20.0f));
+    
+    
+    
+    float aSpeedMenuWidth = 700.0f;
+    if (aSpeedMenuWidth > gDeviceWidth) { aSpeedMenuWidth = gDeviceWidth; }
+    
+    mMenuSpeed = new SpeedControlMenu();
+    mToolContainer->AddChild(mMenuSpeed);
+    mMenuSpeed->SetFrame(gDeviceWidth2 - aSpeedMenuWidth / 2.0f, 20.0f, aSpeedMenuWidth, 170.0f);
+    
+    
     
     mExportIndex = 0;
     
@@ -359,6 +376,18 @@ void GameEditor::Draw() {
     Graphics::SetColor();
     FString aExportString = FString("Export: ") + FString(mExportIndex);
     gApp->mSysFontBold.Center(aExportString.c(), gDeviceWidth2, gSafeAreaInsetTop + 20.0f, 0.5f);
+    
+    
+    //
+    LevelWave *aWave = ((LevelWave *)mEditorSection.mWaveList.Fetch(WaveIndex()));
+    if (aWave != NULL) {
+        
+        //aWave->mPath.mWait
+        //aWave->mPath.Draw();
+        
+    }
+    
+    
 }
 
 void GameEditor::TouchDown(float pX, float pY, void *pData) {
@@ -477,9 +506,11 @@ void GameEditor::KeyDown(int pKey) {
         if (aShift == false && aCtrl == false && aAlt == false) {
             OpenAttachmentMenu();
         }
-        
-        if (aShift == false && aCtrl == true && aAlt == false) {
-            
+    }
+    
+    if (pKey == __KEY__Y) {
+        if (aShift == false && aCtrl == false && aAlt == false) {
+            OpenStyleMenu();
         }
     }
     
