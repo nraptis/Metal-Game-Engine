@@ -100,8 +100,7 @@ void LevelData::Update() {
         bool aForceKill = false;
         
         if (mCurrentSection->mFlyInType == SECTION_FLY_NONE &&
-            mCurrentSection->mFlyOutType == SECTION_FLY_NONE &&
-            mCurrentSection->mAllWavesComplete == true) {
+            mCurrentSection->mFlyOutType == SECTION_FLY_NONE) {
             
             if (mCurrentSection->mForceKillTimer > 0) {
                 mCurrentSection->mForceKillTimer--;

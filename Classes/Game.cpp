@@ -323,33 +323,13 @@ void Game::Layout() {
         //mRenderer->ScreenBoundaryRefresh();
         
     }
-    
-    
 }
-
-static int aKludge = 0;
-static int aInitialKludge = 200;
-
 
 void Game::Update() {
     
-    /*
-    if (aInitialKludge > 0) {
-        aInitialKludge--;
-    } else {
-        
-        aKludge += 1;
-        if (aKludge < 10) { return; }
-        aKludge = 0;
-        
-        if ((gGameContainer != NULL) && (gGameContainer->mPaused == true)) {
-            return;
-        }
-        
-    }
-    */
-    
-    
+}
+
+void Game::UpdateMainLoop() {
     
     bool aShowOverlay = true;
 #ifdef EDITOR_MODE
@@ -358,23 +338,9 @@ void Game::Update() {
     }
 #endif
     
-    if (gRand.Get(40) == 22) {
-        mScore += gRand.Get(1, 100);
-    }
-    
-    if (gRand.Get(80) == 22) {
-        mScore += gRand.Get(80, 999);
-    }
-    
-    if (gRand.Get(200) == 50) {
-        mScore += gRand.Get(1000, 4999);
-    }
-    
-    
     
     if (mPopSoundDelay > 0) { mPopSoundDelay--; }
     if (mRecentFloatingAwayTick > 0) { mRecentFloatingAwayTick--; }
-    
     
     if (aShowOverlay) {
         if (mTestOverlay == NULL) {
@@ -648,7 +614,6 @@ void Game::Update() {
     }
     
     mWind.Update();
-    
 }
 
 void Game::Draw() {

@@ -8,6 +8,7 @@
 
 #include "core_includes.h"
 #include "GameEditor.hpp"
+#include "GameContainer.hpp"
 #include "FAnimation.hpp"
 
 GameEditor *gEditor = NULL;
@@ -89,7 +90,7 @@ GameEditor::GameEditor(Game *pGame) {
     
     mMenuSpeed = new SpeedControlMenu();
     mToolContainer->AddChild(mMenuSpeed);
-    mMenuSpeed->SetFrame(gDeviceWidth2 - aSpeedMenuWidth / 2.0f, 20.0f, aSpeedMenuWidth, 170.0f);
+    mMenuSpeed->SetFrame(gDeviceWidth2 - aSpeedMenuWidth / 2.0f, 38.0f, aSpeedMenuWidth, 150.0f);
     
     
     
@@ -203,7 +204,12 @@ void GameEditor::Update() {
     if (aIsOnPathTools || aIsOnPermTools || aIsOnFormationTools) { aFreeze = false; }
     
     if (aFreeze == false) {
-        mSection.Update();
+        
+        for (int i=0;i<gGameContainer->mPlaybackUpdateCount;i++) {
+            mEditorSection.Update();
+            mEditorWave.Update();
+            mSection.Update();
+        }
     } else {
         RefreshPlayback();
         for (int i=0;i<mFreezeFrame;i++) {
@@ -277,6 +283,7 @@ void GameEditor::Update() {
     
     
     
+    /*
     if (aIsOnMainTools || aIsOnPathTools || aIsOnPermTools) {
         if (mEditorPlaybackEnabled) {
             if (mEditorPlaybackWaveOnly) {
@@ -314,6 +321,7 @@ void GameEditor::Update() {
         mEditorWave.Reset();
         mEditorSection.Reset();
     }
+    */
     
 }
 

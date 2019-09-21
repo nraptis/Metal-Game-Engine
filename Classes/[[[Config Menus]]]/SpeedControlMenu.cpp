@@ -11,9 +11,25 @@
 #include "core_includes.h"
 #include "GFXApp.hpp"
 #include "GameEditor.hpp"
+#include "GameContainer.hpp"
 
 SpeedControlMenu::SpeedControlMenu() : ToolMenu() {
     mName = "SpeedControlMenu";
+    
+    mRowFreezeFrame = NULL;
+    mCheckBoxPause = NULL;
+    mCheckBoxFreezeFrameEnabled = NULL;
+    mTextBoxFreezeFrame = NULL;
+    
+    mButtonNextFrame = NULL;
+    mButtonPrevFrame = NULL;
+    
+    
+    mButtonNext10Frame = NULL;
+    mButtonPrev10Frame = NULL;
+    
+    mButtonNext100Frame = NULL;
+    mButtonPrev100Frame = NULL;
     
     
     
@@ -29,61 +45,50 @@ SpeedControlMenu::SpeedControlMenu() : ToolMenu() {
     AddSection(mSegmentSpeed);
 
 
-    mRowFreezeFrame = new ToolMenuSectionRow();
-    AddSection(mRowFreezeFrame);
+#ifdef EDITOR_MODE
 
-    mCheckBoxFreezeFrameEnabled = new UICheckBox();
-    mCheckBoxFreezeFrameEnabled->SetText("Freeze");
+    if (gEditor != NULL) {
+        
+        mRowFreezeFrame = new ToolMenuSectionRow();
+        AddSection(mRowFreezeFrame);
 
-    mRowFreezeFrame->AddCheckBox(mCheckBoxFreezeFrameEnabled);
-    //gNotify.Register(this, mCheckBoxFreezeFrameEnabled, "checkbox");
-
+        mCheckBoxFreezeFrameEnabled = new UICheckBox();
+        mCheckBoxFreezeFrameEnabled->SetText("Freeze");
+        mRowFreezeFrame->AddCheckBox(mCheckBoxFreezeFrameEnabled);
+        
+        mTextBoxFreezeFrame = new UITextBox();
+        mTextBoxFreezeFrame->SetText("200");
+        mRowFreezeFrame->AddTextBox(mTextBoxFreezeFrame);
+        
+        mButtonPrev100Frame = new UIButton();
+        mButtonPrev100Frame->SetText("-100");
+        mRowFreezeFrame->AddButton(mButtonPrev100Frame);
+        
+        mButtonPrev10Frame = new UIButton();
+        mButtonPrev10Frame->SetText("-10");
+        mRowFreezeFrame->AddButton(mButtonPrev10Frame);
+        
+        mButtonPrevFrame = new UIButton();
+        mButtonPrevFrame->SetText("-1");
+        mRowFreezeFrame->AddButton(mButtonPrevFrame);
+        
+        
+        mButtonNextFrame = new UIButton();
+        mButtonNextFrame->SetText("+1");
+        mRowFreezeFrame->AddButton(mButtonNextFrame);
+        
+        mButtonNext10Frame = new UIButton();
+        mButtonNext10Frame->SetText("+10");
+        mRowFreezeFrame->AddButton(mButtonNext10Frame);
+        
+        mButtonNext100Frame = new UIButton();
+        mButtonNext100Frame->SetText("+100");
+        mRowFreezeFrame->AddButton(mButtonNext100Frame);
+        
+    }
     
+#endif
     
-    
-    
-    
-    
-    
-    
-    mTextBoxFreezeFrame = new UITextBox();
-    mTextBoxFreezeFrame->SetText("200");
-    mRowFreezeFrame->AddTextBox(mTextBoxFreezeFrame);
-    //gNotify.Register(this, mTextBoxFreezeFrame, "text_box_change");
-    //gNotify.Register(this, mTextBoxFreezeFrame, "text_box_submit");
-    
-    
-    //UIButton                                *;
-    //UIButton                                *;
-    
-    //UIButton                                *;
-    //UIButton                                *;
-    
-    
-    mButtonPrev100Frame = new UIButton();
-    mButtonPrev100Frame->SetText("-100");
-    mRowFreezeFrame->AddButton(mButtonPrev100Frame);
-    
-    mButtonPrev10Frame = new UIButton();
-    mButtonPrev10Frame->SetText("-10");
-    mRowFreezeFrame->AddButton(mButtonPrev10Frame);
-    
-    mButtonPrevFrame = new UIButton();
-    mButtonPrevFrame->SetText("-1");
-    mRowFreezeFrame->AddButton(mButtonPrevFrame);
-    
-    
-    mButtonNextFrame = new UIButton();
-    mButtonNextFrame->SetText("+1");
-    mRowFreezeFrame->AddButton(mButtonNextFrame);
-    
-    mButtonNext10Frame = new UIButton();
-    mButtonNext10Frame->SetText("+10");
-    mRowFreezeFrame->AddButton(mButtonNext10Frame);
-    
-    mButtonNext100Frame = new UIButton();
-    mButtonNext100Frame->SetText("+100");
-    mRowFreezeFrame->AddButton(mButtonNext100Frame);
     
     DeactivateCloseButton();
 }
@@ -112,6 +117,18 @@ void SpeedControlMenu::Update() {
     }
     
 #endif
+    
+    
+    if (mSegmentSpeed != NULL) {
+        
+        if (gGameContainer != NULL) {
+            mSegmentSpeed->SetTarget(&(gGameContainer->mPlaybackSpeedCategory));
+        } else {
+            mSegmentSpeed->SetTarget(NULL);
+            mSegmentSpeed->SetSelectedIndex(-1);
+        }
+        
+    }
     
 }
 

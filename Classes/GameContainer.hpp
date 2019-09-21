@@ -10,13 +10,15 @@
 #define GameContainerContainer_hpp
 
 #include "GFXApp.hpp"
-#include "GameTestEditorOverlay.hpp"
-#include "GameTestRunningOverlay.hpp"
 #include "GameMenu.hpp"
 #include "GameOverlayEffects.hpp"
 #include "GameOverlayInterface.hpp"
 #include "EditorMenuGameTestUtils.hpp"
 #include "EditorMenuGameTest.hpp"
+#include "SpeedControlMenu.hpp"
+
+
+
 
 class Game;
 class GameContainer : public FCanvas {
@@ -45,8 +47,8 @@ public:
     
     Game                                        *mGame;
     FCanvas                                     *mContainer;
-    GameTestEditorOverlay                       *mGameTestEditorOverlay;
-    GameTestRunningOverlay                      *mGameTestRunningOverlay;
+    //GameTestEditorOverlay                       *mGameTestEditorOverlay;
+    //GameTestRunningOverlay                      *mGameTestRunningOverlay;
     
     //This is essentially a scaled-down 2-D overlay which rests atop the game...
     GameOverlayEffects                          *mEffectsOverlay;
@@ -55,6 +57,7 @@ public:
     
     EditorMenuGameTest                          *mEditorMenu;
     EditorMenuGameTestUtils                     *mEditorMenuUtils;
+    SpeedControlMenu                            *mEditorMenuSpeed;
     
     //Including Safe Area...
     float                                       mInterfaceLeftWidth;
@@ -88,6 +91,12 @@ public:
     
     
     void                                        OpenEditorTestMenus();
+    
+    
+    int                                         mPlaybackSpeedCategory;
+    int                                         mPlaybackSlowMotionTimer;
+    int                                         mPlaybackUpdateCount;
+    
     
 };
 

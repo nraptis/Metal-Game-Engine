@@ -777,29 +777,28 @@ void GFXApp::EditorTestSwitchToGame() {
 void GFXApp::EditorTestSwitchToGameInternal() {
     float aAspectRatio = 768.0f / 1024.0f;
     float aPadding = 5.0f;
-    float aVirtualHeight = round(gDeviceHeight - (aPadding * 2.0f));
+    float aPaddingTop = 135.0f;
+    float aVirtualHeight = round(gDeviceHeight - (aPadding * 2.0f + aPaddingTop));
     float aVirtualWidth = round(gDeviceHeight * aAspectRatio);
     float aVirtualX = round(gDeviceWidth / 2.0f - (aVirtualWidth / 2.0f));
-    float aVirtualY = aPadding;
+    float aVirtualY = aPadding + aPaddingTop;
     
     //TODO:
     AppShellSetVirtualFrame(aVirtualX, aVirtualY, aVirtualWidth, aVirtualHeight);
-    
     
     if (mEditor != NULL) {
         mEditor->Kill();
         mEditor = NULL;
     }
+    
     if (mGameContainer != NULL) {
         mGameContainer->Kill();
         mGameContainer = NULL;
     }
     
-    
     mWindowTools.Update();
     mWindowModal.Update();
     mWindowMain.Update();
-    
     
     mGameContainer = new GameContainer();
     mGameContainer->SetFrame(0.0f, 0.0f, gVirtualDevWidth, gVirtualDevHeight);
@@ -833,8 +832,6 @@ void GFXApp::EditorTestSwitchToEditorInternal() {
     
     printf("aVirtualWidth = %f\n", aVirtualWidth);
     printf("aVirtualHeight = %f\n", aVirtualHeight);
-    
-    
     
     //TODO:
     AppShellSetVirtualFrame(aVirtualX, aVirtualY, aVirtualWidth, aVirtualHeight);

@@ -34,6 +34,20 @@
 #define GAME_WIDTH 768
 #define GAME_HEIGHT 1280
 
+
+#define GAME_PLAYBACK_XXX_SLOW 0
+#define GAME_PLAYBACK_XX_SLOW 1
+#define GAME_PLAYBACK_X_SLOW 2
+#define GAME_PLAYBACK_SLOW 3
+#define GAME_PLAYBACK_NORMAL 4
+#define GAME_PLAYBACK_FAST 5
+#define GAME_PLAYBACK_X_FAST 6
+#define GAME_PLAYBACK_XX_FAST 7
+#define GAME_PLAYBACK_XXX_FAST 8
+
+
+
+
 class Game : public FCanvas {
 public:
     Game();
@@ -44,6 +58,9 @@ public:
     virtual void                                LayoutTransform() override;
     virtual void                                Layout() override;
     virtual void                                Update() override;
+    void                                        UpdateMainLoop();
+    
+    
     virtual void                                Draw() override;
     
     void                                        Draw3D();

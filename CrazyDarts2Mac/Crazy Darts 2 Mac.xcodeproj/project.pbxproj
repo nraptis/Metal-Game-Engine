@@ -54,7 +54,6 @@
 		0D1542FF232DC1B40004AE55 /* EffectDartFadeStar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D15423C232DC1B40004AE55 /* EffectDartFadeStar.cpp */; };
 		0D154300232DC1B40004AE55 /* EffectBalloonBurst.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D15423D232DC1B40004AE55 /* EffectBalloonBurst.cpp */; };
 		0D154301232DC1B40004AE55 /* GFXAppNotificationHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D15423E232DC1B40004AE55 /* GFXAppNotificationHelper.cpp */; };
-		0D154302232DC1B40004AE55 /* GameTestEditorOverlay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D154240232DC1B40004AE55 /* GameTestEditorOverlay.cpp */; };
 		0D154303232DC1B40004AE55 /* GameOverlayEffects.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D154245232DC1B40004AE55 /* GameOverlayEffects.cpp */; };
 		0D154304232DC1B40004AE55 /* SkyRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D154247232DC1B40004AE55 /* SkyRenderer.cpp */; };
 		0D154305232DC1B40004AE55 /* HangingThreadKnot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D154249232DC1B40004AE55 /* HangingThreadKnot.cpp */; };
@@ -69,7 +68,6 @@
 		0D15430E232DC1B40004AE55 /* WindSpeedSimulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D15425A232DC1B40004AE55 /* WindSpeedSimulator.cpp */; };
 		0D15430F232DC1B40004AE55 /* BrickHead.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D15425B232DC1B40004AE55 /* BrickHead.cpp */; };
 		0D154310232DC1B40004AE55 /* Transform2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D15425D232DC1B40004AE55 /* Transform2D.cpp */; };
-		0D154311232DC1B40004AE55 /* GameTestRunningOverlay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D15425F232DC1B40004AE55 /* GameTestRunningOverlay.cpp */; };
 		0D154312232DC1B40004AE55 /* FormationCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D154262232DC1B40004AE55 /* FormationCollection.cpp */; };
 		0D154313232DC1B40004AE55 /* GameRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D154263232DC1B40004AE55 /* GameRenderer.cpp */; };
 		0D154314232DC1B40004AE55 /* LevelFormationConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D154266232DC1B40004AE55 /* LevelFormationConfiguration.cpp */; };
@@ -334,8 +332,6 @@
 		0D15423C232DC1B40004AE55 /* EffectDartFadeStar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectDartFadeStar.cpp; sourceTree = "<group>"; };
 		0D15423D232DC1B40004AE55 /* EffectBalloonBurst.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EffectBalloonBurst.cpp; sourceTree = "<group>"; };
 		0D15423E232DC1B40004AE55 /* GFXAppNotificationHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GFXAppNotificationHelper.cpp; sourceTree = "<group>"; };
-		0D15423F232DC1B40004AE55 /* GameTestRunningOverlay.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameTestRunningOverlay.hpp; sourceTree = "<group>"; };
-		0D154240232DC1B40004AE55 /* GameTestEditorOverlay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameTestEditorOverlay.cpp; sourceTree = "<group>"; };
 		0D154241232DC1B40004AE55 /* FormationCollection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FormationCollection.hpp; sourceTree = "<group>"; };
 		0D154242232DC1B40004AE55 /* GameRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameRenderer.hpp; sourceTree = "<group>"; };
 		0D154243232DC1B40004AE55 /* GameObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameObject.hpp; sourceTree = "<group>"; };
@@ -365,9 +361,7 @@
 		0D15425C232DC1B40004AE55 /* StuckDart.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StuckDart.hpp; sourceTree = "<group>"; };
 		0D15425D232DC1B40004AE55 /* Transform2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Transform2D.cpp; sourceTree = "<group>"; };
 		0D15425E232DC1B40004AE55 /* GameLevelController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameLevelController.hpp; sourceTree = "<group>"; };
-		0D15425F232DC1B40004AE55 /* GameTestRunningOverlay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameTestRunningOverlay.cpp; sourceTree = "<group>"; };
 		0D154260232DC1B40004AE55 /* GFXAppNotificationHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GFXAppNotificationHelper.hpp; sourceTree = "<group>"; };
-		0D154261232DC1B40004AE55 /* GameTestEditorOverlay.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameTestEditorOverlay.hpp; sourceTree = "<group>"; };
 		0D154262232DC1B40004AE55 /* FormationCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FormationCollection.cpp; sourceTree = "<group>"; };
 		0D154263232DC1B40004AE55 /* GameRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameRenderer.cpp; sourceTree = "<group>"; };
 		0D154265232DC1B40004AE55 /* LevelMotionControllerSlice.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelMotionControllerSlice.hpp; sourceTree = "<group>"; };
@@ -778,10 +772,6 @@
 				0D1541FB232DC1B40004AE55 /* GameOverlayInterface.hpp */,
 				0D154263232DC1B40004AE55 /* GameRenderer.cpp */,
 				0D154242232DC1B40004AE55 /* GameRenderer.hpp */,
-				0D154240232DC1B40004AE55 /* GameTestEditorOverlay.cpp */,
-				0D154261232DC1B40004AE55 /* GameTestEditorOverlay.hpp */,
-				0D15425F232DC1B40004AE55 /* GameTestRunningOverlay.cpp */,
-				0D15423F232DC1B40004AE55 /* GameTestRunningOverlay.hpp */,
 				0D15420F232DC1B40004AE55 /* GFXApp.cpp */,
 				0D1542D1232DC1B40004AE55 /* GFXApp.hpp */,
 				0D15423E232DC1B40004AE55 /* GFXAppNotificationHelper.cpp */,
@@ -1533,7 +1523,6 @@
 				0D1542DA232DC1B40004AE55 /* SoundConfigMenu.cpp in Sources */,
 				0D154338232DC1B40004AE55 /* EditorMenuMotionTypePanel.cpp in Sources */,
 				0D15430A232DC1B40004AE55 /* AssetWadGameInterface.cpp in Sources */,
-				0D154311232DC1B40004AE55 /* GameTestRunningOverlay.cpp in Sources */,
 				0D1542EA232DC1B40004AE55 /* GFXApp.cpp in Sources */,
 				0D8FCF24225DA8ED00A74580 /* FHashMap.cpp in Sources */,
 				0D1542EB232DC1B40004AE55 /* Dart.cpp in Sources */,
@@ -1618,7 +1607,6 @@
 				0D8FCF49225DA8ED00A74580 /* FVec3.cpp in Sources */,
 				0D1542FB232DC1B40004AE55 /* LevelFormationConfigurationBlueprint.cpp in Sources */,
 				0D8FCF83225DA8ED00A74580 /* MetalView.mm in Sources */,
-				0D154302232DC1B40004AE55 /* GameTestEditorOverlay.cpp in Sources */,
 				0D1542D7232DC1B40004AE55 /* DiffuseLightMenu.cpp in Sources */,
 				0D154328232DC1B40004AE55 /* EditorMenuFormationPickerCell.cpp in Sources */,
 				0D8FCF85225DA8ED00A74580 /* AppDelegate.mm in Sources */,

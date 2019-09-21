@@ -20,9 +20,6 @@ GameContainer::GameContainer() {
     mName = "GameContainer";
     
     
-    mGameTestEditorOverlay = NULL;
-    mGameTestRunningOverlay = NULL;
-    
     mEffectsOverlay = NULL;
     mInterfaceOverlay = NULL;
     mGameMenu = NULL;
@@ -30,10 +27,13 @@ GameContainer::GameContainer() {
     
     
     
-    
+    mPlaybackSpeedCategory = GAME_PLAYBACK_NORMAL;
+    mPlaybackSlowMotionTimer = 0;
+    mPlaybackUpdateCount = 1;
     
     mEditorMenu = NULL;
     mEditorMenuUtils = NULL;
+    mEditorMenuSpeed = NULL;
     
     
     SetWidth(1000.0f);
@@ -101,6 +101,11 @@ GameContainer::~GameContainer() {
         mEditorMenuUtils = NULL;
     }
     
+    if (mEditorMenuSpeed != NULL) {
+        mEditorMenuSpeed->Kill();
+        mEditorMenuSpeed = NULL;
+    }
+    
 }
 
 void GameContainer::Layout() {
@@ -162,20 +167,6 @@ void GameContainer::Layout() {
         mGameMenu->SetFrame(mWidth / 2.0f - aWidth / 2.0f, mHeight / 2.0f - aHeight / 2.0f, aWidth, aHeight);
     }
     
-    
-    
-    //TODO: When to show this..?
-    
-
-    
-    
-    if (mGameTestEditorOverlay != NULL) {
-        
-        if (mGame != NULL) {
-            mGameTestEditorOverlay->SetFrame(0.0f, 0.0f, mGame->mWidth, mGame->mHeight);
-        }
-    }
-    
 }
 
 void GameContainer::Update() {
@@ -205,8 +196,6 @@ void GameContainer::Update() {
         if (mGameMenuAnimation != NULL) {
             mGameMenuAnimation->Update();
             if (mGameMenuAnimation->IsComplete()) {
-                
-                printf("ANIMATION COMPLETEEEEE!!!\n");
                 delete mGameMenuAnimation;
                 mGameMenuAnimation = NULL;
                 
@@ -221,6 +210,77 @@ void GameContainer::Update() {
             }
         }
     }
+    
+    if (mGame != NULL) {
+        mPlaybackUpdateCount = 0;
+        
+        if (mPlaybackSpeedCategory == GAME_PLAYBACK_XXX_SLOW) {
+            mPlaybackSlowMotionTimer++;
+            if (mPlaybackSlowMotionTimer >= 25) {
+                mPlaybackSlowMotionTimer = 0;
+                mGame->UpdateMainLoop();
+                mPlaybackUpdateCount = 1;
+            }
+        }
+        if (mPlaybackSpeedCategory == GAME_PLAYBACK_XX_SLOW) {
+            mPlaybackSlowMotionTimer++;
+            if (mPlaybackSlowMotionTimer >= 10) {
+                mPlaybackSlowMotionTimer = 0;
+                mGame->UpdateMainLoop();
+                mPlaybackUpdateCount = 1;
+            }
+        }
+        if (mPlaybackSpeedCategory == GAME_PLAYBACK_X_SLOW) {
+            mPlaybackSlowMotionTimer++;
+            if (mPlaybackSlowMotionTimer >= 5) {
+                mPlaybackSlowMotionTimer = 0;
+                mGame->UpdateMainLoop();
+                mPlaybackUpdateCount = 1;
+            }
+        }
+        if (mPlaybackSpeedCategory == GAME_PLAYBACK_SLOW) {
+            mPlaybackSlowMotionTimer++;
+            if (mPlaybackSlowMotionTimer >= 2) {
+                mPlaybackSlowMotionTimer = 0;
+                mGame->UpdateMainLoop();
+                mPlaybackUpdateCount = 1;
+            }
+        }
+        if (mPlaybackSpeedCategory == GAME_PLAYBACK_NORMAL) {
+            mGame->UpdateMainLoop();
+            mPlaybackSlowMotionTimer = 0;
+            mPlaybackUpdateCount = 1;
+        }
+        if (mPlaybackSpeedCategory == GAME_PLAYBACK_FAST) {
+            for (int i=0;i<2;i++) {
+                mGame->UpdateMainLoop();
+            }
+            mPlaybackUpdateCount = 2;
+            mPlaybackSlowMotionTimer = 0;
+        }
+        if (mPlaybackSpeedCategory == GAME_PLAYBACK_X_FAST) {
+            for (int i=0;i<5;i++) {
+                mGame->UpdateMainLoop();
+            }
+            mPlaybackUpdateCount = 5;
+            mPlaybackSlowMotionTimer = 0;
+        }
+        if (mPlaybackSpeedCategory == GAME_PLAYBACK_XX_FAST) {
+            for (int i=0;i<10;i++) {
+                mGame->UpdateMainLoop();
+            }
+            mPlaybackUpdateCount = 10;
+            mPlaybackSlowMotionTimer = 0;
+        }
+        if (mPlaybackSpeedCategory == GAME_PLAYBACK_XXX_FAST) {
+            for (int i=0;i<25;i++) {
+                mGame->UpdateMainLoop();
+            }
+            mPlaybackUpdateCount = 25;
+            mPlaybackSlowMotionTimer = 0;
+        }
+    }
+    
 }
 
 void GameContainer::Draw() {
@@ -228,8 +288,6 @@ void GameContainer::Draw() {
     if (mContainer != NULL) { mContainer->DrawManual(); }
     if (mEffectsOverlay != NULL) { mEffectsOverlay->DrawManual(); }
     if (mInterfaceOverlay != NULL) { mInterfaceOverlay->DrawManual(); }
-    
-    
     
     if (mPauseFade != 0.0f) {
         DrawTransform();
@@ -310,27 +368,6 @@ void GameContainer::Realize() {
     
     bool aHasEditor = false;
     
-#ifdef EDITOR_MODE
-    if (mGameTestEditorOverlay == NULL && gEditor == NULL) {
-        mGameTestEditorOverlay = new GameTestEditorOverlay();
-        mGameTestEditorOverlay->mConsumesTouches = false;
-        mGame->AddChild(mGameTestEditorOverlay);
-        mWindow->RegisterFrameDidUpdate(this);
-    }
-    
-    if (gEditor != NULL) {
-        aHasEditor = true;
-    }
-    
-#endif
-    
-    // This is what we show when we are running, not from the editor...
-    if (mGameTestRunningOverlay == NULL && aHasEditor == false && mGameTestEditorOverlay == NULL) {
-        mGameTestRunningOverlay = new GameTestRunningOverlay();
-        mGameTestRunningOverlay->mConsumesTouches = false;
-        mGame->AddChild(mGameTestRunningOverlay);
-        mWindow->RegisterFrameDidUpdate(this);
-    }
 }
 
 void GameContainer::PauseAndShowGameMenu() {
@@ -450,6 +487,13 @@ void GameContainer::OpenEditorTestMenus() {
     mEditorMenuUtils = new EditorMenuGameTestUtils();
     gApp->mWindowTools.AddChild(mEditorMenuUtils);
     mEditorMenuUtils->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), gSafeAreaInsetTop + 20.0f, 400.0f, 480.0f);
+    
+    float aSpeedMenuWidth = 700.0f;
+    if (aSpeedMenuWidth > gDeviceWidth) { aSpeedMenuWidth = gDeviceWidth; }
+    
+    mEditorMenuSpeed = new SpeedControlMenu();
+    gApp->mWindowTools.AddChild(mEditorMenuSpeed);
+    mEditorMenuSpeed->SetFrame(gDeviceWidth2 - aSpeedMenuWidth / 2.0f, 6.0f, aSpeedMenuWidth, 120.0f);
     
 }
 
