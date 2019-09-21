@@ -110,20 +110,19 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     mButtonShowObjectClearer->SetText("Clr-Obj");
     mRowMenus3->AddButton(mButtonShowObjectClearer);
     
-    
     mTimingPanel = new ToolMenuPanel();
     mTimingPanel->SetTitle("Timing Panel");
     AddSection(mTimingPanel);
     
     mStepperAliveTimer = new UIStepper();
     mStepperAliveTimer->SetTarget(&(gEditor->mSection.mKeepAliveTimer));
+    mStepperAliveTimer->SetText("Keep Alive");
     mTimingPanel->AddSection(mStepperAliveTimer);
     
     mStepperKillTimer = new UIStepper();
     mStepperKillTimer->SetTarget(&(gEditor->mSection.mForceKillTimer));
+    mStepperKillTimer->SetText("Force Kill");
     mTimingPanel->AddSection(mStepperKillTimer);
-    
-    
     
     
     mWavePanel = new ToolMenuPanel();
@@ -133,7 +132,6 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     mRowWave1 = new ToolMenuSectionRow();
     mWavePanel->AddSection(mRowWave1);
     
-    
     mButtonAddWave = new UIButton();
     mButtonAddWave->SetText("Add Wave");
     mRowWave1->AddButton(mButtonAddWave);
@@ -141,7 +139,6 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     mButtonDeleteWave = new UIButton();
     mButtonDeleteWave->SetText("Delete Wave");
     mRowWave1->AddButton(mButtonDeleteWave);
-    
     
     mButtonEditWavePaths = new UIButton();
     mButtonEditWavePaths->SetText("[E]dit Paths");

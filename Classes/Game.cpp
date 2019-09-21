@@ -1062,8 +1062,6 @@ void Game::NotifyDidSpawnFreeLife() {
     
 }
 
-
-
 bool Game::IsWaveClearForSpawn() {
     
     EnumList (FreeLife, aFreeLife, mFreeLifeList.mObjectList) {
@@ -1691,15 +1689,18 @@ void Game::Load() {
      test_section_one_wave_16_turtles
     */
     
-    aLevel.SetKillTimer(5000);
-    aLevel.SetAliveTimer(5000);
+    //aLevel.SetKillTimer(5000);
+    //aLevel.SetAliveTimer(5000);
     
-    aLevel.AddSection("section_learning_3_groups_lineshot_all_balloons.json");
-    aLevel.AddSection("section_learning_3_groups_lineshot_all_balloons.json");
-    aLevel.AddSection("section_learning_3_groups_lineshot_all_balloons.json");
-    aLevel.AddSection("section_learning_3_groups_lineshot_all_balloons.json");
-    aLevel.AddSection("section_learning_3_groups_lineshot_all_balloons.json");
-    aLevel.AddSection("section_learning_3_groups_lineshot_all_balloons.json");
+    
+    
+    aLevel.AddSection("section_easymed_3_waves_tri_singles_square_bricks_blocking_turtles_both_sides.json");
+    aLevel.AddSection("section_easymed_3_waves_tri_singles_square_bricks_blocking_turtles_both_sides.json");
+    
+    aLevel.AddSection("section_learning_3_waves_lineshot_all_balloons.json");
+    aLevel.AddSection("section_learning_3_waves_lineshot_all_balloons.json");
+    aLevel.AddSection("section_learning_3_waves_lineshot_all_balloons.json");
+    
     
     aLevel.AddSection("test_section_all_bricks_2_waves");
     aLevel.AddSection("test_section_2_tracers_slowslow_speed_all_4_types");

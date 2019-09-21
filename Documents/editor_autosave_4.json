@@ -50,6 +50,111 @@
 					}
 				}
 			]
+		},
+		{
+			"spawn_spacing": 90,
+			"creation_prev_wave_complete": true,
+			"path": {
+				"node_list": [
+					{
+						"x_con": 200,
+						"y_con": 400,
+						"y_con_offset": -40.000000
+					},
+					{
+						"x_con": 400,
+						"y_con": 400,
+						"y_con_offset": -40.000000,
+						"decel": 150,
+						"accel": 150,
+						"wait": 300
+					},
+					{
+						"x_con": 400,
+						"y_con": 150
+					}
+				]
+			},
+			"spawn": [
+				{}
+			]
+		},
+		{
+			"spawn_spacing": 90,
+			"path": {
+				"node_list": [
+					{
+						"x_con": 800,
+						"y_con": 400,
+						"y_con_offset": -40.000000
+					},
+					{
+						"x_con": 600,
+						"y_con": 400,
+						"y_con_offset": -40.000000,
+						"decel": 150,
+						"accel": 150,
+						"wait": 300
+					},
+					{
+						"x_con": 600,
+						"y_con": 150
+					}
+				]
+			},
+			"spawn": [
+				{}
+			]
+		},
+		{
+			"spawn_spacing": 90,
+			"max_spawn_size": 231,
+			"path": {
+				"speed_class": 200,
+				"node_list": [
+					{
+						"x_con": 200,
+						"y_con": 500,
+						"y_con_offset": -100.000000
+					},
+					{
+						"x_con": 500,
+						"y_con": 500,
+						"y_con_offset": -100.000000,
+						"decel": 250,
+						"accel": 200,
+						"wait": 1750
+					},
+					{
+						"x_con": 850,
+						"y_con": 500,
+						"y_con_offset": -100.000000
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "form_all_nod_all_bln_grd_rec_5x3_38sph_48spv_sld_nodes_cfg15xb_snp",
+					"formation_config": {},
+					"motion": {
+						"play_on_enter": false,
+						"play_on_exit": false,
+						"slice_list": [
+							{
+								"type": 4,
+								"linear_tick": 80,
+								"linear_time": 160,
+								"radius": 45,
+								"pause_1": 14,
+								"pause_2": 14
+							}
+						]
+					},
+					"style": {
+						"disable_threads": true
+					}
+				}
+			]
 		}
 	],
 	"perm_list": [
