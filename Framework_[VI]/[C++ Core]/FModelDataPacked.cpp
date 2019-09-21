@@ -136,8 +136,13 @@ void FModelDataPacked::FitUVW(float pStartU, float pEndU, float pStartV, float p
     
     if ((pStartU <= 0.0f) && (pStartV <= 0.0f) && (pEndU >= 1.0f) && (pEndV >= 1.0f)) { return; }
     
+    if (mHasXYZ == false) { return; }
     if (mHasUVW == false) { return; }
     if (mDataCount <= 0) { return; }
+    
+    int aStride = GetStride();
+    if (aStride <= 0) { return; }
+    
     
     float aSpanU = pEndU - pStartU;
     float aSpanV = pEndV - pStartV;
@@ -145,12 +150,7 @@ void FModelDataPacked::FitUVW(float pStartU, float pEndU, float pStartV, float p
     int aStartIndex = 0;
     if (mHasXYZ) { aStartIndex += 3; }
     
-    int aStride = 0;
-    if (mHasXYZ) { aStride += 3; }
-    if (mHasUVW) { aStride += 3; }
-    if (mHasNormals) { aStride += 3; }
-    if (mHasTangents) { aStride += 3; }
-    if (mHasUNormals) { aStride += 3; }
+    
     
     int aIndex = aStartIndex;
     
@@ -162,6 +162,52 @@ void FModelDataPacked::FitUVW(float pStartU, float pEndU, float pStartV, float p
         aV = (pStartV + aSpanV * aV);
         mData[aIndex] = aU;
         mData[aIndex + 1] = aV;
+        aIndex += aStride;
+    }
+}
+
+int FModelDataPacked::GetStride() {
+    int aStride = 0;
+    if (mHasXYZ) { aStride += 3; }
+    if (mHasUVW) { aStride += 3; }
+    if (mHasNormals) { aStride += 3; }
+    if (mHasTangents) { aStride += 3; }
+    if (mHasUNormals) { aStride += 3; }
+    return aStride;
+}
+
+void FModelDataPacked::InvertX() {
+    if (mDataCount <= 0) { return; }
+    if (mHasXYZ == false) { return; }
+    int aStride = GetStride();
+    if (aStride <= 0) { return; }
+    int aIndex = 0;
+    while (aIndex < mDataCount) {
+        mData[aIndex] = -mData[aIndex];
+        aIndex += aStride;
+    }
+}
+
+void FModelDataPacked::InvertY() {
+    if (mDataCount <= 0) { return; }
+    if (mHasXYZ == false) { return; }
+    int aStride = GetStride();
+    if (aStride <= 0) { return; }
+    int aIndex = 1;
+    while (aIndex < mDataCount) {
+        mData[aIndex] = -mData[aIndex];
+        aIndex += aStride;
+    }
+}
+
+void FModelDataPacked::InvertZ() {
+    if (mDataCount <= 0) { return; }
+    if (mHasXYZ == false) { return; }
+    int aStride = GetStride();
+    if (aStride <= 0) { return; }
+    int aIndex = 2;
+    while (aIndex < mDataCount) {
+        mData[aIndex] = -mData[aIndex];
         aIndex += aStride;
     }
 }

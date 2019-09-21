@@ -63,7 +63,11 @@ public:
     
     void                                LoadIndexedModel(FModelDataIndexed *pModel);
     
+    void                                InvertX();
+    void                                InvertY();
+    void                                InvertZ();
     
+    int                                 GetStride();
     
     void                                WriteBuffers();
     

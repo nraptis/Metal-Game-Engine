@@ -124,6 +124,7 @@
 		0D4236FA23348199003CB4A0 /* LevelStyleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D4236F823348199003CB4A0 /* LevelStyleController.cpp */; };
 		0D4236FD233487E8003CB4A0 /* EditorMenuStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D4236FB233487E8003CB4A0 /* EditorMenuStyle.cpp */; };
 		0D511DB82320B14F00EB57D1 /* FModelDataPackedSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D511DB62320B14F00EB57D1 /* FModelDataPackedSequence.cpp */; };
+		0D8EB4992335BBD400B14ACA /* FreeLife.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D8EB4972335BBD300B14ACA /* FreeLife.cpp */; };
 		0D8FCF18225DA8ED00A74580 /* BufferBindingWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDB8225DA8EC00A74580 /* BufferBindingWrapper.mm */; };
 		0D8FCF19225DA8ED00A74580 /* os_core_graphics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDB9225DA8EC00A74580 /* os_core_graphics.mm */; };
 		0D8FCF1A225DA8ED00A74580 /* Shape3DShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCDBD225DA8EC00A74580 /* Shape3DShaders.metal */; };
@@ -479,6 +480,8 @@
 		0D4236FC233487E8003CB4A0 /* EditorMenuStyle.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = EditorMenuStyle.hpp; sourceTree = "<group>"; };
 		0D511DB62320B14F00EB57D1 /* FModelDataPackedSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FModelDataPackedSequence.cpp; sourceTree = "<group>"; };
 		0D511DB72320B14F00EB57D1 /* FModelDataPackedSequence.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FModelDataPackedSequence.hpp; sourceTree = "<group>"; };
+		0D8EB4972335BBD300B14ACA /* FreeLife.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FreeLife.cpp; sourceTree = "<group>"; };
+		0D8EB4982335BBD300B14ACA /* FreeLife.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FreeLife.hpp; sourceTree = "<group>"; };
 		0D8FCDB8225DA8EC00A74580 /* BufferBindingWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BufferBindingWrapper.mm; sourceTree = "<group>"; };
 		0D8FCDB9225DA8EC00A74580 /* os_core_graphics.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = os_core_graphics.mm; sourceTree = "<group>"; };
 		0D8FCDBA225DA8EC00A74580 /* TextureBindingWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureBindingWrapper.h; sourceTree = "<group>"; };
@@ -738,6 +741,8 @@
 				0D15424D232DC1B40004AE55 /* [[Wadding]] */,
 				0D154214232DC1B40004AE55 /* Balloon.cpp */,
 				0D154244232DC1B40004AE55 /* Balloon.hpp */,
+				0D8EB4972335BBD300B14ACA /* FreeLife.cpp */,
+				0D8EB4982335BBD300B14ACA /* FreeLife.hpp */,
 				0D154284232DC1B40004AE55 /* Bomb.cpp */,
 				0D1541FA232DC1B40004AE55 /* Bomb.hpp */,
 				0D15425B232DC1B40004AE55 /* BrickHead.cpp */,
@@ -1625,6 +1630,7 @@
 				0D154312232DC1B40004AE55 /* FormationCollection.cpp in Sources */,
 				0D8FCF28225DA8ED00A74580 /* FQuad.cpp in Sources */,
 				0D8FCF63225DA8ED00A74580 /* DragableCanvas.cpp in Sources */,
+				0D8EB4992335BBD400B14ACA /* FreeLife.cpp in Sources */,
 				0D8FCF7C225DA8ED00A74580 /* os_core_social.cpp in Sources */,
 				0D1542EF232DC1B40004AE55 /* DiffuseConfiguration.cpp in Sources */,
 				0D511DB82320B14F00EB57D1 /* FModelDataPackedSequence.cpp in Sources */,

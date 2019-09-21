@@ -139,6 +139,10 @@ void AssetWadModels::Load() {
     mDartBat[5].LoadData("bardart.3dp", &mDartBatMap[5]);
     
     mExtraLife.LoadData("extra_life.3dp", &mExtraLifeMap);
+    //mExtraLife.LoadOBJ("extra_life.obj");
+    //mExtraLife.InvertX();
+    //mExtraLife.Save(gDirExport + "extra_life.3dp");
+    //mExtraLife.WriteBuffers();
     
     mPrizeStar.LoadData("brickhead_cage.3dp", &mPrizeStarMap);
     
