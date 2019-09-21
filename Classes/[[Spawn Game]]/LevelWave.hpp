@@ -41,6 +41,8 @@ public:
     
     LevelPath                           mPath;
     
+    
+    
     //Decides how the wave is "created" relative to the
     //previous wave. E.G. 200 ticks after prev wave starts...
     

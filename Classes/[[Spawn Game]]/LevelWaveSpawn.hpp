@@ -74,6 +74,10 @@ public:
     float                               mOffsetSpawnDistance;
     
     int                                 mKillTimer;
+    
+    int                                 mCurrentWaitTime;
+    int                                 mCurrentWaitTick;
+    
 };
 
 

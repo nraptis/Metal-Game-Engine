@@ -102,6 +102,9 @@ GameEditor::GameEditor(Game *pGame) {
     //WaveAdd();
     //OpenPathEditorForWave();
     
+    mFreeze = false;
+    mFreezeFrame = 100;
+    
     
     
     
@@ -186,7 +189,31 @@ void GameEditor::Layout() {
 
 void GameEditor::Update() {
     
-    mSection.Update();
+    bool aIsOnMainTools = (mOverlay == mToolContainer);
+    bool aIsOnPathTools = (mOverlay == mPathEditor);
+    bool aIsOnPermTools = (mOverlay == mPermEditor);
+    bool aIsOnFormationTools = (mOverlay == mFormationEditor);
+    
+    
+    
+    
+    
+    
+    bool aFreeze = mFreeze;
+    if (aIsOnPathTools || aIsOnPermTools || aIsOnFormationTools) { aFreeze = false; }
+    
+    if (aFreeze == false) {
+        mSection.Update();
+    } else {
+        RefreshPlayback();
+        for (int i=0;i<mFreezeFrame;i++) {
+            mSection.Update();
+            mEditorSection.Update();
+            mEditorWave.Update();
+        }
+    }
+    
+    
     
     if (mSection.mCurrentWave) {
         mSpeedClassIndex = SpeedConvertTypeToSegment(mSection.mCurrentWave->mPath.mSpeedClass);
@@ -248,9 +275,7 @@ void GameEditor::Update() {
     }
     
     
-    bool aIsOnMainTools = (mOverlay == mToolContainer);
-    bool aIsOnPathTools = (mOverlay == mPathEditor);
-    bool aIsOnPermTools = (mOverlay == mPermEditor);
+    
     
     if (aIsOnMainTools || aIsOnPathTools || aIsOnPermTools) {
         if (mEditorPlaybackEnabled) {
@@ -378,12 +403,40 @@ void GameEditor::Draw() {
     gApp->mSysFontBold.Center(aExportString.c(), gDeviceWidth2, gSafeAreaInsetTop + 20.0f, 0.5f);
     
     
+    
     //
     LevelWave *aWave = ((LevelWave *)mEditorSection.mWaveList.Fetch(WaveIndex()));
-    if (aWave != NULL) {
+    if (aWave != NULL && (mFreeze == true)) {
         
-        //aWave->mPath.mWait
-        //aWave->mPath.Draw();
+        EnumList(LevelWaveSpawn, aSpawn, aWave->mSpawnList) {
+            
+            if (aSpawn->mCurrentWaitTime > 0) {
+                
+                FString aWaitString = FString("W: ") + FString(aSpawn->mCurrentWaitTick) + FString(" / ") + FString(aSpawn->mCurrentWaitTime);
+                float aTextWidth = gApp->mSysFontBold.Width(aWaitString.c(), 0.5f);
+                
+                Graphics::PipelineStateSetShape2DAlphaBlending();
+                Graphics::SetColor(0.25f, 0.125f, 0.685f, 0.75f);
+                
+                FVec2 aPoint = FVec2(aSpawn->mBaseX, aSpawn->mBaseY);
+                aPoint = FCanvas::Convert(aPoint, gGame, this);
+                Graphics::DrawRect(aPoint.mX - aTextWidth / 2.0f, aPoint.mY - 16.0f, aTextWidth, 32.0f);
+                Graphics::PipelineStateSetSpritePremultipliedBlending();
+                Graphics::SetColor();
+                
+                gApp->mSysFontBold.Center(aWaitString.c(), aPoint.mX, aPoint.mY, 0.5f);
+                
+            }
+        }
+        
+        /*
+        if (mCurrentWaitTime > 0) {
+            if (mCurrentWaitTick < mCurrentWaitTime) {
+                mCurrentWaitTick++;
+            }
+        }
+        */
+        
         
     }
     
@@ -399,7 +452,6 @@ void GameEditor::TouchMove(float pX, float pY, void *pData) {
 }
 
 void GameEditor::TouchUp(float pX, float pY, void *pData) {
-    
     
 }
 
@@ -427,6 +479,40 @@ void GameEditor::KeyDown(int pKey) {
     bool aCtrl = gKeyDownCtrl;
     bool aAlt = gKeyDownAlt;
     
+    
+    if (mFreeze) {
+        
+        if (pKey == __KEY__LEFT) {
+            
+            if (aCtrl == true && aShift == true) {
+                mFreezeFrame -= 500;
+            } else if (aCtrl == true) {
+                mFreezeFrame -= 50;
+            } else if (aShift == true) {
+                mFreezeFrame -= 10;
+            } else {
+                mFreezeFrame -= 1;
+            }
+        }
+        
+        if (pKey == __KEY__RIGHT) {
+            if (aCtrl == true && aShift == true) {
+                mFreezeFrame += 500;
+            } else if (aCtrl == true) {
+                mFreezeFrame += 50;
+            } else if (aShift == true) {
+                mFreezeFrame += 10;
+            } else {
+                mFreezeFrame += 1;
+            }
+        }
+        
+        
+        
+        
+    }
+    
+    
     if (aCtrl) {
         if (pKey == __KEY__0) { mTestIndex = 0; LoadTest(); return; }
         if (pKey == __KEY__1) { mTestIndex = 1; LoadTest(); return; }
@@ -449,6 +535,12 @@ void GameEditor::KeyDown(int pKey) {
         if (pKey == __KEY__7) { mExportIndex = 7; SaveConfig(); }
         if (pKey == __KEY__8) { mExportIndex = 8; SaveConfig(); }
         if (pKey == __KEY__9) { mExportIndex = 9; SaveConfig(); }
+    }
+    
+    if (pKey == __KEY__Z) {
+        if (aShift == false && aCtrl == false && aAlt == false) {
+            mFreeze = !mFreeze;
+        }
     }
     
     if (pKey == __KEY__Q) {

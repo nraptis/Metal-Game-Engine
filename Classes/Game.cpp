@@ -1054,14 +1054,12 @@ void Game::DartMovingInterpolationTurtles(Dart *pDart, float pPercent, bool pEnd
 }
 
 bool Game::ShouldSpawnFreeLife() {
-    
-    return true;
-    //return gRand.Get(5) == 2;
-    
+    return gRand.Get(1400) == 200;
 }
 
 void Game::NotifyDidSpawnFreeLife() {
-    printf("We spawned FL...\n");
+    //printf("We spawned FL...\n");
+    
 }
 
 
@@ -1271,8 +1269,7 @@ void Game::DisposeObject(GameObject *pObject) {
                 aTurtle->mBalloon = NULL;
                 
                 if (aTurtle->mKnockedDown == false) {
-                    
-                    printf("WE ARE FORCE-KNOCKING DOWN TURTLE [%lld] for auto-die balloon\n", aTurtle);
+                    //printf("WE ARE FORCE-KNOCKING DOWN TURTLE [%lld] for auto-die balloon\n", aTurtle);
                     aTurtle->KnockDown();
                 }
             }
@@ -1287,7 +1284,7 @@ void Game::DisposeObject(GameObject *pObject) {
                 
                 if (aTurtle->mKnockedDown == false) {
                     
-                    printf("WE ARE FORCE-KNOCKING DOWN TURTLE [%lld] for auto-die balloon\n", aTurtle);
+                    //printf("WE ARE FORCE-KNOCKING DOWN TURTLE [%lld] for auto-die free-life\n", aTurtle);
                     aTurtle->KnockDown();
                 }
             }

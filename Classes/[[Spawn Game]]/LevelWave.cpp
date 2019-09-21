@@ -116,6 +116,9 @@ void LevelWave::Update() {
             } else {
                 if (mPath.mWait.mData[aSpawn->mPathIndex] > 0 && aSpawn->mWaitTimer == 0) {
                     aSpawn->mWaitTimer = mPath.mWait.mData[aSpawn->mPathIndex];
+                    
+                    aSpawn->mCurrentWaitTime = aSpawn->mWaitTimer;
+                    aSpawn->mCurrentWaitTick = 0;
                 }
             }
             

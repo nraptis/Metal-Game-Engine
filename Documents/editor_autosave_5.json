@@ -18,7 +18,7 @@
 						"y_con_offset": 40.000000,
 						"decel": 220,
 						"accel": 170,
-						"wait": 980
+						"wait": 965
 					},
 					{
 						"x_con": 850,

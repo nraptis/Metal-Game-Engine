@@ -294,6 +294,10 @@ public:
     FList                                       mEditorObjectQueue;
     
     
+    bool                                        mFreeze;
+    int                                         mFreezeFrame;
+    
+    
 };
 
 extern GameEditor *gEditor;

@@ -25,6 +25,8 @@ LevelPathNode::LevelPathNode() {
     mWaitTimer = 0;
     mDecelDistance = 0;
     mKillTimer = 8;
+    
+    
 }
 
 LevelPathNode::~LevelPathNode() {
@@ -57,20 +59,7 @@ LevelPath::LevelPath() {
     
     mEnterIndex = -1;
     mExitIndex = -1;
-    
-    
-    /*
-     #define X_CONSTRAINT_LEFT_EXIT 150
-     #define X_CONSTRAINT_LEFT_SPAWN 200
-     
-     #define X_CONSTRAINT_RIGHT_SPAWN 800
-     #define X_CONSTRAINT_RIGHT_EXIT 850
-     
-     #define Y_CONSTRAINT_TOP_EXIT 150
-     #define Y_CONSTRAINT_TOP_SPAWN 200
-     */
-    
-    
+
     mTempX = 0.0f;
     mTempY = 0.0f;
     mTempDist = 0.0f;

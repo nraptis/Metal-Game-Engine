@@ -16,6 +16,7 @@ public:
     SpeedControlMenu();
     virtual ~SpeedControlMenu();
     
+    virtual void                            Update();
     virtual void                            Layout();
     virtual void                            Notify(void *pSender, const char *pNotification);
     
@@ -26,8 +27,17 @@ public:
     UICheckBox                              *mCheckBoxPause;
     UICheckBox                              *mCheckBoxFreezeFrameEnabled;
     UITextBox                               *mTextBoxFreezeFrame;
+    
     UIButton                                *mButtonNextFrame;
     UIButton                                *mButtonPrevFrame;
+    
+    
+    UIButton                                *mButtonNext10Frame;
+    UIButton                                *mButtonPrev10Frame;
+    
+    UIButton                                *mButtonNext100Frame;
+    UIButton                                *mButtonPrev100Frame;
+    
     
     
 };

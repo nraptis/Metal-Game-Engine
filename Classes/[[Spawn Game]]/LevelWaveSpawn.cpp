@@ -37,6 +37,10 @@ LevelWaveSpawn::LevelWaveSpawn(LevelWave *pWave, LevelPath *pPath) {
     
     mObjectType = GAME_OBJECT_TYPE_BALLOON;
     mKillTimer = 8;
+    
+    mCurrentWaitTime = 0;
+    mCurrentWaitTick = 0;
+    
 }
 
 LevelWaveSpawn::~LevelWaveSpawn() {
@@ -212,6 +216,17 @@ void LevelWaveSpawn::Update() {
     
     if (mDidSpawn == true) {
         mDidUpdateAfterSpawn = true;
+    }
+    
+    //aSpawn->mCurrentWaitTime = aSpawn->mWaitTimer;
+    //aSpawn->mCurrentWaitTick = 0;
+    
+    if (mCurrentWaitTime > 0) {
+        mCurrentWaitTick++;
+        if (mCurrentWaitTick > mCurrentWaitTime) {
+            mCurrentWaitTime = 0;
+            mCurrentWaitTick = 0;
+        }
     }
     
     if (mPathIndex >= 0 && mPathIndex < mPath->mPath.mCount) {

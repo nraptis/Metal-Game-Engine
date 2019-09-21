@@ -93,6 +93,8 @@ public:
     int                                 mExitIndex;
     
     
+    
+    
     int                                 mStartConstraintTypeX;
     int                                 mStartConstraintTypeY;
     

@@ -2,6 +2,7 @@
 	"section": true,
 	"wave_list": [
 		{
+			"spawn_spacing": 90,
 			"max_spawn_size": 226,
 			"path": {
 				"speed_class": 200,
@@ -17,7 +18,7 @@
 						"y_con_offset": 40.000000,
 						"decel": 220,
 						"accel": 170,
-						"wait": 1000
+						"wait": 965
 					},
 					{
 						"x_con": 850,
@@ -43,6 +44,9 @@
 								"angle_span": 15
 							}
 						]
+					},
+					"style": {
+						"disable_threads": true
 					}
 				}
 			]
