@@ -52,8 +52,14 @@ LevelFormationNode::~LevelFormationNode() {
 void LevelFormationNode::Spawn() {
     
     if (mObjectType == GAME_OBJECT_TYPE_BALLOON) {
-        mObject = new Balloon();
-        gGame->mBalloonList.Add(mObject);
+        if (gGame->ShouldSpawnFreeLife()) {
+            mObject = new FreeLife();
+            gGame->mFreeLifeList.Add(mObject);
+            gGame->NotifyDidSpawnFreeLife();
+        } else {
+            mObject = new Balloon();
+            gGame->mBalloonList.Add(mObject);
+        }
     }
     
     if (mObjectType == GAME_OBJECT_TYPE_BRICKHEAD) {

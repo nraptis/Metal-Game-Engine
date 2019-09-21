@@ -181,6 +181,11 @@ void EditorMenuFormationPickerCell::DrawFormationNode(LevelFormationNode *pNode,
         Graphics::DrawRect(pX - 1.0f, pY - 1.0f, 3.0f, 3.0f);
     }
     
+    if (pNode->mObjectType == GAME_OBJECT_TYPE_FREE_LIFE) {
+        Graphics::SetColor(0.45f, 0.99f, 0.45f, 0.90f);
+        Graphics::DrawRect(pX - 1.0f, pY - 1.0f, 3.0f, 3.0f);
+    }
+    
     if (pNode->mObjectType == GAME_OBJECT_TYPE_BRICKHEAD) {
         Graphics::SetColor(0.56f, 0.56f, 0.74f, 0.90f);
         Graphics::DrawRect(pX - 2.0f, pY - 2.0f, 5.0f, 5.0f);

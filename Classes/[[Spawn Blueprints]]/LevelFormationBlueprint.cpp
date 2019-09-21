@@ -229,9 +229,6 @@ LevelFormationNodeBlueprint *LevelFormationBlueprint::GetNode() {
     return aResult;
 }
 
-
-
-
 void LevelFormationBlueprint::TracerAdd(float pX, float pY) {
     LevelFormationTracerBlueprint *aTracer = GetTracer();
     if (aTracer != NULL) {

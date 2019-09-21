@@ -125,13 +125,17 @@ void GameRenderer::Draw3D() {
         mGame->mCurrentDart->Draw3D();
     }
     
-    
-    
-    
     Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending();
     EnumList (Balloon, aBalloon, mGame->mBalloonList.mObjectList) {
         if (aBalloon->mKill == 0) {
             aBalloon->Draw3D();
+        }
+    }
+    
+    Graphics::PipelineStateSetModelIndexedLightedPhongNoBlending();
+    EnumList (FreeLife, aFreeLife, mGame->mFreeLifeList.mObjectList) {
+        if (aFreeLife->mKill == 0) {
+            aFreeLife->Draw3D();
         }
     }
     

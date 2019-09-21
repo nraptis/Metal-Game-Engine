@@ -37,9 +37,6 @@ Balloon::Balloon() {
     
     mShouldSpawnThread = true;
     mDidSpawnThread = false;
-    
-    //mThread.Setup();
-    
 }
 
 Balloon::~Balloon() {
@@ -113,3 +110,16 @@ void Balloon::Draw3DThread() {
         
     }
 }
+
+void Balloon::AddThread() {
+    if (mDidSpawnThread == false) {
+        mShouldSpawnThread = true;
+    }
+    mIsThreadVisible = true;
+}
+
+void Balloon::RemoveThread() {
+    mIsThreadVisible = false;
+    mShouldSpawnThread = false;
+}
+

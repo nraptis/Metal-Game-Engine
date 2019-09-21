@@ -9,6 +9,9 @@
 #ifndef LevelStyleController_hpp
 #define LevelStyleController_hpp
 
+#include "GameObject.hpp"
+#include "FList.hpp"
+
 class LevelStyleController {
 public:
     LevelStyleController();
@@ -16,7 +19,8 @@ public:
     
     void                                Reset();
     
-    
+    void                                ApplyToObject(GameObject *pObject);
+    void                                ApplyToObjectList(FList *pList);
     
     bool                                mDisableThreads;
     bool                                mEnableBobbleMode;

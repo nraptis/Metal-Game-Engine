@@ -214,19 +214,37 @@ bool LevelFormation::IsClear() {
 }
 
 void LevelFormation::ApplyMotionController(LevelMotionController *pMotionController) {
-    
     if (pMotionController != NULL) {
-        
         EnumList(LevelFormationTracer, aTracer, mTracerList) {
             EnumList(LevelFormationNode, aNode, aTracer->mSpawnNodeList) {
                 pMotionController->Apply(mX, mY, aNode->mObject);
             }
         }
-        
         EnumList(LevelFormationNode, aNode, mSpawnNodeList) {
             pMotionController->Apply(mX, mY, aNode->mObject);
         }
     }
+}
+
+FList cStyleControllerFormationApplyList;
+void LevelFormation::ApplyStyleController(LevelStyleController *pStyleController) {
+    
+    if (pStyleController == NULL) { return; }
+    
+    cStyleControllerFormationApplyList.RemoveAll();
+    EnumList(LevelFormationTracer, aTracer, mTracerList) {
+        EnumList(LevelFormationNode, aNode, aTracer->mSpawnNodeList) {
+            if (aNode->mObject != NULL) {
+                cStyleControllerFormationApplyList.Add(aNode->mObject);
+            }
+        }
+    }
+    EnumList(LevelFormationNode, aNode, mSpawnNodeList) {
+        if (aNode->mObject != NULL) {
+            cStyleControllerFormationApplyList.Add(aNode->mObject);
+        }
+    }
+    pStyleController->ApplyToObjectList(&cStyleControllerFormationApplyList);
 }
 
 void LevelFormation::HandOffAllGameObjects(FList *pList) {

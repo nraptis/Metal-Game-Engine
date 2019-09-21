@@ -15,6 +15,7 @@
 #include "FloatingCamera.hpp"
 #include "Dart.hpp"
 #include "Balloon.hpp"
+#include "FreeLife.hpp"
 #include "Bomb.hpp"
 #include "Turtle.hpp"
 #include "BrickHead.hpp"
@@ -96,6 +97,7 @@ public:
     void                                        DartCollideWithBalloon(Dart *pDart, Balloon *pBalloon);
     void                                        DartCollideWithBrickhead(Dart *pDart, BrickHead *pBrickHead);
     void                                        DartCollideWithTurtle(Dart *pDart, Turtle *pTurtle);
+    void                                        DartCollideWithFreeLife(Dart *pDart, FreeLife *pFreeLife);
     
     void                                        TurtleDidLoseBalloon(Turtle *pTurtle);
     
@@ -107,6 +109,12 @@ public:
     void                                        DartMovingInterpolationTurtles(Dart *pDart, float pPercent, bool pEnd);
     void                                        DartMovingInterpolationBrickHeads(Dart *pDart, float pPercent, bool pEnd);
     void                                        DartMovingInterpolationBalloons(Dart *pDart, float pPercent, bool pEnd);
+    void                                        DartMovingInterpolationFreeLives(Dart *pDart, float pPercent, bool pEnd);
+    
+    
+    bool                                        ShouldSpawnFreeLife();
+    void                                        NotifyDidSpawnFreeLife();
+    
     
     
     GameInfoOverlay                             *mTestOverlay;
@@ -127,6 +135,7 @@ public:
     
     FObjectList                                 mDartList;
     FObjectList                                 mBalloonList;
+    FObjectList                                 mFreeLifeList;
     FObjectList                                 mBrickHeadList;
     FObjectList                                 mTurtleList;
     FObjectList                                 mBombList;

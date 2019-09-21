@@ -91,8 +91,14 @@ void LevelWaveSpawn::Spawn() {
     if (mFormation == NULL) {
         
         if (mObjectType == GAME_OBJECT_TYPE_BALLOON) {
-            mObject = new Balloon();
-            gGame->mBalloonList.Add(mObject);
+            if (gGame->ShouldSpawnFreeLife()) {
+                mObject = new FreeLife();
+                gGame->mFreeLifeList.Add(mObject);
+                gGame->NotifyDidSpawnFreeLife();
+            } else {
+                mObject = new Balloon();
+                gGame->mBalloonList.Add(mObject);
+            }
         }
         
         if (mObjectType == GAME_OBJECT_TYPE_BRICKHEAD) {
@@ -117,14 +123,22 @@ void LevelWaveSpawn::Spawn() {
             
             mObject->mTransform.mX = mBaseX;
             mObject->mTransform.mY = mBaseY;
+            
+            
         }
     }
     
     mDidSpawn = true;
     mDidUpdateAfterSpawn = false;
     
-    if (mObject != NULL) { mObject->mWaveSpawn = this; }
-    if (mFormation != NULL) { mFormation->SetWaveSpawn(this); }
+    if (mObject != NULL) {
+        mObject->mWaveSpawn = this;
+        mStyleController.ApplyToObject(mObject);
+    }
+    if (mFormation != NULL) {
+        mFormation->SetWaveSpawn(this);
+        mFormation->ApplyStyleController(&mStyleController);
+    }
 }
 
 void LevelWaveSpawn::DisposeObject(GameObject *pObject) {

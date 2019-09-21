@@ -71,14 +71,21 @@ void LevelPermSpawn::Spawn() {
             
             SetObjectPosition();
             mFormation->Spawn(&mMotionController, &mFormationConfiguration);
+            mFormation->ApplyStyleController(&mStyleController);
         }
     }
     
     if (mFormation == NULL) {
         
         if (mObjectType == GAME_OBJECT_TYPE_BALLOON) {
-            mObject = new Balloon();
-            gGame->mBalloonList.Add(mObject);
+            if (gGame->ShouldSpawnFreeLife()) {
+                mObject = new FreeLife();
+                gGame->mFreeLifeList.Add(mObject);
+                gGame->NotifyDidSpawnFreeLife();
+            } else {
+                mObject = new Balloon();
+                gGame->mBalloonList.Add(mObject);
+            }
         }
         
         if (mObjectType == GAME_OBJECT_TYPE_BRICKHEAD) {
@@ -113,8 +120,15 @@ void LevelPermSpawn::Spawn() {
         }
     }
     
-    if (mObject != NULL) { mObject->mPermSpawn = this; }
-    if (mFormation != NULL) { mFormation->SetPermSpawn(this); }
+    if (mObject != NULL) {
+        mObject->mPermSpawn = this;
+        mStyleController.ApplyToObject(mObject);
+    }
+    
+    if (mFormation != NULL) {
+        mFormation->SetPermSpawn(this);
+        mFormation->ApplyStyleController(&mStyleController);
+    }
     
 }
 

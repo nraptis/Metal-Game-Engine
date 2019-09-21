@@ -15,6 +15,7 @@
 #include "GameObject.hpp"
 #include "LevelFormation.hpp"
 #include "LevelMotionController.hpp"
+#include "LevelStyleController.hpp"
 #include "LevelFormationConfiguration.hpp"
 
 class LevelWave;
@@ -41,6 +42,7 @@ public:
     bool                                mIsPlayingEnter;
     bool                                mIsPlayingExit;
     
+    LevelStyleController                mStyleController;
     
     LevelWave                           *mWave;
     LevelPath                           *mPath;

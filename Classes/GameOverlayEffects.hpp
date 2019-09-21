@@ -14,6 +14,7 @@
 class Game;
 class GameObject;
 class Balloon;
+class FreeLife;
 class GameOverlayEffects : public FCanvas {
 public:
     GameOverlayEffects();
@@ -23,10 +24,10 @@ public:
     virtual void                                Update() override;
     virtual void                                Draw() override;
     
-    
     void                                        Get2DPos(GameObject *pObject, float &pX, float &pY);
     
     void                                        GenerateBalloonPopAnimation(Balloon *pBalloon);
+    void                                        GenerateFreeLifePopAnimation(FreeLife *pFreeLife);
     
     FObjectList                                 mEffectListBalloonBursts;
     FObjectList                                 mEffectListDartFadeStar;

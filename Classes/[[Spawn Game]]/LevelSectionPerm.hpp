@@ -14,7 +14,7 @@
 #include "LevelPath.hpp"
 #include "LevelPermSpawn.hpp"
 #include "LevelMotionController.hpp"
-
+#include "LevelStyleController.hpp"
 #include "LevelFormationConfiguration.hpp"
 
 class LevelSection;
@@ -75,6 +75,8 @@ public:
     LevelMotionController               mMotionController;
     bool                                mIsPlayingEnter;
     bool                                mIsPlayingExit;
+    
+    LevelStyleController                mStyleController;
     
     FList                               mSpawnList; //of LevelPermSpawn
     bool                                mSpawnEqualSpacing;

@@ -14,6 +14,7 @@
 #include "LevelFormationTracer.hpp"
 #include "LevelFormationNode.hpp"
 #include "LevelMotionController.hpp"
+#include "LevelStyleController.hpp"
 #include "LevelFormationConfiguration.hpp"
 
 class LevelWaveSpawn;
@@ -36,7 +37,12 @@ public:
     void                                        Draw(int pSelectedIndex);
     void                                        DisposeObject(GameObject *pObject);
     
+    //Gets called on every update...
     void                                        ApplyMotionController(LevelMotionController *pMotionController);
+    
+    //Gets called once after SPAWN...
+    void                                        ApplyStyleController(LevelStyleController *pStyleController);
+    
     
     bool                                        IsClear();
     

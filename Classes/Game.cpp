@@ -167,6 +167,7 @@ Game::~Game() {
     
     mDartList.Free();
     mBalloonList.Free();
+    mFreeLifeList.Free();
     mBrickHeadList.Free();
     mTurtleList.Free();
     mBombList.Free();
@@ -419,6 +420,13 @@ void Game::Update() {
         }
     }
     
+    EnumList (FreeLife, aFreeLife, mFreeLifeList.mObjectList) {
+        if (aFreeLife->mKill == 0) {
+            if (aFreeLife->mFloatAway == true) {
+                mRecentFloatingAwayTick = 4;
+            }
+        }
+    }
     
     EnumList(Balloon, aBalloon, mBalloonList.mObjectList) {
         if (aBalloon->mKill == 0) {
@@ -468,18 +476,10 @@ void Game::Update() {
     
     mDartList.Update();
     mBalloonList.Update();
+    mFreeLifeList.Update();
     mBrickHeadList.Update();
     mBombList.Update();
     mTurtleList.Update();
-    
-    
-    
-    
-    
-    
-    
-    //
-    
     
     //New thing, the dart now moves small increments and tries to collide.
     for (int i=0;i<mDartList.mObjectList.mCount;i++) {
@@ -512,6 +512,16 @@ void Game::Update() {
         }
         if ((aDart->mIdle == false) && (aDart->mKill == 0) && (aDart->mStuck == false) && (aDart->mKnockedDown == false)) {
             DartMovingInterpolationBalloons(aDart, 1.0, true);
+        }
+        
+        
+        for (float aPercent=0.0f;aPercent<1.0f;aPercent+=0.025f) {
+            if ((aDart->mIdle == false) && (aDart->mKill == 0) && (aDart->mStuck == false) && (aDart->mKnockedDown == false)) {
+                DartMovingInterpolationFreeLives(aDart, aPercent, false);
+            }
+        }
+        if ((aDart->mIdle == false) && (aDart->mKill == 0) && (aDart->mStuck == false) && (aDart->mKnockedDown == false)) {
+            DartMovingInterpolationFreeLives(aDart, 1.0, true);
         }
         
     }
@@ -672,6 +682,7 @@ void Game::Draw() {
     
     mBrickHeadList.Draw();
     mBalloonList.Draw();
+    mFreeLifeList.Draw();
     mDartList.Draw();
     mTurtleList.Draw();
     mBombList.Draw();
@@ -751,118 +762,14 @@ void Game::Draw() {
     }
 }
 
-
-void Game::Clear() {
-    
-    if (mCurrentDart) {
-        delete mCurrentDart;
-        mCurrentDart = NULL;
-    }
-    
-    DisposeAllObjects();
-    
-    mTrajectoryList.Reset();
-    
-    if (mLevelController != NULL) {
-        mLevelController->mData = NULL;
-    }
-    
-    if (mLevelData != NULL) {
-        delete mLevelData;
-        mLevelData = NULL;
-    }
-    
-}
-
-
-void Game::DartMovingInterpolationBalloons(Dart *pDart, float pPercent, bool pEnd) {
-    
-    if (pEnd) {
-        pDart->mTransform.mX = pDart->mUpdateInterpEndX;
-        pDart->mTransform.mY = pDart->mUpdateInterpEndY;
-        pDart->mTransform.mRotation = pDart->mUpdateInterpEndRotation;
-    } else {
-        pDart->mTransform.mX = pDart->mUpdateInterpStartX
-        + (pDart->mUpdateInterpEndX - pDart->mUpdateInterpStartX) * pPercent;
-        pDart->mTransform.mY = pDart->mUpdateInterpStartY
-        + (pDart->mUpdateInterpEndY - pDart->mUpdateInterpStartY) * pPercent;
-        pDart->mTransform.mRotation = pDart->mUpdateInterpStartRotation
-        + (pDart->mUpdateInterpEndRotation - pDart->mUpdateInterpStartRotation) * pPercent;
-    }
-    
-    pDart->GetTipPoint(pDart->mTipX, pDart->mTipY);
-    
-    for (int n=0;n<mBalloonList.mObjectList.mCount;n++) {
-        Balloon *aBalloon = (Balloon *)mBalloonList.mObjectList.mData[n];
-        if (aBalloon->mKill == 0) {
-            if (aBalloon->WillCollide(pDart->mPrevTipX, pDart->mPrevTipY, pDart->mTipX, pDart->mTipY)) {
-                DartCollideWithBalloon(pDart, aBalloon);
-            }
-        }
-    }
-}
-
-void Game::DartMovingInterpolationBrickHeads(Dart *pDart, float pPercent, bool pEnd) {
-    
-    if (pEnd) {
-        pDart->mTransform.mX = pDart->mUpdateInterpEndX;
-        pDart->mTransform.mY = pDart->mUpdateInterpEndY;
-        pDart->mTransform.mRotation = pDart->mUpdateInterpEndRotation;
-        
-    } else {
-        pDart->mTransform.mX = pDart->mUpdateInterpStartX
-        + (pDart->mUpdateInterpEndX - pDart->mUpdateInterpStartX) * pPercent;
-        pDart->mTransform.mY = pDart->mUpdateInterpStartY
-        + (pDart->mUpdateInterpEndY - pDart->mUpdateInterpStartY) * pPercent;
-        pDart->mTransform.mRotation = pDart->mUpdateInterpStartRotation
-        + (pDart->mUpdateInterpEndRotation - pDart->mUpdateInterpStartRotation) * pPercent;
-    }
-    
-    pDart->GetTipPoint(pDart->mTipX, pDart->mTipY);
-    
-    for (int n=0;n<mBrickHeadList.mObjectList.mCount;n++) {
-        BrickHead *aBrickHead = (BrickHead *)mBrickHeadList.mObjectList.mData[n];
-        if (aBrickHead->mKill == 0) {
-            if (aBrickHead->WillCollide(pDart->mPrevTipX, pDart->mPrevTipY, pDart->mTipX, pDart->mTipY)) {
-                DartCollideWithBrickhead(pDart, aBrickHead);
-            }
-        }
-    }
-}
-
-void Game::DartMovingInterpolationTurtles(Dart *pDart, float pPercent, bool pEnd) {
-    
-    if (pEnd) {
-        pDart->mTransform.mX = pDart->mUpdateInterpEndX;
-        pDart->mTransform.mY = pDart->mUpdateInterpEndY;
-        pDart->mTransform.mRotation = pDart->mUpdateInterpEndRotation;
-    } else {
-        pDart->mTransform.mX = pDart->mUpdateInterpStartX
-        + (pDart->mUpdateInterpEndX - pDart->mUpdateInterpStartX) * pPercent;
-        pDart->mTransform.mY = pDart->mUpdateInterpStartY
-        + (pDart->mUpdateInterpEndY - pDart->mUpdateInterpStartY) * pPercent;
-        pDart->mTransform.mRotation = pDart->mUpdateInterpStartRotation
-        + (pDart->mUpdateInterpEndRotation - pDart->mUpdateInterpStartRotation) * pPercent;
-    }
-    
-    pDart->GetTipPoint(pDart->mTipX, pDart->mTipY);
-    
-    for (int n=0;n<mTurtleList.mObjectList.mCount;n++) {
-        Turtle *aTurtle = (Turtle *)mTurtleList.mObjectList.mData[n];
-        //if ((aTurtle->mKill == 0) && (aTurtle->mKnockedDown == false)) {
-        if ((aTurtle->mKill == 0) && (aTurtle->mKnockedDown == false)) {
-            if (aTurtle->WillCollide(pDart->mPrevTipX, pDart->mPrevTipY, pDart->mTipX, pDart->mTipY)) {
-                DartCollideWithTurtle(pDart, aTurtle);
-            }
-        }
-    }
-}
-
 void Game::Draw3D() {
     if (mRenderer) {
         mRenderer->Draw3D();
     }
 }
+
+
+
 
 void Game::TouchDown(float pX, float pY, void *pData) {
     
@@ -876,6 +783,10 @@ void Game::TouchDown(float pX, float pY, void *pData) {
         
         FList aList;
         EnumList(GameObject, aObject, gGame->mBalloonList.mObjectList) {
+            aList.Add(aObject);
+        }
+        
+        EnumList(GameObject, aObject, gGame->mFreeLifeList.mObjectList) {
             aList.Add(aObject);
         }
         EnumList(GameObject, aObject, aList) {
@@ -982,7 +893,7 @@ void Game::KeyDown(int pKey) {
                 mLevelData = NULL;
             }
 #ifndef EDITOR_MODE
-             Load();
+            Load();
 #else
             LoadEditorTest();
 #endif
@@ -1006,7 +917,162 @@ void Game::Notify(void *pSender, const char *pNotification) {
     
 }
 
+
+
+
+
+
+void Game::Clear() {
+    
+    if (mCurrentDart) {
+        delete mCurrentDart;
+        mCurrentDart = NULL;
+    }
+    
+    DisposeAllObjects();
+    
+    mTrajectoryList.Reset();
+    
+    if (mLevelController != NULL) {
+        mLevelController->mData = NULL;
+    }
+    
+    if (mLevelData != NULL) {
+        delete mLevelData;
+        mLevelData = NULL;
+    }
+    
+}
+
+void Game::DartMovingInterpolationFreeLives(Dart *pDart, float pPercent, bool pEnd) {
+    
+    if (pEnd) {
+        pDart->mTransform.mX = pDart->mUpdateInterpEndX;
+        pDart->mTransform.mY = pDart->mUpdateInterpEndY;
+        pDart->mTransform.mRotation = pDart->mUpdateInterpEndRotation;
+    } else {
+        pDart->mTransform.mX = pDart->mUpdateInterpStartX
+        + (pDart->mUpdateInterpEndX - pDart->mUpdateInterpStartX) * pPercent;
+        pDart->mTransform.mY = pDart->mUpdateInterpStartY
+        + (pDart->mUpdateInterpEndY - pDart->mUpdateInterpStartY) * pPercent;
+        pDart->mTransform.mRotation = pDart->mUpdateInterpStartRotation
+        + (pDart->mUpdateInterpEndRotation - pDart->mUpdateInterpStartRotation) * pPercent;
+    }
+    
+    pDart->GetTipPoint(pDart->mTipX, pDart->mTipY);
+    
+    for (int n=0;n<mFreeLifeList.mObjectList.mCount;n++) {
+        FreeLife *aFreeLife = (FreeLife *)mFreeLifeList.mObjectList.mData[n];
+        if (aFreeLife->mKill == 0) {
+            if (aFreeLife->WillCollide(pDart->mPrevTipX, pDart->mPrevTipY, pDart->mTipX, pDart->mTipY)) {
+                DartCollideWithFreeLife(pDart, aFreeLife);
+            }
+        }
+    }
+}
+
+void Game::DartMovingInterpolationBalloons(Dart *pDart, float pPercent, bool pEnd) {
+    
+    if (pEnd) {
+        pDart->mTransform.mX = pDart->mUpdateInterpEndX;
+        pDart->mTransform.mY = pDart->mUpdateInterpEndY;
+        pDart->mTransform.mRotation = pDart->mUpdateInterpEndRotation;
+    } else {
+        pDart->mTransform.mX = pDart->mUpdateInterpStartX
+        + (pDart->mUpdateInterpEndX - pDart->mUpdateInterpStartX) * pPercent;
+        pDart->mTransform.mY = pDart->mUpdateInterpStartY
+        + (pDart->mUpdateInterpEndY - pDart->mUpdateInterpStartY) * pPercent;
+        pDart->mTransform.mRotation = pDart->mUpdateInterpStartRotation
+        + (pDart->mUpdateInterpEndRotation - pDart->mUpdateInterpStartRotation) * pPercent;
+    }
+    
+    pDart->GetTipPoint(pDart->mTipX, pDart->mTipY);
+    
+    for (int n=0;n<mBalloonList.mObjectList.mCount;n++) {
+        Balloon *aBalloon = (Balloon *)mBalloonList.mObjectList.mData[n];
+        if (aBalloon->mKill == 0) {
+            if (aBalloon->WillCollide(pDart->mPrevTipX, pDart->mPrevTipY, pDart->mTipX, pDart->mTipY)) {
+                DartCollideWithBalloon(pDart, aBalloon);
+            }
+        }
+    }
+}
+
+void Game::DartMovingInterpolationBrickHeads(Dart *pDart, float pPercent, bool pEnd) {
+    
+    if (pEnd) {
+        pDart->mTransform.mX = pDart->mUpdateInterpEndX;
+        pDart->mTransform.mY = pDart->mUpdateInterpEndY;
+        pDart->mTransform.mRotation = pDart->mUpdateInterpEndRotation;
+        
+    } else {
+        pDart->mTransform.mX = pDart->mUpdateInterpStartX
+        + (pDart->mUpdateInterpEndX - pDart->mUpdateInterpStartX) * pPercent;
+        pDart->mTransform.mY = pDart->mUpdateInterpStartY
+        + (pDart->mUpdateInterpEndY - pDart->mUpdateInterpStartY) * pPercent;
+        pDart->mTransform.mRotation = pDart->mUpdateInterpStartRotation
+        + (pDart->mUpdateInterpEndRotation - pDart->mUpdateInterpStartRotation) * pPercent;
+    }
+    
+    pDart->GetTipPoint(pDart->mTipX, pDart->mTipY);
+    
+    for (int n=0;n<mBrickHeadList.mObjectList.mCount;n++) {
+        BrickHead *aBrickHead = (BrickHead *)mBrickHeadList.mObjectList.mData[n];
+        if (aBrickHead->mKill == 0) {
+            if (aBrickHead->WillCollide(pDart->mPrevTipX, pDart->mPrevTipY, pDart->mTipX, pDart->mTipY)) {
+                DartCollideWithBrickhead(pDart, aBrickHead);
+            }
+        }
+    }
+}
+
+void Game::DartMovingInterpolationTurtles(Dart *pDart, float pPercent, bool pEnd) {
+    
+    if (pEnd) {
+        pDart->mTransform.mX = pDart->mUpdateInterpEndX;
+        pDart->mTransform.mY = pDart->mUpdateInterpEndY;
+        pDart->mTransform.mRotation = pDart->mUpdateInterpEndRotation;
+    } else {
+        pDart->mTransform.mX = pDart->mUpdateInterpStartX
+        + (pDart->mUpdateInterpEndX - pDart->mUpdateInterpStartX) * pPercent;
+        pDart->mTransform.mY = pDart->mUpdateInterpStartY
+        + (pDart->mUpdateInterpEndY - pDart->mUpdateInterpStartY) * pPercent;
+        pDart->mTransform.mRotation = pDart->mUpdateInterpStartRotation
+        + (pDart->mUpdateInterpEndRotation - pDart->mUpdateInterpStartRotation) * pPercent;
+    }
+    
+    pDart->GetTipPoint(pDart->mTipX, pDart->mTipY);
+    
+    for (int n=0;n<mTurtleList.mObjectList.mCount;n++) {
+        Turtle *aTurtle = (Turtle *)mTurtleList.mObjectList.mData[n];
+        if ((aTurtle->mKill == 0) && (aTurtle->mKnockedDown == false)) {
+            if (aTurtle->WillCollide(pDart->mPrevTipX, pDart->mPrevTipY, pDart->mTipX, pDart->mTipY)) {
+                DartCollideWithTurtle(pDart, aTurtle);
+            }
+        }
+    }
+}
+
+bool Game::ShouldSpawnFreeLife() {
+    
+    return true;
+    //return gRand.Get(5) == 2;
+    
+}
+
+void Game::NotifyDidSpawnFreeLife() {
+    printf("We spawned FL...\n");
+}
+
+
+
 bool Game::IsWaveClearForSpawn() {
+    
+    EnumList (FreeLife, aFreeLife, mFreeLifeList.mObjectList) {
+        if ((aFreeLife->mKill == 0) && (aFreeLife->mDidOriginateOnWave == true)) {
+            return false;
+        }
+    }
     EnumList (Balloon, aBalloon, mBalloonList.mObjectList) {
         if ((aBalloon->mKill == 0) && (aBalloon->mDidOriginateOnWave == true)) {
             return false;
@@ -1040,6 +1106,17 @@ bool Game::IsScreenClearForSpawn(bool pIncludePerms) {
     
     int aPermCount = 0;
     int aWaveCount = 0;
+    
+    EnumList (FreeLife, aFreeLife, mFreeLifeList.mObjectList) {
+        if (aFreeLife->mKill == 0) {
+            if (aFreeLife->mDidOriginateAsPermanent == true) {
+                ++aPermCount;
+            }
+            if (aFreeLife->mDidOriginateOnWave == true) {
+                ++aWaveCount;
+            }
+        }
+    }
     
     EnumList (Balloon, aBalloon, mBalloonList.mObjectList) {
         if (aBalloon->mKill == 0) {
@@ -1202,6 +1279,21 @@ void Game::DisposeObject(GameObject *pObject) {
         }
     }
     
+    if (pObject->mGameObjectType == GAME_OBJECT_TYPE_FREE_LIFE) {
+        FreeLife *aFreeLife = ((FreeLife *)pObject);
+        EnumList(Turtle, aTurtle, mTurtleList.mObjectList) {
+            if (aTurtle->mBalloon == aFreeLife) {
+                aTurtle->mBalloon = NULL;
+                
+                if (aTurtle->mKnockedDown == false) {
+                    
+                    printf("WE ARE FORCE-KNOCKING DOWN TURTLE [%lld] for auto-die balloon\n", aTurtle);
+                    aTurtle->KnockDown();
+                }
+            }
+        }
+    }
+    
     if (pObject->mGameObjectType == GAME_OBJECT_TYPE_DART) {
         Dart *aDart = (Dart *)pObject;
         EnumList (BrickHead, aBrickHead, mBrickHeadList.mObjectList) {
@@ -1246,6 +1338,9 @@ void Game::DisposeAllObjects() {
     EnumList (Balloon, aBalloon, mBalloonList.mObjectList) {
         DisposeObject(aBalloon);
     }
+    EnumList (FreeLife, aFreeLife, mFreeLifeList.mObjectList) {
+        DisposeObject(aFreeLife);
+    }
     EnumList (BrickHead, aBrickHead, mBrickHeadList.mObjectList) {
         DisposeObject(aBrickHead);
     }
@@ -1274,7 +1369,6 @@ void Game::FlyOffEscape(GameObject *pObject) {
     }
     
     if (pObject->mGameObjectType == GAME_OBJECT_TYPE_BALLOON) {
-        //Balloon *aBalloon = ((Balloon *)pObject);
         mLives--;
         if (mLives <= 0) {
             mLives = 0;
@@ -1349,8 +1443,6 @@ void Game::DartCollideWithBalloon(Dart *pDart, Balloon *pBalloon) {
     }
     
     if (pBalloon != NULL) {
-        //pBalloon->mDidPop = true;
-        
         
         if (mPopSoundDelay == 0) {
             mPopSoundDelay = 2;
@@ -1369,6 +1461,35 @@ void Game::DartCollideWithBalloon(Dart *pDart, Balloon *pBalloon) {
         }
         
         DisposeObject(pBalloon);
+        
+    }
+    mPoppedCount++;
+}
+
+void Game::DartCollideWithFreeLife(Dart *pDart, FreeLife *pFreeLife) {
+    if (pDart != NULL) {
+        pDart->mHitCount++;
+    }
+    
+    if (pFreeLife != NULL) {
+        
+        if (mPopSoundDelay == 0) {
+            mPopSoundDelay = 2;
+            gApp->mSoundBalloonPop.Play();
+        }
+        
+        if (gEffectsOverlay != NULL) {
+            gEffectsOverlay->GenerateFreeLifePopAnimation(pFreeLife);
+        }
+        
+        //Important: The turtle loses the balloon before the balloon is disposed...
+        EnumList(Turtle, aTurtle, mTurtleList.mObjectList) {
+            if ((aTurtle->mKill == 0) && (aTurtle->mBalloon == pFreeLife)) {
+                TurtleDidLoseBalloon(aTurtle);
+            }
+        }
+        
+        DisposeObject(pFreeLife);
         
     }
     mPoppedCount++;
@@ -1505,6 +1626,14 @@ bool Game::IsGameObjectOutsideKillZone(GameObject *pObject) {
 
 bool Game::IsAnyObjectFloatingAway() {
     
+    EnumList (FreeLife, aFreeLife, mFreeLifeList.mObjectList) {
+        if (aFreeLife->mKill == 0) {
+            if (aFreeLife->mFloatAway == true) {
+                mRecentFloatingAwayTick = 4;
+            }
+        }
+    }
+    
     EnumList (Balloon, aBalloon, mBalloonList.mObjectList) {
         if (aBalloon->mKill == 0) {
             if (aBalloon->mFloatAway == true) {
@@ -1565,10 +1694,22 @@ void Game::Load() {
      test_section_one_wave_16_turtles
     */
     
-    //aLevel.SetKillTimer(500);
-    //aLevel.SetAliveTimer(444);
+    aLevel.SetKillTimer(5000);
+    aLevel.SetAliveTimer(5000);
+    
+    aLevel.AddSection("section_learning_3_groups_lineshot_all_balloons.json");
+    aLevel.AddSection("section_learning_3_groups_lineshot_all_balloons.json");
+    aLevel.AddSection("section_learning_3_groups_lineshot_all_balloons.json");
+    aLevel.AddSection("section_learning_3_groups_lineshot_all_balloons.json");
+    aLevel.AddSection("section_learning_3_groups_lineshot_all_balloons.json");
+    aLevel.AddSection("section_learning_3_groups_lineshot_all_balloons.json");
+    
+    aLevel.AddSection("test_section_all_bricks_2_waves");
+    aLevel.AddSection("test_section_2_tracers_slowslow_speed_all_4_types");
+    aLevel.AddSection("section_2_turtles_2_bricks_2_waves_1_center_balloon");
     
     aLevel.AddSection("section_learning_start");
+    
     aLevel.AddSection("section_learning_3_groups_lineshot_all_balloons.json");
     
     //section_learning_start
@@ -1577,9 +1718,7 @@ void Game::Load() {
     
     //aLevel.AddSection("test_section_all_bricks_2_perms");
     
-    aLevel.AddSection("test_section_all_bricks_2_waves");
-    aLevel.AddSection("test_section_2_tracers_slowslow_speed_all_4_types");
-    aLevel.AddSection("section_2_turtles_2_bricks_2_waves_1_center_balloon");
+    
     
     
     

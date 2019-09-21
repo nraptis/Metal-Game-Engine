@@ -25,7 +25,8 @@ public:
     
     void                                    Draw3DThread();
     
-    
+    void                                    RemoveThread();
+    void                                    AddThread();
     
     float                                   mSpinSpeed;
     
@@ -45,11 +46,6 @@ public:
     
     float                                   mBounceFactor;
     float                                   mBounceFactorSin;
-    
-    
-    
 };
-
-
 
 #endif /* Balloon_hpp */

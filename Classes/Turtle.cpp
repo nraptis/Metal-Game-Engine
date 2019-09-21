@@ -48,9 +48,6 @@ Turtle::Turtle() {
     mKnockedDownRotationSpeed2 = 0.0f;
     mKnockedDownFallSpeed = 0.0f;
     
-    
-    
-    
     mIsRumbling = false;
     mRumbleTime = 80;
     mRumbleDampenTime = mRumbleTime - 30;
@@ -60,8 +57,6 @@ Turtle::Turtle() {
     mRumbleDirY = -1.0f;
     mRumbleBounceMagnitude = 5.0f;
     mRumbleBounceSin = 0.0f;
-    
-    
     
     mTransform.mOffsetY = 1.0f;
     mTransform.mOffsetScale = 0.65f;
@@ -129,9 +124,17 @@ void Turtle::Update() {
     
     if ((mDidSpawnBalloon == false) && (mBalloon == NULL)) {//} && (mKill == 0)) {
         mDidSpawnBalloon = true;
-        mBalloon = new Balloon();
-        mBalloon->mShouldSpawnThread = false;
-        gGame->mBalloonList.Add(mBalloon);
+        
+        if (gGame->ShouldSpawnFreeLife()) {
+            mBalloon = new FreeLife();
+            mBalloon->mShouldSpawnThread = false;
+            gGame->mFreeLifeList.Add(mBalloon);
+            gGame->NotifyDidSpawnFreeLife();
+        } else {
+            mBalloon = new Balloon();
+            mBalloon->mShouldSpawnThread = false;
+            gGame->mBalloonList.Add(mBalloon);
+        }
     }
     
     if (mBalloon != NULL) {

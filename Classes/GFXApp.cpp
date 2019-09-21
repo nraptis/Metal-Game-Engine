@@ -51,7 +51,7 @@ GFXApp::GFXApp() {
     
 //#ifndef EDITOR_MODE
     
-    //mDarkMode = true;
+    mDarkMode = true;
     
 //#endif
     
@@ -60,8 +60,6 @@ GFXApp::GFXApp() {
     
     mEditorTestSwitchToGameEnqueue = 0;
     mEditorTestSwitchToEditorEnqueue = 0;
-    
-    
     
 #endif
     

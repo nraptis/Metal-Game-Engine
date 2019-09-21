@@ -12,6 +12,7 @@
 #include "GameObject.hpp"
 #include "LevelFormation.hpp"
 #include "LevelMotionController.hpp"
+#include "LevelStyleController.hpp"
 #include "LevelFormationConfiguration.hpp"
 
 class LevelSectionPerm;
@@ -42,6 +43,8 @@ public:
     LevelMotionController               mMotionController;
     bool                                mIsPlayingEnter;
     bool                                mIsPlayingExit;
+    
+    LevelStyleController                mStyleController;
     
     LevelSectionPerm                    *mPerm;
     LevelPath                           *mPath;

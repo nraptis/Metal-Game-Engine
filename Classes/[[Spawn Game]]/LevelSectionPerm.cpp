@@ -159,14 +159,21 @@ void LevelSectionPerm::Spawn() {
                 mFormation->mX = mBaseX;
                 mFormation->mY = mBaseY;
                 mFormation->Spawn(&mMotionController, &mFormationConfiguration);
+                mFormation->ApplyStyleController(&mStyleController);
             }
         }
         
         if (mFormation == NULL) {
             
             if (mObjectType == GAME_OBJECT_TYPE_BALLOON) {
-                mObject = new Balloon();
-                gGame->mBalloonList.Add(mObject);
+                if (gGame->ShouldSpawnFreeLife()) {
+                    mObject = new FreeLife();
+                    gGame->mFreeLifeList.Add(mObject);
+                    gGame->NotifyDidSpawnFreeLife();
+                } else {
+                    mObject = new Balloon();
+                    gGame->mBalloonList.Add(mObject);
+                }
             }
             
             if (mObjectType == GAME_OBJECT_TYPE_BRICKHEAD) {
@@ -188,6 +195,7 @@ void LevelSectionPerm::Spawn() {
                 
                 mObject->mDidOriginateOnWave = false;
                 mObject->mDidOriginateAsPermanent = true;
+                mStyleController.ApplyToObject(mObject);
             }
         }
     }
@@ -195,6 +203,14 @@ void LevelSectionPerm::Spawn() {
     mDidSpawn = true;
     
     PositionObject();
+    
+    if (mFormation != NULL) {
+        mFormation->ApplyStyleController(&mStyleController);
+    }
+    
+    if (mObject != NULL) {
+        mStyleController.ApplyToObject(mObject);
+    }
 }
 
 void LevelSectionPerm::Update() {
@@ -256,8 +272,6 @@ void LevelSectionPerm::Draw() {
 }
 
 void LevelSectionPerm::DisposeObject(GameObject *pObject) {
-    
-    
     
     if (mObject == pObject) {
         mObject = NULL;

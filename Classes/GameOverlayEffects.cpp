@@ -119,3 +119,21 @@ void GameOverlayEffects::GenerateBalloonPopAnimation(Balloon *pBalloon) {
     aBurst->mY = aY;
     mEffectListBalloonBursts.Add(aBurst);
 }
+
+void GameOverlayEffects::GenerateFreeLifePopAnimation(FreeLife *pFreeLife) {
+    
+    if (pFreeLife == NULL) { return; }
+    
+    
+    float aX = 0.0f, aY = 0.0f;
+    Get2DPos(pFreeLife, aX, aY);
+    
+    //EffectBalloonBurst *aBurst = new EffectBalloonBurst();
+    //aBurst->mX = aX;
+    //aBurst->mY = aY;
+    //mEffectListBalloonBursts.Add(aBurst);
+    
+}
+
+//void
+
