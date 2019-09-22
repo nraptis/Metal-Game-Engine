@@ -31,6 +31,8 @@ public:
     
     void                            Print(const char *pName);
     
+    int                             GetProgressCount();
+    
     void                            AddSection(LevelSection *pLevelSection);
     FList                           mSectionList;
     LevelSection                    *mCurrentSection;
@@ -40,8 +42,6 @@ public:
     int                             mInitialDelay;
     
     bool                            mFlyInFromRight;
-    
-    
     
 };
 

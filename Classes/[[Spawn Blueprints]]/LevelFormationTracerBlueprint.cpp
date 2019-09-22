@@ -218,7 +218,7 @@ int LevelFormationTracerBlueprint::CountProgressObjects() {
     int aResult = 0;
     for (int i=0;i<mSpawnNodeList.mCount;i++) {
         LevelFormationNodeBlueprint *aNode = (LevelFormationNodeBlueprint *)mSpawnNodeList.mData[i];
-        if (gGame->DoesObjectTypeCountTowardsProgress(aNode->mObjectType)) {
+        if (gGame->DoesObjectTypeCountTowardsProgressCount(aNode->mObjectType)) {
             aResult += 1;
         }
     }

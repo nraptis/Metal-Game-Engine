@@ -16,6 +16,7 @@
 #include "EditorMenuGameTestUtils.hpp"
 #include "EditorMenuGameTest.hpp"
 #include "SpeedControlMenu.hpp"
+#include "StatsMenu.hpp"
 
 
 
@@ -57,7 +58,8 @@ public:
     
     EditorMenuGameTest                          *mEditorMenu;
     EditorMenuGameTestUtils                     *mEditorMenuUtils;
-    SpeedControlMenu                            *mEditorMenuSpeed;
+    SpeedControlMenu                            *mMenuSpeed;
+    StatsMenu                                   *mMenuStats;
     
     //Including Safe Area...
     float                                       mInterfaceLeftWidth;

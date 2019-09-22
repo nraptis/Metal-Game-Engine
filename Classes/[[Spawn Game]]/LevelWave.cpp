@@ -7,7 +7,6 @@
 //
 
 #include "LevelWave.hpp"
-#include "GameLevelController.hpp"
 #include "Game.hpp"
 #include "Balloon.hpp"
 
@@ -16,8 +15,6 @@ LevelWave::LevelWave() {
     mIsComplete = false;
     
     mExitType = WAVE_EXIT_TYPE_DISPERSE;
-    
-    //mCreationType = WAVE_CREATION_TYPE_PREV_WAVE_START;
     
     mCreationRequiresPrevWaveStart = false;
     mCreationRequiresPrevWaveComplete = false;

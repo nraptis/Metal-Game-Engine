@@ -248,7 +248,8 @@ void GameEditor::Update() {
             
             //Load("section_learning_start");
             
-            Load("section_medium_2_perms_2_bricks_2_turtles_4_waves_staggered_mixed_turtles_bricks_medium_circle_2_singles_1_turtle_brick.json");
+            //Load("section_medium_2_perms_2_bricks_2_turtles_4_waves_staggered_mixed_turtles_bricks_medium_circle_2_singles_1_turtle_brick");
+            Load("section_easymed_2_perms_2_bricks_blocking_1_turtle_both_sides_3_waves_med_tri_2_singles_med_square");
             
             
             //OpenFormationEditor(NULL);

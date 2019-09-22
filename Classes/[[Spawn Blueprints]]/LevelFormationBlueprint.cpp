@@ -189,7 +189,7 @@ int LevelFormationBlueprint::CountProgressObjects() {
     
     for (int i=0;i<mNodeList.mCount;i++) {
         LevelFormationNodeBlueprint *aNodeBlueprint = (LevelFormationNodeBlueprint *)mNodeList.mData[i];
-        if (gGame->DoesObjectTypeCountTowardsProgress(aNodeBlueprint->mObjectType)) {
+        if (gGame->DoesObjectTypeCountTowardsProgressCount(aNodeBlueprint->mObjectType)) {
             aResult += 1;
         }
     }

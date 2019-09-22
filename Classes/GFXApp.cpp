@@ -350,6 +350,7 @@ void GFXApp::LoadComplete() {
     
 #ifndef EDITOR_MODE
     
+    /*
     if (gDeviceWidth > 300) {
         if (mScreenTool == NULL) {
             mScreenTool = new Util_ScreenFrame();
@@ -358,6 +359,7 @@ void GFXApp::LoadComplete() {
             mWindowTools.AddChild(mScreenTool);
         }
     }
+    */
     
 #endif
     

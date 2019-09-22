@@ -64,7 +64,7 @@ public:
     int                                         mKeepAliveTimer;
     int                                         mForceKillTimer;
     
-    int                                         mProgressObjectsBase;
+    int                                         mProgressCount;
     
     
     FList                                       mKillWaveList;

@@ -8,7 +8,6 @@
 
 #include "LevelData.hpp"
 #include "Game.hpp"
-#include "GameLevelController.hpp"
 
 LevelData::LevelData() {
     mCurrentSectionIndex = 0;
@@ -41,8 +40,6 @@ void LevelData::Update() {
         if (mCurrentSectionIndex < mSectionList.mCount) {
             
             if (gGame->IsAnyObjectFloatingAway() == false) {
-                
-                
                 
                 if (mCurrentSectionIndex == 0) {
                     aIsFirstSection = true;
@@ -195,5 +192,17 @@ void LevelData::Print(const char *pName) {
 }
 
 void LevelData::AddSection(LevelSection *pLevelSection) {
-    mSectionList.Add(pLevelSection);
+    if (pLevelSection != NULL) {
+        mSectionList.Add(pLevelSection);
+    }
+}
+
+int LevelData::GetProgressCount() {
+    
+    int aResult = 0;
+    EnumList(LevelSection, aSection, mSectionList) {
+        aResult += aSection->mProgressCount;
+    }
+    return aResult;
+    
 }

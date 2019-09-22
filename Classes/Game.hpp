@@ -11,7 +11,6 @@
 
 #include "GFXApp.hpp"
 #include "GameRenderer.hpp"
-#include "GameLevelController.hpp"
 #include "FloatingCamera.hpp"
 #include "Dart.hpp"
 #include "Balloon.hpp"
@@ -88,6 +87,8 @@ public:
     //foreknowledge about which replacements will occur. For example,
     //a "free life" in editor does not count towards progress, but if a replacement occurs,
     //then total progress cannot include the object (balloon replaced by free life, as an example)
+    bool                                        DoesObjectTypeCountTowardsProgressCount(int pObjectType);
+    
     bool                                        DoesObjectTypeCountTowardsProgress(int pObjectType);
     
     bool                                        DoesObjectTypeRequireClearing(int pObjectType);
@@ -155,7 +156,8 @@ public:
     float                                       mRenderShiftY;
     
     LevelData                                   *mLevelData;
-    GameLevelController                         *mLevelController;
+    //GameLevelController                         *mLevelController;
+    
     
     GameRenderer                                *mRenderer;
     FloatingCamera                              *mCamera;
@@ -274,6 +276,9 @@ public:
     int                                         mLives;
     int                                         mLivesMax;
     
+    int                                         mProgressCount;
+    int                                         mProgress;
+    
     int                                         mPoppedCount;
     int                                         mThrownCount;
     int                                         mThrownHitCount;
@@ -282,6 +287,8 @@ public:
     int                                         mEscapedCount;
     
     int                                         mPopSoundDelay;
+    
+    
     
     
 };

@@ -34,7 +34,7 @@ int LevelWaveSpawnBlueprint::CountProgressObjects() {
     if (mFormationID.mLength > 0) {
         aResult += LevelFormationBlueprint::CountProgressObjects(mFormationID.c());
     } else {
-        if (gGame->DoesObjectTypeCountTowardsProgress(mObjectType)) {
+        if (gGame->DoesObjectTypeCountTowardsProgressCount(mObjectType)) {
             aResult += 1;
         }
     }

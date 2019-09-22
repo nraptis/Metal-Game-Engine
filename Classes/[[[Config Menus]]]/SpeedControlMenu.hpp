@@ -20,7 +20,6 @@ public:
     virtual void                            Layout();
     virtual void                            Notify(void *pSender, const char *pNotification);
     
-    
     UISegment                               *mSegmentSpeed;
     
     ToolMenuSectionRow                      *mRowFreezeFrame;
@@ -37,8 +36,6 @@ public:
     
     UIButton                                *mButtonNext100Frame;
     UIButton                                *mButtonPrev100Frame;
-    
-    
     
 };
 

@@ -17,7 +17,7 @@ LevelSectionBlueprint::LevelSectionBlueprint() {
     mKeepAliveTimer = 0;
     mForceKillTimer = 0;
     
-    mProgressObjectsBase = 0;
+    mProgressCount = 0;
     
 }
 
@@ -329,7 +329,7 @@ void LevelSectionBlueprint::Build(LevelSection *pSection) {
     
     pSection->mKeepAliveTimer = mKeepAliveTimer;
     pSection->mForceKillTimer = mForceKillTimer;
-    pSection->mProgressObjectsBase = mProgressObjectsBase;
+    pSection->mProgressCount = mProgressCount;
     
     for (int i=0;i<mWaveList.mCount;i++) {
         LevelWaveBlueprint *aWaveBlueprint = (LevelWaveBlueprint *)mWaveList[i];
@@ -357,11 +357,11 @@ FJSONNode *LevelSectionBlueprint::Save() {
         aExport->AddDictionaryInt("force_kill_timer", mForceKillTimer);
     }
     
-    mProgressObjectsBase = CountProgressObjects();
-    aExport->AddDictionaryInt("progress", mProgressObjectsBase);
+    mProgressCount = CountProgressObjects();
+    aExport->AddDictionaryInt("progress", mProgressCount);
     
-    //printf("Progress Objects: %d\n", mProgressObjectsBase);
-    //mProgressObjectsBase
+    //printf("Progress Objects: %d\n", mProgressCount);
+    //mProgressCount
     
     
     FJSONNode *aWaveArray = new FJSONNode();
@@ -392,7 +392,7 @@ void LevelSectionBlueprint::Load(FJSONNode *pNode) {
     
     mKeepAliveTimer = pNode->GetInt("keep_alive_timer", 0);
     mForceKillTimer = pNode->GetInt("force_kill_timer", 0);
-    mProgressObjectsBase = pNode->GetInt("progress", 0);
+    mProgressCount = pNode->GetInt("progress", 0);
     
     FJSONNode *aWaveArray = pNode->GetArray("wave_list");
     if (aWaveArray != NULL) {

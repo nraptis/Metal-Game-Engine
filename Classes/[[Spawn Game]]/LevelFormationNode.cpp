@@ -13,7 +13,6 @@
 #include "LevelFormation.hpp"
 #include "LevelPath.hpp"
 #include "LevelWave.hpp"
-#include "GameLevelController.hpp"
 #include "Game.hpp"
 #include "Balloon.hpp"
 #include "BrickHead.hpp"

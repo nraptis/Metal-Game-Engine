@@ -8,7 +8,6 @@
 
 #include "LevelSectionPerm.hpp"
 #include "LevelSection.hpp"
-#include "GameLevelController.hpp"
 #include "Game.hpp"
 #include "Balloon.hpp"
 #include "FormationCollection.hpp"

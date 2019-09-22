@@ -9,7 +9,6 @@
 #include "LevelPermSpawn.hpp"
 #include "LevelPath.hpp"
 #include "LevelSectionPerm.hpp"
-#include "GameLevelController.hpp"
 #include "Game.hpp"
 #include "Balloon.hpp"
 #include "FormationCollection.hpp"

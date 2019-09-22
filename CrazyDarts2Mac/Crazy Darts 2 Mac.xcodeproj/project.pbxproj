@@ -49,7 +49,6 @@
 		0D1542FA232DC1B40004AE55 /* LevelFormationTracerBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D15422C232DC1B40004AE55 /* LevelFormationTracerBlueprint.cpp */; };
 		0D1542FB232DC1B40004AE55 /* LevelFormationConfigurationBlueprint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D15422E232DC1B40004AE55 /* LevelFormationConfigurationBlueprint.cpp */; };
 		0D1542FC232DC1B40004AE55 /* WorldConfigScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D154232232DC1B40004AE55 /* WorldConfigScene.cpp */; };
-		0D1542FD232DC1B40004AE55 /* GameLevelController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D154236232DC1B40004AE55 /* GameLevelController.cpp */; };
 		0D1542FE232DC1B40004AE55 /* StuckDart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D154238232DC1B40004AE55 /* StuckDart.cpp */; };
 		0D1542FF232DC1B40004AE55 /* EffectDartFadeStar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D15423C232DC1B40004AE55 /* EffectDartFadeStar.cpp */; };
 		0D154300232DC1B40004AE55 /* EffectBalloonBurst.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D15423D232DC1B40004AE55 /* EffectBalloonBurst.cpp */; };
@@ -235,6 +234,7 @@
 		0D8FCF86225DA8ED00A74580 /* os_core_app_shell_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCE8F225DA8ED00A74580 /* os_core_app_shell_mac.mm */; };
 		0D8FCF87225DA8ED00A74580 /* OSMusicPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCE96225DA8ED00A74580 /* OSMusicPlayer.mm */; };
 		0D8FCF88225DA8ED00A74580 /* os_core_outlets_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0D8FCE97225DA8ED00A74580 /* os_core_outlets_mac.mm */; };
+		0DCE78952337EB37001DD2E7 /* StatsMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0DCE78932337EB37001DD2E7 /* StatsMenu.cpp */; };
 		E1705008222232CF000C5127 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1705007222232CF000C5127 /* Assets.xcassets */; };
 		E17054B0222236F9000C5127 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E17054AC222236F9000C5127 /* Cocoa.framework */; };
 		E17054B1222236F9000C5127 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E17054AD222236F9000C5127 /* AVFoundation.framework */; };
@@ -324,7 +324,6 @@
 		0D154233232DC1B40004AE55 /* HangingThreadSegment.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HangingThreadSegment.hpp; sourceTree = "<group>"; };
 		0D154234232DC1B40004AE55 /* WindSpeedSimulator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WindSpeedSimulator.hpp; sourceTree = "<group>"; };
 		0D154235232DC1B40004AE55 /* BrickHead.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BrickHead.hpp; sourceTree = "<group>"; };
-		0D154236232DC1B40004AE55 /* GameLevelController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameLevelController.cpp; sourceTree = "<group>"; };
 		0D154237232DC1B40004AE55 /* Transform2D.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Transform2D.hpp; sourceTree = "<group>"; };
 		0D154238232DC1B40004AE55 /* StuckDart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StuckDart.cpp; sourceTree = "<group>"; };
 		0D15423A232DC1B40004AE55 /* EffectBalloonBurst.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EffectBalloonBurst.hpp; sourceTree = "<group>"; };
@@ -360,7 +359,6 @@
 		0D15425B232DC1B40004AE55 /* BrickHead.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BrickHead.cpp; sourceTree = "<group>"; };
 		0D15425C232DC1B40004AE55 /* StuckDart.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StuckDart.hpp; sourceTree = "<group>"; };
 		0D15425D232DC1B40004AE55 /* Transform2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Transform2D.cpp; sourceTree = "<group>"; };
-		0D15425E232DC1B40004AE55 /* GameLevelController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameLevelController.hpp; sourceTree = "<group>"; };
 		0D154260232DC1B40004AE55 /* GFXAppNotificationHelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GFXAppNotificationHelper.hpp; sourceTree = "<group>"; };
 		0D154262232DC1B40004AE55 /* FormationCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FormationCollection.cpp; sourceTree = "<group>"; };
 		0D154263232DC1B40004AE55 /* GameRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameRenderer.cpp; sourceTree = "<group>"; };
@@ -695,6 +693,8 @@
 		0D8FCE95225DA8ED00A74580 /* os_core_sound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os_core_sound.h; sourceTree = "<group>"; };
 		0D8FCE96225DA8ED00A74580 /* OSMusicPlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OSMusicPlayer.mm; sourceTree = "<group>"; };
 		0D8FCE97225DA8ED00A74580 /* os_core_outlets_mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = os_core_outlets_mac.mm; sourceTree = "<group>"; };
+		0DCE78932337EB37001DD2E7 /* StatsMenu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StatsMenu.cpp; sourceTree = "<group>"; };
+		0DCE78942337EB37001DD2E7 /* StatsMenu.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StatsMenu.hpp; sourceTree = "<group>"; };
 		E1705001222232CF000C5127 /* Crazy Darts 2 Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crazy Darts 2 Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1705007222232CF000C5127 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E170500C222232CF000C5127 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -764,8 +764,6 @@
 				0D1542CD232DC1B40004AE55 /* GameInfoOverlay.hpp */,
 				0D154217232DC1B40004AE55 /* GameInfoTextBubble.cpp */,
 				0D15424B232DC1B40004AE55 /* GameInfoTextBubble.hpp */,
-				0D154236232DC1B40004AE55 /* GameLevelController.cpp */,
-				0D15425E232DC1B40004AE55 /* GameLevelController.hpp */,
 				0D154211232DC1B40004AE55 /* GameObject.cpp */,
 				0D154243232DC1B40004AE55 /* GameObject.hpp */,
 				0D154245232DC1B40004AE55 /* GameOverlayEffects.cpp */,
@@ -849,6 +847,8 @@
 				0D1541F5232DC1B40004AE55 /* SoundConfigMenu.hpp */,
 				0D8EB49A2335E6E800B14ACA /* SpeedControlMenu.cpp */,
 				0D8EB49B2335E6E800B14ACA /* SpeedControlMenu.hpp */,
+				0DCE78932337EB37001DD2E7 /* StatsMenu.cpp */,
+				0DCE78942337EB37001DD2E7 /* StatsMenu.hpp */,
 			);
 			path = "[[[Config Menus]]]";
 			sourceTree = "<group>";
@@ -1601,7 +1601,6 @@
 				0D8FCF1C225DA8ED00A74580 /* PhongShaders.metal in Sources */,
 				0D8FCF4C225DA8ED00A74580 /* GraphicsInterface.cpp in Sources */,
 				0D8FCF3D225DA8ED00A74580 /* FGestureCanvas.cpp in Sources */,
-				0D1542FD232DC1B40004AE55 /* GameLevelController.cpp in Sources */,
 				0D8FCF1E225DA8ED00A74580 /* ModelShaders.metal in Sources */,
 				0D154315232DC1B40004AE55 /* LevelSection.cpp in Sources */,
 				0D8FCF49225DA8ED00A74580 /* FVec3.cpp in Sources */,
@@ -1651,6 +1650,7 @@
 				0D154321232DC1B40004AE55 /* LevelSectionPerm.cpp in Sources */,
 				0D15432E232DC1B40004AE55 /* EditorMenuPermanent.cpp in Sources */,
 				0D15433D232DC1B40004AE55 /* GameEditor.cpp in Sources */,
+				0DCE78952337EB37001DD2E7 /* StatsMenu.cpp in Sources */,
 				0D8FCF1A225DA8ED00A74580 /* Shape3DShaders.metal in Sources */,
 				0D1542FC232DC1B40004AE55 /* WorldConfigScene.cpp in Sources */,
 				0D154326232DC1B40004AE55 /* EditorMenuFormationPicker.cpp in Sources */,

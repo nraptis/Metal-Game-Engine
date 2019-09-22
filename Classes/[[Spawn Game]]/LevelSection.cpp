@@ -8,7 +8,6 @@
 
 #include "LevelSection.hpp"
 #include "Game.hpp"
-#include "GameLevelController.hpp"
 #include "LevelSectionBlueprint.hpp"
 
 LevelSection::LevelSection() {
@@ -32,7 +31,7 @@ LevelSection::LevelSection() {
     mKeepAliveTimer = 0;
     mForceKillTimer = 0;
     
-    mProgressObjectsBase = 0;
+    mProgressCount = 0;
     
     mDelay = 0;
     
@@ -83,7 +82,7 @@ void LevelSection::Reset() {
     mAllPermsComplete = false;
     mDidSpawn = false;
     mCandidateWaveDelay = 0;
-    mProgressObjectsBase = 0;
+    mProgressCount = 0;
 }
 
 /*

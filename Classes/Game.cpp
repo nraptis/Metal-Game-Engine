@@ -37,8 +37,12 @@ Game::Game() {
     SetHeight(GAME_HEIGHT);
     SetTransformAnchor(0.5f, 0.5f);
     
-    mLevelController = new GameLevelController(this);
+    //mLevelController = new GameLevelController(this);
     mLevelData = NULL;
+    
+    mProgressCount = 0;
+    mProgress = 0;
+    
     
     mCamera = new FloatingCamera();
     
@@ -158,10 +162,14 @@ Game::~Game() {
         mRenderer = NULL;
     }
     
-    if (mLevelController != NULL) {
-        delete mLevelController;
-        mLevelController = NULL;
+    if (mLevelData != NULL) {
+        delete mLevelData;
+        mLevelData = NULL;
     }
+    
+    mProgressCount = 0;
+    mProgress = 0;
+    
     
     Clear();
     
@@ -299,9 +307,9 @@ void Game::LayoutTransform() {
     mExitZoneRight = mWidth + aExitZonePaddingSides;
     mExitZoneLeft = -aExitZonePaddingSides;
     
-    float aKillZonePaddingTop = ((float)GAME_HEIGHT) * 3.0f;
-    float aKillZonePaddingBottom = ((float)GAME_HEIGHT) * 0.5f;
-    float aKillZonePaddingSides = ((float)GAME_WIDTH) * 0.75f + 200.0f;
+    float aKillZonePaddingTop = ((float)GAME_HEIGHT) * 2.0f;
+    float aKillZonePaddingBottom = ((float)GAME_HEIGHT) * 0.25f;
+    float aKillZonePaddingSides = ((float)GAME_WIDTH) * 0.25f + 200.0f;
     mKillZoneTop = -aKillZonePaddingTop;
     mKillZoneRight = mWidth + aKillZonePaddingSides;
     mKillZoneBottom = mHeight + aKillZonePaddingBottom;
@@ -367,7 +375,9 @@ void Game::UpdateMainLoop() {
         }
     }
     
-    mLevelController->Update();
+    if (mLevelData != NULL) {
+        mLevelData->Update();
+    }
     
     if (mDartResetAnimation) {
         mDartResetAnimationTick += 1;
@@ -610,6 +620,10 @@ void Game::UpdateMainLoop() {
                 }
             }
         }
+    }
+    
+    if (mDartList.mObjectList.mCount == 0 && mTrajectoryList.mCount > 0 && mIsDartBeingPulled == false) {
+        mTrajectoryList.RemoveAll();
     }
     
     mWind.Update();
@@ -857,9 +871,6 @@ void Game::KeyDown(int pKey) {
         if (pKey == __KEY__R) {
             DisposeAllObjects();
             if (mLevelData != NULL) {
-                if (mLevelController != NULL) {
-                    mLevelController->mData = NULL;
-                }
                 delete mLevelData;
                 mLevelData = NULL;
             }
@@ -907,21 +918,6 @@ void Game::KeyDown(int pKey) {
     }
     
     if (gKeyDownShift) {
-        if (pKey == __KEY__R) {
-            DisposeAllObjects();
-            if (mLevelData != NULL) {
-                if (mLevelController != NULL) {
-                    mLevelController->mData = NULL;
-                }
-                delete mLevelData;
-                mLevelData = NULL;
-            }
-#ifndef EDITOR_MODE
-            Load();
-#else
-            LoadEditorTest();
-#endif
-        }
         
         if (pKey == __KEY__W) {
             
@@ -1051,14 +1047,13 @@ void Game::Clear() {
     
     mTrajectoryList.Reset();
     
-    if (mLevelController != NULL) {
-        mLevelController->mData = NULL;
-    }
-    
     if (mLevelData != NULL) {
         delete mLevelData;
         mLevelData = NULL;
     }
+    
+    mProgressCount = 0;
+    mProgress = 0;
     
 }
 
@@ -1365,8 +1360,13 @@ void Game::DisposeObject(GameObject *pObject) {
     }
     
 #ifndef EDITOR_MODE
-    printf("Disposing: (%s) %x\n", pObject->TypeString().c() , pObject);
+    //printf("Disposing: (%s) %x\n", pObject->TypeString().c() , pObject);
 #endif
+    
+    if (DoesObjectTypeCountTowardsProgress(pObject->mGameObjectType)) {
+        mProgress++;
+    }
+        
     
     pObject->Kill();
     
@@ -1831,13 +1831,22 @@ bool Game::IsAnyObjectFloatingAway() {
     return (mRecentFloatingAwayTick > 0);
 }
 
-bool Game::DoesObjectTypeCountTowardsProgress(int pObjectType) {
+bool Game::DoesObjectTypeCountTowardsProgressCount(int pObjectType) {
     
     if (pObjectType == GAME_OBJECT_TYPE_BALLOON) { return true; }
     if (pObjectType == GAME_OBJECT_TYPE_TURTLE) { return true; }
     
     return false;
 }
+
+bool Game::DoesObjectTypeCountTowardsProgress(int pObjectType) {
+    
+    if (pObjectType == GAME_OBJECT_TYPE_BALLOON) { return true; }
+    if (pObjectType == GAME_OBJECT_TYPE_FREE_LIFE) { return true; }
+    
+    return false;
+}
+
 
 bool Game::DoesObjectTypeRequireClearing(int pObjectType) {
     
@@ -1879,43 +1888,17 @@ void Game::Load() {
     aLevel.AddSection("section_easymed_2_perms_2_bricks_blocking_1_turtle_both_sides_3_waves_med_tri_2_singles_med_square.json");
     
     
-
-    
-    aLevel.AddSection("test_section_all_bricks_2_waves");
-    aLevel.AddSection("test_section_2_tracers_slowslow_speed_all_4_types");
-    aLevel.AddSection("section_2_turtles_2_bricks_2_waves_1_center_balloon");
-    
-    aLevel.AddSection("section_learning_start");
-    
-    aLevel.AddSection("section_learning_3_groups_lineshot_all_balloons.json");
-    
-    //section_learning_start
-    //
-    
-    
-    //aLevel.AddSection("test_section_all_bricks_2_perms");
-    
-    
-    
-    
-    
-    aLevel.AddSection("section_2_turtles_2_bricks_2_balloon_3_waves_turtles_brickcircle_star.json");
-    aLevel.AddSection("test_section_one_wave_16_turtles");
-    aLevel.AddSection("section_2_turtles_2_bricks_2_waves_1_center_balloon.json");
+    //aLevel.AddSection("section_learning_start");
     
     //aLevel.AddSection("test_section_04");
-    LevelData *aData = aLevel.Build();
-    mLevelData = aData;
-    mLevelController->Setup(mLevelData);
+    mLevelData = aLevel.Build();
+    mProgressCount = mLevelData->GetProgressCount();
+    mProgress = 0;
+    
 }
 
 void Game::LoadEditorTest() {
-    
-    
-    //DisposeAllObjects();
     Clear();
-    
-    
     
     LevelSection *aSection = NULL;
     LevelData *aLevel = new LevelData();
@@ -1927,5 +1910,6 @@ void Game::LoadEditorTest() {
     aSection->mDelay = 0;
     
     mLevelData = aLevel;
-    mLevelController->Setup(mLevelData);
+    mProgressCount = mLevelData->GetProgressCount();
+    mProgress = 0;
 }

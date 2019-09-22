@@ -67,7 +67,7 @@ public:
     //
     ////////////////////////////////////////////////////////////////////////////
     
-    int                                 mProgressObjectsBase;
+    int                                 mProgressCount;
     
     
     void                                DisposeObject(GameObject *pObject);

@@ -33,7 +33,10 @@ GameContainer::GameContainer() {
     
     mEditorMenu = NULL;
     mEditorMenuUtils = NULL;
-    mEditorMenuSpeed = NULL;
+    mMenuSpeed = NULL;
+    mMenuStats = NULL;
+    
+    
     
     
     SetWidth(1000.0f);
@@ -78,10 +81,17 @@ GameContainer::GameContainer() {
     float aSpeedMenuWidth = 700.0f;
     if (aSpeedMenuWidth > gDeviceWidth) { aSpeedMenuWidth = gDeviceWidth; }
     
-    mEditorMenuSpeed = new SpeedControlMenu();
-    gApp->mWindowTools.AddChild(mEditorMenuSpeed);
-    mEditorMenuSpeed->SetFrame(gDeviceWidth2 - aSpeedMenuWidth / 2.0f, 6.0f, aSpeedMenuWidth, 120.0f);
+    mMenuSpeed = new SpeedControlMenu();
+    gApp->mWindowTools.AddChild(mMenuSpeed);
+    mMenuSpeed->SetFrame(gSafeAreaInsetLeft + 20.0f, 6.0f, aSpeedMenuWidth, 120.0f);
 #endif
+    
+    
+    
+    mMenuStats = new StatsMenu();
+    gApp->mWindowTools.AddChild(mMenuStats);
+    mMenuStats->SetFrame(gSafeAreaInsetLeft + 20.0f, 180.0f, 340.0f, 400.0f);
+    
     
     
 }
@@ -113,9 +123,14 @@ GameContainer::~GameContainer() {
         mEditorMenuUtils = NULL;
     }
     
-    if (mEditorMenuSpeed != NULL) {
-        mEditorMenuSpeed->Kill();
-        mEditorMenuSpeed = NULL;
+    if (mMenuSpeed != NULL) {
+        mMenuSpeed->Kill();
+        mMenuSpeed = NULL;
+    }
+    
+    if (mMenuStats != NULL) {
+        mMenuStats->Kill();
+        mMenuStats = NULL;
     }
     
 }
@@ -502,9 +517,9 @@ void GameContainer::OpenEditorTestMenus() {
     float aSpeedMenuWidth = 700.0f;
     if (aSpeedMenuWidth > gDeviceWidth) { aSpeedMenuWidth = gDeviceWidth; }
     
-    mEditorMenuSpeed = new SpeedControlMenu();
-    gApp->mWindowTools.AddChild(mEditorMenuSpeed);
-    mEditorMenuSpeed->SetFrame(gDeviceWidth2 - aSpeedMenuWidth / 2.0f, 6.0f, aSpeedMenuWidth, 120.0f);
+    mMenuSpeed = new SpeedControlMenu();
+    gApp->mWindowTools.AddChild(mMenuSpeed);
+    mMenuSpeed->SetFrame(40.0f, 12.0f, aSpeedMenuWidth, 120.0f);
     
 }
 
