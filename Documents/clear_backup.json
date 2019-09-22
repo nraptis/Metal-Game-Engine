@@ -1,205 +1,51 @@
 {
 	"section": true,
-	"progress": 27,
+	"progress": 8,
 	"wave_list": [
 		{
-			"spawn_spacing": 90,
-			"max_spawn_size": 226,
+			"spawn_spacing": 320,
+			"max_spawn_size": 366,
 			"path": {
-				"speed_class": 200,
 				"node_list": [
 					{
 						"x_con": 200,
-						"y_con": 400,
-						"y_con_offset": 40.000000
+						"y_con": 300
 					},
 					{
 						"x_con": 500,
-						"y_con": 400,
-						"y_con_offset": 40.000000,
-						"decel": 220,
-						"accel": 170,
-						"wait": 1765
+						"y_con": 300
 					},
 					{
 						"x_con": 850,
-						"y_con": 400,
-						"y_con_offset": 50.000000
+						"y_con": 300
 					}
 				]
 			},
 			"spawn": [
 				{
-					"formation": "form_all_nod_all_bln_grd_tri_ng2_88rad_0ofy_46sph_40spv_stgodd_180ros_sld_nodes_cfg10xb_snp",
-					"formation_config": {
-						"tracer_speed_class_global": -300
-					},
-					"motion": {
-						"play_on_enter": false,
-						"play_on_exit": false,
-						"slice_list": [
-							{
-								"type": 3,
-								"linear_tick": 80,
-								"linear_time": 160,
-								"angle_span": 15
-							}
-						]
-					},
-					"style": {
-						"disable_threads": true
-					}
-				}
-			]
-		},
-		{
-			"spawn_spacing": 90,
-			"creation_prev_wave_complete": true,
-			"path": {
-				"node_list": [
-					{
-						"x_con": 200,
-						"y_con": 400,
-						"y_con_offset": -40.000000
-					},
-					{
-						"x_con": 400,
-						"y_con": 400,
-						"y_con_offset": -40.000000,
-						"decel": 150,
-						"accel": 150,
-						"wait": 300
-					},
-					{
-						"x_con": 400,
-						"y_con": 150
-					}
-				]
-			},
-			"spawn": [
-				{}
-			]
-		},
-		{
-			"spawn_spacing": 90,
-			"path": {
-				"node_list": [
-					{
-						"x_con": 800,
-						"y_con": 400,
-						"y_con_offset": -40.000000
-					},
-					{
-						"x_con": 600,
-						"y_con": 400,
-						"y_con_offset": -40.000000,
-						"decel": 150,
-						"accel": 150,
-						"wait": 300
-					},
-					{
-						"x_con": 600,
-						"y_con": 150
-					}
-				]
-			},
-			"spawn": [
-				{}
-			]
-		},
-		{
-			"spawn_spacing": 90,
-			"max_spawn_size": 231,
-			"path": {
-				"speed_class": 200,
-				"node_list": [
-					{
-						"x_con": 200,
-						"y_con": 500,
-						"y_con_offset": -100.000000
-					},
-					{
-						"x_con": 500,
-						"y_con": 500,
-						"y_con_offset": -100.000000,
-						"decel": 250,
-						"accel": 200,
-						"wait": 1750
-					},
-					{
-						"x_con": 850,
-						"y_con": 500,
-						"y_con_offset": -100.000000
-					}
-				]
-			},
-			"spawn": [
+					"formation": "form_all_nod_all_tur_grd_rec_3x3_68sph_68spv_44ful_nodes_cfg4xt_snp",
+					"formation_config": {}
+				},
 				{
-					"formation": "form_all_nod_all_bln_grd_rec_5x3_38sph_48spv_sld_nodes_cfg15xb_snp",
-					"formation_config": {},
-					"motion": {
-						"play_on_enter": false,
-						"play_on_exit": false,
-						"slice_list": [
-							{
-								"type": 4,
-								"linear_tick": 80,
-								"linear_time": 160,
-								"radius": 45,
-								"pause_1": 14,
-								"pause_2": 14
-							}
-						]
-					},
-					"style": {
-						"disable_threads": true
-					}
-				}
+					"formation": "form_all_nod_all_bom_grd_rec_5x4_68sph_68spv_sld_nodes_cfg20xm_snp",
+					"formation_config": {}
+				},
+				{}
 			]
 		}
 	],
 	"perm_list": [
 		{
-			"x_con": 300,
-			"x_con_offset": 25.000000,
-			"y_con": 800,
-			"y_con_offset": -195.000000,
-			"type": 3
+			"x": 16.692936,
+			"y": 57.076496
 		},
 		{
-			"x_con": 400,
-			"x_con_offset": -5.000000,
-			"y_con": 800,
-			"y_con_offset": -165.000000,
-			"type": 1
+			"x": 51.038242,
+			"y": 78.815804
 		},
 		{
-			"x_con": 600,
-			"x_con_offset": 5.000000,
-			"y_con": 800,
-			"y_con_offset": -165.000000,
-			"type": 1
-		},
-		{
-			"x_con": 700,
-			"x_con_offset": -25.000000,
-			"y_con": 800,
-			"y_con_offset": -195.000000,
-			"type": 3
-		},
-		{
-			"x_con": 400,
-			"x_con_offset": -5.000000,
-			"y_con": 600,
-			"y_con_offset": -2.000000,
-			"type": 1
-		},
-		{
-			"x_con": 600,
-			"x_con_offset": 5.000000,
-			"y_con": 600,
-			"y_con_offset": -2.000000,
-			"type": 1
+			"x": 82.843338,
+			"y": 54.163944
 		}
 	]
 }

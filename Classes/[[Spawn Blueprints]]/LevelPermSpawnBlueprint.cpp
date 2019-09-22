@@ -7,7 +7,9 @@
 //
 
 #include "LevelPermSpawnBlueprint.hpp"
+#include "LevelFormationBlueprint.hpp"
 #include "GameObject.hpp"
+#include "Game.hpp"
 #include "core_includes.h"
 
 LevelPermSpawnBlueprint::LevelPermSpawnBlueprint() {

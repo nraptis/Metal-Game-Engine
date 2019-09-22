@@ -66,7 +66,7 @@ void WadGlobalConfiguration::NotifyVirtualFrameChange() {
     
     float aScale = RoundSpriteScale(aExpectScale);
     
-    Log("WadGlobalConfiguration::Expect Scale: %f (%f) VD(%f x %f)\n", aScale, aExpectScale, gVirtualDevWidth, gVirtualDevHeight);
+    //Log("WadGlobalConfiguration::Expect Scale: %f (%f) VD(%f x %f)\n", aScale, aExpectScale, gVirtualDevWidth, gVirtualDevHeight);
     
     if (mAutoScale) {
         
@@ -80,14 +80,6 @@ void WadGlobalConfiguration::NotifyVirtualFrameChange() {
         if (mAssetScale < aThresholdScale) {
             mAssetScale = aThresholdScale;
         }
-    }
-    
-    if (mAssetScale != mPrevAssetScale) {
-        Log("WadGlobalConfiguration::UPDATE Asset Scale: %d\n", mAssetScale);
-    }
-    
-    if (mSpriteScale != mPrevSpriteScale) {
-        Log("WadGlobalConfiguration::UPDATE Asset Scale: %f\n", mSpriteScale);
     }
 }
 

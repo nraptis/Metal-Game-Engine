@@ -440,10 +440,6 @@ void GFXApp::Draw() {
             
             if (mWadReloadOnNextDraw) {
                 
-                
-                Log("WAD RELOAD - Triggered!!!\n");
-                
-                
                 mWadReloadIsEnqueued = false;
                 mWadReloadOnNextDraw = false;
                 mWadReloadTimer = 0;
@@ -829,9 +825,6 @@ void GFXApp::EditorTestSwitchToEditorInternal() {
     //float aVirtualWidth = round(aVirtualHeight * aAspectRatio);
     float aVirtualX = round(gDeviceWidth / 2.0f - (aVirtualWidth / 2.0f));
     float aVirtualY = gDeviceHeight - (5.0f + aVirtualHeight);
-    
-    printf("aVirtualWidth = %f\n", aVirtualWidth);
-    printf("aVirtualHeight = %f\n", aVirtualHeight);
     
     //TODO:
     AppShellSetVirtualFrame(aVirtualX, aVirtualY, aVirtualWidth, aVirtualHeight);
