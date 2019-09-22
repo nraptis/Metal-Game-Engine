@@ -1002,6 +1002,30 @@ void Game::KeyDown(int pKey) {
         }
     }
     
+    
+    if (pKey == __KEY__D) {
+        
+        EnumList(GameObject, aObject, gGame->mBalloonList.mObjectList) {
+            KnockDown(aObject);
+        }
+        EnumList(FreeLife, aObject, gGame->mFreeLifeList.mObjectList) {
+            KnockDown(aObject);
+        }
+        EnumList(GameObject, aObject, gGame->mDartList.mObjectList) {
+            KnockDown(aObject);
+        }
+        EnumList(GameObject, aObject, gGame->mBrickHeadList.mObjectList) {
+            KnockDown(aObject);
+        }
+        EnumList(GameObject, aObject, gGame->mTurtleList.mObjectList) {
+            KnockDown(aObject);
+        }
+        EnumList(GameObject, aObject, gGame->mBombList.mObjectList) {
+            KnockDown(aObject);
+        }
+        
+    }
+    
 }
 
 void Game::KeyUp(int pKey) {
@@ -1113,7 +1137,7 @@ void Game::DartMovingInterpolationBrickHeads(Dart *pDart, float pPercent, bool p
     
     for (int n=0;n<mBrickHeadList.mObjectList.mCount;n++) {
         BrickHead *aBrickHead = (BrickHead *)mBrickHeadList.mObjectList.mData[n];
-        if (aBrickHead->mKill == 0) {
+        if ((aBrickHead->mKill == 0) && (aBrickHead->mKnockedDown == false)) {
             if (aBrickHead->WillCollide(pDart->mPrevTipX, pDart->mPrevTipY, pDart->mTipX, pDart->mTipY)) {
                 DartCollideWithBrickhead(pDart, aBrickHead);
             }
@@ -1150,7 +1174,13 @@ void Game::DartMovingInterpolationTurtles(Dart *pDart, float pPercent, bool pEnd
 
 bool Game::ShouldSpawnFreeLife() {
 #ifdef EDITOR_MODE
-    return false;
+    
+    if (gEditor != NULL) {
+        return false;
+    } else {
+        return gRand.Get(6) == 2;
+    }
+    
 #endif
     return gRand.Get(20) == 8;
 }
@@ -1178,7 +1208,7 @@ bool Game::IsWaveClearForSpawn() {
         }
     }
     EnumList (BrickHead, aBrickHead, mBrickHeadList.mObjectList) {
-        if ((aBrickHead->mKill == 0) && (aBrickHead->mDidOriginateOnWave == true)) {
+        if ((aBrickHead->mKill == 0) && (aBrickHead->mKnockedDown == false) && (aBrickHead->mDidOriginateOnWave == true)) {
             return false;
         }
     }
@@ -1235,7 +1265,10 @@ bool Game::IsScreenClearForSpawn(bool pIncludePerms) {
     }
     
     EnumList (BrickHead, aBrickHead, mBrickHeadList.mObjectList) {
-        if ((aBrickHead->mKill == 0) && (aBrickHead->mDidOriginateOnWave == true)) {
+        
+        //TODO: What was the reason for "mDidOriginateOnWave" here?
+        if ((aBrickHead->mKill == 0) && (aBrickHead->mKnockedDown == false)) {
+        //if ((aBrickHead->mKill == 0) && (aBrickHead->mKnockedDown == false) && (aBrickHead->mDidOriginateOnWave == true)) {
             if (aBrickHead->mDidOriginateAsPermanent == true) {
                 ++aPermCount;
             }
@@ -1471,6 +1504,38 @@ void Game::FlyOffEscape(GameObject *pObject) {
     DisposeObject(pObject);
 }
 
+//Generally these are only going to be bricks to start..?
+void Game::KnockDown(GameObject *pObject) {
+    
+    if (pObject == NULL) { return; }
+    if (pObject->mKill > 0) { return; }
+    
+    if (pObject->mGameObjectType == GAME_OBJECT_TYPE_BRICKHEAD) {
+        BrickHead *aBrickHead = ((BrickHead *)pObject);
+        if (aBrickHead->mKnockedDown == false) {
+            aBrickHead->KnockDown();
+        }
+    }
+    
+    if (pObject->mGameObjectType == GAME_OBJECT_TYPE_TURTLE) {
+        Turtle *aTurtle = ((Turtle *)pObject);
+        
+        if (aTurtle->mBalloon != NULL && aTurtle->mBalloon->mKill == 0) {
+            PopBalloon(aTurtle->mBalloon);
+        }
+        
+        if (aTurtle->mKnockedDown == false) {
+            aTurtle->KnockDown();
+        }
+        
+        
+        
+        
+    }
+    
+    
+}
+
 void Game::StuckDartBeginFadeOut(Dart *pDart) {
     
     if (pDart != NULL && gEffectsOverlay != NULL) {
@@ -1529,11 +1594,7 @@ void Game::StuckDartFinishFadeOut(Dart *pDart) {
     
 }
 
-void Game::DartCollideWithBalloon(Dart *pDart, Balloon *pBalloon) {
-    
-    if (pDart != NULL) {
-        pDart->mHitCount++;
-    }
+void Game::PopBalloon(Balloon *pBalloon) {
     
     if (pBalloon != NULL) {
         
@@ -1555,8 +1616,20 @@ void Game::DartCollideWithBalloon(Dart *pDart, Balloon *pBalloon) {
         
         DisposeObject(pBalloon);
         
+        mPoppedCount++;
     }
-    mPoppedCount++;
+    
+    
+}
+
+void Game::DartCollideWithBalloon(Dart *pDart, Balloon *pBalloon) {
+    
+    if (pDart != NULL) {
+        pDart->mHitCount++;
+    }
+    
+    PopBalloon(pBalloon);
+    
 }
 
 void Game::DartCollideWithFreeLife(Dart *pDart, FreeLife *pFreeLife) {
@@ -1744,7 +1817,7 @@ bool Game::IsAnyObjectFloatingAway() {
     }
     
     EnumList (BrickHead, aBrickHead, mBrickHeadList.mObjectList) {
-        if (aBrickHead->mKill == 0) {
+        if ((aBrickHead->mKill == 0) && (aBrickHead->mKnockedDown == false)) {
             if (aBrickHead->mFloatAway == true) {
                 mRecentFloatingAwayTick = 4;
             }
@@ -1767,13 +1840,17 @@ bool Game::DoesObjectTypeCountTowardsProgress(int pObjectType) {
     if (pObjectType == GAME_OBJECT_TYPE_BALLOON) { return true; }
     if (pObjectType == GAME_OBJECT_TYPE_TURTLE) { return true; }
     
-    
-    //if (pObjectType == GAME_OBJECT_TYPE_FREE_LIFE) { return true; }
-    
-    
     return false;
 }
 
+bool Game::DoesObjectTypeRequireClearing(int pObjectType) {
+    
+    if (pObjectType == GAME_OBJECT_TYPE_BALLOON) { return true; }
+    if (pObjectType == GAME_OBJECT_TYPE_TURTLE) { return true; }
+    if (pObjectType == GAME_OBJECT_TYPE_FREE_LIFE) { return true; }
+    
+    return false;
+}
 
 void Game::Load() {
     

@@ -73,6 +73,28 @@ void Balloon::Update() {
 
 void Balloon::Draw() {
     GameObject::Draw();
+    
+    Graphics::PipelineStateSetShape2DAlphaBlending();
+    if (mEllipseRadiusH > SQRT_EPSILON && mEllipseRadiusV > SQRT_EPSILON) {
+        
+        Graphics::SetColor(1.0f, 0.25f, 0.25f, 0.65f);
+        
+        FVec2 aEllC = FVec2(mTransform.mX, mTransform.mY);
+        FVec2 aP2H = FVec2(mTransform.mX + mEllipseRadiusH, mTransform.mY);
+        aP2H = PivotPoint(aP2H, mTransform.mRotation, aEllC);
+        
+        FVec2 aP2V = FVec2(mTransform.mX, mTransform.mY - mEllipseRadiusV);
+        aP2V = PivotPoint(aP2V, mTransform.mRotation, aEllC);
+        
+        
+        Graphics::SetColor(1.0f, 0.25f, 0.25f, 0.75f);
+        Graphics::DrawLine(mTransform.mX, mTransform.mY, aP2H.mX, aP2H.mY, 2.5f);
+        
+        Graphics::SetColor(0.75f, 1.0f, 0.25f, 0.75f);
+        Graphics::DrawLine(mTransform.mX, mTransform.mY, aP2V.mX, aP2V.mY, 2.5f);
+    }
+    
+    
 }
 
 void Balloon::Draw3D() {

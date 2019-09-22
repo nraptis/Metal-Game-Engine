@@ -1,6 +1,6 @@
 {
 	"section": true,
-	"force_kill_timer": 7486,
+	"force_kill_timer": 3486,
 	"progress": 14,
 	"wave_list": [
 		{
@@ -40,6 +40,9 @@
 								"type": 2
 							}
 						]
+					},
+					"style": {
+						"disable_threads": true
 					}
 				}
 			]
@@ -59,7 +62,7 @@
 						"x_con": 600,
 						"y_con": 400,
 						"decel": 250,
-						"accel": 220,
+						"accel": 140,
 						"wait": 2100
 					},
 					{

@@ -28,6 +28,10 @@ LevelWaveSpawn::LevelWaveSpawn(LevelWave *pWave, LevelPath *pPath) {
     mShortCircuit = false;
     mShortCircuitKnockDown = false;
     
+    mDidShortCircuit = false;
+    mDidKnockDown = false;
+    
+    
     mIsPlayingEnter = false;
     mIsPlayingExit = false;
     
@@ -182,19 +186,29 @@ bool LevelWaveSpawn::IsClear() {
     if (mFormation != NULL) {
         if (mFormation->IsClear() == false) {
             return false;
-        } else {
-            Log("What?\n");
         }
     }
     
     return true;
 }
 
-
-
-
-
-
+bool LevelWaveSpawn::IsClearForSectionCompletion() {
+    if (mDidSpawn == false) { return false; }
+    
+    if (mObject != NULL) {
+        if (mObject->IsRequiredToClearForSectionCompletion() == true) {
+            return false;
+        }
+    }
+    
+    if (mFormation != NULL) {
+        if (mFormation->IsClearForSectionCompletion() == false) {
+            return false;
+        }
+    }
+    
+    return true;
+}
 
 void LevelWaveSpawn::Reset() {
     if (mObject != NULL) {
@@ -213,8 +227,12 @@ void LevelWaveSpawn::Reset() {
     
     mDidSpawn = false;
     mDidUpdateAfterSpawn = false;
+    
+    mDidShortCircuit = false;
+    mDidKnockDown = false;
 }
 
+static FList cWaveShortCircuitHandoffList;
 void LevelWaveSpawn::Update() {
     
     if (mDidSpawn == true) {
@@ -270,6 +288,33 @@ void LevelWaveSpawn::Update() {
         mFormation->Update(&mMotionController);
     }
     
+    
+    if (mShortCircuit) {
+        
+        if (IsClearForSectionCompletion()) {
+            mDidShortCircuit = true;
+            
+            if ((mShortCircuitKnockDown == true) && (mDidKnockDown == false)) {
+                mDidKnockDown = true;
+                
+                cWaveShortCircuitHandoffList.RemoveAll();
+                HandOffAllGameObjects(&cWaveShortCircuitHandoffList);
+                
+                EnumList(GameObject, aObject, cWaveShortCircuitHandoffList) {
+                    gGame->KnockDown(aObject);
+                }
+            }
+        }
+    }
+    
+    //mShortCircuit = false;
+    //mShortCircuitKnockDown = false;
+    
+    //mDidShortCircuit = false;
+    //mDidKnockDown = false;
+    
+    
+    
 }
 
 void LevelWaveSpawn::Draw() {
@@ -295,6 +340,8 @@ void LevelWaveSpawn::HandOffAllGameObjects(FList *pList) {
         mFormation->HandOffAllGameObjects(pList);
     }
 }
+
+
 
 
 

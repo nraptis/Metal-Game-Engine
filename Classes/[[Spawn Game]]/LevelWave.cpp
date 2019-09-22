@@ -93,9 +93,10 @@ void LevelWave::Update() {
         LevelWaveSpawn *aSpawn = (LevelWaveSpawn *)mSpawnList.Fetch(i);
         if (aSpawn != NULL && aSpawn->mIsComplete == false) {
             
+            
             if (aSpawn->mWaitTimer > 0) {
                 aSpawn->mWaitTimer--;
-                if (aSpawn->mWaitTimer <= 0) {
+                if ((aSpawn->mWaitTimer <= 0) || (aSpawn->mDidShortCircuit == true)) {
                     if (aSpawn->mPathIndex < mPath.mPath.mCount) {
                         aSpawn->mPathIndex += 1;
                     }
@@ -115,10 +116,15 @@ void LevelWave::Update() {
                 }
             } else {
                 if (mPath.mWait.mData[aSpawn->mPathIndex] > 0 && aSpawn->mWaitTimer == 0) {
-                    aSpawn->mWaitTimer = mPath.mWait.mData[aSpawn->mPathIndex];
                     
-                    aSpawn->mCurrentWaitTime = aSpawn->mWaitTimer;
-                    aSpawn->mCurrentWaitTick = 0;
+                    
+                    if (aSpawn->mDidShortCircuit == false) {
+                    
+                        aSpawn->mWaitTimer = mPath.mWait.mData[aSpawn->mPathIndex];
+                        aSpawn->mCurrentWaitTime = aSpawn->mWaitTimer;
+                        aSpawn->mCurrentWaitTick = 0;
+                        
+                    }
                 }
             }
             

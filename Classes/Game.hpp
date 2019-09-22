@@ -90,6 +90,9 @@ public:
     //then total progress cannot include the object (balloon replaced by free life, as an example)
     bool                                        DoesObjectTypeCountTowardsProgress(int pObjectType);
     
+    bool                                        DoesObjectTypeRequireClearing(int pObjectType);
+    
+    
     void                                        Convert2DTransformTo3D(Transform2D *p2D, Transform3D *p3D);
     
     FVec3                                       Convert2DCoordsTo3D(float pX, float pY);
@@ -113,6 +116,10 @@ public:
     ////
     void                                        FlyOffEscape(GameObject *pObject);
     
+    //Generally these are only going to be bricks to start..?
+    void                                        KnockDown(GameObject *pObject);
+    
+    
     void                                        StuckDartBeginFadeOut(Dart *pDart);
     void                                        StuckDartFinishFadeOut(Dart *pDart);
     
@@ -120,6 +127,8 @@ public:
     void                                        DartCollideWithBrickhead(Dart *pDart, BrickHead *pBrickHead);
     void                                        DartCollideWithTurtle(Dart *pDart, Turtle *pTurtle);
     void                                        DartCollideWithFreeLife(Dart *pDart, FreeLife *pFreeLife);
+    
+    void                                        PopBalloon(Balloon *pBalloon);
     
     void                                        TurtleDidLoseBalloon(Turtle *pTurtle);
     

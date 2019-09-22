@@ -51,6 +51,13 @@ BrickHead::BrickHead() {
     mWanderingMagY = gRand.GetFloat(3.0f, 40.0f, true);
     
     
+    mKnockedDown = false;
+    mKnockedDownColorSin = 0.0f;
+    mKnockedDownRotationSpeed1 = 0.0f;
+    mKnockedDownRotationSpeed2 = 0.0f;
+    mKnockedDownFallSpeed = 0.0f;
+    
+    
     mIsRumbling = false;
     mRumbleTime = 200;
     mRumbleDampenTime = mRumbleTime - 100;
@@ -78,6 +85,45 @@ void BrickHead::Update() {
     
     
     //
+    
+    
+    if (mKnockedDown == true) {
+        
+        
+        
+        mKnockedDownColorSin += 12.0f;
+        if (mKnockedDownColorSin >= 360.0f) { mKnockedDownColorSin -= 360.0f; }
+        
+        if (mTransform.mScale > 0.8f) {
+            mTransform.mScale *= 0.985f;
+            if (mTransform.mScale <= 0.8f) { mTransform.mScale = 0.8f; }
+        }
+        
+        mTransform3D.mRotationX += mKnockedDownRotationSpeed1;
+        if (mTransform3D.mRotationX >= 360.0f) { mTransform3D.mRotationX -= 360.0f; }
+        
+        
+        mTransform3D.mRotationZ += mKnockedDownRotationSpeed2;
+        if (mTransform3D.mRotationZ >= 360.0f) { mTransform3D.mRotationZ -= 360.0f; }
+        
+        
+        mKnockedDownRotationSpeed1 *= 0.994f;
+        mKnockedDownRotationSpeed2 *= 0.994f;
+        
+        mTransform.mY += mKnockedDownFallSpeed;
+        mKnockedDownFallSpeed += gGame->mGravity * 1.125f;
+        
+        if (gGame->IsGameObjectOutsideKillZone(this)) {
+            gGame->DisposeObject(this);
+        }
+        
+        
+        float aColorSin = Sin(mKnockedDownColorSin);
+        float aColorPercent = (aColorSin + 1.0f) * 0.5f; //Goes from 0 to 1...
+        mColor.mRed = 0.8f - (aColorPercent * 0.45f);
+        mColor.mGreen = 0.8f - (aColorPercent * 0.65f);
+        mColor.mBlue = 0.8f - (aColorPercent * 0.65f);
+    }
     
     
     
@@ -128,9 +174,12 @@ void BrickHead::Update() {
         
         
     } else {
-        mColor.mRed = 1.0f;
-        mColor.mGreen = 1.0f;
-        mColor.mBlue = 1.0f;
+        
+        if (mKnockedDown == false) {
+            mColor.mRed = 1.0f;
+            mColor.mGreen = 1.0f;
+            mColor.mBlue = 1.0f;
+        }
         
         mTransform.mOffsetX = 0.0f;
         mTransform.mOffsetY = 0.0f;
@@ -256,42 +305,7 @@ void BrickHead::Draw3D() {
     if (mAccessoryModel != NULL && mAccessorySprite != NULL) {
         
         if (mUniform != NULL) {
-            /*
-            gGame->Convert2DTransformTo3D(&mTransform, &mTransform3D);
-            
-            mModelView.Reset();
-            
-            //We start by translation...?
-            
-            mModelView.Translate(mTransform3D.mX, mTransform3D.mY, mTransform3D.mZ);
-            
-            //All of our models are exported with X 90 degrees wrong...
-            mModelView.RotateX(90.0f);
-            
-            if (mTransform3D.mRotationX != 0.0f) {
-                mModelView.RotateX(mTransform3D.mRotationX);
-            }
-            
-            if (mTransform3D.mRotationZ != 0.0f) {
-                mModelView.RotateZ(mTransform3D.mRotationZ);
-            }
-            
-            //Now we do a 2-D rotation...
-            if (mTransform3D.mRotation2D != 0.0f) {
-                mModelView.RotateY(mTransform3D.mRotation2D);
-            }
-            
-            //Now we spin around the Y axis...
-            if (mTransform3D.mSpin != 0.0f) {
-                mModelView.RotateZ(mTransform3D.mSpin);
-            }
-            
-            //Now we scale down...
-            mModelView.Scale(mTransform3D.mScaleX * mTransform3D.mScale, mTransform3D.mScaleY * mTransform3D.mScale, mTransform3D.mScaleZ * mTransform3D.mScale);
-            
-            mNormal.SetNormalMatrix(mModelView);
-            */
-            
+
             //Assign the model view to the uniform...
             mUniform->mModelView.Set(mModelView);
             
@@ -321,6 +335,22 @@ void BrickHead::Draw3D() {
             
         }
     }
+}
+
+void BrickHead::KnockDown() {
+    if (gGame != NULL) {
+        //This becomes removed from whichever group it was in...
+        gGame->DisposeObjectFromLevelData(this);
+    }
+    
+    mKnockedDown = true;
+    
+    mKnockedDownColorSin = 0.0f;
+    mKnockedDownRotationSpeed1 = gRand.GetFloat(3.0f, 4.5f, true);
+    mKnockedDownRotationSpeed2 = gRand.GetFloat(1.5f, 1.75f, true);
+    mKnockedDownFallSpeed = 0.0f;
+    
+    
 }
 
 void BrickHead::Rumble(float pRotation) {

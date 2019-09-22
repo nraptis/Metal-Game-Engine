@@ -36,7 +36,9 @@ public:
     void                                DisposeObject(GameObject *pObject);
     
     bool                                DidStart();
-    bool                                IsClear(); //all of the objects are either null or "un-killable" types
+    bool                                IsClear();
+    bool                                IsClearForSectionCompletion();
+    
     
     LevelMotionController               mMotionController;
     bool                                mIsPlayingEnter;
@@ -62,6 +64,9 @@ public:
     
     bool                                mShortCircuit;
     bool                                mShortCircuitKnockDown;
+    
+    bool                                mDidShortCircuit;
+    bool                                mDidKnockDown;
     
     
     int                                 mWaitTimer;

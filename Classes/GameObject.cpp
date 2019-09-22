@@ -66,8 +66,6 @@ void GameObject::Update() {
 
 void GameObject::Draw() {
     
-    
-    
     Graphics::PipelineStateSetSpritePremultipliedBlending();
     Graphics::SetColor();
     if (mDidOriginateOnWave) {
@@ -78,28 +76,9 @@ void GameObject::Draw() {
         gApp->mSysFontBold.Center("P", mTransform.mX, mTransform.mY);
     }
     
+    /*
     
-    Graphics::PipelineStateSetShape2DAlphaBlending();
-    if (mEllipseRadiusH > SQRT_EPSILON && mEllipseRadiusV > SQRT_EPSILON) {
-        
-        
-        Graphics::SetColor(1.0f, 0.25f, 0.25f, 0.65f);
-        
-        FVec2 aEllC = FVec2(mTransform.mX, mTransform.mY);
-        FVec2 aP2H = FVec2(mTransform.mX + mEllipseRadiusH, mTransform.mY);
-        aP2H = PivotPoint(aP2H, mTransform.mRotation, aEllC);
-        
-        FVec2 aP2V = FVec2(mTransform.mX, mTransform.mY - mEllipseRadiusV);
-        aP2V = PivotPoint(aP2V, mTransform.mRotation, aEllC);
-        
-        
-        Graphics::SetColor(1.0f, 0.25f, 0.25f, 0.75f);
-        Graphics::DrawLine(mTransform.mX, mTransform.mY, aP2H.mX, aP2H.mY, 2.0f);
-        
-        Graphics::SetColor(0.75f, 1.0f, 0.25f, 0.75f);
-        Graphics::DrawLine(mTransform.mX, mTransform.mY, aP2V.mX, aP2V.mY, 2.0f);
-        
-    }
+    */
     
     
 }
@@ -195,6 +174,7 @@ bool GameObject::IsRequiredToClearForSectionCompletion() {
     
     if (mGameObjectType == GAME_OBJECT_TYPE_BALLOON) { return true; }
     if (mGameObjectType == GAME_OBJECT_TYPE_TURTLE) { return true; }
+    if (mGameObjectType == GAME_OBJECT_TYPE_FREE_LIFE) { return true; }
     
     return false;
 }

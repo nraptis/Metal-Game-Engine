@@ -21,6 +21,9 @@ FreeLife::FreeLife() {
     mSprite = &gWadModels.mExtraLifeMap;
     mUniform = &(gGame->mRenderer->mUniformPhongBalloon);
     
+    mEllipseRadiusH = 0.0f;
+    mEllipseRadiusV = 0.0f;
+    
     BuildEdgePointListBase();
 }
 
@@ -37,7 +40,7 @@ void FreeLife::Draw() {
     
     Balloon::Draw();
     
-    /*
+    
     Graphics::PipelineStateSetShape2DAlphaBlending();
     Graphics::SetColor(1.0f, 0.0f, 0.0f, 0.85f);
      
@@ -45,7 +48,6 @@ void FreeLife::Draw() {
     
     Graphics::SetColor(1.0f, 0.0f, 0.25f, 1.0f);
     mEdgePointList2D.DrawEdges(2.0f);
-    */
     
 }
 

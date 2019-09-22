@@ -111,9 +111,11 @@ void Turtle::Update() {
         
         //mTransform.mRotation += DistanceBetweenAngles(mTransform.mRotation, 180.0f) * 0.02125f;
         mTransform.mY += mKnockedDownFallSpeed;
-        mKnockedDownFallSpeed += gGame->mGravity;
+        mKnockedDownFallSpeed += gGame->mGravity * 1.125f;
         
-        
+        if (gGame->IsGameObjectOutsideKillZone(this)) {
+            gGame->DisposeObject(this);
+        }
         
         float aColorSin = Sin(mKnockedDownColorSin);
         float aColorPercent = (aColorSin + 1.0f) * 0.5f; //Goes from 0 to 1...

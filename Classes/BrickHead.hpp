@@ -50,6 +50,14 @@ public:
     
     
     
+    void                                    KnockDown();
+    bool                                    mKnockedDown; //When  we are knocked down, we no longer operate as a blocker.
+    float                                   mKnockedDownColorSin;
+    float                                   mKnockedDownRotationSpeed1;
+    float                                   mKnockedDownRotationSpeed2;
+    float                                   mKnockedDownFallSpeed;
+    
+    
     //Dart                                    *mStuckDart;
     //float                                   mStuckDartStartDartRotation;
     //float                                   mStuckDartStartBrickHeadRotation;
