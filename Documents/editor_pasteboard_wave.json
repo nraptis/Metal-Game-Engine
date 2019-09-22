@@ -1,30 +1,30 @@
 {
-	"spawn_spacing": 90,
-	"max_spawn_size": 318,
+	"max_spawn_size": 163,
 	"path": {
-		"speed_class": 200,
+		"speed_class": 300,
 		"node_list": [
 			{
 				"x_con": 200,
-				"y": 44.811474
+				"y_con": 800
 			},
 			{
-				"x": 20.506723,
-				"y_con": 100,
-				"y_con_target": 0,
-				"decel": 250,
-				"wait": 1930
+				"x_con": 300,
+				"x_con_offset": 100.000000,
+				"y_con": 800,
+				"y_con_offset": -60.000000,
+				"decel": 125,
+				"accel": 125,
+				"wait": 1820
 			},
 			{
 				"x_con": 150,
-				"y_con": 100,
-				"y_con_target": 0
+				"y_con": 800
 			}
 		]
 	},
 	"spawn": [
 		{
-			"formation": "form_all_nod_all_bln_grd_rec_1x6_0sph_46spv_sld_nodes_cfg6xb_snp",
+			"formation": "form_all_nod_mix_bln_brk_grd_cir_46rsp_1rct_6rdc_sld_nodes_cfgbbbrbbb_snp",
 			"formation_config": {},
 			"motion": {
 				"play_on_enter": false,
@@ -32,15 +32,13 @@
 				"slice_list": [
 					{
 						"type": 3,
-						"linear_tick": 0,
-						"linear_time": 120,
-						"angle_span": 56,
-						"pause_2": 40
+						"linear_tick": 110,
+						"linear_time": 220,
+						"angle_span": 40,
+						"pause_1": 20,
+						"pause_2": 20
 					}
 				]
-			},
-			"style": {
-				"disable_threads": true
 			}
 		}
 	]

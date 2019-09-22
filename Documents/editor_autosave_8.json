@@ -18,18 +18,16 @@
 						"y_con": 500,
 						"decel": 250,
 						"accel": 150,
-						"wait": 2742
+						"wait": 1770
 					},
 					{
-						"x_con": 150,
+						"x_con": 850,
 						"y_con": 500
 					}
 				]
 			},
 			"spawn": [
 				{
-					"short_circuit": true,
-					"short_circuit_knock": true,
 					"formation": "form_all_nod_mix_bln_brk_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfgbrrbbbrrb_snp",
 					"formation_config": {},
 					"motion": {
@@ -70,7 +68,6 @@
 			},
 			"spawn": [
 				{
-					"short_circuit": true,
 					"formation": "form_all_nod_mix_brk_tur_grd_rec_2x1_36sph_44spv_sld_nodes_cfgtr_snp",
 					"formation_config": {}
 				}

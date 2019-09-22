@@ -1,13 +1,12 @@
 {
 	"section": true,
-	"progress": 13,
+	"progress": 16,
 	"wave_list": [],
 	"perm_list": [
 		{
-			"x_con": 500,
-			"x_con_offset": 10.000000,
-			"y_con": 500,
-			"y_con_offset": -40.000000,
+			"x_con": 400,
+			"y_con": 400,
+			"y_con_offset": -30.000000,
 			"path": {
 				"smooth": true,
 				"closed": true,
@@ -80,8 +79,46 @@
 			]
 		},
 		{
+			"x_con": 500,
+			"x_con_offset": 30.000000,
+			"y_con": 600,
+			"y_con_offset": 50.000000,
+			"path": {
+				"node_list": [
+					{
+						"x_con": 150,
+						"y_con": 600
+					},
+					{
+						"x_con": 500,
+						"y_con": 600
+					},
+					{
+						"x_con": 850,
+						"y_con": 600
+					}
+				]
+			},
+			"spawn": [
+				{},
+				{
+					"type": 1
+				},
+				{},
+				{
+					"type": 1
+				},
+				{},
+				{
+					"type": 1
+				}
+			]
+		},
+		{
 			"x_con": 700,
-			"y_con": 500,
+			"x_con_offset": -100.000000,
+			"y_con": 300,
+			"y_con_offset": 320.000000,
 			"motion": {
 				"play_on_enter": false,
 				"play_on_exit": false,

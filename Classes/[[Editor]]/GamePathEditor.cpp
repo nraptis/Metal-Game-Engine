@@ -233,6 +233,9 @@ void GamePathEditor::TouchMove(float pX, float pY, void *pData) {
                     //aNode->mConstraint.mTypeY = gEditor->ClosestYConstraint(pY);
                     
                 }
+                
+                gEditor->RefreshPlayback();
+                
             }
         }
     }

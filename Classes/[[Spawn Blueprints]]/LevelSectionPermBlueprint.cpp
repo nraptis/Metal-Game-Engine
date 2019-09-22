@@ -225,8 +225,17 @@ void LevelSectionPermBlueprint::Build(LevelSectionPerm *pPerm) {
         pPerm->mBaseY = gGame->mGameAreaTop + (gGame->mGameAreaBottom - gGame->mGameAreaTop) * aPoint.mY;
     }
     
-    pPerm->mPath.Shift(-pPerm->mBaseX, -pPerm->mBaseY);
-
+    float aShiftX = 0.0f;
+    float aShiftY = 0.0f;
+    if (mConstraint.mTypeX != X_CONSTRAINT_NONE) {
+        aShiftX += mConstraint.mOffsetX;
+    }
+    if (mConstraint.mTypeY != Y_CONSTRAINT_NONE) {
+        aShiftY += mConstraint.mOffsetY;
+    }
+    
+    pPerm->mPath.Shift(-pPerm->mBaseX + aShiftX, -pPerm->mBaseY + aShiftY);
+    
     
     //Only include spawns when we have a path...
     

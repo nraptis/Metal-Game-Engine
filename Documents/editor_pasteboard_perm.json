@@ -1,21 +1,16 @@
 {
-	"x_con": 300,
-	"x_con_offset": 80.000000,
-	"y_con": 600,
-	"y_con_offset": 160.000000,
+	"x_con": 400,
+	"y_con": 400,
 	"motion": {
 		"slice_list": [
 			{
-				"type": 4,
-				"linear": true,
-				"linear_tick": 70,
-				"linear_time": 140,
-				"radius": 20,
-				"pause_1": 30,
-				"pause_2": 30
+				"type": 3,
+				"linear_tick": 140,
+				"linear_time": 280,
+				"angle_span": 60
 			}
 		]
 	},
-	"formation": "form_all_nod_mix_brk_tur_grd_rec_2x2_36sph_56spv_sld_nodes_cfgttrr_snp",
+	"formation": "form_all_nod_mix_bln_brk_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfgbrrbbbrrb_snp",
 	"formation_config": {}
 }

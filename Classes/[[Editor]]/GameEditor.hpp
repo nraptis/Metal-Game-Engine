@@ -296,6 +296,8 @@ public:
     
     bool                                        mFreeze;
     int                                         mFreezeFrame;
+    int                                         mPreviousFreezeFrame;
+    int                                         mFreezeFrameRecapTimer;
     
     
 };

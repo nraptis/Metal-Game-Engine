@@ -191,11 +191,18 @@ void LevelWaveBlueprint::FlipV() {
 }
 
 void LevelWaveBlueprint::Build() {
+ 
+#ifdef EDITOR_MODE
     if (gEditor) {
-        //Build(&gEditor->mEditorWave);
-        //Build(&(gEditor->mSection.mCurrentWave));
+        
+        gEditor->RefreshPlayback();
+        //LevelWave *aWave = ((LevelWave *)gEditor->mEditorSection.mWaveList.Fetch(gEditor->WaveIndex()));
+        //Build(aWave);
         
     }
+#endif
+    
+    
 }
 
 void LevelWaveBlueprint::Build(LevelWave *pWave) {

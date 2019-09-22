@@ -104,8 +104,9 @@ GameEditor::GameEditor(Game *pGame) {
     //OpenPathEditorForWave();
     
     mFreeze = false;
-    mFreezeFrame = 100;
-    
+    mFreezeFrame = 400;
+    mPreviousFreezeFrame = -1;
+    mFreezeFrameRecapTimer = 0;
     
     
     
@@ -205,16 +206,27 @@ void GameEditor::Update() {
     
     if (aFreeze == false) {
         
+        mFreezeFrameRecapTimer = 0;
+        mPreviousFreezeFrame = -1;
         for (int i=0;i<gGameContainer->mPlaybackUpdateCount;i++) {
             mEditorSection.Update();
             mSection.Update();
         }
     } else {
-        RefreshPlayback();
-        for (int i=0;i<mFreezeFrame;i++) {
-            mSection.Update();
-            mEditorSection.Update();
+        
+        mFreezeFrameRecapTimer--;
+        if (mFreezeFrameRecapTimer <= 0) {
+            mFreezeFrameRecapTimer = 20;
+            
+            RefreshPlayback();
+            for (int i=0;i<mFreezeFrame;i++) {
+                mSection.Update();
+                mEditorSection.Update();
+            }
         }
+        
+        
+        
     }
     
     if (mSection.mCurrentWave) {
@@ -951,7 +963,7 @@ void GameEditor::RefreshPlayback() {
         
         int aWaveIndex = WaveIndex();
         //mSection.mCurrentWave
-        if (mEditorPlaybackFromCurrentWave == true && aWaveIndex >= 0) {
+        if (mEditorPlaybackFromCurrentWave == true && aWaveIndex >= 0 && (mFreezeFrame == false)) {
             mEditorSection.mStartWaveIndex = aWaveIndex;
         } else {
             mEditorSection.mStartWaveIndex = 0;

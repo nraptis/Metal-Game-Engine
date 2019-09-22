@@ -1,8 +1,9 @@
 {
 	"grid_type": 0,
-	"rect_width": 1,
-	"rect_height": 2,
-	"rect_spacing_h": 34,
+	"grid_offset_y": -30,
+	"rect_width": 5,
+	"rect_height": 7,
+	"rect_spacing_h": 124,
 	"rect_spacing_v": 50,
 	"circle_ring_spacing": 85,
 	"circle_ring_count": 2,
