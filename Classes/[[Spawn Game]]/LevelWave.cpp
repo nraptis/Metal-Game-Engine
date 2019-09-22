@@ -97,6 +97,7 @@ void LevelWave::Update() {
             if (aSpawn->mWaitTimer > 0) {
                 aSpawn->mWaitTimer--;
                 if ((aSpawn->mWaitTimer <= 0) || (aSpawn->mDidShortCircuit == true)) {
+                    aSpawn->mWaitTimer = 0;
                     if (aSpawn->mPathIndex < mPath.mPath.mCount) {
                         aSpawn->mPathIndex += 1;
                     }
@@ -111,7 +112,8 @@ void LevelWave::Update() {
             
             
             if (aSpawn->mPathIndex >= mPath.mPath.mCount) {
-                if (aSpawn->mWaitTimer <= 0) {
+                if ((aSpawn->mWaitTimer <= 0) || (aSpawn->mDidShortCircuit == true)) {
+                    aSpawn->mWaitTimer = 0;
                     aComplete = true;
                 }
             } else {

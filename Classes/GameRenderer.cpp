@@ -187,14 +187,25 @@ void GameRenderer::Draw3D() {
     
     
 #ifdef EDITOR_MODE
+    
     if (gEditor != NULL) {
         if (gEditor->mEditorShowReferenced) {
-            for (int i=0;i<gEditor->mEditorWave.mPath.mNodeList.mCount;i++) {
-                GameObject *aObject = (GameObject *)gEditor->mEditorObjectList.Fetch(i);
-                if (aObject != NULL) {
-                    aObject->Draw3D();
+            
+            
+            //LevelWave *aWave = gEditor->mSection.mCurrentWave;
+            LevelWave *aWave = ((LevelWave *)gEditor->mEditorSection.mWaveList.Fetch(gEditor->WaveIndex()));
+            
+            if (aWave != NULL) {
+                for (int i=0;i<aWave->mPath.mNodeList.mCount;i++) {
+                    GameObject *aObject = (GameObject *)gEditor->mEditorObjectList.Fetch(i);
+                    if (aObject != NULL) {
+                        aObject->Draw3D();
+                    }
                 }
             }
+            
+            
+            
         }
     }
 #endif

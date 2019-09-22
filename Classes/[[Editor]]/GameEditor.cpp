@@ -207,7 +207,6 @@ void GameEditor::Update() {
         
         for (int i=0;i<gGameContainer->mPlaybackUpdateCount;i++) {
             mEditorSection.Update();
-            mEditorWave.Update();
             mSection.Update();
         }
     } else {
@@ -215,15 +214,11 @@ void GameEditor::Update() {
         for (int i=0;i<mFreezeFrame;i++) {
             mSection.Update();
             mEditorSection.Update();
-            mEditorWave.Update();
         }
     }
     
-    
-    
     if (mSection.mCurrentWave) {
         mSpeedClassIndex = SpeedConvertTypeToSegment(mSection.mCurrentWave->mPath.mSpeedClass);
-        
     }
     
     mAutosaveTimer += 1;
@@ -239,6 +234,8 @@ void GameEditor::Update() {
             
             //HOOK: We want to jump right to a particular toolset?
             
+            //Load("section_learning_start");
+            
             //OpenFormationEditor(NULL);
             
             
@@ -251,34 +248,39 @@ void GameEditor::Update() {
     
     
     
-    
-    
-    int aRequiredTestObjectCount = mEditorWave.mPath.mNodeList.mCount;
-    
-    while (mEditorObjectList.mCount > aRequiredTestObjectCount) {
-        mEditorObjectQueue.Add(mEditorObjectList.PopLast());
-    }
-    
-    while (mEditorObjectList.mCount < aRequiredTestObjectCount && mEditorObjectQueue.mCount > 0) {
-        mEditorObjectList.Add(mEditorObjectQueue.PopLast());
-    }
-    
-    while (mEditorObjectList.mCount < aRequiredTestObjectCount) {
-        Balloon *aBalloon = new Balloon();
-        mEditorObjectList.Add(aBalloon);
-    }
-    
-    for (int i=0;i<mEditorWave.mPath.mNodeList.mCount;i++) {
-        
-        GameObject *aObject = (GameObject *)mEditorObjectList.Fetch(i);
-        LevelPathNode *aPathNode = (LevelPathNode *)mEditorWave.mPath.mNodeList.Fetch(i);
-        
-        if (aObject != NULL && aPathNode != NULL) {
-            aObject->mTransform.mX = aPathNode->mX;
-            aObject->mTransform.mY = aPathNode->mY;
-            aObject->Update();
+    if (true) {
+        LevelWave *aWave = ((LevelWave *)gEditor->mEditorSection.mWaveList.Fetch(gEditor->WaveIndex()));
+        if (aWave != NULL) {
+            
+            int aRequiredTestObjectCount = aWave->mPath.mNodeList.mCount;
+            
+            while (mEditorObjectList.mCount > aRequiredTestObjectCount) {
+                mEditorObjectQueue.Add(mEditorObjectList.PopLast());
+            }
+            
+            while (mEditorObjectList.mCount < aRequiredTestObjectCount && mEditorObjectQueue.mCount > 0) {
+                mEditorObjectList.Add(mEditorObjectQueue.PopLast());
+            }
+            
+            while (mEditorObjectList.mCount < aRequiredTestObjectCount) {
+                Balloon *aBalloon = new Balloon();
+                mEditorObjectList.Add(aBalloon);
+            }
+            
+            for (int i=0;i<aWave->mPath.mNodeList.mCount;i++) {
+                
+                GameObject *aObject = (GameObject *)mEditorObjectList.Fetch(i);
+                LevelPathNode *aPathNode = (LevelPathNode *)aWave->mPath.mNodeList.Fetch(i);
+                
+                if (aObject != NULL && aPathNode != NULL) {
+                    aObject->mTransform.mX = aPathNode->mX;
+                    aObject->mTransform.mY = aPathNode->mY;
+                    aObject->Update();
+                }
+            }
         }
     }
+    
     
     
     
@@ -339,16 +341,12 @@ void GameEditor::Draw() {
     
     Graphics::PipelineStateSetShape2DNoBlending();
     Graphics::SetColor();
-    if (mEditorWave.mPath.mNodeList.mCount > 0) {
-        mEditorWave.mPath.Draw();
-    } else {
-        
+    if (true) {
         LevelWave *aWave = ((LevelWave *)mEditorSection.mWaveList.Fetch(WaveIndex()));
         if (aWave != NULL) {
             aWave->mPath.Draw();
         }
     }
-    mEditorWave.Draw();
     
     Graphics::PipelineStateSetShape2DAlphaBlending();
     Graphics::SetColor(0.35f, 0.65f, 0.35f, 0.45f);
@@ -931,7 +929,6 @@ void GameEditor::RefreshPlayback() {
     }
     
     mEditorSection.Reset();
-    mEditorWave.Reset();
     
     if (mPermEditor != NULL && mPermEditor == mOverlay) {
         LevelSectionPermBlueprint *aPerm = PermGet();
@@ -1077,9 +1074,6 @@ void GameEditor::WaveAdd() {
 
 void GameEditor::WaveRemove() {
     mSection.WaveRemove();
-    if (mSection.mCurrentWave == NULL) {
-        mEditorWave.Reset();
-    }
 }
 
 void GameEditor::WaveSelectNext() {
@@ -1479,7 +1473,6 @@ void GameEditor::Clear() {
     ClosePathEditor();
     mSection.Reset();
     
-    mEditorWave.Reset();
     mEditorSection.Reset();
     
     
@@ -1539,7 +1532,6 @@ void GameEditor::SelectClosestObject(float pX, float pY) {
         mSection.mCurrentWave = aClosestWave;
     } else {
         mSection.mCurrentWave = NULL;
-        mEditorWave.mPath.Reset();
     }
     
     RefreshPlayback();
@@ -1584,8 +1576,6 @@ void GameEditor::Load(const char *pFile) {
     
     ClosePathEditor();
     CloseFormationEditor();
-    
-    mEditorWave.mPath.Reset();
     
     FJSON aJSON;
     aJSON.Load(pFile);

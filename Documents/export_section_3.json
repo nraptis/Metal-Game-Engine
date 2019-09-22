@@ -1,152 +1,45 @@
 {
 	"section": true,
+	"progress": 30,
 	"wave_list": [
 		{
 			"spawn_spacing": 90,
-			"max_spawn_size": 226,
+			"max_spawn_size": 318,
 			"path": {
 				"speed_class": 200,
 				"node_list": [
 					{
 						"x_con": 200,
-						"y_con": 400,
-						"y_con_offset": 40.000000
+						"y": 44.811474
 					},
 					{
-						"x_con": 500,
-						"y_con": 400,
-						"y_con_offset": 40.000000,
-						"decel": 220,
-						"accel": 170,
-						"wait": 1765
-					},
-					{
-						"x_con": 850,
-						"y_con": 400,
-						"y_con_offset": 50.000000
-					}
-				]
-			},
-			"spawn": [
-				{
-					"formation": "form_all_nod_all_bln_grd_tri_ng2_88rad_0ofy_46sph_40spv_stgodd_180ros_sld_nodes_cfg10xb_snp",
-					"formation_config": {
-						"tracer_speed_class_global": -300
-					},
-					"motion": {
-						"play_on_enter": false,
-						"play_on_exit": false,
-						"slice_list": [
-							{
-								"type": 3,
-								"linear_tick": 80,
-								"linear_time": 160,
-								"angle_span": 15
-							}
-						]
-					},
-					"style": {
-						"disable_threads": true
-					}
-				}
-			]
-		},
-		{
-			"spawn_spacing": 90,
-			"creation_prev_wave_complete": true,
-			"path": {
-				"node_list": [
-					{
-						"x_con": 200,
-						"y_con": 400,
-						"y_con_offset": -40.000000
-					},
-					{
-						"x_con": 400,
-						"y_con": 400,
-						"y_con_offset": -40.000000,
-						"decel": 150,
-						"accel": 150,
-						"wait": 300
-					},
-					{
-						"x_con": 400,
-						"y_con": 150
-					}
-				]
-			},
-			"spawn": [
-				{}
-			]
-		},
-		{
-			"spawn_spacing": 90,
-			"path": {
-				"node_list": [
-					{
-						"x_con": 800,
-						"y_con": 400,
-						"y_con_offset": -40.000000
-					},
-					{
-						"x_con": 600,
-						"y_con": 400,
-						"y_con_offset": -40.000000,
-						"decel": 150,
-						"accel": 150,
-						"wait": 300
-					},
-					{
-						"x_con": 600,
-						"y_con": 150
-					}
-				]
-			},
-			"spawn": [
-				{}
-			]
-		},
-		{
-			"spawn_spacing": 90,
-			"max_spawn_size": 231,
-			"path": {
-				"speed_class": 200,
-				"node_list": [
-					{
-						"x_con": 200,
-						"y_con": 500,
-						"y_con_offset": -100.000000
-					},
-					{
-						"x_con": 500,
-						"y_con": 500,
-						"y_con_offset": -100.000000,
+						"x": 20.506723,
+						"y_con": 100,
+						"y_con_target": 0,
 						"decel": 250,
-						"accel": 200,
-						"wait": 1750
+						"wait": 2410
 					},
 					{
-						"x_con": 850,
-						"y_con": 500,
-						"y_con_offset": -100.000000
+						"x_con": 150,
+						"y_con": 100,
+						"y_con_target": 0
 					}
 				]
 			},
 			"spawn": [
 				{
-					"formation": "form_all_nod_all_bln_grd_rec_5x3_38sph_48spv_sld_nodes_cfg15xb_snp",
+					"formation": "form_all_nod_all_bln_grd_rec_1x6_0sph_46spv_sld_nodes_cfg6xb_snp",
 					"formation_config": {},
 					"motion": {
 						"play_on_enter": false,
 						"play_on_exit": false,
 						"slice_list": [
 							{
-								"type": 4,
-								"linear_tick": 80,
-								"linear_time": 160,
-								"radius": 45,
-								"pause_1": 14,
-								"pause_2": 14
+								"type": 3,
+								"linear_tick": 0,
+								"linear_time": 120,
+								"angle_span": 56,
+								"pause_2": 40
 							}
 						]
 					},
@@ -155,50 +48,171 @@
 					}
 				}
 			]
-		}
-	],
-	"perm_list": [
-		{
-			"x_con": 300,
-			"x_con_offset": 25.000000,
-			"y_con": 800,
-			"y_con_offset": -195.000000,
-			"type": 3
 		},
 		{
-			"x_con": 400,
-			"x_con_offset": -5.000000,
-			"y_con": 800,
-			"y_con_offset": -165.000000,
-			"type": 1
+			"spawn_spacing": 90,
+			"max_spawn_size": 318,
+			"path": {
+				"speed_class": 200,
+				"node_list": [
+					{
+						"x_con": 800,
+						"y": 44.811474
+					},
+					{
+						"x": 79.493279,
+						"y_con": 100,
+						"y_con_target": 0,
+						"decel": 250,
+						"wait": 2410
+					},
+					{
+						"x_con": 850,
+						"y_con": 100,
+						"y_con_target": 0
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "form_all_nod_all_bln_grd_rec_1x6_0sph_46spv_sld_nodes_cfg6xb_snp",
+					"formation_config": {},
+					"motion": {
+						"play_on_enter": false,
+						"play_on_exit": false,
+						"slice_list": [
+							{
+								"type": 3,
+								"linear_tick": 0,
+								"linear_time": 120,
+								"angle_span": 56,
+								"pause_2": 40
+							},
+							{
+								"type": 1
+							}
+						]
+					},
+					"style": {
+						"disable_threads": true
+					}
+				}
+			]
 		},
 		{
-			"x_con": 600,
-			"x_con_offset": 5.000000,
-			"y_con": 800,
-			"y_con_offset": -165.000000,
-			"type": 1
+			"spawn_spacing": 90,
+			"creation_screen_waves_clear": true,
+			"max_spawn_size": 318,
+			"path": {
+				"speed_class": 300,
+				"node_list": [
+					{
+						"x_con": 500,
+						"y_con": 200
+					},
+					{
+						"x_con": 500,
+						"y_con": 500,
+						"decel": 300,
+						"wait": 1590
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "form_all_nod_all_bln_grd_rec_1x6_0sph_46spv_sld_nodes_cfg6xb_snp",
+					"formation_config": {},
+					"motion": {
+						"slice_list": [
+							{
+								"type": 2
+							}
+						]
+					},
+					"style": {
+						"disable_threads": true
+					}
+				}
+			]
 		},
 		{
-			"x_con": 700,
-			"x_con_offset": -25.000000,
-			"y_con": 800,
-			"y_con_offset": -195.000000,
-			"type": 3
+			"spawn_spacing": 90,
+			"creation_screen_waves_clear": true,
+			"max_spawn_size": 318,
+			"path": {
+				"speed_class": 300,
+				"node_list": [
+					{
+						"x": 30.917645,
+						"y_con": 200
+					},
+					{
+						"x_con": 100,
+						"x_con_target": 0,
+						"y": 36.104721,
+						"decel": 300,
+						"wait": 1800
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "form_all_nod_all_bln_grd_rec_1x6_0sph_46spv_sld_nodes_cfg6xb_snp",
+					"formation_config": {},
+					"motion": {
+						"slice_list": [
+							{
+								"type": 5,
+								"radius": 144,
+								"pause_1": 70,
+								"pause_2": 70
+							}
+						]
+					},
+					"style": {
+						"disable_threads": true
+					}
+				}
+			]
 		},
 		{
-			"x_con": 400,
-			"x_con_offset": -5.000000,
-			"y_con": 600,
-			"y_con_offset": -2.000000,
-			"type": 1
-		},
-		{
-			"x_con": 600,
-			"x_con_offset": 5.000000,
-			"y_con": 600,
-			"y_con_offset": -2.000000,
-			"type": 1
+			"spawn_spacing": 90,
+			"max_spawn_size": 318,
+			"path": {
+				"speed_class": 300,
+				"node_list": [
+					{
+						"x": 69.082336,
+						"y_con": 200
+					},
+					{
+						"x_con": 100,
+						"x_con_target": 0,
+						"y": 36.149952,
+						"decel": 300,
+						"wait": 1800
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "form_all_nod_all_bln_grd_rec_1x6_0sph_46spv_sld_nodes_cfg6xb_snp",
+					"formation_config": {},
+					"motion": {
+						"slice_list": [
+							{
+								"type": 5,
+								"radius": 144,
+								"pause_1": 70,
+								"pause_2": 70
+							}
+						]
+					},
+					"style": {
+						"disable_threads": true
+					}
+				}
+			]
 		}
 	]
 }

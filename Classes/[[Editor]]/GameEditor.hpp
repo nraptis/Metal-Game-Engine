@@ -288,7 +288,7 @@ public:
     bool                                        mIsRefreshingPlayback;
     
     LevelSection                                mEditorSection;
-    LevelWave                                   mEditorWave;
+    //LevelWave                                   mEditorWave;
     
     FList                                       mEditorObjectList;
     FList                                       mEditorObjectQueue;

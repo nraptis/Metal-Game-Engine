@@ -1,5 +1,6 @@
 {
 	"section": true,
+	"progress": 37,
 	"wave_list": [
 		{
 			"spawn_spacing": 90,
@@ -74,7 +75,7 @@
 				"node_list": [
 					{
 						"x_con": 200,
-						"y": 45.892151
+						"y": 45.892147
 					},
 					{
 						"x_con": 500,
@@ -138,6 +139,7 @@
 			]
 		},
 		{
+			"spawn_spacing": 90,
 			"creation_prev_wave_complete": true,
 			"creation_screen_waves_clear": true,
 			"creation_screen_perms_clear": true,
@@ -152,7 +154,7 @@
 					{
 						"x_con": 100,
 						"x_con_target": 0,
-						"y": 43.429596,
+						"y": 43.429604,
 						"decel": 300,
 						"wait": 9999
 					}
@@ -178,6 +180,7 @@
 			]
 		},
 		{
+			"spawn_spacing": 90,
 			"creation_prev_wave_complete": true,
 			"max_spawn_size": 168,
 			"path": {
@@ -216,6 +219,7 @@
 			]
 		},
 		{
+			"spawn_spacing": 90,
 			"creation_delay": 55,
 			"max_spawn_size": 195,
 			"path": {
@@ -223,7 +227,7 @@
 				"node_list": [
 					{
 						"x_con": 800,
-						"y": 49.899685
+						"y": 49.899681
 					},
 					{
 						"x_con": 600,
@@ -251,6 +255,7 @@
 			]
 		},
 		{
+			"spawn_spacing": 90,
 			"creation_delay": 90,
 			"max_spawn_size": 189,
 			"path": {

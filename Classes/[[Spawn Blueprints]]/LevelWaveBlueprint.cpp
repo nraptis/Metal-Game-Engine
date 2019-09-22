@@ -192,7 +192,9 @@ void LevelWaveBlueprint::FlipV() {
 
 void LevelWaveBlueprint::Build() {
     if (gEditor) {
-        Build(&gEditor->mEditorWave);
+        //Build(&gEditor->mEditorWave);
+        //Build(&(gEditor->mSection.mCurrentWave));
+        
     }
 }
 

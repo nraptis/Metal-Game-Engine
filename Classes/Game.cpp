@@ -489,7 +489,6 @@ void Game::UpdateMainLoop() {
         if ((aDart->mIdle == false) && (aDart->mKill == 0) && (aDart->mStuck == false) && (aDart->mKnockedDown == false)) {
             DartMovingInterpolationFreeLives(aDart, 1.0, true);
         }
-        
     }
     
     if (mDartTouch != NULL && mDartResetAnimation == false) {
@@ -624,7 +623,7 @@ void Game::Draw() {
     
     Graphics::PipelineStateSetShape2DAlphaBlending();
     //Graphics::SetColor(0.125f, 0.5f, 0.35f, 0.075f);
-    Graphics::SetColor(0.825f, 0.5f, 0.35f, 0.575f);
+    Graphics::SetColor(0.825f, 0.5f, 0.35f, 0.25f);
     
     Graphics::OutlineRect(0.0f, 0.0f, mWidth, mHeight, 20.0f);
     Graphics::SetColor();
@@ -1444,7 +1443,8 @@ void Game::DisposeObject(GameObject *pObject) {
 #ifdef EDITOR_MODE
     if (gEditor != NULL) {
         gEditor->mEditorSection.DisposeObject(pObject);
-        gEditor->mEditorWave.DisposeObject(pObject);
+        //gEditor->mEditorWave.DisposeObject(pObject);
+        
     }
 #endif
     
@@ -1527,10 +1527,6 @@ void Game::KnockDown(GameObject *pObject) {
         if (aTurtle->mKnockedDown == false) {
             aTurtle->KnockDown();
         }
-        
-        
-        
-        
     }
     
     
@@ -1862,7 +1858,7 @@ void Game::Load() {
     //return;
     
     Level aLevel;
-
+    
     /*
     section_2_turtles_2_bricks_2_balloon_3_waves_turtles_brickcircle_star
     section_2_turtles_2_bricks_2_waves_1_center_balloon
@@ -1879,14 +1875,11 @@ void Game::Load() {
     //aLevel.SetAliveTimer(5000);
     
     
+    aLevel.AddSection("section_medium_2_perms_2_bricks_2_turtles_4_waves_staggered_mixed_turtles_bricks_medium_circle_2_singles_1_turtle_brick.json");
+    aLevel.AddSection("section_easymed_2_perms_2_bricks_blocking_1_turtle_both_sides_3_waves_med_tri_2_singles_med_square.json");
     
-    aLevel.AddSection("section_easymed_3_waves_tri_singles_square_bricks_blocking_turtles_both_sides.json");
-    aLevel.AddSection("section_easymed_3_waves_tri_singles_square_bricks_blocking_turtles_both_sides.json");
     
-    aLevel.AddSection("section_learning_3_waves_lineshot_all_balloons.json");
-    aLevel.AddSection("section_learning_3_waves_lineshot_all_balloons.json");
-    aLevel.AddSection("section_learning_3_waves_lineshot_all_balloons.json");
-    
+
     
     aLevel.AddSection("test_section_all_bricks_2_waves");
     aLevel.AddSection("test_section_2_tracers_slowslow_speed_all_4_types");

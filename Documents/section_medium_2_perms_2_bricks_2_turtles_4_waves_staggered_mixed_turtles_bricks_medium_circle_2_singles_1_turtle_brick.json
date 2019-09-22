@@ -4,6 +4,7 @@
 	"progress": 12,
 	"wave_list": [
 		{
+			"spawn_spacing": 90,
 			"max_spawn_size": 195,
 			"path": {
 				"speed_class": 200,
@@ -17,16 +18,18 @@
 						"y_con": 500,
 						"decel": 250,
 						"accel": 150,
-						"wait": 1770
+						"wait": 2742
 					},
 					{
-						"x_con": 850,
+						"x_con": 150,
 						"y_con": 500
 					}
 				]
 			},
 			"spawn": [
 				{
+					"short_circuit": true,
+					"short_circuit_knock": true,
 					"formation": "form_all_nod_mix_bln_brk_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfgbrrbbbrrb_snp",
 					"formation_config": {},
 					"motion": {
@@ -42,10 +45,11 @@
 			]
 		},
 		{
+			"spawn_spacing": 90,
 			"creation_delay": 180,
 			"max_spawn_size": 101,
 			"path": {
-				"speed_class": 100,
+				"speed_class": 300,
 				"node_list": [
 					{
 						"x_con": 200,
@@ -55,7 +59,7 @@
 						"x_con": 600,
 						"y_con": 400,
 						"decel": 250,
-						"accel": 220,
+						"accel": 140,
 						"wait": 2100
 					},
 					{
@@ -66,6 +70,7 @@
 			},
 			"spawn": [
 				{
+					"short_circuit": true,
 					"formation": "form_all_nod_mix_brk_tur_grd_rec_2x1_36sph_44spv_sld_nodes_cfgtr_snp",
 					"formation_config": {}
 				}
@@ -73,8 +78,8 @@
 		},
 		{
 			"spawn_spacing": 90,
-			"creation_delay": 25,
 			"path": {
+				"speed_class": 200,
 				"node_list": [
 					{
 						"x_con": 700,
@@ -86,8 +91,8 @@
 						"x_con_offset": -40.000000,
 						"y_con": 500,
 						"decel": 200,
-						"accel": 80,
-						"wait": 250
+						"accel": 120,
+						"wait": 500
 					},
 					{
 						"x_con": 850,
@@ -100,8 +105,10 @@
 			]
 		},
 		{
+			"spawn_spacing": 90,
 			"creation_delay": 40,
 			"path": {
+				"speed_class": 200,
 				"node_list": [
 					{
 						"x_con": 300,
@@ -113,8 +120,8 @@
 						"x_con_offset": 40.000000,
 						"y_con": 500,
 						"decel": 200,
-						"accel": 80,
-						"wait": 250
+						"accel": 100,
+						"wait": 400
 					},
 					{
 						"x_con": 150,
