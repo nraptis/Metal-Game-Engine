@@ -168,23 +168,32 @@ void FormationCollection::Load() {
     //Tracers - Circle [[BALLOON ONLY]]
     
     //Add("");
+    Add("form_all_trc_all_bln_tra_cir_60rad_cfg2xb");
+    Add("form_all_trc_all_bln_tra_cir_66rad_cfg3xb");
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Tracers - Custom [[BALLOON ONLY]]
     
    
     //Add("");
-    //Add("");
+    
     Add("form_all_trc_all_bln_grd_rec_6x6_60sph_60spv_0ful_tra_4ply_cfg4xb_tra_4ply_cfg4xb_tra_4ply_cfg4xb_tra_4ply_cfg4xb_tra_4ply_cfg4xb_tra_4ply_cfg4xb");
     Add("form_all_trc_all_bln_grd_rec_6x6_60sph_60spv_0ful_tra_12ply_cfg28xb");
     Add("form_all_trc_all_bln_grd_hex_ng1_135rsp_1rct_30pts_0ful_tra_6ply_cfg12xb");
     Add("form_all_trc_all_bln_grd_hex_ng1_135rsp_1rct_30pts_0ful_tra_6ply_cfg14xb_tra_cir_155rad_cfg7xb");
+    Add("form_all_trc_all_bln_grd_pen_ng1_84rsp_1rct_88pts_0ful_tra_5ply_cfg7xb.json");
     
     
     
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Tracers - Rect [[BALLOON ONLY]]
+    
+    //Add("");
+    Add("form_all_trc_all_bln_grd_rec_2x2_60sph_61spv_0ful_tra_4ply_cfg1xb");
+    Add("form_all_trc_all_bln_grd_rec_2x2_60sph_61spv_0ful_tra_4ply_cfg2xb");
+    Add("form_all_trc_all_bln_grd_rec_2x2_60sph_61spv_0ful_tra_4ply_cfg3xb");
+    Add("form_all_trc_all_bln_grd_rec_2x2_60sph_61spv_0ful_tra_4ply_cfg4xb");
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Tracers - Rounded Rect [[BALLOON ONLY]]
@@ -542,9 +551,16 @@ void FormationCollection::Load() {
     //Add("");
     
     //Add("form_all_nod_mix_bln_tur_grd_rec_2x1_38sph_48spv_sld_nodes_cfgtb_snp.json");
-    //Add("form_all_nod_mix_bln_tur_grd_rec_2x1_38sph_48spv_sld_nodes_cfgbt_snp.json");
-    //Add("form_all_nod_mix_bln_tur_grd_rec_1x2_38sph_48spv_sld_nodes_cfgbt_snp.json");
-    //Add("form_all_nod_mix_bln_tur_grd_rec_1x2_38sph_64spv_sld_nodes_cfgtb_snp.json");
+    
+    Add("form_all_nod_mix_bln_tur_grd_rec_1x2_34sph_50spv_sld_nodes_cfgbt_snp");
+    Add("form_all_nod_mix_bln_tur_grd_rec_1x2_34sph_66spv_sld_nodes_cfgtb_snp");
+    Add("form_all_nod_mix_bln_tur_grd_rec_2x1_34sph_50spv_sld_nodes_cfgbt_snp");
+    Add("form_all_nod_mix_bln_tur_grd_rec_2x1_34sph_50spv_sld_nodes_cfgtb_snp");
+    Add("form_all_nod_mix_bln_tur_grd_rec_2x2_36sph_50spv_sld_nodes_cfgbbtt_snp");
+    Add("form_all_nod_mix_bln_tur_grd_rec_2x2_36sph_64spv_sld_nodes_cfgttbb_snp");
+    Add("form_all_nod_mix_bln_tur_grd_rec_3x2_36sph_64spv_sld_nodes_cfgtbtbbb_snp");
+    Add("form_all_nod_mix_bln_tur_grd_rec_3x2_36sph_64spv_sld_nodes_cfgtttbbb_snp");
+    
     
     Add("form_all_nod_mix_bln_tur_grd_rec_4x2_38sph_48spv_50ful_nodes_cfgbbttbb4on2of");
     Add("form_all_nod_mix_bln_tur_grd_rec_5x3_38sph_48spv_73ful_nodes_cfgbbbtbbbtbbb_snp");
@@ -625,13 +641,15 @@ void FormationCollection::Load() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Rectangle [[[Brick + Turtle]]]
     
-    //Add("form_all_nod_mix_brk_tur_grd_rec_1x2_38sph_46spv_sld_nodes_cfgrt_snp");
-    //Add("form_all_nod_mix_brk_tur_grd_rec_1x2_38sph_58spv_sld_nodes_cfgtr_snp");
-    //Add("form_all_nod_mix_brk_tur_grd_rec_2x1_38sph_46spv_sld_nodes_cfgrt_snp");
-    //Add("form_all_nod_mix_brk_tur_grd_rec_2x1_38sph_46spv_sld_nodes_cfgtr_snp");
-    //Add("form_all_nod_mix_brk_tur_grd_rec_2x2_38sph_46spv_sld_nodes_cfgrrtt_snp");
-    //Add("form_all_nod_mix_brk_tur_grd_rec_2x2_38sph_56spv_sld_nodes_cfgttrr_snp");
-    //Add("form_all_nod_mix_brk_tur_grd_rec_3x2_38sph_64spv_sld_nodes_cfgrrrttt_snp");
+    //Add("");
+    
+    Add("form_all_nod_mix_brk_tur_grd_rec_1x2_36sph_44spv_sld_nodes_cfgrt_snp");
+    Add("form_all_nod_mix_brk_tur_grd_rec_1x2_36sph_60spv_sld_nodes_cfgtr_snp");
+    Add("form_all_nod_mix_brk_tur_grd_rec_2x1_36sph_44spv_sld_nodes_cfgrt_snp");
+    Add("form_all_nod_mix_brk_tur_grd_rec_2x1_36sph_44spv_sld_nodes_cfgtr_snp");
+    Add("form_all_nod_mix_brk_tur_grd_rec_2x2_36sph_44spv_sld_nodes_cfgrrtt_snp");
+    Add("form_all_nod_mix_brk_tur_grd_rec_2x2_36sph_56spv_sld_nodes_cfgttrr_snp");
+    
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Staggered [[[Brick + Turtle]]]

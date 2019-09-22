@@ -1,0 +1,39 @@
+{
+	"node_list": [],
+	"tracer_list": [
+		{
+			"object_count": 7,
+			"special_type": 0,
+			"tracer_node_list": [
+				{
+					"x": 0.081093,
+					"y": -14.736835
+				},
+				{
+					"x": 23.440376,
+					"y": -4.553925
+				},
+				{
+					"x": 14.517929,
+					"y": 11.922367
+				},
+				{
+					"x": -14.355736,
+					"y": 11.922352
+				},
+				{
+					"x": -23.278183,
+					"y": -4.553936
+				}
+			]
+		}
+	],
+	"grid": {
+		"grid_type": 4,
+		"ngon1_sides": 5,
+		"ngon1_ring_spacing": 84,
+		"ngon1_ring_count": 1,
+		"ngon1_point_spacing": 88,
+		"ngon1_start_rotation": 0
+	}
+}

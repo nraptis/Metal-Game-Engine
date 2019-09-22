@@ -360,8 +360,7 @@ FJSONNode *LevelSectionBlueprint::Save() {
     mProgressObjectsBase = CountProgressObjects();
     aExport->AddDictionaryInt("progress", mProgressObjectsBase);
     
-    printf("Progress Objects: %d\n", mProgressObjectsBase);
-    
+    //printf("Progress Objects: %d\n", mProgressObjectsBase);
     //mProgressObjectsBase
     
     

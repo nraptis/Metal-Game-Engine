@@ -4,7 +4,6 @@
 	"progress": 12,
 	"wave_list": [
 		{
-			"spawn_spacing": 90,
 			"max_spawn_size": 195,
 			"path": {
 				"speed_class": 200,
@@ -43,7 +42,6 @@
 			]
 		},
 		{
-			"spawn_spacing": 90,
 			"creation_delay": 180,
 			"max_spawn_size": 101,
 			"path": {
@@ -102,7 +100,6 @@
 			]
 		},
 		{
-			"spawn_spacing": 90,
 			"creation_delay": 40,
 			"path": {
 				"node_list": [

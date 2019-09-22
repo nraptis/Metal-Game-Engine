@@ -1,22 +1,23 @@
 {
+	"creation_delay": 40,
 	"path": {
 		"node_list": [
 			{
-				"x_con": 200,
-				"y_con": 400,
-				"y_con_offset": -40.000000
+				"x_con": 300,
+				"x_con_offset": 40.000000,
+				"y_con": 200
 			},
 			{
-				"x_con": 400,
-				"y_con": 400,
-				"y_con_offset": -40.000000,
-				"decel": 150,
-				"accel": 150,
-				"wait": 600
+				"x_con": 300,
+				"x_con_offset": 40.000000,
+				"y_con": 500,
+				"decel": 200,
+				"accel": 80,
+				"wait": 250
 			},
 			{
-				"x_con": 400,
-				"y_con": 150
+				"x_con": 150,
+				"y_con": 500
 			}
 		]
 	},

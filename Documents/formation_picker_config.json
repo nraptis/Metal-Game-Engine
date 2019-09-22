@@ -1,11 +1,11 @@
 {
-	"scroll_offset_x": 97.692505,
-	"scroll_offset_y": -753.964661,
-	"grid_offset_x": 13,
+	"scroll_offset_x": 98.147942,
+	"scroll_offset_y": -676.620911,
+	"grid_offset_x": 3,
 	"grid_offset_y": 0,
 	"filter_text": "",
 	"filter_balloons_only": false,
-	"filter_mixed_only": false,
+	"filter_mixed_only": true,
 	"filter_tracers_only": false,
 	"filter_no_tracers_only": false
 }
