@@ -5,6 +5,8 @@ B2.) We need to decide how "free life" or "prize box" will influence level progr
 
 B3.) We need a way to freeze the editor playback and skip to a particular frame.
 
+B4.) We need to flag wave spawns as "kill me when all pop-ables are killed" or possibly rush-to-end. Needs to work with single or multiple spawns.
+
 A1.) We need a way to turn threads on and off for wave spawns, perms, and perm spawns.
 
 A2.) We need a generic styling mechanism (style controller) blueprint and object. 
