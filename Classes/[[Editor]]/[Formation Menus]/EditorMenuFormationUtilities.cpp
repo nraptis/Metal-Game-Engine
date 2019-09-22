@@ -25,18 +25,14 @@ EditorMenuFormationUtilities::EditorMenuFormationUtilities(GameFormationEditor *
     mRowMain1 = new ToolMenuSectionRow();
     AddSection(mRowMain1);
     
-    mButtonCloseEditor = new UIButton();
-    mButtonCloseEditor->SetText("Close Editor");
-    mRowMain1->AddButton(mButtonCloseEditor);
-    
     
     mButtonResetFormation = new UIButton();
     mButtonResetFormation->SetText("Reset");
     mRowMain1->AddButton(mButtonResetFormation);
     
-    
-    
-    
+    mButtonCloseEditor = new UIButton();
+    mButtonCloseEditor->SetText("Close Editor");
+    mRowMain1->AddButton(mButtonCloseEditor);
     mPanelTracers = new ToolMenuPanel();
     mPanelTracers->SetTitle("Tracer Mode");
     AddSection(mPanelTracers);

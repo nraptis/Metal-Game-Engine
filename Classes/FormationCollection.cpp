@@ -148,6 +148,17 @@ void FormationCollection::Load() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Trapezoid [[BALLOON ONLY]]
     
+    Add("form_all_nod_all_bln_grd_trp1_80tsz_220bsz_96ht_11cth_3ctv_35ful_nodes_cfg14xb12on2of");
+    Add("form_all_nod_all_bln_grd_trp1_220tsz_80bsz_96ht_11cth_3ctv_35ful_nodes_cfg14xb12on2of");
+    Add("form_all_nod_all_bln_grd_trp1_74tsz_36bsz_36ht_3cth_2ctv_71ful_nodes_cfg5xb_snp");
+    Add("form_all_nod_all_bln_grd_trp1_36tsz_74bsz_36ht_3cth_2ctv_71ful_nodes_cfg5xb_snp");
+    Add("form_all_nod_all_bln_grd_trp1_44tsz_88bsz_28ht_3cth_2ctv_90ros_71ful_nodes_cfg5xb_snp");
+    Add("form_all_nod_all_bln_grd_trp1_88tsz_44bsz_28ht_3cth_2ctv_90ros_71ful_nodes_cfg5xb_snp");
+    Add("form_all_nod_all_bln_grd_trp1_130tsz_44bsz_62ht_4cth_3ctv_62ful_nodes_cfg9xb8on1of");
+    Add("form_all_nod_all_bln_grd_trp1_44tsz_130bsz_62ht_4cth_3ctv_62ful_nodes_cfg9xb8on1of");
+    //Add("");
+    //Add("");
+    
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Triangle [[BALLOON ONLY]]
     

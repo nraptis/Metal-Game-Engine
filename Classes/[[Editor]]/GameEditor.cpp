@@ -20,7 +20,6 @@ GameEditor::GameEditor(Game *pGame) {
     mEditorShowReferenced = false;
     mEditorWaveLoop = true;
     mEditorSectionLoop = true;
-    mEditorPlaybackWaveOnly = false;
     mEditorPlaybackFromCurrentWave = true;
     mEditorPlaybackEnabled = true;
     
@@ -501,9 +500,7 @@ void GameEditor::KeyDown(int pKey) {
     bool aCtrl = gKeyDownCtrl;
     bool aAlt = gKeyDownAlt;
     
-    
-    if (mFreeze) {
-        
+    if (mFreeze == true) {
         if (pKey == __KEY__LEFT) {
             
             if (aCtrl == true && aShift == true) {
@@ -529,11 +526,7 @@ void GameEditor::KeyDown(int pKey) {
             }
         }
         
-        
-        
-        
     }
-    
     
     if (aCtrl) {
         if (pKey == __KEY__0) { mTestIndex = 0; LoadTest(); return; }
@@ -957,30 +950,15 @@ void GameEditor::RefreshPlayback() {
         mSpeedClassIndex = SpeedConvertTypeToSegment(mSection.mCurrentWave->mPath.mSpeedClass);
     }
     
-    if (mEditorPlaybackWaveOnly) {
-        
-        if (mSection.mCurrentWave != NULL) {
-            mSection.mCurrentWave->Build();
-        }
-        
-    } else {
-        
+    if (true) {
         int aWaveIndex = WaveIndex();
-        //mSection.mCurrentWave
-        if (mEditorPlaybackFromCurrentWave == true && aWaveIndex >= 0 && (mFreezeFrame == false)) {
+        if (mEditorPlaybackFromCurrentWave == true && aWaveIndex >= 0 && (mFreeze == false)) {
             mEditorSection.mStartWaveIndex = aWaveIndex;
         } else {
             mEditorSection.mStartWaveIndex = 0;
         }
-        
-        //Section Build...
         mSection.Build();
     }
-    
-
-    
-    //    mEditorSection.FlyInReset(SECTION_FLY_NONE);
-    
     
     mEditorSection.Spawn();
     

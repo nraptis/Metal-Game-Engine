@@ -59,9 +59,6 @@ GameFormationEditor::GameFormationEditor(GameEditor *pEditor) {
     //mSelectedSpawnIndex = -1;
     //mSelectedTracerSpawnIndex = -1;
     
-    
-    
-    
     mName = "[GameFormationEditor]";
     
     SetWidth(gDeviceWidth);
@@ -1016,6 +1013,31 @@ FString GameFormationEditor::GenerateGridName() {
         
         if (mGrid.mGridNGON2StartRotation != 0) {
             FString aStartRotationString = FString(mGrid.mGridNGON2StartRotation) + "ros";
+            aChunkList.Add(new FString(aStartRotationString.c()));
+        }
+    }
+    
+    if (mGrid.mGridType == SNAP_GRID_TYPE_TRAP1) {
+
+        aChunkList.Add(new FString("trp1"));
+        
+        FString aSizeTString = FString(mGrid.mGridTRAP1TopSize) + "tsz";
+        aChunkList.Add(new FString(aSizeTString.c()));
+        
+        FString aSizeBString = FString(mGrid.mGridTRAP1BottomSize) + "bsz";
+        aChunkList.Add(new FString(aSizeBString.c()));
+        
+        FString aHeightString = FString(mGrid.mGridTRAP1Height) + "ht";
+        aChunkList.Add(new FString(aHeightString.c()));
+        
+        FString aCountHString = FString(mGrid.mGridTRAP1CountH) + "cth";
+        aChunkList.Add(new FString(aCountHString.c()));
+        
+        FString aCountVString = FString(mGrid.mGridTRAP1CountV) + "ctv";
+        aChunkList.Add(new FString(aCountVString.c()));
+        
+        if (mGrid.mGridTRAP1StartRotation != 0) {
+            FString aStartRotationString = FString(mGrid.mGridTRAP1StartRotation) + "ros";
             aChunkList.Add(new FString(aStartRotationString.c()));
         }
     }

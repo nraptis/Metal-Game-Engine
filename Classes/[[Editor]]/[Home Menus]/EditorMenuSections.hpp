@@ -80,7 +80,6 @@ public:
     UIButton                                *mButtonPlaybackRestart;
     
     ToolMenuSectionRow                      *mRowPlayback2;
-    UICheckBox                              *mCheckBoxCurrentWaveOnly;
     UICheckBox                              *mCheckBoxPlaybackStartAtSelectedWave;
     
     

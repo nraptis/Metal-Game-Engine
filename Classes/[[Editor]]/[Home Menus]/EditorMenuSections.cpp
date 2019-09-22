@@ -221,12 +221,6 @@ EditorMenuSections::EditorMenuSections(GameEditor *pEditor) : ToolMenu() {
     mCheckBoxPlaybackStartAtSelectedWave->SetTarget(&mEditor->mEditorPlaybackFromCurrentWave);
     mRowPlayback2->AddCheckBox(mCheckBoxPlaybackStartAtSelectedWave);
     
-    mCheckBoxCurrentWaveOnly = new UICheckBox();
-    mCheckBoxCurrentWaveOnly->SetText("Wave Only");
-    mCheckBoxCurrentWaveOnly->SetTarget(&mEditor->mEditorPlaybackWaveOnly);
-    mRowPlayback2->AddCheckBox(mCheckBoxCurrentWaveOnly);
-    
-    
     DeactivateCloseButton();
 }
 
@@ -285,7 +279,6 @@ void EditorMenuSections::Notify(void *pSender, const char *pNotification) {
     if (pSender == mButtonShowMotionEditor) { mEditor->OpenMotionMenu(); }
     if (pSender == mButtonShowObjectClearer) { mEditor->OpenObjectClearingMenu(); }
     
-    if (pSender == mCheckBoxCurrentWaveOnly) { mEditor->RefreshPlayback(); }
     if (pSender == mButtonPlaybackRestart) { mEditor->RefreshPlayback(); }
     if (pSender == mCheckBoxPlaybackStartAtSelectedWave) { mEditor->RefreshPlayback(); }
     

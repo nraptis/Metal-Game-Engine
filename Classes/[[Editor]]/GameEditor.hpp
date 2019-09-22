@@ -282,7 +282,6 @@ public:
     bool                                        mEditorSectionLoop;
     bool                                        mEditorShowReferenced;
     bool                                        mEditorPlaybackEnabled;
-    bool                                        mEditorPlaybackWaveOnly;
     bool                                        mEditorPlaybackFromCurrentWave;
     
     bool                                        mIsRefreshingPlayback;
