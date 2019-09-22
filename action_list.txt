@@ -1,4 +1,12 @@
 
+C1.) We need to implement "short circuit" functionality.
+
+C2.) We need to implement "knock down" functionality for BRICK.
+
+C3.) We need to implement "knock down" functionality for BOMB.
+
+C4.) We need to logic to determine if entire wave should "short circuit"
+
 B1.) We need to know the number of "progress" objects per-level-section. These will be used in computing over-all progress...
 
 B2.) We need to decide how "free life" or "prize box" will influence level progress. For example, it could be strange to GAIN PROGRESS when an object automatically exits play field..?

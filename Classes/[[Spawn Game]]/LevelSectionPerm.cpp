@@ -147,15 +147,11 @@ void LevelSectionPerm::Spawn() {
         
         //We are either an object or formation, free floating...
         
-        
         if (mFormationID.mLength > 0) {
-            
             mFormation = gFormationCollection.Get(mFormationID.c());
             if (mFormation != NULL) {
-                
-                mFormation->mDidOriginateAsPermanent = false;
-                mFormation->mDidOriginateOnWave = true;
-                
+                mFormation->mDidOriginateOnWave = false;
+                mFormation->mDidOriginateAsPermanent = true;
                 mFormation->mX = mBaseX;
                 mFormation->mY = mBaseY;
                 mFormation->Spawn(&mMotionController, &mFormationConfiguration);

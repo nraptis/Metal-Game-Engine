@@ -1042,6 +1042,11 @@ void GameEditor::KillAllWaves() {
                 gGame->DisposeObject(aObject);
             }
         }
+        EnumList(FreeLife, aObject, gGame->mFreeLifeList.mObjectList) {
+            if (aObject->mDidOriginateOnWave == true) {
+                gGame->DisposeObject(aObject);
+            }
+        }
         EnumList(GameObject, aObject, gGame->mDartList.mObjectList) {
             if (aObject->mDidOriginateOnWave == true) {
                 gGame->DisposeObject(aObject);

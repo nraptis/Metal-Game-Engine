@@ -28,6 +28,8 @@
 			},
 			"spawn": [
 				{
+					"short_circuit": true,
+					"short_circuit_knock": true,
 					"formation": "form_all_nod_mix_bln_brk_grd_cir_60rsp_1rct_8rdc_sld_nodes_cfgbrrbbbrrb_snp",
 					"formation_config": {},
 					"motion": {
@@ -68,6 +70,7 @@
 			},
 			"spawn": [
 				{
+					"short_circuit": true,
 					"formation": "form_all_nod_mix_brk_tur_grd_rec_2x1_36sph_44spv_sld_nodes_cfgtr_snp",
 					"formation_config": {}
 				}

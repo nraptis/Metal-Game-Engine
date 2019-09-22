@@ -25,6 +25,9 @@ LevelWaveSpawn::LevelWaveSpawn(LevelWave *pWave, LevelPath *pPath) {
     mDidSpawn = false;
     mDidUpdateAfterSpawn = false;
     
+    mShortCircuit = false;
+    mShortCircuitKnockDown = false;
+    
     mIsPlayingEnter = false;
     mIsPlayingExit = false;
     

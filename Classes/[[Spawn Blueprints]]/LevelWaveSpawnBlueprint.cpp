@@ -19,6 +19,10 @@ LevelWaveSpawnBlueprint::LevelWaveSpawnBlueprint() {
     mFormationID = "";
     
     mObjectType = GAME_OBJECT_TYPE_BALLOON;
+    
+    mShortCircuit = false;
+    mShortCircuitKnockDown = false;
+    
 }
 
 LevelWaveSpawnBlueprint::~LevelWaveSpawnBlueprint() {
@@ -50,6 +54,15 @@ FJSONNode *LevelWaveSpawnBlueprint::Save() {
         aExport->AddDictionaryInt("spacing_offset", mSpawnSpacingOffset);
     }
     
+    if (mShortCircuit != false) {
+        aExport->AddDictionaryBool("short_circuit", mShortCircuit);
+    }
+    
+    if (mShortCircuitKnockDown != false) {
+        aExport->AddDictionaryBool("short_circuit_knock", mShortCircuitKnockDown);
+    }
+    
+    
     
     if (mFormationID.mLength > 0) {
         //Possibility 1.) We have a formation...
@@ -79,6 +92,9 @@ void LevelWaveSpawnBlueprint::Load(FJSONNode *pNode) {
     
     mSpawnSpacingOffset = pNode->GetInt("spacing_offset", 0);
     mFormationID = pNode->GetString("formation", mFormationID);
+    
+    mShortCircuit = pNode->GetBool("short_circuit", false);
+    mShortCircuitKnockDown = pNode->GetBool("short_circuit_knock", false);
     
     if (mFormationID.mLength > 0) {
         //Possibility 1.) We have a formation...

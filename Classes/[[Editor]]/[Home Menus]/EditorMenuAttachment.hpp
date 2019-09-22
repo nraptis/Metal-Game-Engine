@@ -67,6 +67,11 @@ public:
     
     ToolMenuPanel                           *mPanelBehavior;
     
+    ToolMenuSectionRow                      *mRowBehavior1;
+    UICheckBox                              *mCheckBoxShortCircuit;
+    UICheckBox                              *mCheckBoxShortCircuitKnockDown;
+    
+    
     UIStepper                               *mStepperSpacingOffset;
 };
 

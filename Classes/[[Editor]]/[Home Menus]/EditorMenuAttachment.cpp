@@ -34,6 +34,10 @@ EditorMenuAttachment::EditorMenuAttachment(GamePermanentEditor *pEditor) {
 void EditorMenuAttachment::Init() {
     
     mStepperSpacingOffset = NULL;
+    mCheckBoxShortCircuitKnockDown = NULL;
+    mCheckBoxShortCircuit = NULL;
+    
+    
     
     SetTitle("Spawn Attach");
     SetScrollMode(true);
@@ -100,6 +104,7 @@ void EditorMenuAttachment::Init() {
     mPanelFormations->AddSection(mPanelFormationConfiguration);
     //AddSection(mPanelFormationConfiguration);
     
+    mPanelFormations->Collapse();
     
     
     
@@ -108,13 +113,27 @@ void EditorMenuAttachment::Init() {
         mPanelBehavior = new ToolMenuPanel();
         mPanelBehavior->SetTitle("Behaviors");
         AddSection(mPanelBehavior);
-        
+    
+    mRowBehavior1 = new ToolMenuSectionRow();
+    mPanelBehavior->AddSection(mRowBehavior1);
+    
+    
+    mCheckBoxShortCircuit = new UICheckBox();
+    mCheckBoxShortCircuit->SetText("Short Circ");
+    mRowBehavior1->AddCheckBox(mCheckBoxShortCircuit);
+    
+    mCheckBoxShortCircuitKnockDown = new UICheckBox();
+    mCheckBoxShortCircuitKnockDown->SetText("Knock Down");
+    mRowBehavior1->AddCheckBox(mCheckBoxShortCircuitKnockDown);
+    
+    
         mStepperSpacingOffset = new UIStepper();
         mStepperSpacingOffset->SetText("Spacing Offset");
         mStepperSpacingOffset->mMin = -1000;
         mStepperSpacingOffset->mMax = 1000;
         mPanelBehavior->AddSection(mStepperSpacingOffset);
     //}
+    
 
 }
 
@@ -186,4 +205,28 @@ void EditorMenuAttachment::Update() {
             mStepperSpacingOffset->SetTarget(NULL);
         }
     }
+    
+    
+    if (mCheckBoxShortCircuit != NULL) {
+        if (aSpawn != NULL) {
+            mCheckBoxShortCircuit->SetTarget(&(aSpawn->mShortCircuit));
+        } else {
+            mCheckBoxShortCircuit->SetTarget(NULL);
+        }
+    }
+    
+    
+    if (mCheckBoxShortCircuitKnockDown != NULL) {
+        if (aSpawn != NULL) {
+            mCheckBoxShortCircuitKnockDown->SetTarget(&(aSpawn->mShortCircuitKnockDown));
+        } else {
+            mCheckBoxShortCircuitKnockDown->SetTarget(NULL);
+        }
+    }
+    
+    
+    
+    
+    
+    
 }

@@ -847,6 +847,13 @@ void Game::TouchFlush() {
 
 void Game::KeyDown(int pKey) {
     
+#ifdef EDITOR_MODE
+    if (gEditor != NULL) {
+        return;
+    }
+#endif
+    
+    
     if (gKeyDownCtrl) {
         if (pKey == __KEY__R) {
             DisposeAllObjects();
@@ -863,6 +870,129 @@ void Game::KeyDown(int pKey) {
             LoadEditorTest();
 #endif
         }
+        
+        if (pKey == __KEY__W) {
+            
+            EnumList(GameObject, aObject, gGame->mBalloonList.mObjectList) {
+                if (aObject->mDidOriginateOnWave == true) { DisposeObject(aObject); }
+            }
+            EnumList(FreeLife, aObject, gGame->mFreeLifeList.mObjectList) {
+                if (aObject->mDidOriginateOnWave == true) { DisposeObject(aObject); }
+            }
+            
+        }
+        
+        if (pKey == __KEY__P) {
+            
+            EnumList(GameObject, aObject, gGame->mBalloonList.mObjectList) {
+                if (aObject->mDidOriginateAsPermanent == true) { DisposeObject(aObject); }
+            }
+            EnumList(FreeLife, aObject, gGame->mFreeLifeList.mObjectList) {
+                if (aObject->mDidOriginateAsPermanent == true) { DisposeObject(aObject); }
+            }
+            
+            
+        }
+        
+        if (pKey == __KEY__K) {
+            
+            EnumList(GameObject, aObject, gGame->mBalloonList.mObjectList) {
+                DisposeObject(aObject);
+            }
+            EnumList(FreeLife, aObject, gGame->mFreeLifeList.mObjectList) {
+                DisposeObject(aObject);
+            }
+            
+        }
+        
+    }
+    
+    if (gKeyDownShift) {
+        if (pKey == __KEY__R) {
+            DisposeAllObjects();
+            if (mLevelData != NULL) {
+                if (mLevelController != NULL) {
+                    mLevelController->mData = NULL;
+                }
+                delete mLevelData;
+                mLevelData = NULL;
+            }
+#ifndef EDITOR_MODE
+            Load();
+#else
+            LoadEditorTest();
+#endif
+        }
+        
+        if (pKey == __KEY__W) {
+            
+            EnumList(GameObject, aObject, gGame->mBalloonList.mObjectList) {
+                if (aObject->mDidOriginateOnWave == true) { DisposeObject(aObject); }
+            }
+            EnumList(FreeLife, aObject, gGame->mFreeLifeList.mObjectList) {
+                if (aObject->mDidOriginateOnWave == true) { DisposeObject(aObject); }
+            }
+            EnumList(GameObject, aObject, gGame->mDartList.mObjectList) {
+                if (aObject->mDidOriginateOnWave == true) { DisposeObject(aObject); }
+            }
+            EnumList(GameObject, aObject, gGame->mBrickHeadList.mObjectList) {
+                if (aObject->mDidOriginateOnWave == true) { DisposeObject(aObject); }
+            }
+            EnumList(GameObject, aObject, gGame->mTurtleList.mObjectList) {
+                if (aObject->mDidOriginateOnWave == true) { DisposeObject(aObject); }
+            }
+            EnumList(GameObject, aObject, gGame->mBombList.mObjectList) {
+                if (aObject->mDidOriginateOnWave == true) { DisposeObject(aObject); }
+            }
+            
+        }
+        
+        if (pKey == __KEY__P) {
+            
+            EnumList(GameObject, aObject, gGame->mBalloonList.mObjectList) {
+                if (aObject->mDidOriginateAsPermanent == true) { DisposeObject(aObject); }
+            }
+            EnumList(FreeLife, aObject, gGame->mFreeLifeList.mObjectList) {
+                if (aObject->mDidOriginateAsPermanent == true) { DisposeObject(aObject); }
+            }
+            EnumList(GameObject, aObject, gGame->mDartList.mObjectList) {
+                if (aObject->mDidOriginateAsPermanent == true) { DisposeObject(aObject); }
+            }
+            EnumList(GameObject, aObject, gGame->mBrickHeadList.mObjectList) {
+                if (aObject->mDidOriginateAsPermanent == true) { DisposeObject(aObject); }
+            }
+            EnumList(GameObject, aObject, gGame->mTurtleList.mObjectList) {
+                if (aObject->mDidOriginateAsPermanent == true) { DisposeObject(aObject); }
+            }
+            EnumList(GameObject, aObject, gGame->mBombList.mObjectList) {
+                if (aObject->mDidOriginateAsPermanent == true) { DisposeObject(aObject); }
+            }
+            
+        }
+        
+        if (pKey == __KEY__K) {
+            
+            EnumList(GameObject, aObject, gGame->mBalloonList.mObjectList) {
+                DisposeObject(aObject);
+            }
+            EnumList(FreeLife, aObject, gGame->mFreeLifeList.mObjectList) {
+                DisposeObject(aObject);
+            }
+            EnumList(GameObject, aObject, gGame->mDartList.mObjectList) {
+                DisposeObject(aObject);
+            }
+            EnumList(GameObject, aObject, gGame->mBrickHeadList.mObjectList) {
+                DisposeObject(aObject);
+            }
+            EnumList(GameObject, aObject, gGame->mTurtleList.mObjectList) {
+                DisposeObject(aObject);
+            }
+            EnumList(GameObject, aObject, gGame->mBombList.mObjectList) {
+                DisposeObject(aObject);
+            }
+            
+        }
+        
     }
     
     if (pKey == __KEY__L) {

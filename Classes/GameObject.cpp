@@ -67,7 +67,7 @@ void GameObject::Update() {
 void GameObject::Draw() {
     
     
-    /*
+    
     Graphics::PipelineStateSetSpritePremultipliedBlending();
     Graphics::SetColor();
     if (mDidOriginateOnWave) {
@@ -100,7 +100,6 @@ void GameObject::Draw() {
         Graphics::DrawLine(mTransform.mX, mTransform.mY, aP2V.mX, aP2V.mY, 2.0f);
         
     }
-    */
     
     
 }

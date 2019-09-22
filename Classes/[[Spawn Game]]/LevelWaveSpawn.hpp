@@ -60,6 +60,9 @@ public:
     float                               mBaseY;
     float                               mDistanceTraveled;
     
+    bool                                mShortCircuit;
+    bool                                mShortCircuitKnockDown;
+    
     
     int                                 mWaitTimer;
     

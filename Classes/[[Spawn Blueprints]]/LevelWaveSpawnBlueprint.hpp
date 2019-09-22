@@ -28,6 +28,8 @@ public:
     
     int                                         mSpawnSpacingOffset;
     
+    bool                                        mShortCircuit;
+    bool                                        mShortCircuitKnockDown;
     
     LevelMotionControllerBlueprint              mMotionController;
     

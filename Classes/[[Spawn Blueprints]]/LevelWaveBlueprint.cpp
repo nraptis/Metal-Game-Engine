@@ -225,6 +225,8 @@ void LevelWaveBlueprint::Build(LevelWave *pWave) {
         aSpawn->mOffsetSpawnDistance = mSpawn[i].mSpawnSpacingOffset;
         aSpawn->mFormationID = mSpawn[i].mFormationID.c();
         aSpawn->mObjectType = mSpawn[i].mObjectType;
+        aSpawn->mShortCircuit = mSpawn[i].mShortCircuit;
+        aSpawn->mShortCircuitKnockDown = mSpawn[i].mShortCircuitKnockDown;
         
         if (mSpawn[i].mMotionController.IsEmpty() == false) {
             mSpawn[i].mMotionController.Build(&(aSpawn->mMotionController));

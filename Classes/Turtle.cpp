@@ -127,14 +127,18 @@ void Turtle::Update() {
         
         if (gGame->ShouldSpawnFreeLife()) {
             mBalloon = new FreeLife();
-            mBalloon->mShouldSpawnThread = false;
             gGame->mFreeLifeList.Add(mBalloon);
             gGame->NotifyDidSpawnFreeLife();
         } else {
             mBalloon = new Balloon();
-            mBalloon->mShouldSpawnThread = false;
+            
             gGame->mBalloonList.Add(mBalloon);
         }
+        
+        mBalloon->mShouldSpawnThread = false;
+        mBalloon->mDidOriginateOnWave = mDidOriginateOnWave;
+        mBalloon->mDidOriginateAsPermanent = mDidOriginateAsPermanent;
+        
     }
     
     if (mBalloon != NULL) {
