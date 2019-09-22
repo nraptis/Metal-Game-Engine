@@ -1,6 +1,10 @@
 
 D1.) We need an "information panel" or "stats menu" so we can see what's going on. Includes sections remaining, sections cleared, waves cleared, objects cleared, PROGRESS, total progress, objects destroyed, possibly accuracy and streak informtion.
 
+D2.) We need to have a new type of BUILT IN TRACER, which is ELLIPSE...
+
+D2.) We need to have a new grid type - stagger / zig zag...
+
 C1.) We need to implement "short circuit" functionality.
 
 C2.) We need to implement "knock down" functionality for BRICK.

@@ -82,6 +82,16 @@ public:
     
     
     
+    ToolMenuPanel                           *mPanelTRAP1Grid;
+    UIStepper                               *mStepperTRAP1TopSize;
+    UIStepper                               *mStepperTRAP1BottomSize;
+    UIStepper                               *mStepperTRAP1Height;
+    UIStepper                               *mStepperTRAP1CountH;
+    UIStepper                               *mStepperTRAP1CountV;
+    UIStepper                               *mStepperTRAP1StartRotation;
+    
+    
+    
     void                                    RefreshGridPanels();
     
 };

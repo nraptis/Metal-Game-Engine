@@ -78,7 +78,7 @@ GameContainer::GameContainer() {
     
     
 #ifndef EDITOR_MODE
-    float aSpeedMenuWidth = 700.0f;
+    float aSpeedMenuWidth = 510.0f;
     if (aSpeedMenuWidth > gDeviceWidth) { aSpeedMenuWidth = gDeviceWidth; }
     
     mMenuSpeed = new SpeedControlMenu();
@@ -514,7 +514,7 @@ void GameContainer::OpenEditorTestMenus() {
     gApp->mWindowTools.AddChild(mEditorMenuUtils);
     mEditorMenuUtils->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 400.0f), gSafeAreaInsetTop + 20.0f, 400.0f, 480.0f);
     
-    float aSpeedMenuWidth = 700.0f;
+    float aSpeedMenuWidth = 510.0f;
     if (aSpeedMenuWidth > gDeviceWidth) { aSpeedMenuWidth = gDeviceWidth; }
     
     mMenuSpeed = new SpeedControlMenu();

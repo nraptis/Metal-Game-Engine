@@ -679,68 +679,93 @@ int FPointList::GetNextIndex(int pIndex)
     return aResult;
 }
 
-int FPointList::GetPrevIndex(int pIndex)
-{
+int FPointList::GetPrevIndex(int pIndex) {
     int aResult = 0;
-    if(mCount > 0)
-    {
+    if (mCount > 0) {
         aResult = (pIndex - 1);
-        if(aResult < 0) aResult = (mCount - 1);
-        else if(aResult >= mCount)aResult = 0;
+        if (aResult < 0) {
+            aResult = (mCount - 1);
+        } else if(aResult >= mCount) {
+            aResult = 0;
+        }
     }
     return aResult;
 }
 
-void FPointList::Transform(FPointList *pPointList, float pX, float pY, float pScaleX, float pScaleY, float pRotation)
-{
+void FPointList::Transform(FPointList *pPointList, float pX, float pY, float pScaleX, float pScaleY, float pRotation) {
     Clone(pPointList);
-    
     Transform(pX, pY, pScaleX, pScaleY, pRotation);
 }
 
-void FPointList::Transform(float pX, float pY, float pScaleX, float pScaleY, float pRotation)
-{
+void FPointList::Transform(float pX, float pY, float pScaleX, float pScaleY, float pRotation) {
     TransformScaleRotate(pScaleX, pScaleY, pRotation);
     TransformTranslate(pX, pY);
 }
 
-void FPointList::TransformScaleRotate(float pScaleX, float pScaleY, float pRotation)
-{
-    if(pRotation != 0.0f)
-    {
+void FPointList::TransformRotate(float pRotation) {
+    if (pRotation != 0.0f) {
         pRotation = pRotation * 0.01745329251994329576923690768488;
         float aX = 0.0f;
         float aY = 0.0f;
         float aDist = 0.0f;
         float aPivot = 0.0f;
-        for(int i=0;i<mCount;i++)
-        {
-            aX = mX[i] * pScaleX;
-            aY = mY[i] * pScaleY;
+        for (int i=0;i<mCount;i++) {
+            aX = mX[i];
+            aY = mY[i];
             aDist = aX * aX + aY * aY;
-            
-            if(aDist > SQRT_EPSILON)
-            {
+            if (aDist > SQRT_EPSILON) {
                 aDist = sqrtf(aDist);
                 aX /= aDist;
                 aY /= aDist;
             }
             aPivot = (pRotation - atan2f(-aX, -aY));
-            mX[i] = (sin(aPivot)) * aDist;
-            mY[i] = (-cos(aPivot)) * aDist;
+            mX[i] = (sinf(aPivot)) * aDist;
+            mY[i] = (-cosf(aPivot)) * aDist;
         }
-    }
-    else
-    {
-        if(pScaleX != 1.0f)for(int i=0;i<mCount;i++)mX[i] *= pScaleX;
-        if(pScaleY != 1.0f)for(int i=0;i<mCount;i++)mY[i] *= pScaleY;
     }
 }
 
-void FPointList::TransformTranslate(float pX, float pY)
-{
-    if(pX != 0)for(int i=0;i<mCount;i++)mX[i] += pX;
-    if(pY != 0)for(int i=0;i<mCount;i++)mY[i] += pY;
+void FPointList::TransformScaleRotate(float pScaleX, float pScaleY, float pRotation) {
+    if (pRotation != 0.0f) {
+        pRotation = pRotation * 0.01745329251994329576923690768488;
+        float aX = 0.0f;
+        float aY = 0.0f;
+        float aDist = 0.0f;
+        float aPivot = 0.0f;
+        for (int i=0;i<mCount;i++) {
+            aX = mX[i] * pScaleX;
+            aY = mY[i] * pScaleY;
+            aDist = aX * aX + aY * aY;
+            if (aDist > SQRT_EPSILON) {
+                aDist = sqrtf(aDist);
+                aX /= aDist;
+                aY /= aDist;
+            }
+            aPivot = (pRotation - atan2f(-aX, -aY));
+            mX[i] = (sinf(aPivot)) * aDist;
+            mY[i] = (-cosf(aPivot)) * aDist;
+        }
+    } else {
+        if (pScaleX != 1.0f) {
+            for (int i=0;i<mCount;i++) {
+                mX[i] *= pScaleX;
+            }
+        }
+        if (pScaleY != 1.0f) {
+            for (int i=0;i<mCount;i++) {
+                mY[i] *= pScaleY;
+            }
+        }
+    }
+}
+
+void FPointList::TransformTranslate(float pX, float pY) {
+    if (pX != 0)for(int i=0;i<mCount;i++) {
+        mX[i] += pX;
+    }
+    if (pY != 0)for(int i=0;i<mCount;i++) {
+        mY[i] += pY;
+    }
 }
 
 void FPointList::Untransform(float pX, float pY, float pScaleX, float pScaleY, float pRotation)

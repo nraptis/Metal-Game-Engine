@@ -85,7 +85,7 @@ GameEditor::GameEditor(Game *pGame) {
     
     
     
-    float aSpeedMenuWidth = 700.0f;
+    float aSpeedMenuWidth = 510.0f;
     if (aSpeedMenuWidth > gDeviceWidth) { aSpeedMenuWidth = gDeviceWidth; }
     
     mMenuSpeed = new SpeedControlMenu();

@@ -54,6 +54,12 @@ GameEditorGrid::GameEditorGrid() {
     mGridNGON2StartRotation = 0;
     
     
+    mGridTRAP1TopSize = 176;
+    mGridTRAP1BottomSize = 220;
+    mGridTRAP1Height = 160;
+    mGridTRAP1CountH = 5;
+    mGridTRAP1CountV = 4;
+    mGridTRAP1StartRotation = 0;
     
     
     mSaveGridTimer = 0;
@@ -110,6 +116,8 @@ void GameEditorGrid::BuildGrid() {
     if (mGridType == SNAP_GRID_TYPE_STAR) { BuildStarGrid(); }
     if (mGridType == SNAP_GRID_TYPE_NGON1) { BuildNGON1Grid(); }
     if (mGridType == SNAP_GRID_TYPE_NGON2) { BuildNGON2Grid(); }
+    if (mGridType == SNAP_GRID_TYPE_TRAP1) { BuildTRAP1Grid(); }
+    if (mGridType == SNAP_GRID_TYPE_TRAP2) { BuildTRAP2Grid(); }
     
 }
 
@@ -393,6 +401,152 @@ void GameEditorGrid::BuildNGON2Grid() {
     }
     BuildScanlinePoly(&mOutlineList, mGridNGON2ScanLineOffsetY, mGridNGON2ScanLineSpacingH, mGridNGON2ScanLineSpacingV, mGridNGON2ScanLineStagger, mGridNGON2ScanLineStaggerOdd);
     
+}
+
+void GameEditorGrid::BuildTRAP1Grid() {
+    
+    
+    
+    float aCenterX = mCenterX + ((float)mOffsetX);
+    float aCenterY = mCenterY + ((float)mOffsetY);
+    
+    mOutlineList.RemoveAll();
+    
+    mGridList.RemoveAll();
+    mGridList.Add(mCenterX, mCenterY);
+    
+    if (mGridTRAP1Height < 0) { mGridTRAP1Height = 0; }
+    if (mGridTRAP1CountH < 2) { mGridTRAP1CountH = 2; }
+    if (mGridTRAP1CountV < 2) { mGridTRAP1CountV = 2; }
+    if (mGridTRAP1StartRotation < -360) { mGridTRAP1StartRotation = -360; }
+    if (mGridTRAP1StartRotation > 360) { mGridTRAP1StartRotation = 360; }
+    
+    
+    
+    float aTopX1 = -((float)mGridTRAP1TopSize) / 2.0f;
+    float aTopX2 = ((float)mGridTRAP1TopSize) / 2.0f;
+    float aBottomX1 = -((float)mGridTRAP1BottomSize) / 2.0f;
+    float aBottomX2 = ((float)mGridTRAP1BottomSize) / 2.0f;
+    
+    float aTopY1 = -((float)mGridTRAP1Height) / 2.0f;
+    float aTopY2 = aTopY1;
+    float aBottomY1 = ((float)mGridTRAP1Height) / 2.0f;
+    float aBottomY2 = aBottomY1;
+    
+    
+    mOutlineList.Add(aTopX1, aTopY1);
+    mOutlineList.Add(aTopX2, aTopY2);
+    mOutlineList.Add(aBottomX2, aBottomY2);
+    mOutlineList.Add(aBottomX1, aBottomY1);
+    
+    for (int i=0;i<mGridTRAP1CountH;i++) {
+        float aPercentH = ((float)i) / ((float)(mGridTRAP1CountH - 1));
+        for (int n=0;n<mGridTRAP1CountV;n++) {
+            float aPercentV = ((float)n) / ((float)(mGridTRAP1CountV - 1));
+            
+            float aY = aTopY1 + (aBottomY1 - aTopY1) * aPercentV;
+            
+            float aXStart = (aTopX1) + (aBottomX1 - aTopX1) * aPercentV;
+            float aXEnd = (aTopX2) + (aBottomX2 - aTopX2) * aPercentV;
+            
+            float aX = aXStart + (aXEnd - aXStart) * aPercentH;
+            
+            
+            mGridList.Add(aX, aY);
+            
+            
+            
+        }
+    }
+       
+    
+    
+    
+    
+    
+    
+    
+    
+    mOutlineList.TransformRotate((float)mGridTRAP1StartRotation);
+    mOutlineList.TransformTranslate(aCenterX, aCenterY);
+    
+    
+    mGridList.TransformRotate((float)mGridTRAP1StartRotation);
+    mGridList.TransformTranslate(aCenterX, aCenterY);
+    
+    
+    /*
+    FPointList aRingList;
+    float aArmLength = 0.0f;
+    for (int aRing = 1;aRing<=mGridNGON1RingCount;aRing++) {
+        aArmLength = ((float)aRing) * ((float)mGridNGON1RingSpacing);
+        aRingList.RemoveAll();
+        for (int i=0;i<mGridNGON1Sides;i++) {
+            float aPercent = ((float)i) / ((float)mGridNGON1Sides);
+            float aAngle = aPercent * 360.0f + (float)mGridNGON1StartRotation;
+            float aDirX = Sin(aAngle), aDirY = -Cos(aAngle);
+            float aX = aCenterX + aDirX * aArmLength;
+            float aY = aCenterY + aDirY * aArmLength;
+            aRingList.Add(aX, aY);
+            
+            if (aRing == mGridNGON1RingCount) {
+                mOutlineList.Add(aX, aY);
+            }
+            
+        }
+        
+        float aX1 = aRingList.mX[0];
+        float aY1 = aRingList.mY[0];
+        
+        float aX2 = aRingList.mX[1];
+        float aY2 = aRingList.mY[1];
+        
+        float aDist = Distance(aX1, aY1, aX2, aY2);
+        
+        int aLineCount = (int)round(aDist / (float)mGridNGON1PointSpacing);
+        
+        for (int i=1;i<=aRingList.mCount;i++) {
+            
+            int aIndex1 = i-1;
+            int aIndex2 = i;
+            if (aIndex2 == aRingList.mCount) { aIndex2 = 0; }
+            
+            aX1 = aRingList.mX[aIndex1];
+            aY1 = aRingList.mY[aIndex1];
+            
+            aX2 = aRingList.mX[aIndex2];
+            aY2 = aRingList.mY[aIndex2];
+            
+            mGridList.Add(aX1, aY1);
+            
+            float aDiffX = aX2 - aX1;
+            float aDiffY = aY2 - aY1;
+            
+            aDist = aDiffX * aDiffX + aDiffY * aDiffY;
+            
+            if (aDist > SQRT_EPSILON) {
+                aDist = sqrtf(aDist);
+                aDiffX /= aDist;
+                aDiffY /= aDist;
+            }
+            if (aLineCount > 2) {
+                for (int aInterp=1;aInterp<(aLineCount - 1);aInterp++) {
+                    float aPercent = ((float)aInterp) / ((float)(aLineCount - 1));
+                    mGridList.Add(aX1 + aDiffX * aPercent * aDist,
+                                  aY1 + aDiffY * aPercent * aDist);
+                }
+            }
+        }
+    }
+    */
+    
+    
+    
+    
+    
+}
+
+void GameEditorGrid::BuildTRAP2Grid() {
     
 }
 
@@ -502,6 +656,15 @@ void GameEditorGrid::SaveGridState() {
     
     
     
+    aConfigNode->AddDictionaryInt("trap1_top_size", mGridTRAP1TopSize);
+    aConfigNode->AddDictionaryInt("trap1_bottom_size", mGridTRAP1BottomSize);
+    aConfigNode->AddDictionaryInt("trap1_height", mGridTRAP1Height);
+    aConfigNode->AddDictionaryInt("trap1_count_h", mGridTRAP1CountH);
+    aConfigNode->AddDictionaryInt("trap1_count_v", mGridTRAP1CountV);
+    aConfigNode->AddDictionaryInt("trap1_start_rotation", mGridTRAP1StartRotation);
+    
+    
+    
     aJSON.Save(aPath.c());
 }
 
@@ -547,6 +710,15 @@ void GameEditorGrid::LoadGridState() {
     mGridNGON2StartRotation = aConfigNode->GetInt("ngon2_start_rotation", mGridNGON2StartRotation);
     mGridNGON2ScanLineStagger = aConfigNode->GetBool("ngon2_stagger", mGridNGON2ScanLineStagger);
     mGridNGON2ScanLineStaggerOdd = aConfigNode->GetBool("ngon2_stagger_odd", mGridNGON2ScanLineStaggerOdd);
+    
+    
+    
+    mGridTRAP1TopSize = aConfigNode->GetInt("trap1_top_size", mGridTRAP1TopSize);
+    mGridTRAP1BottomSize = aConfigNode->GetInt("trap1_bottom_size", mGridTRAP1BottomSize);
+    mGridTRAP1Height = aConfigNode->GetInt("trap1_height", mGridTRAP1Height);
+    mGridTRAP1CountH = aConfigNode->GetInt("trap1_count_h", mGridTRAP1CountH);
+    mGridTRAP1CountV = aConfigNode->GetInt("trap1_count_v", mGridTRAP1CountV);
+    mGridTRAP1StartRotation = aConfigNode->GetInt("trap1_start_rotation", mGridTRAP1StartRotation);
     
     
     
@@ -600,11 +772,17 @@ FJSONNode *GameEditorGrid::SaveCurrentGrid() {
         aResult->AddDictionaryInt("ngon2_start_rotation", mGridNGON2StartRotation);
         aResult->AddDictionaryBool("ngon2_stagger", mGridNGON2ScanLineStagger);
         aResult->AddDictionaryBool("ngon2_stagger_odd", mGridNGON2ScanLineStaggerOdd);
-        
-        
-        
-        
     }
+    
+    if (mGridType == SNAP_GRID_TYPE_TRAP1) {
+        aResult->AddDictionaryInt("trap1_top_size", mGridTRAP1TopSize);
+        aResult->AddDictionaryInt("trap1_bottom_size", mGridTRAP1BottomSize);
+        aResult->AddDictionaryInt("trap1_height", mGridTRAP1Height);
+        aResult->AddDictionaryInt("trap1_count_h", mGridTRAP1CountH);
+        aResult->AddDictionaryInt("trap1_count_v", mGridTRAP1CountV);
+        aResult->AddDictionaryInt("trap1_start_rotation", mGridTRAP1StartRotation);
+    }
+
     
     return aResult;
 }
@@ -655,7 +833,15 @@ void GameEditorGrid::LoadCurrentGrid(FJSONNode *pNode) {
         mGridNGON2StartRotation = pNode->GetInt("ngon2_start_rotation", mGridNGON2StartRotation);
         mGridNGON2ScanLineStagger = pNode->GetBool("ngon2_stagger", mGridNGON2ScanLineStagger);
         mGridNGON2ScanLineStagger = pNode->GetBool("ngon2_stagger_odd", mGridNGON2ScanLineStaggerOdd);
-        
+    }
+    
+    if (mGridType == SNAP_GRID_TYPE_TRAP1) {
+        mGridTRAP1TopSize = pNode->GetInt("trap1_top_size", mGridTRAP1TopSize);
+        mGridTRAP1BottomSize = pNode->GetInt("trap1_bottom_size", mGridTRAP1BottomSize);
+        mGridTRAP1Height = pNode->GetInt("trap1_height", mGridTRAP1Height);
+        mGridTRAP1CountH = pNode->GetInt("trap1_count_h", mGridTRAP1CountH);
+        mGridTRAP1CountV = pNode->GetInt("trap1_count_v", mGridTRAP1CountV);
+        mGridTRAP1StartRotation = pNode->GetInt("trap1_start_rotation", mGridTRAP1StartRotation);
     }
     
     BuildGrid();

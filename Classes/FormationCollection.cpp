@@ -184,8 +184,6 @@ void FormationCollection::Load() {
     Add("form_all_trc_all_bln_grd_pen_ng1_84rsp_1rct_88pts_0ful_tra_5ply_cfg7xb.json");
     
     
-    
-    
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Tracers - Rect [[BALLOON ONLY]]
     
@@ -228,7 +226,6 @@ void FormationCollection::Load() {
     Add("form_all_nod_all_brk_grd_cir_46rsp_1rct_6rdc_86ful_nodes_cfg6xr_snp");
     //Add("");
     //Add("");
-
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Heptagon

@@ -12,9 +12,11 @@
 #define SNAP_GRID_TYPE_RECT 0
 #define SNAP_GRID_TYPE_CIRCLE 1
 #define SNAP_GRID_TYPE_STAR 2
-#define SNAP_GRID_TYPE_TRAPEZOID 3
+#define SNAP_GRID_TYPE_ARC 3
 #define SNAP_GRID_TYPE_NGON1 4
 #define SNAP_GRID_TYPE_NGON2 5
+#define SNAP_GRID_TYPE_TRAP1 6
+#define SNAP_GRID_TYPE_TRAP2 7
 
 
 #include "FPointList.hpp"
@@ -64,8 +66,6 @@ public:
     int                                         mGridNGON1PointSpacing;
     int                                         mGridNGON1StartRotation;
     
-    
-    
     int                                         mGridNGON2Sides;
     int                                         mGridNGON2Radius;
     bool                                        mGridNGON2ScanLineStagger;
@@ -75,6 +75,13 @@ public:
     int                                         mGridNGON2ScanLineSpacingH;
     int                                         mGridNGON2StartRotation;
     
+    
+    int                                         mGridTRAP1TopSize;
+    int                                         mGridTRAP1BottomSize;
+    int                                         mGridTRAP1Height;
+    int                                         mGridTRAP1CountH;
+    int                                         mGridTRAP1CountV;
+    int                                         mGridTRAP1StartRotation;
     
     
     FPointList                                  mGridList;
@@ -87,6 +94,10 @@ public:
     void                                        BuildStarGrid();
     void                                        BuildNGON1Grid();
     void                                        BuildNGON2Grid();
+    
+    void                                        BuildTRAP1Grid();
+    void                                        BuildTRAP2Grid();
+    
     
     void                                        BuildScanlinePoly(FPointList *pPoly, int pOffsetY, int pSpacingH, int pSpacingV, bool pStaggerH, bool pStaggerOdd);
     

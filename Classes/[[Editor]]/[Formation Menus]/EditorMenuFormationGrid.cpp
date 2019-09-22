@@ -51,8 +51,8 @@ EditorMenuFormationGrid::EditorMenuFormationGrid(GameEditorGrid *pGrid) : ToolMe
     
     
     mSegmentGridType = new UISegment();
-    mSegmentGridType->SetSegmentCount(6);
-    mSegmentGridType->SetTitles("RECT", "CIRC", "STAR", "TRI", "NGON1", "NGON2");
+    mSegmentGridType->SetSegmentCount(8);
+    mSegmentGridType->SetTitles("RCT", "CRC", "STR", "ARC", "NGO1", "NGO2", "TRP1", "TRP2");
     mSegmentGridType->SetTarget(&mGrid->mGridType);
     mPanelGrid->AddSection(mSegmentGridType);
     
@@ -230,6 +230,49 @@ EditorMenuFormationGrid::EditorMenuFormationGrid(GameEditorGrid *pGrid) : ToolMe
     
     
     
+    
+    mPanelTRAP1Grid = new ToolMenuPanel();
+    mPanelTRAP1Grid->SetTitle("TRAP-1");
+    mPanelGrid->AddSection(mPanelTRAP1Grid);
+    
+    
+    mStepperTRAP1TopSize = new UIStepper();
+    mStepperTRAP1TopSize->SetText("Top Size:");
+    mStepperTRAP1TopSize->SetTarget(&mGrid->mGridTRAP1TopSize);
+    mPanelTRAP1Grid->AddSection(mStepperTRAP1TopSize);
+    
+    mStepperTRAP1BottomSize = new UIStepper();
+    mStepperTRAP1BottomSize->SetText("Btm Size:");
+    mStepperTRAP1BottomSize->SetTarget(&mGrid->mGridTRAP1BottomSize);
+    mPanelTRAP1Grid->AddSection(mStepperTRAP1BottomSize);
+    
+    mStepperTRAP1Height = new UIStepper();
+    mStepperTRAP1Height->SetText("Height:");
+    mStepperTRAP1Height->SetTarget(&mGrid->mGridTRAP1Height);
+    mPanelTRAP1Grid->AddSection(mStepperTRAP1Height);
+    
+    mStepperTRAP1CountH = new UIStepper();
+    mStepperTRAP1CountH->SetText("H-Count:");
+    mStepperTRAP1CountH->SetTarget(&mGrid->mGridTRAP1CountH);
+    mPanelTRAP1Grid->AddSection(mStepperTRAP1CountH);
+    
+    mStepperTRAP1CountV = new UIStepper();
+    mStepperTRAP1CountV->SetText("V-Count:");
+    mStepperTRAP1CountV->SetTarget(&mGrid->mGridTRAP1CountV);
+    mPanelTRAP1Grid->AddSection(mStepperTRAP1CountV);
+    
+    mStepperTRAP1StartRotation = new UIStepper();
+    mStepperTRAP1StartRotation->SetText("S-Rot:");
+    mStepperTRAP1StartRotation->SetTarget(&mGrid->mGridTRAP1StartRotation);
+    mPanelTRAP1Grid->AddSection(mStepperTRAP1StartRotation);
+    
+    
+    
+    
+    
+    
+    
+    
     DeactivateCloseButton();
     RefreshGridPanels();
 }
@@ -307,6 +350,18 @@ void EditorMenuFormationGrid::Notify(void *pSender, const char *pNotification) {
     if (pSender == mStepperNGON2ScanLineSpacingV) { mGrid->BuildGrid(); }
     if (pSender == mStepperNGON2StartRotation) { mGrid->BuildGrid(); }
     
+    
+    
+    if (pSender == mStepperTRAP1TopSize) { mGrid->BuildGrid(); }
+    if (pSender == mStepperTRAP1BottomSize) { mGrid->BuildGrid(); }
+    if (pSender == mStepperTRAP1Height) { mGrid->BuildGrid(); }
+    if (pSender == mStepperTRAP1CountH) { mGrid->BuildGrid(); }
+    if (pSender == mStepperTRAP1CountV) { mGrid->BuildGrid(); }
+    if (pSender == mStepperTRAP1StartRotation) { mGrid->BuildGrid(); }
+    
+    
+    
+    
 }
 
 void EditorMenuFormationGrid::RefreshGridPanels() {
@@ -340,7 +395,7 @@ void EditorMenuFormationGrid::RefreshGridPanels() {
         }
     }
     
-    if (aGridType == SNAP_GRID_TYPE_TRAPEZOID) {
+    if (aGridType == SNAP_GRID_TYPE_ARC) {
         
     } else {
         
@@ -365,5 +420,11 @@ void EditorMenuFormationGrid::RefreshGridPanels() {
     
     
     
-    
+    if (mPanelTRAP1Grid != NULL) {
+        if (aGridType == SNAP_GRID_TYPE_TRAP1) {
+            mPanelTRAP1Grid->Activate();
+        } else {
+            mPanelTRAP1Grid->Deactivate();
+        }
+    }
 }

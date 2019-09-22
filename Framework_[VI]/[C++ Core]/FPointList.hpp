@@ -111,8 +111,8 @@ public:
     void                    GetSymmetry(FPointList *pOriginalPath, bool pOriginalPathClosed, bool pSliceSide, float pSliceLineX1, float pSliceLineY1, float pSliceLineX2, float pSliceLineY2);
     
     void                    Transform(FPointList *pPointList, float pX, float pY, float pScaleX, float pScaleY, float pRotation);
-    inline void             Transform(FPointList *pPointList, float pX, float pY, float pScale, float pRotation){Transform(pPointList, pX, pY, pScale, pScale, pRotation);}
-    inline void             Transform(FPointList &pPointList, float pX, float pY, float pScaleX, float pScaleY, float pRotation){Transform(&pPointList, pX, pY, pScaleX, pScaleY, pRotation);}
+    inline void             Transform(FPointList *pPointList, float pX, float pY, float pScale, float pRotation) { Transform(pPointList, pX, pY, pScale, pScale, pRotation); }
+    inline void             Transform(FPointList &pPointList, float pX, float pY, float pScaleX, float pScaleY, float pRotation) { Transform(&pPointList, pX, pY, pScaleX, pScaleY, pRotation); }
     inline void             Transform(FPointList &pPointList, float pX, float pY, float pScale, float pRotation){Transform(&pPointList, pX, pY, pScale, pScale, pRotation);}
     void                    Transform(float pX, float pY, float pScaleX, float pScaleY, float pRotation);
     
@@ -120,13 +120,14 @@ public:
     
     
     
+    void                    TransformRotate(float pRotation);
     void                    TransformScaleRotate(float pScaleX, float pScaleY, float pRotation);
     void                    TransformTranslate(float pX, float pY);
     
     
     void                    Untransform(float pX, float pY, float pScaleX, float pScaleY, float pRotation);
     void                    UntransformScaleRotate(float pScaleX, float pScaleY, float pRotation);
-    inline void             UntransformScaleRotate(float pScale, float pRotation){UntransformScaleRotate(pScale, pScale, pRotation);}
+    inline void             UntransformScaleRotate(float pScale, float pRotation) { UntransformScaleRotate(pScale, pScale, pRotation); }
     void                    UntransformTranslate(float pX, float pY);
     
     
