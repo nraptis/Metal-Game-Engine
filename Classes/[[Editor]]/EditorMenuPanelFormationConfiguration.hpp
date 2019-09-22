@@ -34,6 +34,13 @@ public:
     
     int                                     mTracerSpeedIndexGlobal;
     
+    
+    int                                     mTracerSpeedIndex1;
+    int                                     mTracerSpeedIndex2;
+    int                                     mTracerSpeedIndex3;
+    
+    
+    
     //ToolMenuPanel                           *mMenuPathSpawn;
     //UIStepper                               *mStepperPathSpawnCount;
     //UIStepper                               *mStepperPathSpawnSpacing;

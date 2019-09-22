@@ -19,6 +19,12 @@ EditorMenuPanelFormationConfiguration::EditorMenuPanelFormationConfiguration() {
     
     mTracerSpeedIndexGlobal = 0;
     
+    mTracerSpeedIndex1 = 0;
+    mTracerSpeedIndex2 = 0;
+    mTracerSpeedIndex3 = 0;
+    
+    
+    
     
     mSegmentTracerSpeedGlobal = new UISegment();
     mSegmentTracerSpeedGlobal->SetSegmentCount(8);
@@ -37,7 +43,21 @@ EditorMenuPanelFormationConfiguration::EditorMenuPanelFormationConfiguration() {
     mSegmentTracerSpeed1->SetSegmentCount(8);
     mSegmentTracerSpeed1->SetTitles("--", "XS", "S", "MS", "M", "MF", "F", "XF");
     gNotify.Register(this, mSegmentTracerSpeed1, "segment");
-    AddSection(mSegmentTracerSpeed1);
+    mPanelTracerSpeed->AddSection(mSegmentTracerSpeed1);
+    
+    
+    mSegmentTracerSpeed2 = new UISegment();
+    mSegmentTracerSpeed2->SetSegmentCount(8);
+    mSegmentTracerSpeed2->SetTitles("--", "XS", "S", "MS", "M", "MF", "F", "XF");
+    gNotify.Register(this, mSegmentTracerSpeed2, "segment");
+    mPanelTracerSpeed->AddSection(mSegmentTracerSpeed2);
+    
+    
+    mSegmentTracerSpeed3 = new UISegment();
+    mSegmentTracerSpeed3->SetSegmentCount(8);
+    mSegmentTracerSpeed3->SetTitles("--", "XS", "S", "MS", "M", "MF", "F", "XF");
+    gNotify.Register(this, mSegmentTracerSpeed3, "segment");
+    mPanelTracerSpeed->AddSection(mSegmentTracerSpeed3);
     
     //mSegmentTracerSpeed2;
     //mSegmentTracerSpeed3;
@@ -161,7 +181,25 @@ void EditorMenuPanelFormationConfiguration::Notify(void *pSender, const char *pN
     }
     
     
-    if (pSender == mSegmentTracerSpeed1) { gEditor->RefreshPlayback(); }
+    if (pSender == mSegmentTracerSpeed1) {
+        aConfig->mTracerSpeed1 = gEditor->SpeedConvertSegmentToType(mSegmentTracerSpeed1->mSelectedIndex);
+        gEditor->RefreshPlayback();
+    }
+    
+    if (pSender == mSegmentTracerSpeed2) {
+        aConfig->mTracerSpeed2 = gEditor->SpeedConvertSegmentToType(mSegmentTracerSpeed2->mSelectedIndex);
+        gEditor->RefreshPlayback();
+    }
+    
+    if (pSender == mSegmentTracerSpeed3) {
+        aConfig->mTracerSpeed3 = gEditor->SpeedConvertSegmentToType(mSegmentTracerSpeed3->mSelectedIndex);
+        gEditor->RefreshPlayback();
+    }
+    
+    
+    
+    //if (pSender == mSegmentTracerSpeed1) { gEditor->RefreshPlayback(); }
+    
     
     
     
@@ -198,6 +236,16 @@ void EditorMenuPanelFormationConfiguration::Update() {
         mTracerSpeedIndexGlobal = gEditor->SpeedConvertTypeToSegment(aConfig->mTracerSpeedGlobal);
         
         
+        mTracerSpeedIndex1 = gEditor->SpeedConvertTypeToSegment(aConfig->mTracerSpeed1);
+        mTracerSpeedIndex2 = gEditor->SpeedConvertTypeToSegment(aConfig->mTracerSpeed2);
+        mTracerSpeedIndex3 = gEditor->SpeedConvertTypeToSegment(aConfig->mTracerSpeed3);
+        
+        
+        
+        
+        
+        
+        
     }
     
     
@@ -207,12 +255,15 @@ void EditorMenuPanelFormationConfiguration::Update() {
     }
     
     if (mSegmentTracerSpeed1 != NULL) {
-        
-        if (aConfig != NULL) {
-            mSegmentTracerSpeed1->SetTarget(&aConfig->mTracerSpeed1);
-        } else {
-            mSegmentTracerSpeed1->SetTarget(NULL);
-        }
+        mSegmentTracerSpeed1->SetTarget(&mTracerSpeedIndex1);
+    }
+    
+    if (mSegmentTracerSpeed2 != NULL) {
+        mSegmentTracerSpeed2->SetTarget(&mTracerSpeedIndex2);
+    }
+    
+    if (mSegmentTracerSpeed3 != NULL) {
+        mSegmentTracerSpeed3->SetTarget(&mTracerSpeedIndex3);
     }
     
     

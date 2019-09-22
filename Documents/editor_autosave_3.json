@@ -3,6 +3,7 @@
 	"progress": 30,
 	"wave_list": [
 		{
+			"spawn_spacing": 90,
 			"max_spawn_size": 363,
 			"path": {
 				"speed_class": 100,
@@ -28,14 +29,21 @@
 			},
 			"spawn": [
 				{
+					"short_circuit": true,
+					"short_circuit_knock": true,
 					"formation": "form_all_trc_all_bln_grd_hex_ng1_135rsp_1rct_30pts_0ful_tra_6ply_cfg14xb_tra_cir_155rad_cfgrbbrbb",
 					"formation_config": {
-						"tracer_speed_class_global": -300
+						"tracer_speed_class_1": -300,
+						"tracer_speed_class_2": -100
+					},
+					"style": {
+						"disable_threads": true
 					}
 				}
 			]
 		},
 		{
+			"spawn_spacing": 90,
 			"max_spawn_size": 163,
 			"path": {
 				"speed_class": 300,
@@ -61,6 +69,7 @@
 			},
 			"spawn": [
 				{
+					"short_circuit": true,
 					"formation": "form_all_nod_mix_bln_brk_grd_cir_46rsp_1rct_6rdc_sld_nodes_cfgbbbrbbb_snp",
 					"formation_config": {},
 					"motion": {
@@ -107,6 +116,7 @@
 			},
 			"spawn": [
 				{
+					"short_circuit": true,
 					"formation": "form_all_nod_mix_bln_brk_grd_cir_46rsp_1rct_6rdc_sld_nodes_cfgbbbrbbb_snp",
 					"formation_config": {},
 					"motion": {
