@@ -93,6 +93,9 @@ public:
     
     bool                                mIsComplete;
     
+    bool                                mDidFirstUpdate;
+    
+    
     bool                                mAllWavesComplete;
     bool                                mAllPermsComplete;
     

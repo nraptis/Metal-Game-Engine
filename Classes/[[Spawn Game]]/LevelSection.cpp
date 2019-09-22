@@ -20,6 +20,9 @@ LevelSection::LevelSection() {
     
     mIsComplete = false;
     
+    mDidFirstUpdate = false;
+    
+    
     mAllWavesComplete = false;
     mAllPermsComplete = false;
     
@@ -298,6 +301,14 @@ void LevelSection::Update() {
             }
         }
         
+        if (mDidFirstUpdate == false) {
+            aCanSpawnWave = false;
+        }
+        
+        if ((mFlyInType != SECTION_FLY_NONE) || (mFlyOutType != SECTION_FLY_NONE)) {
+            aCanSpawnWave = false;
+        }
+        
         if (aCanSpawnWave) {
             if (mCandidateWaveDelay > 0) {
                 mCandidateWaveDelay--;
@@ -377,6 +388,8 @@ void LevelSection::Update() {
         delete aWave;
     }
     mDeleteWaveList.RemoveAll();
+    
+    mDidFirstUpdate = true;
 }
 
 void LevelSection::Draw() {
