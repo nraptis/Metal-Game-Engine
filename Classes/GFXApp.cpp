@@ -429,12 +429,7 @@ void GFXApp::Draw() {
                                   false, //Clear Color
                                   false); //Clear Depth
         
-
-        
-        
         Graphics::PipelineStateSetSpriteAlphaBlending();
-        
-        
         
         if (mWadReloadIsEnqueued) {
             

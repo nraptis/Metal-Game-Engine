@@ -192,7 +192,6 @@ void LevelSectionPerm::Spawn() {
             }
             
             if (mObject != NULL) {
-                
                 mObject->mDidOriginateOnWave = false;
                 mObject->mDidOriginateAsPermanent = true;
                 mStyleController.ApplyToObject(mObject);

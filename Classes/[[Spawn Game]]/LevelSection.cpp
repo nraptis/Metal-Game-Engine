@@ -102,6 +102,8 @@ void LevelSection::Spawn() {
         aPerm->Spawn();
     }
     mDidSpawn = true;
+    
+    Update();
 }
 
 void LevelSection::Update() {
