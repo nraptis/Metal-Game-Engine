@@ -324,7 +324,6 @@ void LevelFormationTracer::AddDumpPointsRoundedRect(float pX, float pY) {
     }
 }
 
-
 void LevelFormationTracer::SetSpeedClass(int pSpeedClass) {
     if (pSpeedClass == SPEED_CLASS_EXTRA_SLOW) {
         mSpeed = 0.45f;

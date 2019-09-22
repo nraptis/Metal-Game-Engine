@@ -72,6 +72,18 @@ GameContainer::GameContainer() {
     AddChild(mInterfaceOverlay);
 #endif
     
+    
+    
+#ifndef EDITOR_MODE
+    float aSpeedMenuWidth = 700.0f;
+    if (aSpeedMenuWidth > gDeviceWidth) { aSpeedMenuWidth = gDeviceWidth; }
+    
+    mEditorMenuSpeed = new SpeedControlMenu();
+    gApp->mWindowTools.AddChild(mEditorMenuSpeed);
+    mEditorMenuSpeed->SetFrame(gDeviceWidth2 - aSpeedMenuWidth / 2.0f, 6.0f, aSpeedMenuWidth, 120.0f);
+#endif
+    
+    
 }
 
 GameContainer::~GameContainer() {
