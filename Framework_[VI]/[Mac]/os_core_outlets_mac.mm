@@ -537,7 +537,7 @@ void os_getFilesInDirectoryRecursive(const char *pFilePath, FList *pList) {
     //printf("Dir[%s]\nDir[%X]\n", pFilePath, dp);
     
     if (dp == NULL) {
-        printf("Couldn't Find Directory [%s] [%s]\n", pFilePath, strerror(errno));
+        //printf("Couldn't Find Directory [%s] [%s]\n", pFilePath, strerror(errno));
         return;
     }
     
@@ -594,7 +594,7 @@ void os_getFilesInDirectory(const char *pFilePath, FList *pList) {
     //printf("Dir[%s]\nDir[%X]\n", pFilePath, dp);
     
     if (dp == NULL) {
-        printf("Couldn't Find Directory [%s] [%s]\n", pFilePath, strerror(errno));
+        //printf("Couldn't Find Directory [%s] [%s]\n", pFilePath, strerror(errno));
         return;
     }
     

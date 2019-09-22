@@ -50,6 +50,9 @@ public:
     void                                        Reset();
     void                                        Draw(bool pSelected);
     
+    int                                         CountProgressObjects();
+    static int                                  CountProgressObjects(const char *pFormationID);
+    
     void                                        Print();
     
     void                                        RefreshNodePositions();

@@ -29,6 +29,8 @@ public:
     void                                        Update();
     void                                        Draw(bool pSelected);
     
+    int                                         CountProgressObjects();
+    
     LevelPathBlueprint                          mPath;
     void                                        ApplyEditorConstraints();
     void                                        DeletePath();

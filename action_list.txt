@@ -1,9 +1,15 @@
 
-A.) We need a way to turn threads on and off for wave spawns, perms, and perm spawns.
+B1.) We need to know the number of "progress" objects per-level-section. These will be used in computing over-all progress...
 
-B.) We need a generic styling mechanism (style controller) blueprint and object. 
+B2.) We need to decide how "free life" or "prize box" will influence level progress. For example, it could be strange to GAIN PROGRESS when an object automatically exits play field..?
 
-C.) We need a "start from pause start" and "start from pause end" option for several of the motion controllers.
+B3.) We need a way to freeze the editor playback and skip to a particular frame.
+
+A1.) We need a way to turn threads on and off for wave spawns, perms, and perm spawns.
+
+A2.) We need a generic styling mechanism (style controller) blueprint and object. 
+
+A3.) We need a "start from pause start" and "start from pause end" option for several of the motion controllers.
 
 01.) Win condition? We need to capture the win condition.
 

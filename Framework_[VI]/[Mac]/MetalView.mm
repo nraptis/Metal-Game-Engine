@@ -40,8 +40,6 @@ CVReturn displayCallback(CVDisplayLinkRef CV_NONNULL displayLink,
 - (void)setup {
     _screenScale = (int)([NSScreen mainScreen].backingScaleFactor + 0.5f);
     
-    printf("Screen Scale = [[%d]]\n", _screenScale);
-    
     self.layer = [[CAMetalLayer alloc] init];
     _metalLayer = (CAMetalLayer *)self.layer;
     gMetalLayer = _metalLayer;

@@ -21,6 +21,8 @@ public:
     
     void                                        Reset();
     
+    int                                         CountProgressObjects();
+    
     FJSONNode                                   *Save();
     void                                        Load(FJSONNode *pNode);
     

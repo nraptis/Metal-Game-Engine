@@ -120,6 +120,27 @@ void LevelSectionPermBlueprint::ApplyEditorConstraints() {
     }
 }
 
+int LevelSectionPermBlueprint::CountProgressObjects() {
+    int aResult = 0;
+    
+    if (IsPathPerm()) {
+        
+        for (int i=0;i<mSpawnCount;i++) {
+            aResult += mSpawn[i].CountProgressObjects();
+        }
+    } else {
+        
+        if (mFormationID.mLength > 0) {
+            aResult += LevelFormationBlueprint::CountProgressObjects(mFormationID.c());
+        } else {
+            if (gGame->DoesObjectTypeCountTowardsProgress(mObjectType)) {
+                aResult += 1;
+            }
+        }
+    }
+    return aResult;
+}
+
 void LevelSectionPermBlueprint::ShiftX(float pShiftX) {
     if (mConstraint.mTypeX == X_CONSTRAINT_NONE) {
         mEditorX = mEditorX + pShiftX;
@@ -161,11 +182,13 @@ void LevelSectionPermBlueprint::DeletePath() {
 }
 
 bool LevelSectionPermBlueprint::IsPathPerm() {
-    if (mPath.mNodeList.mCount > 0 && mSpawnCount > 0) {
+    if (mPath.mNodeList.mCount > 0) {
         return true;
     }
     return false;
 }
+
+
 
 void LevelSectionPermBlueprint::Build(LevelSectionPerm *pPerm) {
     
@@ -295,7 +318,7 @@ FJSONNode *LevelSectionPermBlueprint::Save() {
         }
     }
     
-    if (mPath.mNodeList.mCount > 0) {
+    if (IsPathPerm()) {
         aExport->AddDictionary("path", mPath.Save());
         
         //We only save the spawn list when we have a
@@ -315,19 +338,21 @@ FJSONNode *LevelSectionPermBlueprint::Save() {
             aExport->AddDictionary("style", mStyleController.Save());
         }
         
-    }
-    
-    
-    if (mFormationID.mLength > 0) {
-        //Possibility 1.) We have a formation...
-        aExport->AddDictionaryString("formation", mFormationID.c());
-        aExport->AddDictionary("formation_config", mFormationConfiguration.Save());
-    } else {
-        //Possibility 2.) We have an object...
-        if (mObjectType != GAME_OBJECT_TYPE_BALLOON) {
-            aExport->AddDictionaryInt("type", mObjectType);
+        
+        if (mFormationID.mLength > 0) {
+            //Possibility 1.) We have a formation...
+            aExport->AddDictionaryString("formation", mFormationID.c());
+            aExport->AddDictionary("formation_config", mFormationConfiguration.Save());
+        } else {
+            //Possibility 2.) We have an object...
+            if (mObjectType != GAME_OBJECT_TYPE_BALLOON) {
+                aExport->AddDictionaryInt("type", mObjectType);
+            }
         }
     }
+    
+    
+    
     
     return aExport;
 }
@@ -378,7 +403,7 @@ void LevelSectionPermBlueprint::Load(FJSONNode *pNode) {
         }
     }
     
-    if (mSpawnCount <= 0) { mSpawnCount = 1; }
+    //if (mSpawnCount < 0) { mSpawnCount = 0; }
     if (mSpawnCount > WAVE_MAX_SPAWN_COUNT) { mSpawnCount = WAVE_MAX_SPAWN_COUNT; }
     
     
@@ -388,20 +413,23 @@ void LevelSectionPermBlueprint::Load(FJSONNode *pNode) {
         
         FJSONNode *aStyleNode = pNode->GetDictionary("style");
         mStyleController.Load(aStyleNode);
+        
+        
+        mFormationID = pNode->GetString("formation", mFormationID);
+        
+        if (mFormationID.mLength > 0) {
+            //Possibility 1.) We have a formation...
+            
+            FJSONNode *aFormationConfigurationNode = pNode->GetDictionary("formation_config");
+            mFormationConfiguration.Load(aFormationConfigurationNode);
+            
+        } else {
+            //Possibility 2.) We have an object...
+            mObjectType = pNode->GetInt("type", mObjectType);
+        }
     }
     
-    mFormationID = pNode->GetString("formation", mFormationID);
     
-    if (mFormationID.mLength > 0) {
-        //Possibility 1.) We have a formation...
-        
-        FJSONNode *aFormationConfigurationNode = pNode->GetDictionary("formation_config");
-        mFormationConfiguration.Load(aFormationConfigurationNode);
-        
-    } else {
-        //Possibility 2.) We have an object...
-        mObjectType = pNode->GetInt("type", mObjectType);
-    }
     
     
     

@@ -12,6 +12,7 @@
 #include "FPolyPath.hpp"
 #include "core_includes.h"
 #include "GameEditor.hpp"
+#include "FormationCollection.hpp"
 #include "FLine.hpp"
 
 
@@ -175,6 +176,37 @@ void LevelFormationBlueprint::Draw(bool pSelected) {
     for (int i=0;i<BLUEPRINT_TRACER_COUNT;i++) {
         mTracer[i].Draw(mCurrentTracerIndex == i);
     }
+}
+
+int LevelFormationBlueprint::CountProgressObjects() {
+    
+    int aResult = 0;
+    for (int i=0;i<BLUEPRINT_TRACER_COUNT;i++) {
+        if (mTracer[i].IsValid()) {
+            aResult += mTracer[i].CountProgressObjects();
+        }
+    }
+    
+    for (int i=0;i<mNodeList.mCount;i++) {
+        LevelFormationNodeBlueprint *aNodeBlueprint = (LevelFormationNodeBlueprint *)mNodeList.mData[i];
+        if (gGame->DoesObjectTypeCountTowardsProgress(aNodeBlueprint->mObjectType)) {
+            aResult += 1;
+        }
+    }
+    return aResult;
+}
+
+
+int LevelFormationBlueprint::CountProgressObjects(const char *pFormationID) {
+    LevelFormationBlueprint aFormation;
+    
+    FJSON aJSON;
+    aJSON.Load(pFormationID);
+    FString aDummy;
+    
+    aFormation.Load(aJSON.mRoot, aDummy);
+    
+    return aFormation.CountProgressObjects();
 }
 
 float LevelFormationBlueprint::GetX(int pIndex) {

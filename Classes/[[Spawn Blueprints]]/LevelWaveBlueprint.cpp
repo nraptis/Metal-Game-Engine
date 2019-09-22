@@ -101,6 +101,13 @@ void LevelWaveBlueprint::Draw(bool pSelected) {
     }
 }
 
+int LevelWaveBlueprint::CountProgressObjects() {
+    int aResult = 0;
+    for (int i=0;i<mSpawnCount;i++) {
+        aResult += mSpawn[i].CountProgressObjects();
+    }
+    return aResult;
+}
 
 void LevelWaveBlueprint::ApplyEditorConstraints() {
     mPath.ApplyEditorConstraints();

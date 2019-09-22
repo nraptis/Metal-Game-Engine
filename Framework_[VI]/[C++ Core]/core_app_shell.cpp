@@ -313,8 +313,7 @@ void AppShellSetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
     //TODO: Toggle for Galaxy Test
     //gVirtualDevHeight = (float)pWidth * 4.0f / 3.0f;
     
-    
-    Log("Set Virtual Frame [%f %f %f %f]\n", gVirtualDevX, gVirtualDevY, gVirtualDevWidth, gVirtualDevHeight);
+    //Log("Set Virtual Frame [%f %f %f %f]\n", gVirtualDevX, gVirtualDevY, gVirtualDevWidth, gVirtualDevHeight);
     
     gAppWidth = (float)pWidth;
     gAppHeight = (float)pHeight;
@@ -328,14 +327,14 @@ void AppShellSetVirtualFrame(int pX, int pY, int pWidth, int pHeight) {
 
 void AppShellSetSafeAreaInsets(int pInsetUp, int pInsetRight, int pInsetDown, int pInsetLeft) {
     
-    Log("I - AppShellSetSafeAreaInsets(%d, %d, %d, %d)\n", pInsetUp, pInsetRight, pInsetDown, pInsetLeft);
+    //Log("I - AppShellSetSafeAreaInsets(%d, %d, %d, %d)\n", pInsetUp, pInsetRight, pInsetDown, pInsetLeft);
     
     gSafeAreaInsetTop = pInsetUp;
     gSafeAreaInsetRight = pInsetRight;
     gSafeAreaInsetBottom = pInsetDown;
     gSafeAreaInsetLeft = pInsetLeft;
     
-    Log("II - AppShellSetSafeAreaInsets(%f, %f, %f, %f)\n", gSafeAreaInsetTop, gSafeAreaInsetRight, gSafeAreaInsetBottom, gSafeAreaInsetLeft);
+    //Log("II - AppShellSetSafeAreaInsets(%f, %f, %f, %f)\n", gSafeAreaInsetTop, gSafeAreaInsetRight, gSafeAreaInsetBottom, gSafeAreaInsetLeft);
     
     if (gAppBase) {
         gAppBase->BaseSetSafeAreaInsets(gSafeAreaInsetTop, gSafeAreaInsetRight, gSafeAreaInsetBottom, gSafeAreaInsetLeft);

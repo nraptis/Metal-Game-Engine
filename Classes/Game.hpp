@@ -83,7 +83,12 @@ public:
     bool                                        IsAnyObjectFloatingAway();
     int                                         mRecentFloatingAwayTick;
     
-    
+    // Note: This is intended to be used for preliminary check (FROM EDITOR)...
+    //When computing actual progress count, there will need to be
+    //foreknowledge about which replacements will occur. For example,
+    //a "free life" in editor does not count towards progress, but if a replacement occurs,
+    //then total progress cannot include the object (balloon replaced by free life, as an example)
+    bool                                        DoesObjectTypeCountTowardsProgress(int pObjectType);
     
     void                                        Convert2DTransformTo3D(Transform2D *p2D, Transform3D *p3D);
     

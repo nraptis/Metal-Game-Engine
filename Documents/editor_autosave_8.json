@@ -1,4 +1,51 @@
 {
 	"section": true,
-	"wave_list": []
+	"progress": 8,
+	"wave_list": [
+		{
+			"spawn_spacing": 320,
+			"max_spawn_size": 366,
+			"path": {
+				"node_list": [
+					{
+						"x_con": 200,
+						"y_con": 300
+					},
+					{
+						"x_con": 500,
+						"y_con": 300
+					},
+					{
+						"x_con": 850,
+						"y_con": 300
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "form_all_nod_all_tur_grd_rec_3x3_68sph_68spv_44ful_nodes_cfg4xt_snp",
+					"formation_config": {}
+				},
+				{
+					"formation": "form_all_nod_all_bom_grd_rec_5x4_68sph_68spv_sld_nodes_cfg20xm_snp",
+					"formation_config": {}
+				},
+				{}
+			]
+		}
+	],
+	"perm_list": [
+		{
+			"x": 16.692940,
+			"y": 57.076488
+		},
+		{
+			"x": 51.038231,
+			"y": 78.815788
+		},
+		{
+			"x": 82.843330,
+			"y": 54.163925
+		}
+	]
 }

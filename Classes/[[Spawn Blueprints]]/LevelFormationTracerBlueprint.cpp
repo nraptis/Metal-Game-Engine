@@ -214,6 +214,17 @@ void LevelFormationTracerBlueprint::Draw(bool pSelected) {
     
 }
 
+int LevelFormationTracerBlueprint::CountProgressObjects() {
+    int aResult = 0;
+    for (int i=0;i<mSpawnNodeList.mCount;i++) {
+        LevelFormationNodeBlueprint *aNode = (LevelFormationNodeBlueprint *)mSpawnNodeList.mData[i];
+        if (gGame->DoesObjectTypeCountTowardsProgress(aNode->mObjectType)) {
+            aResult += 1;
+        }
+    }
+    return aResult;
+}
+
 float LevelFormationTracerBlueprint::GetX(int pIndex) {
     LevelFormationTracerNodeBlueprint *aNode = (LevelFormationTracerNodeBlueprint *)mTracerNodeList.Fetch(pIndex);
     if (aNode != NULL) { return aNode->mEditorX; }

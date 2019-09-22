@@ -7,8 +7,10 @@
 //
 
 #include "LevelWaveSpawnBlueprint.hpp"
+#include "LevelFormationBlueprint.hpp"
 #include "GameObject.hpp"
 #include "core_includes.h"
+#include "Game.hpp"
 
 LevelWaveSpawnBlueprint::LevelWaveSpawnBlueprint() {
     mSpawnSpacingOffset = 0;
@@ -21,6 +23,18 @@ LevelWaveSpawnBlueprint::LevelWaveSpawnBlueprint() {
 
 LevelWaveSpawnBlueprint::~LevelWaveSpawnBlueprint() {
     
+}
+
+int LevelWaveSpawnBlueprint::CountProgressObjects() {
+    int aResult = 0;
+    if (mFormationID.mLength > 0) {
+        aResult += LevelFormationBlueprint::CountProgressObjects(mFormationID.c());
+    } else {
+        if (gGame->DoesObjectTypeCountTowardsProgress(mObjectType)) {
+            aResult += 1;
+        }
+    }
+    return aResult;
 }
 
 void LevelWaveSpawnBlueprint::Reset() {

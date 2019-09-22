@@ -519,7 +519,8 @@ void FImageBundler::Load(const char *pFileName, const char *pImageName) {
     FImage aImage;
     aImage.Load(pImageName);
     
-    Log("Loaded Image Bundle: (%s) Scale: %d\n", aImage.mFileName.c(), aImage.mScale);
+    //Log("Loaded Image Bundle: (%s) Scale: %d\n", aImage.mFileName.c(), aImage.mScale);
+    
     
     if (aImage.mScale == 1) {
         mBundleScale = 1;

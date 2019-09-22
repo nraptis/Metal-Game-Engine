@@ -30,6 +30,18 @@ void LevelPermSpawnBlueprint::Reset() {
     mFormationConfiguration.Reset();
 }
 
+int LevelPermSpawnBlueprint::CountProgressObjects() {
+    int aResult = 0;
+    if (mFormationID.mLength > 0) {
+        aResult += LevelFormationBlueprint::CountProgressObjects(mFormationID.c());
+    } else {
+        if (gGame->DoesObjectTypeCountTowardsProgress(mObjectType)) {
+            aResult += 1;
+        }
+    }
+    return aResult;
+}
+
 FJSONNode *LevelPermSpawnBlueprint::Save() {
     FJSONNode *aExport = new FJSONNode();
     aExport->mNodeType = JSON_NODE_TYPE_DICTIONARY;

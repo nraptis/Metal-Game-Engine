@@ -626,15 +626,15 @@ void GFXApp::DequeueWadReload() {
 
 void GFXApp::ExecuteWadReload() {
     
-    Log("*** BEGIN:: GFXApp::ExecuteWadReload()\n");
+    //Log("*** BEGIN:: GFXApp::ExecuteWadReload()\n");
     
     DequeueWadReload();
     if (gWadConfiguration.ShouldReload() == false) {
-        Log("BLOCKING RELOAD, NO NEED...\n");
+        //Log("BLOCKING RELOAD, NO NEED...\n");
         return;
     }
     
-    Log("NOTIFYING RELOAD, NO NEED...\n");
+    //Log("NOTIFYING RELOAD, NO NEED...\n");
     
     gWadConfiguration.NotifyReload();
     
@@ -651,7 +651,7 @@ void GFXApp::ExecuteWadReload() {
     gWadModels.Load();
     
     
-    Log("*** End:: GFXApp::ExecuteWadReload()\n");
+    //Log("*** End:: GFXApp::ExecuteWadReload()\n");
     
 }
 

@@ -1019,7 +1019,10 @@ void Game::DartMovingInterpolationTurtles(Dart *pDart, float pPercent, bool pEnd
 }
 
 bool Game::ShouldSpawnFreeLife() {
-    return gRand.Get(1400) == 200;
+#ifdef EDITOR_MODE
+    return false;
+#endif
+    return gRand.Get(20) == 8;
 }
 
 void Game::NotifyDidSpawnFreeLife() {
@@ -1629,6 +1632,17 @@ bool Game::IsAnyObjectFloatingAway() {
     return (mRecentFloatingAwayTick > 0);
 }
 
+bool Game::DoesObjectTypeCountTowardsProgress(int pObjectType) {
+    
+    if (pObjectType == GAME_OBJECT_TYPE_BALLOON) { return true; }
+    if (pObjectType == GAME_OBJECT_TYPE_TURTLE) { return true; }
+    
+    
+    //if (pObjectType == GAME_OBJECT_TYPE_FREE_LIFE) { return true; }
+    
+    
+    return false;
+}
 
 
 void Game::Load() {

@@ -24,6 +24,9 @@ public:
     void                                        Update();
     void                                        Draw();
     
+    int                                         CountProgressObjects();
+    
+    
     void                                        WaveAdd();
     void                                        WaveInsert();
     void                                        WaveRemove();
@@ -60,6 +63,8 @@ public:
     
     int                                         mKeepAliveTimer;
     int                                         mForceKillTimer;
+    
+    int                                         mProgressObjectsBase;
     
     
     FList                                       mKillWaveList;

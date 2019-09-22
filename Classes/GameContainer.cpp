@@ -280,7 +280,6 @@ void GameContainer::Update() {
             mPlaybackSlowMotionTimer = 0;
         }
     }
-    
 }
 
 void GameContainer::Draw() {

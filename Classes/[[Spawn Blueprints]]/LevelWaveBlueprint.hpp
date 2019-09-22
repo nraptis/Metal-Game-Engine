@@ -25,6 +25,8 @@ public:
     void                                        Update();
     void                                        Draw(bool pSelected);
     
+    int                                         CountProgressObjects();
+    
     LevelPathBlueprint                          mPath;
     LevelWaveSpawnBlueprint                     mSpawn[WAVE_MAX_SPAWN_COUNT + 1];
     

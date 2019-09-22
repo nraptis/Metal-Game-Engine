@@ -39,8 +39,11 @@ public:
     void                                                Reset(); //Keeps spawn nodes...
     void                                                Nuke();  //Clears + removes spawn nodes...
     
+    
     void                                                Draw(bool pSelected);
     
+    int                                                 CountProgressObjects();
+        
     void                                                RefreshNodePositions();
     
     void                                                RefreshSpawnNodeList();

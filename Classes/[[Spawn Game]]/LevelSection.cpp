@@ -29,6 +29,8 @@ LevelSection::LevelSection() {
     mKeepAliveTimer = 0;
     mForceKillTimer = 0;
     
+    mProgressObjectsBase = 0;
+    
     mDelay = 0;
     
     mStartWaveIndex = 0;
@@ -78,6 +80,7 @@ void LevelSection::Reset() {
     mAllPermsComplete = false;
     mDidSpawn = false;
     mCandidateWaveDelay = 0;
+    mProgressObjectsBase = 0;
 }
 
 /*
