@@ -2,11 +2,11 @@
 	"node_list": [],
 	"tracer_list": [
 		{
-			"object_count": 2,
+			"object_count": 5,
 			"special_type": 1,
 			"special_x": 0.081093,
 			"special_y": -1.228069,
-			"special_type_radius": 80
+			"special_type_radius": 98
 		}
 	]
 }

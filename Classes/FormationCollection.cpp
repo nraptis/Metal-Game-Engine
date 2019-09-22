@@ -48,10 +48,10 @@ void FormationCollection::Load() {
     //////
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Rectangle
+    //Shapes - Rectangle [[BALLOON ONLY]]
     
-    Add("form_all_nod_all_bln_grd_rec_2x1_38sph_48spv_sld_nodes_cfg2xb_snp");
-    Add("form_all_nod_all_bln_grd_rec_1x2_60sph_48spv_sld_nodes_cfg2xb_snp");
+    //Add("form_all_nod_all_bln_grd_rec_2x1_38sph_48spv_sld_nodes_cfg2xb_snp");
+    //Add("form_all_nod_all_bln_grd_rec_1x2_60sph_48spv_sld_nodes_cfg2xb_snp");
     
     Add("form_all_nod_all_bln_grd_rec_2x2_38sph_48spv_sld_nodes_cfg4xb_snp");
     Add("form_all_nod_all_bln_grd_rec_3x2_38sph_48spv_sld_nodes_cfg6xb_snp");
@@ -74,7 +74,7 @@ void FormationCollection::Load() {
     Add("form_all_nod_all_bln_grd_rec_7x6_38sph_48spv_67ful_nodes_cfg28xb_snp");
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Circle
+    //Shapes - Circle [[BALLOON ONLY]]
     
     Add("form_all_nod_all_bln_grd_cir_28rsp_1rct_3rdc_75ful_nodes_cfg3xb_snp");
     Add("form_all_nod_all_bln_grd_cir_34rsp_1rct_4rdc_80ful_nodes_cfg4xb_snp");
@@ -102,17 +102,17 @@ void FormationCollection::Load() {
     Add("form_all_nod_all_bln_grd_cir_96rsp_1rct_12rdc_sld_nodes_cfg19xb13on6of");
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Arcs
+    //Shapes - Arcs [[BALLOON ONLY]]
     
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Heptagon
+    //Shapes - Heptagon [[BALLOON ONLY]]
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Hexagon
+    //Shapes - Hexagon [[BALLOON ONLY]]
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Lines
+    //Shapes - Lines [[BALLOON ONLY]]
     
     Add("form_all_nod_all_bln_grd_rec_1x6_0sph_46spv_sld_nodes_cfg6xb_snp");
     Add("form_all_nod_all_bln_grd_rec_1x5_0sph_46spv_sld_nodes_cfg5xb_snp");
@@ -126,18 +126,16 @@ void FormationCollection::Load() {
     Add("form_all_nod_all_bln_grd_rec_2x1_38sph_0spv_sld_nodes_cfg2xb_snp");
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Octogon
+    //Shapes - Octogon [[BALLOON ONLY]]
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Pentagon
+    //Shapes - Pentagon [[BALLOON ONLY]]
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Staggered
+    //Shapes - Staggered [[BALLOON ONLY]]
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Star
-    
-    //Add("");
+    //Shapes - Star [[BALLOON ONLY]]
     
     Add("form_all_nod_all_bln_grd_sta_91rdi_140rdo_3ptc_5arc_180ros_49ful_nodes_cfg20xb_snp");
     Add("form_all_nod_all_bln_grd_sta_50rdi_90rdo_3ptc_5arc_27ful_nodes_cfg11xb_snp");
@@ -148,12 +146,10 @@ void FormationCollection::Load() {
     
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Trapezoid
+    //Shapes - Trapezoid [[BALLOON ONLY]]
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Triangle
-    
-    //Add("");
+    //Shapes - Triangle [[BALLOON ONLY]]
     
     Add("form_all_nod_all_bln_grd_tri_ng2_34rad_0ofy_46sph_40spv_stg_sld_nodes_cfg3xb_snp");
     Add("form_all_nod_all_bln_grd_tri_ng2_34rad_0ofy_46sph_40spv_stgodd_180ros_sld_nodes_cfg3xb_snp");
@@ -169,10 +165,12 @@ void FormationCollection::Load() {
     Add("form_all_nod_all_bln_grd_tri_ng2_172rad_0ofy_46sph_40spv_stg_180ros_sld_nodes_cfg28xb_snp");
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Tracers - Circle
+    //Tracers - Circle [[BALLOON ONLY]]
+    
+    //Add("");
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Tracers - Custom
+    //Tracers - Custom [[BALLOON ONLY]]
     
    
     //Add("");
@@ -186,10 +184,10 @@ void FormationCollection::Load() {
     
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Tracers - Rect
+    //Tracers - Rect [[BALLOON ONLY]]
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Tracers - Rounded Rect
+    //Tracers - Rounded Rect [[BALLOON ONLY]]
     
     //Add("");
     Add("form_all_trc_all_bln_tra_rrc_505siz_110crd_cfg13xb");
@@ -543,10 +541,10 @@ void FormationCollection::Load() {
     //Add("");
     //Add("");
     
-    Add("form_all_nod_mix_bln_tur_grd_rec_2x1_38sph_48spv_sld_nodes_cfgtb_snp.json");
-    Add("form_all_nod_mix_bln_tur_grd_rec_2x1_38sph_48spv_sld_nodes_cfgbt_snp.json");
-    Add("form_all_nod_mix_bln_tur_grd_rec_1x2_38sph_48spv_sld_nodes_cfgbt_snp.json");
-    Add("form_all_nod_mix_bln_tur_grd_rec_1x2_38sph_64spv_sld_nodes_cfgtb_snp.json");
+    //Add("form_all_nod_mix_bln_tur_grd_rec_2x1_38sph_48spv_sld_nodes_cfgtb_snp.json");
+    //Add("form_all_nod_mix_bln_tur_grd_rec_2x1_38sph_48spv_sld_nodes_cfgbt_snp.json");
+    //Add("form_all_nod_mix_bln_tur_grd_rec_1x2_38sph_48spv_sld_nodes_cfgbt_snp.json");
+    //Add("form_all_nod_mix_bln_tur_grd_rec_1x2_38sph_64spv_sld_nodes_cfgtb_snp.json");
     
     Add("form_all_nod_mix_bln_tur_grd_rec_4x2_38sph_48spv_50ful_nodes_cfgbbttbb4on2of");
     Add("form_all_nod_mix_bln_tur_grd_rec_5x3_38sph_48spv_73ful_nodes_cfgbbbtbbbtbbb_snp");
@@ -627,13 +625,13 @@ void FormationCollection::Load() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Rectangle [[[Brick + Turtle]]]
     
-    Add("form_all_nod_mix_brk_tur_grd_rec_1x2_38sph_46spv_sld_nodes_cfgrt_snp");
-    Add("form_all_nod_mix_brk_tur_grd_rec_1x2_38sph_58spv_sld_nodes_cfgtr_snp");
-    Add("form_all_nod_mix_brk_tur_grd_rec_2x1_38sph_46spv_sld_nodes_cfgrt_snp");
-    Add("form_all_nod_mix_brk_tur_grd_rec_2x1_38sph_46spv_sld_nodes_cfgtr_snp");
-    Add("form_all_nod_mix_brk_tur_grd_rec_2x2_38sph_46spv_sld_nodes_cfgrrtt_snp");
-    Add("form_all_nod_mix_brk_tur_grd_rec_2x2_38sph_56spv_sld_nodes_cfgttrr_snp");
-    Add("form_all_nod_mix_brk_tur_grd_rec_3x2_38sph_64spv_sld_nodes_cfgrrrttt_snp");
+    //Add("form_all_nod_mix_brk_tur_grd_rec_1x2_38sph_46spv_sld_nodes_cfgrt_snp");
+    //Add("form_all_nod_mix_brk_tur_grd_rec_1x2_38sph_58spv_sld_nodes_cfgtr_snp");
+    //Add("form_all_nod_mix_brk_tur_grd_rec_2x1_38sph_46spv_sld_nodes_cfgrt_snp");
+    //Add("form_all_nod_mix_brk_tur_grd_rec_2x1_38sph_46spv_sld_nodes_cfgtr_snp");
+    //Add("form_all_nod_mix_brk_tur_grd_rec_2x2_38sph_46spv_sld_nodes_cfgrrtt_snp");
+    //Add("form_all_nod_mix_brk_tur_grd_rec_2x2_38sph_56spv_sld_nodes_cfgttrr_snp");
+    //Add("form_all_nod_mix_brk_tur_grd_rec_3x2_38sph_64spv_sld_nodes_cfgrrrttt_snp");
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Staggered [[[Brick + Turtle]]]
@@ -817,6 +815,7 @@ void FormationCollection::Load() {
             
         } else {
             Log("FAILED to Load Formation [%s]\n", aString->c());
+            printf("...\n");
         }
     }
 }
