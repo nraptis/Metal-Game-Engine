@@ -1,11 +1,11 @@
 {
 	"section": true,
-	"force_kill_timer": 7900,
+	"force_kill_timer": 8320,
 	"progress": 52,
 	"wave_list": [
 		{
 			"spawn_spacing": 90,
-			"max_spawn_size": 144,
+			"max_spawn_size": 150,
 			"path": {
 				"speed_class": 100,
 				"node_list": [
@@ -18,7 +18,7 @@
 						"y_con": 500,
 						"decel": 230,
 						"accel": 140,
-						"wait": 330
+						"wait": 560
 					},
 					{
 						"x_con": 500,
@@ -28,7 +28,7 @@
 			},
 			"spawn": [
 				{
-					"formation": "form_all_nod_all_bln_grd_trp1_74tsz_36bsz_36ht_3cth_2ctv_71ful_nodes_cfg5xb_snp",
+					"formation": "form_all_nod_all_bln_grd_trp2_114tsz_48bsz_42ht_20sph_20spv_stg_42ful_nodes_cfg5xb_snp",
 					"formation_config": {},
 					"motion": {
 						"play_on_enter": false,
@@ -62,7 +62,7 @@
 						"y_con": 500,
 						"decel": 210,
 						"accel": 80,
-						"wait": 600
+						"wait": 800
 					},
 					{
 						"x_con": 500,

@@ -104,8 +104,6 @@ EditorMenuFormationGrid::EditorMenuFormationGrid(GameEditorGrid *pGrid) : ToolMe
     
     
     
-    
-    
     mPanelStarGrid = new ToolMenuPanel();
     mPanelStarGrid->SetTitle("Star");
     mPanelGrid->AddSection(mPanelStarGrid);
@@ -173,13 +171,9 @@ EditorMenuFormationGrid::EditorMenuFormationGrid(GameEditorGrid *pGrid) : ToolMe
     
     
     
-    
-    
-    
     mPanelNGON2Grid = new ToolMenuPanel();
     mPanelNGON2Grid->SetTitle("NGON-2");
     mPanelGrid->AddSection(mPanelNGON2Grid);
-    
     
     mStepperNGON2Sides = new UIStepper();
     mStepperNGON2Sides->SetText("Sides:");
@@ -190,22 +184,6 @@ EditorMenuFormationGrid::EditorMenuFormationGrid(GameEditorGrid *pGrid) : ToolMe
     mStepperNGON2Radius->SetText("Radius:");
     mStepperNGON2Radius->SetTarget(&mGrid->mGridNGON2Radius);
     mPanelNGON2Grid->AddSection(mStepperNGON2Radius);
-    
-    mRowNGON21 = new ToolMenuSectionRow();
-    mPanelNGON2Grid->AddSection(mRowNGON21);
-    
-    mCheckBoxNGON2Stagger = new UICheckBox();
-    mCheckBoxNGON2Stagger->SetText("Stagger");
-    mCheckBoxNGON2Stagger->SetTarget(&mGrid->mGridNGON2ScanLineStagger);
-    mRowNGON21->AddCheckBox(mCheckBoxNGON2Stagger);
-    
-    
-    mCheckBoxNGON2StaggerOdd = new UICheckBox();
-    mCheckBoxNGON2StaggerOdd->SetText("Odd");
-    mCheckBoxNGON2StaggerOdd->SetTarget(&mGrid->mGridNGON2ScanLineStaggerOdd);
-    mRowNGON21->AddCheckBox(mCheckBoxNGON2StaggerOdd);
-    
-    
     
     mStepperNGON2ScanLineOffsetY = new UIStepper();
     mStepperNGON2ScanLineOffsetY->SetText("Scan-Off-Y:");
@@ -227,6 +205,21 @@ EditorMenuFormationGrid::EditorMenuFormationGrid(GameEditorGrid *pGrid) : ToolMe
     mStepperNGON2StartRotation->SetText("Rot-Off:");
     mStepperNGON2StartRotation->SetTarget(&mGrid->mGridNGON2StartRotation);
     mPanelNGON2Grid->AddSection(mStepperNGON2StartRotation);
+    
+    mRowNGON21 = new ToolMenuSectionRow();
+    mPanelNGON2Grid->AddSection(mRowNGON21);
+    
+    mCheckBoxNGON2Stagger = new UICheckBox();
+    mCheckBoxNGON2Stagger->SetText("Stagger");
+    mCheckBoxNGON2Stagger->SetTarget(&mGrid->mGridNGON2ScanLineStagger);
+    mRowNGON21->AddCheckBox(mCheckBoxNGON2Stagger);
+    
+    mCheckBoxNGON2StaggerOdd = new UICheckBox();
+    mCheckBoxNGON2StaggerOdd->SetText("Odd");
+    mCheckBoxNGON2StaggerOdd->SetTarget(&mGrid->mGridNGON2ScanLineStaggerOdd);
+    mRowNGON21->AddCheckBox(mCheckBoxNGON2StaggerOdd);
+    
+    
     
     
     
@@ -267,6 +260,77 @@ EditorMenuFormationGrid::EditorMenuFormationGrid(GameEditorGrid *pGrid) : ToolMe
     mPanelTRAP1Grid->AddSection(mStepperTRAP1StartRotation);
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    mPanelTRAP2Grid = new ToolMenuPanel();
+    mPanelTRAP2Grid->SetTitle("TRAP-2");
+    mPanelGrid->AddSection(mPanelTRAP2Grid);
+    
+    mStepperTRAP2TopSize = new UIStepper();
+    mStepperTRAP2TopSize->SetText("Top Size:");
+    mStepperTRAP2TopSize->SetTarget(&mGrid->mGridTRAP2TopSize);
+    mPanelTRAP2Grid->AddSection(mStepperTRAP2TopSize);
+    
+    mStepperTRAP2BottomSize = new UIStepper();
+    mStepperTRAP2BottomSize->SetText("Btm Size:");
+    mStepperTRAP2BottomSize->SetTarget(&mGrid->mGridTRAP2BottomSize);
+    mPanelTRAP2Grid->AddSection(mStepperTRAP2BottomSize);
+    
+    
+    mStepperTRAP2Height = new UIStepper();
+    mStepperTRAP2Height->SetText("Height:");
+    mStepperTRAP2Height->SetTarget(&mGrid->mGridTRAP2Height);
+    mPanelTRAP2Grid->AddSection(mStepperTRAP2Height);
+    
+    
+    
+    
+    mStepperTRAP2ScanLineOffsetY = new UIStepper();
+    mStepperTRAP2ScanLineOffsetY->SetText("Scan-Off-Y:");
+    mStepperTRAP2ScanLineOffsetY->SetTarget(&mGrid->mGridTRAP2ScanLineOffsetY);
+    mPanelTRAP2Grid->AddSection(mStepperTRAP2ScanLineOffsetY);
+    
+    
+    mStepperTRAP2ScanLineSpacingV = new UIStepper();
+    mStepperTRAP2ScanLineSpacingV->SetText("SPC-V:");
+    mStepperTRAP2ScanLineSpacingV->SetTarget(&mGrid->mGridTRAP2ScanLineSpacingV);
+    mPanelTRAP2Grid->AddSection(mStepperTRAP2ScanLineSpacingV);
+    
+    mStepperTRAP2ScanLineSpacingH = new UIStepper();
+    mStepperTRAP2ScanLineSpacingH->SetText("SPC-H:");
+    mStepperTRAP2ScanLineSpacingH->SetTarget(&mGrid->mGridTRAP2ScanLineSpacingH);
+    mPanelTRAP2Grid->AddSection(mStepperTRAP2ScanLineSpacingH);
+    
+
+    
+    
+    
+    
+    mRowTRAP21 = new ToolMenuSectionRow();
+    mPanelTRAP2Grid->AddSection(mRowTRAP21);
+    
+    mCheckBoxTRAP2Stagger = new UICheckBox();
+    mCheckBoxTRAP2Stagger->SetText("Stagger");
+    mCheckBoxTRAP2Stagger->SetTarget(&mGrid->mGridTRAP2ScanLineStagger);
+    mRowTRAP21->AddCheckBox(mCheckBoxTRAP2Stagger);
+    
+    mCheckBoxTRAP2StaggerOdd = new UICheckBox();
+    mCheckBoxTRAP2StaggerOdd->SetText("Odd");
+    mCheckBoxTRAP2StaggerOdd->SetTarget(&mGrid->mGridTRAP2ScanLineStaggerOdd);
+    mRowTRAP21->AddCheckBox(mCheckBoxTRAP2StaggerOdd);
+    
+    mCheckBoxTRAP2Rotate90 = new UICheckBox();
+    mCheckBoxTRAP2Rotate90->SetText("Turn90");
+    mCheckBoxTRAP2Rotate90->SetTarget(&mGrid->mGridTRAP2Rotate90);
+    mRowTRAP21->AddCheckBox(mCheckBoxTRAP2Rotate90);
     
     
     
@@ -361,6 +425,15 @@ void EditorMenuFormationGrid::Notify(void *pSender, const char *pNotification) {
     
     
     
+    if (pSender == mStepperTRAP2TopSize) { mGrid->BuildGrid(); }
+    if (pSender == mStepperTRAP2BottomSize) { mGrid->BuildGrid(); }
+    if (pSender == mStepperTRAP2Height) { mGrid->BuildGrid(); }
+    if (pSender == mStepperTRAP2ScanLineOffsetY) { mGrid->BuildGrid(); }
+    if (pSender == mStepperTRAP2ScanLineSpacingH) { mGrid->BuildGrid(); }
+    if (pSender == mStepperTRAP2ScanLineSpacingV) { mGrid->BuildGrid(); }
+    if (pSender == mCheckBoxTRAP2Stagger) { mGrid->BuildGrid(); }
+    if (pSender == mCheckBoxTRAP2StaggerOdd) { mGrid->BuildGrid(); }
+    if (pSender == mCheckBoxTRAP2Rotate90) { mGrid->BuildGrid(); }
     
 }
 
@@ -417,9 +490,6 @@ void EditorMenuFormationGrid::RefreshGridPanels() {
         }
     }
     
-    
-    
-    
     if (mPanelTRAP1Grid != NULL) {
         if (aGridType == SNAP_GRID_TYPE_TRAP1) {
             mPanelTRAP1Grid->Activate();
@@ -427,4 +497,14 @@ void EditorMenuFormationGrid::RefreshGridPanels() {
             mPanelTRAP1Grid->Deactivate();
         }
     }
+    
+    if (mPanelTRAP2Grid != NULL) {
+        if (aGridType == SNAP_GRID_TYPE_TRAP2) {
+            mPanelTRAP2Grid->Activate();
+        } else {
+            mPanelTRAP2Grid->Deactivate();
+        }
+    }
+    
+    
 }

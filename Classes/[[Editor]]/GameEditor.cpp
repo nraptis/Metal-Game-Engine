@@ -247,9 +247,17 @@ void GameEditor::Update() {
             
             //Load("section_learning_start");
             
-            //Load("section_medium_2_perms_2_bricks_2_turtles_4_waves_staggered_mixed_turtles_bricks_medium_circle_2_singles_1_turtle_brick");
-            Load("editor_test_section");
+            Load("section_medhard_4_perms_2_double_turtle_4linev_2_2_turtle_2_brick_rect_5_wave_trap5_line6_tect8_circ6_circ6_brick");
             
+            //Load("section_medium_2_perms_2_bricks_2_turtles_4_waves_staggered_mixed_turtles_bricks_medium_circle_2_singles_1_turtle_brick");
+            //Load("editor_test_section");
+            
+            //Load("section_medium_5_waves_1_4_spaced_turtles_2_sym_circles6_brick_center_1_marquee6_1_tri3");
+
+            //Load("section_easymed_2_perms_2_bricks_blocking_1_turtle_both_sides_3_waves_med_tri_2_singles_med_square");
+            //Load("section_medium_2_perms_2_bricks_2_turtles_4_waves_staggered_mixed_turtles_bricks_medium_circle_2_singles_1_turtle_brick");
+            //Load("section_medium_3_waves_simultaneous_large_hexahon_two_ring_tracer_with_bricks_2_small_osc_circles_brick_in_center");
+            //Load("section_medium_2_perms_circle_8_4_bricks_rot_oscillations_1_wave_circle_8_4_bricks_rotating");
             
             //OpenFormationEditor(NULL);
             

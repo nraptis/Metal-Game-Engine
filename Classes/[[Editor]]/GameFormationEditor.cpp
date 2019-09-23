@@ -1042,6 +1042,45 @@ FString GameFormationEditor::GenerateGridName() {
         }
     }
     
+    
+    if (mGrid.mGridType == SNAP_GRID_TYPE_TRAP2) {
+
+        aChunkList.Add(new FString("trp2"));
+        
+        FString aSizeTString = FString(mGrid.mGridTRAP2TopSize) + "tsz";
+        aChunkList.Add(new FString(aSizeTString.c()));
+        
+        FString aSizeBString = FString(mGrid.mGridTRAP2BottomSize) + "bsz";
+        aChunkList.Add(new FString(aSizeBString.c()));
+        
+        FString aHeightString = FString(mGrid.mGridTRAP2Height) + "ht";
+        aChunkList.Add(new FString(aHeightString.c()));
+        
+        if (mGrid.mGridTRAP2ScanLineOffsetY != 0) {
+            FString aOffsetString = FString(mGrid.mGridTRAP2ScanLineOffsetY) + "ofy";
+            aChunkList.Add(new FString(aOffsetString.c()));
+        }
+        
+        FString aSpacingHString = FString(mGrid.mGridTRAP2ScanLineSpacingH) + "sph";
+        aChunkList.Add(new FString(aSpacingHString.c()));
+        
+        FString aSpacingVString = FString(mGrid.mGridTRAP2ScanLineSpacingV) + "spv";
+        aChunkList.Add(new FString(aSpacingVString.c()));
+        
+        if (mGrid.mGridTRAP2ScanLineStagger != false) {
+            FString aStaggerString = FString("stg");
+            if (mGrid.mGridTRAP2ScanLineStaggerOdd != false) {
+                aStaggerString.Append("odd");
+            }
+            aChunkList.Add(new FString(aStaggerString.c()));
+        }
+        
+        if (mGrid.mGridTRAP2Rotate90 != false) {
+            FString aRot90String = "rot90";
+            aChunkList.Add(new FString(aRot90String.c()));
+        }
+    }
+    
     int aCount = 0;
     int aOnCount = 0;
     float aForgiveness = 2.0f;

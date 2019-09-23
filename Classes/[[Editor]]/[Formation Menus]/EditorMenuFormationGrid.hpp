@@ -74,7 +74,6 @@ public:
     ToolMenuSectionRow                      *mRowNGON21;
     UICheckBox                              *mCheckBoxNGON2Stagger;
     UICheckBox                              *mCheckBoxNGON2StaggerOdd;
-    
     UIStepper                               *mStepperNGON2ScanLineOffsetY;
     UIStepper                               *mStepperNGON2ScanLineSpacingH;
     UIStepper                               *mStepperNGON2ScanLineSpacingV;
@@ -91,6 +90,18 @@ public:
     UIStepper                               *mStepperTRAP1StartRotation;
     
     
+    
+    ToolMenuPanel                           *mPanelTRAP2Grid;
+    UIStepper                               *mStepperTRAP2TopSize;
+    UIStepper                               *mStepperTRAP2BottomSize;
+    UIStepper                               *mStepperTRAP2Height;
+    UIStepper                               *mStepperTRAP2ScanLineOffsetY;
+    UIStepper                               *mStepperTRAP2ScanLineSpacingH;
+    UIStepper                               *mStepperTRAP2ScanLineSpacingV;
+    ToolMenuSectionRow                      *mRowTRAP21;
+    UICheckBox                              *mCheckBoxTRAP2Stagger;
+    UICheckBox                              *mCheckBoxTRAP2StaggerOdd;
+    UICheckBox                              *mCheckBoxTRAP2Rotate90;
     
     void                                    RefreshGridPanels();
     

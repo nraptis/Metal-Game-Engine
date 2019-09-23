@@ -83,6 +83,15 @@ public:
     int                                         mGridTRAP1CountV;
     int                                         mGridTRAP1StartRotation;
     
+    int                                         mGridTRAP2TopSize;
+    int                                         mGridTRAP2BottomSize;
+    int                                         mGridTRAP2Height;
+    bool                                        mGridTRAP2Rotate90;
+    bool                                        mGridTRAP2ScanLineStagger;
+    bool                                        mGridTRAP2ScanLineStaggerOdd;
+    int                                         mGridTRAP2ScanLineOffsetY;
+    int                                         mGridTRAP2ScanLineSpacingV;
+    int                                         mGridTRAP2ScanLineSpacingH;
     
     FPointList                                  mGridList;
     FPointList                                  mOutlineList;
@@ -92,9 +101,11 @@ public:
     void                                        BuildRectGrid();
     void                                        BuildCircleGrid();
     void                                        BuildStarGrid();
+    
+    void                                        BuildArc();
+    
     void                                        BuildNGON1Grid();
     void                                        BuildNGON2Grid();
-    
     void                                        BuildTRAP1Grid();
     void                                        BuildTRAP2Grid();
     

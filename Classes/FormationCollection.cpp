@@ -148,15 +148,34 @@ void FormationCollection::Load() {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Trapezoid [[BALLOON ONLY]]
     
-    Add("form_all_nod_all_bln_grd_trp1_80tsz_220bsz_96ht_11cth_3ctv_35ful_nodes_cfg14xb12on2of");
-    Add("form_all_nod_all_bln_grd_trp1_220tsz_80bsz_96ht_11cth_3ctv_35ful_nodes_cfg14xb12on2of");
-    Add("form_all_nod_all_bln_grd_trp1_74tsz_36bsz_36ht_3cth_2ctv_71ful_nodes_cfg5xb_snp");
-    Add("form_all_nod_all_bln_grd_trp1_36tsz_74bsz_36ht_3cth_2ctv_71ful_nodes_cfg5xb_snp");
-    Add("form_all_nod_all_bln_grd_trp1_44tsz_88bsz_28ht_3cth_2ctv_90ros_71ful_nodes_cfg5xb_snp");
-    Add("form_all_nod_all_bln_grd_trp1_88tsz_44bsz_28ht_3cth_2ctv_90ros_71ful_nodes_cfg5xb_snp");
-    Add("form_all_nod_all_bln_grd_trp1_130tsz_44bsz_62ht_4cth_3ctv_62ful_nodes_cfg9xb8on1of");
-    Add("form_all_nod_all_bln_grd_trp1_44tsz_130bsz_62ht_4cth_3ctv_62ful_nodes_cfg9xb8on1of");
     //Add("");
+    //Add("form_all_nod_all_bln_grd_trp1_80tsz_220bsz_96ht_11cth_3ctv_35ful_nodes_cfg14xb12on2of");
+    //Add("form_all_nod_all_bln_grd_trp1_220tsz_80bsz_96ht_11cth_3ctv_35ful_nodes_cfg14xb12on2of");
+    //Add("form_all_nod_all_bln_grd_trp1_74tsz_36bsz_36ht_3cth_2ctv_71ful_nodes_cfg5xb_snp");
+    //Add("form_all_nod_all_bln_grd_trp1_36tsz_74bsz_36ht_3cth_2ctv_71ful_nodes_cfg5xb_snp");
+    //Add("form_all_nod_all_bln_grd_trp1_44tsz_88bsz_28ht_3cth_2ctv_90ros_71ful_nodes_cfg5xb_snp");
+    //Add("form_all_nod_all_bln_grd_trp1_88tsz_44bsz_28ht_3cth_2ctv_90ros_71ful_nodes_cfg5xb_snp");
+    //Add("form_all_nod_all_bln_grd_trp1_130tsz_44bsz_62ht_4cth_3ctv_62ful_nodes_cfg9xb8on1of");
+    //Add("form_all_nod_all_bln_grd_trp1_44tsz_130bsz_62ht_4cth_3ctv_62ful_nodes_cfg9xb8on1of");
+    
+    
+    Add("form_all_nod_all_bln_grd_trp2_165tsz_260bsz_85ht_20sph_20spv_stg_33ful_nodes_cfg18xb_snp");
+    Add("form_all_nod_all_bln_grd_trp2_260tsz_165bsz_85ht_20sph_20spv_stg_33ful_nodes_cfg18xb_snp");
+    Add("form_all_nod_all_bln_grd_trp2_230tsz_135bsz_85ht_20sph_20spv_stg_33ful_nodes_cfg15xb_snp");
+    Add("form_all_nod_all_bln_grd_trp2_135tsz_245bsz_85ht_20sph_20spv_stg_33ful_nodes_cfg15xb_snp");
+    Add("form_all_nod_all_bln_grd_trp2_105tsz_205bsz_85ht_20sph_20spv_stg_34ful_nodes_cfg12xb_snp");
+    Add("form_all_nod_all_bln_grd_trp2_188tsz_102bsz_85ht_20sph_20spv_stg_34ful_nodes_cfg12xb_snp");
+    Add("form_all_nod_all_bln_grd_trp2_148tsz_52bsz_85ht_20sph_20spv_stg_36ful_nodes_cfg9xb_snp");
+    Add("form_all_nod_all_bln_grd_trp2_52tsz_148bsz_85ht_20sph_20spv_stg_36ful_nodes_cfg9xb_snp");
+    //Add("form_all_nod_all_bln_grd_trp2_52tsz_120bsz_42ht_20sph_20spv_stg_42ful_nodes_cfg5xb_snp");
+    Add("form_all_nod_all_bln_grd_trp2_114tsz_48bsz_42ht_20sph_20spv_stg_42ful_nodes_cfg5xb_snp");
+    //Add("form_all_nod_all_bln_grd_trp2_124tsz_78bsz_42ht_20sph_20spv_stg_39ful_nodes_cfg7xb_snp");
+    Add("form_all_nod_all_bln_grd_trp2_78tsz_114bsz_42ht_20sph_20spv_stg_42ful_nodes_cfg5xb_snp");
+    Add("form_all_nod_all_bln_grd_trp2_98tsz_134bsz_42ht_20sph_20spv_stg_39ful_nodes_cfg7xb_snp");
+    Add("form_all_nod_all_bln_grd_trp2_140tsz_96bsz_42ht_20sph_20spv_stg_39ful_nodes_cfg7xb_snp");
+    Add("form_all_nod_all_bln_grd_trp2_170tsz_136bsz_42ht_20sph_20spv_stg_38ful_nodes_cfg9xb_snp");
+    Add("form_all_nod_all_bln_grd_trp2_136tsz_170bsz_42ht_20sph_20spv_stg_38ful_nodes_cfg9xb_snp");
+    
     //Add("");
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
