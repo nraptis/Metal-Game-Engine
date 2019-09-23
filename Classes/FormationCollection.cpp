@@ -303,8 +303,21 @@ void FormationCollection::Load() {
     Add("form_all_nod_all_tur_grd_rec_3x3_68sph_68spv_44ful_nodes_cfg4xt_snp");
     Add("form_all_nod_all_tur_grd_rec_5x4_68sph_68spv_80ful_nodes_cfg16xt_snp");
     
-    //Add("");
-    
+    Add("form_all_nod_all_tur_grd_rec_1x2_34sph_62spv_sld_nodes_cfg2xt_snp");
+    Add("form_all_nod_all_tur_grd_rec_1x3_34sph_62spv_sld_nodes_cfg3xt_snp");
+    Add("form_all_nod_all_tur_grd_rec_1x4_34sph_62spv_sld_nodes_cfg4xt_snp");
+    Add("form_all_nod_all_tur_grd_rec_1x5_34sph_62spv_sld_nodes_cfg5xt_snp");
+    Add("form_all_nod_all_tur_grd_rec_1x6_34sph_62spv_sld_nodes_cfg6xt_snp");
+    Add("form_all_nod_all_tur_grd_rec_2x2_34sph_62spv_sld_nodes_cfg4xt_snp");
+    Add("form_all_nod_all_tur_grd_rec_2x3_34sph_62spv_sld_nodes_cfg6xt_snp");
+    Add("form_all_nod_all_tur_grd_rec_2x4_34sph_62spv_sld_nodes_cfg8xt_snp");
+    Add("form_all_nod_all_tur_grd_rec_2x5_34sph_62spv_sld_nodes_cfg10xt_snp");
+    Add("form_all_nod_all_tur_grd_rec_2x6_34sph_62spv_sld_nodes_cfg12xt_snp");
+    Add("form_all_nod_all_tur_grd_rec_3x2_34sph_62spv_sld_nodes_cfg6xt_snp");
+    Add("form_all_nod_all_tur_grd_rec_3x3_34sph_62spv_sld_nodes_cfg9xt_snp");
+    Add("form_all_nod_all_tur_grd_rec_3x4_34sph_62spv_sld_nodes_cfg12xt_snp");
+    Add("form_all_nod_all_tur_grd_rec_3x5_34sph_62spv_sld_nodes_cfg15xt_snp");
+    Add("form_all_nod_all_tur_grd_rec_3x6_34sph_62spv_sld_nodes_cfg18xt_snp");
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Arcs [[[Turtles ONLY]]]
@@ -435,10 +448,10 @@ void FormationCollection::Load() {
     //////
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Arcs
+    //Shapes - Arcs [[[Balloon + BrickHead]]]
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Circle
+    //Shapes - Circle [[[Balloon + BrickHead]]]
     
     //Add("");
     //Add("");
@@ -451,40 +464,46 @@ void FormationCollection::Load() {
     Add("form_all_nod_mix_bln_brk_grd_cir_72rsp_1rct_10rdc_sld_nodes_cfgbrrbbbrrbbr_snp");
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Heptagon
+    //Shapes - Heptagon [[[Balloon + BrickHead]]]
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Hexagon
+    //Shapes - Hexagon [[[Balloon + BrickHead]]]
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Lines
+    //Shapes - Lines [[[Balloon + BrickHead]]]
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Octogon
+    //Shapes - Octogon [[[Balloon + BrickHead]]]
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Pentagon
+    //Shapes - Pentagon [[[Balloon + BrickHead]]]
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Rectangle
+    //Shapes - Rectangle [[[Balloon + BrickHead]]]
+    
+    Add("form_all_nod_mix_bln_brk_grd_rec_3x7_46sph_46spv_sld_nodes_cfgrbrrbrrbrrbrrbrrbrrbr_snp");
+    Add("form_all_nod_mix_bln_brk_grd_rec_3x6_46sph_46spv_sld_nodes_cfgrbrrbrrbrrbrrbrrbr_snp");
+    Add("form_all_nod_mix_bln_brk_grd_rec_3x5_46sph_46spv_sld_nodes_cfgrbrrbrrbrrbrrbr_snp");
+    Add("form_all_nod_mix_bln_brk_grd_rec_3x4_46sph_46spv_sld_nodes_cfgrbrrbrrbrrbr_snp");
+    Add("form_all_nod_mix_bln_brk_grd_rec_3x3_46sph_46spv_sld_nodes_cfgrbrrbrrbr_snp");
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Staggered
+    //Shapes - Staggered [[[Balloon + BrickHead]]]
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Star
+    //Shapes - Star [[[Balloon + BrickHead]]]
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Trapezoid
+    //Shapes - Trapezoid [[[Balloon + BrickHead]]]
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Triangle
+    //Shapes - Triangle [[[Balloon + BrickHead]]]
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Tracers - Circle
+    //Tracers - Circle [[[Balloon + BrickHead]]]
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Tracers - Custom
+    //Tracers - Custom [[[Balloon + BrickHead]]]
     
     //Add("");
     Add("form_all_trc_mix_bln_brk_grd_rec_6x6_60sph_60spv_0ful_tra_12ply_cfgrbbbbbbbbbbbbbrbbbbbbbbbbbbb");
@@ -495,11 +514,11 @@ void FormationCollection::Load() {
     
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Tracers - Rect
+    //Tracers - Rect [[[Balloon + BrickHead]]]
     
     //Add("");
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Tracers - Rounded Rect
+    //Tracers - Rounded Rect [[[Balloon + BrickHead]]]
     
     Add("form_all_trc_mix_bln_brk_tra_rrc_505siz_110crd_cfgrbbbrbbbrbbbb");
     Add("form_all_trc_mix_bln_brk_tra_rrc_505siz_110crd_cfgrbrbrbrbrbrbb");
@@ -520,7 +539,7 @@ void FormationCollection::Load() {
     //////
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Shapes - Arcs
+    //Shapes - Arcs [[[Balloon + Turtles]]]
     
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Shapes - Circle [[[Balloons + Turtles]]]

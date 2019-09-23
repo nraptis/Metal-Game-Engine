@@ -1,0 +1,204 @@
+{
+	"section": true,
+	"progress": 25,
+	"wave_list": [
+		{
+			"spawn_spacing": 90,
+			"max_spawn_size": 213,
+			"path": {
+				"speed_class": 200,
+				"node_list": [
+					{
+						"x_con": 200,
+						"y_con": 400
+					},
+					{
+						"x_con": 500,
+						"y_con": 400,
+						"decel": 235,
+						"accel": 145,
+						"wait": 3666
+					},
+					{
+						"x_con": 850,
+						"y_con": 400
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "form_all_nod_all_tur_grd_rec_3x3_68sph_68spv_44ful_nodes_cfg4xt_snp",
+					"formation_config": {}
+				}
+			]
+		},
+		{
+			"spawn_spacing": 90,
+			"creation_delay": 400,
+			"max_spawn_size": 163,
+			"path": {
+				"node_list": [
+					{
+						"x_con": 200,
+						"y_con": 600
+					},
+					{
+						"x_con": 400,
+						"x_con_offset": -10.000000,
+						"y_con": 600,
+						"wait": 1886
+					},
+					{
+						"x_con": 150,
+						"y_con": 600
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "form_all_nod_mix_bln_brk_grd_cir_46rsp_1rct_6rdc_sld_nodes_cfgbbbrbbb_snp",
+					"formation_config": {},
+					"motion": {
+						"play_on_enter": false,
+						"play_on_exit": false,
+						"slice_list": [
+							{
+								"type": 2,
+								"speed_class": 100
+							},
+							{
+								"type": 4,
+								"linear_tick": 125,
+								"linear_time": 250,
+								"radius": 50,
+								"pause_1": 20,
+								"pause_2": 20
+							}
+						]
+					},
+					"style": {
+						"disable_threads": true
+					}
+				}
+			]
+		},
+		{
+			"spawn_spacing": 90,
+			"max_spawn_size": 163,
+			"path": {
+				"node_list": [
+					{
+						"x_con": 800,
+						"y_con": 600
+					},
+					{
+						"x_con": 600,
+						"x_con_offset": 10.000000,
+						"y_con": 600,
+						"wait": 1886
+					},
+					{
+						"x_con": 850,
+						"y_con": 600
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "form_all_nod_mix_bln_brk_grd_cir_46rsp_1rct_6rdc_sld_nodes_cfgbbbrbbb_snp",
+					"formation_config": {},
+					"motion": {
+						"play_on_enter": false,
+						"play_on_exit": false,
+						"slice_list": [
+							{
+								"type": 2,
+								"speed_class": 100
+							},
+							{
+								"type": 4,
+								"linear_tick": 125,
+								"linear_time": 250,
+								"radius": 50,
+								"pause_1": 20,
+								"pause_2": 20
+							},
+							{
+								"type": 1
+							}
+						]
+					},
+					"style": {
+						"disable_threads": true
+					}
+				}
+			]
+		},
+		{
+			"spawn_spacing": 90,
+			"creation_delay": 200,
+			"path": {
+				"speed_class": -200,
+				"node_list": [
+					{
+						"x_con": 200,
+						"y_con": 400
+					},
+					{
+						"x_con": 850,
+						"y_con": 400
+					}
+				]
+			},
+			"spawn": [
+				{},
+				{},
+				{},
+				{},
+				{},
+				{}
+			]
+		},
+		{
+			"spawn_spacing": 90,
+			"creation_delay": 1550,
+			"max_spawn_size": 116,
+			"path": {
+				"speed_class": 300,
+				"node_list": [
+					{
+						"x_con": 500,
+						"y_con": 200
+					},
+					{
+						"x_con": 500,
+						"y_con": 400,
+						"decel": 180,
+						"accel": 120,
+						"wait": 1288
+					},
+					{
+						"x_con": 500,
+						"y_con": 150
+					}
+				]
+			},
+			"spawn": [
+				{
+					"formation": "form_all_nod_all_bln_grd_tri_ng2_34rad_0ofy_46sph_40spv_stgodd_180ros_sld_nodes_cfg3xb_snp",
+					"formation_config": {},
+					"motion": {
+						"play_on_enter": false,
+						"play_on_exit": false,
+						"slice_list": [
+							{
+								"type": 2,
+								"speed_class": 100
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

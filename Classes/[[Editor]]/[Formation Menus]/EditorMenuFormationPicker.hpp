@@ -113,6 +113,14 @@ public:
     UICheckBox                                  *mCheckBoxTracersOnly;
     UICheckBox                                  *mCheckBoxNoTracersOnly;
     
+    
+    ToolMenuSectionRow                          *mFilterRow3;
+    UICheckBox                                  *mCheckBoxRequiresBalloon;
+    UICheckBox                                  *mCheckBoxRequiresBrick;
+    UICheckBox                                  *mCheckBoxRequiresTurtle;
+    UICheckBox                                  *mCheckBoxRequiresBomb;
+    
+    
     void                                        ApplyFilter();
     void                                        ClearFilter();
     

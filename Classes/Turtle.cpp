@@ -248,7 +248,7 @@ void Turtle::Draw() {
     
     GameObject::Draw();
     
-    /*
+    
     Graphics::PipelineStateSetShape2DAlphaBlending();
     Graphics::SetColor(1.0f, 0.0f, 0.0f, 0.85f);
     
@@ -257,7 +257,7 @@ void Turtle::Draw() {
     
     Graphics::SetColor(1.0f, 0.0f, 0.25f, 0.5f);
     mEdgePointList2D.DrawEdges(2.0f);
-    */
+    
 }
 
 void Turtle::Draw3DPropeller() {

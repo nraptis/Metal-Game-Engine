@@ -1,11 +1,15 @@
 {
-	"scroll_offset_x": 76.740936,
-	"scroll_offset_y": 336.965393,
-	"grid_offset_x": 7,
+	"scroll_offset_x": 6.847300,
+	"scroll_offset_y": 1807.391113,
+	"grid_offset_x": 20,
 	"grid_offset_y": 0,
-	"filter_text": "trp",
+	"filter_text": "",
 	"filter_balloons_only": false,
 	"filter_mixed_only": false,
 	"filter_tracers_only": false,
-	"filter_no_tracers_only": false
+	"filter_no_tracers_only": false,
+	"filter_requires_balloon": false,
+	"filter_requires_brick": false,
+	"filter_requires_turtle": false,
+	"filter_requires_bomb": false
 }

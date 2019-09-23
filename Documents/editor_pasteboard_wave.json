@@ -1,24 +1,24 @@
 {
+	"creation_prev_wave_complete": true,
 	"max_spawn_size": 163,
 	"path": {
-		"speed_class": 300,
+		"speed_class": 200,
 		"node_list": [
 			{
-				"x_con": 200,
-				"y_con": 800
+				"x_con": 500,
+				"y_con": 200
 			},
 			{
-				"x_con": 300,
-				"x_con_offset": 100.000000,
-				"y_con": 800,
-				"y_con_offset": -60.000000,
-				"decel": 125,
-				"accel": 125,
-				"wait": 1820
+				"x_con": 500,
+				"y_con": 600,
+				"y_con_offset": -120.000000,
+				"decel": 170,
+				"accel": 100,
+				"wait": 1637
 			},
 			{
-				"x_con": 150,
-				"y_con": 800
+				"x_con": 500,
+				"y_con": 150
 			}
 		]
 	},
@@ -31,14 +31,13 @@
 				"play_on_exit": false,
 				"slice_list": [
 					{
-						"type": 3,
-						"linear_tick": 110,
-						"linear_time": 220,
-						"angle_span": 40,
-						"pause_1": 20,
-						"pause_2": 20
+						"type": 2,
+						"speed_class": 200
 					}
 				]
+			},
+			"style": {
+				"disable_threads": true
 			}
 		}
 	]

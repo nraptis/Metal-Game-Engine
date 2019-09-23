@@ -12,6 +12,7 @@
 #include "GameEditor.hpp"
 #include "GamePermanentEditor.hpp"
 #include "EditorMenuPanelFormationConfiguration.hpp"
+#include "LevelSectionPermBlueprint.hpp"
 
 //#include "FApp.hpp"
 
@@ -192,24 +193,32 @@ void EditorMenuAttachment::Notify(void *pSender, const char *pNotification) {
 
 void EditorMenuAttachment::Update() {
     
-    LevelWaveSpawnBlueprint *aSpawn = NULL;
-    if (gEditor) { aSpawn = gEditor->SpawnGet(); }
+    
+    LevelWaveSpawnBlueprint *aWaveSpawn = NULL;
+    LevelPermSpawnBlueprint *aPermSpawn = NULL;
+    LevelSectionPermBlueprint *aPerm = NULL;
+    
+    if (mEditor != NULL) {
+        aWaveSpawn = gEditor->SpawnGet();
+    } else if (mPermEditor != NULL) {
+        aPermSpawn = gEditor->PermSpawnGet();
+        if (aPermSpawn == NULL) {
+            aPerm = gEditor->PermGet();
+        }
+    }
     
     if (mStepperSpacingOffset != NULL) {
-        bool aUnlink = true;
-        if (aSpawn != NULL) {
-            aUnlink = false;
-            mStepperSpacingOffset->SetTarget(&(aSpawn->mSpawnSpacingOffset));
-        }
-        if (aUnlink) {
+        if (aWaveSpawn != NULL) {
+            mStepperSpacingOffset->SetTarget(&(aWaveSpawn->mSpawnSpacingOffset));
+        } else {
             mStepperSpacingOffset->SetTarget(NULL);
         }
     }
     
     
     if (mCheckBoxShortCircuit != NULL) {
-        if (aSpawn != NULL) {
-            mCheckBoxShortCircuit->SetTarget(&(aSpawn->mShortCircuit));
+        if (aWaveSpawn != NULL) {
+            mCheckBoxShortCircuit->SetTarget(&(aWaveSpawn->mShortCircuit));
         } else {
             mCheckBoxShortCircuit->SetTarget(NULL);
         }
@@ -217,8 +226,8 @@ void EditorMenuAttachment::Update() {
     
     
     if (mCheckBoxShortCircuitKnockDown != NULL) {
-        if (aSpawn != NULL) {
-            mCheckBoxShortCircuitKnockDown->SetTarget(&(aSpawn->mShortCircuitKnockDown));
+        if (aWaveSpawn != NULL) {
+            mCheckBoxShortCircuitKnockDown->SetTarget(&(aWaveSpawn->mShortCircuitKnockDown));
         } else {
             mCheckBoxShortCircuitKnockDown->SetTarget(NULL);
         }

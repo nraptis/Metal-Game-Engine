@@ -412,3 +412,22 @@ bool LevelFormation::EditorHasBalloonsOnly() {
     
     return false;
 }
+
+bool LevelFormation::EditorHasType(int pType) {
+    EnumList(LevelFormationNode, aNode, mSpawnNodeList) {
+        
+        if (aNode->mObjectType == pType) {
+            return true;
+        }
+    }
+    
+    EnumList(LevelFormationTracer, aTracer, mTracerList) {
+        EnumList(LevelFormationNode, aNode, aTracer->mSpawnNodeList) {
+            if (aNode->mObjectType == pType) {
+                return true;
+            }
+        }
+    }
+    
+    return false;
+}

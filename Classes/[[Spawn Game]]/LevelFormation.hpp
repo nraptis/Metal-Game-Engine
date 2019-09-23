@@ -83,12 +83,13 @@ public:
     LevelFormation                              *Clone();
     
     //For Editor
-    void                                        EditorKillAllObjects();
     
+    void                                        EditorKillAllObjects();
     bool                                        EditorHasAnyTracers();
     bool                                        EditorHasNonTracers();
     bool                                        EditorHasMixedTypes();
     bool                                        EditorHasBalloonsOnly();
+    bool                                        EditorHasType(int pType);
     
 private:
     

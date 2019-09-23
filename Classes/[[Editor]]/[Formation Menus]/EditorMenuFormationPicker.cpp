@@ -79,6 +79,30 @@ EditorMenuFormationPicker::EditorMenuFormationPicker() {
     
     
     
+    
+    mFilterRow3 = new ToolMenuSectionRow();
+    AddSection(mFilterRow3);
+    
+    
+    mCheckBoxRequiresBalloon = new UICheckBox();
+    mCheckBoxRequiresBalloon->SetText("Has-BLN");
+    mFilterRow3->AddCheckBox(mCheckBoxRequiresBalloon);
+    
+    mCheckBoxRequiresBrick = new UICheckBox();
+    mCheckBoxRequiresBrick->SetText("Has-BRK");
+    mFilterRow3->AddCheckBox(mCheckBoxRequiresBrick);
+    
+    mCheckBoxRequiresTurtle = new UICheckBox();
+    mCheckBoxRequiresTurtle->SetText("Has-TUR");
+    mFilterRow3->AddCheckBox(mCheckBoxRequiresTurtle);
+    
+    mCheckBoxRequiresBomb = new UICheckBox();
+    mCheckBoxRequiresBomb->SetText("Has-BOM");
+    mFilterRow3->AddCheckBox(mCheckBoxRequiresBomb);
+    
+    
+    
+    
     mSection = new ToolMenuSection();
     AddSection(mSection);
     
@@ -116,8 +140,8 @@ void EditorMenuFormationPicker::Update() {
     
     
     mLoadConfigTimer++;
-    if (mLoadConfigTimer >= 8) {
-        mLoadConfigTimer = 8;
+    if (mLoadConfigTimer >= 2) {
+        mLoadConfigTimer = 2;
         if (mLoadConfig == true) {
             mLoadConfig = false;
             LoadConfig();
@@ -127,7 +151,6 @@ void EditorMenuFormationPicker::Update() {
     
     
     if (mEnqueueApplyFilter > 0) {
-        printf("mEnqueueApplyFilter = %d\n", mEnqueueApplyFilter);
         mEnqueueApplyFilter--;
         if (mEnqueueApplyFilter <= 0) {
             ApplyFilter();
@@ -135,7 +158,6 @@ void EditorMenuFormationPicker::Update() {
     }
     
     if (mEnqueueUpdateScroll > 0) {
-        printf("mEnqueueUpdateScroll = %d\n", mEnqueueUpdateScroll);
         mEnqueueUpdateScroll--;
         if (mEnqueueUpdateScroll <= 0) {
             mScrollContent->CatchUpLoadedShift();
@@ -165,10 +187,69 @@ void EditorMenuFormationPicker::Notify(void *pSender, const char *pNotification)
     
     if (pSender == mTextBoxFilter) { ApplyFilter(); }
     if (pSender == mButtonApplyFilter) { ApplyFilter(); }
-    if (pSender == mCheckBoxBalloonsOnly) { ApplyFilter(); }
-    if (pSender == mCheckBoxMixedOnly) { ApplyFilter(); }
-    if (pSender == mCheckBoxTracersOnly) { ApplyFilter(); }
-    if (pSender == mCheckBoxNoTracersOnly) { ApplyFilter(); }
+    if (pSender == mCheckBoxBalloonsOnly) {
+        if (mCheckBoxBalloonsOnly->mIsChecked) {
+            mCheckBoxMixedOnly->SetChecked(false);
+            mCheckBoxRequiresBrick->SetChecked(false);
+            mCheckBoxRequiresTurtle->SetChecked(false);
+            mCheckBoxRequiresBomb->SetChecked(false);
+        }
+        ApplyFilter();
+    }
+    if (pSender == mCheckBoxMixedOnly) {
+        if (mCheckBoxMixedOnly->mIsChecked) {
+            mCheckBoxBalloonsOnly->SetChecked(false);
+        }
+        
+        ApplyFilter(); }
+    if (pSender == mCheckBoxTracersOnly) {
+        
+        if (mCheckBoxTracersOnly->mIsChecked) {
+            mCheckBoxNoTracersOnly->SetChecked(false);
+        }
+        
+        
+        ApplyFilter();
+    }
+    if (pSender == mCheckBoxNoTracersOnly) {
+        if (mCheckBoxNoTracersOnly->mIsChecked) {
+            mCheckBoxTracersOnly->SetChecked(false);
+        }
+        
+        ApplyFilter();
+    }
+    
+    
+    if (pSender == mCheckBoxRequiresBalloon) {
+        ApplyFilter();
+    }
+    if (pSender == mCheckBoxRequiresBrick) {
+        
+        if (mCheckBoxRequiresBrick->mIsChecked == true) {
+            mCheckBoxBalloonsOnly->SetChecked(false);
+        }
+        
+        ApplyFilter();
+        
+    }
+    if (pSender == mCheckBoxRequiresTurtle) {
+        
+        if (mCheckBoxRequiresTurtle->mIsChecked == true) {
+            mCheckBoxBalloonsOnly->SetChecked(false);
+        }
+        
+        ApplyFilter();
+    }
+    if (pSender == mCheckBoxRequiresBomb) {
+        
+        if (mCheckBoxRequiresBomb->mIsChecked == true) {
+            mCheckBoxBalloonsOnly->SetChecked(false);
+        }
+        
+        ApplyFilter();
+        
+    }
+    
     
     if (pSender == mButtonClearFilter) { ClearFilter(); }
     
@@ -196,8 +277,9 @@ void EditorMenuFormationPicker::Layout() {
     
     mFilterRow1->SetFrame(0.0f, 0.0f, mContent.GetWidth(), mFilterRow1->GetHeight());
     mFilterRow2->SetFrame(0.0f, mFilterRow1->GetHeight(), mContent.GetWidth(), mFilterRow1->GetHeight());
+    mFilterRow3->SetFrame(0.0f, mFilterRow1->GetHeight() + mFilterRow2->GetHeight(), mContent.GetWidth(), mFilterRow1->GetHeight());
     
-    float aOffset = mFilterRow1->GetHeight() + mFilterRow2->GetHeight();
+    float aOffset = mFilterRow1->GetHeight() + mFilterRow2->GetHeight() + mFilterRow3->GetHeight();
     mSection->SetFrame(0.0f, aOffset, mContent.GetWidth(), mContent.GetHeight() - aOffset);
 }
 
@@ -226,6 +308,12 @@ void EditorMenuFormationPicker::ApplyFilter() {
     bool aTracersOnly = false;
     bool aNoTracersOnly = false;
     
+    bool aRequiresBalloon = false;
+    bool aRequiresBrick = false;
+    bool aRequiresTurtle = false;
+    bool aRequiresBomb = false;
+    
+    
     if (mCheckBoxBalloonsOnly != NULL) {
         aBalloonOnly = mCheckBoxBalloonsOnly->mIsChecked;
     }
@@ -241,6 +329,23 @@ void EditorMenuFormationPicker::ApplyFilter() {
     if (mCheckBoxNoTracersOnly != NULL) {
         aNoTracersOnly = mCheckBoxNoTracersOnly->mIsChecked;
     }
+    
+    if (mCheckBoxRequiresBalloon != NULL) {
+        aRequiresBalloon = mCheckBoxRequiresBalloon->mIsChecked;
+    }
+    
+    if (mCheckBoxRequiresBrick != NULL) {
+        aRequiresBrick = mCheckBoxRequiresBrick->mIsChecked;
+    }
+    
+    if (mCheckBoxRequiresTurtle != NULL) {
+        aRequiresTurtle = mCheckBoxRequiresTurtle->mIsChecked;
+    }
+    
+    if (mCheckBoxRequiresBomb != NULL) {
+        aRequiresBomb = mCheckBoxRequiresBomb->mIsChecked;
+    }
+    
     
     
    
@@ -271,6 +376,24 @@ void EditorMenuFormationPicker::ApplyFilter() {
         
         if (aBalloonOnly) {
             if (aFormation->EditorHasBalloonsOnly() == false) { aUse = false; }
+        }
+        
+        
+        
+        if (aRequiresBalloon) {
+            if (aFormation->EditorHasType(GAME_OBJECT_TYPE_BALLOON) == false) { aUse = false; }
+        }
+        
+        if (aRequiresBrick) {
+            if (aFormation->EditorHasType(GAME_OBJECT_TYPE_BRICKHEAD) == false) { aUse = false; }
+        }
+        
+        if (aRequiresTurtle) {
+            if (aFormation->EditorHasType(GAME_OBJECT_TYPE_TURTLE) == false) { aUse = false; }
+        }
+        
+        if (aRequiresBomb) {
+            if (aFormation->EditorHasType(GAME_OBJECT_TYPE_BOMB) == false) { aUse = false; }
         }
         
         if (aUse == true) {
@@ -312,6 +435,14 @@ void EditorMenuFormationPicker::SaveConfig() {
     aConfigNode->AddDictionaryBool("filter_no_tracers_only", mCheckBoxNoTracersOnly->mIsChecked);
     
     
+    aConfigNode->AddDictionaryBool("filter_requires_balloon", mCheckBoxRequiresBalloon->mIsChecked);
+    aConfigNode->AddDictionaryBool("filter_requires_brick", mCheckBoxRequiresBrick->mIsChecked);
+    aConfigNode->AddDictionaryBool("filter_requires_turtle", mCheckBoxRequiresTurtle->mIsChecked);
+    aConfigNode->AddDictionaryBool("filter_requires_bomb", mCheckBoxRequiresBomb->mIsChecked);
+    
+    
+    
+    
     aJSON.Save(aPath.c());
     
     SaveConfigFrame();
@@ -336,6 +467,17 @@ void EditorMenuFormationPicker::LoadConfig() {
     mCheckBoxMixedOnly->SetChecked(aConfigNode->GetBool("filter_mixed_only", false));
     mCheckBoxTracersOnly->SetChecked(aConfigNode->GetBool("filter_tracers_only", false));
     mCheckBoxNoTracersOnly->SetChecked(aConfigNode->GetBool("filter_no_tracers_only", false));
+    
+    
+    mCheckBoxRequiresBalloon->SetChecked(aConfigNode->GetBool("filter_requires_balloon", false));
+    mCheckBoxRequiresBrick->SetChecked(aConfigNode->GetBool("filter_requires_brick", false));
+    mCheckBoxRequiresTurtle->SetChecked(aConfigNode->GetBool("filter_requires_turtle", false));
+    mCheckBoxRequiresBomb->SetChecked(aConfigNode->GetBool("filter_requires_bomb", false));
+
+    
+    
+    
+    
     
     mEnqueueApplyFilter = 2;
     mEnqueueUpdateScroll = 3;

@@ -16,13 +16,13 @@ ToolMenuSection::ToolMenuSection() {
 
     mSectionDepth = 0;
     
-    mSectionBackground.SetColorTop(0.325f, 0.125f, 0.125f);
-    mSectionBackground.SetColorBottom(0.365f, 0.135f, 0.085f);
-    mSectionBackground.mCornerRadius = 5.0f;
+    mSectionBackground.SetColorTop(0.45f, 0.44f, 0.485f);
+    mSectionBackground.SetColorBottom(0.52f, 0.54f, 0.575f);
+    mSectionBackground.mCornerRadius = 3.0f;
 
-    mSectionBackgroundOutline.SetColorTop(0.525f, 0.925f, 0.925f);
-    mSectionBackgroundOutline.SetColorBottom(0.565f, 0.965f, 0.965f);
-    mSectionBackgroundOutline.mCornerRadius = 5.0f;
+    mSectionBackgroundOutline.SetColorTop(0.65f, 0.65f, 0.685f);
+    mSectionBackgroundOutline.SetColorBottom(0.59f, 0.59f, 0.62f);
+    mSectionBackgroundOutline.mCornerRadius = 4.0f;
 
     mMenu = 0;
 
