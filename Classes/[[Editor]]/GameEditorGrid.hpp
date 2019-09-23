@@ -60,6 +60,20 @@ public:
     int                                         mGridStarStartRotation;
     int                                         mGridStarLinePointCount;
     
+    
+    int                                         mGridArcStartRot;
+    int                                         mGridArcEndRot;
+    int                                         mGridArcRadius;
+    int                                         mGridArcRadiusSpacing;
+    int                                         mGridArcRadiusCount;
+    int                                         mGridArcSweep;
+    int                                         mGridArcCumulativeDepression;
+    bool                                        mGridArcFillEvenly;
+    bool                                        mGridArcInvertH;
+    
+    
+    
+    
     int                                         mGridNGON1Sides;
     int                                         mGridNGON1RingSpacing;
     int                                         mGridNGON1RingCount;
@@ -86,7 +100,6 @@ public:
     int                                         mGridTRAP2TopSize;
     int                                         mGridTRAP2BottomSize;
     int                                         mGridTRAP2Height;
-    bool                                        mGridTRAP2Rotate90;
     bool                                        mGridTRAP2ScanLineStagger;
     bool                                        mGridTRAP2ScanLineStaggerOdd;
     int                                         mGridTRAP2ScanLineOffsetY;

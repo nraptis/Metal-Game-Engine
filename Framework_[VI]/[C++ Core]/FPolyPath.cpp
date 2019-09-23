@@ -20,8 +20,8 @@ FPolyPathInterp::FPolyPathInterp() {
     mY = 0.0f;
     mNormX = 0.0f;
     mNormY = -1.0f;
-    mWidth = 0.0f;
-    mRotation = 0.0f;
+    //mWidth = 0.0f;
+    //mRotation = 0.0f;
 }
 
 FPolyPathInterp::~FPolyPathInterp() {
@@ -44,13 +44,13 @@ FPolyPath::FPolyPath() {
     mDirY = 0;
     mNormX = 0;
     mNormY = 0;
-    mLerpX = 0;
-    mLerpY = 0;
-    mWidth = 0;
-    mRotation = 0;
-    mFaceCenterX = 0;
-    mFaceCenterY = 0;
-    mFaceCenterRotation = 0;
+    //mLerpX = 0;
+    //mLerpY = 0;
+    //mWidth = 0;
+    //mRotation = 0;
+    //mFaceCenterX = 0;
+    //mFaceCenterY = 0;
+    //mFaceCenterRotation = 0;
     mCenterX = 0.0f;
     mCenterY = 0.0f;
 }
@@ -75,13 +75,13 @@ void FPolyPath::Clear() {
     mDirY = 0;
     mNormX = 0;
     mNormY = 0;
-    mLerpX = 0;
-    mLerpY = 0;
-    mWidth = 0;
-    mRotation = 0;
-    mFaceCenterX = 0;
-    mFaceCenterY = 0;
-    mFaceCenterRotation = 0;
+    //mLerpX = 0;
+    //mLerpY = 0;
+    //mWidth = 0;
+    //mRotation = 0;
+    //mFaceCenterX = 0;
+    //mFaceCenterY = 0;
+    //mFaceCenterRotation = 0;
 }
 
 void FPolyPath::RemoveAll() {
@@ -99,54 +99,24 @@ void FPolyPath::Add(float pX, float pY) {
     mRefresh = true;
 }
 
-void FPolyPath::Add(FPointList *pList)
-{
-    if(pList)
-    {
-        for(int i=0;i<pList->mCount;i++)
-        {
+void FPolyPath::Add(FPointList *pList) {
+    if (pList) {
+        for (int i=0;i<pList->mCount;i++) {
             Add(pList->mX[i], pList->mY[i]);
         }
     }
     mRefresh = true;
 }
 
-void FPolyPath::AddValues(int pCount, float pX1, float pY1, float pX2, float pY2, float pX3, float pY3, float pX4, float pY4, float pX5, float pY5, float pX6, float pY6, float pX7, float pY7, float pX8, float pY8)
-{
-    if(pCount >= 8)
-    {
-        Add(pX1, pY1);Add(pX2, pY2);Add(pX3, pY3);Add(pX4, pY4);
-        Add(pX5, pY5);Add(pX6, pY6);Add(pX7, pY7);Add(pX8, pY8);
+void FPolyPath::Set(int pIndex, float pX, float pY) {
+    if (pIndex >= mSize) {
+        SetSize(pIndex + (pIndex / 2) + 1);
     }
-    else
-    {
-        if(pCount > 0)Add(pX1, pY1);if(pCount > 1)Add(pX2, pY2);if(pCount > 2)Add(pX3, pY3);
-        if(pCount > 3)Add(pX4, pY4);if(pCount > 4)Add(pX5, pY5);if(pCount > 5)Add(pX6, pY6);
-        if(pCount > 6)Add(pX7, pY7);if(pCount > 7)Add(pX8, pY8);
-    }
-    mRefresh = true;
-}
-
-void FPolyPath::AddValuesReset(int pCount, float pX1, float pY1, float pX2, float pY2, float pX3, float pY3, float pX4, float pY4, float pX5, float pY5, float pX6, float pY6, float pX7, float pY7, float pX8, float pY8)
-{
-    mCount = 0;
-    AddValues(pCount, pX1, pY1, pX2, pY2, pX3, pY3, pX4, pY4, pX5, pY5, pX6, pY6, pX7, pY7, pX8, pY8);
-    mRefresh = true;
-}
-
-void FPolyPath::Set(int pIndex, float pX, float pY)
-{
-    if(pIndex >= mSize)
-    {
-        SetSize(pIndex + 1);
-    }
-    if(pIndex >= mCount)
-    {
+    if (pIndex >= mCount) {
         mCount = (pIndex + 1);
     }
     
-    if(pIndex >= 0)
-    {
+    if (pIndex >= 0) {
         mX[pIndex] = pX;
         mY[pIndex] = pY;
         mRefresh = true;
@@ -157,21 +127,18 @@ void FPolyPath::Set(int pIndex, float pX, float pY)
 
 
 
-void FPolyPath::Size(int pSize)
-{
-    if(pSize != mSize)
-    {
-        if(pSize <= 0)
-        {
+void FPolyPath::Size(int pSize) {
+    if (pSize != mSize) {
+        if (pSize <= 0) {
             Clear();
-        }
-        else
-        {
-            if(mCount >= pSize)mCount = pSize;
+        } else {
+            if (mCount >= pSize) {
+                mCount = pSize;
+            }
             
             int aSize = pSize + 1;
             
-            float *aNewX = new float[aSize * 16 + 32];
+            float *aNewX = new float[aSize * 8 + 8];
             float *aNewY = aNewX + aSize;
             float *aNewDistance = aNewY + aSize;
             float *aNewPercent = aNewDistance + aSize;
@@ -179,14 +146,14 @@ void FPolyPath::Size(int pSize)
             float *aNewDirY = aNewDirX + aSize;
             float *aNewNormX = aNewDirY + aSize;
             float *aNewNormY = aNewNormX + aSize;
-            float *aNewLerpX = aNewNormY + aSize;
-            float *aNewLerpY = aNewLerpX + aSize;
-            float *aNewWidth = aNewLerpY + aSize;
-            float *aNewRotation = aNewWidth + aSize;
+            //float *aNewLerpX = aNewNormY + aSize;
+            //float *aNewLerpY = aNewLerpX + aSize;
+            //float *aNewWidth = aNewLerpY + aSize;
+            //float *aNewRotation = aNewNormY + aSize;
             
-            float *aNewFaceCenterX = aNewRotation + aSize;
-            float *aNewFaceCenterY = aNewFaceCenterX + aSize;
-            float *aNewFaceCenterRotation = aNewFaceCenterY + aSize;
+            //float *aNewFaceCenterX = aNewRotation + aSize;
+            //float *aNewFaceCenterY = aNewFaceCenterX + aSize;
+            //float *aNewFaceCenterRotation = aNewRotation + aSize;
             
             for(int i=0;i<mCount;i++)aNewX[i] = mX[i];
             for(int i=0;i<mCount;i++)aNewY[i] = mY[i];
@@ -200,14 +167,14 @@ void FPolyPath::Size(int pSize)
             for(int i=0;i<mCount;i++)aNewNormX[i] = mNormX[i];
             for(int i=0;i<mCount;i++)aNewNormY[i] = mNormY[i];
             
-            for(int i=0;i<mCount;i++)aNewLerpX[i] = mLerpX[i];
-            for(int i=0;i<mCount;i++)aNewLerpY[i] = mLerpY[i];
-            for(int i=0;i<mCount;i++)aNewWidth[i] = mWidth[i];
-            for(int i=0;i<mCount;i++)aNewRotation[i] = mRotation[i];
+            //for(int i=0;i<mCount;i++)aNewLerpX[i] = mLerpX[i];
+            //for(int i=0;i<mCount;i++)aNewLerpY[i] = mLerpY[i];
+            //for(int i=0;i<mCount;i++)aNewWidth[i] = mWidth[i];
+            //for(int i=0;i<mCount;i++)aNewRotation[i] = mRotation[i];
             
-            for(int i=0;i<mCount;i++)aNewFaceCenterX[i] = mFaceCenterX[i];
-            for(int i=0;i<mCount;i++)aNewFaceCenterY[i] = mFaceCenterY[i];
-            for(int i=0;i<mCount;i++)aNewFaceCenterRotation[i] = mFaceCenterRotation[i];
+            //for(int i=0;i<mCount;i++)aNewFaceCenterX[i] = mFaceCenterX[i];
+            //for(int i=0;i<mCount;i++)aNewFaceCenterY[i] = mFaceCenterY[i];
+            //for(int i=0;i<mCount;i++)aNewFaceCenterRotation[i] = mFaceCenterRotation[i];
             
             for(int i=mCount;i<aSize;i++)aNewX[i] = 0.0f;
             for(int i=mCount;i<aSize;i++)aNewY[i] = 0.0f;
@@ -219,13 +186,13 @@ void FPolyPath::Size(int pSize)
             for(int i=mCount;i<aSize;i++)aNewDirY[i] = -1.0f;
             for(int i=mCount;i<aSize;i++)aNewNormX[i] = 1.0f;
             for(int i=mCount;i<aSize;i++)aNewNormY[i] = 0.0f;
-            for(int i=mCount;i<aSize;i++)aNewLerpX[i] = 1.0f;
-            for(int i=mCount;i<aSize;i++)aNewLerpY[i] = 0.0f;
-            for(int i=mCount;i<aSize;i++)aNewWidth[i] = 1.0f;
-            for(int i=mCount;i<aSize;i++)aNewRotation[i] = 0.0f;
-            for(int i=mCount;i<aSize;i++)aNewFaceCenterX[i] = -1.0f;
-            for(int i=mCount;i<aSize;i++)aNewFaceCenterY[i] = 0.0f;
-            for(int i=mCount;i<aSize;i++)aNewFaceCenterRotation[i] = 0.0f;
+            //for(int i=mCount;i<aSize;i++)aNewLerpX[i] = 1.0f;
+            //for(int i=mCount;i<aSize;i++)aNewLerpY[i] = 0.0f;
+            //for(int i=mCount;i<aSize;i++)aNewWidth[i] = 1.0f;
+            //for(int i=mCount;i<aSize;i++)aNewRotation[i] = 0.0f;
+            //for(int i=mCount;i<aSize;i++)aNewFaceCenterX[i] = -1.0f;
+            //for(int i=mCount;i<aSize;i++)aNewFaceCenterY[i] = 0.0f;
+            //for(int i=mCount;i<aSize;i++)aNewFaceCenterRotation[i] = 0.0f;
 
             delete [] mX;
             
@@ -237,13 +204,14 @@ void FPolyPath::Size(int pSize)
             mDirY = aNewDirY;
             mNormX = aNewNormX;
             mNormY = aNewNormY;
-            mLerpX = aNewLerpX;
-            mLerpY = aNewLerpY;
-            mWidth = aNewWidth;
-            mRotation = aNewRotation;
-            mFaceCenterX = aNewFaceCenterX;
-            mFaceCenterY = aNewFaceCenterY;
-            mFaceCenterRotation = aNewFaceCenterRotation;
+            //mLerpX = aNewLerpX;
+            //mLerpY = aNewLerpY;
+            //mWidth = aNewWidth;
+            //mRotation = aNewRotation;
+            //mFaceCenterX = aNewFaceCenterX;
+            //mFaceCenterY = aNewFaceCenterY;
+            //mFaceCenterRotation = aNewFaceCenterRotation;
+            
             mSize = pSize;
             mRefresh = true;
         }
@@ -364,73 +332,6 @@ void FPolyPath::DrawNormals()
         
     }
     
-    
-    
-    aLength = 12.0f;
-    
-    for(int aIndex = 0;aIndex < aCount; aIndex++)
-    {
-        aX = mX[aIndex];
-        aY = mY[aIndex];
-        
-        aDrawX = mFaceCenterX[aIndex] * aLength;
-        aDrawY = mFaceCenterY[aIndex] * aLength;
-        
-        aDrawX += aX;
-        aDrawY += aY;
-        
-        Graphics::DrawLine(aX, aY, aDrawX, aDrawY);
-        Graphics::DrawPoint(aDrawX, aDrawY, 3.0f);
-    }
-}
-
-void FPolyPath::DrawLerps()
-{
-    float aX = 0.0f;
-    float aY = 0.0f;
-    
-    float aDrawX = 0.0f;
-    float aDrawY = 0.0f;
-    
-    float aLength = 30.0f;
-    
-    int aCount = mCount;
-    
-    if(aCount > 0)
-    {
-        if(mClosed)aCount++;
-        
-    }
-    
-    
-    for(int aIndex = 0;aIndex < aCount; aIndex++)
-    {
-        aX = mX[aIndex];
-        aY = mY[aIndex];
-        
-        aDrawX = mLerpX[aIndex] * aLength;
-        aDrawY = mLerpY[aIndex] * aLength;
-        
-        aDrawX += aX;
-        aDrawY += aY;
-        
-        
-        Graphics::DrawLine(aX, aY, aDrawX, aDrawY);
-        Graphics::DrawPoint(aDrawX, aDrawY, 8.0f);
-    }
-}
-
-void FPolyPath::DrawOffset(float pOffset)
-{
-    
-    
-    
-    
-}
-
-void FPolyPath::DrawRay(float pPercent, float pLength)
-{
-    
 }
 
 bool FPolyPath::Interpolate(float pLength)
@@ -438,41 +339,32 @@ bool FPolyPath::Interpolate(float pLength)
     return Interpolate(&mInterpolater, pLength);
 }
 
-bool FPolyPath::Interpolate(FPolyPathInterp *pInterp, float pLength)
-{
+bool FPolyPath::Interpolate(FPolyPathInterp *pInterp, float pLength) {
     bool aResult = false;
     
-    if(mRefresh)
-    {
+    if (mRefresh) {
         Generate();
     }
     
-    if(pInterp)
-    {
+    if (pInterp) {
         pInterp->mValid = false;
         pInterp->mIndexStart = -1;
         pInterp->mIndexEnd = -1;
         
         
-        if((mLength > 0.025f) && (mCount > 1))
-        {
-            if(mWrap)
-            {
-                if(pLength > mLength)
-                {
+        if ((mLength > 0.025f) && (mCount > 1)) {
+            if (mWrap) {
+                if (pLength > mLength) {
                     int aLoops = 32;
-                    while ((aLoops > 0) && (pLength > mLength))
-                    {
+                    while ((aLoops > 0) && (pLength > mLength)) {
                         pLength -= mLength;
                         aLoops--;
                     }
                 }
                 
-                if(pLength < 0.0f)
-                {
+                if (pLength < 0.0f) {
                     int aLoops = 32;
-                    while ((aLoops > 0) && (pLength < 0.0f))
-                    {
+                    while ((aLoops > 0) && (pLength < 0.0f)) {
                         pLength += mLength;
                         aLoops--;
                     }
@@ -515,10 +407,12 @@ bool FPolyPath::Interpolate(FPolyPathInterp *pInterp, float pLength)
                 aLengthEnd += mLength;
             }
             
-            double aRange = aLengthEnd - aLengthStart;
-            double aPercent = 0.0f;
+            float aRange = aLengthEnd - aLengthStart;
+            float aPercent = 0.0f;
             
-            if(aRange > SQRT_EPSILON)aPercent = (float)(((double)(pLength - aLengthStart)) / aRange);
+            if (aRange > SQRT_EPSILON) {
+                aPercent = (float)(((pLength - aLengthStart)) / aRange);
+            }
             
             pInterp->mValid = true;
             aResult = true;
@@ -534,34 +428,13 @@ bool FPolyPath::Interpolate(FPolyPathInterp *pInterp, float pLength)
             pInterp->mLineX2 = mX[aInd2];
             pInterp->mLineY2 = mY[aInd2];
             
-            pInterp->mLineRotation = mRotation[aInd1];
+            //pInterp->mLineRotation = mRotation[aInd1];
             
             pInterp->mX = mX[aInd1] + (mX[aInd2] - mX[aInd1]) * aPercent;
             pInterp->mY = mY[aInd1] + (mY[aInd2] - mY[aInd1]) * aPercent;
             
             
-            
-            
-            float aDiffX = pInterp->mX - mCenterX;
-            float aDiffY = pInterp->mY - mCenterY;
-            float aDist = aDiffX * aDiffX + aDiffY * aDiffY;
-            
-            if(aDist > SQRT_EPSILON)
-            {
-                aDist = sqrtf(aDist);
-                aDiffX /= aDist;
-                aDiffY /= aDist;
-            }
-            else
-            {
-                aDist = 0.025f;
-                aDiffX = 0.0f;
-                aDiffY = -1.0f;
-            }
-            
-            pInterp->mFaceCenterX = aDiffX;
-            pInterp->mFaceCenterY = aDiffY;
-            pInterp->mFaceCenterRotation = -atan2f(-aDiffX, -aDiffY) * 57.2957795130823208767981548141052;
+
         }
     }
     
@@ -569,157 +442,53 @@ bool FPolyPath::Interpolate(FPolyPathInterp *pInterp, float pLength)
 }
 
 
-void FPolyPath::GetWithDist(float pDistance, float &pX, float &pY)
-{
+void FPolyPath::GetWithDist(float pDistance, float &pX, float &pY) {
     Interpolate(pDistance);
-    
     pX = mInterpolater.mX;
     pY = mInterpolater.mY;
 }
 
-void FPolyPath::GetWithPercent(float pPercent, float &pX, float &pY)
-{
+void FPolyPath::GetWithPercent(float pPercent, float &pX, float &pY) {
     GetWithDist(pPercent * mLength, pX, pY);
 }
 
-
-
-void FPolyPath::GetRandom(float &pX, float &pY)
-{
+void FPolyPath::GetRandom(float &pX, float &pY) {
     GetWithDist(gRand.GetFloat(mLength), pX, pY);
 }
 
-/*
-float FPolyPath::Interpolate(float *pArray, float pLength, bool pWrap)
-{
-    float aResult = 0.0f;
-    
-    if((mLength > 0.025f) && (mCount > 1))
-    {
-        if(pWrap)
-        {
-            if(pLength > mLength)
-            {
-                int aLoops = 32;
-                while ((aLoops > 0) && (pLength > mLength))
-                {
-                    pLength -= mLength;
-                    aLoops--;
-                }
-            }
-            
-            if(pLength < 0.0f)
-            {
-                int aLoops = 32;
-                while ((aLoops > 0) && (pLength < 0.0f))
-                {
-                    pLength += mLength;
-                    aLoops--;
-                }
-            }
-        }
-        
-        int aIndexStart = 0;
-        int aIndexEnd = 0;
-        
-        int aCount = mCount;
-        
-        if(mClosed)aCount++;
-        
-        while(aIndexEnd < aCount)
-        {
-            if(mDistance[aIndexEnd] >= pLength)break;
-            else aIndexEnd++;
-        }
-        
-        bool aLoopStart = false;
-        aIndexStart = (aIndexEnd - 1);
-        if(aIndexStart < 0)
-        {
-            aLoopStart = true;
-            aIndexStart = (aCount - 1);
-        }
-        
-        float aLengthStart = mDistance[aIndexStart];
-        float aLengthEnd = mDistance[aIndexEnd];
-        
-        if(aLoopStart == true)
-        {
-            aLengthEnd += mLength;
-        }
-        
-        double aRange = aLengthEnd - aLengthStart;
-        double aPercent = 0.0f;
-        
-        if(aRange > SQRT_EPSILON)
-        {
-            aPercent = (float)(((double)(pLength - aLengthStart)) / aRange);
-        }
-        
-        aResult = pArray[aIndexStart] + ((pArray[aIndexEnd] - pArray[aIndexStart]) * aPercent);
-    }
-    
-    return aResult;
-}
-
-float FPolyPath::GetX(float pLength, bool pWrap)
-{
-    return Interpolate(mX, pLength, pWrap);
-}
-
-float FPolyPath::GetY(float pLength, bool pWrap)
-{
-    return Interpolate(mY, pLength, pWrap);
-}
-*/
-
-void FPolyPath::Save(FFile *pFile)
-{
-    if(pFile)
-    {
+void FPolyPath::Save(FFile *pFile) {
+    if (pFile) {
         pFile->WriteInt(mCount);
-        
-        for(int i=0;i<mCount;i++)
-        {
+        for (int i=0;i<mCount;i++) {
             pFile->WriteFloat(mX[i]);
             pFile->WriteFloat(mY[i]);
         }
     }
 }
 
-void FPolyPath::Load(FFile *pFile)
-{
+void FPolyPath::Load(FFile *pFile) {
     Clear();
-    
-    if(pFile)
-    {
+    if (pFile) {
         int aCount = pFile->ReadInt();
-        
         Size(aCount);
-        
         float aReadX = 0.0f;
         float aReadY = 0.0f;
-        
-        for(int i=0;i<aCount;i++)
-        {
+        for (int i=0;i<aCount;i++) {
             aReadX = pFile->ReadFloat();
             aReadY = pFile->ReadFloat();
-            
             Add(aReadX, aReadY);
         }
     }
 }
 
 
-void FPolyPath::Generate()
-{
+void FPolyPath::Generate() {
     mRefresh = false;
     mLength = 0;
     mCenterX = 0.0f;
     mCenterY = 0.0f;
     
-    if(mCount > 1)
-    {
+    if (mCount > 1) {
         float aDiffX = 0.0f;
         float aDiffY = 0.0f;
         float aDist = 0.0f;
@@ -736,15 +505,13 @@ void FPolyPath::Generate()
         mPercent[0] = 0.0f;
         
         int aCount = mCount;
-        if(mClosed)
-        {
+        if (mClosed) {
             aCount++;
             mX[mCount] = mX[0];
             mY[mCount] = mY[0];
         }
         
-        while(aIndex < aCount)
-        {
+        while (aIndex < aCount) {
             aX = mX[aIndex];
             aY = mY[aIndex];
             
@@ -752,14 +519,11 @@ void FPolyPath::Generate()
             aDiffY = (aY - aLastY);
             aDist = aDiffX * aDiffX + aDiffY * aDiffY;
             
-            if(aDist > SQRT_EPSILON)
-            {
+            if (aDist > SQRT_EPSILON) {
                 aDist = sqrtf(aDist);
                 aDiffX /= aDist;
                 aDiffY /= aDist;
-            }
-            else
-            {
+            } else {
                 aDist = 0.025f;
                 aDiffX = 0.0f;
                 aDiffY = -1.0f;
@@ -794,8 +558,7 @@ void FPolyPath::Generate()
         mDirY[0] = mDirY[mCount];
         mNormX[0] = mNormX[mCount];
         mNormY[0] = mNormY[mCount];
-        mWidth[0] = mWidth[mCount];
-        mRotation[0] = mRotation[mCount];
+        
         
         
         if(mFlipNormals)
@@ -830,27 +593,15 @@ void FPolyPath::Generate()
             
             aDist = aDiffX * aDiffX + aDiffY * aDiffY;
             
-            if(aDist > SQRT_EPSILON)
-            {
+            if (aDist > SQRT_EPSILON) {
                 aDist = sqrtf(aDist);
                 aDiffX /= aDist;
                 aDiffY /= aDist;
-            }
-            else
-            {
+            } else {
                 aDist = 0.025f;
                 aDiffX = 0.0f;
                 aDiffY = -1.0f;
             }
-            
-            
-            
-            mFaceCenterX[aIndex] = aDiffX;
-            mFaceCenterY[aIndex] = aDiffY;
-            
-            
-            mRotation[aIndex] = -atan2f(-mNormX[aIndex + 1], -mNormY[aIndex + 1]) * 57.2957795130823208767981548141052;
-            mFaceCenterRotation[aIndex] = -atan2f(-mFaceCenterX[aIndex + 1], -mFaceCenterY[aIndex + 1]) * 57.2957795130823208767981548141052;
             
             aIndex++;
         }
@@ -860,11 +611,9 @@ void FPolyPath::Generate()
         
         
         
-        if(mLength > SQRT_EPSILON)
-        {
+        if (mLength > SQRT_EPSILON) {
             aIndex = 0;
-            while(aIndex < aCount)
-            {
+            while (aIndex < aCount) {
                 mPercent[aIndex] = mDistance[aIndex] / mLength;
                 aIndex++;
             }

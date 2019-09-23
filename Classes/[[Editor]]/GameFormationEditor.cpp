@@ -64,6 +64,9 @@ GameFormationEditor::GameFormationEditor(GameEditor *pEditor) {
     SetWidth(gDeviceWidth);
     SetHeight(gDeviceHeight);
     
+    
+    mGrid.LoadGridState();
+    
     mMenuFormation = new EditorMenuFormation(this);
     AddChild(mMenuFormation);
     mMenuFormation->SetFrame(gSafeAreaInsetLeft + 16.0f, gSafeAreaInsetTop + 20.0f, 400.0f, 736.0f);
@@ -74,7 +77,7 @@ GameFormationEditor::GameFormationEditor(GameEditor *pEditor) {
     
     mMenuGrid = new EditorMenuFormationGrid(&mGrid);
     AddChild(mMenuGrid);
-    mMenuGrid->SetFrame(gDeviceWidth - (gSafeAreaInsetRight + 14.0f + 550.0f + 60.0f), gSafeAreaInsetTop + 20.0f + 80.0f, 400.0f, 720.0f);
+    mMenuGrid->SetFrame(gSafeAreaInsetLeft + 370.0f, gSafeAreaInsetTop + 20.0f + 80.0f, 400.0f, 764.0f);
     
     
     mMenuSpawn = new EditorMenuFormationSpawnPicker(this);
@@ -82,7 +85,7 @@ GameFormationEditor::GameFormationEditor(GameEditor *pEditor) {
     mMenuSpawn->SetFrame((gDeviceWidth2 - 500.0f / 2.0f), gSafeAreaInsetTop + 20.0f, 500.0f, 256.0f);
     
     
-    mGrid.LoadGridState();
+    
 }
 
 GameFormationEditor::~GameFormationEditor() {
@@ -97,7 +100,6 @@ GameFormationEditor::~GameFormationEditor() {
         }
     }
     
-    mFormation.Print();
     mGrid.SaveGridState();
 }
 
@@ -537,11 +539,8 @@ void GameFormationEditor::PickDefaultModes() {
 }
 
 void GameFormationEditor::Close() {
-    
-    mFormation.Print();
     mFormation.Reset();
     mEditorFormation.Reset();
-    
     mEditor->CloseFormationEditor();
 }
 
@@ -1074,11 +1073,70 @@ FString GameFormationEditor::GenerateGridName() {
             }
             aChunkList.Add(new FString(aStaggerString.c()));
         }
+
+    }
+    
+    
+    if (mGrid.mGridType == SNAP_GRID_TYPE_ARC) {
+
+        aChunkList.Add(new FString("arc"));
         
-        if (mGrid.mGridTRAP2Rotate90 != false) {
-            FString aRot90String = "rot90";
-            aChunkList.Add(new FString(aRot90String.c()));
+        FString aRot1String = FString(mGrid.mGridArcStartRot) + "sro";
+        aChunkList.Add(new FString(aRot1String.c()));
+        
+        FString aRot2String = FString(mGrid.mGridArcEndRot) + "ero";
+        aChunkList.Add(new FString(aRot2String.c()));
+        
+        FString aRadString = FString(mGrid.mGridArcRadius) + "rad";
+        aChunkList.Add(new FString(aRadString.c()));
+        
+        FString aSweepString = FString(mGrid.mGridArcSweep) + "rad";
+        aChunkList.Add(new FString(aSweepString.c()));
+        
+        if (mGrid.mGridArcFillEvenly) {
+            FString aString = "evn";
+            aChunkList.Add(new FString(aString.c()));
         }
+        
+        if (mGrid.mGridArcInvertH) {
+            FString aString = "inh";
+            aChunkList.Add(new FString(aString.c()));
+        }
+        
+        if (mGrid.mGridArcRadiusCount > 1) {
+            
+            FString aRadiusSpacing = FString(mGrid.mGridArcRadiusSpacing) + "rsp";
+            aChunkList.Add(new FString(aRadiusSpacing.c()));
+            
+            FString aRadiusCountString = FString(mGrid.mGridArcRadiusCount) + "rct";
+            aChunkList.Add(new FString(aRadiusCountString.c()));
+        }
+        
+        if (mGrid.mGridArcCumulativeDepression != 0) {
+            FString aCDString = FString(mGrid.mGridArcCumulativeDepression) + "dep";
+            aChunkList.Add(new FString(aCDString.c()));
+            
+        }
+        
+        if (mGrid.mGridTRAP2ScanLineOffsetY != 0) {
+            FString aOffsetString = FString(mGrid.mGridTRAP2ScanLineOffsetY) + "ofy";
+            aChunkList.Add(new FString(aOffsetString.c()));
+        }
+        
+        FString aSpacingHString = FString(mGrid.mGridTRAP2ScanLineSpacingH) + "sph";
+        aChunkList.Add(new FString(aSpacingHString.c()));
+        
+        FString aSpacingVString = FString(mGrid.mGridTRAP2ScanLineSpacingV) + "spv";
+        aChunkList.Add(new FString(aSpacingVString.c()));
+        
+        if (mGrid.mGridTRAP2ScanLineStagger != false) {
+            FString aStaggerString = FString("stg");
+            if (mGrid.mGridTRAP2ScanLineStaggerOdd != false) {
+                aStaggerString.Append("odd");
+            }
+            aChunkList.Add(new FString(aStaggerString.c()));
+        }
+
     }
     
     int aCount = 0;

@@ -327,14 +327,69 @@ EditorMenuFormationGrid::EditorMenuFormationGrid(GameEditorGrid *pGrid) : ToolMe
     mCheckBoxTRAP2StaggerOdd->SetTarget(&mGrid->mGridTRAP2ScanLineStaggerOdd);
     mRowTRAP21->AddCheckBox(mCheckBoxTRAP2StaggerOdd);
     
-    mCheckBoxTRAP2Rotate90 = new UICheckBox();
-    mCheckBoxTRAP2Rotate90->SetText("Turn90");
-    mCheckBoxTRAP2Rotate90->SetTarget(&mGrid->mGridTRAP2Rotate90);
-    mRowTRAP21->AddCheckBox(mCheckBoxTRAP2Rotate90);
     
     
     
     
+    
+    
+    
+    
+    
+    mPanelArcGrid = new ToolMenuPanel();
+    mPanelArcGrid->SetTitle("ARC");
+    mPanelGrid->AddSection(mPanelArcGrid);
+    
+    mStepperArcStartRot = new UIStepper();
+    mStepperArcStartRot->SetText("Rot-1:");
+    mStepperArcStartRot->SetTarget(&mGrid->mGridArcStartRot);
+    mPanelArcGrid->AddSection(mStepperArcStartRot);
+    
+    mStepperArcEndRot = new UIStepper();
+    mStepperArcEndRot->SetText("Rot-2:");
+    mStepperArcEndRot->SetTarget(&mGrid->mGridArcEndRot);
+    mPanelArcGrid->AddSection(mStepperArcEndRot);
+    
+    mStepperArcRadius = new UIStepper();
+    mStepperArcRadius->SetText("Radd:");
+    mStepperArcRadius->SetTarget(&mGrid->mGridArcRadius);
+    mPanelArcGrid->AddSection(mStepperArcRadius);
+    
+    mStepperArcRadiusSpacing = new UIStepper();
+    mStepperArcRadiusSpacing->SetText("R-SPC:");
+    mStepperArcRadiusSpacing->SetTarget(&mGrid->mGridArcRadiusSpacing);
+    mPanelArcGrid->AddSection(mStepperArcRadiusSpacing);
+    
+    
+    mStepperArcRadiusCount = new UIStepper();
+    mStepperArcRadiusCount->SetText("R-CNT:");
+    mStepperArcRadiusCount->SetTarget(&mGrid->mGridArcSweep);
+    mPanelArcGrid->AddSection(mStepperArcRadiusCount);
+    
+    mStepperArcSweepCount = new UIStepper();
+    mStepperArcSweepCount->SetText("CNT/SPC:");
+    mStepperArcSweepCount->SetTarget(&mGrid->mGridArcRadiusCount);
+    mPanelArcGrid->AddSection(mStepperArcSweepCount);
+    
+    mStepperArcCumulativeDepression = new UIStepper();
+    mStepperArcCumulativeDepression->SetText("SAGGY:");
+    mStepperArcCumulativeDepression->SetTarget(&mGrid->mGridArcCumulativeDepression);
+    mPanelArcGrid->AddSection(mStepperArcCumulativeDepression);
+
+    mRowArc1 = new ToolMenuSectionRow();
+    mPanelArcGrid->AddSection(mRowArc1);
+    
+    mCheckBoxArcFillEvenly = new UICheckBox();
+    mCheckBoxArcFillEvenly->SetText("Evenly");
+    mCheckBoxArcFillEvenly->SetTarget(&mGrid->mGridArcFillEvenly);
+    mRowArc1->AddCheckBox(mCheckBoxArcFillEvenly);
+    
+    mCheckBoxArcInvertH = new UICheckBox();
+    mCheckBoxArcInvertH->SetText("Inv-H");
+    mCheckBoxArcInvertH->SetTarget(&mGrid->mGridArcInvertH);
+    mRowArc1->AddCheckBox(mCheckBoxArcInvertH);
+    
+
     
     
     DeactivateCloseButton();
@@ -352,6 +407,14 @@ void EditorMenuFormationGrid::Layout() {
 
 void EditorMenuFormationGrid::Update() {
     ToolMenu::Update();
+    
+    if (mSegmentGridType != NULL) {
+        if (mGrid != NULL) {
+            mSegmentGridType->SetTarget(&(mGrid->mGridType));
+        } else {
+            mSegmentGridType->SetTarget(NULL);
+        }
+    }
     
     /*
      if (mCheckBoxSmooth) {
@@ -433,7 +496,34 @@ void EditorMenuFormationGrid::Notify(void *pSender, const char *pNotification) {
     if (pSender == mStepperTRAP2ScanLineSpacingV) { mGrid->BuildGrid(); }
     if (pSender == mCheckBoxTRAP2Stagger) { mGrid->BuildGrid(); }
     if (pSender == mCheckBoxTRAP2StaggerOdd) { mGrid->BuildGrid(); }
-    if (pSender == mCheckBoxTRAP2Rotate90) { mGrid->BuildGrid(); }
+    
+    
+    
+    
+    
+    
+    if (pSender == mStepperArcStartRot) { mGrid->BuildGrid(); }
+    if (pSender == mStepperArcEndRot) { mGrid->BuildGrid(); }
+    if (pSender == mStepperArcRadius) { mGrid->BuildGrid(); }
+    if (pSender == mStepperArcRadiusSpacing) { mGrid->BuildGrid(); }
+    if (pSender == mStepperArcRadiusCount) { mGrid->BuildGrid(); }
+    if (pSender == mStepperArcSweepCount) { mGrid->BuildGrid(); }
+    if (pSender == mStepperArcCumulativeDepression) { mGrid->BuildGrid(); }
+    if (pSender == mCheckBoxArcFillEvenly) { mGrid->BuildGrid(); }
+    if (pSender == mCheckBoxArcInvertH) { mGrid->BuildGrid(); }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 }
 
@@ -468,11 +558,15 @@ void EditorMenuFormationGrid::RefreshGridPanels() {
         }
     }
     
-    if (aGridType == SNAP_GRID_TYPE_ARC) {
-        
-    } else {
-        
+    if (mPanelArcGrid != NULL) {
+        if (aGridType == SNAP_GRID_TYPE_ARC) {
+            mPanelArcGrid->Activate();
+        } else {
+            mPanelArcGrid->Deactivate();
+        }
     }
+    
+    
     
     if (mPanelNGON1Grid != NULL) {
         if (aGridType == SNAP_GRID_TYPE_NGON1) {

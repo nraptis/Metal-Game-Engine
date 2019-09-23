@@ -9,7 +9,7 @@
 #include "GameEditorGrid.hpp"
 #include "os_core_graphics.h"
 #include "core_includes.h"
-
+#include "FPolyPath.hpp"
 
 GameEditorGrid::GameEditorGrid() {
     
@@ -37,6 +37,19 @@ GameEditorGrid::GameEditorGrid() {
     mGridStarLinePointCount = 3;
     mGridStarArmCount = 5;
     mGridStarStartRotation = 9;
+    
+    
+    mGridArcStartRot = -120;
+    mGridArcEndRot = 120;
+    mGridArcRadius = 150;
+    mGridArcRadiusSpacing = 48;
+    mGridArcRadiusCount = 3;
+    mGridArcSweep = 42;
+    mGridArcCumulativeDepression = 8;
+    mGridArcFillEvenly = true;
+    mGridArcInvertH = false;
+    
+    
     
     mGridNGON1Sides = 5;
     mGridNGON1RingSpacing = 52;
@@ -68,7 +81,6 @@ GameEditorGrid::GameEditorGrid() {
     mGridTRAP2Height = 160;
     mGridTRAP2ScanLineStagger = true;
     mGridTRAP2ScanLineStaggerOdd = false;
-    mGridTRAP2Rotate90 = false;
     mGridTRAP2ScanLineOffsetY = 0;
     mGridTRAP2ScanLineSpacingV = 46;
     mGridTRAP2ScanLineSpacingH = 46;
@@ -316,6 +328,119 @@ void GameEditorGrid::BuildStarGrid() {
 
 void GameEditorGrid::BuildArc() {
     
+    if (mGridArcRadius < 36) { mGridArcRadius = 36; }
+    if (mGridArcRadiusSpacing < 14) { mGridArcRadiusSpacing = 14; }
+    if (mGridArcRadiusCount < 1) { mGridArcRadiusCount = 1; }
+    
+    if (mGridArcFillEvenly) {
+        
+        if (mGridArcSweep < 16) { mGridArcSweep = 16;}
+        
+    } else {
+        if (mGridArcSweep < 2) { mGridArcSweep = 2;}
+        if (mGridArcSweep > 12) { mGridArcSweep = 12;}
+    }
+    
+    
+    float aCenterX = mCenterX + ((float)mOffsetX);
+    float aCenterY = mCenterY + ((float)mOffsetY);
+    
+    mOutlineList.RemoveAll();
+    
+    mGridList.RemoveAll();
+    mGridList.Add(mCenterX, mCenterY);
+    
+    
+    
+    float aArm = ((float)mGridArcRadius);
+    
+    for (int i=0;i<mGridArcRadiusCount;i++) {
+        
+        
+        float aRot1 = ((float)mGridArcStartRot);
+        float aRot2 = ((float)mGridArcEndRot);
+        float aRotDelta = (aRot2 - aRot1);
+        
+        int aPolyPointCount = 480;
+        
+        FPolyPath aPath;
+        
+        for (int aSpoke=0;aSpoke<aPolyPointCount;aSpoke++) {
+            float aPercent = ((float)aSpoke) / ((float)(aPolyPointCount - 1));
+            
+            float aRot = aRot1 + (aRot2 - aRot1) * aPercent;
+            
+            float aDirX = Sin(aRot);
+            float aDirY = -Cos(aRot);
+            
+            float aX = aCenterX + aDirX * aArm;
+            float aY = aCenterY + aDirY * aArm;
+            
+            aY += ((float)mGridArcCumulativeDepression) * aPercent;
+            
+            aPath.Add(aX, aY);
+        }
+        
+        aPath.Generate();
+        
+        float aLength = aPath.mLength;
+        
+        float aArcX = 0.0f;
+        float aArcY = 0.0f;
+        
+        if (i == 0) {
+            for (float aDist=0.0f;aDist<aLength;aDist+=40.0f) {
+                aPath.GetWithDist(aDist, aArcX, aArcY);
+                mOutlineList.Add(aArcX, aArcY);
+            }
+            aPath.GetWithDist(aLength, aArcX, aArcY);
+            mOutlineList.Add(aArcX, aArcY);
+        }
+        
+        if (i == (mGridArcRadiusCount - 1)) {
+            for (float aDist=aLength;aDist>0.0f;aDist-=40.0f) {
+                aPath.GetWithDist(aDist, aArcX, aArcY);
+                mOutlineList.Add(aArcX, aArcY);
+            }
+            aPath.GetWithDist(0.0f, aArcX, aArcY);
+            mOutlineList.Add(aArcX, aArcY);
+        }
+        
+        
+        if (mGridArcFillEvenly == true) {
+            
+            int aCount = roundf(aLength / ((float) mGridArcSweep));
+            if (aCount < 2) { aCount = 2; }
+            
+            for (int k=0;k<aCount;k++) {
+                
+                float aPercent = ((float)k) / ((float)(aCount - 1));
+                float aDist = aLength * aPercent;
+                
+                aPath.GetWithDist(aDist, aArcX, aArcY);
+                
+                mGridList.Add(aArcX, aArcY);
+            }
+        } else {
+            int aCount = mGridArcSweep;
+            for (int k=0;k<aCount;k++) {
+                float aPercent = ((float)k) / ((float)(aCount - 1));
+                float aDist = aLength * aPercent;
+                aPath.GetWithDist(aDist, aArcX, aArcY);
+                mGridList.Add(aArcX, aArcY);
+            }
+        }
+        
+        
+        
+        
+        
+        
+        aArm += ((float)mGridArcRadiusSpacing);
+    }
+    
+    
+    
     
 }
 
@@ -424,8 +549,6 @@ void GameEditorGrid::BuildNGON2Grid() {
 
 void GameEditorGrid::BuildTRAP1Grid() {
     
-    
-    
     float aCenterX = mCenterX + ((float)mOffsetX);
     float aCenterY = mCenterY + ((float)mOffsetY);
     
@@ -503,9 +626,9 @@ void GameEditorGrid::BuildTRAP2Grid() {
     mOutlineList.Add(aBottomX2, aBottomY2);
     mOutlineList.Add(aBottomX1, aBottomY1);
     
-    if (mGridTRAP2Rotate90) {
-        mOutlineList.TransformRotate(90.0f);
-    }
+    //if (mGridTRAP2Rotate90) {
+    //    mOutlineList.TransformRotate(90.0f);
+    //}
     
     mOutlineList.TransformTranslate(aCenterX, aCenterY);
     
@@ -636,8 +759,19 @@ void GameEditorGrid::SaveGridState() {
     
     aConfigNode->AddDictionaryBool("trap2_stagger", mGridTRAP2ScanLineStagger);
     aConfigNode->AddDictionaryBool("trap2_stagger_odd", mGridTRAP2ScanLineStaggerOdd);
-    aConfigNode->AddDictionaryBool("trap2_rotate_90", mGridTRAP2Rotate90);
     
+    
+    
+    aConfigNode->AddDictionaryInt("arc_start_rot", mGridArcStartRot);
+    aConfigNode->AddDictionaryInt("arc_end_rot", mGridArcEndRot);
+    aConfigNode->AddDictionaryInt("arc_rad", mGridArcRadius);
+    aConfigNode->AddDictionaryInt("arc_rad_spacing", mGridArcRadiusSpacing);
+    aConfigNode->AddDictionaryInt("arc_rad_count", mGridArcRadiusCount);
+    aConfigNode->AddDictionaryInt("arc_sweep", mGridArcSweep);
+    aConfigNode->AddDictionaryInt("arc_sag", mGridArcCumulativeDepression);
+    
+    aConfigNode->AddDictionaryBool("arc_even_fill", mGridArcFillEvenly);
+    aConfigNode->AddDictionaryBool("arc_invert_h", mGridArcInvertH);
     
     aJSON.Save(aPath.c());
 }
@@ -702,7 +836,19 @@ void GameEditorGrid::LoadGridState() {
     mGridTRAP2ScanLineSpacingH = aConfigNode->GetInt("trap2_spacing_h", mGridTRAP2ScanLineSpacingH);
     mGridTRAP2ScanLineStagger = aConfigNode->GetBool("trap2_stagger", mGridTRAP2ScanLineStagger);
     mGridTRAP2ScanLineStaggerOdd = aConfigNode->GetBool("trap2_stagger_odd", mGridTRAP2ScanLineStaggerOdd);
-    mGridTRAP2Rotate90 = aConfigNode->GetBool("trap2_rotate_90", mGridTRAP2Rotate90);
+    
+    
+    
+    mGridArcStartRot = aConfigNode->GetInt("arc_start_rot", mGridArcStartRot);
+    mGridArcEndRot = aConfigNode->GetInt("arc_end_rot", mGridArcEndRot);
+    mGridArcRadius = aConfigNode->GetInt("arc_rad", mGridArcRadius);
+    mGridArcRadiusSpacing = aConfigNode->GetInt("arc_rad_spacing", mGridArcRadiusSpacing);
+    mGridArcRadiusCount = aConfigNode->GetInt("arc_rad_count", mGridArcRadiusCount);
+    mGridArcSweep = aConfigNode->GetInt("arc_sweep", mGridArcSweep);
+    mGridArcCumulativeDepression = aConfigNode->GetInt("arc_sag", mGridArcCumulativeDepression);
+    mGridArcFillEvenly = aConfigNode->GetBool("arc_even_fill", mGridArcFillEvenly);
+    mGridArcInvertH = aConfigNode->GetBool("arc_invert_h", mGridArcInvertH);
+    
     
     BuildGrid();
 }
@@ -773,10 +919,19 @@ FJSONNode *GameEditorGrid::SaveCurrentGrid() {
         aResult->AddDictionaryInt("trap2_spacing_h", mGridTRAP2ScanLineSpacingH);
         aResult->AddDictionaryBool("trap2_stagger", mGridTRAP2ScanLineStagger);
         aResult->AddDictionaryBool("trap2_stagger_odd", mGridTRAP2ScanLineStaggerOdd);
-        aResult->AddDictionaryBool("trap2_rotate_90", mGridTRAP2Rotate90);
-        
-        
-        
+    }
+    
+    
+    if (mGridType == SNAP_GRID_TYPE_ARC) {
+        aResult->AddDictionaryInt("arc_start_rot", mGridArcStartRot);
+        aResult->AddDictionaryInt("arc_end_rot", mGridArcEndRot);
+        aResult->AddDictionaryInt("arc_rad", mGridArcRadius);
+        aResult->AddDictionaryInt("arc_rad_spacing", mGridArcRadiusSpacing);
+        aResult->AddDictionaryInt("arc_rad_count", mGridArcRadiusCount);
+        aResult->AddDictionaryInt("arc_sweep", mGridArcSweep);
+        aResult->AddDictionaryInt("arc_sag", mGridArcCumulativeDepression);
+        aResult->AddDictionaryBool("arc_even_fill", mGridArcFillEvenly);
+        aResult->AddDictionaryBool("arc_invert_h", mGridArcInvertH);
         
     }
     
@@ -849,9 +1004,22 @@ void GameEditorGrid::LoadCurrentGrid(FJSONNode *pNode) {
         mGridTRAP2ScanLineSpacingH = pNode->GetInt("trap2_spacing_h", mGridTRAP2ScanLineSpacingH);
         mGridTRAP2ScanLineStagger = pNode->GetBool("trap2_stagger", mGridTRAP2ScanLineStagger);
         mGridTRAP2ScanLineStaggerOdd = pNode->GetBool("trap2_stagger_odd", mGridTRAP2ScanLineStaggerOdd);
-        mGridTRAP2Rotate90 = pNode->GetBool("trap2_rotate_90", mGridTRAP2Rotate90);
+    }
+    
+    if (mGridType == SNAP_GRID_TYPE_ARC) {
+        mGridArcStartRot = pNode->GetInt("arc_start_rot", mGridArcStartRot);
+        mGridArcEndRot = pNode->GetInt("arc_end_rot", mGridArcEndRot);
+        mGridArcRadius = pNode->GetInt("arc_rad", mGridArcRadius);
+        mGridArcRadiusSpacing = pNode->GetInt("arc_rad_spacing", mGridArcRadiusSpacing);
+        mGridArcRadiusCount = pNode->GetInt("arc_rad_count", mGridArcRadiusCount);
+        mGridArcSweep = pNode->GetInt("arc_sweep", mGridArcSweep);
+        mGridArcCumulativeDepression = pNode->GetInt("arc_sag", mGridArcCumulativeDepression);
+        mGridArcFillEvenly = pNode->GetBool("arc_even_fill", mGridArcFillEvenly);
+        mGridArcInvertH = pNode->GetBool("arc_invert_h", mGridArcInvertH);
+        
     }
 
+    
     BuildGrid();
 }
 

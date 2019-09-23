@@ -30,19 +30,20 @@ public:
     float                           mNormX;
     float                           mNormY;
     
-    float                           mWidth;
-    float                           mRotation;
+    //float                           mWidth;
+    //float                           mRotation;
     
     float                           mLineX1;
     float                           mLineY1;
     float                           mLineX2;
     float                           mLineY2;
     
-    float                           mLineRotation;
+    //float                           mLineRotation;
     
-    float                           mFaceCenterX;
-    float                           mFaceCenterY;
-    float                           mFaceCenterRotation;
+    //float                           mFaceCenterX;
+    //float                           mFaceCenterY;
+    //float                           mFaceCenterRotation;
+    
 };
 
 class FPolyPath
@@ -58,10 +59,6 @@ public:
     void                            Add(FPointList *pList);
     void                            Add(float pX, float pY);
     void                            Set(int pIndex, float pX, float pY);
-
-    
-    void                            AddValues(int pCount, float pX1, float pY1, float pX2=0.0f, float pY2=0.0f, float pX3=0.0f, float pY3=0.0f, float pX4=0.0f, float pY4=0.0f, float pX5=0.0f, float pY5=0.0f, float pX6=0.0f, float pY6=0.0f, float pX7=0.0f, float pY7=0.0f, float pX8=0.0f, float pY8=0.0f);
-    void                            AddValuesReset(int pCount, float pX1, float pY1, float pX2=0.0f, float pY2=0.0f, float pX3=0.0f, float pY3=0.0f, float pX4=0.0f, float pY4=0.0f, float pX5=0.0f, float pY5=0.0f, float pX6=0.0f, float pY6=0.0f, float pX7=0.0f, float pY7=0.0f, float pX8=0.0f, float pY8=0.0f);
     
     void                            Size(int pSize);
     inline void                     SetSize(int pSize){Size(pSize);}
@@ -73,10 +70,6 @@ public:
     void                            DrawPoints();
     void                            DrawEdges();
     void                            DrawNormals();
-    void                            DrawLerps();
-    void                            DrawOffset(float pOffset);
-    void                            DrawRay(float pPercent, float pLength=36.0f);
-    
     
     bool                            Interpolate(float pLength);
     bool                            Interpolate(FPolyPathInterp *pInterp, float pLength);
@@ -117,16 +110,15 @@ public:
     float                           *mDirY;
     float                           *mNormX;
     float                           *mNormY;
-    float                           *mLerpX;
-    float                           *mLerpY;
+    //float                           *mLerpX;
+    //float                           *mLerpY;
     
-    float                           *mFaceCenterX;
-    float                           *mFaceCenterY;
-    float                           *mFaceCenterRotation;
+    //float                           *mFaceCenterX;
+    //float                           *mFaceCenterY;
+    //float                           *mFaceCenterRotation;
+    //float                           *mWidth;
+    //float                           *mRotation;
     
-    
-    float                           *mWidth;
-    float                           *mRotation;
     
     void                            Save(FFile *pFile);
     void                            Load(FFile *pFile);

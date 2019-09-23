@@ -36,8 +36,6 @@ public:
     UIStepper                               *mStepperGridOffsetX;
     UIStepper                               *mStepperGridOffsetY;
     
-    
-    
     UIStepper                               *mStepperRectGridWidth;
     UIStepper                               *mStepperRectGridHeight;
     UIStepper                               *mStepperRectGridSpacingH;
@@ -101,7 +99,25 @@ public:
     ToolMenuSectionRow                      *mRowTRAP21;
     UICheckBox                              *mCheckBoxTRAP2Stagger;
     UICheckBox                              *mCheckBoxTRAP2StaggerOdd;
-    UICheckBox                              *mCheckBoxTRAP2Rotate90;
+    
+    
+    
+    
+    
+    ToolMenuPanel                           *mPanelArcGrid;
+    UIStepper                               *mStepperArcStartRot;
+    UIStepper                               *mStepperArcEndRot;
+    UIStepper                               *mStepperArcRadius;
+    UIStepper                               *mStepperArcRadiusSpacing;
+    UIStepper                               *mStepperArcRadiusCount;
+    
+    UIStepper                               *mStepperArcSweepCount;
+    UIStepper                               *mStepperArcCumulativeDepression;
+    
+    ToolMenuSectionRow                      *mRowArc1;
+    UICheckBox                              *mCheckBoxArcFillEvenly;
+    UICheckBox                              *mCheckBoxArcInvertH;
+    
     
     void                                    RefreshGridPanels();
     
